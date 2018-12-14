@@ -1,0 +1,19 @@
+language: rust
+sudo: false
+matrix:
+  include:
+    - rust: stable
+      env:
+       - NAME="stable"
+       - FEATURES=''
+    - rust: nightly
+      env:
+       - NAME="nightly"
+       - FEATURES=''
+before_script:
+  - (test -x $HOME/.cargo/bin/mdbook || cargo install mdbook)
+script:
+  - |
+      mdbook build &&
+      mdbook test
+
