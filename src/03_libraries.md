@@ -23,6 +23,14 @@ version.
 > ### Recommendation:
 > <mark>TODO</mark>: run cargo-outdated to check dependencies status
 
+## cargo-audit
+
+Cargo-audit tool allows one to easily check for security vulnerabilities
+reported to the RustSec Advisory Database.
+
+> ### Recommendation:
+> <mark>TODO</mark>: run cargo-audit to check for known vulnerabilities
+
 ## Unsafe code in libraries
 
 <mark>TODO</mark>: `unsafe` blocks are discussed in the following chapter.
