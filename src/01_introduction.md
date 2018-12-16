@@ -44,7 +44,7 @@ It is not intended to be a course on how to write Rust programs, there are
 already plenty of good learning resources for this purpose
 (see for instance the
 [Rust documentation main page](https://doc.rust-lang.org)).
-The purpose is rather to guide the programmer and to inform him about certain
+The purpose is rather to guide the programmer and to inform them about certain
 pitfalls. These recommendations form a complement to the good level of trust
 the Rust language already provides. That said, recalls are sometimes necessary
 for clarity, and the experienced Rust programmer may rely solely on
