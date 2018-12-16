@@ -38,5 +38,5 @@ One needs to ensure that this kind of block is not misused in project
 dependencies.
 
 > ### Recommendation:
-> <mark>TODO</mark>: check that no `unsafe` blocks appear in the imported
-> dependencies (with a tool?).
+> <mark>TODO</mark>: run cargo-geiger to check that no `unsafe` blocks appear in
+> the imported dependencies (note that there are currently false negatives)
