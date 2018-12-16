@@ -8,7 +8,7 @@ applications development using the Rust programming language.
 It is not intended to be a course on how to write Rust programs, there are
 already plenty of good learning resources for this purpose (see the *External
 references* section below). The purpose is rather to guide the programmer and to
-inform him about certain pitfalls, especially in case he is involved in the
+inform them about certain pitfalls, especially in case they are involved in the
 development of applications with strong security requirements.  These
 recommendations form a complement to the good level of trust the Rust language
 already provides. That said, recalls are sometimes necessary for clarity, and
