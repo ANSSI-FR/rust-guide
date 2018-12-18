@@ -61,7 +61,7 @@ $ rustup override list
 $
 ```
 
-> ### Recommendation:
+> ### Recommendation [ENVD-STABLE]:
 > In general, development of a secure application should be done using a
 > fully stable toolchain, for limiting potential compiler, runtime or tool
 > bugs.
@@ -105,7 +105,7 @@ detect. The warnings should be re-checked by the programmer before committing
 the fix that is suggested by `clippy`, especially in the case of lints of the
 category `clippy::nursery` since those hints are still under development.
 
-> ### Recommendation:
+> ### Recommendation [DENV-CLIPPY]:
 > The tool `clippy` must be used at various times during a secure application
 > development process.
 

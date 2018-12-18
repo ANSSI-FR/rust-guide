@@ -21,7 +21,7 @@ and data races.
 To perform risky actions such as system calls, type coercions, or memory
 pointers direct manipulations, the language provides the `unsafe` keyword.
 
-> ### Recommendation:
+> ### Recommendation [LANG-UNSAFE]:
 > For a secured development, the `unsafe` blocks shall be avoided. Afterward,
 > we list the only cases where `unsafe` may be used, provided that they come
 > with a proper justification:
@@ -86,7 +86,7 @@ else { println!("{}", res); }
 # }
 ```
 
-> ### Recommendation:
+> ### Recommendation [LANG-ARITH]:
 > When assuming that an arithmetic operation can produce an overflow, the
 > specialized functions `overlapping_<op>`, `wrapping_<op>`, or the
 > `Wrapping` type must be used.
@@ -104,12 +104,12 @@ patterns with traits).
 The `Result` type is the preferred way of handling functions that can fail.
 A `Result` object must be tested, and never ignored.
 
-> ### Recommendation:
+> ### Recommendation [LANG-ERRWRAP]:
 > A crate can implement its own Error type, wrapping all possible errors.
 > It must be careful to make this type exception-safe (RFC 1236), and implement
 > `Error + Send + Sync + 'static` as well as `Display`.
 
-> ### Recommendation:
+> ### Recommendation [LANG-ERRDO]:
 > The `?` operator should be used to improve readability of code.
 > The `try!` macro should not be used.
 
@@ -135,13 +135,13 @@ Common patterns that can cause panics are:
  - large allocations
  - string formatting using `format!`
 
-> ### Recommendation:
+> ### Recommendation [LANG-NOPANIC]:
 > Functions or instructions that can cause the code to panic at runtime should
 > be avoided.
 
-> ### Recommendation:
-> Array indexing must be properly tested, or the `.get()` method should be
-> used to return an `Option`
+> ### Recommendation [LANG-ARRINDEXING]:
+> Array indexing must be properly tested, or the `get()` method should be
+> used to return an `Option`.
 
 <mark>TODO</mark> Check if the [no_panic](https://github.com/dtolnay/no-panic)
 crate can catch all cases. Drawback: all functions need to be marked as
@@ -157,7 +157,7 @@ When calling Rust code from another language (for ex. C), the Rust code must
 be careful to never panic.
 Unwinding from Rust code into foreign code results in undefined behavior.
 
-> ### Recommendation:
+> ### Recommendation [LANG-FFIPANIC]:
 > Rust code called from FFI must either ensure the function cannot panic, or
 > use `catch_unwind` or the `std::panic` module to ensure the rust code will not
 > abort or return in an unstable state.

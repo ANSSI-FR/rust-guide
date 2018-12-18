@@ -6,4 +6,5 @@
 - [The language](04_language.md)
 - [Test and fuzzing](05_test_fuzz.md)
 
+[Recommendations Checklist](RECOS.md)
 [Licence](LICENCE.md)
