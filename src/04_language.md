@@ -46,6 +46,10 @@ pointers direct manipulations, the language provides the `unsafe` keyword.
 > With the exception of these cases, `#[forbid(unsafe_code)]` shall appear in
 > `main.rs` to generate compilation errors if `unsafe` is used in the code base.
 
+The tool `cargo-geiger` can be used to check a crate and its dependencies
+recursively for use of unsafe code. This tool will not guarantee the absence of
+unsafe code (e.g. macros are not expanded), but will check most common patterns.
+
 ### Integer overflows
 
 Although some verification is performed by Rust regarding the potential
