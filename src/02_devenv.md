@@ -105,7 +105,7 @@ detect. The warnings should be re-checked by the programmer before committing
 the fix that is suggested by `clippy`, especially in the case of lints of the
 category `clippy::nursery` since those hints are still under development.
 
-> ### Recommendation [DENV-CLIPPY]:
+> ### Recommendation [DENV-LINTER]:
 > The tool `clippy` must be used at various times during a secure application
 > development process.
 

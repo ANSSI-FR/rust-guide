@@ -4,29 +4,29 @@
 
 | Name                 | Short description                                    |
 |:---------------------|:-----------------------------------------------------|
-| **[DENV-STABLE]**    | Using stable compilation toolchain                   |
-| **[DENV-CLIPPY]**    | Using Rust linter (cargo-clippy)                     |
+| **[DENV-STABLE]**    | Use stable compilation toolchain                     |
+| **[DENV-LINTER]**    | Use Rust linter (cargo-clippy)                       |
 
 ## Libraries
 
 | Name                 | Short description                                    |
 |:---------------------|:-----------------------------------------------------|
-| **[LIBS-OUTDATED]**  | Checked for outdated dependencies versions (cargo-outdated) |
-| **[LIBS-AUDIT]**     | Checked for security vulnerabilities report on dependencies (cargo-audit) |
-| **[LIBS-UNSAFE]**    | Checked for unsafe code in dependencies              |
+| **[LIBS-OUTDATED]**  | Check for outdated dependencies versions (cargo-outdated) |
+| **[LIBS-AUDIT]**     | Check for security vulnerabilities report on dependencies (cargo-audit) |
+| **[LIBS-UNSAFE]**    | Check for unsafe code in dependencies                |
 | **[MEM-ZERO]**       | Zeroize memory of sensitive data after use           |
 
 ## Language
 
 | Name                 | Short description                                    |
 |:---------------------|:-----------------------------------------------------|
-| **[LANG-UNSAFE]**    | Using unsafe blocks only in predefined cases and justify it |
-| **[LANG-ARITH]**     | Using the appropriate arithmetic operations regarding potential overflows |
-| **[LANG-ERRWRAP]**   | Implementing custom Error type, wrapping all possible errors |
-| **[LANG-ERRDO]**     | Using the `?` operator and do not use the `try!` macro |
-| **[LANG-NOPANIC]**   | Avoiding functions that can cause `panic!`           |
-| **[LANG-ARRINDEXING]** | Testing properly array indexing or using the `get()` method |
-| **[LANG-FFIPANIC]**  | Handling correctly `panic!` in FFI                   |
+| **[LANG-UNSAFE]**    | Use unsafe blocks only in predefined cases and justify it |
+| **[LANG-ARITH]**     | Use the appropriate arithmetic operations regarding potential overflows |
+| **[LANG-ERRWRAP]**   | Implemente custom Error type, wrapping all possible errors |
+| **[LANG-ERRDO]**     | Use the `?` operator and do not use the `try!` macro |
+| **[LANG-NOPANIC]**   | Avoid functions that can cause `panic!`              |
+| **[LANG-ARRINDEXING]** | Test properly array indexing or using the `get()` method |
+| **[LANG-FFIPANIC]**  | Handle correctly `panic!` in FFI                     |
 
 ## Test and fuzzing
 
