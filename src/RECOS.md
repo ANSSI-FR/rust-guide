@@ -14,6 +14,7 @@
 | **[LIBS-OUTDATED]**  | Checked for outdated dependencies versions (cargo-outdated) |
 | **[LIBS-AUDIT]**     | Checked for security vulnerabilities report on dependencies (cargo-audit) |
 | **[LIBS-UNSAFE]**    | Checked for unsafe code in dependencies              |
+| **[MEM-ZERO]**       | Zeroize memory of sensitive data after use           |
 
 ## Language
 
