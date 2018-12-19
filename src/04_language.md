@@ -12,6 +12,42 @@
 and identify language constructs that may break memory safety (for instance,
 unsound behaviors in older versions of the compiler).
 
+By default, Rust forces all values to be initialized, preventing the use of
+uninitialized memory (except if using `std::mem::uninitialized`).
+However, zeroing memory is useful for sensitive variables, especially if the
+Rust code is used through FFI.
+
+> ### Recommendation [MEM-ZERO]:
+> Variables containing sensitive data shall be zeroized after use, using functions
+> that will not be removed by the compiler optimizations, like `std::ptr::write_volatile`
+> or the `zeroize` crate.
+>
+> The `std::mem::uninitialized` function shall not be used, or explicitly
+> justified.
+>
+
+The following code shows how to define an integer type that will be set to
+0 when freed, using the `Drop` trait:
+
+```rust
+/// Example: u32 newtype, set to 0 when freed
+pub struct ZU32(pub u32);
+
+impl Drop for ZU32 {
+    fn drop(&mut self) {
+        println!("zeroing memory");
+        unsafe{ ::std::ptr::write_volatile(&mut self.0, 0) };
+    }
+}
+
+# fn main() {
+{
+    let i = ZU32(42);
+    // ...
+} // i is freed here
+# }
+```
+
 ### Unsafe code
 
 The joint utilization of the type system and the ownership system aims to
