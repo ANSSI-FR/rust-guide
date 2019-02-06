@@ -124,7 +124,7 @@ else { println!("{}", res); }
 
 > ### Recommendation [LANG-ARITH]:
 > When assuming that an arithmetic operation can produce an overflow, the
-> specialized functions `overlapping_<op>`, `wrapping_<op>`, or the
+> specialized functions `overflowing_<op>`, `wrapping_<op>`, or the
 > `Wrapping` type must be used.
 
 ## Type system
