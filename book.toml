@@ -1,0 +1,3 @@
+[book]
+title = "Secure Rust Guidelines"
+description = "Recommendations for secure applications development with Rust"
