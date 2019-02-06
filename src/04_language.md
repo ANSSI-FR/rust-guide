@@ -17,14 +17,13 @@ uninitialized memory (except if using `std::mem::uninitialized`).
 However, zeroing memory is useful for sensitive variables, especially if the
 Rust code is used through FFI.
 
-> ### Recommendation [MEM-ZERO]:
-> Variables containing sensitive data shall be zeroized after use, using functions
-> that will not be removed by the compiler optimizations, like `std::ptr::write_volatile`
-> or the `zeroize` crate.
+> ### Rule [MEM-ZERO]:
+> Variables containing sensitive data must be zeroized after use, using
+> functions that will not be removed by the compiler optimizations, like
+> `std::ptr::write_volatile` or the `zeroize` crate.
 >
-> The `std::mem::uninitialized` function shall not be used, or explicitly
-> justified.
->
+> The `std::mem::uninitialized` function must not be used, or explicitly
+> justified when necessary.
 
 The following code shows how to define an integer type that will be set to
 0 when freed, using the `Drop` trait:
@@ -57,8 +56,8 @@ and data races.
 To perform risky actions such as system calls, type coercions, or memory
 pointers direct manipulations, the language provides the `unsafe` keyword.
 
-> ### Recommendation [LANG-UNSAFE]:
-> For a secured development, the `unsafe` blocks shall be avoided. Afterward,
+> ### Rule [LANG-UNSAFE]:
+> For a secured development, the `unsafe` blocks must be avoided. Afterward,
 > we list the only cases where `unsafe` may be used, provided that they come
 > with a proper justification:
 > 
@@ -79,7 +78,7 @@ pointers direct manipulations, the language provides the `unsafe` keyword.
 >  arguments, that are unavoidable. For instance, this happens when a function
 >  tries to dereference a pointer passed as an argument.
 > 
-> With the exception of these cases, `#[forbid(unsafe_code)]` shall appear in
+> With the exception of these cases, `#[forbid(unsafe_code)]` must appear in
 > `main.rs` to generate compilation errors if `unsafe` is used in the code base.
 
 ### Integer overflows
@@ -122,7 +121,7 @@ else { println!("{}", res); }
 # }
 ```
 
-> ### Recommendation [LANG-ARITH]:
+> ### Rule [LANG-ARITH]:
 > When assuming that an arithmetic operation can produce an overflow, the
 > specialized functions `overflowing_<op>`, `wrapping_<op>`, or the
 > `Wrapping` type must be used.
@@ -171,13 +170,13 @@ Common patterns that can cause panics are:
  - large allocations
  - string formatting using `format!`
 
-> ### Recommendation [LANG-NOPANIC]:
-> Functions or instructions that can cause the code to panic at runtime should
-> be avoided.
+> ### Rule [LANG-NOPANIC]:
+> Functions or instructions that can cause the code to panic at runtime must not
+> be used.
 
-> ### Recommendation [LANG-ARRINDEXING]:
-> Array indexing must be properly tested, or the `get()` method should be
-> used to return an `Option`.
+> ### Rule [LANG-ARRINDEXING]:
+> Array indexing must be properly tested, or the `get` method should be used to
+> return an `Option`.
 
 <mark>TODO</mark> Check if the [no_panic](https://github.com/dtolnay/no-panic)
 crate can catch all cases. Drawback: all functions need to be marked as
@@ -193,9 +192,9 @@ When calling Rust code from another language (for ex. C), the Rust code must
 be careful to never panic.
 Unwinding from Rust code into foreign code results in undefined behavior.
 
-> ### Recommendation [LANG-FFIPANIC]:
-> Rust code called from FFI must either ensure the function cannot panic, or
-> use `catch_unwind` or the `std::panic` module to ensure the rust code will not
+> ### Rule [LANG-FFIPANIC]:
+> Rust code called from FFI must either ensure the function cannot panic, or use
+> `catch_unwind` or the `std::panic` module to ensure the rust code will not
 > abort or return in an unstable state.
 
 Note that `catch_unwind` will only catch unwinding panics, not those that abort

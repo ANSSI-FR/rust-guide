@@ -20,16 +20,19 @@ For a given crate, it lists current dependencies versions (using its
 `Cargo.toml`), and checks latest compatible version and also latest general
 version.
 
-> ### Recommendation [LIBS-OUTDATED]:
-> <mark>TODO</mark>: run cargo-outdated to check dependencies status
+> ### Rule [LIBS-OUTDATED]:
+> The `cargo-outdated` tool must be used to check dependencies status. Then,
+> each outdated dependency must be updated or the choice of the version must be
+> justified.
 
 ## cargo-audit
 
 Cargo-audit tool allows one to easily check for security vulnerabilities
 reported to the RustSec Advisory Database.
 
-> ### Recommendation [LIBS-AUDIT]:
-> <mark>TODO</mark>: run cargo-audit to check for known vulnerabilities
+> ### Rule [LIBS-AUDIT]:
+> The `cargo-audit` tool must be used to check for known vulnerabilities in
+> dependencies.
 
 ## Unsafe code in libraries
 

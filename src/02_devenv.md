@@ -61,10 +61,9 @@ $ rustup override list
 $
 ```
 
-> ### Recommendation [ENVD-STABLE]:
-> In general, development of a secure application should be done using a
-> fully stable toolchain, for limiting potential compiler, runtime or tool
-> bugs.
+> ### Rule [ENVD-STABLE]:
+> Development of a secure application must be done using a fully stable
+> toolchain, for limiting potential compiler, runtime or tool bugs.
 
 When using a specific cargo subcommand that requires a nightly component,
 it is preferable to run it by switching the toolchain only locally, instead
@@ -105,7 +104,7 @@ detect. The warnings should be re-checked by the programmer before committing
 the fix that is suggested by `clippy`, especially in the case of lints of the
 category `clippy::nursery` since those hints are still under development.
 
-> ### Recommendation [DENV-LINTER]:
+> ### Rule [DENV-LINTER]:
 > The tool `clippy` must be used at various times during a secure application
 > development process.
 

@@ -48,7 +48,7 @@ The purpose is rather to guide the programmer and to inform them about certain
 pitfalls. These recommendations form a complement to the good level of trust
 the Rust language already provides. That said, recalls are sometimes necessary
 for clarity, and the experienced Rust programmer may rely solely on
-*Recommendation* or *Warning* inserts.
+highlighted inserts (*Rule*, *Recommendation*, *Warning*, etc.).
 
 ## Structure of the Document
 

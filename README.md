@@ -12,8 +12,8 @@ inform them about certain pitfalls, especially in case they are involved in the
 development of applications with strong security requirements.  These
 recommendations form a complement to the good level of trust the Rust language
 already provides. That said, recalls are sometimes necessary for clarity, and
-the experienced Rust programmer may rely solely on *Recommendation* or *Warning*
-inserts.
+the experienced Rust programmer may rely solely on highlighted inserts
+(*Rule*, *Recommendation*, *Warning*, etc.).
 
 It is currently an ongoing version and all contributions are welcome.
 
