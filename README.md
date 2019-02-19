@@ -23,8 +23,15 @@ It is currently an ongoing version and all contributions are welcome.
 
 ## Building the guide
 
+Install `mdbook` and required preprocessor:
+
 ```
-$ cargo install mdbook
+cargo install mdbook mdbook-checklist
+```
+
+Then build and open the book:
+
+```
 $ mdbook serve -o
 ```
 

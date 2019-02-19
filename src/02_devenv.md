@@ -61,7 +61,7 @@ $ rustup override list
 $
 ```
 
-> ### Rule [ENVD-STABLE]:
+> ### Rule {{#check DENV-STABLE | Use a stable compilation toolchain}}:
 > Development of a secure application must be done using a fully stable
 > toolchain, for limiting potential compiler, runtime or tool bugs.
 
@@ -104,7 +104,7 @@ detect. The warnings should be re-checked by the programmer before committing
 the fix that is suggested by `clippy`, especially in the case of lints of the
 category `clippy::nursery` since those hints are still under development.
 
-> ### Rule [DENV-LINTER]:
+> ### Rule {{#check DENV-LINTER | Use Rust linter (cargo-clippy)}}:
 > The tool `clippy` must be used at various times during a secure application
 > development process.
 
