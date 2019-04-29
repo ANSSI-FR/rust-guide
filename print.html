@@ -1,0 +1,681 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Secure Rust Guidelines</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Recommendations for secure applications development with Rust">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development Environment</a></li><li><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li><a href="04_language.html"><strong aria-hidden="true">4.</strong> The language</a></li><li><a href="05_test_fuzz.html"><strong aria-hidden="true">5.</strong> Test and fuzzing</a></li><li class="affix"><a href="LICENCE.html">Licence</a></li><li class="affix"><a href="checklist.html">Checklist</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Secure Rust Guidelines</h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#introduction" id="introduction"><h1>Introduction</h1></a>
+<p><a href="https://www.rust-lang.org">Rust</a> is a multi-paradigm language with a focus on
+memory safety.</p>
+<p>It aims to be systems programming oriented, allowing fine-grained memory
+management without garbage collection but also without tedious and error-prone
+manual memory allocations and deallocations. It achieves this goal by means of
+its ownership system (mostly related to variable aliasing). At any point of a
+Rust program, the compiler tracks how many variables refer to a given data, and
+enforces a set of rules which enable automatic memory management, memory safety
+and data-race free programs.</p>
+<p>The language also focuses on performance, with powerful compilation
+optimizations and language constructs that allows writing zero-cost abstraction
+code.</p>
+<p>Moreover, the Rust language provides some high-level programming features.
+Thanks to higher-order functions, closures, iterators, etc., it allows writing
+program parts in the same vein as in functional programming languages.
+Besides, static typing discipline, type inference, and ad hoc polymorphism (in
+the form of traits) are other ways Rust provides to build libraries and programs
+in a safe manner.</p>
+<p>Nevertheless, due to its versatility, the language possibly offers some
+constructions that, if not used properly, can introduce security problems,
+either by or by making code misinterpreted by the programmer or a reviewer. In
+addition, as for every tool in the compilation or software verification field,
+the tools used to develop, compile and execute programs can expose certain
+features or configurations that, if misused, may lead to vulnerabilities.</p>
+<p>Thus, the object of this document is to compile hints and recommendations to
+stay in a safe zone for secure applications development while taking advantage
+of the range of possibilities Rust language can offer.</p>
+<a class="header" href="#target-audience" id="target-audience"><h2>Target Audience</h2></a>
+<p>The guide intents to group recommendations that should be applied for
+application development with strong security level requirements. Anyway, it can
+be followed by everyone who wants to ensure that guarantees offered by the Rust
+platform are not invalidated due to unsafe, misleading or unclear feature usage.</p>
+<p>It is not intended to be a course on how to write Rust programs, there are
+already plenty of good learning resources for this purpose
+(see for instance the
+<a href="https://doc.rust-lang.org">Rust documentation main page</a>).
+The purpose is rather to guide the programmer and to inform them about certain
+pitfalls. These recommendations form a complement to the good level of trust
+the Rust language already provides. That said, recalls are sometimes necessary
+for clarity, and the experienced Rust programmer may rely solely on
+highlighted inserts (<em>Rule</em>, <em>Recommendation</em>, <em>Warning</em>, etc.).</p>
+<a class="header" href="#structure-of-the-document" id="structure-of-the-document"><h2>Structure of the Document</h2></a>
+<p>The aim with the structure of this document is to consider separately different
+phases of a typical (and simplified) development process. Firstly, we provide
+some advices for using tools of the Rust ecosystem to how to take advantage
+of them for secure development. A second chapter focuses on precautions to
+take when choosing and using external libraries. Then, recommendations about
+the Rust language constructs are exposed. Finally, we introduce advices for
+writing tests for a project in Rust, and for using Rust fuzzing tools.
+A summary of recommendations presented throughout the document is listed at the
+end of this guide.</p>
+<a class="header" href="#development-environment" id="development-environment"><h1>Development Environment</h1></a>
+<a class="header" href="#rustup" id="rustup"><h2><code>rustup</code></h2></a>
+<p><code>rustup</code> is the Rust toolchain installer. Among other things, it enables
+switching between different flavors of the toolchain (stable, beta, nightly),
+managing additional components installation and keeping them up to date.</p>
+<blockquote>
+<a class="header" href="#warning" id="warning"><h3>Warning:</h3></a>
+<p>From a security perspective, <code>rustup</code> does perform all downloads over HTTPS,
+but doesn’t validate signatures of downloads. Protection against downgrade
+attacks, certificate pinning, validation of signatures are works that are
+currently in progress. In some cases, it may be preferable to opt for
+an alternative installation method listed in the <em>Install</em> section of the
+official rust website.</p>
+</blockquote>
+<a class="header" href="#rust-editions" id="rust-editions"><h3>Rust Editions</h3></a>
+<p>Several flavors, called <em>editions</em>, of the Rust language coexist.
+The concept of editions has been introduced to clarify new features
+implementation and to make them incremental. But as stated in the
+<a href="https://rust-lang-nursery.github.io/edition-guide/editions/index.html">Edition Guide</a>,
+this doesn’t mean that new features and improvements will be shipped on
+the last edition only.</p>
+<p>However, some editions could bring new keywords and language constructs.
+Recommendations for secure applications development then remain closely
+linked to features that are used in such applications rather than the actual
+edition that is declared in it.
+In the rest of this guide, best effort will be made to highlight constructions
+and language features that are specific to a particular Rust edition.</p>
+<blockquote>
+<a class="header" href="#note" id="note"><h3>Note:</h3></a>
+<p>No specific edition is recommended, as long as users follow recommendations
+that are expressed in relation to features offered by edition that has been
+chosen.</p>
+</blockquote>
+<a class="header" href="#stable-nightly-and-beta-toolchains" id="stable-nightly-and-beta-toolchains"><h3>Stable, nightly and beta toolchains</h3></a>
+<p>Orthogonally to editions that allows one to select a flavor (a set of features)
+of the Rust language, the Rust toolchain is provided in three different
+versions, called <em>release channels</em>:</p>
+<ul>
+<li><em>nightly</em> releases are created once a day,</li>
+<li><em>nightly</em> releases are promoted every six weeks to <em>beta</em> releases,</li>
+<li><em>beta</em> releases are promoted every six weeks to <em>stable</em> releases.</li>
+</ul>
+<p>When playing with different toolchains, it is important to check not only what
+the default toolchain is, but also if overrides are currently set for some
+directories.</p>
+<pre><code class="language-shell">$ pwd
+/tmp/foo
+$ rustup toolchain list
+stable-x86_64-unknown-linux-gnu (default)
+beta-x86_64-unknown-linux-gnu
+nightly-x86_64-unknown-linux-gnu
+$ rustup override list
+/tmp/foo                                	nightly-x86_64-unknown-linux-gnu
+$
+</code></pre>
+<blockquote>
+<a class="header" href="#rule-a-iddenv-stableadenv-stable" id="rule-a-iddenv-stableadenv-stable"><h3>Rule <a id="DENV-STABLE"></a>DENV-STABLE:</h3></a>
+<p>Development of a secure application must be done using a fully stable
+toolchain, for limiting potential compiler, runtime or tool bugs.</p>
+</blockquote>
+<p>When using a specific cargo subcommand that requires a nightly component,
+it is preferable to run it by switching the toolchain only locally, instead
+of explicitly switching the complete toolchain. For example, to run the
+(nightly) latest <code>rustfmt</code>:</p>
+<pre><code class="language-shell">$ rustup toolchain list
+stable-x86_64-unknown-linux-gnu (default)
+beta-x86_64-unknown-linux-gnu
+nightly-x86_64-unknown-linux-gnu
+$ rustup run nightly cargo fmt
+$ # or
+$ cargo +nightly fmt
+$
+</code></pre>
+<a class="header" href="#cargo" id="cargo"><h2><code>cargo</code></h2></a>
+<p>Once <code>rustup</code> has been used to set up the appropriate Rust toolchain, the
+tool <code>cargo</code> has been made available. It’s the Rust package manager, that
+provides ways to structure and build projects, managing on its own dependencies
+download among other tasks. It’s also a front-end to run complementary tools such
+as those that are described below, in the form of sub-commands.</p>
+<p><mark>TODO</mark>: identify unsafe features and risky environment variables.</p>
+<a class="header" href="#clippy" id="clippy"><h3>clippy</h3></a>
+<p>Clippy is a tool that provides and checks many lints (bugs, styling, performance
+issues, etc.). Since the stable toolchain has reached version 1.29, <code>clippy</code> can
+be used within the stable rustup environment. It is also recommended
+to install <code>clippy</code> as a component (<code>rustup component add clippy</code>) in the
+stable toolchain instead of installing it as a project dependency.</p>
+<p>The tool comes with some lint categories regarding the kind of issue it aims to
+detect. The warnings should be re-checked by the programmer before committing
+the fix that is suggested by <code>clippy</code>, especially in the case of lints of the
+category <code>clippy::nursery</code> since those hints are still under development.</p>
+<blockquote>
+<a class="header" href="#rule-a-iddenv-linteradenv-linter" id="rule-a-iddenv-linteradenv-linter"><h3>Rule <a id="DENV-LINTER"></a>DENV-LINTER:</h3></a>
+<p>The tool <code>clippy</code> must be used at various times during a secure application
+development process.</p>
+</blockquote>
+<a class="header" href="#rustfmt" id="rustfmt"><h3>rustfmt</h3></a>
+<p><mark>TODO</mark>: introduce the rustfmt tool and recommend its use.</p>
+<a class="header" href="#others" id="others"><h3>Others</h3></a>
+<p>There exist other useful tools or cargo subcommands for enforcing program
+security whether by searching for specific code patterns or by providing
+convenient commands for testing or fuzzing. They are discussed in the following
+chapters, according to their goals.</p>
+<a class="header" href="#libraries" id="libraries"><h1>Libraries</h1></a>
+<p>In addition to a standard library, Rust provides an easy way to import libraries
+in a project, thanks to <code>cargo</code>. The libraries, known as <em>crates</em> in the Rust
+ecosystem, are imported from the open-source components central repository
+<a href="https://crates.io">crates.io</a>.</p>
+<p>It should be noticed that the quality (in terms of security, performances,
+readability, etc.) of the published crates is very variable. Moreover, their
+maintenance can be irregular or interrupted. The usage of each component from
+this repository should be justified, and the developer should validate the
+correct application of rules from the current guide in its code. Several tools
+can aid in that task.</p>
+<a class="header" href="#cargo-outdated" id="cargo-outdated"><h2>cargo-outdated</h2></a>
+<p>Cargo-outdated tool allows one to easily manage dependencies versions.</p>
+<p>For a given crate, it lists current dependencies versions (using its
+<code>Cargo.toml</code>), and checks latest compatible version and also latest general
+version.</p>
+<blockquote>
+<a class="header" href="#rule-a-idlibs-outdatedalibs-outdated" id="rule-a-idlibs-outdatedalibs-outdated"><h3>Rule <a id="LIBS-OUTDATED"></a>LIBS-OUTDATED:</h3></a>
+<p>The <code>cargo-outdated</code> tool must be used to check dependencies status. Then,
+each outdated dependency must be updated or the choice of the version must be
+justified.</p>
+</blockquote>
+<a class="header" href="#cargo-audit" id="cargo-audit"><h2>cargo-audit</h2></a>
+<p>Cargo-audit tool allows one to easily check for security vulnerabilities
+reported to the RustSec Advisory Database.</p>
+<blockquote>
+<a class="header" href="#rule-a-idlibs-auditalibs-audit" id="rule-a-idlibs-auditalibs-audit"><h3>Rule <a id="LIBS-AUDIT"></a>LIBS-AUDIT:</h3></a>
+<p>The <code>cargo-audit</code> tool must be used to check for known vulnerabilities in
+dependencies.</p>
+</blockquote>
+<a class="header" href="#unsafe-code-in-libraries" id="unsafe-code-in-libraries"><h2>Unsafe code in libraries</h2></a>
+<p><mark>TODO</mark>: <code>unsafe</code> blocks are discussed in the following chapter.
+One needs to ensure that this kind of block is not misused in project
+dependencies.</p>
+<blockquote>
+<a class="header" href="#recommendation-a-idlibs-unsafealibs-unsafe" id="recommendation-a-idlibs-unsafealibs-unsafe"><h3>Recommendation <a id="LIBS-UNSAFE"></a>LIBS-UNSAFE:</h3></a>
+<p><mark>TODO</mark>: check that no <code>unsafe</code> blocks appear in the imported
+dependencies (with a tool?).</p>
+</blockquote>
+<a class="header" href="#the-rust-language" id="the-rust-language"><h1>The Rust language</h1></a>
+<a class="header" href="#generalities" id="generalities"><h2>Generalities</h2></a>
+<a class="header" href="#naming" id="naming"><h3>Naming</h3></a>
+<p><mark>TODO</mark>: recommendations about correctly naming things (RFC 430).</p>
+<a class="header" href="#memory-management" id="memory-management"><h3>Memory management</h3></a>
+<p><mark>TODO</mark>: explain safe allocations/deallocations, ownership/borrowing,
+and identify language constructs that may break memory safety (for instance,
+unsound behaviors in older versions of the compiler).</p>
+<p>By default, Rust forces all values to be initialized, preventing the use of
+uninitialized memory (except if using <code>std::mem::uninitialized</code>).
+However, zeroing memory is useful for sensitive variables, especially if the
+Rust code is used through FFI.</p>
+<blockquote>
+<a class="header" href="#rule-a-idmem-zeroamem-zero" id="rule-a-idmem-zeroamem-zero"><h3>Rule <a id="MEM-ZERO"></a>MEM-ZERO:</h3></a>
+<p>Variables containing sensitive data must be zeroized after use, using
+functions that will not be removed by the compiler optimizations, like
+<code>std::ptr::write_volatile</code> or the <code>zeroize</code> crate.</p>
+<p>The <code>std::mem::uninitialized</code> function must not be used, or explicitly
+justified when necessary.</p>
+</blockquote>
+<p>The following code shows how to define an integer type that will be set to
+0 when freed, using the <code>Drop</code> trait:</p>
+<pre><pre class="playpen"><code class="language-rust">/// Example: u32 newtype, set to 0 when freed
+pub struct ZU32(pub u32);
+
+impl Drop for ZU32 {
+    fn drop(&amp;mut self) {
+        println!(&quot;zeroing memory&quot;);
+        unsafe{ ::std::ptr::write_volatile(&amp;mut self.0, 0) };
+    }
+}
+
+# fn main() {
+{
+    let i = ZU32(42);
+    // ...
+} // i is freed here
+# }
+</code></pre></pre>
+<a class="header" href="#unsafe-code" id="unsafe-code"><h3>Unsafe code</h3></a>
+<p>The joint utilization of the type system and the ownership system aims to
+enforce safety regarding the memory management in Rust's programs. So the
+language aims to avoid memory overflows, null or invalid pointer constructions,
+and data races.
+To perform risky actions such as system calls, type coercions, or memory
+pointers direct manipulations, the language provides the <code>unsafe</code> keyword.</p>
+<blockquote>
+<a class="header" href="#rule-a-idlang-unsafealang-unsafe" id="rule-a-idlang-unsafealang-unsafe"><h3>Rule <a id="LANG-UNSAFE"></a>LANG-UNSAFE:</h3></a>
+<p>For a secured development, the <code>unsafe</code> blocks must be avoided. Afterward,
+we list the only cases where <code>unsafe</code> may be used, provided that they come
+with a proper justification:</p>
+<ul>
+<li>
+<p>The Foreign Function Interface (FFI) of Rust allows for describing
+functions whose implementation is written in C, using the <code>extern &quot;C&quot;</code>
+prefix. To use such a function, the <code>unsafe</code> keyword is required. “Safe”
+wrapper shall be defined to safely and seamlessly call C code.</p>
+</li>
+<li>
+<p>For embedded device programming, registers and various other resources are
+often accessed through a fixed memory address. In this case, <code>unsafe</code> blocks
+are required to initialize and dereference those particular pointers in Rust.
+In order to minimize the number of unsafe accesses in the code and to allow
+easier identification of them by a programmer, a proper abstraction (data
+structure or module) shall be provided.</p>
+</li>
+<li>
+<p>A function can be marked unsafe globally (by prefixing its declaration with
+the <code>unsafe</code> keyword) when it may exhibit unsafe behaviors based on its
+arguments, that are unavoidable. For instance, this happens when a function
+tries to dereference a pointer passed as an argument.</p>
+</li>
+</ul>
+<p>With the exception of these cases, <code>#[forbid(unsafe_code)]</code> must appear in
+<code>main.rs</code> to generate compilation errors if <code>unsafe</code> is used in the code base.</p>
+</blockquote>
+<a class="header" href="#integer-overflows" id="integer-overflows"><h3>Integer overflows</h3></a>
+<p>Although some verification is performed by Rust regarding the potential
+integer overflows, precautions should be taken when executing arithmetic
+operations on integers.</p>
+<p>In particular, it should be noted that using debug or release compilation
+profile changes integer overflow behavior. In debug configuration, overflow
+cause the termination of the program (<code>panic</code>), whereas in the release configuration
+the computed value silently wraps around the maximum value that can be stored.</p>
+<p>This last behavior can be made explicit by using the <code>Wrapping</code> generic type,
+or the <code>overflowing_&lt;op&gt;</code> and <code>wrapping_&lt;op&gt;</code> operations on integers
+(the <code>&lt;op&gt;</code> part being <code>add</code>, <code>mul</code>, <code>sub</code>, <code>shr</code>, etc.).</p>
+<pre><pre class="playpen"><code class="language-rust">use std::num::Wrapping;
+# use std::panic;
+
+# fn main() {
+let x: u8 = 242;
+
+# let result = panic::catch_unwind(|| {
+println!(&quot;{}&quot;, x + 50);                      // panics in debug, prints 36 in release.
+# });
+# if result.is_err() { println!(&quot;panic&quot;); }
+println!(&quot;{}&quot;, x.overflowing_add(50).0);     // always prints 36.
+println!(&quot;{}&quot;, x.wrapping_add(50));          // always prints 36.
+println!(&quot;{}&quot;, Wrapping(x) + Wrapping(50));  // always prints 36.
+
+// always panics:
+let (res, c) = x.overflowing_add(50);
+# let result = panic::catch_unwind(|| {
+if c { panic!(&quot;custom error&quot;); }
+else { println!(&quot;{}&quot;, res); }
+# });
+# if result.is_err() { println!(&quot;panic&quot;); }
+# }
+</code></pre></pre>
+<blockquote>
+<a class="header" href="#rule-a-idlang-arithalang-arith" id="rule-a-idlang-arithalang-arith"><h3>Rule <a id="LANG-ARITH"></a>LANG-ARITH:</h3></a>
+<p>When assuming that an arithmetic operation can produce an overflow, the
+specialized functions <code>overflowing_&lt;op&gt;</code>, <code>wrapping_&lt;op&gt;</code>, or the
+<code>Wrapping</code> type must be used.</p>
+</blockquote>
+<a class="header" href="#type-system" id="type-system"><h2>Type system</h2></a>
+<p><mark>TODO</mark>: identify pitfalls with the type system (for instance,
+misunderstanding of which code is actually executed when implementing complex
+patterns with traits).</p>
+<a class="header" href="#error-handling" id="error-handling"><h2>Error handling</h2></a>
+<p><mark>TODO</mark>: explicit good practices in error handling.</p>
+<p>The <code>Result</code> type is the preferred way of handling functions that can fail.
+A <code>Result</code> object must be tested, and never ignored.</p>
+<blockquote>
+<a class="header" href="#recommendation-a-idlang-errwrapalang-errwrap" id="recommendation-a-idlang-errwrapalang-errwrap"><h3>Recommendation <a id="LANG-ERRWRAP"></a>LANG-ERRWRAP:</h3></a>
+<p>A crate can implement its own Error type, wrapping all possible errors.
+It must be careful to make this type exception-safe (RFC 1236), and implement
+<code>Error + Send + Sync + 'static</code> as well as <code>Display</code>.</p>
+</blockquote>
+<blockquote>
+<a class="header" href="#recommendation-a-idlang-errdoalang-errdo" id="recommendation-a-idlang-errdoalang-errdo"><h3>Recommendation <a id="LANG-ERRDO"></a>LANG-ERRDO:</h3></a>
+<p>The <code>?</code> operator should be used to improve readability of code.
+The <code>try!</code> macro should not be used.</p>
+</blockquote>
+<p>The <a href="https://crates.io/crates/error-chain">error-chain</a> and
+<a href="https://crates.io/crates/failure">failure</a> crates can be used to wrap errors.</p>
+<a class="header" href="#panics" id="panics"><h3>Panics</h3></a>
+<p>Explicit error handling (<code>Result</code>) should always be preferred instead of calling
+<code>panic</code>.  The cause of the error should be available, and generic errors should
+be avoided.</p>
+<p>Crates providing libraries should never use functions or instructions that can
+fail and cause the code to panic.</p>
+<p>Common patterns that can cause panics are:</p>
+<ul>
+<li>using <code>unwrap</code> or <code>expect</code></li>
+<li>using <code>assert</code></li>
+<li>an unchecked access to an array</li>
+<li>integer overflow (in debug mode)</li>
+<li>division by zero</li>
+<li>large allocations</li>
+<li>string formatting using <code>format!</code></li>
+</ul>
+<blockquote>
+<a class="header" href="#rule-a-idlang-nopanicalang-nopanic" id="rule-a-idlang-nopanicalang-nopanic"><h3>Rule <a id="LANG-NOPANIC"></a>LANG-NOPANIC:</h3></a>
+<p>Functions or instructions that can cause the code to panic at runtime must not
+be used.</p>
+</blockquote>
+<blockquote>
+<a class="header" href="#rule-a-idlang-arrindexingalang-arrindexing" id="rule-a-idlang-arrindexingalang-arrindexing"><h3>Rule <a id="LANG-ARRINDEXING"></a>LANG-ARRINDEXING:</h3></a>
+<p>Array indexing must be properly tested, or the <code>get</code> method should be used to
+return an <code>Option</code>.</p>
+</blockquote>
+<p><mark>TODO</mark> Check if the <a href="https://github.com/dtolnay/no-panic">no_panic</a>
+crate can catch all cases. Drawback: all functions need to be marked as
+<code>#[no_panic]</code>.</p>
+<!--
+<mark>TODO</mark> Another possibility:
+[rustig](https://github.com/Technolution/rustig) (doesn't build here)
+-->
+<a class="header" href="#ffi-and-panics" id="ffi-and-panics"><h3>FFI and panics</h3></a>
+<p>When calling Rust code from another language (for ex. C), the Rust code must
+be careful to never panic.
+Unwinding from Rust code into foreign code results in undefined behavior.</p>
+<blockquote>
+<a class="header" href="#rule-a-idlang-ffipanicalang-ffipanic" id="rule-a-idlang-ffipanicalang-ffipanic"><h3>Rule <a id="LANG-FFIPANIC"></a>LANG-FFIPANIC:</h3></a>
+<p>Rust code called from FFI must either ensure the function cannot panic, or use
+<code>catch_unwind</code> or the <code>std::panic</code> module to ensure the rust code will not
+abort or return in an unstable state.</p>
+</blockquote>
+<p>Note that <code>catch_unwind</code> will only catch unwinding panics, not those that abort
+the process.</p>
+<a class="header" href="#standard-library-traits" id="standard-library-traits"><h2>Standard library traits</h2></a>
+<ul>
+<li>
+<p>Drop <mark>TODO</mark></p>
+</li>
+<li>
+<p>The <code>Send</code> and <code>Sync</code> traits are marker traits that allow implementors
+to specify respectively that a value can be sent (moved) to another thread and
+that a value be shared through a shared reference. They both are unsafe traits,
+that should be used. Moreover, the <code>unsafe</code> keyword is necessary for a type
+to implement those traits.</p>
+</li>
+<li>
+<p>PartialOrd, Ord, Eq <mark>TODO</mark></p>
+</li>
+</ul>
+<a class="header" href="#macros" id="macros"><h2>Macros</h2></a>
+<p><mark>TODO</mark>: cyclomatic complexity of the macro expanded code, recursion
+limits, ...</p>
+<a class="header" href="#tests-and-fuzzing" id="tests-and-fuzzing"><h1>Tests and fuzzing</h1></a>
+<a class="header" href="#writing-tests" id="writing-tests"><h2>Writing tests</h2></a>
+<p><mark>TODO</mark>: good practices in writing tests.</p>
+<a class="header" href="#fuzzing" id="fuzzing"><h2>Fuzzing</h2></a>
+<a class="header" href="#cargo-fuzz" id="cargo-fuzz"><h3>cargo-fuzz</h3></a>
+<p><mark>TODO</mark>: good practices in fuzzing programs or part of programs.</p>
+<a class="header" href="#open-licence-20licence-ouverte-20" id="open-licence-20licence-ouverte-20"><h1>OPEN LICENCE 2.0/LICENCE OUVERTE 2.0</h1></a>
+<a class="header" href="#reuse-of-the-information-covered-by-this-licence" id="reuse-of-the-information-covered-by-this-licence"><h2>“Reuse” of the “Information” covered by this licence</h2></a>
+<p>The “Grantor” grants the “Reuser” the free, non-exclusive right to “Reuse” the “Information” subject of this licence, for commercial or non-commercial purposes, worldwide and for an unlimited period, in accordance with the conditions stated below.</p>
+<p><strong>The “Reuser” is free to reuse the “Information”:</strong></p>
+<ul>
+<li>To reproduce it, copy it.</li>
+<li>To adapt, modify, retrieve and transform it in order to create “derived information”, products and services.</li>
+<li>To share, disseminate, redistribute, publish and transmit it.</li>
+<li>To exploit it for commercial purposes, e.g., by combining it with other information, or by including it in his/her own product or application.</li>
+</ul>
+<p><strong>Subject to:</strong></p>
+<ul>
+<li>An acknowledgement of the authorship of the “Information”: its source (at least, the name of the “Grantor”) and the date of the most recent update of the reused “Information”. Specifically, the “Reuser” may satisfy this condition by pointing, via a hypertext link, to the source of “the Information” and so supplying an actual acknowledgement of its authorship.</li>
+</ul>
+<p><strong>For example:</strong></p>
+<blockquote>
+<p>“Ministry of xxx—Original data downloaded from <code>http://www.data.gouv.fr/fr/datasets/xxx/</code>, updated on 14 February 2017”.</p>
+</blockquote>
+<p>This acknowledgement of authorship does not confer any official status on the “Reuse” of the “Information”, and must not suggest any sort of recognition or endorsement on the part of the “Grantor”, or any other public entity, of the “Reuser” or of their “Reuse”.</p>
+<a class="header" href="#personal-data" id="personal-data"><h2>Personal data</h2></a>
+<p>The “Information” made available may contain “Personal data” that may be subject to “Reuse”. If this is the case, the “Grantor” informs the “Reuser” about its existence. The “Information” may be freely reused, within the rights granted by this licence, subject to compliance with the legal framework relating to personal data protection.</p>
+<a class="header" href="#intellectual-property-rights" id="intellectual-property-rights"><h2>Intellectual property rights</h2></a>
+<p>It is guaranteed to The “Reuser” that potential “Intellectual property rights” held by third parties or by the “Grantor” on “Information” do not interfere with the rights granted by this licence.</p>
+<p>When the “Grantor” holds transferable “Intellectual property rights” on the “Information”, he/she assigns these to the “Reuser” on a non-exclusive basis, free of charge, worldwide, for the entire duration of the “Intellectual property rights”, and the “Reuser” is free to use the “Information” for any purpose that complies with the rights and conditions defined in this licence.</p>
+<a class="header" href="#liability" id="liability"><h2>Liability</h2></a>
+<p>The “Information” is made available as it is produced or received by the “Grantor”, without any other express or tacit guarantee than those set out in this licence. The “Grantor” does not guarantee the absence of errors or inaccuracies in the “Information”, nor a continuous supply of the “Information”. He/she cannot be held responsible for any loss, prejudice or damage of any kind caused to third parties as a result of the “Reuse”.</p>
+<p>The “Reuser” is solely responsible for the “Reuse” of the “Information”. This “Reuse” must not mislead third parties as to the contents of the “Information”, its source or its date of update.</p>
+<a class="header" href="#applicable-legislation" id="applicable-legislation"><h2>Applicable legislation</h2></a>
+<p>This licence is governed by French law.</p>
+<a class="header" href="#compatibility-of-this-licence" id="compatibility-of-this-licence"><h3>Compatibility of this licence</h3></a>
+<p>This licence has been designed to be compatible with any free licence that at least requires an acknowledgement of authorship, and specifically with the previous version of this licence as well as with the following licences: United Kingdom’s “Open Government Licence” (OGL), Creative Commons’ “Creative Commons Attribution” (CC-BY) and Open Knowledge Foundation’s “Open Data Commons Attribution” (ODC-BY).</p>
+<a class="header" href="#definitions" id="definitions"><h2>Definitions</h2></a>
+<p>Within the meaning of this licence, are to be considered as :</p>
+<ul>
+<li>The “Grantor”: any person granting the right to “Reuse” “Information” under the rights and conditions set out in this licence.</li>
+<li>The “Information”:
+<ul>
+<li>any public information contained in documents disclosed or published by any administration referred to in the first paragraph of Article L. 300-2 of the code des relations entre le public et l’administration (CRPA),</li>
+<li>any information made available by any person under the terms and conditions of this licence.</li>
+</ul>
+</li>
+<li>The “Reuse”: the use of the “Information” for other purposes than those for which it was produced or received.</li>
+<li>The“Reuser”: any person reusing the “Information” in accordance with the conditions of this licence.</li>
+<li>“Personal data”: any information relating to an identified or identifiable natural person who may be identified directly or indirectly. Its “Reuse” is conditional on the respect of the existing legal framework.</li>
+<li>“Derived information”: any new data or information created directly from the “Information” or from a combination of the “Information” and other data or information not subject to this licence.</li>
+<li>“Intellectual property rights”: all rights identified as such under the code de la propriété intellectuelle (including copyright, rights related to copyright, sui generis rights of database producers, etc.).</li>
+</ul>
+<a class="header" href="#about-this-licence" id="about-this-licence"><h2>About this licence</h2></a>
+<p>This licence is intended to be used by administrations for the reuse of their public information. It can also be used by any individual wishing to supply “Information” under the conditions defined in this licence.</p>
+<p>France has a comprehensive legal framework aiming at the spontaneous dissemination by the administrations of their public information in order to ensure the widest possible reuse of this information.</p>
+<p>The right to “Reuse” the administrations’ “Information” is governed by the code des relations entre le public et l’administration  (CRPA).</p>
+<p>This licence facilitates the unrestricted and free of charge reuse of public information and is one of the licences which can be used by the administration pursuant to the decree issued under article L. 323-2 of the CRPA.</p>
+<p>Under the Prime Minister’s authority, the Etalab mission is mandated to open up the maximum amount of data held by State administrations and public institutions. Etalab has drawn up the Open Licence to facilitate the unrestricted and free of charge reuse of public information, as defined by article L. 321-1 of the CRPA.</p>
+<p>This licence is version 2.0 of the Open Licence.</p>
+<p>Etalab reserves the right to propose new versions of the Open Licence. Nevertheless, “Reusers” may continue to reuse information obtained under this licence should they so wish.</p>
+<a class="header" href="#checklist" id="checklist"><h1>Checklist</h1></a>
+<ul>
+<li>
+<p>Development Environment:</p>
+<ul>
+<li>[ ] Use a stable compilation toolchain (<a href="02_devenv.html#DENV-STABLE">DENV-STABLE</a>)</li>
+<li>[ ] Use Rust linter (cargo-clippy) (<a href="02_devenv.html#DENV-LINTER">DENV-LINTER</a>)</li>
+</ul>
+</li>
+<li>
+<p>Libraries:</p>
+<ul>
+<li>[ ] Check for outdated dependencies versions (cargo-outdated) (<a href="03_libraries.html#LIBS-OUTDATED">LIBS-OUTDATED</a>)</li>
+<li>[ ] Check for security vulnerabilities report on dependencies (cargo-audit) (<a href="03_libraries.html#LIBS-AUDIT">LIBS-AUDIT</a>)</li>
+<li>[ ] Check for unsafe code in dependencies (<a href="03_libraries.html#LIBS-UNSAFE">LIBS-UNSAFE</a>)</li>
+</ul>
+</li>
+<li>
+<p>The language:</p>
+<ul>
+<li>[ ] Zeroize memory of sensitive data after use (<a href="04_language.html#MEM-ZERO">MEM-ZERO</a>)</li>
+<li>[ ] Don't use unsafe blocks (<a href="04_language.html#LANG-UNSAFE">LANG-UNSAFE</a>)</li>
+<li>[ ] Use appropriate arithmetic operations regarding potential overflows (<a href="04_language.html#LANG-ARITH">LANG-ARITH</a>)</li>
+<li>[ ] Implement custom <code>Error</code> type, wrapping all possible errors (<a href="04_language.html#LANG-ERRWRAP">LANG-ERRWRAP</a>)</li>
+<li>[ ] Use the <code>?</code> operator and do not use the <code>try!</code> macro (<a href="04_language.html#LANG-ERRDO">LANG-ERRDO</a>)</li>
+<li>[ ] Don't use functions that can cause <code>panic!</code> (<a href="04_language.html#LANG-NOPANIC">LANG-NOPANIC</a>)</li>
+<li>[ ] Test properly array indexing or use the <code>get</code> method (<a href="04_language.html#LANG-ARRINDEXING">LANG-ARRINDEXING</a>)</li>
+<li>[ ] Handle correctly <code>panic!</code> in FFI (<a href="04_language.html#LANG-FFIPANIC">LANG-FFIPANIC</a>)</li>
+</ul>
+</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
+        
+
+    </body>
+</html>
