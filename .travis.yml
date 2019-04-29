@@ -1,16 +1,7 @@
 language: rust
 cache: cargo
 sudo: false
-matrix:
-  include:
-    - rust: stable
-      env:
-       - NAME="stable"
-       - FEATURES=''
-    - rust: nightly
-      env:
-       - NAME="nightly"
-       - FEATURES=''
+
 before_script:
   - |
     LATEST=$(cargo search mdbook | grep "^mdbook =" | cut -d '"' -f 2)
@@ -36,3 +27,19 @@ script:
   - mdbook build
   - mdbook test
 
+
+jobs:
+  include:
+    - stage: 'nightly'
+      rust: nightly
+    - stage: 'stable'
+      rust: stable
+      deploy:
+        provider: pages
+        target-branch: gh-pages
+        local-dir: book
+        skip-cleanup: true
+        github-token: $GITHUB_TOKEN
+        keep-history: true
+        on:
+          branch: master
