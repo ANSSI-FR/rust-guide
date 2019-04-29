@@ -1,5 +1,7 @@
 # Guide to develop secure applications with Rust
 
+[![Build Status](https://travis-ci.org/ANSSI-FR/rust-guide.svg?branch=master)](https://https://travis-ci.org/ANSSI-FR/rust-guide)
+
 ## Objectives
 
 The object of this document is to provide hints and recommendations for secure
@@ -19,7 +21,7 @@ It is currently an ongoing version and all contributions are welcome.
 
 ## Reading the guide online
 
-[Summary](./src/SUMMARY.md)
+[https://anssi-fr.github.io/rust-guide](https://anssi-fr.github.io/rust-guide)
 
 ## Building the guide
 
