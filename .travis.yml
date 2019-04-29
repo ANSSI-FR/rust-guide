@@ -22,6 +22,16 @@ before_script:
       echo "Installing mdbook '$LATEST'"
       cargo install mdbook --force --vers "$LATEST"
     fi
+    LATEST=$(cargo search mdbook-checklist | grep "^mdbook-checklist =" | cut -d '"' -f 2)
+    INSTALLED=$(cargo install --list | grep "^mdbook-checklist " | cut -d v -f 2 | tr -d :)
+    if [ "$INSTALLED" != "$LATEST" ]; then
+      if [ "$INSTALLED" != "" ]; then
+        echo "mdbook-checklist '$INSTALLED' is already installed"
+      fi
+      echo "Installing mdbook-checklist '$LATEST'"
+      cargo install mdbook-checklist --force --vers "$LATEST"
+    fi
+
 script:
   - mdbook build
   - mdbook test
