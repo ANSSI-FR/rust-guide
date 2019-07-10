@@ -143,6 +143,43 @@ at the [Rust Style Guide](https://github.com/rust-dev-tools/fmt-rfcs/blob/master
 > guidelines (as described in `rustfmt.toml` file), with `--check` option and
 > manual review.
 
+### Rustfix
+
+Included with Rust, since the end of 2018, Rustfix is a tool dedicated in fixing
+compiler warnings as well as easing transitions between editions.
+
+```shell
+$ cargo fix
+```
+
+To prepare a Rust 2015 project to transition to Rust 2018, one can run:
+
+```shell
+$ cargo fix --edition
+```
+
+Rustfix will either fix the code to be compatible with Rust 2018 or print
+a warning that explain the problem. This problem will have to be fixed manually.
+By running the command (and possibly fixing manually some issues) until there
+is no warning, one can ensure the code is compatible with both Rust 2015 and
+Rust 2018.
+
+To switch definitely to Rust 2018, one may run:
+
+```shell
+$ cargo fix --edition-idioms
+```
+
+Be advised that this tool provides few guarantees on the soundness of the
+proposed fixes. In particular mode, some corrections (such as some of those
+provided with the `--edition-idioms`) are known to break the compilation
+or change the program semantics in some case.
+
+> ### Rule {{#check DENV-AUTOFIX | Manually check automatic fixes }}
+>
+> In a secure Rust development, any automatic fix (for instance, provided by
+> Rustfix) must be verified by the developer.
+
 ### Others
 
 There exist other useful tools or cargo subcommands for enforcing program
