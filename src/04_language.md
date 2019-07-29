@@ -39,18 +39,41 @@ some particular constructions:
 and identify language constructs that may break memory safety (for instance,
 unsound behaviors in older versions of the compiler).
 
+#### Uninitialized memory
+
 By default, Rust forces all values to be initialized, preventing the use of
-uninitialized memory (except if using `std::mem::uninitialized`).
-However, zeroing memory is useful for sensitive variables, especially if the
+uninitialized memory (except if using `std::mem::uninitialized` or
+`std::mem::MaybeUninit`).
+
+> ### Rule {{#check MEM-UNINIT | Do not use uninitialized memory }}
+>
+> The `std::mem::uninitialized` function (deprecated 1.38) or the
+> `std::mem::MaybeUninit` type (stabilized 1.36) must not be used, or explicitly
+> justified when necessary.
+
+The use of uninitialized memory may result in two distinct security issues:
+
+- drop of uninitialized memory (also a memory safety issue),
+- non-drop of initialized memory.
+
+> **Note**
+>
+> `std::mem::MaybeUninit` is an improvement over `std::mem::uninitialized`.
+> Indeed, it makes dropping uninitialized values a lot more difficult.
+> However, it does not change the second issue: the non-drop of an initialized
+> memory is as much likely. It is problematic, in particular when considering
+> the use of `Drop` to erase sensitive memory.
+
+#### Secure memory zeroing for sensitive information
+
+Zeroing memory is useful for sensitive variables, especially if the
 Rust code is used through FFI.
 
-> ### Rule {{#check MEM-ZERO | Zeroize memory of sensitive data after use}}
-> Variables containing sensitive data must be zeroized after use, using
+> ### Rule {{#check MEM-ZERO | Zero out memory of sensitive data after use}}
+>
+> Variables containing sensitive data must be zeroed out after use, using
 > functions that will not be removed by the compiler optimizations, like
 > `std::ptr::write_volatile` or the `zeroize` crate.
->
-> The `std::mem::uninitialized` function must not be used, or explicitly
-> justified when necessary.
 
 The following code shows how to define an integer type that will be set to
 0 when freed, using the `Drop` trait:
