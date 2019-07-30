@@ -62,8 +62,9 @@ manipulations of memory pointers, the language provides the `unsafe` keyword.
 >  arguments, that are unavoidable. For instance, this happens when a function
 >  tries to dereference a pointer passed as an argument.
 >
-> With the exception of these cases, `#[forbid(unsafe_code)]` must appear in
-> `main.rs` to generate compilation errors if `unsafe` is used in the code base.
+> With the exception of these cases, `#![forbid(unsafe_code)]` must appear in
+> the crate root (typically `main.rs` or `lib.rs`) to generate compilation
+> errors if `unsafe` is used in the code base.
 
 ## Integer overflows
 
