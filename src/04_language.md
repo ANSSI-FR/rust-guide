@@ -202,15 +202,161 @@ the process.
 
 ## Standard library traits
 
- - Drop <mark>TODO</mark>
+### `Drop` trait, the destructor
 
- - The `Send` and `Sync` traits are marker traits that allow implementors
- to specify respectively that a value can be sent (moved) to another thread and
- that a value be shared through a shared reference. They both are unsafe traits,
- that should be used. Moreover, the `unsafe` keyword is necessary for a type
- to implement those traits.
+Types implement the trait `std::ops::Drop` to perform some operations when the
+memory associated with a value of this type is to be reclaimed. `Drop` is the
+Rust equivalent of a destructor in C++ or a finalizer in Java.
 
- - PartialOrd, Ord, Eq <mark>TODO</mark>
+Dropping is done recursively from the outer value to the inner values.
+When a value goes out of scope (or is explicitly dropped with `std::mem::drop`),
+the value is dropped in two steps. The first step happens only if the type of
+this value implements `Drop`. It consists in calling the `drop` method on it.
+The second step consists in repeating the dropping process recursively on any
+field the value contains. Note that a `Drop` implementation is
+**only responsible for the outer value**.
+
+Another important point is that implementing `Drop` should not be systematic.
+It is only needed if the type requires some destructor logic. In fact, `Drop` is
+typically used to release external resources (network connections, files, etc.)
+or to release memory (e.g. in smart pointers such as `Box` or `Rc`).
+
+> ### Recommendation {{#check LANG-DROP | Justify `Drop` impl.}}
+>
+> In a Rust secure development, the implementation of the `std::ops::Drop` trait
+> should be justified, documented and peer-reviewed.
+
+Due to the typical use cases of `Drop`, `Drop` trait implementations are likely
+to contain `unsafe` code as well as security-critical operations.
+
+> ### Rule {{#check LANG-DROP-NO-PANIC | Do not panic in `Drop` impl.}}
+>
+> In a Rust secure development, the implementation of the `std::ops::Drop` trait
+> must not panic.
+
+A panic while dropping likely leads to a program abort and missing some `drop`
+calls, which may expose sensitive data.
+
+### `Send` and `Sync` traits
+
+The `Send` and `Sync` traits are marker traits that allow implementors
+to specify respectively that a value can be sent (moved) to another thread and
+that a value be shared through a shared reference. They both are unsafe traits,
+that should be used. Moreover, the `unsafe` keyword is necessary for a type
+to implement those traits.
+
+<mark>TODO</mark> Recommendation: do not impl send or sync manually or justify
+
+### Comparison traits (`PartialEq`, `Eq`, `PartialOrd`, `Ord`)
+
+Comparisons (`==`, `!=`, `<`, `<=`, `>`, `>=`) in Rust relies on four standard
+traits available in `std::cmp` (or `core::cmp` for `no_std` compilation):
+
+- `PartialEq<Rhs>` that defines a partial equivalence between
+  objects of types `Self` and `Rhs`,
+- `PartialOrd<Rhs>` that defines a partial order between objects of types
+  `Self` and `Rhs`,
+- `Eq` that defines a total equivalence between objects of the same
+  type. It is only a marker trait that requires `PartialEq<Self>`!
+- `Ord` that defines the total order between objects of the same type.
+  It requires that `PartialOrd<Self>` is implemented.
+
+As documented in the standard library, Rust assumes **a lot of invariants**
+about the implementations of those traits:
+
+- For `PartialEq`
+
+  - *Internal consistency*: `a.ne(b)` is equivalent to `!a.eq(b)`, i.e., `ne` is
+    the strict inverse of `eq`. The default implementation of `ne` is precisely that.
+
+  - *Symmetry*: `a.eq(b)` and `b.eq(a)`, are equivalent. From the developer's
+    point of view, it means:
+
+    - `PartialEq<B>` is implemented for type `A` (noted `A: PartialEq<B>`),
+    - `PartialEq<A>` is implemented for type `B` (noted `B: PartialEq<A>`),
+    - both implementations are consistent with each other.
+
+  - *Transitivity*: `a.eq(b)` and `b.eq(c)` implies `a.eq(c)`. It means that:
+
+    - `A: PartialEq<B>`,
+    - `B: PartialEq<C>`,
+    - `A: PartialEq<C>`,
+    - the three implementations are consistent with each other (and their
+      symmetric implementations).
+
+- For `Eq`
+
+  - `PartialEq<Self>` is implemented.
+
+  - *Reflexivity*: `a.eq(a)`. This stands for `PartialEq<Self>` (`Eq` does not
+    provide any method).
+
+- For `PartialOrd`
+
+  - *Equality consistency*:
+    `a.eq(b)` is equivalent to `a.partial_cmp(b) == Some(std::ordering::Eq)`.
+
+  - *Internal consistency*:
+
+    - `a.lt(b)` iff `a.partial_cmp(b) == Some(std::ordering::Less)`,
+    - `a.gt(b)` iff `a.partial_cmp(b) == Some(std::ordering::Greater)`,
+    - `a.le(b)` iff `a.lt(b) || a.eq(b)`,
+    - `a.ge(b)` iff `a.gt(b) || a.eq(b)`.
+
+    Note that by only defining `partial_cmp`, the internal consistency is
+    guaranteed by the default implementation of `lt`, `le`, `gt`, and `ge`.
+
+  - *Antisymmetry*: `a.lt(b)` (respectively `a.gt(b)`) implies `b.gt(a)`
+    (respectively, `b.lt(b)`). From the developer's standpoint, it also means:
+
+    - `A: PartialOrd<B>`,
+    - `B: PartialOrd<A>`,
+    - both implementations are consistent with each other.
+
+  - *Transitivity*: `a.lt(b)` and `b.lt(c)` implies `a.lt(c)` (also with `gt`,
+    `le` and `ge`). It also means:
+
+    - `A: PartialOrd<B>`,
+    - `B: PartialOrd<C>`,
+    - `A: PartialOrd<C>`,
+    - the implementations are consistent with each other (and their symmetric).
+
+- For `Ord`
+
+  - `PartialOrd<Self>`
+
+  - *Totality*: `a.partial_cmp(b) != None` always. In other words,
+    exactly one of `a.eq(b)`, `a.lt(b)`, `a.gt(b)` is true.
+
+  - *Consistency with `PartialOrd<Self>`*: `Some(a.cmp(b)) == a.partial_cmp(b)`.
+
+The compiler do not check any of those requirements except for the type checking
+itself. However, comparisons are critical because they intervene both in
+liveness critical systems such as schedulers and load balancers, and in
+optimized algorithms that may use `unsafe` blocks.
+In the first use, a bad ordering may lead to availability issues such as
+deadlocks.
+In the second use, it may lead to classical security issues linked to memory
+safety violations. That is again a factor in the practice of limiting the use
+of `unsafe` blocks.
+
+> ### Rule {{#check LANG-CMP-INV | Respect the invariants of standard comparison traits}}
+>
+> In a Rust secure development, the implementation of standard comparison traits
+> must respect the invariants described in the documentation.
+
+<!-- -->
+
+> ### Recommendation {{#check LANG-CMP-DEFAULTS | Use the default method impl. of standard comparison traits}}
+>
+> In a Rust secure development, the implementation of standard comparison traits
+> should only define methods with no default implementation, so as to reduce
+> the risk of violating the invariants associated with the traits.
+
+There is a Clippy lint to check that `PartialEq::ne` is not defined in
+`PartialEq` implementations.
+
+<mark>TODO</mark> Recommendation: Derive when possible?
 
 ## Macros
 
