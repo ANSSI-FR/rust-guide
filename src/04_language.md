@@ -216,26 +216,48 @@ The second step consists in repeating the dropping process recursively on any
 field the value contains. Note that a `Drop` implementation is
 **only responsible for the outer value**.
 
-Another important point is that implementing `Drop` should not be systematic.
+First and foremost, implementing `Drop` should not be systematic.
 It is only needed if the type requires some destructor logic. In fact, `Drop` is
 typically used to release external resources (network connections, files, etc.)
 or to release memory (e.g. in smart pointers such as `Box` or `Rc`).
+As a result, `Drop` trait implementations are likely to contain `unsafe` code
+blocks as well as other security-critical operations.
 
 > ### Recommendation {{#check LANG-DROP | Justify `Drop` impl.}}
 >
 > In a Rust secure development, the implementation of the `std::ops::Drop` trait
 > should be justified, documented and peer-reviewed.
 
-Due to the typical use cases of `Drop`, `Drop` trait implementations are likely
-to contain `unsafe` code as well as security-critical operations.
+Second, Rust type system only ensures memory safety and, from the type system's
+standpoint, missing drops is allowed. In fact, several things may lead to
+missing drops, such as:
+
+- a reference cycle (for instance, with `Rc` or `Arc`),
+- an explicit call to `std::mem::forget` (or `core::mem::forget`) (see Rule
+  <mark>TODO</mark>),
+- a panic in drop,
+- program aborts (and panics when abort-on-panic is on).
+
+And missing drops may lead to exposing sensitive data or to lock limited
+resources leading to unavailability issues.
 
 > ### Rule {{#check LANG-DROP-NO-PANIC | Do not panic in `Drop` impl.}}
 >
 > In a Rust secure development, the implementation of the `std::ops::Drop` trait
 > must not panic.
 
-A panic while dropping likely leads to a program abort and missing some `drop`
-calls, which may expose sensitive data.
+Beside panics, secure-critical drop should be protected.
+
+> ### Rule {{#check LANG-DROP-NO-CYCLE | Do not allow cycles of reference-counted `Drop`}}
+>
+> Value whose type implements `Drop` must not be embedded directly or indirectly
+> in a cycle of reference-counted references.
+
+> ### Recommendation {{#check LANG-DROP-SEC | Do not rely only on `Drop` to ensure security}}
+>
+> Ensuring security operations at the end of some treatment (such as key erasure
+> at the end of a cryptographic encryption) should not rely only on the `Drop`
+> trait implementation.
 
 ### `Send` and `Sync` traits
 
