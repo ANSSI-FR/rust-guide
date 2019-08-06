@@ -1,14 +1,15 @@
 # Development Environment
 
-## `rustup`
+## Rustup
 
-`rustup` is the Rust toolchain installer. Among other things, it enables
+Rustup is the Rust toolchain installer. Among other things, it enables
 switching between different flavors of the toolchain (stable, beta, nightly),
 managing additional components installation and keeping them up to date.
 
-> ### Warning:
+> ### Warning
+>
 > From a security perspective, `rustup` does perform all downloads over HTTPS,
-> but doesn’t validate signatures of downloads. Protection against downgrade
+> but does not validate signatures of downloads. Protection against downgrade
 > attacks, certificate pinning, validation of signatures are works that are
 > currently in progress. In some cases, it may be preferable to opt for
 > an alternative installation method listed in the *Install* section of the
@@ -57,7 +58,7 @@ stable-x86_64-unknown-linux-gnu (default)
 beta-x86_64-unknown-linux-gnu
 nightly-x86_64-unknown-linux-gnu
 $ rustup override list
-/tmp/foo                                	nightly-x86_64-unknown-linux-gnu
+/tmp/foo                                    nightly-x86_64-unknown-linux-gnu
 $
 ```
 
