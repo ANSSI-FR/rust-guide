@@ -91,7 +91,7 @@ as those that are described below, in the form of sub-commands.
 
 <mark>TODO</mark>: identify unsafe features and risky environment variables.
 
-### clippy
+### Clippy
 
 Clippy is a tool that provides and checks many lints (bugs, styling, performance
 issues, etc.). Since the stable toolchain has reached version 1.29, `clippy` can
@@ -104,9 +104,10 @@ detect. The warnings should be re-checked by the programmer before committing
 the fix that is suggested by `clippy`, especially in the case of lints of the
 category `clippy::nursery` since those hints are still under development.
 
-> ### Rule {{#check DENV-LINTER | Use Rust linter (cargo-clippy)}}:
-> The tool `clippy` must be used at various times during a secure application
-> development process.
+> ### Rule {{#check DENV-LINTER | Use linter regularly}}
+>
+> A linter, such as `clippy`, must be used regularly during the development of
+> a secure application.
 
 ### rustfmt
 
