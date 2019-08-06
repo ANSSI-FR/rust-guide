@@ -82,15 +82,33 @@ $ cargo +nightly fmt
 $
 ```
 
-## `cargo`
+## Cargo
 
-Once `rustup` has been used to set up the appropriate Rust toolchain, the
-tool `cargo` has been made available. It’s the Rust package manager, that
-provides ways to structure and build projects, managing on its own dependencies
-download among other tasks. It’s also a front-end to run complementary tools such
-as those that are described below, in the form of sub-commands.
+Once Rustup has set up the appropriate Rust toolchain, Cargo is available
+through the command line program `cargo`. Cargo is the Rust package manager.
+It has a fundamental role in most Rust development:
+
+- It structures project by providing the project skeleton (`cargo new`),
+- It compiles the project (`cargo build`),
+- It generates the project's documentation (`cargo doc`),
+- It runs tests (`cargo test`) and benchmarks (`cargo bench`),
+- It manages and download dependencies,
+- It makes packages distributable and publishes them on [crates.io],
+- It’s also a front-end to run complementary tools such as those that are
+  described below, in the form of sub-commands.
 
 <mark>TODO</mark>: identify unsafe features and risky environment variables.
+
+[crates.io]: https://crates.io
+
+> ### Warning
+>
+> Like Rustup, Cargo does perform all downloads over HTTPS, but does not
+> validate the registry index. Ongoing discussions occur on how best protect and
+> verify crates. For now, the security relies on the good security of the
+> website [crates.io] and the GitHub hosted repository containing the
+> registry index. In some cases, it may be preferable to opt for an alternative
+> installation method for dependencies.
 
 ### Clippy
 
