@@ -312,13 +312,53 @@ Beside panics, secure-critical drop should be protected.
 
 ### `Send` and `Sync` traits
 
-The `Send` and `Sync` traits are marker traits that allow implementors
-to specify respectively that a value can be sent (moved) to another thread and
-that a value be shared through a shared reference. They both are unsafe traits,
-that should be used. Moreover, the `unsafe` keyword is necessary for a type
-to implement those traits.
+The `Send` and `Sync` traits (defined in `std::marker` or `core::marker`) are
+marker traits used to ensure the safety of concurrency in Rust. When implemented
+correctly, they allow the Rust compiler to guarantee the absence of data races.
+Their semantics is as follows:
 
-<mark>TODO</mark> Recommendation: do not impl send or sync manually or justify
+- A type is `Send` if it is safe to send (move) it to another thread.
+- A type is `Sync` if it is safe to share a immutable reference to it with
+  another thread.
+
+Both traits are _unsafe traits_, i.e., the Rust compiler do not verify in any
+way that they are implemented correctly. The danger is real: an incorrect
+implementation may lead to **undefined behavior**.
+
+Fortunately, in most case, one does not need to implement it. In Rust,
+almost all primitive types are `Send` and `Sync`, and for most compound types
+the implementation is automatically provided by the Rust compiler.
+Notable exceptions are:
+
+- Raw pointers are neither `Send` nor `Sync` because they offer no safety guards.
+- `UnsafeCell` is not `Sync` (and as a result `Cell` and `RefCell` aren't
+  either) because they offer interior mutability (mutably shared value).
+- `Rc` is neither `Send` nor `Sync` because the reference counter is shared and
+  unsynchronized.
+
+Automatic implementation of `Send` (resp. `Sync`) occurs for a compound type
+(structure or enumeration) when all fields have `Send` types (resp. `Sync`
+types). Using an unstable feature (as of Rust 1.36.0), one can block the automatic
+implementation of those traits with a manual _negative implementation_:
+
+```rust,ignore
+#![feature(option_builtin_traits)]
+
+struct SpecialType(u8);
+impl !Send for SpecialType {}
+impl !Sync for SpecialType {}
+```
+
+The negative implementation of `Send` or `Sync` are also used in the standard
+library for the exceptions, and are automatically implemented when appropriate.
+As a result, the generated documentation is always explicit: a type implements
+either `Send` or `!Send` (resp. `Sync` or `Sync`).
+
+> ### Recommendation {{#check LANG-SYNC-TRAITS | Justify `Send` and `Sync` impl.}}
+>
+> In a Rust secure development, the manual implementation (or negative
+> implementation) of the `Send` and `Sync` traits should be avoided and, if
+> necessary, should be justified, documented and peer-reviewed.
 
 ### Comparison traits (`PartialEq`, `Eq`, `PartialOrd`, `Ord`)
 
