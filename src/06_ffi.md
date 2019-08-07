@@ -183,6 +183,10 @@ is only manipulated from the Rust side of an FFI boundary.
 > ### Rule {{#check FFI-TCONS | Use consistent types at FFI boundaries}}
 >
 > Types must be consistent on each side of the FFI boundary.
+>
+> Although some details may be hidden on one side with respect to the other
+> (typically to make a type opaque), types on both sides must have the same size
+> and the same alignment requirement.
 
 Concerning enums with fields in particular, the corresponding types in C (or
 C++) are not obvious, cf. [RFC 2195].
