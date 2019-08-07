@@ -214,20 +214,6 @@ crate can catch all cases. Drawback: all functions need to be marked as
 [rustig](https://github.com/Technolution/rustig) (doesn't build here)
 -->
 
-### FFI and panics
-
-When calling Rust code from another language (for ex. C), the Rust code must
-be careful to never panic.
-Unwinding from Rust code into foreign code results in undefined behavior.
-
-> ### Rule {{#check LANG-FFIPANIC | Handle correctly `panic!` in FFI}}:
-> Rust code called from FFI must either ensure the function cannot panic, or use
-> `catch_unwind` or the `std::panic` module to ensure the rust code will not
-> abort or return in an unstable state.
-
-Note that `catch_unwind` will only catch unwinding panics, not those that abort
-the process.
-
 ## Standard library traits
 
  - Drop <mark>TODO</mark>
