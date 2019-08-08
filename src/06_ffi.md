@@ -243,7 +243,7 @@ Another approach is to simply ensure that there is no use of `panic!` with the
 [`panic-never`] crate. Like [`no-panic`], [`panic-never`] relies on a linking
 trick: the linker fails if a non-trivially-dead branch leads to `panic!`.
 
-[`panic-never`]: https://crate.io/crates/panic-never
+[`panic-never`]: https://crates.io/crates/panic-never
 [`no-panic`]: https://github.com/dtolnay/no-panic
 
 ## Binding a foreign library in Rust
