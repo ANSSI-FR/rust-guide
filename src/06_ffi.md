@@ -162,7 +162,8 @@ because C has no references (in the sense of valid pointers):
 
 In case of binding to or from C++, it is possible to use Rust references on one
 side, and C++ references on the other. However, the C++ code should be checked
-against pointer/reference confusion.
+against pointer/reference confusion. Other reasonable exceptions include C
+variants allowing for non-null type checking, e.g. Microsoft SAL annotated code.
 
 > ### Rule {{#check FFI-CKPTR | Check foreign pointers}}
 >
