@@ -24,9 +24,10 @@ Conversely, one can call C functions from Rust if they are declared in an
 `extern` block:
 
 ```rust
+use std::os::raw::c_int;
 // import an external function from libc
 extern "C" {
-    fn abs(args: i32) -> i32;
+    fn abs(args: c_int) -> c_int;
 }
 
 fn main() {
