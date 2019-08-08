@@ -195,8 +195,8 @@ C++) are not obvious, cf. [RFC 2195].
 Automated tools to generate bindings, such as [rust-bindgen] or
 [cbindgen], may be of help in making types consistent between C and Rust.
 
-[rust-bindgen]: https://github.com/rust-lang/rust-bindgen
-[cbindgen]: https://github.com/eqrion/cbindgen
+[rust-bindgen]: https://crates.io/crates/rust-bindgen
+[cbindgen]: https://crates.io/crates/cbindgen
 
 ## Panics with foreign code
 
@@ -245,7 +245,7 @@ Another approach is to simply ensure that there is no use of `panic!` with the
 trick: the linker fails if a non-trivially-dead branch leads to `panic!`.
 
 [`panic-never`]: https://crates.io/crates/panic-never
-[`no-panic`]: https://github.com/dtolnay/no-panic
+[`no-panic`]: https://crates.io/crates/no-panic
 
 ## Binding a foreign library in Rust
 
