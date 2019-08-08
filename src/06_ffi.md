@@ -67,7 +67,9 @@ fn main() {
 }
 ```
 
-## Data layout
+## Types
+
+### Data layout
 
 Rust provides no short or long term guarantees with respect to how the data is
 laid out in the memory. The only way to make data compatible with a foreign
@@ -143,7 +145,7 @@ References:
 [Rust Reference: Type Layout]: https://doc.rust-lang.org/reference/type-layout.html
 [Rust Book: Unsafe Rust]: https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html
 
-## Pointers and references
+### Pointers and references
 
 Although they are allowed by the Rust compiler, the use of Rust references in
 FFI should be avoided. It is particularly true when binding to and from C,
@@ -182,7 +184,7 @@ is only manipulated from the Rust side of an FFI boundary.
 > side. The C `NULL` is understood as `None` in Rust while a non-null
 > pointer is encapsulated in `Some`.
 
-## Type consistency
+### Type consistency
 
 > ### Rule {{#check FFI-TCONS | Use consistent types at FFI boundaries}}
 >
@@ -200,6 +202,42 @@ Automated tools to generate bindings, such as [rust-bindgen] or
 
 [rust-bindgen]: https://crates.io/crates/rust-bindgen
 [cbindgen]: https://crates.io/crates/cbindgen
+
+### Platform-dependent types
+
+When interfacing with a foreign language, like C or C++, it is often required
+to use platform-dependent types such as C's `int`, `long`, etc.
+
+In addition to `c_void` in `std::ffi` (or `core::ffi`) for `void`, the standard
+library offers portable type aliases in `std:os::raw` (ore `core::os::raw`):
+
+- `c_char` for `char` (either `i8` or `u8`),
+- `c_schar` for `signed char` (always `i8`),
+- `c_uchar` for `unsigned char` (always `u8`),
+- `c_short` for `short`,
+- `c_ushort` for `unsigned short`,
+- `c_int` for `int`,
+- `c_uint` for `unsigned int`,
+- `c_long` for `long`,
+- `c_ulong` for `unsigned long`,
+- `c_longlong` for `long long`,
+- `c_ulonglong` for `unsigned long long`,
+- `c_float` for `float` (always `f32`),
+- `c_double` for `double` (always `f64`).
+
+The [libc] crate offers more C compatible types that cover almost exhaustively
+the C standard library.
+
+> Rule {{#check FFI-PFTYPE | Use portable aliases `c_*` when binding to platform-dependent types}}
+>
+> In a secure Rust development, when interfacing with foreign code that
+> uses platform-dependent types, such as C's `int` and `long`, Rust code must
+> use portable type aliases, such as provided by the standard library or the
+> [libc] crate, rather than platform-specific types, except if
+> the binding is automatically generated for each platform (for instance,
+> with a [cbindgen] step in the build process).
+
+[libc]: https://crates.io/crates/libc
 
 ## Panics with foreign code
 
