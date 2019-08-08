@@ -145,7 +145,7 @@ References:
 
 ## Pointers and references
 
-Although there are allowed by the Rust compiler, the use of Rust references in
+Although they are allowed by the Rust compiler, the use of Rust references in
 FFI should be avoided. It is particularly true when binding to and from C,
 because C has no references (in the sense of valid pointers):
 
@@ -157,7 +157,8 @@ because C has no references (in the sense of valid pointers):
 > - the prototype of an imported or exported function,
 > - the type of an imported or exported global variables,
 >
-> directly or indirectly (in a non-opaque subtype).
+> directly or indirectly (in a non-opaque subtype), except for `Option`-wrapped
+> references (see Note below).
 
 In case of binding to or from C++, it is possible to use Rust references on one
 side, and C++ references on the other. However, the C++ code should be checked
@@ -174,10 +175,11 @@ is only manipulated from the Rust side of an FFI boundary.
 
 > ### Note
 >
-> It is possible to use the type `Option<&T>` (resp. `Option<&mut T>`) instead
-> of pointers with nullity checks. However, because it is less explicit and
-> relies on Rust “nullable pointer optimization”, it is not advisable at this
-> point.
+> `Option<&T>` and `Option<&mut T>` for any `T: Sized` are allowable in FFI
+> instead of pointers with explicit nullity checks. Due to the Rust guaranteed
+> “nullable pointer optimization”, a nullable pointer is acceptable on the C
+> side. The C `NULL` is understood as `None` in Rust while a non-null
+> pointer is encapsulated in `Some`.
 
 ## Type consistency
 
