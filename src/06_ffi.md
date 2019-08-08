@@ -115,8 +115,8 @@ The following types are considered C-compatible:
 
 - integral or floating point primitive types,
 - `repr(C)`-annotated `struct`,
-- `repr(C)` or `repr(Int)`-annotated `enum` with only fieldless variants (where
-  `Int` is an integral primitive type),
+- `repr(C)` or `repr(Int)`-annotated `enum` with at least one variant and only
+  fieldless variants (where `Int` is an integral primitive type),
 - pointers.
 
 The following types are not C-compatible:
