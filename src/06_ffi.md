@@ -209,7 +209,7 @@ When interfacing with a foreign language, like C or C++, it is often required
 to use platform-dependent types such as C's `int`, `long`, etc.
 
 In addition to `c_void` in `std::ffi` (or `core::ffi`) for `void`, the standard
-library offers portable type aliases in `std:os::raw` (ore `core::os::raw`):
+library offers portable type aliases in `std:os::raw` (or `core::os::raw`):
 
 - `c_char` for `char` (either `i8` or `u8`),
 - `c_schar` for `signed char` (always `i8`),
