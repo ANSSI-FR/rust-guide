@@ -67,7 +67,11 @@ fn main() {
 }
 ```
 
-## Types
+## Typing
+
+Typing is the way Rust ensures memory safety. When interfacing with other
+languages, which may not offer the same guarantee, the choice of types in the
+binding is essential to maintain the memory safety.
 
 ### Data layout
 
