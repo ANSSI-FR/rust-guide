@@ -1,7 +1,10 @@
 # Interfacing (FFI)
 
-Rust approach to interfacing with other programs relies on a strong
-compatibility with C. However, this boundary is by its very nature `unsafe`.
+Rust approach to interfacing with other languages relies on a strong
+compatibility with C. However, this boundary is by its very nature **unsafe**
+(see [Rust Book: Unsafe Rust]).
+
+[Rust Book: Unsafe Rust]: https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html
 
 Functions that are marked `extern` are made compatible with C code at the
 compilation. They may be called from C code with any parameter.
@@ -78,7 +81,8 @@ binding is essential to maintain the memory safety.
 Rust provides no short or long term guarantees with respect to how the data is
 laid out in the memory. The only way to make data compatible with a foreign
 language is through explicit use of a C-compatible data layout with the `repr`
-attribute. For instance, the following Rust types:
+attribute (see [Rust Reference: Type Layout]). For instance, the following Rust
+types:
 
 ```rust
 #[repr(C)]
@@ -116,6 +120,9 @@ struct PackedData {
 > In a secure Rust development, only C-compatible types must be used as
 > parameter or return type of imported or exported functions and as types of
 > imported or exported global variables.
+>
+> The lone exception is types that are considered **opaque** on the foreign
+> side.
 
 The following types are considered C-compatible:
 
@@ -137,17 +144,10 @@ Some types are compatibles with some caveats:
 - Zero-sized types, which is really zero sized (which is let unspecified in C
   and contradicts the C++ specification),
 - `repr(C)`, `repr(C, Int)`, or `repr(Int)`-annotated enum with fields
-  ([RFC 2195]).
+  (see [RFC 2195]).
 
-References:
-
-- [RFC 2195 (Really tagged unions)][RFC 2195]
-- [Rust Reference: Type Layout]
-- [Rust Book: Unsafe Rust]
-
-[RFC 2195]: https://github.com/rust-lang/rfcs/blob/master/text/2195-really-tagged-unions.md
+[RFC 2195]: https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html
 [Rust Reference: Type Layout]: https://doc.rust-lang.org/reference/type-layout.html
-[Rust Book: Unsafe Rust]: https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html
 
 ### Pointers and references
 
