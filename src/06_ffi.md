@@ -204,6 +204,20 @@ C++) are not obvious, cf. [RFC 2195].
 Automated tools to generate bindings, such as [rust-bindgen] or
 [cbindgen], may be of help in making types consistent between C and Rust.
 
+> ### Recommendation {{#check FFI-AUTOMATE | Use automatic binding generator tools}}
+>
+> In a secure Rust development, automated generation tools should be use to
+> generate binding when possible and maintain them continually.
+
+<!-- -->
+
+> **Warning**
+>
+> For binding C/C++ to Rust, [rust-bindgen] is able to automatically generate
+> the low-level binding. A high-level safe binding is still highly recommended.
+> Also some options of rust-bindgen may result in dangerous translations, in
+> particular `rustified_enum`.
+
 [rust-bindgen]: https://crates.io/crates/rust-bindgen
 [cbindgen]: https://crates.io/crates/cbindgen
 
