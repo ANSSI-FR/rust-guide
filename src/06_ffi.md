@@ -149,45 +149,6 @@ Some types are compatibles with some caveats:
 [RFC 2195]: https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html
 [Rust Reference: Type Layout]: https://doc.rust-lang.org/reference/type-layout.html
 
-### Pointers and references
-
-Although they are allowed by the Rust compiler, the use of Rust references in
-FFI should be avoided. It is particularly true when binding to and from C,
-because C has no references (in the sense of valid pointers):
-
-> ### Rule {{#check FFI-NOREF | Do not use unchecked references in FFI}}
->
-> In a secure Rust development, there must be no Rust reference types when
-> interfacing with C, in particular, in:
->
-> - the prototype of an imported or exported function,
-> - the type of an imported or exported global variables,
->
-> directly or indirectly (in a non-opaque subtype), except for `Option`-wrapped
-> references (see Note below).
-
-In case of binding to or from C++, it is possible to use Rust references on one
-side, and C++ references on the other. However, the C++ code should be checked
-against pointer/reference confusion. Other reasonable exceptions include C
-variants allowing for non-null type checking, e.g. Microsoft SAL annotated code.
-
-> ### Rule {{#check FFI-CKPTR | Check foreign pointers}}
->
-> In a secure Rust development, any Rust code that dereferences a foreign
-> pointer must check their validity beforehand.
-> In particular, pointers must be checked to be non-null before any use.
-
-Stronger approaches such as _tagged pointers_ are possible if the pointed value
-is only manipulated from the Rust side of an FFI boundary.
-
-> ### Note
->
-> `Option<&T>` and `Option<&mut T>` for any `T: Sized` are allowable in FFI
-> instead of pointers with explicit nullity checks. Due to the Rust guaranteed
-> “nullable pointer optimization”, a nullable pointer is acceptable on the C
-> side. The C `NULL` is understood as `None` in Rust while a non-null
-> pointer is encapsulated in `Some`.
-
 ### Type consistency
 
 > ### Rule {{#check FFI-TCONS | Use consistent types at FFI boundaries}}
@@ -246,16 +207,315 @@ library offers portable type aliases in `std:os::raw` (or `core::os::raw`):
 The [libc] crate offers more C compatible types that cover almost exhaustively
 the C standard library.
 
-> Rule {{#check FFI-PFTYPE | Use portable aliases `c_*` when binding to platform-dependent types}}
+> ### Rule {{#check FFI-PFTYPE | Use portable aliases `c_*` when binding to platform-dependent types}}
 >
 > In a secure Rust development, when interfacing with foreign code that
 > uses platform-dependent types, such as C's `int` and `long`, Rust code must
 > use portable type aliases, such as provided by the standard library or the
 > [libc] crate, rather than platform-specific types, except if
-> the binding is automatically generated for each platform (for instance,
-> with a [cbindgen] step in the build process).
+> the binding is automatically generated for each platform (see Note below).
+
+<!-- -->
+
+> **Note**
+>
+> Automatic binding generation tools (e.g. [cbindgen], [rust-bindgen]) are able
+> to ensure type consistency on a specific platform. They should be used during
+> the build process for each target to ensure that the generation is sound for
+> the specific target platform.
 
 [libc]: https://crates.io/crates/libc
+
+### Non-robust types: references, pointers, enums
+
+A *trap representation* of a particular type is a representation (pattern of
+bits) that respects the type's representation constraints (such as size and
+alignment) but does not represent a valid value of this type.
+
+A lot of Rust types have trap representations:
+
+- `bool` (1 byte, 256 representations, only 2 valid ones),
+- references,
+- pointers,
+- function pointers,
+- enums,
+- compound types that contain a non-robust type.
+
+In the following we called such types, *non-robust types*. On the other hand,
+integer types (`u*`/`i*`) for instance are *robust types*.
+
+Non-robust types are a difficulty when interfacing two languages. It revolves
+into deciding **which language of the two is responsible in asserting the
+validity of boundary-crossing values** and how to do it.
+
+> ### Rule {{#check FFI-CKNONROBUST | Do not use unchecked non-robust foreign values}}
+>
+> In a secure Rust development, there must not be any use of *unchecked* foreign
+> values of non-robust types.
+>
+> In other words, either Rust translates robust types to non-robust types
+> through explicit checking or the foreign side offers strong guarantees of the
+> validity of the value.
+
+<!-- -->
+
+> ### Recommendation {{#check FFI-CKINRUST | Check foreign values in Rust}}
+>
+> In a secure Rust development, the validity checks of foreign values should
+> be done in Rust when possible.
+
+Those generic rules are to be adapted to a specific foreign language or for the
+associated risks. Concerning languages, C is particularly unfit to offer
+guarantees about validity. However, Rust is not the only language to offer
+strong guarantees. For instance, some C++ subset (without reinterpretation)
+allows developers to do lot of type checking. Because Rust natively separates
+the safe and unsafe segments, the recommendation is to always use Rust to check
+when possible. Concerning risks, the most dangerous types are references,
+pointers, function references, and enums, and are discussed below.
+
+> **Warning**
+>
+> Rust's `bool` has been made equivalent to C99's `_Bool` (aliased as `bool`
+> in `<stdbool.h>`) and C++'s `bool`. However, loading a value other than 0 and
+> 1 as a `_Bool`/`bool` is an undefined behavior *on both sides*.
+> Safe Rust ensures that. Standard-compliant C and C++ compilers ensure that no
+> value but 0 and 1 can be *stored* in a `_Bool`/`bool` value but cannot
+> guarantee the absence of an *incorrect reinterpretation* (e.g., union types,
+> pointer cast). To detect such a bad reinterpretation, sanitizers such as
+> LLVM's `-fsanitize=bool` may be used.
+
+#### References and pointers
+
+Although they are allowed by the Rust compiler, the use of Rust references in
+FFI may break Rust's memory safety. Because their “unsafety” is more explicit,
+pointers are recommended.
+
+On the one hand, reference types are very non-robust: they allow only pointers
+to valid memory objects. Any deviation leads to undefined behavior.
+
+> ### Rule {{#check FFI-CKREF | Do not use unchecked foreign references}}
+>
+> In a secure Rust development, every foreign references that is transmitted to
+> Rust through FFI must be **checked on the foreign side** either automatically
+> (for instance, by a compiler) or manually.
+>
+> Exceptions include Rust references in an opaque wrapping that is
+> created and manipulated only from the Rust side and `Option`-wrapped reference
+> (see Note below).
+
+When binding to and from C, the problem is particularly severe because C has
+no references (in the sense of valid pointers) and the compiler do not offer
+any safety guarantee.
+
+When binding with C++, Rust references may be bound to C++ references in
+practice even though the actual ABI of an `extern "C"` function in C++ with
+references is “implementation-defined”. Also, the C++ code should be checked
+against pointer/reference confusion.
+
+Rust references may be used reasonably with other C-compatible languages
+including C variants allowing for non-null type checking, e.g. Microsoft SAL
+annotated code.
+
+> ### Recommendation {{#check FFI-NOREF | Do not use reference types but pointer types}}
+>
+> In a secure Rust development, the Rust code should not use references types
+> but pointer types.
+>
+> Exceptions include:
+>
+> - Rust references that are opaque in the foreign language and only manipulated
+>   from the Rust side,
+> - `Option`-wrapped references (see Note below),
+> - references bound to foreign safe references, e.g. from some augmented C
+>   variants or from C++ compiled in an environment where `extern "C"`
+>   references are encoded as pointers.
+
+On the other hand, Rust's *pointer types* may also lead to undefined behaviors
+but are more verifiable, mostly against `std/core::ptr::null()` (C's `(void*)0`)
+but also in some context against a known valid memory range (particularly in
+embedded systems or kernel-level programming). Another advantage of using Rust
+pointers in FFI is that any load of the pointed value is clearly marked inside
+an `unsafe` block or function.
+
+> ### Rule {{#check FFI-CKPTR | Check foreign pointers}}
+>
+> In a secure Rust development, any Rust code that dereferences a foreign
+> pointer must check their validity beforehand.
+> In particular, pointers must be checked to be non-null before any use.
+>
+> Stronger approaches are advisable when possible. They includes checking
+> pointers against known valid memory range or tagging (or signing) pointers
+> (particularly applicable if the pointed value is only manipulated from Rust).
+
+The following code a simple example of foreign pointer use in an exported Rust
+function:
+
+```rust
+/// Add in place
+#[no_mangle]
+unsafe extern fn add_in_place(a: *mut u32, b: u32) {
+    // checks for nullity of `a`
+    // and takes a mutable reference on it if it's non-null
+    if let Some(a) = a.as_mut() {
+        *a += b
+    }
+}
+```
+
+Note that the methods `as_ref` and `as_mut` (for mutable pointers) allows easy
+access to a reference while ensuring a null check in a very *Rusty* way.
+On the other side, one could use this prototype in C:
+
+```c
+//! Add in place
+void add_in_place(uint32_t *a, uint32_t b);
+```
+
+> ### Note
+>
+> `Option<&T>` and `Option<&mut T>` for any `T: Sized` are allowable in FFI
+> instead of pointers with explicit nullity checks. Due to the Rust guaranteed
+> “nullable pointer optimization”, a nullable pointer is acceptable on the C
+> side. The C `NULL` is understood as `None` in Rust while a non-null
+> pointer is encapsulated in `Some`. While quite ergonomic, this feature does
+> not allow stronger validations such as memory range checking.
+
+#### Function pointers
+
+Function pointers that cross FFI boundaries may ultimately lead to arbitrary code
+execution and represents a real security risks.
+
+> ### Rule {{#check FFI-MARKEDFUNPTR | Mark function pointer types in FFI as `extern` and `unsafe`}}
+>
+> In a secure Rust development, any function pointer types at the FFI boundary
+> must be marked `extern` (possibly with the specific ABI) and `unsafe`.
+
+Function pointers in Rust are a lot more similar to references than they are
+to normal pointers. In particular, the validity of function pointers cannot be
+checked directly on the Rust side. However, Rust offers two alternative
+possibilities:
+
+- use `Option`-wrapped function pointer and check against `null`:
+
+  ```rust
+  #[no_mangle]
+  unsafe extern fn repeat(start: u32, n: u32, f: Option<unsafe extern fn(u32) -> u32>) -> u32 {
+      if let Some(f) = f {
+          let mut value = start;
+          for _ in 0..n {
+              value = f(value);
+          }
+          value
+      } else {
+          start
+      }
+  }
+  ```
+
+  On the C side:
+
+  ```c
+  uint32_t repeat(uint32_t start, uint32_t n, uint32_t (*f)(uint32_t));
+  ```
+
+- use raw pointers with an `unsafe` transmutation to the function pointer type,
+  allowing more powerful checks at the cost of ergonomics.
+
+> ### Rule {{#check FFI-CKFUNPTR | Check foreign function pointers}}
+>
+> In a secure Rust development, any foreign function pointer must be checked at
+> the FFI boundary.
+
+When binding with C or even C++, one cannot guarantee easily the validity of the
+function pointer. C++ functors are not C-compatible.
+
+#### Enums
+
+Usually the possible bit patterns of valid `enum` values are really small with
+respect to the number of possible bit patterns of the same size. Mishandling an
+`enum` value provided by a foreign code may lead to type confusion and have
+severe consequences on software security. Unfortunately, checking an `enum`
+value at the FFI boundary is not simple on both sides.
+
+On the Rust side, it consists to actually use an integer type in the `extern`
+block declaration, a *robust* type, and then to perform a checked conversion
+to the enum type.
+
+On the foreign side, it is possible only if the other language allows for
+stricter checks than plain C. `enum class` in C++ are for instance allowable.
+Note however that as for reference the actual `extern "C"` ABI of
+`enum class` is implementation defined and should be verified for each
+environment.
+
+> ### Recommendation {{#check FFI-NOENUM | Do not use incoming Rust `enum` at FFI boundary}}
+>
+> In a secure Rust development, when interfacing with a foreign language,
+> the Rust code should not accept incoming values from Rust `enum` types.
+>
+> Exceptions include Rust `enum` types that are:
+>
+> - opaque in the foreign language and only manipulated from the
+>   Rust side,
+> - bound to safe enums in the foreign language, e.g. `enum class` types in C++.
+
+Concerning fieldless enums, crates like [`num_derive`] or [`num_enum`] allows
+developer to easily provide safe conversion from integer to enumeration and may
+be use to safely convert a integer (provided from a C `enum`) into a Rust enum.
+
+[num_derive]: https://crates.io/crates/num_derive
+[num_enum]: https://crates.io/crates/num_enum
+
+### Opaque types
+
+Opacifying types is a good way to increase modularity in software development.
+When doing multilingual development, it is something very common.
+
+> ### Recommendation {{#check FFI-R-OPAQUE | Use dedicated Rust types for foreign opaque types}}
+>
+> In a secure Rust development, when binding foreign opaque types, one should
+> use pointers to dedicated opaque types rather than `c_void` pointers.
+
+Currently the recommended way to make a foreign opaque type is like so:
+
+```rust ignore
+#[repr(C)]
+pub struct Foo {_private: [u8; 0]}
+extern {
+    pub fn foo(arg: *mut Foo);
+}
+```
+
+The not yet implemented [RFC 1861] proposes to facilitate the coding by allowing
+to declare opaque types in `extern` blocks.
+
+[RFC 1861]: https://rust-lang.github.io/rfcs/1861-extern-types.html
+
+> ### Recommendation {{#check FFI-C-OPAQUE | Use incomplete C/C++ `struct` pointers to make type opaque}}
+>
+> In a secure Rust development, when interfacing with C or C++, Rust types that
+> are to be considered opaque in C/C++ should be translated as incomplete
+> `struct` type (i,e., declared without definition) and be provided with
+> a dedicated constructor and destructor.
+
+Example of opaque Rust type:
+
+```rust
+struct Opaque {
+    // (...) details to be hidden
+}
+
+#[no_mangle]
+unsafe extern fn new_opaque() -> *mut Opaque {
+    Box::into_raw(Box::new(Opaque {
+        // (...) actual construction
+    }))
+}
+
+#[no_mangle]
+unsafe extern fn destroy_opaque(o: *mut Opaque) {
+    drop(Box::from_raw(o))
+}
+```
 
 ## Panics with foreign code
 
