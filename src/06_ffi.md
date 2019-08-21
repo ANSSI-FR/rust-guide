@@ -15,7 +15,7 @@ a standard C calling convention on the target platform.
 ```rust
 // export a C-compatible function
 #[no_mangle]
-pub extern "C" fn mylib_f(param: u32) -> i32 {
+unsafe extern "C" fn mylib_f(param: u32) -> i32 {
     if param == 0xCAFEBABE { 0 } else { -1 }
 }
 ```
@@ -399,7 +399,7 @@ possibilities:
 
   ```rust
   #[no_mangle]
-  unsafe extern fn repeat(start: u32, n: u32, f: Option<unsafe extern fn(u32) -> u32>) -> u32 {
+  unsafe extern "C" fn repeat(start: u32, n: u32, f: Option<unsafe extern "C" fn(u32) -> u32>) -> u32 {
       if let Some(f) = f {
           let mut value = start;
           for _ in 0..n {
@@ -480,8 +480,8 @@ Currently the recommended way to make a foreign opaque type is like so:
 ```rust ignore
 #[repr(C)]
 pub struct Foo {_private: [u8; 0]}
-extern {
-    pub fn foo(arg: *mut Foo);
+extern "C" {
+    fn foo(arg: *mut Foo);
 }
 ```
 
@@ -505,14 +505,14 @@ struct Opaque {
 }
 
 #[no_mangle]
-unsafe extern fn new_opaque() -> *mut Opaque {
+unsafe extern "C" fn new_opaque() -> *mut Opaque {
     Box::into_raw(Box::new(Opaque {
         // (...) actual construction
     }))
 }
 
 #[no_mangle]
-unsafe extern fn destroy_opaque(o: *mut Opaque) {
+unsafe extern "C" fn destroy_opaque(o: *mut Opaque) {
     drop(Box::from_raw(o))
 }
 ```
@@ -537,14 +537,14 @@ the process.
 use std::panic::catch_unwind;
 use rand;
 
-pub fn may_panic() {
+fn may_panic() {
     if rand::random() {
         panic!("panic happens");
     }
 }
 
 #[no_mangle]
-pub extern fn no_panic() -> i32 {
+unsafe extern "C" fn no_panic() -> i32 {
     let result = catch_unwind(||may_panic());
     match result {
         Ok(_) => 0,
@@ -627,13 +627,13 @@ impl Counter {
 // C-compatible API
 
 #[no_mangle]
-pub extern fn counter_create() -> *mut Counter {
+unsafe extern "C" fn counter_create() -> *mut Counter {
     Box::into_raw(Box::new(Counter::new()))
 }
 
 #[no_mangle]
-pub extern fn counter_incr(counter: *mut Counter) -> std::os::raw::c_int {
-    if let Some(counter) = unsafe { counter.as_mut() } {
+unsafe extern "C" fn counter_incr(counter: *mut Counter) -> std::os::raw::c_int {
+    if let Some(counter) = counter.as_mut() {
         if counter.incr() {
             0
         } else {
@@ -645,17 +645,17 @@ pub extern fn counter_incr(counter: *mut Counter) -> std::os::raw::c_int {
 }
 
 #[no_mangle]
-pub extern fn counter_get(counter: *const Counter) -> u32 {
-    if let Some(counter) = unsafe { counter.as_ref() } {
+unsafe extern "C" fn counter_get(counter: *const Counter) -> u32 {
+    if let Some(counter) = counter.as_ref() {
         return counter.get();
     }
     return 0;
 }
 
 #[no_mangle]
-pub extern fn counter_destroy(counter: *mut Counter) -> std::os::raw::c_int {
+unsafe extern fn counter_destroy(counter: *mut Counter) -> std::os::raw::c_int {
     if !counter.is_null() {
-        let _ = unsafe { Box::from_raw(counter) }; // get box and drop
+        let _ = Box::from_raw(counter); // get box and drop
         return 0;
     }
     return -1;
