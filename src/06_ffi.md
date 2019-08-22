@@ -361,7 +361,7 @@ an `unsafe` block or function.
 The following code a simple example of foreign pointer use in an exported Rust
 function:
 
-```rust
+```rust,noplaypen
 /// Add in place
 #[no_mangle]
 unsafe extern fn add_in_place(a: *mut u32, b: u32) {
@@ -408,9 +408,9 @@ possibilities:
 
 - use `Option`-wrapped function pointer and check against `null`:
 
-  ```rust
+  ```rust,noplaypen
   #[no_mangle]
-  unsafe extern "C" fn repeat(start: u32, n: u32, f: Option<unsafe extern "C" fn(u32) -> u32>) -> u32 {
+  pub unsafe extern "C" fn repeat(start: u32, n: u32, f: Option<unsafe extern "C" fn(u32) -> u32>) -> u32 {
       if let Some(f) = f {
           let mut value = start;
           for _ in 0..n {
@@ -488,7 +488,7 @@ When doing multilingual development, it is something very common.
 
 Currently the recommended way to make a foreign opaque type is like so:
 
-```rust ignore
+```rust,unsafe,noplaypen
 #[repr(C)]
 pub struct Foo {_private: [u8; 0]}
 extern "C" {
@@ -520,9 +520,9 @@ struct Opaque {
 #[no_mangle]
 pub unsafe extern "C" fn new_opaque() -> *mut Opaque {
     catch_unwind(|| // Catch panics, see below
-    Box::into_raw(Box::new(Opaque {
-        // (...) actual construction
-    }))
+        Box::into_raw(Box::new(Opaque {
+            // (...) actual construction
+        }))
     ).unwrap_or(std::ptr::null_mut())
 }
 
@@ -530,8 +530,8 @@ pub unsafe extern "C" fn new_opaque() -> *mut Opaque {
 pub unsafe extern "C" fn destroy_opaque(o: *mut Opaque) {
     catch_unwind(||
         if !o.is_null() {
-    drop(Box::from_raw(o))
-}
+            drop(Box::from_raw(o))
+        }
     ); // Only needed if Opaque or one of its subfield is Drop
 }
 ```
@@ -552,9 +552,9 @@ Unwinding from Rust code into foreign code results is **undefined behavior**.
 Note that `catch_unwind` will only catch unwinding panics, not those that abort
 the process.
 
-```rust ignore
+```rust,unsafe,noplaypen,ignore
 use std::panic::catch_unwind;
-use rand;
+# use rand;
 
 fn may_panic() {
     if rand::random() {
@@ -619,7 +619,7 @@ the Rust C-compatible API of a Rust library.
 
 `src/lib.rs`:
 
-```rust
+```rust,noplaypen
 /// Opaque counter
 pub struct Counter(u32);
 
