@@ -375,11 +375,21 @@ unsafe extern fn add_in_place(a: *mut u32, b: u32) {
 
 Note that the methods `as_ref` and `as_mut` (for mutable pointers) allows easy
 access to a reference while ensuring a null check in a very *Rusty* way.
-On the other side, one could use this prototype in C:
+On the other side in C, it can be used as follows:
 
 ```c
+#include <stdint.h>
+#include <inttypes.h>
+
 //! Add in place
 void add_in_place(uint32_t *a, uint32_t b);
+
+int main() {
+    uint32_t x = 25;
+    add_in_place(x, 17);
+    printf("%" PRIu32 " == 42", x);
+    return 0;
+}
 ```
 
 > ### Note
