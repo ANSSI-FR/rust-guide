@@ -230,19 +230,30 @@ the C standard library.
 
 A *trap representation* of a particular type is a representation (pattern of
 bits) that respects the type's representation constraints (such as size and
-alignment) but does not represent a valid value of this type.
+alignment) but does not represent a valid value of this type and lead to
+undefined behavior.
 
-A lot of Rust types have trap representations:
+In simple term, if a Rust variable is set to such an invalid value,
+anything can happen from simple program crash to arbitrary code execution. When
+writing safe Rust, this cannot happen (except through a bug in the Rust
+compiler). However, when writing unsafe Rust and in particular in FFI, it is
+really easy.
+
+In the following, **non-robust types** are types that have such trap
+representations (at least one). A lot of Rust types are non-robust, even among
+the C-compatible types:
 
 - `bool` (1 byte, 256 representations, only 2 valid ones),
 - references,
 - pointers,
 - function pointers,
 - enums,
-- compound types that contain a non-robust type.
+- floats (even if almost every language have the same understanding of what is
+  a valid float),
+- compound types that contain a field of a non-robust type.
 
-In the following we called such types, *non-robust types*. On the other hand,
-integer types (`u*`/`i*`) for instance are *robust types*.
+ On the other hand, integer types (`u*`/`i*`), packed compound types that
+ contain no non-robust fields, for instance are *robust types*.
 
 Non-robust types are a difficulty when interfacing two languages. It revolves
 into deciding **which language of the two is responsible in asserting the
