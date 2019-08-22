@@ -364,7 +364,7 @@ function:
 ```rust,noplaypen
 /// Add in place
 #[no_mangle]
-unsafe extern fn add_in_place(a: *mut u32, b: u32) {
+pub unsafe extern fn add_in_place(a: *mut u32, b: u32) {
     // checks for nullity of `a`
     // and takes a mutable reference on it if it's non-null
     if let Some(a) = a.as_mut() {
@@ -573,8 +573,8 @@ fn may_panic() {
 }
 
 #[no_mangle]
-unsafe extern "C" fn no_panic() -> i32 {
-    let result = catch_unwind(||may_panic());
+pub unsafe extern "C" fn no_panic() -> i32 {
+    let result = catch_unwind(may_panic);
     match result {
         Ok(_) => 0,
         Err(_) => -1,
@@ -656,12 +656,12 @@ impl Counter {
 // C-compatible API
 
 #[no_mangle]
-unsafe extern "C" fn counter_create() -> *mut Counter {
+pub unsafe extern "C" fn counter_create() -> *mut Counter {
     Box::into_raw(Box::new(Counter::new()))
 }
 
 #[no_mangle]
-unsafe extern "C" fn counter_incr(counter: *mut Counter) -> std::os::raw::c_int {
+pub unsafe extern "C" fn counter_incr(counter: *mut Counter) -> std::os::raw::c_int {
     if let Some(counter) = counter.as_mut() {
         if counter.incr() {
             0
@@ -674,7 +674,7 @@ unsafe extern "C" fn counter_incr(counter: *mut Counter) -> std::os::raw::c_int 
 }
 
 #[no_mangle]
-unsafe extern "C" fn counter_get(counter: *const Counter) -> u32 {
+pub unsafe extern "C" fn counter_get(counter: *const Counter) -> u32 {
     if let Some(counter) = counter.as_ref() {
         return counter.get();
     }
@@ -682,7 +682,7 @@ unsafe extern "C" fn counter_get(counter: *const Counter) -> u32 {
 }
 
 #[no_mangle]
-unsafe extern fn counter_destroy(counter: *mut Counter) -> std::os::raw::c_int {
+pub unsafe extern fn counter_destroy(counter: *mut Counter) -> std::os::raw::c_int {
     if !counter.is_null() {
         let _ = Box::from_raw(counter); // get box and drop
         return 0;
