@@ -304,7 +304,7 @@ to valid memory objects. Any deviation leads to undefined behavior.
 > (see Note below).
 
 When binding to and from C, the problem is particularly severe because C has
-no references (in the sense of valid pointers) and the compiler do not offer
+no references (in the sense of valid pointers) and the compiler does not offer
 any safety guarantee.
 
 When binding with C++, Rust references may be bound to C++ references in
