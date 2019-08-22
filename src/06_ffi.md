@@ -499,21 +499,29 @@ to declare opaque types in `extern` blocks.
 
 Example of opaque Rust type:
 
-```rust
+```rust,unsafe,noplaypen
+# use std::panic::catch_unwind;
+#
 struct Opaque {
     // (...) details to be hidden
 }
 
 #[no_mangle]
-unsafe extern "C" fn new_opaque() -> *mut Opaque {
+pub unsafe extern "C" fn new_opaque() -> *mut Opaque {
+    catch_unwind(|| // Catch panics, see below
     Box::into_raw(Box::new(Opaque {
         // (...) actual construction
     }))
+    ).unwrap_or(std::ptr::null_mut())
 }
 
 #[no_mangle]
-unsafe extern "C" fn destroy_opaque(o: *mut Opaque) {
+pub unsafe extern "C" fn destroy_opaque(o: *mut Opaque) {
+    catch_unwind(||
+        if !o.is_null() {
     drop(Box::from_raw(o))
+}
+    ); // Only needed if Opaque or one of its subfield is Drop
 }
 ```
 
