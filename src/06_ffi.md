@@ -227,7 +227,7 @@ the C standard library.
 
 [libc]: https://crates.io/crates/libc
 
-### Non-robust types: references, pointers, enums
+### Non-robust types: references, function pointers, enums
 
 A *trap representation* of a particular type is a representation (pattern of
 bits) that respects the type's representation constraints (such as size and
@@ -246,7 +246,6 @@ the C-compatible types:
 
 - `bool` (1 byte, 256 representations, only 2 valid ones),
 - references,
-- pointers,
 - function pointers,
 - enums,
 - floats (even if almost every language have the same understanding of what is
@@ -283,7 +282,7 @@ strong guarantees. For instance, some C++ subset (without reinterpretation)
 allows developers to do lot of type checking. Because Rust natively separates
 the safe and unsafe segments, the recommendation is to always use Rust to check
 when possible. Concerning risks, the most dangerous types are references,
-pointers, function references, and enums, and are discussed below.
+function references, and enums, and are discussed below.
 
 > **Warning**
 >
@@ -300,7 +299,7 @@ pointers, function references, and enums, and are discussed below.
 
 Although they are allowed by the Rust compiler, the use of Rust references in
 FFI may break Rust's memory safety. Because their “unsafety” is more explicit,
-pointers are recommended.
+pointers are preferred over Rust references when binding to another language.
 
 On the one hand, reference types are very non-robust: they allow only pointers
 to valid memory objects. Any deviation leads to undefined behavior.
