@@ -175,7 +175,8 @@ Automated tools to generate bindings, such as [rust-bindgen] or
 > **Warning**
 >
 > For binding C/C++ to Rust, [rust-bindgen] is able to automatically generate
-> the low-level binding. A high-level safe binding is still highly recommended.
+> the low-level binding. A high-level safe binding is highly recommended (see
+> Recommendation [FFI-SAFEWRAPPING](#FFI-SAFEWRAPPING)).
 > Also some options of rust-bindgen may result in dangerous translations, in
 > particular `rustified_enum`.
 
