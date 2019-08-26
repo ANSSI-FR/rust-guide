@@ -167,8 +167,8 @@ Automated tools to generate bindings, such as [rust-bindgen] or
 
 > ### Recommendation {{#check FFI-AUTOMATE | Use automatic binding generator tools}}
 >
-> In a secure Rust development, automated generation tools should be use to
-> generate binding when possible and maintain them continually.
+> In a secure Rust development, automated generation tools should be used to
+> generate bindings when possible and to maintain them continually.
 
 <!-- -->
 
