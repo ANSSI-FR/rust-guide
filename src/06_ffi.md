@@ -393,7 +393,7 @@ int main() {
 }
 ```
 
-> ### Note
+> **Note**
 >
 > `Option<&T>` and `Option<&mut T>` for any `T: Sized` are allowable in FFI
 > instead of pointers with explicit nullity checks. Due to the Rust guaranteed
