@@ -253,8 +253,8 @@ the C-compatible types:
   a valid float),
 - compound types that contain a field of a non-robust type.
 
- On the other hand, integer types (`u*`/`i*`), packed compound types that
- contain no non-robust fields, for instance are *robust types*.
+On the other hand, integer types (`u*`/`i*`), packed compound types that contain
+no non-robust fields, for instance are *robust types*.
 
 Non-robust types are a difficulty when interfacing two languages. It revolves
 into deciding **which language of the two is responsible in asserting the
