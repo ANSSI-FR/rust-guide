@@ -546,6 +546,217 @@ pub unsafe extern "C" fn destroy_opaque(o: *mut Opaque) {
 }
 ```
 
+## Memory and resource management
+
+Programming languages handle memory in various ways. As a result, it is
+important to known when transmitting data between Rust and another language
+which language is responsible for reclaiming the memory space for this data.
+The same is true for other kind of resources such as sockets or files.
+
+Rust tracks variable ownership and lifetime to determine at compilation time if
+and when memory should be deallocated. Thanks to the `Drop` trait, one can
+exploit this system to reclaim other kind of resources such as file or network
+access. *Moving* some piece of data from Rust to a foreign language means also
+abandoning the possible reclamations associated with it.
+
+> ### Rule {{#check FFI-MEM-NODROP | Do not use types that implement `Drop` at FFI boundary}}
+>
+> In a secure Rust development, Rust code must not implement `Drop` for any
+> types that are directly transmitted to foreign code  (i.e. not through a
+> pointer or reference).
+
+In fact, it is advisable to only use `Copy` types. Note that `*const T` is
+`Copy` even if T is not.
+
+However if not reclaiming memory and resources is bad, using reclaimed memory or
+reclaiming twice some resources is worst from a security point of view. In order
+to correctly release a resource only once one must known which language is
+responsible for allocating and deallocating memory.
+
+> ### Rule {{#check FFI-MEM-OWNER | Ensure clear data ownership in FFI}}
+>
+> In a secure Rust development, when data of some type passes without copy
+> through a FFI boundary, one must ensure that:
+>
+> - A single language is responsible for both allocation and deallocation of
+>   data.
+> - The other language must not allocate or free the data directly but use
+>   dedicated foreign functions provided by the chosen language.
+
+Ownership is not enough. It remains to ensure the correct lifetime, mostly that
+no use occurs after reclamation. It is a lot more challenging. When the other
+language is responsible for the memory, the best way is to provide a safe
+wrapper around the foreign type:
+
+> ### Recommendation {{#check FFI-MEM-WRAPPING | Wrap foreign data in memory releasing wrapper}}
+>
+> In a secure Rust development, any non-sensitive foreign piece of data that are
+> allocated and deallocated in the foreign language should be encapsulated in a
+> `Drop` type in such a way as to provide automatic deallocation in Rust.
+
+A simple example of Rust wrapping over an external opaque type:
+
+```rust
+#use std::ops::Drop;
+#
+/// Private “raw” opaque foreign type Foo
+#[repr(C)]
+struct RawFoo {
+    _private: [u8; 0],
+}
+
+/// Private “raw” C API
+extern "C" {
+    fn foo_create() -> *mut RawFoo;
+    fn foo_do_something(this: *const RawFoo);
+    fn foo_destroy(this: *mut RawFoo);
+}
+
+/// Foo
+pub struct Foo(*mut RawFoo);
+#
+impl Foo {
+    /// Create a Foo
+    pub fn new() -> Option<Foo> {
+        let raw_ptr = unsafe { foo_create() };
+        if raw_ptr.is_null() {
+            None
+        } else {
+            Some(Foo(raw_ptr))
+        }
+    }
+#
+    /// Do something on a Foo
+    pub fn do_something(&self) {
+        unsafe { foo_do_something(self.0) }
+    }
+}
+#
+impl Drop for Foo {
+    fn drop(&mut self) {
+        if !self.0.is_null() {
+            unsafe { foo_destroy(self.0) }
+        }
+    }
+}
+
+#fn main() {
+#    let foo = Foo::new().expect("cannot create Foo");
+#    foo.do_something();
+#}
+```
+
+> **Warning**
+>
+> Because panics may lead to not running the `Drop::drop` method this solution
+> is not sufficient for sensitive deallocation (such as wiping sensitive data)
+> except if the code is guaranteed to never panic.
+>
+> For wiping sensitive data case, one could address the issue with a dedicated
+> panic handler.
+
+When the foreign language is the one exploiting Rust allocated resources, it is
+a lot more difficult to offer any guarantee.
+
+In C for instance there is no easy way to check that the appropriate destructor
+is checked. A possible approach is to exploit callbacks to ensure that the
+reclamation is done.
+
+The following Rust code is a **thread-unsafe** example of a C-compatible API
+that provide callback to ensure safe resource
+reclamation:
+
+```rust,noplaypen
+pub struct XtraResource {/*fields */}
+
+impl XtraResource {
+    pub fn new() -> Self {
+        XtraResource { /* ... */}
+    }
+    pub fn dosthg(&mut self) {
+        /*...*/
+    }
+}
+
+impl std::ops::Drop for XtraResource {
+    fn drop(&mut self) {
+        println!("xtra drop");
+    }
+}
+
+pub mod c_api {
+    use super::XtraResource;
+    use zeroize::Zeroize; // crate
+
+    const TAG: u32 = 0xDEADBEEF;
+
+    static mut COUNTER: u32 = 0;
+
+    pub struct CXtraResource {
+        tag: u32, // to detect accidental reuse
+        id: u32,
+        inner: XtraResource,
+    }
+
+    #[no_mangle]
+    pub unsafe extern "C" fn xtra_with(cb: extern "C" fn(*mut CXtraResource) -> ()) {
+        if letcatch_unwind(XtraResource)
+
+
+        let id = COUNTER;
+        COUNTER = COUNTER.wrapping_add(1);
+        // Use heap memory and do not provide pointer to stack to C code!
+        let mut boxed = Box::new(CXtraResource {
+            tag: TAG,
+            id,
+            inner: XtraResource::new(),
+        });
+
+        println!("running the callback on {:p}", boxed.as_ref());
+        cb(boxed.as_mut() as *mut CXtraResource);
+        if boxed.tag != TAG || boxed.id != id {
+#            println!("forgetting {:p}", boxed.as_ref());
+            // (...) error handling (should be fatal)
+            boxed.tag.zeroize(); // prevent reuse
+            std::mem::forget(boxed); // boxed is corrupted it should not be
+        } else {
+#            println!("freeing {:p}", boxed.as_ref());
+            boxed.tag.zeroize(); // prevent accidental reuse
+            // implicit boxed drop
+        }
+    }
+
+    #[no_mangle]
+    pub unsafe extern "C" fn xtra_dosthg(cxtra: *mut CXtraResource) {
+        if let Some(cxtra) = cxtra.as_mut() {
+            if cxtra.tag == TAG {
+                println!("doing something with {:p}", cxtra);
+                catch_unwind(cxtra.inner.dosthg);
+                return;)
+            }
+        }
+#        println!("doing nothing with {:p}", cxtra);
+    }
+}
+```
+
+A compatible C call:
+
+```c
+struct XtraResource;
+void xtra_with(void (*cb)(XtraResource* xtra));
+void xtra_sthg(XtraResource* xtra);
+
+void cb(XtraResource* xtra) {
+    // ()...) do anything with the proposed C API for XtraResource
+    xtra_sthg(xtra);
+}
+
+int main() {
+    xtra_with(cb);
+}
+```
+
 ## Panics with foreign code
 
 When calling Rust code from another language (e.g. C), the Rust code must
