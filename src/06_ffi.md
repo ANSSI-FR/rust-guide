@@ -686,9 +686,11 @@ impl std::ops::Drop for XtraResource {
 
 pub mod c_api {
     use super::XtraResource;
-    use zeroize::Zeroize; // crate
+    use std::panic::catch_unwind;
 
-    const TAG: u32 = 0xDEADBEEF;
+    const INVALID_TAG: u32 = 0;
+    const VALID_TAG: u32 = 0xDEAD_BEEF;
+    const ERR_TAG: u32 = 0xDEAF_CAFE;
 
     static mut COUNTER: u32 = 0;
 
@@ -700,42 +702,52 @@ pub mod c_api {
 
     #[no_mangle]
     pub unsafe extern "C" fn xtra_with(cb: extern "C" fn(*mut CXtraResource) -> ()) {
-        if letcatch_unwind(XtraResource)
-
-
+        let inner = if let Ok(res) = catch_unwind(XtraResource::new) {
+            res
+        } else {
+#            println!("cannot allocate resource");
+            return;
+        };
         let id = COUNTER;
+        let tag = VALID_TAG;
+
         COUNTER = COUNTER.wrapping_add(1);
         // Use heap memory and do not provide pointer to stack to C code!
-        let mut boxed = Box::new(CXtraResource {
-            tag: TAG,
-            id,
-            inner: XtraResource::new(),
-        });
+        let mut boxed = Box::new(CXtraResource { tag, id, inner });
 
-        println!("running the callback on {:p}", boxed.as_ref());
+#        println!("running the callback on {:p}", boxed.as_ref());
         cb(boxed.as_mut() as *mut CXtraResource);
-        if boxed.tag != TAG || boxed.id != id {
+
+        if boxed.id == id && (boxed.tag == VALID_TAG || boxed.tag == ERR_TAG) {
+#            println!("freeing {:p}", boxed.as_ref());
+            boxed.tag = INVALID_TAG; // prevent accidental reuse
+                                 // implicit boxed drop
+        } else {
 #            println!("forgetting {:p}", boxed.as_ref());
             // (...) error handling (should be fatal)
-            boxed.tag.zeroize(); // prevent reuse
+            boxed.tag = INVALID_TAG; // prevent reuse
             std::mem::forget(boxed); // boxed is corrupted it should not be
-        } else {
-#            println!("freeing {:p}", boxed.as_ref());
-            boxed.tag.zeroize(); // prevent accidental reuse
-            // implicit boxed drop
         }
     }
 
     #[no_mangle]
     pub unsafe extern "C" fn xtra_dosthg(cxtra: *mut CXtraResource) {
-        if let Some(cxtra) = cxtra.as_mut() {
-            if cxtra.tag == TAG {
-                println!("doing something with {:p}", cxtra);
-                catch_unwind(cxtra.inner.dosthg);
-                return;)
+        let do_it = || {
+            if let Some(cxtra) = cxtra.as_mut() {
+                if cxtra.tag == VALID_TAG {
+#                    println!("doing something with {:p}", cxtra);
+                    cxtra.inner.dosthg();
+                    return;
+                }
             }
-        }
-#        println!("doing nothing with {:p}", cxtra);
+            println!("doing nothing with {:p}", cxtra);
+        };
+        if catch_unwind(do_it).is_err() {
+            if let Some(cxtra) = cxtra.as_mut() {
+#                println!("panicking with {:p}", cxtra);
+                cxtra.tag = ERR_TAG;
+            }
+        };
     }
 }
 ```
