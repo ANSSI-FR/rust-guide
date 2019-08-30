@@ -481,7 +481,7 @@ environment.
 
 Concerning fieldless enums, crates like [`num_derive`] or [`num_enum`] allows
 developer to easily provide safe conversion from integer to enumeration and may
-be use to safely convert a integer (provided from a C `enum`) into a Rust enum.
+be use to safely convert an integer (provided from a C `enum`) into a Rust enum.
 
 [num_derive]: https://crates.io/crates/num_derive
 [num_enum]: https://crates.io/crates/num_enum
