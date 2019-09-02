@@ -5,7 +5,7 @@
 ### Naming
 
 As of now, the standard library is the de facto standard for naming things in
-the Rust world. However, an effort have been made to formalized it, first in
+the Rust world. However, an effort has been made to formalize it, first in
 [RFC 430], then in the [Rust API Guidelines].
 
 The basic rule consists in using :
@@ -29,7 +29,7 @@ some particular constructions:
 > Development of a secure application must follow the naming conventions
 > outlined in the [Rust API Guidelines].
 
-[rfc 430]: http://github.com/rust-lang/rfcs/blob/master/0430-finalizing-naming-conventions.md
+[rfc 430]: https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md
 
 [rust api guidelines]: https://rust-lang-nursery.github.io/api-guidelines/
 
