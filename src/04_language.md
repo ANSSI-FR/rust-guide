@@ -338,10 +338,10 @@ Notable exceptions are:
 
 Automatic implementation of `Send` (resp. `Sync`) occurs for a compound type
 (structure or enumeration) when all fields have `Send` types (resp. `Sync`
-types). Using an unstable feature (as of Rust 1.36.0), one can block the automatic
+types). Using an unstable feature (as of Rust 1.37.0), one can block the automatic
 implementation of those traits with a manual _negative implementation_:
 
-```rust,ignore
+```rust,ignore,noplaypen
 #![feature(option_builtin_traits)]
 
 struct SpecialType(u8);
@@ -354,11 +354,20 @@ library for the exceptions, and are automatically implemented when appropriate.
 As a result, the generated documentation is always explicit: a type implements
 either `Send` or `!Send` (resp. `Sync` or `Sync`).
 
+As a stable alternative to negative implementation, one can use a `PhantomData`
+field:
+
+```rust,noplayplen
+#use std::marker::PhantomData;
+#
+struct SpecialType(u8, PhandomData<*const ()>);
+```
+
 > ### Recommendation {{#check LANG-SYNC-TRAITS | Justify `Send` and `Sync` impl.}}
 >
-> In a Rust secure development, the manual implementation (or negative
-> implementation) of the `Send` and `Sync` traits should be avoided and, if
-> necessary, should be justified, documented and peer-reviewed.
+> In a Rust secure development, the manual implementation of the `Send` and
+> `Sync` traits should be avoided and, if necessary, should be justified,
+> documented and peer-reviewed.
 
 ### Comparison traits (`PartialEq`, `Eq`, `PartialOrd`, `Ord`)
 
