@@ -478,7 +478,67 @@ of `unsafe` blocks.
 There is a Clippy lint to check that `PartialEq::ne` is not defined in
 `PartialEq` implementations.
 
-<mark>TODO</mark> Recommendation: Derive when possible?
+Rust comes with a standard way to automatically construct implementations of the
+comparison traits through the `#[derive(...)]` attribute:
+
+- Derivation `PartialEq` implements `PartialEq<Self>` with a
+  **structural equality** providing that each subtype is `PartialEq<Self>`.
+- Derivation `Eq` implements the `Eq` marker trait providing that each subtype is `Eq`.
+- Derivation `PartialOrd` implements `PartialOrd<Self>` as a
+  **lexicographical order** providing that each subtype is `PartialOrd`.
+- Derivation `Ord` implements `Ord` as a **lexicographical order**
+  providing that each subtype is `Ord`.
+
+For instance, the short code:
+
+```rust,noplaypen
+#[derive(PartialEq, Eq, PartialOrd, Ord)]
+struct T1{
+    a: u8, b: u8
+};
+```
+
+lets us compare two `T1`s easily. For instance, the following expressions are
+`true`:
+
+- `&T1 {a: 0, b: 0} == Box::new(T1 {a: 0, b: 0}).as_ref()`
+- `T1 {a: 1, b: 0} > T1 {a: 0, b: 0}`
+- `T1 {a: 1, b: 1} > T1 {a: 1, b: 0}`
+
+> **Warning**
+>
+> Derivation of comparison traits for compound types depends on the
+> **field order** not on their name.
+>
+> First, it means changing the order of two fields change the order. For
+> instance, provided this second ordered type:
+>
+> ```rust,noplaypen
+> #[derive(PartialEq, Eq, PartialOrd, Ord)]
+> struct T2{
+>    b: u8, a: u8
+> };
+> ```
+>
+> we have `T1 {a: 1, b: 0} > T1 {a: 0, b: 1}` but `T2 {a: 1, b: 0} < T2 {a: 0, b: 1}`.
+>
+> Second, if one of the underlying comparison panics, the order may change the
+> result due to the use of short-circuit logic in the automatic implementation.
+>
+> For enums, the derived comparisons depends first on the **variant order** then
+> on the field order.
+
+<!-- -->
+
+Despite the ordering caveat, derived comparisons are a lot less error-prone
+than manual ones and makes code more shorter and easier to maintain:
+
+> ### Recommendation {{#check LANG-CMP-DERIVE | Derive comparison traits when possible}}
+>
+> In a secure Rust development, the implementation of standard comparison traits
+> should be automatically derived with `#[derive(...)]` when structural equality
+> and lexicographical comparison is needed. Any manual implementation of
+> standard comparison traits should be documented and justified.
 
 ## Macros
 
