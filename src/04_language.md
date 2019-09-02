@@ -307,9 +307,9 @@ As a stable alternative to negative implementation, one can use a `PhantomData`
 field:
 
 ```rust,noplayplen
-#use std::marker::PhantomData;
+# use std::marker::PhantomData;
 #
-struct SpecialType(u8, PhandomData<*const ()>);
+struct SpecialType(u8, PhantomData<*const ()>);
 ```
 
 > ### Recommendation {{#check LANG-SYNC-TRAITS | Justify `Send` and `Sync` impl.}}
