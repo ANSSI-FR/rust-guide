@@ -4,6 +4,8 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>The language - Secure Rust Guidelines</title>
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Recommendations for secure applications development with Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,7 +58,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -75,7 +77,10 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development Environment</a></li><li><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li><a href="04_language.html" class="active"><strong aria-hidden="true">4.</strong> The language</a></li><li><a href="05_test_fuzz.html"><strong aria-hidden="true">5.</strong> Test and fuzzing</a></li><li class="affix"><a href="LICENCE.html">Licence</a></li><li class="affix"><a href="checklist.html">Checklist</a></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development Environment</a></li><li><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li><a href="04_language.html" class="active"><strong aria-hidden="true">4.</strong> The language</a></li><li><a href="05_test_fuzz.html"><strong aria-hidden="true">5.</strong> Test and fuzzing</a></li><li class="affix"><a href="LICENCE.html">Licence</a></li><li class="affix"><a href="checklist.html">Checklist</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -105,7 +110,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Secure Rust Guidelines</h1> 
+                        <h1 class="menu-title">Secure Rust Guidelines</h1>
 
                         <div class="right-buttons">
                             <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -140,11 +145,34 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#the-rust-language" id="the-rust-language"><h1>The Rust language</h1></a>
-<a class="header" href="#generalities" id="generalities"><h2>Generalities</h2></a>
-<a class="header" href="#naming" id="naming"><h3>Naming</h3></a>
-<p><mark>TODO</mark>: recommendations about correctly naming things (RFC 430).</p>
-<a class="header" href="#memory-management" id="memory-management"><h3>Memory management</h3></a>
+                        <h1><a class="header" href="#the-rust-language" id="the-rust-language">The Rust language</a></h1>
+<h2><a class="header" href="#generalities" id="generalities">Generalities</a></h2>
+<h3><a class="header" href="#naming" id="naming">Naming</a></h3>
+<p>As of now, the standard library is the de facto standard for naming things in
+the Rust world. However, an effort has been made to formalize it, first in
+<a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">RFC 430</a>, then in the <a href="https://rust-lang-nursery.github.io/api-guidelines/">Rust API Guidelines</a>.</p>
+<p>The basic rule consists in using :</p>
+<ul>
+<li><code>UpperCamelCase</code> for types, traits, enum variants,</li>
+<li><code>snake_case</code> for functions, macros, variables and modules,</li>
+<li><code>SCREAMING_SNAKE_CASE</code> for statics and constants.</li>
+</ul>
+<p>The <a href="https://rust-lang-nursery.github.io/api-guidelines/">Rust API Guidelines</a> also prescribes more precise naming conventions for
+some particular constructions:</p>
+<ul>
+<li>(C-CONV) for conversion methods (<code>as_</code>, <code>to_</code>, <code>into_</code>),</li>
+<li>(C-GETTER) for getters,</li>
+<li>(C-ITER) for iterator-producing methods,</li>
+<li>(C-ITER-TY) for iterator types,</li>
+<li>(C-FEATURE) for feature naming,</li>
+<li>(C-WORD-ORDER) for word order consistency.</li>
+</ul>
+<blockquote>
+<h3><a class="header" href="#rule-a-idlang-namingalang-naming" id="rule-a-idlang-namingalang-naming">Rule <a id="LANG-NAMING"></a>LANG-NAMING</a></h3>
+<p>Development of a secure application must follow the naming conventions
+outlined in the <a href="https://rust-lang-nursery.github.io/api-guidelines/">Rust API Guidelines</a>.</p>
+</blockquote>
+<h3><a class="header" href="#memory-management" id="memory-management">Memory management</a></h3>
 <p><mark>TODO</mark>: explain safe allocations/deallocations, ownership/borrowing,
 and identify language constructs that may break memory safety (for instance,
 unsound behaviors in older versions of the compiler).</p>
@@ -153,7 +181,7 @@ uninitialized memory (except if using <code>std::mem::uninitialized</code>).
 However, zeroing memory is useful for sensitive variables, especially if the
 Rust code is used through FFI.</p>
 <blockquote>
-<a class="header" href="#rule-a-idmem-zeroamem-zero" id="rule-a-idmem-zeroamem-zero"><h3>Rule <a id="MEM-ZERO"></a>MEM-ZERO:</h3></a>
+<h3><a class="header" href="#rule-a-idmem-zeroamem-zero" id="rule-a-idmem-zeroamem-zero">Rule <a id="MEM-ZERO"></a>MEM-ZERO:</a></h3>
 <p>Variables containing sensitive data must be zeroized after use, using
 functions that will not be removed by the compiler optimizations, like
 <code>std::ptr::write_volatile</code> or the <code>zeroize</code> crate.</p>
@@ -179,7 +207,7 @@ impl Drop for ZU32 {
 } // i is freed here
 # }
 </code></pre></pre>
-<a class="header" href="#unsafe-code" id="unsafe-code"><h3>Unsafe code</h3></a>
+<h3><a class="header" href="#unsafe-code" id="unsafe-code">Unsafe code</a></h3>
 <p>The joint utilization of the type system and the ownership system aims to
 enforce safety regarding the memory management in Rust's programs. So the
 language aims to avoid memory overflows, null or invalid pointer constructions,
@@ -187,7 +215,7 @@ and data races.
 To perform risky actions such as system calls, type coercions, or memory
 pointers direct manipulations, the language provides the <code>unsafe</code> keyword.</p>
 <blockquote>
-<a class="header" href="#rule-a-idlang-unsafealang-unsafe" id="rule-a-idlang-unsafealang-unsafe"><h3>Rule <a id="LANG-UNSAFE"></a>LANG-UNSAFE:</h3></a>
+<h3><a class="header" href="#rule-a-idlang-unsafealang-unsafe" id="rule-a-idlang-unsafealang-unsafe">Rule <a id="LANG-UNSAFE"></a>LANG-UNSAFE:</a></h3>
 <p>For a secured development, the <code>unsafe</code> blocks must be avoided. Afterward,
 we list the only cases where <code>unsafe</code> may be used, provided that they come
 with a proper justification:</p>
@@ -216,7 +244,7 @@ tries to dereference a pointer passed as an argument.</p>
 <p>With the exception of these cases, <code>#[forbid(unsafe_code)]</code> must appear in
 <code>main.rs</code> to generate compilation errors if <code>unsafe</code> is used in the code base.</p>
 </blockquote>
-<a class="header" href="#integer-overflows" id="integer-overflows"><h3>Integer overflows</h3></a>
+<h3><a class="header" href="#integer-overflows" id="integer-overflows">Integer overflows</a></h3>
 <p>Although some verification is performed by Rust regarding the potential
 integer overflows, precautions should be taken when executing arithmetic
 operations on integers.</p>
@@ -251,33 +279,33 @@ else { println!(&quot;{}&quot;, res); }
 # }
 </code></pre></pre>
 <blockquote>
-<a class="header" href="#rule-a-idlang-arithalang-arith" id="rule-a-idlang-arithalang-arith"><h3>Rule <a id="LANG-ARITH"></a>LANG-ARITH:</h3></a>
+<h3><a class="header" href="#rule-a-idlang-arithalang-arith" id="rule-a-idlang-arithalang-arith">Rule <a id="LANG-ARITH"></a>LANG-ARITH:</a></h3>
 <p>When assuming that an arithmetic operation can produce an overflow, the
 specialized functions <code>overflowing_&lt;op&gt;</code>, <code>wrapping_&lt;op&gt;</code>, or the
 <code>Wrapping</code> type must be used.</p>
 </blockquote>
-<a class="header" href="#type-system" id="type-system"><h2>Type system</h2></a>
+<h2><a class="header" href="#type-system" id="type-system">Type system</a></h2>
 <p><mark>TODO</mark>: identify pitfalls with the type system (for instance,
 misunderstanding of which code is actually executed when implementing complex
 patterns with traits).</p>
-<a class="header" href="#error-handling" id="error-handling"><h2>Error handling</h2></a>
+<h2><a class="header" href="#error-handling" id="error-handling">Error handling</a></h2>
 <p><mark>TODO</mark>: explicit good practices in error handling.</p>
 <p>The <code>Result</code> type is the preferred way of handling functions that can fail.
 A <code>Result</code> object must be tested, and never ignored.</p>
 <blockquote>
-<a class="header" href="#recommendation-a-idlang-errwrapalang-errwrap" id="recommendation-a-idlang-errwrapalang-errwrap"><h3>Recommendation <a id="LANG-ERRWRAP"></a>LANG-ERRWRAP:</h3></a>
+<h3><a class="header" href="#recommendation-a-idlang-errwrapalang-errwrap" id="recommendation-a-idlang-errwrapalang-errwrap">Recommendation <a id="LANG-ERRWRAP"></a>LANG-ERRWRAP:</a></h3>
 <p>A crate can implement its own Error type, wrapping all possible errors.
 It must be careful to make this type exception-safe (RFC 1236), and implement
 <code>Error + Send + Sync + 'static</code> as well as <code>Display</code>.</p>
 </blockquote>
 <blockquote>
-<a class="header" href="#recommendation-a-idlang-errdoalang-errdo" id="recommendation-a-idlang-errdoalang-errdo"><h3>Recommendation <a id="LANG-ERRDO"></a>LANG-ERRDO:</h3></a>
+<h3><a class="header" href="#recommendation-a-idlang-errdoalang-errdo" id="recommendation-a-idlang-errdoalang-errdo">Recommendation <a id="LANG-ERRDO"></a>LANG-ERRDO:</a></h3>
 <p>The <code>?</code> operator should be used to improve readability of code.
 The <code>try!</code> macro should not be used.</p>
 </blockquote>
 <p>The <a href="https://crates.io/crates/error-chain">error-chain</a> and
 <a href="https://crates.io/crates/failure">failure</a> crates can be used to wrap errors.</p>
-<a class="header" href="#panics" id="panics"><h3>Panics</h3></a>
+<h3><a class="header" href="#panics" id="panics">Panics</a></h3>
 <p>Explicit error handling (<code>Result</code>) should always be preferred instead of calling
 <code>panic</code>.  The cause of the error should be available, and generic errors should
 be avoided.</p>
@@ -294,12 +322,12 @@ fail and cause the code to panic.</p>
 <li>string formatting using <code>format!</code></li>
 </ul>
 <blockquote>
-<a class="header" href="#rule-a-idlang-nopanicalang-nopanic" id="rule-a-idlang-nopanicalang-nopanic"><h3>Rule <a id="LANG-NOPANIC"></a>LANG-NOPANIC:</h3></a>
+<h3><a class="header" href="#rule-a-idlang-nopanicalang-nopanic" id="rule-a-idlang-nopanicalang-nopanic">Rule <a id="LANG-NOPANIC"></a>LANG-NOPANIC:</a></h3>
 <p>Functions or instructions that can cause the code to panic at runtime must not
 be used.</p>
 </blockquote>
 <blockquote>
-<a class="header" href="#rule-a-idlang-arrindexingalang-arrindexing" id="rule-a-idlang-arrindexingalang-arrindexing"><h3>Rule <a id="LANG-ARRINDEXING"></a>LANG-ARRINDEXING:</h3></a>
+<h3><a class="header" href="#rule-a-idlang-arrindexingalang-arrindexing" id="rule-a-idlang-arrindexingalang-arrindexing">Rule <a id="LANG-ARRINDEXING"></a>LANG-ARRINDEXING:</a></h3>
 <p>Array indexing must be properly tested, or the <code>get</code> method should be used to
 return an <code>Option</code>.</p>
 </blockquote>
@@ -310,19 +338,19 @@ crate can catch all cases. Drawback: all functions need to be marked as
 <mark>TODO</mark> Another possibility:
 [rustig](https://github.com/Technolution/rustig) (doesn't build here)
 -->
-<a class="header" href="#ffi-and-panics" id="ffi-and-panics"><h3>FFI and panics</h3></a>
+<h3><a class="header" href="#ffi-and-panics" id="ffi-and-panics">FFI and panics</a></h3>
 <p>When calling Rust code from another language (for ex. C), the Rust code must
 be careful to never panic.
 Unwinding from Rust code into foreign code results in undefined behavior.</p>
 <blockquote>
-<a class="header" href="#rule-a-idlang-ffipanicalang-ffipanic" id="rule-a-idlang-ffipanicalang-ffipanic"><h3>Rule <a id="LANG-FFIPANIC"></a>LANG-FFIPANIC:</h3></a>
+<h3><a class="header" href="#rule-a-idlang-ffipanicalang-ffipanic" id="rule-a-idlang-ffipanicalang-ffipanic">Rule <a id="LANG-FFIPANIC"></a>LANG-FFIPANIC:</a></h3>
 <p>Rust code called from FFI must either ensure the function cannot panic, or use
 <code>catch_unwind</code> or the <code>std::panic</code> module to ensure the rust code will not
 abort or return in an unstable state.</p>
 </blockquote>
 <p>Note that <code>catch_unwind</code> will only catch unwinding panics, not those that abort
 the process.</p>
-<a class="header" href="#standard-library-traits" id="standard-library-traits"><h2>Standard library traits</h2></a>
+<h2><a class="header" href="#standard-library-traits" id="standard-library-traits">Standard library traits</a></h2>
 <ul>
 <li>
 <p>Drop <mark>TODO</mark></p>
@@ -338,7 +366,7 @@ to implement those traits.</p>
 <p>PartialOrd, Ord, Eq <mark>TODO</mark></p>
 </li>
 </ul>
-<a class="header" href="#macros" id="macros"><h2>Macros</h2></a>
+<h2><a class="header" href="#macros" id="macros">Macros</a></h2>
 <p><mark>TODO</mark>: cyclomatic complexity of the macro expanded code, recursion
 limits, ...</p>
 

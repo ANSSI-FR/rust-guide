@@ -4,6 +4,8 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Libraries - Secure Rust Guidelines</title>
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Recommendations for secure applications development with Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,7 +58,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -75,7 +77,10 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development Environment</a></li><li><a href="03_libraries.html" class="active"><strong aria-hidden="true">3.</strong> Libraries</a></li><li><a href="04_language.html"><strong aria-hidden="true">4.</strong> The language</a></li><li><a href="05_test_fuzz.html"><strong aria-hidden="true">5.</strong> Test and fuzzing</a></li><li class="affix"><a href="LICENCE.html">Licence</a></li><li class="affix"><a href="checklist.html">Checklist</a></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development Environment</a></li><li><a href="03_libraries.html" class="active"><strong aria-hidden="true">3.</strong> Libraries</a></li><li><a href="04_language.html"><strong aria-hidden="true">4.</strong> The language</a></li><li><a href="05_test_fuzz.html"><strong aria-hidden="true">5.</strong> Test and fuzzing</a></li><li class="affix"><a href="LICENCE.html">Licence</a></li><li class="affix"><a href="checklist.html">Checklist</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -105,7 +110,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Secure Rust Guidelines</h1> 
+                        <h1 class="menu-title">Secure Rust Guidelines</h1>
 
                         <div class="right-buttons">
                             <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -140,7 +145,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#libraries" id="libraries"><h1>Libraries</h1></a>
+                        <h1><a class="header" href="#libraries" id="libraries">Libraries</a></h1>
 <p>In addition to a standard library, Rust provides an easy way to import libraries
 in a project, thanks to <code>cargo</code>. The libraries, known as <em>crates</em> in the Rust
 ecosystem, are imported from the open-source components central repository
@@ -151,31 +156,31 @@ maintenance can be irregular or interrupted. The usage of each component from
 this repository should be justified, and the developer should validate the
 correct application of rules from the current guide in its code. Several tools
 can aid in that task.</p>
-<a class="header" href="#cargo-outdated" id="cargo-outdated"><h2>cargo-outdated</h2></a>
+<h2><a class="header" href="#cargo-outdated" id="cargo-outdated">cargo-outdated</a></h2>
 <p>Cargo-outdated tool allows one to easily manage dependencies versions.</p>
 <p>For a given crate, it lists current dependencies versions (using its
 <code>Cargo.toml</code>), and checks latest compatible version and also latest general
 version.</p>
 <blockquote>
-<a class="header" href="#rule-a-idlibs-outdatedalibs-outdated" id="rule-a-idlibs-outdatedalibs-outdated"><h3>Rule <a id="LIBS-OUTDATED"></a>LIBS-OUTDATED:</h3></a>
+<h3><a class="header" href="#rule-a-idlibs-outdatedalibs-outdated" id="rule-a-idlibs-outdatedalibs-outdated">Rule <a id="LIBS-OUTDATED"></a>LIBS-OUTDATED:</a></h3>
 <p>The <code>cargo-outdated</code> tool must be used to check dependencies status. Then,
 each outdated dependency must be updated or the choice of the version must be
 justified.</p>
 </blockquote>
-<a class="header" href="#cargo-audit" id="cargo-audit"><h2>cargo-audit</h2></a>
+<h2><a class="header" href="#cargo-audit" id="cargo-audit">cargo-audit</a></h2>
 <p>Cargo-audit tool allows one to easily check for security vulnerabilities
 reported to the RustSec Advisory Database.</p>
 <blockquote>
-<a class="header" href="#rule-a-idlibs-auditalibs-audit" id="rule-a-idlibs-auditalibs-audit"><h3>Rule <a id="LIBS-AUDIT"></a>LIBS-AUDIT:</h3></a>
+<h3><a class="header" href="#rule-a-idlibs-auditalibs-audit" id="rule-a-idlibs-auditalibs-audit">Rule <a id="LIBS-AUDIT"></a>LIBS-AUDIT:</a></h3>
 <p>The <code>cargo-audit</code> tool must be used to check for known vulnerabilities in
 dependencies.</p>
 </blockquote>
-<a class="header" href="#unsafe-code-in-libraries" id="unsafe-code-in-libraries"><h2>Unsafe code in libraries</h2></a>
+<h2><a class="header" href="#unsafe-code-in-libraries" id="unsafe-code-in-libraries">Unsafe code in libraries</a></h2>
 <p><mark>TODO</mark>: <code>unsafe</code> blocks are discussed in the following chapter.
 One needs to ensure that this kind of block is not misused in project
 dependencies.</p>
 <blockquote>
-<a class="header" href="#recommendation-a-idlibs-unsafealibs-unsafe" id="recommendation-a-idlibs-unsafealibs-unsafe"><h3>Recommendation <a id="LIBS-UNSAFE"></a>LIBS-UNSAFE:</h3></a>
+<h3><a class="header" href="#recommendation-a-idlibs-unsafealibs-unsafe" id="recommendation-a-idlibs-unsafealibs-unsafe">Recommendation <a id="LIBS-UNSAFE"></a>LIBS-UNSAFE:</a></h3>
 <p><mark>TODO</mark>: check that no <code>unsafe</code> blocks appear in the imported
 dependencies (with a tool?).</p>
 </blockquote>

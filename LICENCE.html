@@ -4,6 +4,8 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Licence - Secure Rust Guidelines</title>
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Recommendations for secure applications development with Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,7 +58,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -75,7 +77,10 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development Environment</a></li><li><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li><a href="04_language.html"><strong aria-hidden="true">4.</strong> The language</a></li><li><a href="05_test_fuzz.html"><strong aria-hidden="true">5.</strong> Test and fuzzing</a></li><li class="affix"><a href="LICENCE.html" class="active">Licence</a></li><li class="affix"><a href="checklist.html">Checklist</a></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development Environment</a></li><li><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li><a href="04_language.html"><strong aria-hidden="true">4.</strong> The language</a></li><li><a href="05_test_fuzz.html"><strong aria-hidden="true">5.</strong> Test and fuzzing</a></li><li class="affix"><a href="LICENCE.html" class="active">Licence</a></li><li class="affix"><a href="checklist.html">Checklist</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -105,7 +110,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Secure Rust Guidelines</h1> 
+                        <h1 class="menu-title">Secure Rust Guidelines</h1>
 
                         <div class="right-buttons">
                             <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -140,8 +145,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#open-licence-20licence-ouverte-20" id="open-licence-20licence-ouverte-20"><h1>OPEN LICENCE 2.0/LICENCE OUVERTE 2.0</h1></a>
-<a class="header" href="#reuse-of-the-information-covered-by-this-licence" id="reuse-of-the-information-covered-by-this-licence"><h2>“Reuse” of the “Information” covered by this licence</h2></a>
+                        <h1><a class="header" href="#open-licence-20licence-ouverte-20" id="open-licence-20licence-ouverte-20">OPEN LICENCE 2.0/LICENCE OUVERTE 2.0</a></h1>
+<h2><a class="header" href="#reuse-of-the-information-covered-by-this-licence" id="reuse-of-the-information-covered-by-this-licence">“Reuse” of the “Information” covered by this licence</a></h2>
 <p>The “Grantor” grants the “Reuser” the free, non-exclusive right to “Reuse” the “Information” subject of this licence, for commercial or non-commercial purposes, worldwide and for an unlimited period, in accordance with the conditions stated below.</p>
 <p><strong>The “Reuser” is free to reuse the “Information”:</strong></p>
 <ul>
@@ -159,19 +164,19 @@
 <p>“Ministry of xxx—Original data downloaded from <code>http://www.data.gouv.fr/fr/datasets/xxx/</code>, updated on 14 February 2017”.</p>
 </blockquote>
 <p>This acknowledgement of authorship does not confer any official status on the “Reuse” of the “Information”, and must not suggest any sort of recognition or endorsement on the part of the “Grantor”, or any other public entity, of the “Reuser” or of their “Reuse”.</p>
-<a class="header" href="#personal-data" id="personal-data"><h2>Personal data</h2></a>
+<h2><a class="header" href="#personal-data" id="personal-data">Personal data</a></h2>
 <p>The “Information” made available may contain “Personal data” that may be subject to “Reuse”. If this is the case, the “Grantor” informs the “Reuser” about its existence. The “Information” may be freely reused, within the rights granted by this licence, subject to compliance with the legal framework relating to personal data protection.</p>
-<a class="header" href="#intellectual-property-rights" id="intellectual-property-rights"><h2>Intellectual property rights</h2></a>
+<h2><a class="header" href="#intellectual-property-rights" id="intellectual-property-rights">Intellectual property rights</a></h2>
 <p>It is guaranteed to The “Reuser” that potential “Intellectual property rights” held by third parties or by the “Grantor” on “Information” do not interfere with the rights granted by this licence.</p>
 <p>When the “Grantor” holds transferable “Intellectual property rights” on the “Information”, he/she assigns these to the “Reuser” on a non-exclusive basis, free of charge, worldwide, for the entire duration of the “Intellectual property rights”, and the “Reuser” is free to use the “Information” for any purpose that complies with the rights and conditions defined in this licence.</p>
-<a class="header" href="#liability" id="liability"><h2>Liability</h2></a>
+<h2><a class="header" href="#liability" id="liability">Liability</a></h2>
 <p>The “Information” is made available as it is produced or received by the “Grantor”, without any other express or tacit guarantee than those set out in this licence. The “Grantor” does not guarantee the absence of errors or inaccuracies in the “Information”, nor a continuous supply of the “Information”. He/she cannot be held responsible for any loss, prejudice or damage of any kind caused to third parties as a result of the “Reuse”.</p>
 <p>The “Reuser” is solely responsible for the “Reuse” of the “Information”. This “Reuse” must not mislead third parties as to the contents of the “Information”, its source or its date of update.</p>
-<a class="header" href="#applicable-legislation" id="applicable-legislation"><h2>Applicable legislation</h2></a>
+<h2><a class="header" href="#applicable-legislation" id="applicable-legislation">Applicable legislation</a></h2>
 <p>This licence is governed by French law.</p>
-<a class="header" href="#compatibility-of-this-licence" id="compatibility-of-this-licence"><h3>Compatibility of this licence</h3></a>
+<h3><a class="header" href="#compatibility-of-this-licence" id="compatibility-of-this-licence">Compatibility of this licence</a></h3>
 <p>This licence has been designed to be compatible with any free licence that at least requires an acknowledgement of authorship, and specifically with the previous version of this licence as well as with the following licences: United Kingdom’s “Open Government Licence” (OGL), Creative Commons’ “Creative Commons Attribution” (CC-BY) and Open Knowledge Foundation’s “Open Data Commons Attribution” (ODC-BY).</p>
-<a class="header" href="#definitions" id="definitions"><h2>Definitions</h2></a>
+<h2><a class="header" href="#definitions" id="definitions">Definitions</a></h2>
 <p>Within the meaning of this licence, are to be considered as :</p>
 <ul>
 <li>The “Grantor”: any person granting the right to “Reuse” “Information” under the rights and conditions set out in this licence.</li>
@@ -187,7 +192,7 @@
 <li>“Derived information”: any new data or information created directly from the “Information” or from a combination of the “Information” and other data or information not subject to this licence.</li>
 <li>“Intellectual property rights”: all rights identified as such under the code de la propriété intellectuelle (including copyright, rights related to copyright, sui generis rights of database producers, etc.).</li>
 </ul>
-<a class="header" href="#about-this-licence" id="about-this-licence"><h2>About this licence</h2></a>
+<h2><a class="header" href="#about-this-licence" id="about-this-licence">About this licence</a></h2>
 <p>This licence is intended to be used by administrations for the reuse of their public information. It can also be used by any individual wishing to supply “Information” under the conditions defined in this licence.</p>
 <p>France has a comprehensive legal framework aiming at the spontaneous dissemination by the administrations of their public information in order to ensure the widest possible reuse of this information.</p>
 <p>The right to “Reuse” the administrations’ “Information” is governed by the code des relations entre le public et l’administration  (CRPA).</p>

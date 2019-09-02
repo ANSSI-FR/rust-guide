@@ -4,6 +4,8 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Test and fuzzing - Secure Rust Guidelines</title>
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Recommendations for secure applications development with Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,7 +58,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -75,7 +77,10 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development Environment</a></li><li><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li><a href="04_language.html"><strong aria-hidden="true">4.</strong> The language</a></li><li><a href="05_test_fuzz.html" class="active"><strong aria-hidden="true">5.</strong> Test and fuzzing</a></li><li class="affix"><a href="LICENCE.html">Licence</a></li><li class="affix"><a href="checklist.html">Checklist</a></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development Environment</a></li><li><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li><a href="04_language.html"><strong aria-hidden="true">4.</strong> The language</a></li><li><a href="05_test_fuzz.html" class="active"><strong aria-hidden="true">5.</strong> Test and fuzzing</a></li><li class="affix"><a href="LICENCE.html">Licence</a></li><li class="affix"><a href="checklist.html">Checklist</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -105,7 +110,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Secure Rust Guidelines</h1> 
+                        <h1 class="menu-title">Secure Rust Guidelines</h1>
 
                         <div class="right-buttons">
                             <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -140,11 +145,11 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#tests-and-fuzzing" id="tests-and-fuzzing"><h1>Tests and fuzzing</h1></a>
-<a class="header" href="#writing-tests" id="writing-tests"><h2>Writing tests</h2></a>
+                        <h1><a class="header" href="#tests-and-fuzzing" id="tests-and-fuzzing">Tests and fuzzing</a></h1>
+<h2><a class="header" href="#writing-tests" id="writing-tests">Writing tests</a></h2>
 <p><mark>TODO</mark>: good practices in writing tests.</p>
-<a class="header" href="#fuzzing" id="fuzzing"><h2>Fuzzing</h2></a>
-<a class="header" href="#cargo-fuzz" id="cargo-fuzz"><h3>cargo-fuzz</h3></a>
+<h2><a class="header" href="#fuzzing" id="fuzzing">Fuzzing</a></h2>
+<h3><a class="header" href="#cargo-fuzz" id="cargo-fuzz">cargo-fuzz</a></h3>
 <p><mark>TODO</mark>: good practices in fuzzing programs or part of programs.</p>
 
                     </main>

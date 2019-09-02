@@ -4,6 +4,8 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Checklist - Secure Rust Guidelines</title>
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Recommendations for secure applications development with Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,7 +58,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -75,7 +77,10 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development Environment</a></li><li><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li><a href="04_language.html"><strong aria-hidden="true">4.</strong> The language</a></li><li><a href="05_test_fuzz.html"><strong aria-hidden="true">5.</strong> Test and fuzzing</a></li><li class="affix"><a href="LICENCE.html">Licence</a></li><li class="affix"><a href="checklist.html" class="active">Checklist</a></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development Environment</a></li><li><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li><a href="04_language.html"><strong aria-hidden="true">4.</strong> The language</a></li><li><a href="05_test_fuzz.html"><strong aria-hidden="true">5.</strong> Test and fuzzing</a></li><li class="affix"><a href="LICENCE.html">Licence</a></li><li class="affix"><a href="checklist.html" class="active">Checklist</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -105,7 +110,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Secure Rust Guidelines</h1> 
+                        <h1 class="menu-title">Secure Rust Guidelines</h1>
 
                         <div class="right-buttons">
                             <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -140,34 +145,49 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#checklist" id="checklist"><h1>Checklist</h1></a>
+                        <h1><a class="header" href="#checklist" id="checklist">Checklist</a></h1>
 <ul>
 <li>
 <p>Development Environment:</p>
 <ul>
-<li>[ ] Use a stable compilation toolchain (<a href="02_devenv.html#DENV-STABLE">DENV-STABLE</a>)</li>
-<li>[ ] Use Rust linter (cargo-clippy) (<a href="02_devenv.html#DENV-LINTER">DENV-LINTER</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Use a stable compilation toolchain (<a href="02_devenv.html#DENV-STABLE">DENV-STABLE</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Use Rust linter (cargo-clippy) (<a href="02_devenv.html#DENV-LINTER">DENV-LINTER</a>)</li>
 </ul>
 </li>
 <li>
 <p>Libraries:</p>
 <ul>
-<li>[ ] Check for outdated dependencies versions (cargo-outdated) (<a href="03_libraries.html#LIBS-OUTDATED">LIBS-OUTDATED</a>)</li>
-<li>[ ] Check for security vulnerabilities report on dependencies (cargo-audit) (<a href="03_libraries.html#LIBS-AUDIT">LIBS-AUDIT</a>)</li>
-<li>[ ] Check for unsafe code in dependencies (<a href="03_libraries.html#LIBS-UNSAFE">LIBS-UNSAFE</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Check for outdated dependencies versions (cargo-outdated) (<a href="03_libraries.html#LIBS-OUTDATED">LIBS-OUTDATED</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Check for security vulnerabilities report on dependencies (cargo-audit) (<a href="03_libraries.html#LIBS-AUDIT">LIBS-AUDIT</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Check for unsafe code in dependencies (<a href="03_libraries.html#LIBS-UNSAFE">LIBS-UNSAFE</a>)</li>
 </ul>
 </li>
 <li>
 <p>The language:</p>
 <ul>
-<li>[ ] Zeroize memory of sensitive data after use (<a href="04_language.html#MEM-ZERO">MEM-ZERO</a>)</li>
-<li>[ ] Don't use unsafe blocks (<a href="04_language.html#LANG-UNSAFE">LANG-UNSAFE</a>)</li>
-<li>[ ] Use appropriate arithmetic operations regarding potential overflows (<a href="04_language.html#LANG-ARITH">LANG-ARITH</a>)</li>
-<li>[ ] Implement custom <code>Error</code> type, wrapping all possible errors (<a href="04_language.html#LANG-ERRWRAP">LANG-ERRWRAP</a>)</li>
-<li>[ ] Use the <code>?</code> operator and do not use the <code>try!</code> macro (<a href="04_language.html#LANG-ERRDO">LANG-ERRDO</a>)</li>
-<li>[ ] Don't use functions that can cause <code>panic!</code> (<a href="04_language.html#LANG-NOPANIC">LANG-NOPANIC</a>)</li>
-<li>[ ] Test properly array indexing or use the <code>get</code> method (<a href="04_language.html#LANG-ARRINDEXING">LANG-ARRINDEXING</a>)</li>
-<li>[ ] Handle correctly <code>panic!</code> in FFI (<a href="04_language.html#LANG-FFIPANIC">LANG-FFIPANIC</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Respect naming conventions (<a href="04_language.html#LANG-NAMING">LANG-NAMING</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Zeroize memory of sensitive data after use (<a href="04_language.html#MEM-ZERO">MEM-ZERO</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Don't use unsafe blocks (<a href="04_language.html#LANG-UNSAFE">LANG-UNSAFE</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Use appropriate arithmetic operations regarding potential overflows (<a href="04_language.html#LANG-ARITH">LANG-ARITH</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Implement custom <code>Error</code> type, wrapping all possible errors (<a href="04_language.html#LANG-ERRWRAP">LANG-ERRWRAP</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Use the <code>?</code> operator and do not use the <code>try!</code> macro (<a href="04_language.html#LANG-ERRDO">LANG-ERRDO</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Don't use functions that can cause <code>panic!</code> (<a href="04_language.html#LANG-NOPANIC">LANG-NOPANIC</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Test properly array indexing or use the <code>get</code> method (<a href="04_language.html#LANG-ARRINDEXING">LANG-ARRINDEXING</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Handle correctly <code>panic!</code> in FFI (<a href="04_language.html#LANG-FFIPANIC">LANG-FFIPANIC</a>)</li>
 </ul>
 </li>
 </ul>

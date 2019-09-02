@@ -4,6 +4,8 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Introduction - Secure Rust Guidelines</title>
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Recommendations for secure applications development with Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,7 +58,7 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
@@ -75,7 +77,10 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="01_introduction.html" class="active"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development Environment</a></li><li><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li><a href="04_language.html"><strong aria-hidden="true">4.</strong> The language</a></li><li><a href="05_test_fuzz.html"><strong aria-hidden="true">5.</strong> Test and fuzzing</a></li><li class="affix"><a href="LICENCE.html">Licence</a></li><li class="affix"><a href="checklist.html">Checklist</a></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li><a href="01_introduction.html" class="active"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development Environment</a></li><li><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li><a href="04_language.html"><strong aria-hidden="true">4.</strong> The language</a></li><li><a href="05_test_fuzz.html"><strong aria-hidden="true">5.</strong> Test and fuzzing</a></li><li class="affix"><a href="LICENCE.html">Licence</a></li><li class="affix"><a href="checklist.html">Checklist</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -105,7 +110,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Secure Rust Guidelines</h1> 
+                        <h1 class="menu-title">Secure Rust Guidelines</h1>
 
                         <div class="right-buttons">
                             <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -140,7 +145,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#introduction" id="introduction"><h1>Introduction</h1></a>
+                        <h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
 <p><a href="https://www.rust-lang.org">Rust</a> is a multi-paradigm language with a focus on
 memory safety.</p>
 <p>It aims to be systems programming oriented, allowing fine-grained memory
@@ -168,7 +173,7 @@ features or configurations that, if misused, may lead to vulnerabilities.</p>
 <p>Thus, the object of this document is to compile hints and recommendations to
 stay in a safe zone for secure applications development while taking advantage
 of the range of possibilities Rust language can offer.</p>
-<a class="header" href="#target-audience" id="target-audience"><h2>Target Audience</h2></a>
+<h2><a class="header" href="#target-audience" id="target-audience">Target Audience</a></h2>
 <p>The guide intents to group recommendations that should be applied for
 application development with strong security level requirements. Anyway, it can
 be followed by everyone who wants to ensure that guarantees offered by the Rust
@@ -182,7 +187,7 @@ pitfalls. These recommendations form a complement to the good level of trust
 the Rust language already provides. That said, recalls are sometimes necessary
 for clarity, and the experienced Rust programmer may rely solely on
 highlighted inserts (<em>Rule</em>, <em>Recommendation</em>, <em>Warning</em>, etc.).</p>
-<a class="header" href="#structure-of-the-document" id="structure-of-the-document"><h2>Structure of the Document</h2></a>
+<h2><a class="header" href="#structure-of-the-document" id="structure-of-the-document">Structure of the Document</a></h2>
 <p>The aim with the structure of this document is to consider separately different
 phases of a typical (and simplified) development process. Firstly, we provide
 some advices for using tools of the Rust ecosystem to how to take advantage
