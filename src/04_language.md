@@ -11,8 +11,9 @@ the Rust world. However, an effort has been made to formalize it, first in
 The basic rule consists in using :
 
 - `UpperCamelCase` for types, traits, enum variants,
-- `snake_case` for functions, macros, variables and modules,
-- `SCREAMING_SNAKE_CASE` for statics and constants.
+- `snake_case` for functions, methods, macros, variables and modules,
+- `SCREAMING_SNAKE_CASE` for statics and constants,
+- `'lowercase` for lifetimes.
 
 The [Rust API Guidelines] also prescribes more precise naming conventions for
 some particular constructions:
