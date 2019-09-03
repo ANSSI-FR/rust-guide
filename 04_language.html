@@ -205,7 +205,7 @@ the use of <code>Drop</code> to erase sensitive memory.</p>
 Rust code is used through FFI.</p>
 <blockquote>
 <h3><a class="header" href="#rule-a-idmem-zeroamem-zero" id="rule-a-idmem-zeroamem-zero">Rule <a id="MEM-ZERO"></a>MEM-ZERO</a></h3>
-<p>Variables containing sensitive data must be zeroized after use, using
+<p>Variables containing sensitive data must be zeroed out after use, using
 functions that will not be removed by the compiler optimizations, like
 <code>std::ptr::write_volatile</code> or the <code>zeroize</code> crate.</p>
 </blockquote>
