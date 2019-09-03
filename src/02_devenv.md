@@ -1,14 +1,15 @@
 # Development Environment
 
-## `rustup`
+## Rustup
 
-`rustup` is the Rust toolchain installer. Among other things, it enables
+Rustup is the Rust toolchain installer. Among other things, it enables
 switching between different flavors of the toolchain (stable, beta, nightly),
 managing additional components installation and keeping them up to date.
 
-> ### Warning:
+> ### Warning
+>
 > From a security perspective, `rustup` does perform all downloads over HTTPS,
-> but doesn’t validate signatures of downloads. Protection against downgrade
+> but does not validate signatures of downloads. Protection against downgrade
 > attacks, certificate pinning, validation of signatures are works that are
 > currently in progress. In some cases, it may be preferable to opt for
 > an alternative installation method listed in the *Install* section of the
@@ -57,7 +58,7 @@ stable-x86_64-unknown-linux-gnu (default)
 beta-x86_64-unknown-linux-gnu
 nightly-x86_64-unknown-linux-gnu
 $ rustup override list
-/tmp/foo                                	nightly-x86_64-unknown-linux-gnu
+/tmp/foo                                    nightly-x86_64-unknown-linux-gnu
 $
 ```
 
@@ -81,17 +82,35 @@ $ cargo +nightly fmt
 $
 ```
 
-## `cargo`
+## Cargo
 
-Once `rustup` has been used to set up the appropriate Rust toolchain, the
-tool `cargo` has been made available. It’s the Rust package manager, that
-provides ways to structure and build projects, managing on its own dependencies
-download among other tasks. It’s also a front-end to run complementary tools such
-as those that are described below, in the form of sub-commands.
+Once Rustup has set up the appropriate Rust toolchain, Cargo is available
+through the command line program `cargo`. Cargo is the Rust package manager.
+It has a fundamental role in most Rust development:
+
+- It structures project by providing the project skeleton (`cargo new`),
+- It compiles the project (`cargo build`),
+- It generates the project's documentation (`cargo doc`),
+- It runs tests (`cargo test`) and benchmarks (`cargo bench`),
+- It manages and download dependencies,
+- It makes packages distributable and publishes them on [crates.io],
+- It’s also a front-end to run complementary tools such as those that are
+  described below, in the form of sub-commands.
 
 <mark>TODO</mark>: identify unsafe features and risky environment variables.
 
-### clippy
+[crates.io]: https://crates.io
+
+> ### Warning
+>
+> Like Rustup, Cargo does perform all downloads over HTTPS, but does not
+> validate the registry index. Ongoing discussions occur on how best protect and
+> verify crates. For now, the security relies on the good security of the
+> website [crates.io] and the GitHub hosted repository containing the
+> registry index. In some cases, it may be preferable to opt for an alternative
+> installation method for dependencies.
+
+### Clippy
 
 Clippy is a tool that provides and checks many lints (bugs, styling, performance
 issues, etc.). Since the stable toolchain has reached version 1.29, `clippy` can
@@ -104,9 +123,10 @@ detect. The warnings should be re-checked by the programmer before committing
 the fix that is suggested by `clippy`, especially in the case of lints of the
 category `clippy::nursery` since those hints are still under development.
 
-> ### Rule {{#check DENV-LINTER | Use Rust linter (cargo-clippy)}}:
-> The tool `clippy` must be used at various times during a secure application
-> development process.
+> ### Rule {{#check DENV-LINTER | Use linter regularly}}
+>
+> A linter, such as `clippy`, must be used regularly during the development of
+> a secure application.
 
 ### rustfmt
 
@@ -142,6 +162,43 @@ at the [Rust Style Guide](https://github.com/rust-dev-tools/fmt-rfcs/blob/master
 > The tool `rustfmt` can be used to ensure that the codebase respect style
 > guidelines (as described in `rustfmt.toml` file), with `--check` option and
 > manual review.
+
+### Rustfix
+
+Included with Rust, since the end of 2018, Rustfix is a tool dedicated in fixing
+compiler warnings as well as easing transitions between editions.
+
+```shell
+$ cargo fix
+```
+
+To prepare a Rust 2015 project to transition to Rust 2018, one can run:
+
+```shell
+$ cargo fix --edition
+```
+
+Rustfix will either fix the code to be compatible with Rust 2018 or print
+a warning that explain the problem. This problem will have to be fixed manually.
+By running the command (and possibly fixing manually some issues) until there
+is no warning, one can ensure the code is compatible with both Rust 2015 and
+Rust 2018.
+
+To switch definitely to Rust 2018, one may run:
+
+```shell
+$ cargo fix --edition-idioms
+```
+
+Be advised that this tool provides few guarantees on the soundness of the
+proposed fixes. In particular mode, some corrections (such as some of those
+provided with the `--edition-idioms`) are known to break the compilation
+or change the program semantics in some case.
+
+> ### Rule {{#check DENV-AUTOFIX | Manually check automatic fixes }}
+>
+> In a secure Rust development, any automatic fix (for instance, provided by
+> Rustfix) must be verified by the developer.
 
 ### Others
 
