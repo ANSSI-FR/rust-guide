@@ -110,15 +110,23 @@ category `clippy::nursery` since those hints are still under development.
 
 ### rustfmt
 
-`rustfmt` is a tool that formats your code according to style guidelines.
+`rustfmt` is a tool that formats your code according to style guidelines. The
+documentation of the tool states some limitations, among others partial macro
+declarations and uses support. One should use the `--check` option that prints
+found differences, review these changes, and finally apply them if the code
+readability is not affected.
 
-To launch it:
+So, to launch it:
 
 ```shell
-$> cargo fmt
+$ cargo fmt -- --check
+$ # review of the changes
+$ cargo fmt
 ```
 
-These guidelines can be customized to your needs by creating a `rustfmt.toml` or `.rustfmt.toml` file at the root of your project. It will be used to override the default settings, for instance:
+These guidelines can be customized to your needs by creating a `rustfmt.toml` or
+`.rustfmt.toml` file at the root of your project. It will be used to override
+the default settings, for instance:
 
 ```toml
 # Set the maximum line width to 120
@@ -127,9 +135,13 @@ max_width = 120
 single_line_if_else_max_width = 40
 ```
 
+For more information about the guidelines that `rustfmt` will check, have a look
+at the [Rust Style Guide](https://github.com/rust-dev-tools/fmt-rfcs/blob/master/guide/guide.md).
 
-For more information about the guidelines that `rustfmt` will check, have a look at the [Rust Style Guide](https://github.com/rust-dev-tools/fmt-rfcs/blob/master/guide/guide.md).
-
+> ### Rule {{#check DENV-FORMAT | Use Rust formatter (rustfmt)}}
+> The tool `rustfmt` can be used to ensure that the codebase respect style
+> guidelines (as described in `rustfmt.toml` file), with `--check` option and
+> manual review.
 
 ### Others
 
