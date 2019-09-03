@@ -14,7 +14,7 @@ can aid in that task.
 
 ## Cargo-outdated
 
-Cargo-outdated tool allows one to easily manage dependencies versions.
+[Cargo-outdated] tool allows one to easily manage dependencies versions.
 
 For a given crate, it lists current dependencies versions (using its
 `Cargo.toml`), and checks latest compatible version and also latest general
@@ -25,14 +25,18 @@ version.
 > each outdated dependency must be updated or the choice of the version must be
 > justified.
 
+[cargo-outdated]: https://github.com/kbknapp/cargo-outdated
+
 ## Cargo-audit
 
-Cargo-audit tool allows one to easily check for security vulnerabilities
+[Cargo-audit] tool allows one to easily check for security vulnerabilities
 reported to the RustSec Advisory Database.
 
 > ### Rule {{#check LIBS-AUDIT | Check for security vulnerabilities report on dependencies (cargo-audit)}}
 > The `cargo-audit` tool must be used to check for known vulnerabilities in
 > dependencies.
+
+[cargo-audit]: https://github.com/RustSec/cargo-audit
 
 ## Unsafe code in libraries
 

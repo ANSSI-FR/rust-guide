@@ -31,7 +31,6 @@ some particular constructions:
 > outlined in the [Rust API Guidelines].
 
 [rfc 430]: https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md
-
 [rust api guidelines]: https://rust-lang-nursery.github.io/api-guidelines/
 
 ### Memory management
@@ -176,8 +175,10 @@ A `Result` object must be tested, and never ignored.
 > The `?` operator should be used to improve readability of code.
 > The `try!` macro should not be used.
 
-The [error-chain](https://crates.io/crates/error-chain) and
-[failure](https://crates.io/crates/failure) crates can be used to wrap errors.
+The [error-chain] and [failure] crates can be used to wrap errors.
+
+[error-chain]: https://crates.io/crates/error-chain
+[failure]: https://crates.io/crates/failure
 
 ### Panics
 

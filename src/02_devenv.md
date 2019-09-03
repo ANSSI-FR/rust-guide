@@ -2,7 +2,7 @@
 
 ## Rustup
 
-Rustup is the Rust toolchain installer. Among other things, it enables
+[Rustup] is the Rust toolchain installer. Among other things, it enables
 switching between different flavors of the toolchain (stable, beta, nightly),
 managing additional components installation and keeping them up to date.
 
@@ -15,14 +15,15 @@ managing additional components installation and keeping them up to date.
 > an alternative installation method listed in the *Install* section of the
 > official Rust website.
 
+[rustup]: https://github.com/rust-lang/rustup.rs
+
 ### Rust Editions
 
 Several flavors, called *editions*, of the Rust language coexist.
 The concept of editions has been introduced to clarify new features
 implementation and to make them incremental. But as stated in the
-[Edition Guide](https://rust-lang-nursery.github.io/edition-guide/editions/index.html),
-this doesn’t mean that new features and improvements will be shipped on
-the last edition only.
+[Edition Guide], this doesn’t mean that new features and improvements will be
+shipped on the last edition only.
 
 However, some editions could bring new keywords and language constructs.
 Recommendations for secure applications development then remain closely
@@ -35,6 +36,8 @@ and language features that are specific to a particular Rust edition.
 > No specific edition is recommended, as long as users follow recommendations
 > that are expressed in relation to features offered by edition that has been
 > chosen.
+
+[edition guide]: https://rust-lang-nursery.github.io/edition-guide/editions/index.html
 
 ### Stable, nightly and beta toolchains
 
@@ -84,7 +87,7 @@ $
 
 ## Cargo
 
-Once Rustup has set up the appropriate Rust toolchain, Cargo is available
+Once Rustup has set up the appropriate Rust toolchain, [Cargo] is available
 through the command line program `cargo`. Cargo is the Rust package manager.
 It has a fundamental role in most Rust development:
 
@@ -99,8 +102,6 @@ It has a fundamental role in most Rust development:
 
 <mark>TODO</mark>: identify unsafe features and risky environment variables.
 
-[crates.io]: https://crates.io
-
 > ### Warning
 >
 > Like `rustup`, `cargo` does perform all downloads over HTTPS, but does not
@@ -110,9 +111,12 @@ It has a fundamental role in most Rust development:
 > registry index. In some cases, it may be preferable to opt for an alternative
 > installation method for dependencies.
 
+[crates.io]: https://crates.io
+[cargo]: https://doc.rust-lang.org/stable/cargo/
+
 ### Clippy
 
-Clippy is a tool that provides and checks many lints (bugs, styling, performance
+[Clippy] is a tool that provides and checks many lints (bugs, styling, performance
 issues, etc.). Since the stable toolchain has reached version 1.29, `clippy` can
 be used within the stable `rustup` environment. It is also recommended
 to install `clippy` as a component (`rustup component add clippy`) in the
@@ -128,9 +132,11 @@ category `clippy::nursery` since those hints are still under development.
 > A linter, such as `clippy`, must be used regularly during the development of
 > a secure application.
 
+[clippy]: https://github.com/rust-lang/rust-clippy
+
 ### Rustfmt
 
-Rustfmt is a tool that formats your code according to style guidelines. The
+[Rustfmt] is a tool that formats your code according to style guidelines. The
 documentation of the tool states some limitations, among others partial macro
 declarations and uses support. One should use the `--check` option that prints
 found differences, review these changes, and finally apply them if the code
@@ -163,10 +169,12 @@ at the [Rust Style Guide](https://github.com/rust-dev-tools/fmt-rfcs/blob/master
 > guidelines (as described in `rustfmt.toml` file), with `--check` option and
 > manual review.
 
+[rustfmt]: https://github.com/rust-lang/rustfmt
+
 ### Rustfix
 
-Included with Rust, since the end of 2018, Rustfix is a tool dedicated in fixing
-compiler warnings as well as easing transitions between editions.
+Included with Rust, since the end of 2018, [Rustfix] is a tool dedicated in
+fixing compiler warnings as well as easing transitions between editions.
 
 ```shell
 $ cargo fix
@@ -199,6 +207,8 @@ or change the program semantics in some case.
 >
 > In a secure Rust development, any automatic fix (for instance, provided by
 > `rustfix`) must be verified by the developer.
+
+[rustfix]: https://github.com/rust-lang-nursery/rustfix
 
 ### Others
 
