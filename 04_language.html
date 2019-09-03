@@ -177,17 +177,37 @@ outlined in the <a href="https://rust-lang-nursery.github.io/api-guidelines/">Ru
 <p><mark>TODO</mark>: explain safe allocations/deallocations, ownership/borrowing,
 and identify language constructs that may break memory safety (for instance,
 unsound behaviors in older versions of the compiler).</p>
+<h4><a class="header" href="#uninitialized-memory" id="uninitialized-memory">Uninitialized memory</a></h4>
 <p>By default, Rust forces all values to be initialized, preventing the use of
-uninitialized memory (except if using <code>std::mem::uninitialized</code>).
-However, zeroing memory is useful for sensitive variables, especially if the
+uninitialized memory (except if using <code>std::mem::uninitialized</code> or
+<code>std::mem::MaybeUninit</code>).</p>
+<blockquote>
+<h3><a class="header" href="#rule-a-idmem-uninitamem-uninit" id="rule-a-idmem-uninitamem-uninit">Rule <a id="MEM-UNINIT"></a>MEM-UNINIT</a></h3>
+<p>The <code>std::mem::uninitialized</code> function (deprecated 1.38) or the
+<code>std::mem::MaybeUninit</code> type (stabilized 1.36) must not be used, or explicitly
+justified when necessary.</p>
+</blockquote>
+<p>The use of uninitialized memory may result in two distinct security issues:</p>
+<ul>
+<li>drop of uninitialized memory (also a memory safety issue),</li>
+<li>non-drop of initialized memory.</li>
+</ul>
+<blockquote>
+<p><strong>Note</strong></p>
+<p><code>std::mem::MaybeUninit</code> is an improvement over <code>std::mem::uninitialized</code>.
+Indeed, it makes dropping uninitialized values a lot more difficult.
+However, it does not change the second issue: the non-drop of an initialized
+memory is as much likely. It is problematic, in particular when considering
+the use of <code>Drop</code> to erase sensitive memory.</p>
+</blockquote>
+<h4><a class="header" href="#secure-memory-zeroing-for-sensitive-information" id="secure-memory-zeroing-for-sensitive-information">Secure memory zeroing for sensitive information</a></h4>
+<p>Zeroing memory is useful for sensitive variables, especially if the
 Rust code is used through FFI.</p>
 <blockquote>
 <h3><a class="header" href="#rule-a-idmem-zeroamem-zero" id="rule-a-idmem-zeroamem-zero">Rule <a id="MEM-ZERO"></a>MEM-ZERO</a></h3>
 <p>Variables containing sensitive data must be zeroized after use, using
 functions that will not be removed by the compiler optimizations, like
 <code>std::ptr::write_volatile</code> or the <code>zeroize</code> crate.</p>
-<p>The <code>std::mem::uninitialized</code> function must not be used, or explicitly
-justified when necessary.</p>
 </blockquote>
 <p>The following code shows how to define an integer type that will be set to
 0 when freed, using the <code>Drop</code> trait:</p>
