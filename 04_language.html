@@ -304,8 +304,7 @@ It must be careful to make this type exception-safe (RFC 1236), and implement
 <p>The <code>?</code> operator should be used to improve readability of code.
 The <code>try!</code> macro should not be used.</p>
 </blockquote>
-<p>The <a href="https://crates.io/crates/error-chain">error-chain</a> and
-<a href="https://crates.io/crates/failure">failure</a> crates can be used to wrap errors.</p>
+<p>The <a href="https://crates.io/crates/error-chain">error-chain</a> and <a href="https://crates.io/crates/failure">failure</a> crates can be used to wrap errors.</p>
 <h3><a class="header" href="#panics" id="panics">Panics</a></h3>
 <p>Explicit error handling (<code>Result</code>) should always be preferred instead of calling
 <code>panic</code>.  The cause of the error should be available, and generic errors should

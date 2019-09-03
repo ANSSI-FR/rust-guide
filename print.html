@@ -201,7 +201,7 @@ A summary of recommendations presented throughout the document is listed at the
 end of this guide.</p>
 <h1><a class="header" href="#development-environment" id="development-environment">Development Environment</a></h1>
 <h2><a class="header" href="#rustup" id="rustup">Rustup</a></h2>
-<p>Rustup is the Rust toolchain installer. Among other things, it enables
+<p><a href="https://github.com/rust-lang/rustup.rs">Rustup</a> is the Rust toolchain installer. Among other things, it enables
 switching between different flavors of the toolchain (stable, beta, nightly),
 managing additional components installation and keeping them up to date.</p>
 <blockquote>
@@ -217,9 +217,8 @@ official Rust website.</p>
 <p>Several flavors, called <em>editions</em>, of the Rust language coexist.
 The concept of editions has been introduced to clarify new features
 implementation and to make them incremental. But as stated in the
-<a href="https://rust-lang-nursery.github.io/edition-guide/editions/index.html">Edition Guide</a>,
-this doesn’t mean that new features and improvements will be shipped on
-the last edition only.</p>
+<a href="https://rust-lang-nursery.github.io/edition-guide/editions/index.html">Edition Guide</a>, this doesn’t mean that new features and improvements will be
+shipped on the last edition only.</p>
 <p>However, some editions could bring new keywords and language constructs.
 Recommendations for secure applications development then remain closely
 linked to features that are used in such applications rather than the actual
@@ -273,7 +272,7 @@ $ cargo +nightly fmt
 $
 </code></pre>
 <h2><a class="header" href="#cargo" id="cargo">Cargo</a></h2>
-<p>Once Rustup has set up the appropriate Rust toolchain, Cargo is available
+<p>Once Rustup has set up the appropriate Rust toolchain, <a href="https://doc.rust-lang.org/stable/cargo/">Cargo</a> is available
 through the command line program <code>cargo</code>. Cargo is the Rust package manager.
 It has a fundamental role in most Rust development:</p>
 <ul>
@@ -297,7 +296,7 @@ registry index. In some cases, it may be preferable to opt for an alternative
 installation method for dependencies.</p>
 </blockquote>
 <h3><a class="header" href="#clippy" id="clippy">Clippy</a></h3>
-<p>Clippy is a tool that provides and checks many lints (bugs, styling, performance
+<p><a href="https://github.com/rust-lang/rust-clippy">Clippy</a> is a tool that provides and checks many lints (bugs, styling, performance
 issues, etc.). Since the stable toolchain has reached version 1.29, <code>clippy</code> can
 be used within the stable <code>rustup</code> environment. It is also recommended
 to install <code>clippy</code> as a component (<code>rustup component add clippy</code>) in the
@@ -312,7 +311,7 @@ category <code>clippy::nursery</code> since those hints are still under developm
 a secure application.</p>
 </blockquote>
 <h3><a class="header" href="#rustfmt" id="rustfmt">Rustfmt</a></h3>
-<p>Rustfmt is a tool that formats your code according to style guidelines. The
+<p><a href="https://github.com/rust-lang/rustfmt">Rustfmt</a> is a tool that formats your code according to style guidelines. The
 documentation of the tool states some limitations, among others partial macro
 declarations and uses support. One should use the <code>--check</code> option that prints
 found differences, review these changes, and finally apply them if the code
@@ -339,8 +338,8 @@ guidelines (as described in <code>rustfmt.toml</code> file), with <code>--check<
 manual review.</p>
 </blockquote>
 <h3><a class="header" href="#rustfix" id="rustfix">Rustfix</a></h3>
-<p>Included with Rust, since the end of 2018, Rustfix is a tool dedicated in fixing
-compiler warnings as well as easing transitions between editions.</p>
+<p>Included with Rust, since the end of 2018, <a href="https://github.com/rust-lang-nursery/rustfix">Rustfix</a> is a tool dedicated in
+fixing compiler warnings as well as easing transitions between editions.</p>
 <pre><code class="language-shell">$ cargo fix
 </code></pre>
 <p>To prepare a Rust 2015 project to transition to Rust 2018, one can run:</p>
@@ -380,7 +379,7 @@ this repository should be justified, and the developer should validate the
 correct application of rules from the current guide in its code. Several tools
 can aid in that task.</p>
 <h2><a class="header" href="#cargo-outdated" id="cargo-outdated">Cargo-outdated</a></h2>
-<p>Cargo-outdated tool allows one to easily manage dependencies versions.</p>
+<p><a href="https://github.com/kbknapp/cargo-outdated">Cargo-outdated</a> tool allows one to easily manage dependencies versions.</p>
 <p>For a given crate, it lists current dependencies versions (using its
 <code>Cargo.toml</code>), and checks latest compatible version and also latest general
 version.</p>
@@ -391,7 +390,7 @@ each outdated dependency must be updated or the choice of the version must be
 justified.</p>
 </blockquote>
 <h2><a class="header" href="#cargo-audit" id="cargo-audit">Cargo-audit</a></h2>
-<p>Cargo-audit tool allows one to easily check for security vulnerabilities
+<p><a href="https://github.com/RustSec/cargo-audit">Cargo-audit</a> tool allows one to easily check for security vulnerabilities
 reported to the RustSec Advisory Database.</p>
 <blockquote>
 <h3><a class="header" href="#rule-a-idlibs-auditalibs-audit" id="rule-a-idlibs-auditalibs-audit">Rule <a id="LIBS-AUDIT"></a>LIBS-AUDIT</a></h3>
@@ -566,8 +565,7 @@ It must be careful to make this type exception-safe (RFC 1236), and implement
 <p>The <code>?</code> operator should be used to improve readability of code.
 The <code>try!</code> macro should not be used.</p>
 </blockquote>
-<p>The <a href="https://crates.io/crates/error-chain">error-chain</a> and
-<a href="https://crates.io/crates/failure">failure</a> crates can be used to wrap errors.</p>
+<p>The <a href="https://crates.io/crates/error-chain">error-chain</a> and <a href="https://crates.io/crates/failure">failure</a> crates can be used to wrap errors.</p>
 <h3><a class="header" href="#panics" id="panics">Panics</a></h3>
 <p>Explicit error handling (<code>Result</code>) should always be preferred instead of calling
 <code>panic</code>.  The cause of the error should be available, and generic errors should
