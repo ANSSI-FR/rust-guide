@@ -596,8 +596,8 @@ wrapper around the foreign type:
 
 A simple example of Rust wrapping over an external opaque type:
 
-```rust
-#use std::ops::Drop;
+```rust,ignore,noplaypen
+# use std::ops::Drop;
 #
 /// Private “raw” opaque foreign type Foo
 #[repr(C)]
@@ -640,10 +640,10 @@ impl Drop for Foo {
     }
 }
 
-#fn main() {
-#    let foo = Foo::new().expect("cannot create Foo");
-#    foo.do_something();
-#}
+# fn main() {
+#     let foo = Foo::new().expect("cannot create Foo");
+#     foo.do_something();
+# }
 ```
 
 > **Warning**
@@ -667,6 +667,8 @@ that provide callback to ensure safe resource
 reclamation:
 
 ```rust,noplaypen
+# use std::ops::Drop;
+#
 pub struct XtraResource {/*fields */}
 
 impl XtraResource {
@@ -678,7 +680,7 @@ impl XtraResource {
     }
 }
 
-impl std::ops::Drop for XtraResource {
+impl Drop for XtraResource {
     fn drop(&mut self) {
         println!("xtra drop");
     }
@@ -705,7 +707,7 @@ pub mod c_api {
         let inner = if let Ok(res) = catch_unwind(XtraResource::new) {
             res
         } else {
-#            println!("cannot allocate resource");
+#             println!("cannot allocate resource");
             return;
         };
         let id = COUNTER;
@@ -715,15 +717,15 @@ pub mod c_api {
         // Use heap memory and do not provide pointer to stack to C code!
         let mut boxed = Box::new(CXtraResource { tag, id, inner });
 
-#        println!("running the callback on {:p}", boxed.as_ref());
+#         println!("running the callback on {:p}", boxed.as_ref());
         cb(boxed.as_mut() as *mut CXtraResource);
 
         if boxed.id == id && (boxed.tag == VALID_TAG || boxed.tag == ERR_TAG) {
-#            println!("freeing {:p}", boxed.as_ref());
+#             println!("freeing {:p}", boxed.as_ref());
             boxed.tag = INVALID_TAG; // prevent accidental reuse
                                  // implicit boxed drop
         } else {
-#            println!("forgetting {:p}", boxed.as_ref());
+#             println!("forgetting {:p}", boxed.as_ref());
             // (...) error handling (should be fatal)
             boxed.tag = INVALID_TAG; // prevent reuse
             std::mem::forget(boxed); // boxed is corrupted it should not be
@@ -735,7 +737,7 @@ pub mod c_api {
         let do_it = || {
             if let Some(cxtra) = cxtra.as_mut() {
                 if cxtra.tag == VALID_TAG {
-#                    println!("doing something with {:p}", cxtra);
+#                     println!("doing something with {:p}", cxtra);
                     cxtra.inner.dosthg();
                     return;
                 }
@@ -744,12 +746,14 @@ pub mod c_api {
         };
         if catch_unwind(do_it).is_err() {
             if let Some(cxtra) = cxtra.as_mut() {
-#                println!("panicking with {:p}", cxtra);
+#                 println!("panicking with {:p}", cxtra);
                 cxtra.tag = ERR_TAG;
             }
         };
     }
 }
+#
+# fn main() {}
 ```
 
 A compatible C call:
