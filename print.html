@@ -200,14 +200,14 @@ writing tests for a project in Rust, and for using Rust fuzzing tools.
 A summary of recommendations presented throughout the document is listed at the
 end of this guide.</p>
 <h1><a class="header" href="#development-environment" id="development-environment">Development Environment</a></h1>
-<h2><a class="header" href="#rustup" id="rustup"><code>rustup</code></a></h2>
-<p><code>rustup</code> is the Rust toolchain installer. Among other things, it enables
+<h2><a class="header" href="#rustup" id="rustup">Rustup</a></h2>
+<p>Rustup is the Rust toolchain installer. Among other things, it enables
 switching between different flavors of the toolchain (stable, beta, nightly),
 managing additional components installation and keeping them up to date.</p>
 <blockquote>
-<h3><a class="header" href="#warning" id="warning">Warning:</a></h3>
+<h3><a class="header" href="#warning" id="warning">Warning</a></h3>
 <p>From a security perspective, <code>rustup</code> does perform all downloads over HTTPS,
-but doesn’t validate signatures of downloads. Protection against downgrade
+but does not validate signatures of downloads. Protection against downgrade
 attacks, certificate pinning, validation of signatures are works that are
 currently in progress. In some cases, it may be preferable to opt for
 an alternative installation method listed in the <em>Install</em> section of the
@@ -251,7 +251,7 @@ stable-x86_64-unknown-linux-gnu (default)
 beta-x86_64-unknown-linux-gnu
 nightly-x86_64-unknown-linux-gnu
 $ rustup override list
-/tmp/foo                                	nightly-x86_64-unknown-linux-gnu
+/tmp/foo                                    nightly-x86_64-unknown-linux-gnu
 $
 </code></pre>
 <blockquote>
@@ -272,14 +272,31 @@ $ # or
 $ cargo +nightly fmt
 $
 </code></pre>
-<h2><a class="header" href="#cargo" id="cargo"><code>cargo</code></a></h2>
-<p>Once <code>rustup</code> has been used to set up the appropriate Rust toolchain, the
-tool <code>cargo</code> has been made available. It’s the Rust package manager, that
-provides ways to structure and build projects, managing on its own dependencies
-download among other tasks. It’s also a front-end to run complementary tools such
-as those that are described below, in the form of sub-commands.</p>
+<h2><a class="header" href="#cargo" id="cargo">Cargo</a></h2>
+<p>Once Rustup has set up the appropriate Rust toolchain, Cargo is available
+through the command line program <code>cargo</code>. Cargo is the Rust package manager.
+It has a fundamental role in most Rust development:</p>
+<ul>
+<li>It structures project by providing the project skeleton (<code>cargo new</code>),</li>
+<li>It compiles the project (<code>cargo build</code>),</li>
+<li>It generates the project's documentation (<code>cargo doc</code>),</li>
+<li>It runs tests (<code>cargo test</code>) and benchmarks (<code>cargo bench</code>),</li>
+<li>It manages and download dependencies,</li>
+<li>It makes packages distributable and publishes them on <a href="https://crates.io">crates.io</a>,</li>
+<li>It’s also a front-end to run complementary tools such as those that are
+described below, in the form of sub-commands.</li>
+</ul>
 <p><mark>TODO</mark>: identify unsafe features and risky environment variables.</p>
-<h3><a class="header" href="#clippy" id="clippy">clippy</a></h3>
+<blockquote>
+<h3><a class="header" href="#warning-1" id="warning-1">Warning</a></h3>
+<p>Like Rustup, Cargo does perform all downloads over HTTPS, but does not
+validate the registry index. Ongoing discussions occur on how best protect and
+verify crates. For now, the security relies on the good security of the
+website <a href="https://crates.io">crates.io</a> and the GitHub hosted repository containing the
+registry index. In some cases, it may be preferable to opt for an alternative
+installation method for dependencies.</p>
+</blockquote>
+<h3><a class="header" href="#clippy" id="clippy">Clippy</a></h3>
 <p>Clippy is a tool that provides and checks many lints (bugs, styling, performance
 issues, etc.). Since the stable toolchain has reached version 1.29, <code>clippy</code> can
 be used within the stable rustup environment. It is also recommended
@@ -290,9 +307,9 @@ detect. The warnings should be re-checked by the programmer before committing
 the fix that is suggested by <code>clippy</code>, especially in the case of lints of the
 category <code>clippy::nursery</code> since those hints are still under development.</p>
 <blockquote>
-<h3><a class="header" href="#rule-a-iddenv-linteradenv-linter" id="rule-a-iddenv-linteradenv-linter">Rule <a id="DENV-LINTER"></a>DENV-LINTER:</a></h3>
-<p>The tool <code>clippy</code> must be used at various times during a secure application
-development process.</p>
+<h3><a class="header" href="#rule-a-iddenv-linteradenv-linter" id="rule-a-iddenv-linteradenv-linter">Rule <a id="DENV-LINTER"></a>DENV-LINTER</a></h3>
+<p>A linter, such as <code>clippy</code>, must be used regularly during the development of
+a secure application.</p>
 </blockquote>
 <h3><a class="header" href="#rustfmt" id="rustfmt">rustfmt</a></h3>
 <p><code>rustfmt</code> is a tool that formats your code according to style guidelines. The
@@ -320,6 +337,31 @@ at the <a href="https://github.com/rust-dev-tools/fmt-rfcs/blob/master/guide/gui
 <p>The tool <code>rustfmt</code> can be used to ensure that the codebase respect style
 guidelines (as described in <code>rustfmt.toml</code> file), with <code>--check</code> option and
 manual review.</p>
+</blockquote>
+<h3><a class="header" href="#rustfix" id="rustfix">Rustfix</a></h3>
+<p>Included with Rust, since the end of 2018, Rustfix is a tool dedicated in fixing
+compiler warnings as well as easing transitions between editions.</p>
+<pre><code class="language-shell">$ cargo fix
+</code></pre>
+<p>To prepare a Rust 2015 project to transition to Rust 2018, one can run:</p>
+<pre><code class="language-shell">$ cargo fix --edition
+</code></pre>
+<p>Rustfix will either fix the code to be compatible with Rust 2018 or print
+a warning that explain the problem. This problem will have to be fixed manually.
+By running the command (and possibly fixing manually some issues) until there
+is no warning, one can ensure the code is compatible with both Rust 2015 and
+Rust 2018.</p>
+<p>To switch definitely to Rust 2018, one may run:</p>
+<pre><code class="language-shell">$ cargo fix --edition-idioms
+</code></pre>
+<p>Be advised that this tool provides few guarantees on the soundness of the
+proposed fixes. In particular mode, some corrections (such as some of those
+provided with the <code>--edition-idioms</code>) are known to break the compilation
+or change the program semantics in some case.</p>
+<blockquote>
+<h3><a class="header" href="#rule-a-iddenv-autofixadenv-autofix" id="rule-a-iddenv-autofixadenv-autofix">Rule <a id="DENV-AUTOFIX"></a>DENV-AUTOFIX</a></h3>
+<p>In a secure Rust development, any automatic fix (for instance, provided by
+Rustfix) must be verified by the developer.</p>
 </blockquote>
 <h3><a class="header" href="#others" id="others">Others</a></h3>
 <p>There exist other useful tools or cargo subcommands for enforcing program
@@ -659,9 +701,11 @@ limits, ...</p>
 <li><input disabled="" type="checkbox"/>
 Use a stable compilation toolchain (<a href="02_devenv.html#DENV-STABLE">DENV-STABLE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Use Rust linter (cargo-clippy) (<a href="02_devenv.html#DENV-LINTER">DENV-LINTER</a>)</li>
+Use linter regularly (<a href="02_devenv.html#DENV-LINTER">DENV-LINTER</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Use Rust formatter (rustfmt) (<a href="02_devenv.html#DENV-FORMAT">DENV-FORMAT</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Manually check automatic fixes  (<a href="02_devenv.html#DENV-AUTOFIX">DENV-AUTOFIX</a>)</li>
 </ul>
 </li>
 <li>
