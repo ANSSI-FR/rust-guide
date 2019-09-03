@@ -227,7 +227,7 @@ edition that is declared in it.
 In the rest of this guide, best effort will be made to highlight constructions
 and language features that are specific to a particular Rust edition.</p>
 <blockquote>
-<h3><a class="header" href="#note" id="note">Note:</a></h3>
+<h3><a class="header" href="#note" id="note">Note</a></h3>
 <p>No specific edition is recommended, as long as users follow recommendations
 that are expressed in relation to features offered by edition that has been
 chosen.</p>
@@ -255,7 +255,7 @@ $ rustup override list
 $
 </code></pre>
 <blockquote>
-<h3><a class="header" href="#rule-a-iddenv-stableadenv-stable" id="rule-a-iddenv-stableadenv-stable">Rule <a id="DENV-STABLE"></a>DENV-STABLE:</a></h3>
+<h3><a class="header" href="#rule-a-iddenv-stableadenv-stable" id="rule-a-iddenv-stableadenv-stable">Rule <a id="DENV-STABLE"></a>DENV-STABLE</a></h3>
 <p>Development of a secure application must be done using a fully stable
 toolchain, for limiting potential compiler, runtime or tool bugs.</p>
 </blockquote>
@@ -385,7 +385,7 @@ can aid in that task.</p>
 <code>Cargo.toml</code>), and checks latest compatible version and also latest general
 version.</p>
 <blockquote>
-<h3><a class="header" href="#rule-a-idlibs-outdatedalibs-outdated" id="rule-a-idlibs-outdatedalibs-outdated">Rule <a id="LIBS-OUTDATED"></a>LIBS-OUTDATED:</a></h3>
+<h3><a class="header" href="#rule-a-idlibs-outdatedalibs-outdated" id="rule-a-idlibs-outdatedalibs-outdated">Rule <a id="LIBS-OUTDATED"></a>LIBS-OUTDATED</a></h3>
 <p>The <code>cargo-outdated</code> tool must be used to check dependencies status. Then,
 each outdated dependency must be updated or the choice of the version must be
 justified.</p>
@@ -394,7 +394,7 @@ justified.</p>
 <p>Cargo-audit tool allows one to easily check for security vulnerabilities
 reported to the RustSec Advisory Database.</p>
 <blockquote>
-<h3><a class="header" href="#rule-a-idlibs-auditalibs-audit" id="rule-a-idlibs-auditalibs-audit">Rule <a id="LIBS-AUDIT"></a>LIBS-AUDIT:</a></h3>
+<h3><a class="header" href="#rule-a-idlibs-auditalibs-audit" id="rule-a-idlibs-auditalibs-audit">Rule <a id="LIBS-AUDIT"></a>LIBS-AUDIT</a></h3>
 <p>The <code>cargo-audit</code> tool must be used to check for known vulnerabilities in
 dependencies.</p>
 </blockquote>
@@ -403,7 +403,7 @@ dependencies.</p>
 One needs to ensure that this kind of block is not misused in project
 dependencies.</p>
 <blockquote>
-<h3><a class="header" href="#recommendation-a-idlibs-unsafealibs-unsafe" id="recommendation-a-idlibs-unsafealibs-unsafe">Recommendation <a id="LIBS-UNSAFE"></a>LIBS-UNSAFE:</a></h3>
+<h3><a class="header" href="#recommendation-a-idlibs-unsafealibs-unsafe" id="recommendation-a-idlibs-unsafealibs-unsafe">Recommendation <a id="LIBS-UNSAFE"></a>LIBS-UNSAFE</a></h3>
 <p><mark>TODO</mark>: check that no <code>unsafe</code> blocks appear in the imported
 dependencies (with a tool?).</p>
 </blockquote>
@@ -444,7 +444,7 @@ uninitialized memory (except if using <code>std::mem::uninitialized</code>).
 However, zeroing memory is useful for sensitive variables, especially if the
 Rust code is used through FFI.</p>
 <blockquote>
-<h3><a class="header" href="#rule-a-idmem-zeroamem-zero" id="rule-a-idmem-zeroamem-zero">Rule <a id="MEM-ZERO"></a>MEM-ZERO:</a></h3>
+<h3><a class="header" href="#rule-a-idmem-zeroamem-zero" id="rule-a-idmem-zeroamem-zero">Rule <a id="MEM-ZERO"></a>MEM-ZERO</a></h3>
 <p>Variables containing sensitive data must be zeroized after use, using
 functions that will not be removed by the compiler optimizations, like
 <code>std::ptr::write_volatile</code> or the <code>zeroize</code> crate.</p>
@@ -478,7 +478,7 @@ and data races.
 To perform risky actions such as system calls, type coercions, or memory
 pointers direct manipulations, the language provides the <code>unsafe</code> keyword.</p>
 <blockquote>
-<h3><a class="header" href="#rule-a-idlang-unsafealang-unsafe" id="rule-a-idlang-unsafealang-unsafe">Rule <a id="LANG-UNSAFE"></a>LANG-UNSAFE:</a></h3>
+<h3><a class="header" href="#rule-a-idlang-unsafealang-unsafe" id="rule-a-idlang-unsafealang-unsafe">Rule <a id="LANG-UNSAFE"></a>LANG-UNSAFE</a></h3>
 <p>For a secured development, the <code>unsafe</code> blocks must be avoided. Afterward,
 we list the only cases where <code>unsafe</code> may be used, provided that they come
 with a proper justification:</p>
@@ -542,7 +542,7 @@ else { println!(&quot;{}&quot;, res); }
 # }
 </code></pre></pre>
 <blockquote>
-<h3><a class="header" href="#rule-a-idlang-arithalang-arith" id="rule-a-idlang-arithalang-arith">Rule <a id="LANG-ARITH"></a>LANG-ARITH:</a></h3>
+<h3><a class="header" href="#rule-a-idlang-arithalang-arith" id="rule-a-idlang-arithalang-arith">Rule <a id="LANG-ARITH"></a>LANG-ARITH</a></h3>
 <p>When assuming that an arithmetic operation can produce an overflow, the
 specialized functions <code>overflowing_&lt;op&gt;</code>, <code>wrapping_&lt;op&gt;</code>, or the
 <code>Wrapping</code> type must be used.</p>
@@ -556,13 +556,13 @@ patterns with traits).</p>
 <p>The <code>Result</code> type is the preferred way of handling functions that can fail.
 A <code>Result</code> object must be tested, and never ignored.</p>
 <blockquote>
-<h3><a class="header" href="#recommendation-a-idlang-errwrapalang-errwrap" id="recommendation-a-idlang-errwrapalang-errwrap">Recommendation <a id="LANG-ERRWRAP"></a>LANG-ERRWRAP:</a></h3>
+<h3><a class="header" href="#recommendation-a-idlang-errwrapalang-errwrap" id="recommendation-a-idlang-errwrapalang-errwrap">Recommendation <a id="LANG-ERRWRAP"></a>LANG-ERRWRAP</a></h3>
 <p>A crate can implement its own Error type, wrapping all possible errors.
 It must be careful to make this type exception-safe (RFC 1236), and implement
 <code>Error + Send + Sync + 'static</code> as well as <code>Display</code>.</p>
 </blockquote>
 <blockquote>
-<h3><a class="header" href="#recommendation-a-idlang-errdoalang-errdo" id="recommendation-a-idlang-errdoalang-errdo">Recommendation <a id="LANG-ERRDO"></a>LANG-ERRDO:</a></h3>
+<h3><a class="header" href="#recommendation-a-idlang-errdoalang-errdo" id="recommendation-a-idlang-errdoalang-errdo">Recommendation <a id="LANG-ERRDO"></a>LANG-ERRDO</a></h3>
 <p>The <code>?</code> operator should be used to improve readability of code.
 The <code>try!</code> macro should not be used.</p>
 </blockquote>
@@ -585,12 +585,12 @@ fail and cause the code to panic.</p>
 <li>string formatting using <code>format!</code>.</li>
 </ul>
 <blockquote>
-<h3><a class="header" href="#rule-a-idlang-nopanicalang-nopanic" id="rule-a-idlang-nopanicalang-nopanic">Rule <a id="LANG-NOPANIC"></a>LANG-NOPANIC:</a></h3>
+<h3><a class="header" href="#rule-a-idlang-nopanicalang-nopanic" id="rule-a-idlang-nopanicalang-nopanic">Rule <a id="LANG-NOPANIC"></a>LANG-NOPANIC</a></h3>
 <p>Functions or instructions that can cause the code to panic at runtime must not
 be used.</p>
 </blockquote>
 <blockquote>
-<h3><a class="header" href="#rule-a-idlang-arrindexingalang-arrindexing" id="rule-a-idlang-arrindexingalang-arrindexing">Rule <a id="LANG-ARRINDEXING"></a>LANG-ARRINDEXING:</a></h3>
+<h3><a class="header" href="#rule-a-idlang-arrindexingalang-arrindexing" id="rule-a-idlang-arrindexingalang-arrindexing">Rule <a id="LANG-ARRINDEXING"></a>LANG-ARRINDEXING</a></h3>
 <p>Array indexing must be properly tested, or the <code>get</code> method should be used to
 return an <code>Option</code>.</p>
 </blockquote>
@@ -606,7 +606,7 @@ crate can catch all cases. Drawback: all functions need to be marked as
 be careful to never panic.
 Unwinding from Rust code into foreign code results in undefined behavior.</p>
 <blockquote>
-<h3><a class="header" href="#rule-a-idlang-ffipanicalang-ffipanic" id="rule-a-idlang-ffipanicalang-ffipanic">Rule <a id="LANG-FFIPANIC"></a>LANG-FFIPANIC:</a></h3>
+<h3><a class="header" href="#rule-a-idlang-ffipanicalang-ffipanic" id="rule-a-idlang-ffipanicalang-ffipanic">Rule <a id="LANG-FFIPANIC"></a>LANG-FFIPANIC</a></h3>
 <p>Rust code called from FFI must either ensure the function cannot panic, or use
 <code>catch_unwind</code> or the <code>std::panic</code> module to ensure the rust code will not
 abort or return in an unstable state.</p>
