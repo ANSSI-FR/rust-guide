@@ -295,7 +295,17 @@ category <code>clippy::nursery</code> since those hints are still under developm
 development process.</p>
 </blockquote>
 <h3><a class="header" href="#rustfmt" id="rustfmt">rustfmt</a></h3>
-<p><mark>TODO</mark>: introduce the rustfmt tool and recommend its use.</p>
+<p><code>rustfmt</code> is a tool that formats your code according to style guidelines.</p>
+<p>To launch it:</p>
+<pre><code class="language-shell">$&gt; cargo fmt
+</code></pre>
+<p>These guidelines can be customized to your needs by creating a <code>rustfmt.toml</code> or <code>.rustfmt.toml</code> file at the root of your project. It will be used to override the default settings, for instance:</p>
+<pre><code class="language-toml"># Set the maximum line width to 120
+max_width = 120
+# Maximum line length for single line if-else expressions
+single_line_if_else_max_width = 40
+</code></pre>
+<p>For more information about the guidelines that <code>rustfmt</code> will check, have a look at the <a href="https://github.com/rust-dev-tools/fmt-rfcs/blob/master/guide/guide.md">Rust Style Guide</a>.</p>
 <h3><a class="header" href="#others" id="others">Others</a></h3>
 <p>There exist other useful tools or cargo subcommands for enforcing program
 security whether by searching for specific code patterns or by providing
