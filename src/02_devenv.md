@@ -110,7 +110,26 @@ category `clippy::nursery` since those hints are still under development.
 
 ### rustfmt
 
-<mark>TODO</mark>: introduce the rustfmt tool and recommend its use.
+`rustfmt` is a tool that formats your code according to style guidelines.
+
+To launch it:
+
+```shell
+$> cargo fmt
+```
+
+These guidelines can be customized to your needs by creating a `rustfmt.toml` or `.rustfmt.toml` file at the root of your project. It will be used to override the default settings, for instance:
+
+```toml
+# Set the maximum line width to 120
+max_width = 120
+# Maximum line length for single line if-else expressions
+single_line_if_else_max_width = 40
+```
+
+
+For more information about the guidelines that `rustfmt` will check, have a look at the [Rust Style Guide](https://github.com/rust-dev-tools/fmt-rfcs/blob/master/guide/guide.md).
+
 
 ### Others
 
