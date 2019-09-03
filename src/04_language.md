@@ -69,8 +69,8 @@ The use of uninitialized memory may result in two distinct security issues:
 Zeroing memory is useful for sensitive variables, especially if the
 Rust code is used through FFI.
 
-> ### Rule {{#check MEM-ZERO | Zeroize memory of sensitive data after use}}
-> Variables containing sensitive data must be zeroized after use, using
+> ### Rule {{#check MEM-ZERO | Zero out memory of sensitive data after use}}
+> Variables containing sensitive data must be zeroed out after use, using
 > functions that will not be removed by the compiler optimizations, like
 > `std::ptr::write_volatile` or the `zeroize` crate.
 
