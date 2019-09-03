@@ -31,7 +31,7 @@ edition that is declared in it.
 In the rest of this guide, best effort will be made to highlight constructions
 and language features that are specific to a particular Rust edition.
 
-> ### Note:
+> ### Note
 > No specific edition is recommended, as long as users follow recommendations
 > that are expressed in relation to features offered by edition that has been
 > chosen.
@@ -62,7 +62,7 @@ $ rustup override list
 $
 ```
 
-> ### Rule {{#check DENV-STABLE | Use a stable compilation toolchain}}:
+> ### Rule {{#check DENV-STABLE | Use a stable compilation toolchain}}
 > Development of a secure application must be done using a fully stable
 > toolchain, for limiting potential compiler, runtime or tool bugs.
 
