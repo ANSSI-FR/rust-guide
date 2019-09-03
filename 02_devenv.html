@@ -241,17 +241,32 @@ category <code>clippy::nursery</code> since those hints are still under developm
 development process.</p>
 </blockquote>
 <h3><a class="header" href="#rustfmt" id="rustfmt">rustfmt</a></h3>
-<p><code>rustfmt</code> is a tool that formats your code according to style guidelines.</p>
-<p>To launch it:</p>
-<pre><code class="language-shell">$&gt; cargo fmt
+<p><code>rustfmt</code> is a tool that formats your code according to style guidelines. The
+documentation of the tool states some limitations, among others partial macro
+declarations and uses support. One should use the <code>--check</code> option that prints
+found differences, review these changes, and finally apply them if the code
+readability is not affected.</p>
+<p>So, to launch it:</p>
+<pre><code class="language-shell">$ cargo fmt -- --check
+$ # review of the changes
+$ cargo fmt
 </code></pre>
-<p>These guidelines can be customized to your needs by creating a <code>rustfmt.toml</code> or <code>.rustfmt.toml</code> file at the root of your project. It will be used to override the default settings, for instance:</p>
+<p>These guidelines can be customized to your needs by creating a <code>rustfmt.toml</code> or
+<code>.rustfmt.toml</code> file at the root of your project. It will be used to override
+the default settings, for instance:</p>
 <pre><code class="language-toml"># Set the maximum line width to 120
 max_width = 120
 # Maximum line length for single line if-else expressions
 single_line_if_else_max_width = 40
 </code></pre>
-<p>For more information about the guidelines that <code>rustfmt</code> will check, have a look at the <a href="https://github.com/rust-dev-tools/fmt-rfcs/blob/master/guide/guide.md">Rust Style Guide</a>.</p>
+<p>For more information about the guidelines that <code>rustfmt</code> will check, have a look
+at the <a href="https://github.com/rust-dev-tools/fmt-rfcs/blob/master/guide/guide.md">Rust Style Guide</a>.</p>
+<blockquote>
+<h3><a class="header" href="#rule-a-iddenv-formatadenv-format" id="rule-a-iddenv-formatadenv-format">Rule <a id="DENV-FORMAT"></a>DENV-FORMAT</a></h3>
+<p>The tool <code>rustfmt</code> can be used to ensure that the codebase respect style
+guidelines (as described in <code>rustfmt.toml</code> file), with <code>--check</code> option and
+manual review.</p>
+</blockquote>
 <h3><a class="header" href="#others" id="others">Others</a></h3>
 <p>There exist other useful tools or cargo subcommands for enforcing program
 security whether by searching for specific code patterns or by providing
