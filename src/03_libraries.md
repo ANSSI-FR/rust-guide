@@ -12,7 +12,7 @@ this repository should be justified, and the developer should validate the
 correct application of rules from the current guide in its code. Several tools
 can aid in that task.
 
-## cargo-outdated
+## Cargo-outdated
 
 Cargo-outdated tool allows one to easily manage dependencies versions.
 
@@ -25,7 +25,7 @@ version.
 > each outdated dependency must be updated or the choice of the version must be
 > justified.
 
-## cargo-audit
+## Cargo-audit
 
 Cargo-audit tool allows one to easily check for security vulnerabilities
 reported to the RustSec Advisory Database.

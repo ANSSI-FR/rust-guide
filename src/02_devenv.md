@@ -13,7 +13,7 @@ managing additional components installation and keeping them up to date.
 > attacks, certificate pinning, validation of signatures are works that are
 > currently in progress. In some cases, it may be preferable to opt for
 > an alternative installation method listed in the *Install* section of the
-> official rust website.
+> official Rust website.
 
 ### Rust Editions
 
@@ -66,7 +66,7 @@ $
 > Development of a secure application must be done using a fully stable
 > toolchain, for limiting potential compiler, runtime or tool bugs.
 
-When using a specific cargo subcommand that requires a nightly component,
+When using a specific `cargo` subcommand that requires a nightly component,
 it is preferable to run it by switching the toolchain only locally, instead
 of explicitly switching the complete toolchain. For example, to run the
 (nightly) latest `rustfmt`:
@@ -103,7 +103,7 @@ It has a fundamental role in most Rust development:
 
 > ### Warning
 >
-> Like Rustup, Cargo does perform all downloads over HTTPS, but does not
+> Like `rustup`, `cargo` does perform all downloads over HTTPS, but does not
 > validate the registry index. Ongoing discussions occur on how best protect and
 > verify crates. For now, the security relies on the good security of the
 > website [crates.io] and the GitHub hosted repository containing the
@@ -114,7 +114,7 @@ It has a fundamental role in most Rust development:
 
 Clippy is a tool that provides and checks many lints (bugs, styling, performance
 issues, etc.). Since the stable toolchain has reached version 1.29, `clippy` can
-be used within the stable rustup environment. It is also recommended
+be used within the stable `rustup` environment. It is also recommended
 to install `clippy` as a component (`rustup component add clippy`) in the
 stable toolchain instead of installing it as a project dependency.
 
@@ -128,9 +128,9 @@ category `clippy::nursery` since those hints are still under development.
 > A linter, such as `clippy`, must be used regularly during the development of
 > a secure application.
 
-### rustfmt
+### Rustfmt
 
-`rustfmt` is a tool that formats your code according to style guidelines. The
+Rustfmt is a tool that formats your code according to style guidelines. The
 documentation of the tool states some limitations, among others partial macro
 declarations and uses support. One should use the `--check` option that prints
 found differences, review these changes, and finally apply them if the code
@@ -178,8 +178,8 @@ To prepare a Rust 2015 project to transition to Rust 2018, one can run:
 $ cargo fix --edition
 ```
 
-Rustfix will either fix the code to be compatible with Rust 2018 or print
-a warning that explain the problem. This problem will have to be fixed manually.
+Rustfix will either fix the code to be compatible with Rust 2018 or print a
+warning that explain the problem. This problem will have to be fixed manually.
 By running the command (and possibly fixing manually some issues) until there
 is no warning, one can ensure the code is compatible with both Rust 2015 and
 Rust 2018.
@@ -198,11 +198,11 @@ or change the program semantics in some case.
 > ### Rule {{#check DENV-AUTOFIX | Manually check automatic fixes }}
 >
 > In a secure Rust development, any automatic fix (for instance, provided by
-> Rustfix) must be verified by the developer.
+> `rustfix`) must be verified by the developer.
 
 ### Others
 
-There exist other useful tools or cargo subcommands for enforcing program
+There exist other useful tools or `cargo` subcommands for enforcing program
 security whether by searching for specific code patterns or by providing
 convenient commands for testing or fuzzing. They are discussed in the following
 chapters, according to their goals.

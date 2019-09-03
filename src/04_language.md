@@ -190,13 +190,13 @@ fail and cause the code to panic.
 
 Common patterns that can cause panics are:
 
- - using `unwrap` or `expect`
- - using `assert`
- - an unchecked access to an array
- - integer overflow (in debug mode)
- - division by zero
- - large allocations
- - string formatting using `format!`
+- using `unwrap` or `expect`,
+- using `assert`,
+- an unchecked access to an array,
+- integer overflow (in debug mode),
+- division by zero,
+- large allocations,
+- string formatting using `format!`.
 
 > ### Rule {{#check LANG-NOPANIC | Don't use functions that can cause `panic!`}}:
 > Functions or instructions that can cause the code to panic at runtime must not
