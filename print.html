@@ -885,19 +885,20 @@ is <code>Eq</code>.</li>
 <li>Derivation <code>Ord</code> implements <code>Ord</code> as a <strong>lexicographical order</strong>
 providing that each subtype is <code>Ord</code>.</li>
 </ul>
-<p>For instance, the short code:</p>
-<pre><code class="language-rust noplaypen">#[derive(PartialEq, Eq, PartialOrd, Ord)]
-struct T1{
+<p>For instance, the short following code shows how to compare two <code>T1</code>s easily.
+All the assertions hold.</p>
+<pre><pre class="playpen"><code class="language-rust">#[derive(PartialEq, Eq, PartialOrd, Ord)]
+struct T1 {
     a: u8, b: u8
-};
-</code></pre>
-<p>lets us compare two <code>T1</code>s easily. For instance, the following expressions are
-<code>true</code>:</p>
-<ul>
-<li><code>&amp;T1 {a: 0, b: 0} == Box::new(T1 {a: 0, b: 0}).as_ref()</code></li>
-<li><code>T1 {a: 1, b: 0} &gt; T1 {a: 0, b: 0}</code></li>
-<li><code>T1 {a: 1, b: 1} &gt; T1 {a: 1, b: 0}</code></li>
-</ul>
+}
+
+# fn main() {
+assert!(&amp;T1 { a: 0, b: 0 } == Box::new(T1 { a: 0, b: 0 }).as_ref());
+assert!(T1 { a: 1, b: 0 } &gt; T1 { a: 0, b: 0 });
+assert!(T1 { a: 1, b: 1 } &gt; T1 { a: 1, b: 0 });
+# println!(&quot;all tests passed.&quot;);
+# }
+</code></pre></pre>
 <blockquote>
 <p><strong>Warning</strong></p>
 <p>Derivation of comparison traits for compound types depends on the
