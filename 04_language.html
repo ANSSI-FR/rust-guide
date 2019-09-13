@@ -462,7 +462,7 @@ impl !Sync for SpecialType {}
 <p>The negative implementation of <code>Send</code> or <code>Sync</code> are also used in the standard
 library for the exceptions, and are automatically implemented when appropriate.
 As a result, the generated documentation is always explicit: a type implements
-either <code>Send</code> or <code>!Send</code> (resp. <code>Sync</code> or <code>Sync</code>).</p>
+either <code>Send</code> or <code>!Send</code> (resp. <code>Sync</code> or <code>!Sync</code>).</p>
 <p>As a stable alternative to negative implementation, one can use a <code>PhantomData</code>
 field:</p>
 <pre><pre class="playpen"><code class="language-rust noplayplen">
