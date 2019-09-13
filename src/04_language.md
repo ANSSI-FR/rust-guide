@@ -138,8 +138,9 @@ operations on integers.
 
 In particular, it should be noted that using debug or release compilation
 profile changes integer overflow behavior. In debug configuration, overflow
-cause the termination of the program (`panic`), whereas in the release configuration
-the computed value silently wraps around the maximum value that can be stored.
+cause the termination of the program (`panic`), whereas in the release
+configuration the computed value silently wraps around the maximum value that
+can be stored.
 
 This last behavior can be made explicit by using the `Wrapping` generic type,
 or the `overflowing_<op>` and `wrapping_<op>` operations on integers
@@ -274,7 +275,7 @@ or to release memory (e.g. in smart pointers such as `Box` or `Rc`).
 As a result, `Drop` trait implementations are likely to contain `unsafe` code
 blocks as well as other security-critical operations.
 
-> ### Recommendation {{#check LANG-DROP | Justify `Drop` impl.}}
+> ### Recommendation {{#check LANG-DROP | Justify `Drop` implementation}}
 >
 > In a Rust secure development, the implementation of the `std::ops::Drop` trait
 > should be justified, documented and peer-reviewed.
@@ -292,7 +293,7 @@ missing drops, such as:
 And missing drops may lead to exposing sensitive data or to lock limited
 resources leading to unavailability issues.
 
-> ### Rule {{#check LANG-DROP-NO-PANIC | Do not panic in `Drop` impl.}}
+> ### Rule {{#check LANG-DROP-NO-PANIC | Do not panic in `Drop` implementation}}
 >
 > In a Rust secure development, the implementation of the `std::ops::Drop` trait
 > must not panic.
@@ -325,12 +326,13 @@ Both traits are _unsafe traits_, i.e., the Rust compiler do not verify in any
 way that they are implemented correctly. The danger is real: an incorrect
 implementation may lead to **undefined behavior**.
 
-Fortunately, in most case, one does not need to implement it. In Rust,
+Fortunately, in most cases, one does not need to implement it. In Rust,
 almost all primitive types are `Send` and `Sync`, and for most compound types
 the implementation is automatically provided by the Rust compiler.
 Notable exceptions are:
 
-- Raw pointers are neither `Send` nor `Sync` because they offer no safety guards.
+- Raw pointers are neither `Send` nor `Sync` because they offer no safety
+  guards.
 - `UnsafeCell` is not `Sync` (and as a result `Cell` and `RefCell` aren't
   either) because they offer interior mutability (mutably shared value).
 - `Rc` is neither `Send` nor `Sync` because the reference counter is shared and
@@ -338,8 +340,9 @@ Notable exceptions are:
 
 Automatic implementation of `Send` (resp. `Sync`) occurs for a compound type
 (structure or enumeration) when all fields have `Send` types (resp. `Sync`
-types). Using an unstable feature (as of Rust 1.37.0), one can block the automatic
-implementation of those traits with a manual _negative implementation_:
+types). Using an unstable feature (as of Rust 1.37.0), one can block the
+automatic implementation of those traits with a manual
+_negative implementation_:
 
 ```rust,ignore,noplaypen
 #![feature(option_builtin_traits)]
@@ -363,7 +366,7 @@ field:
 struct SpecialType(u8, PhantomData<*const ()>);
 ```
 
-> ### Recommendation {{#check LANG-SYNC-TRAITS | Justify `Send` and `Sync` impl.}}
+> ### Recommendation {{#check LANG-SYNC-TRAITS | Justify `Send` and `Sync` implementation}}
 >
 > In a Rust secure development, the manual implementation of the `Send` and
 > `Sync` traits should be avoided and, if necessary, should be justified,
@@ -389,7 +392,8 @@ about the implementations of those traits:
 - For `PartialEq`
 
   - *Internal consistency*: `a.ne(b)` is equivalent to `!a.eq(b)`, i.e., `ne` is
-    the strict inverse of `eq`. The default implementation of `ne` is precisely that.
+    the strict inverse of `eq`. The default implementation of `ne` is precisely
+    that.
 
   - *Symmetry*: `a.eq(b)` and `b.eq(a)`, are equivalent. From the developer's
     point of view, it means:
@@ -467,9 +471,7 @@ of `unsafe` blocks.
 > In a Rust secure development, the implementation of standard comparison traits
 > must respect the invariants described in the documentation.
 
-<!-- -->
-
-> ### Recommendation {{#check LANG-CMP-DEFAULTS | Use the default method impl. of standard comparison traits}}
+> ### Recommendation {{#check LANG-CMP-DEFAULTS | Use the default method implementation of standard comparison traits}}
 >
 > In a Rust secure development, the implementation of standard comparison traits
 > should only define methods with no default implementation, so as to reduce
@@ -483,7 +485,8 @@ comparison traits through the `#[derive(...)]` attribute:
 
 - Derivation `PartialEq` implements `PartialEq<Self>` with a
   **structural equality** providing that each subtype is `PartialEq<Self>`.
-- Derivation `Eq` implements the `Eq` marker trait providing that each subtype is `Eq`.
+- Derivation `Eq` implements the `Eq` marker trait providing that each subtype
+  is `Eq`.
 - Derivation `PartialOrd` implements `PartialOrd<Self>` as a
   **lexicographical order** providing that each subtype is `PartialOrd`.
 - Derivation `Ord` implements `Ord` as a **lexicographical order**
@@ -520,15 +523,14 @@ lets us compare two `T1`s easily. For instance, the following expressions are
 > };
 > ```
 >
-> we have `T1 {a: 1, b: 0} > T1 {a: 0, b: 1}` but `T2 {a: 1, b: 0} < T2 {a: 0, b: 1}`.
+> we have `T1 {a: 1, b: 0} > T1 {a: 0, b: 1}` but
+> `T2 {a: 1, b: 0} < T2 {a: 0, b: 1}`.
 >
 > Second, if one of the underlying comparison panics, the order may change the
 > result due to the use of short-circuit logic in the automatic implementation.
 >
 > For enums, the derived comparisons depends first on the **variant order** then
 > on the field order.
-
-<!-- -->
 
 Despite the ordering caveat, derived comparisons are a lot less error-prone
 than manual ones and makes code more shorter and easier to maintain:
