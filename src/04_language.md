@@ -492,21 +492,22 @@ comparison traits through the `#[derive(...)]` attribute:
 - Derivation `Ord` implements `Ord` as a **lexicographical order**
   providing that each subtype is `Ord`.
 
-For instance, the short code:
+For instance, the short following code shows how to compare two `T1`s easily.
+All the assertions hold.
 
-```rust,noplaypen
+```rust
 #[derive(PartialEq, Eq, PartialOrd, Ord)]
-struct T1{
+struct T1 {
     a: u8, b: u8
-};
+}
+
+# fn main() {
+assert!(&T1 { a: 0, b: 0 } == Box::new(T1 { a: 0, b: 0 }).as_ref());
+assert!(T1 { a: 1, b: 0 } > T1 { a: 0, b: 0 });
+assert!(T1 { a: 1, b: 1 } > T1 { a: 1, b: 0 });
+# println!("all tests passed.");
+# }
 ```
-
-lets us compare two `T1`s easily. For instance, the following expressions are
-`true`:
-
-- `&T1 {a: 0, b: 0} == Box::new(T1 {a: 0, b: 0}).as_ref()`
-- `T1 {a: 1, b: 0} > T1 {a: 0, b: 0}`
-- `T1 {a: 1, b: 1} > T1 {a: 1, b: 0}`
 
 > **Warning**
 >
