@@ -100,8 +100,6 @@ It has a fundamental role in most Rust development:
 - It’s also a front-end to run complementary tools such as those that are
   described below, in the form of sub-commands.
 
-<mark>TODO</mark>: identify unsafe features and risky environment variables.
-
 > ### Warning
 >
 > Like `rustup`, `cargo` does perform all downloads over HTTPS, but does not
@@ -111,8 +109,29 @@ It has a fundamental role in most Rust development:
 > registry index. In some cases, it may be preferable to opt for an alternative
 > installation method for dependencies.
 
+Cargo proposes many different commands and options to adapt the build process to
+your project needs, mainly through the manifest file `Cargo.toml`. For a
+complete presentation, see [The Cargo Book].
+
+During the development of a secure application, some of the options may require
+some attention. The `[profile.*]` sections allow configuring how the compiler is
+invoked. For example:
+
+- the `debug-assertions` variable controls whether debug assertions are enabled,
+- the `overflow-checks` variable controls whether overflows are checked for
+  integer arithmetic.
+
+Overriding the default options may cause bugs not being detected, even when
+using the debug profile that normally enables runtime checks (for example
+[integer overflow checks](./04_language.html#integer-overflows)).
+
+> ### Rule {{#check DENV-CARGO-OPTS | Keep default values for critical variables in cargo profiles}}
+> The variables `debug-assertions` and `overflow-checks` must not be overridden
+> in development profiles sections (`[profile.dev]` and `[profile.test]`).
+
 [crates.io]: https://crates.io
 [cargo]: https://doc.rust-lang.org/stable/cargo/
+[the cargo book]: https://doc.rust-lang.org/cargo/index.html
 
 ### Clippy
 
