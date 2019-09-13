@@ -322,7 +322,7 @@ Their semantics is as follows:
 - A type is `Sync` if it is safe to share a immutable reference to it with
   another thread.
 
-Both traits are _unsafe traits_, i.e., the Rust compiler do not verify in any
+Both traits are _unsafe traits_, i.e., the Rust compiler does not verify in any
 way that they are implemented correctly. The danger is real: an incorrect
 implementation may lead to **undefined behavior**.
 
