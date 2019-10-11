@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development Environment</a></li><li><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li><a href="04_language.html"><strong aria-hidden="true">4.</strong> The language</a></li><li><a href="05_test_fuzz.html"><strong aria-hidden="true">5.</strong> Test and fuzzing</a></li><li class="affix"><a href="LICENCE.html">Licence</a></li><li class="affix"><a href="checklist.html" class="active">Checklist</a></li></ol>
+                <ol class="chapter"><li><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development Environment</a></li><li><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li><a href="04_language.html"><strong aria-hidden="true">4.</strong> The language</a></li><li><a href="05_test_fuzz.html"><strong aria-hidden="true">5.</strong> Test and fuzzing</a></li><li><a href="06_ffi.html"><strong aria-hidden="true">6.</strong> Interfacing (FFI)</a></li><li class="affix"><a href="LICENCE.html">Licence</a></li><li class="affix"><a href="checklist.html" class="active">Checklist</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -218,6 +218,51 @@ Respect the invariants of standard comparison traits (<a href="04_language.html#
 Use the default method implementation of standard comparison traits (<a href="04_language.html#LANG-CMP-DEFAULTS">LANG-CMP-DEFAULTS</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Derive comparison traits when possible (<a href="04_language.html#LANG-CMP-DERIVE">LANG-CMP-DERIVE</a>)</li>
+</ul>
+</li>
+<li>
+<p>Interfacing (FFI):</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Use only C-compatible types in FFI (<a href="06_ffi.html#FFI-CTYPE">FFI-CTYPE</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Use consistent types at FFI boundaries (<a href="06_ffi.html#FFI-TCONS">FFI-TCONS</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Use automatic binding generator tools (<a href="06_ffi.html#FFI-AUTOMATE">FFI-AUTOMATE</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Use portable aliases <code>c_*</code> when binding to platform-dependent types (<a href="06_ffi.html#FFI-PFTYPE">FFI-PFTYPE</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Do not use unchecked non-robust foreign values (<a href="06_ffi.html#FFI-CKNONROBUST">FFI-CKNONROBUST</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Check foreign values in Rust (<a href="06_ffi.html#FFI-CKINRUST">FFI-CKINRUST</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Do not use unchecked foreign references (<a href="06_ffi.html#FFI-CKREF">FFI-CKREF</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Do not use reference types but pointer types (<a href="06_ffi.html#FFI-NOREF">FFI-NOREF</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Check foreign pointers (<a href="06_ffi.html#FFI-CKPTR">FFI-CKPTR</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Mark function pointer types in FFI as <code>extern</code> and <code>unsafe</code> (<a href="06_ffi.html#FFI-MARKEDFUNPTR">FFI-MARKEDFUNPTR</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Check foreign function pointers (<a href="06_ffi.html#FFI-CKFUNPTR">FFI-CKFUNPTR</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Do not use incoming Rust <code>enum</code> at FFI boundary (<a href="06_ffi.html#FFI-NOENUM">FFI-NOENUM</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Use dedicated Rust types for foreign opaque types (<a href="06_ffi.html#FFI-R-OPAQUE">FFI-R-OPAQUE</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Use incomplete C/C++ <code>struct</code> pointers to make type opaque (<a href="06_ffi.html#FFI-C-OPAQUE">FFI-C-OPAQUE</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Do not use types that implement <code>Drop</code> at FFI boundary (<a href="06_ffi.html#FFI-MEM-NODROP">FFI-MEM-NODROP</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Ensure clear data ownership in FFI (<a href="06_ffi.html#FFI-MEM-OWNER">FFI-MEM-OWNER</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Wrap foreign data in memory releasing wrapper (<a href="06_ffi.html#FFI-MEM-WRAPPING">FFI-MEM-WRAPPING</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Handle <code>panic!</code> correctly in FFI (<a href="06_ffi.html#FFI-NOPANIC">FFI-NOPANIC</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Provide safe wrapping to foreign library (<a href="06_ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Expose dedicated C-compatible API only (<a href="06_ffi.html#FFI-CAPI">FFI-CAPI</a>)</li>
 </ul>
 </li>
 </ul>
