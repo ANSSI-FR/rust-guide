@@ -181,7 +181,7 @@ unsound behaviors in older versions of the compiler).</p>
 <p>While the usual way for memory to be reclaimed is for a variable to go out of
 scope, Rust provides special functions to manually reclaim memory: <code>forget</code> and
 <code>drop</code> of the <code>std::mem</code> module (or <code>core::mem</code>). While <code>drop</code> simply triggers
-an early memory reclamation that call associated destructors when needed,
+an early memory reclamation that calls associated destructors when needed,
 <code>forget</code> skips any call to the destructors.</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
