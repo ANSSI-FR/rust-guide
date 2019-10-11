@@ -44,7 +44,7 @@ unsound behaviors in older versions of the compiler).
 While the usual way for memory to be reclaimed is for a variable to go out of
 scope, Rust provides special functions to manually reclaim memory: `forget` and
 `drop` of the `std::mem` module (or `core::mem`). While `drop` simply triggers
-an early memory reclamation that call associated destructors when needed,
+an early memory reclamation that calls associated destructors when needed,
 `forget` skips any call to the destructors.
 
 ```rust
