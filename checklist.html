@@ -177,6 +177,14 @@ Check for unsafe code in dependencies (<a href="03_libraries.html#LIBS-UNSAFE">L
 <li><input disabled="" type="checkbox"/>
 Respect naming conventions (<a href="04_language.html#LANG-NAMING">LANG-NAMING</a>)</li>
 <li><input disabled="" type="checkbox"/>
+Do not use <code>forget</code>  (<a href="04_language.html#MEM-FORGET">MEM-FORGET</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Do not leak memory (<a href="04_language.html#MEM-LEAK">MEM-LEAK</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Do release value wrapped in <code>ManuallyDrop</code> (<a href="04_language.html#MEM-MANUALLYDROP">MEM-MANUALLYDROP</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Always call <code>from_raw</code> on <code>into_raw</code>ed value (<a href="04_language.html#MEM-INTOFROMRAW">MEM-INTOFROMRAW</a>)</li>
+<li><input disabled="" type="checkbox"/>
 Do not use uninitialized memory  (<a href="04_language.html#MEM-UNINIT">MEM-UNINIT</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Zero out memory of sensitive data after use (<a href="04_language.html#MEM-ZERO">MEM-ZERO</a>)</li>
