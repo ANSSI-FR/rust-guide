@@ -80,7 +80,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development Environment</a></li><li><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li><a href="04_language.html"><strong aria-hidden="true">4.</strong> The language</a></li><li><a href="05_test_fuzz.html"><strong aria-hidden="true">5.</strong> Test and fuzzing</a></li><li><a href="06_ffi.html"><strong aria-hidden="true">6.</strong> Interfacing (FFI)</a></li><li class="affix"><a href="LICENCE.html">Licence</a></li><li class="affix"><a href="checklist.html">Checklist</a></li></ol>
+                <ol class="chapter"><li><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development Environment</a></li><li><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li><a href="04_language.html"><strong aria-hidden="true">4.</strong> Language generalities</a></li><li><a href="05_memory.html"><strong aria-hidden="true">5.</strong> Memory management</a></li><li><a href="06_typesystem.html"><strong aria-hidden="true">6.</strong> Type system</a></li><li><a href="07_ffi.html"><strong aria-hidden="true">7.</strong> Foreign Function Interface</a></li><li><a href="08_testfuzz.html"><strong aria-hidden="true">8.</strong> Test and fuzzing</a></li><li class="affix"><a href="LICENCE.html">Licence</a></li><li class="affix"><a href="checklist.html">Checklist</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -193,12 +193,12 @@ highlighted inserts (<em>Rule</em>, <em>Recommendation</em>, <em>Warning</em>, e
 <p>The aim with the structure of this document is to consider separately different
 phases of a typical (and simplified) development process. Firstly, we provide
 some advices for using tools of the Rust ecosystem to how to take advantage
-of them for secure development. A second chapter focuses on precautions to
-take when choosing and using external libraries. Then, recommendations about
-the Rust language constructs are exposed. Finally, we introduce advices for
-writing tests for a project in Rust, and for using Rust fuzzing tools.
-A summary of recommendations presented throughout the document is listed at the
-end of this guide.</p>
+of them for secure development. A following chapter focuses on precautions to
+take when choosing and using external libraries. Then, recommendations about the
+Rust language constructs are exposed. Finally, we introduce advices for writing
+tests for a project in Rust, and for using Rust fuzzing tools. A summary of
+recommendations presented throughout the document is listed at the end of this
+guide.</p>
 <h1><a class="header" href="#development-environment" id="development-environment">Development Environment</a></h1>
 <h2><a class="header" href="#rustup" id="rustup">Rustup</a></h2>
 <p><a href="https://github.com/rust-lang/rustup.rs">Rustup</a> is the Rust toolchain installer. Among other things, it enables
@@ -406,9 +406,8 @@ dependencies.</p>
 <p><mark>TODO</mark>: check that no <code>unsafe</code> blocks appear in the imported
 dependencies (with a tool?).</p>
 </blockquote>
-<h1><a class="header" href="#the-rust-language" id="the-rust-language">The Rust language</a></h1>
-<h2><a class="header" href="#generalities" id="generalities">Generalities</a></h2>
-<h3><a class="header" href="#naming" id="naming">Naming</a></h3>
+<h1><a class="header" href="#language-generalities" id="language-generalities">Language generalities</a></h1>
+<h2><a class="header" href="#naming" id="naming">Naming</a></h2>
 <p>As of now, the standard library is the de facto standard for naming things in
 the Rust world. However, an effort has been made to formalize it, first in
 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">RFC 430</a>, then in the <a href="https://rust-lang-nursery.github.io/api-guidelines/">Rust API Guidelines</a>.</p>
@@ -434,11 +433,154 @@ some particular constructions:</p>
 <p>Development of a secure application must follow the naming conventions
 outlined in the <a href="https://rust-lang-nursery.github.io/api-guidelines/">Rust API Guidelines</a>.</p>
 </blockquote>
-<h3><a class="header" href="#memory-management" id="memory-management">Memory management</a></h3>
+<h2><a class="header" href="#unsafe-code" id="unsafe-code">Unsafe code</a></h2>
+<p>The joint utilization of the type system and the ownership system aims to
+enforce safety regarding the memory management in Rust's programs. So the
+language aims to avoid memory overflows, null or invalid pointer constructions,
+and data races.
+To perform risky actions such as system calls, type coercions, or memory
+pointers direct manipulations, the language provides the <code>unsafe</code> keyword.</p>
+<blockquote>
+<h3><a class="header" href="#rule-a-idlang-unsafealang-unsafe" id="rule-a-idlang-unsafealang-unsafe">Rule <a id="LANG-UNSAFE"></a>LANG-UNSAFE</a></h3>
+<p>For a secured development, the <code>unsafe</code> blocks must be avoided. Afterward,
+we list the only cases where <code>unsafe</code> may be used, provided that they come
+with a proper justification:</p>
+<ul>
+<li>
+<p>The Foreign Function Interface (FFI) of Rust allows for describing
+functions whose implementation is written in C, using the <code>extern &quot;C&quot;</code>
+prefix. To use such a function, the <code>unsafe</code> keyword is required. “Safe”
+wrapper shall be defined to safely and seamlessly call C code.</p>
+</li>
+<li>
+<p>For embedded device programming, registers and various other resources are
+often accessed through a fixed memory address. In this case, <code>unsafe</code> blocks
+are required to initialize and dereference those particular pointers in Rust.
+In order to minimize the number of unsafe accesses in the code and to allow
+easier identification of them by a programmer, a proper abstraction (data
+structure or module) shall be provided.</p>
+</li>
+<li>
+<p>A function can be marked unsafe globally (by prefixing its declaration with
+the <code>unsafe</code> keyword) when it may exhibit unsafe behaviors based on its
+arguments, that are unavoidable. For instance, this happens when a function
+tries to dereference a pointer passed as an argument.</p>
+</li>
+</ul>
+<p>With the exception of these cases, <code>#[forbid(unsafe_code)]</code> must appear in
+<code>main.rs</code> to generate compilation errors if <code>unsafe</code> is used in the code base.</p>
+</blockquote>
+<h2><a class="header" href="#integer-overflows" id="integer-overflows">Integer overflows</a></h2>
+<p>Although some verification is performed by Rust regarding the potential
+integer overflows, precautions should be taken when executing arithmetic
+operations on integers.</p>
+<p>In particular, it should be noted that using debug or release compilation
+profile changes integer overflow behavior. In debug configuration, overflow
+cause the termination of the program (<code>panic</code>), whereas in the release
+configuration the computed value silently wraps around the maximum value that
+can be stored.</p>
+<p>This last behavior can be made explicit by using the <code>Wrapping</code> generic type,
+or the <code>overflowing_&lt;op&gt;</code> and <code>wrapping_&lt;op&gt;</code> operations on integers
+(the <code>&lt;op&gt;</code> part being <code>add</code>, <code>mul</code>, <code>sub</code>, <code>shr</code>, etc.).</p>
+<pre><pre class="playpen"><code class="language-rust">use std::num::Wrapping;
+# use std::panic;
+
+# fn main() {
+let x: u8 = 242;
+
+# let result = panic::catch_unwind(|| {
+println!(&quot;{}&quot;, x + 50);                      // panics in debug, prints 36 in release.
+# });
+# if result.is_err() { println!(&quot;panic&quot;); }
+println!(&quot;{}&quot;, x.overflowing_add(50).0);     // always prints 36.
+println!(&quot;{}&quot;, x.wrapping_add(50));          // always prints 36.
+println!(&quot;{}&quot;, Wrapping(x) + Wrapping(50));  // always prints 36.
+
+// always panics:
+let (res, c) = x.overflowing_add(50);
+# let result = panic::catch_unwind(|| {
+if c { panic!(&quot;custom error&quot;); }
+else { println!(&quot;{}&quot;, res); }
+# });
+# if result.is_err() { println!(&quot;panic&quot;); }
+# }
+</code></pre></pre>
+<blockquote>
+<h3><a class="header" href="#rule-a-idlang-arithalang-arith" id="rule-a-idlang-arithalang-arith">Rule <a id="LANG-ARITH"></a>LANG-ARITH</a></h3>
+<p>When assuming that an arithmetic operation can produce an overflow, the
+specialized functions <code>overflowing_&lt;op&gt;</code>, <code>wrapping_&lt;op&gt;</code>, or the
+<code>Wrapping</code> type must be used.</p>
+</blockquote>
+<h2><a class="header" href="#error-handling" id="error-handling">Error handling</a></h2>
+<p><mark>TODO</mark>: explicit good practices in error handling.</p>
+<p>The <code>Result</code> type is the preferred way of handling functions that can fail.
+A <code>Result</code> object must be tested, and never ignored.</p>
+<blockquote>
+<h3><a class="header" href="#recommendation-a-idlang-errwrapalang-errwrap" id="recommendation-a-idlang-errwrapalang-errwrap">Recommendation <a id="LANG-ERRWRAP"></a>LANG-ERRWRAP</a></h3>
+<p>A crate can implement its own Error type, wrapping all possible errors.
+It must be careful to make this type exception-safe (RFC 1236), and implement
+<code>Error + Send + Sync + 'static</code> as well as <code>Display</code>.</p>
+</blockquote>
+<blockquote>
+<h3><a class="header" href="#recommendation-a-idlang-errdoalang-errdo" id="recommendation-a-idlang-errdoalang-errdo">Recommendation <a id="LANG-ERRDO"></a>LANG-ERRDO</a></h3>
+<p>The <code>?</code> operator should be used to improve readability of code.
+The <code>try!</code> macro should not be used.</p>
+</blockquote>
+<p>The <a href="https://crates.io/crates/error-chain">error-chain</a> and <a href="https://crates.io/crates/failure">failure</a> crates can be used to wrap errors.</p>
+<h3><a class="header" href="#panics" id="panics">Panics</a></h3>
+<p>Explicit error handling (<code>Result</code>) should always be preferred instead of calling
+<code>panic</code>.  The cause of the error should be available, and generic errors should
+be avoided.</p>
+<p>Crates providing libraries should never use functions or instructions that can
+fail and cause the code to panic.</p>
+<p>Common patterns that can cause panics are:</p>
+<ul>
+<li>using <code>unwrap</code> or <code>expect</code>,</li>
+<li>using <code>assert</code>,</li>
+<li>an unchecked access to an array,</li>
+<li>integer overflow (in debug mode),</li>
+<li>division by zero,</li>
+<li>large allocations,</li>
+<li>string formatting using <code>format!</code>.</li>
+</ul>
+<blockquote>
+<h3><a class="header" href="#rule-a-idlang-nopanicalang-nopanic" id="rule-a-idlang-nopanicalang-nopanic">Rule <a id="LANG-NOPANIC"></a>LANG-NOPANIC</a></h3>
+<p>Functions or instructions that can cause the code to panic at runtime must not
+be used.</p>
+</blockquote>
+<blockquote>
+<h3><a class="header" href="#rule-a-idlang-arrindexingalang-arrindexing" id="rule-a-idlang-arrindexingalang-arrindexing">Rule <a id="LANG-ARRINDEXING"></a>LANG-ARRINDEXING</a></h3>
+<p>Array indexing must be properly tested, or the <code>get</code> method should be used to
+return an <code>Option</code>.</p>
+</blockquote>
+<p><mark>TODO</mark> Check if the <a href="https://github.com/dtolnay/no-panic">no_panic</a>
+crate can catch all cases. Drawback: all functions need to be marked as
+<code>#[no_panic]</code>.</p>
+<!--
+<mark>TODO</mark> Another possibility:
+[rustig](https://github.com/Technolution/rustig) (doesn't build here)
+-->
+<h3><a class="header" href="#ffi-and-panics" id="ffi-and-panics">FFI and panics</a></h3>
+<p>When calling Rust code from another language (for ex. C), the Rust code must
+be careful to never panic.
+Unwinding from Rust code into foreign code results in undefined behavior.</p>
+<blockquote>
+<h3><a class="header" href="#rule-a-idlang-ffipanicalang-ffipanic" id="rule-a-idlang-ffipanicalang-ffipanic">Rule <a id="LANG-FFIPANIC"></a>LANG-FFIPANIC</a></h3>
+<p>Rust code called from FFI must either ensure the function cannot panic, or use
+<code>catch_unwind</code> or the <code>std::panic</code> module to ensure the rust code will not
+abort or return in an unstable state.</p>
+</blockquote>
+<p>Note that <code>catch_unwind</code> will only catch unwinding panics, not those that abort
+the process.</p>
+<h2><a class="header" href="#macros" id="macros">Macros</a></h2>
+<p><mark>TODO</mark>: cyclomatic complexity of the macro expanded code, recursion
+limits, ...</p>
+<h1><a class="header" href="#memory-management" id="memory-management">Memory management</a></h1>
+<h2><a class="header" href="#about-rust-memory-safety" id="about-rust-memory-safety">About Rust memory safety</a></h2>
 <p><mark>TODO</mark>: explain safe allocations/deallocations, ownership/borrowing,
 and identify language constructs that may break memory safety (for instance,
 unsound behaviors in older versions of the compiler).</p>
-<h4><a class="header" href="#forget-and-memory-leaks" id="forget-and-memory-leaks">Forget and memory leaks</a></h4>
+<h2><a class="header" href="#forget-and-memory-leaks" id="forget-and-memory-leaks">Forget and memory leaks</a></h2>
 <p>While the usual way for memory to be reclaimed is for a variable to go out of
 scope, Rust provides special functions to manually reclaim memory: <code>forget</code> and
 <code>drop</code> of the <code>std::mem</code> module (or <code>core::mem</code>). While <code>drop</code> simply triggers
@@ -544,7 +686,7 @@ unsafe {
 <p>Because the other types (<code>Rc</code> and <code>Arc</code>) are opaque and more complex, manual
 cleanup is not possible.</p>
 </blockquote>
-<h4><a class="header" href="#uninitialized-memory" id="uninitialized-memory">Uninitialized memory</a></h4>
+<h2><a class="header" href="#uninitialized-memory" id="uninitialized-memory">Uninitialized memory</a></h2>
 <p>By default, Rust forces all values to be initialized, preventing the use of
 uninitialized memory (except if using <code>std::mem::uninitialized</code> or
 <code>std::mem::MaybeUninit</code>).</p>
@@ -567,7 +709,7 @@ However, it does not change the second issue: the non-drop of an initialized
 memory is as much likely. It is problematic, in particular when considering
 the use of <code>Drop</code> to erase sensitive memory.</p>
 </blockquote>
-<h4><a class="header" href="#secure-memory-zeroing-for-sensitive-information" id="secure-memory-zeroing-for-sensitive-information">Secure memory zeroing for sensitive information</a></h4>
+<h2><a class="header" href="#secure-memory-zeroing-for-sensitive-information" id="secure-memory-zeroing-for-sensitive-information">Secure memory zeroing for sensitive information</a></h2>
 <p>Zeroing memory is useful for sensitive variables, especially if the
 Rust code is used through FFI.</p>
 <blockquote>
@@ -595,149 +737,11 @@ impl Drop for ZU32 {
 } // i is freed here
 # }
 </code></pre></pre>
-<h3><a class="header" href="#unsafe-code" id="unsafe-code">Unsafe code</a></h3>
-<p>The joint utilization of the type system and the ownership system aims to
-enforce safety regarding the memory management in Rust's programs. So the
-language aims to avoid memory overflows, null or invalid pointer constructions,
-and data races.
-To perform risky actions such as system calls, type coercions, or memory
-pointers direct manipulations, the language provides the <code>unsafe</code> keyword.</p>
-<blockquote>
-<h3><a class="header" href="#rule-a-idlang-unsafealang-unsafe" id="rule-a-idlang-unsafealang-unsafe">Rule <a id="LANG-UNSAFE"></a>LANG-UNSAFE</a></h3>
-<p>For a secured development, the <code>unsafe</code> blocks must be avoided. Afterward,
-we list the only cases where <code>unsafe</code> may be used, provided that they come
-with a proper justification:</p>
-<ul>
-<li>
-<p>The Foreign Function Interface (FFI) of Rust allows for describing
-functions whose implementation is written in C, using the <code>extern &quot;C&quot;</code>
-prefix. To use such a function, the <code>unsafe</code> keyword is required. “Safe”
-wrapper shall be defined to safely and seamlessly call C code.</p>
-</li>
-<li>
-<p>For embedded device programming, registers and various other resources are
-often accessed through a fixed memory address. In this case, <code>unsafe</code> blocks
-are required to initialize and dereference those particular pointers in Rust.
-In order to minimize the number of unsafe accesses in the code and to allow
-easier identification of them by a programmer, a proper abstraction (data
-structure or module) shall be provided.</p>
-</li>
-<li>
-<p>A function can be marked unsafe globally (by prefixing its declaration with
-the <code>unsafe</code> keyword) when it may exhibit unsafe behaviors based on its
-arguments, that are unavoidable. For instance, this happens when a function
-tries to dereference a pointer passed as an argument.</p>
-</li>
-</ul>
-<p>With the exception of these cases, <code>#[forbid(unsafe_code)]</code> must appear in
-<code>main.rs</code> to generate compilation errors if <code>unsafe</code> is used in the code base.</p>
-</blockquote>
-<h3><a class="header" href="#integer-overflows" id="integer-overflows">Integer overflows</a></h3>
-<p>Although some verification is performed by Rust regarding the potential
-integer overflows, precautions should be taken when executing arithmetic
-operations on integers.</p>
-<p>In particular, it should be noted that using debug or release compilation
-profile changes integer overflow behavior. In debug configuration, overflow
-cause the termination of the program (<code>panic</code>), whereas in the release
-configuration the computed value silently wraps around the maximum value that
-can be stored.</p>
-<p>This last behavior can be made explicit by using the <code>Wrapping</code> generic type,
-or the <code>overflowing_&lt;op&gt;</code> and <code>wrapping_&lt;op&gt;</code> operations on integers
-(the <code>&lt;op&gt;</code> part being <code>add</code>, <code>mul</code>, <code>sub</code>, <code>shr</code>, etc.).</p>
-<pre><pre class="playpen"><code class="language-rust">use std::num::Wrapping;
-# use std::panic;
-
-# fn main() {
-let x: u8 = 242;
-
-# let result = panic::catch_unwind(|| {
-println!(&quot;{}&quot;, x + 50);                      // panics in debug, prints 36 in release.
-# });
-# if result.is_err() { println!(&quot;panic&quot;); }
-println!(&quot;{}&quot;, x.overflowing_add(50).0);     // always prints 36.
-println!(&quot;{}&quot;, x.wrapping_add(50));          // always prints 36.
-println!(&quot;{}&quot;, Wrapping(x) + Wrapping(50));  // always prints 36.
-
-// always panics:
-let (res, c) = x.overflowing_add(50);
-# let result = panic::catch_unwind(|| {
-if c { panic!(&quot;custom error&quot;); }
-else { println!(&quot;{}&quot;, res); }
-# });
-# if result.is_err() { println!(&quot;panic&quot;); }
-# }
-</code></pre></pre>
-<blockquote>
-<h3><a class="header" href="#rule-a-idlang-arithalang-arith" id="rule-a-idlang-arithalang-arith">Rule <a id="LANG-ARITH"></a>LANG-ARITH</a></h3>
-<p>When assuming that an arithmetic operation can produce an overflow, the
-specialized functions <code>overflowing_&lt;op&gt;</code>, <code>wrapping_&lt;op&gt;</code>, or the
-<code>Wrapping</code> type must be used.</p>
-</blockquote>
-<h2><a class="header" href="#type-system" id="type-system">Type system</a></h2>
+<h1><a class="header" href="#type-system" id="type-system">Type system</a></h1>
+<h2><a class="header" href="#about-rust-type-system" id="about-rust-type-system">About Rust type system</a></h2>
 <p><mark>TODO</mark>: identify pitfalls with the type system (for instance,
 misunderstanding of which code is actually executed when implementing complex
 patterns with traits).</p>
-<h2><a class="header" href="#error-handling" id="error-handling">Error handling</a></h2>
-<p><mark>TODO</mark>: explicit good practices in error handling.</p>
-<p>The <code>Result</code> type is the preferred way of handling functions that can fail.
-A <code>Result</code> object must be tested, and never ignored.</p>
-<blockquote>
-<h3><a class="header" href="#recommendation-a-idlang-errwrapalang-errwrap" id="recommendation-a-idlang-errwrapalang-errwrap">Recommendation <a id="LANG-ERRWRAP"></a>LANG-ERRWRAP</a></h3>
-<p>A crate can implement its own Error type, wrapping all possible errors.
-It must be careful to make this type exception-safe (RFC 1236), and implement
-<code>Error + Send + Sync + 'static</code> as well as <code>Display</code>.</p>
-</blockquote>
-<blockquote>
-<h3><a class="header" href="#recommendation-a-idlang-errdoalang-errdo" id="recommendation-a-idlang-errdoalang-errdo">Recommendation <a id="LANG-ERRDO"></a>LANG-ERRDO</a></h3>
-<p>The <code>?</code> operator should be used to improve readability of code.
-The <code>try!</code> macro should not be used.</p>
-</blockquote>
-<p>The <a href="https://crates.io/crates/error-chain">error-chain</a> and <a href="https://crates.io/crates/failure">failure</a> crates can be used to wrap errors.</p>
-<h3><a class="header" href="#panics" id="panics">Panics</a></h3>
-<p>Explicit error handling (<code>Result</code>) should always be preferred instead of calling
-<code>panic</code>.  The cause of the error should be available, and generic errors should
-be avoided.</p>
-<p>Crates providing libraries should never use functions or instructions that can
-fail and cause the code to panic.</p>
-<p>Common patterns that can cause panics are:</p>
-<ul>
-<li>using <code>unwrap</code> or <code>expect</code>,</li>
-<li>using <code>assert</code>,</li>
-<li>an unchecked access to an array,</li>
-<li>integer overflow (in debug mode),</li>
-<li>division by zero,</li>
-<li>large allocations,</li>
-<li>string formatting using <code>format!</code>.</li>
-</ul>
-<blockquote>
-<h3><a class="header" href="#rule-a-idlang-nopanicalang-nopanic" id="rule-a-idlang-nopanicalang-nopanic">Rule <a id="LANG-NOPANIC"></a>LANG-NOPANIC</a></h3>
-<p>Functions or instructions that can cause the code to panic at runtime must not
-be used.</p>
-</blockquote>
-<blockquote>
-<h3><a class="header" href="#rule-a-idlang-arrindexingalang-arrindexing" id="rule-a-idlang-arrindexingalang-arrindexing">Rule <a id="LANG-ARRINDEXING"></a>LANG-ARRINDEXING</a></h3>
-<p>Array indexing must be properly tested, or the <code>get</code> method should be used to
-return an <code>Option</code>.</p>
-</blockquote>
-<p><mark>TODO</mark> Check if the <a href="https://github.com/dtolnay/no-panic">no_panic</a>
-crate can catch all cases. Drawback: all functions need to be marked as
-<code>#[no_panic]</code>.</p>
-<!--
-<mark>TODO</mark> Another possibility:
-[rustig](https://github.com/Technolution/rustig) (doesn't build here)
--->
-<h3><a class="header" href="#ffi-and-panics" id="ffi-and-panics">FFI and panics</a></h3>
-<p>When calling Rust code from another language (for ex. C), the Rust code must
-be careful to never panic.
-Unwinding from Rust code into foreign code results in undefined behavior.</p>
-<blockquote>
-<h3><a class="header" href="#rule-a-idlang-ffipanicalang-ffipanic" id="rule-a-idlang-ffipanicalang-ffipanic">Rule <a id="LANG-FFIPANIC"></a>LANG-FFIPANIC</a></h3>
-<p>Rust code called from FFI must either ensure the function cannot panic, or use
-<code>catch_unwind</code> or the <code>std::panic</code> module to ensure the rust code will not
-abort or return in an unstable state.</p>
-</blockquote>
-<p>Note that <code>catch_unwind</code> will only catch unwinding panics, not those that abort
-the process.</p>
 <h2><a class="header" href="#standard-library-traits" id="standard-library-traits">Standard library traits</a></h2>
 <h3><a class="header" href="#drop-trait-the-destructor" id="drop-trait-the-destructor"><code>Drop</code> trait, the destructor</a></h3>
 <p>Types implement the trait <code>std::ops::Drop</code> to perform some operations when the
@@ -1032,16 +1036,7 @@ should be automatically derived with <code>#[derive(...)]</code> when structural
 and lexicographical comparison is needed. Any manual implementation of
 standard comparison traits should be documented and justified.</p>
 </blockquote>
-<h2><a class="header" href="#macros" id="macros">Macros</a></h2>
-<p><mark>TODO</mark>: cyclomatic complexity of the macro expanded code, recursion
-limits, ...</p>
-<h1><a class="header" href="#tests-and-fuzzing" id="tests-and-fuzzing">Tests and fuzzing</a></h1>
-<h2><a class="header" href="#writing-tests" id="writing-tests">Writing tests</a></h2>
-<p><mark>TODO</mark>: good practices in writing tests.</p>
-<h2><a class="header" href="#fuzzing" id="fuzzing">Fuzzing</a></h2>
-<h3><a class="header" href="#cargo-fuzz" id="cargo-fuzz">cargo-fuzz</a></h3>
-<p><mark>TODO</mark>: good practices in fuzzing programs or part of programs.</p>
-<h1><a class="header" href="#interfacing-ffi" id="interfacing-ffi">Interfacing (FFI)</a></h1>
+<h1><a class="header" href="#foreign-function-interface-ffi" id="foreign-function-interface-ffi">Foreign Function Interface (FFI)</a></h1>
 <p>Rust approach to interfacing with other languages relies on a strong
 compatibility with C. However, this boundary is by its very nature <strong>unsafe</strong>
 (see <a href="https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html">Rust Book: Unsafe Rust</a>).</p>
@@ -1193,7 +1188,7 @@ generate bindings when possible and to maintain them continually.</p>
 <p><strong>Warning</strong></p>
 <p>For binding C/C++ to Rust, <a href="https://crates.io/crates/rust-bindgen">rust-bindgen</a> is able to automatically generate
 the low-level binding. A high-level safe binding is highly recommended (see
-Recommendation <a href="06_ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>).
+Recommendation <a href="07_ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>).
 Also some options of rust-bindgen may result in dangerous translations, in
 particular <code>rustified_enum</code>.</p>
 </blockquote>
@@ -1888,6 +1883,12 @@ int main(int argc, const char** argv) {
     return 0;
 }
 </code></pre>
+<h1><a class="header" href="#test-and-fuzzing" id="test-and-fuzzing">Test and fuzzing</a></h1>
+<h2><a class="header" href="#writing-tests" id="writing-tests">Writing tests</a></h2>
+<p><mark>TODO</mark>: good practices in writing tests.</p>
+<h2><a class="header" href="#fuzzing" id="fuzzing">Fuzzing</a></h2>
+<h3><a class="header" href="#cargo-fuzz" id="cargo-fuzz">cargo-fuzz</a></h3>
+<p><mark>TODO</mark>: good practices in fuzzing programs or part of programs.</p>
 <h1><a class="header" href="#open-licence-20licence-ouverte-20" id="open-licence-20licence-ouverte-20">OPEN LICENCE 2.0/LICENCE OUVERTE 2.0</a></h1>
 <h2><a class="header" href="#reuse-of-the-information-covered-by-this-licence" id="reuse-of-the-information-covered-by-this-licence">“Reuse” of the “Information” covered by this licence</a></h2>
 <p>The “Grantor” grants the “Reuser” the free, non-exclusive right to “Reuse” the “Information” subject of this licence, for commercial or non-commercial purposes, worldwide and for an unlimited period, in accordance with the conditions stated below.</p>
@@ -1970,22 +1971,10 @@ Check for unsafe code in dependencies (<a href="03_libraries.html#LIBS-UNSAFE">L
 </ul>
 </li>
 <li>
-<p>The language:</p>
+<p>Language generalities:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
 Respect naming conventions (<a href="04_language.html#LANG-NAMING">LANG-NAMING</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Do not use <code>forget</code>  (<a href="04_language.html#MEM-FORGET">MEM-FORGET</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Do not leak memory (<a href="04_language.html#MEM-LEAK">MEM-LEAK</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Do release value wrapped in <code>ManuallyDrop</code> (<a href="04_language.html#MEM-MANUALLYDROP">MEM-MANUALLYDROP</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Always call <code>from_raw</code> on <code>into_raw</code>ed value (<a href="04_language.html#MEM-INTOFROMRAW">MEM-INTOFROMRAW</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Do not use uninitialized memory  (<a href="04_language.html#MEM-UNINIT">MEM-UNINIT</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Zero out memory of sensitive data after use (<a href="04_language.html#MEM-ZERO">MEM-ZERO</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Don't use unsafe blocks (<a href="04_language.html#LANG-UNSAFE">LANG-UNSAFE</a>)</li>
 <li><input disabled="" type="checkbox"/>
@@ -2000,67 +1989,89 @@ Don't use functions that can cause <code>panic!</code> (<a href="04_language.htm
 Test properly array indexing or use the <code>get</code> method (<a href="04_language.html#LANG-ARRINDEXING">LANG-ARRINDEXING</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Handle correctly <code>panic!</code> in FFI (<a href="04_language.html#LANG-FFIPANIC">LANG-FFIPANIC</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Justify <code>Drop</code> implementation (<a href="04_language.html#LANG-DROP">LANG-DROP</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Do not panic in <code>Drop</code> implementation (<a href="04_language.html#LANG-DROP-NO-PANIC">LANG-DROP-NO-PANIC</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Do not allow cycles of reference-counted <code>Drop</code> (<a href="04_language.html#LANG-DROP-NO-CYCLE">LANG-DROP-NO-CYCLE</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Do not rely only on <code>Drop</code> to ensure security (<a href="04_language.html#LANG-DROP-SEC">LANG-DROP-SEC</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Justify <code>Send</code> and <code>Sync</code> implementation (<a href="04_language.html#LANG-SYNC-TRAITS">LANG-SYNC-TRAITS</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Respect the invariants of standard comparison traits (<a href="04_language.html#LANG-CMP-INV">LANG-CMP-INV</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Use the default method implementation of standard comparison traits (<a href="04_language.html#LANG-CMP-DEFAULTS">LANG-CMP-DEFAULTS</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Derive comparison traits when possible (<a href="04_language.html#LANG-CMP-DERIVE">LANG-CMP-DERIVE</a>)</li>
 </ul>
 </li>
 <li>
-<p>Interfacing (FFI):</p>
+<p>Memory management:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Use only C-compatible types in FFI (<a href="06_ffi.html#FFI-CTYPE">FFI-CTYPE</a>)</li>
+Do not use <code>forget</code>  (<a href="05_memory.html#MEM-FORGET">MEM-FORGET</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Use consistent types at FFI boundaries (<a href="06_ffi.html#FFI-TCONS">FFI-TCONS</a>)</li>
+Do not leak memory (<a href="05_memory.html#MEM-LEAK">MEM-LEAK</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Use automatic binding generator tools (<a href="06_ffi.html#FFI-AUTOMATE">FFI-AUTOMATE</a>)</li>
+Do release value wrapped in <code>ManuallyDrop</code> (<a href="05_memory.html#MEM-MANUALLYDROP">MEM-MANUALLYDROP</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Use portable aliases <code>c_*</code> when binding to platform-dependent types (<a href="06_ffi.html#FFI-PFTYPE">FFI-PFTYPE</a>)</li>
+Always call <code>from_raw</code> on <code>into_raw</code>ed value (<a href="05_memory.html#MEM-INTOFROMRAW">MEM-INTOFROMRAW</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Do not use unchecked non-robust foreign values (<a href="06_ffi.html#FFI-CKNONROBUST">FFI-CKNONROBUST</a>)</li>
+Do not use uninitialized memory  (<a href="05_memory.html#MEM-UNINIT">MEM-UNINIT</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Check foreign values in Rust (<a href="06_ffi.html#FFI-CKINRUST">FFI-CKINRUST</a>)</li>
+Zero out memory of sensitive data after use (<a href="05_memory.html#MEM-ZERO">MEM-ZERO</a>)</li>
+</ul>
+</li>
+<li>
+<p>Type system:</p>
+<ul>
 <li><input disabled="" type="checkbox"/>
-Do not use unchecked foreign references (<a href="06_ffi.html#FFI-CKREF">FFI-CKREF</a>)</li>
+Justify <code>Drop</code> implementation (<a href="06_typesystem.html#LANG-DROP">LANG-DROP</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Do not use reference types but pointer types (<a href="06_ffi.html#FFI-NOREF">FFI-NOREF</a>)</li>
+Do not panic in <code>Drop</code> implementation (<a href="06_typesystem.html#LANG-DROP-NO-PANIC">LANG-DROP-NO-PANIC</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Check foreign pointers (<a href="06_ffi.html#FFI-CKPTR">FFI-CKPTR</a>)</li>
+Do not allow cycles of reference-counted <code>Drop</code> (<a href="06_typesystem.html#LANG-DROP-NO-CYCLE">LANG-DROP-NO-CYCLE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Mark function pointer types in FFI as <code>extern</code> and <code>unsafe</code> (<a href="06_ffi.html#FFI-MARKEDFUNPTR">FFI-MARKEDFUNPTR</a>)</li>
+Do not rely only on <code>Drop</code> to ensure security (<a href="06_typesystem.html#LANG-DROP-SEC">LANG-DROP-SEC</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Check foreign function pointers (<a href="06_ffi.html#FFI-CKFUNPTR">FFI-CKFUNPTR</a>)</li>
+Justify <code>Send</code> and <code>Sync</code> implementation (<a href="06_typesystem.html#LANG-SYNC-TRAITS">LANG-SYNC-TRAITS</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Do not use incoming Rust <code>enum</code> at FFI boundary (<a href="06_ffi.html#FFI-NOENUM">FFI-NOENUM</a>)</li>
+Respect the invariants of standard comparison traits (<a href="06_typesystem.html#LANG-CMP-INV">LANG-CMP-INV</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Use dedicated Rust types for foreign opaque types (<a href="06_ffi.html#FFI-R-OPAQUE">FFI-R-OPAQUE</a>)</li>
+Use the default method implementation of standard comparison traits (<a href="06_typesystem.html#LANG-CMP-DEFAULTS">LANG-CMP-DEFAULTS</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Use incomplete C/C++ <code>struct</code> pointers to make type opaque (<a href="06_ffi.html#FFI-C-OPAQUE">FFI-C-OPAQUE</a>)</li>
+Derive comparison traits when possible (<a href="06_typesystem.html#LANG-CMP-DERIVE">LANG-CMP-DERIVE</a>)</li>
+</ul>
+</li>
+<li>
+<p>Foreign Function Interface:</p>
+<ul>
 <li><input disabled="" type="checkbox"/>
-Do not use types that implement <code>Drop</code> at FFI boundary (<a href="06_ffi.html#FFI-MEM-NODROP">FFI-MEM-NODROP</a>)</li>
+Use only C-compatible types in FFI (<a href="07_ffi.html#FFI-CTYPE">FFI-CTYPE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Ensure clear data ownership in FFI (<a href="06_ffi.html#FFI-MEM-OWNER">FFI-MEM-OWNER</a>)</li>
+Use consistent types at FFI boundaries (<a href="07_ffi.html#FFI-TCONS">FFI-TCONS</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Wrap foreign data in memory releasing wrapper (<a href="06_ffi.html#FFI-MEM-WRAPPING">FFI-MEM-WRAPPING</a>)</li>
+Use automatic binding generator tools (<a href="07_ffi.html#FFI-AUTOMATE">FFI-AUTOMATE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Handle <code>panic!</code> correctly in FFI (<a href="06_ffi.html#FFI-NOPANIC">FFI-NOPANIC</a>)</li>
+Use portable aliases <code>c_*</code> when binding to platform-dependent types (<a href="07_ffi.html#FFI-PFTYPE">FFI-PFTYPE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Provide safe wrapping to foreign library (<a href="06_ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>)</li>
+Do not use unchecked non-robust foreign values (<a href="07_ffi.html#FFI-CKNONROBUST">FFI-CKNONROBUST</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Expose dedicated C-compatible API only (<a href="06_ffi.html#FFI-CAPI">FFI-CAPI</a>)</li>
+Check foreign values in Rust (<a href="07_ffi.html#FFI-CKINRUST">FFI-CKINRUST</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Do not use unchecked foreign references (<a href="07_ffi.html#FFI-CKREF">FFI-CKREF</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Do not use reference types but pointer types (<a href="07_ffi.html#FFI-NOREF">FFI-NOREF</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Check foreign pointers (<a href="07_ffi.html#FFI-CKPTR">FFI-CKPTR</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Mark function pointer types in FFI as <code>extern</code> and <code>unsafe</code> (<a href="07_ffi.html#FFI-MARKEDFUNPTR">FFI-MARKEDFUNPTR</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Check foreign function pointers (<a href="07_ffi.html#FFI-CKFUNPTR">FFI-CKFUNPTR</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Do not use incoming Rust <code>enum</code> at FFI boundary (<a href="07_ffi.html#FFI-NOENUM">FFI-NOENUM</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Use dedicated Rust types for foreign opaque types (<a href="07_ffi.html#FFI-R-OPAQUE">FFI-R-OPAQUE</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Use incomplete C/C++ <code>struct</code> pointers to make type opaque (<a href="07_ffi.html#FFI-C-OPAQUE">FFI-C-OPAQUE</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Do not use types that implement <code>Drop</code> at FFI boundary (<a href="07_ffi.html#FFI-MEM-NODROP">FFI-MEM-NODROP</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Ensure clear data ownership in FFI (<a href="07_ffi.html#FFI-MEM-OWNER">FFI-MEM-OWNER</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Wrap foreign data in memory releasing wrapper (<a href="07_ffi.html#FFI-MEM-WRAPPING">FFI-MEM-WRAPPING</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Handle <code>panic!</code> correctly in FFI (<a href="07_ffi.html#FFI-NOPANIC">FFI-NOPANIC</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Provide safe wrapping to foreign library (<a href="07_ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Expose dedicated C-compatible API only (<a href="07_ffi.html#FFI-CAPI">FFI-CAPI</a>)</li>
 </ul>
 </li>
 </ul>
