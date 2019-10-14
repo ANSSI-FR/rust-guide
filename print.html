@@ -607,12 +607,12 @@ leading to deadlocks or not erasing sensitive data from the memory. That is why,
 <code>forget</code> is <strong>unsecure</strong>.</p>
 <blockquote>
 <h3><a class="header" href="#rule-a-idmem-forgetamem-forget" id="rule-a-idmem-forgetamem-forget">Rule <a id="MEM-FORGET"></a>MEM-FORGET</a></h3>
-<p>In a secure Rust development, the <code>forget</code> function of
-<code>std::mem</code> (<code>core::mem</code>) must not be used.</p>
+<p>In a secure Rust development, the <code>forget</code> function of <code>std::mem</code>
+(<code>core::mem</code>) must not be used.</p>
 </blockquote>
 <!-- -->
 <blockquote>
-<p><strong>Lint</strong></p>
+<h3><a class="header" href="#recommendation-a-idmem-forget-lintamem-forget-lint" id="recommendation-a-idmem-forget-lintamem-forget-lint">Recommendation <a id="MEM-FORGET-LINT"></a>MEM-FORGET-LINT</a></h3>
 <p>The lint <code>mem_forget</code> of Clippy may be used to automatically detect any use of
 <code>forget</code>. To enforce the absence of <code>forget</code> in a crate, add the following
 line at the top of the root file (usually <code>src/lib.rs</code> or <code>src/main.rs</code>):</p>
@@ -1995,7 +1995,9 @@ Handle correctly <code>panic!</code> in FFI (<a href="04_language.html#LANG-FFIP
 <p>Memory management:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Do not use <code>forget</code>  (<a href="05_memory.html#MEM-FORGET">MEM-FORGET</a>)</li>
+Do not use <code>forget</code> (<a href="05_memory.html#MEM-FORGET">MEM-FORGET</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Use clippy lint to detect use of <code>forget</code> (<a href="05_memory.html#MEM-FORGET-LINT">MEM-FORGET-LINT</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Do not leak memory (<a href="05_memory.html#MEM-LEAK">MEM-LEAK</a>)</li>
 <li><input disabled="" type="checkbox"/>
