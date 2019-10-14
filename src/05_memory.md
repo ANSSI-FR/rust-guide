@@ -33,14 +33,14 @@ In particular, using `forget` may result in not releasing critical resources
 leading to deadlocks or not erasing sensitive data from the memory. That is why,
 `forget` is **unsecure**.
 
-> ### Rule {{#check MEM-FORGET | Do not use `forget` }}
+> ### Rule {{#check MEM-FORGET | Do not use `forget`}}
 >
-> In a secure Rust development, the `forget` function of
-> `std::mem` (`core::mem`) must not be used.
+> In a secure Rust development, the `forget` function of `std::mem`
+> (`core::mem`) must not be used.
 
 <!-- -->
 
-> **Lint**
+> ### Recommendation {{#check MEM-FORGET-LINT | Use clippy lint to detect use of `forget`}}
 >
 > The lint `mem_forget` of Clippy may be used to automatically detect any use of
 > `forget`. To enforce the absence of `forget` in a crate, add the following
