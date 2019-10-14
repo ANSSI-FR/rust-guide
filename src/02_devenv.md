@@ -129,6 +129,20 @@ using the debug profile that normally enables runtime checks (for example
 > The variables `debug-assertions` and `overflow-checks` must not be overridden
 > in development profiles sections (`[profile.dev]` and `[profile.test]`).
 
+Cargo proposes other ways to setup configuration and change its behavior on
+a given system. This can be very useful, but it may also be difficult to know
+and remember at a given time all of the options that are effectively used, and
+in particular passed to the compiler. At the end, this can affect the confidence
+and robustness of the build process. It is preferable to centralize compiler
+options and flags in the configuration file `Cargo.toml`. For the case of
+environment variable `RUSTC_WRAPPER`, for example to generate part of code or
+to run external tools before Rust compilation, it is preferable to use the Cargo
+build scripts feature.
+
+> ### Rule {{#check DENV-CARGO-ENVVARS | Keep default values for compiler environment variables when running cargo}}
+> The environment variables `RUSTC`, `RUSTC_WRAPPER` and `RUSTFLAGS` must not
+> be overriden when using Cargo to build project.
+
 [crates.io]: https://crates.io
 [cargo]: https://doc.rust-lang.org/stable/cargo/
 [the cargo book]: https://doc.rust-lang.org/cargo/index.html
