@@ -1,6 +1,6 @@
 # Language generalities
 
-### Naming
+## Naming
 
 As of now, the standard library is the de facto standard for naming things in
 the Rust world. However, an effort has been made to formalize it, first in
@@ -31,7 +31,7 @@ some particular constructions:
 [rfc 430]: https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md
 [rust api guidelines]: https://rust-lang-nursery.github.io/api-guidelines/
 
-### Unsafe code
+## Unsafe code
 
 The joint utilization of the type system and the ownership system aims to
 enforce safety regarding the memory management in Rust's programs. So the
@@ -65,7 +65,7 @@ pointers direct manipulations, the language provides the `unsafe` keyword.
 > With the exception of these cases, `#[forbid(unsafe_code)]` must appear in
 > `main.rs` to generate compilation errors if `unsafe` is used in the code base.
 
-### Integer overflows
+## Integer overflows
 
 Although some verification is performed by Rust regarding the potential
 integer overflows, precautions should be taken when executing arithmetic

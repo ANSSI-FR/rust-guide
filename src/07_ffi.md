@@ -1,4 +1,4 @@
-# Interfacing (FFI)
+# Foreign Function Interface (FFI)
 
 Rust approach to interfacing with other languages relies on a strong
 compatibility with C. However, this boundary is by its very nature **unsafe**

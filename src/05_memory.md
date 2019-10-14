@@ -1,12 +1,12 @@
 # Memory management
 
-### Memory management
+## About Rust memory safety
 
 <mark>TODO</mark>: explain safe allocations/deallocations, ownership/borrowing,
 and identify language constructs that may break memory safety (for instance,
 unsound behaviors in older versions of the compiler).
 
-#### Forget and memory leaks
+## Forget and memory leaks
 
 While the usual way for memory to be reclaimed is for a variable to go out of
 scope, Rust provides special functions to manually reclaim memory: `forget` and
@@ -120,7 +120,7 @@ compiler to the developer.
 > Because the other types (`Rc` and `Arc`) are opaque and more complex, manual
 > cleanup is not possible.
 
-#### Uninitialized memory
+## Uninitialized memory
 
 By default, Rust forces all values to be initialized, preventing the use of
 uninitialized memory (except if using `std::mem::uninitialized` or
@@ -145,7 +145,7 @@ The use of uninitialized memory may result in two distinct security issues:
 > memory is as much likely. It is problematic, in particular when considering
 > the use of `Drop` to erase sensitive memory.
 
-#### Secure memory zeroing for sensitive information
+## Secure memory zeroing for sensitive information
 
 Zeroing memory is useful for sensitive variables, especially if the
 Rust code is used through FFI.
