@@ -285,7 +285,6 @@ It has a fundamental role in most Rust development:</p>
 <li>It’s also a front-end to run complementary tools such as those that are
 described below, in the form of sub-commands.</li>
 </ul>
-<p><mark>TODO</mark>: identify unsafe features and risky environment variables.</p>
 <blockquote>
 <h3><a class="header" href="#warning-1" id="warning-1">Warning</a></h3>
 <p>Like <code>rustup</code>, <code>cargo</code> does perform all downloads over HTTPS, but does not
@@ -294,6 +293,39 @@ verify crates. For now, the security relies on the good security of the
 website <a href="https://crates.io">crates.io</a> and the GitHub hosted repository containing the
 registry index. In some cases, it may be preferable to opt for an alternative
 installation method for dependencies.</p>
+</blockquote>
+<p>Cargo proposes many different commands and options to adapt the build process to
+your project needs, mainly through the manifest file <code>Cargo.toml</code>. For a
+complete presentation, see <a href="https://doc.rust-lang.org/cargo/index.html">The Cargo Book</a>.</p>
+<p>During the development of a secure application, some of the options may require
+some attention. The <code>[profile.*]</code> sections allow configuring how the compiler is
+invoked. For example:</p>
+<ul>
+<li>the <code>debug-assertions</code> variable controls whether debug assertions are enabled,</li>
+<li>the <code>overflow-checks</code> variable controls whether overflows are checked for
+integer arithmetic.</li>
+</ul>
+<p>Overriding the default options may cause bugs not being detected, even when
+using the debug profile that normally enables runtime checks (for example
+<a href="./04_language.html#integer-overflows">integer overflow checks</a>).</p>
+<blockquote>
+<h3><a class="header" href="#rule-a-iddenv-cargo-optsadenv-cargo-opts" id="rule-a-iddenv-cargo-optsadenv-cargo-opts">Rule <a id="DENV-CARGO-OPTS"></a>DENV-CARGO-OPTS</a></h3>
+<p>The variables <code>debug-assertions</code> and <code>overflow-checks</code> must not be overridden
+in development profiles sections (<code>[profile.dev]</code> and <code>[profile.test]</code>).</p>
+</blockquote>
+<p>Cargo proposes other ways to setup configuration and change its behavior on
+a given system. This can be very useful, but it may also be difficult to know
+and remember at a given time all of the options that are effectively used, and
+in particular passed to the compiler. At the end, this can affect the confidence
+and robustness of the build process. It is preferable to centralize compiler
+options and flags in the configuration file <code>Cargo.toml</code>. For the case of
+environment variable <code>RUSTC_WRAPPER</code>, for example to generate part of code or
+to run external tools before Rust compilation, it is preferable to use the Cargo
+build scripts feature.</p>
+<blockquote>
+<h3><a class="header" href="#rule-a-iddenv-cargo-envvarsadenv-cargo-envvars" id="rule-a-iddenv-cargo-envvarsadenv-cargo-envvars">Rule <a id="DENV-CARGO-ENVVARS"></a>DENV-CARGO-ENVVARS</a></h3>
+<p>The environment variables <code>RUSTC</code>, <code>RUSTC_WRAPPER</code> and <code>RUSTFLAGS</code> must not
+be overriden when using Cargo to build project.</p>
 </blockquote>
 <h3><a class="header" href="#clippy" id="clippy">Clippy</a></h3>
 <p><a href="https://github.com/rust-lang/rust-clippy">Clippy</a> is a tool that provides and checks many lints (bugs, styling, performance
@@ -1951,6 +1983,10 @@ int main(int argc, const char** argv) {
 <ul>
 <li><input disabled="" type="checkbox"/>
 Use a stable compilation toolchain (<a href="02_devenv.html#DENV-STABLE">DENV-STABLE</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Keep default values for critical variables in cargo profiles (<a href="02_devenv.html#DENV-CARGO-OPTS">DENV-CARGO-OPTS</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Keep default values for compiler environment variables when running cargo (<a href="02_devenv.html#DENV-CARGO-ENVVARS">DENV-CARGO-ENVVARS</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Use linter regularly (<a href="02_devenv.html#DENV-LINTER">DENV-LINTER</a>)</li>
 <li><input disabled="" type="checkbox"/>
