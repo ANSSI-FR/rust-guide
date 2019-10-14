@@ -770,8 +770,8 @@ standpoint, missing drops is allowed. In fact, several things may lead to
 missing drops, such as:</p>
 <ul>
 <li>a reference cycle (for instance, with <code>Rc</code> or <code>Arc</code>),</li>
-<li>an explicit call to <code>std::mem::forget</code> (or <code>core::mem::forget</code>) (see Rule
-<mark>TODO</mark>),</li>
+<li>an explicit call to <code>std::mem::forget</code> (or <code>core::mem::forget</code>) (see paragraph
+on <a href="05_memory.html#forget-and-memory-leaks">Forget and memory leaks</a>,</li>
 <li>a panic in drop,</li>
 <li>program aborts (and panics when abort-on-panic is on).</li>
 </ul>
