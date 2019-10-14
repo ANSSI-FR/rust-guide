@@ -55,9 +55,9 @@ highlighted inserts (*Rule*, *Recommendation*, *Warning*, etc.).
 The aim with the structure of this document is to consider separately different
 phases of a typical (and simplified) development process. Firstly, we provide
 some advices for using tools of the Rust ecosystem to how to take advantage
-of them for secure development. A second chapter focuses on precautions to
-take when choosing and using external libraries. Then, recommendations about
-the Rust language constructs are exposed. Finally, we introduce advices for
-writing tests for a project in Rust, and for using Rust fuzzing tools.
-A summary of recommendations presented throughout the document is listed at the
-end of this guide.
+of them for secure development. A following chapter focuses on precautions to
+take when choosing and using external libraries. Then, recommendations about the
+Rust language constructs are exposed. Finally, we introduce advices for writing
+tests for a project in Rust, and for using Rust fuzzing tools. A summary of
+recommendations presented throughout the document is listed at the end of this
+guide.
