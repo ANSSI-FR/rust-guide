@@ -39,10 +39,11 @@ standpoint, missing drops is allowed. In fact, several things may lead to
 missing drops, such as:
 
 - a reference cycle (for instance, with `Rc` or `Arc`),
-- an explicit call to `std::mem::forget` (or `core::mem::forget`) (see Rule
-  <mark>TODO</mark>),
+- an explicit call to `std::mem::forget` (or `core::mem::forget`) (see paragraph
+  on [Forget and memory leaks](05_memory.html#forget-and-memory-leaks),
 - a panic in drop,
 - program aborts (and panics when abort-on-panic is on).
+
 
 And missing drops may lead to exposing sensitive data or to lock limited
 resources leading to unavailability issues.
