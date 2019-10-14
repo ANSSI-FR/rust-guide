@@ -1,4 +1,4 @@
-# Tests and fuzzing
+# Test and fuzzing
 
 ## Writing tests
 

@@ -3,8 +3,10 @@
 - [Introduction](01_introduction.md)
 - [Development Environment](02_devenv.md)
 - [Libraries](03_libraries.md)
-- [The language](04_language.md)
-- [Test and fuzzing](05_test_fuzz.md)
-- [Interfacing (FFI)](06_ffi.md)
+- [Language generalities](04_language.md)
+- [Memory management](05_memory.md)
+- [Type system](06_typesystem.md)
+- [Foreign Function Interface](07_ffi.md)
+- [Test and fuzzing](08_testfuzz.md)
 
 [Licence](LICENCE.md)
