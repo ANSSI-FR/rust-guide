@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -32,11 +32,11 @@
 
         
     </head>
-    <body class="light">
+    <body>
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -60,8 +60,11 @@
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            document.body.className = theme;
-            document.querySelector('html').className = theme + ' js';
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
@@ -77,8 +80,8 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development Environment</a></li><li><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li><a href="04_language.html"><strong aria-hidden="true">4.</strong> Language generalities</a></li><li><a href="05_memory.html"><strong aria-hidden="true">5.</strong> Memory management</a></li><li><a href="06_typesystem.html"><strong aria-hidden="true">6.</strong> Type system</a></li><li><a href="07_ffi.html" class="active"><strong aria-hidden="true">7.</strong> Foreign Function Interface</a></li><li><a href="08_testfuzz.html"><strong aria-hidden="true">8.</strong> Test and fuzzing</a></li><li class="affix"><a href="LICENCE.html">Licence</a></li><li class="affix"><a href="checklist.html">Checklist</a></li></ol>
+            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
+                <ol class="chapter"><li class="expanded "><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="expanded "><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development Environment</a></li><li class="expanded "><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li class="expanded "><a href="04_language.html"><strong aria-hidden="true">4.</strong> Language generalities</a></li><li class="expanded "><a href="05_memory.html"><strong aria-hidden="true">5.</strong> Memory management</a></li><li class="expanded "><a href="06_typesystem.html"><strong aria-hidden="true">6.</strong> Type system</a></li><li class="expanded "><a href="07_ffi.html" class="active"><strong aria-hidden="true">7.</strong> Foreign Function Interface</a></li><li class="expanded "><a href="08_testfuzz.html"><strong aria-hidden="true">8.</strong> Test and fuzzing</a></li><li class="expanded affix "><a href="LICENCE.html">Licence</a></li><li class="expanded affix "><a href="checklist.html">Checklist</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -155,14 +158,15 @@ The exact syntax is <code>extern &quot;&lt;ABI&gt;&quot;</code> where ABI is a c
 depends on the target platform. The default one is <code>C</code> which corresponds to
 a standard C calling convention on the target platform.</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-// export a C-compatible function
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>// export a C-compatible function
 #[no_mangle]
 unsafe extern &quot;C&quot; fn mylib_f(param: u32) -&gt; i32 {
     if param == 0xCAFEBABE { 0 } else { -1 }
 }
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>For the function <code>mylib_f</code> to be accessible with the same name, the function
 must also be annotated with the <code>#[no_mangle]</code> attribute.</p>
 <p>Conversely, one can call C functions from Rust if they are declared in an
@@ -217,9 +221,9 @@ language is through explicit use of a C-compatible data layout with the <code>re
 attribute (see <a href="https://doc.rust-lang.org/reference/type-layout.html">Rust Reference: Type Layout</a>). For instance, the following Rust
 types:</p>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-#[repr(C)]
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>#[repr(C)]
 struct Data {
     a: u32,
     b: u16,
@@ -231,7 +235,8 @@ struct PackedData {
     b: u16,
     c: u64,
 }
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>are compatible with the following C types:</p>
 <pre><code class="language-c">struct Data {
     uint32_t a;
@@ -587,9 +592,9 @@ are to be considered opaque in C/C++ should be translated as incomplete
 a dedicated constructor and destructor.</p>
 </blockquote>
 <p>Example of opaque Rust type:</p>
-<pre><code class="language-rust unsafe noplaypen"># use std::panic::catch_unwind;
-#
-struct Opaque {
+<pre><code class="language-rust unsafe noplaypen"><span class="boring">use std::panic::catch_unwind;
+</span><span class="boring">
+</span>struct Opaque {
     // (...) details to be hidden
 }
 
@@ -655,9 +660,9 @@ allocated and deallocated in the foreign language should be encapsulated in a
 <code>Drop</code> type in such a way as to provide automatic deallocation in Rust.</p>
 </blockquote>
 <p>A simple example of Rust wrapping over an external opaque type:</p>
-<pre><code class="language-rust ignore noplaypen"># use std::ops::Drop;
-#
-/// Private “raw” opaque foreign type Foo
+<pre><code class="language-rust ignore noplaypen"><span class="boring">use std::ops::Drop;
+</span><span class="boring">
+</span>/// Private “raw” opaque foreign type Foo
 #[repr(C)]
 struct RawFoo {
     _private: [u8; 0],
@@ -672,8 +677,8 @@ extern &quot;C&quot; {
 
 /// Foo
 pub struct Foo(*mut RawFoo);
-#
-impl Foo {
+<span class="boring">
+</span>impl Foo {
     /// Create a Foo
     pub fn new() -&gt; Option&lt;Foo&gt; {
         let raw_ptr = unsafe { foo_create() };
@@ -683,14 +688,14 @@ impl Foo {
             Some(Foo(raw_ptr))
         }
     }
-#
-    /// Do something on a Foo
+<span class="boring">
+</span>    /// Do something on a Foo
     pub fn do_something(&amp;self) {
         unsafe { foo_do_something(self.0) }
     }
 }
-#
-impl Drop for Foo {
+<span class="boring">
+</span>impl Drop for Foo {
     fn drop(&amp;mut self) {
         if !self.0.is_null() {
             unsafe { foo_destroy(self.0) }
@@ -698,11 +703,11 @@ impl Drop for Foo {
     }
 }
 
-# fn main() {
-#     let foo = Foo::new().expect(&quot;cannot create Foo&quot;);
-#     foo.do_something();
-# }
-</code></pre>
+<span class="boring">fn main() {
+</span><span class="boring">    let foo = Foo::new().expect(&quot;cannot create Foo&quot;);
+</span><span class="boring">    foo.do_something();
+</span><span class="boring">}
+</span></code></pre>
 <blockquote>
 <p><strong>Warning</strong></p>
 <p>Because panics may lead to not running the <code>Drop::drop</code> method this solution
@@ -719,9 +724,9 @@ reclamation is done.</p>
 <p>The following Rust code is a <strong>thread-unsafe</strong> example of a C-compatible API
 that provide callback to ensure safe resource
 reclamation:</p>
-<pre><code class="language-rust noplaypen"># use std::ops::Drop;
-#
-pub struct XtraResource {/*fields */}
+<pre><code class="language-rust noplaypen"><span class="boring">use std::ops::Drop;
+</span><span class="boring">
+</span>pub struct XtraResource {/*fields */}
 
 impl XtraResource {
     pub fn new() -&gt; Self {
@@ -759,8 +764,8 @@ pub mod c_api {
         let inner = if let Ok(res) = catch_unwind(XtraResource::new) {
             res
         } else {
-#             println!(&quot;cannot allocate resource&quot;);
-            return;
+<span class="boring">            println!(&quot;cannot allocate resource&quot;);
+</span>            return;
         };
         let id = COUNTER;
         let tag = VALID_TAG;
@@ -769,16 +774,16 @@ pub mod c_api {
         // Use heap memory and do not provide pointer to stack to C code!
         let mut boxed = Box::new(CXtraResource { tag, id, inner });
 
-#         println!(&quot;running the callback on {:p}&quot;, boxed.as_ref());
-        cb(boxed.as_mut() as *mut CXtraResource);
+<span class="boring">        println!(&quot;running the callback on {:p}&quot;, boxed.as_ref());
+</span>        cb(boxed.as_mut() as *mut CXtraResource);
 
         if boxed.id == id &amp;&amp; (boxed.tag == VALID_TAG || boxed.tag == ERR_TAG) {
-#             println!(&quot;freeing {:p}&quot;, boxed.as_ref());
-            boxed.tag = INVALID_TAG; // prevent accidental reuse
+<span class="boring">            println!(&quot;freeing {:p}&quot;, boxed.as_ref());
+</span>            boxed.tag = INVALID_TAG; // prevent accidental reuse
                                  // implicit boxed drop
         } else {
-#             println!(&quot;forgetting {:p}&quot;, boxed.as_ref());
-            // (...) error handling (should be fatal)
+<span class="boring">            println!(&quot;forgetting {:p}&quot;, boxed.as_ref());
+</span>            // (...) error handling (should be fatal)
             boxed.tag = INVALID_TAG; // prevent reuse
             std::mem::forget(boxed); // boxed is corrupted it should not be
         }
@@ -789,8 +794,8 @@ pub mod c_api {
         let do_it = || {
             if let Some(cxtra) = cxtra.as_mut() {
                 if cxtra.tag == VALID_TAG {
-#                     println!(&quot;doing something with {:p}&quot;, cxtra);
-                    cxtra.inner.dosthg();
+<span class="boring">                    println!(&quot;doing something with {:p}&quot;, cxtra);
+</span>                    cxtra.inner.dosthg();
                     return;
                 }
             }
@@ -798,15 +803,15 @@ pub mod c_api {
         };
         if catch_unwind(do_it).is_err() {
             if let Some(cxtra) = cxtra.as_mut() {
-#                 println!(&quot;panicking with {:p}&quot;, cxtra);
-                cxtra.tag = ERR_TAG;
+<span class="boring">                println!(&quot;panicking with {:p}&quot;, cxtra);
+</span>                cxtra.tag = ERR_TAG;
             }
         };
     }
 }
-#
-# fn main() {}
-</code></pre>
+<span class="boring">
+</span><span class="boring">fn main() {}
+</span></code></pre>
 <p>A compatible C call:</p>
 <pre><code class="language-c">struct XtraResource;
 void xtra_with(void (*cb)(XtraResource* xtra));
@@ -835,8 +840,8 @@ abort or return in an unstable state.</p>
 <p>Note that <code>catch_unwind</code> will only catch unwinding panics, not those that abort
 the process.</p>
 <pre><code class="language-rust unsafe noplaypen ignore">use std::panic::catch_unwind;
-# use rand;
-
+<span class="boring">use rand;
+</span>
 fn may_panic() {
     if rand::random() {
         panic!(&quot;panic happens&quot;);
@@ -1032,6 +1037,14 @@ int main(int argc, const char** argv) {
 
         
 
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
+        </script>
         
 
         

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -32,11 +32,11 @@
 
         
     </head>
-    <body class="light">
+    <body>
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -60,8 +60,11 @@
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            document.body.className = theme;
-            document.querySelector('html').className = theme + ' js';
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
@@ -77,8 +80,8 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development Environment</a></li><li><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li><a href="04_language.html"><strong aria-hidden="true">4.</strong> Language generalities</a></li><li><a href="05_memory.html"><strong aria-hidden="true">5.</strong> Memory management</a></li><li><a href="06_typesystem.html" class="active"><strong aria-hidden="true">6.</strong> Type system</a></li><li><a href="07_ffi.html"><strong aria-hidden="true">7.</strong> Foreign Function Interface</a></li><li><a href="08_testfuzz.html"><strong aria-hidden="true">8.</strong> Test and fuzzing</a></li><li class="affix"><a href="LICENCE.html">Licence</a></li><li class="affix"><a href="checklist.html">Checklist</a></li></ol>
+            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
+                <ol class="chapter"><li class="expanded "><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="expanded "><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development Environment</a></li><li class="expanded "><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li class="expanded "><a href="04_language.html"><strong aria-hidden="true">4.</strong> Language generalities</a></li><li class="expanded "><a href="05_memory.html"><strong aria-hidden="true">5.</strong> Memory management</a></li><li class="expanded "><a href="06_typesystem.html" class="active"><strong aria-hidden="true">6.</strong> Type system</a></li><li class="expanded "><a href="07_ffi.html"><strong aria-hidden="true">7.</strong> Foreign Function Interface</a></li><li class="expanded "><a href="08_testfuzz.html"><strong aria-hidden="true">8.</strong> Test and fuzzing</a></li><li class="expanded affix "><a href="LICENCE.html">Licence</a></li><li class="expanded affix "><a href="checklist.html">Checklist</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -244,13 +247,10 @@ As a result, the generated documentation is always explicit: a type implements
 either <code>Send</code> or <code>!Send</code> (resp. <code>Sync</code> or <code>!Sync</code>).</p>
 <p>As a stable alternative to negative implementation, one can use a <code>PhantomData</code>
 field:</p>
-<pre><pre class="playpen"><code class="language-rust noplayplen">
-# #![allow(unused_variables)]
-#fn main() {
-# use std::marker::PhantomData;
-#
-struct SpecialType(u8, PhantomData&lt;*const ()&gt;);
-#}</code></pre></pre>
+<pre><code class="language-rust noplaypen"><span class="boring">use std::marker::PhantomData;
+</span><span class="boring">
+</span>struct SpecialType(u8, PhantomData&lt;*const ()&gt;);
+</code></pre>
 <blockquote>
 <h3><a class="header" href="#recommendation-a-idlang-sync-traitsalang-sync-traits" id="recommendation-a-idlang-sync-traitsalang-sync-traits">Recommendation <a id="LANG-SYNC-TRAITS"></a>LANG-SYNC-TRAITS</a></h3>
 <p>In a Rust secure development, the manual implementation of the <code>Send</code> and
@@ -410,13 +410,13 @@ struct T1 {
     a: u8, b: u8
 }
 
-# fn main() {
-assert!(&amp;T1 { a: 0, b: 0 } == Box::new(T1 { a: 0, b: 0 }).as_ref());
+<span class="boring">fn main() {
+</span>assert!(&amp;T1 { a: 0, b: 0 } == Box::new(T1 { a: 0, b: 0 }).as_ref());
 assert!(T1 { a: 1, b: 0 } &gt; T1 { a: 0, b: 0 });
 assert!(T1 { a: 1, b: 1 } &gt; T1 { a: 1, b: 0 });
-# println!(&quot;all tests passed.&quot;);
-# }
-</code></pre></pre>
+<span class="boring">println!(&quot;all tests passed.&quot;);
+</span><span class="boring">}
+</span></code></pre></pre>
 <blockquote>
 <p><strong>Warning</strong></p>
 <p>Derivation of comparison traits for compound types depends on the
@@ -484,6 +484,14 @@ standard comparison traits should be documented and justified.</p>
 
         
 
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
+        </script>
         
 
         
