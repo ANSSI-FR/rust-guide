@@ -115,7 +115,7 @@ either `Send` or `!Send` (resp. `Sync` or `!Sync`).
 As a stable alternative to negative implementation, one can use a `PhantomData`
 field:
 
-```rust,noplayplen
+```rust,noplaypen
 # use std::marker::PhantomData;
 #
 struct SpecialType(u8, PhantomData<*const ()>);
