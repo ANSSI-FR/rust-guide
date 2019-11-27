@@ -299,7 +299,7 @@ generate bindings when possible and to maintain them continually.</p>
 </blockquote>
 <!-- -->
 <blockquote>
-<p><strong>Warning</strong></p>
+<h3><a class="header" href="#warning" id="warning">Warning</a></h3>
 <p>For binding C/C++ to Rust, <a href="https://crates.io/crates/rust-bindgen">rust-bindgen</a> is able to automatically generate
 the low-level binding. A high-level safe binding is highly recommended (see
 Recommendation <a href="#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>).
@@ -394,7 +394,7 @@ the safe and unsafe segments, the recommendation is to always use Rust to check
 when possible. Concerning risks, the most dangerous types are references,
 function references, and enums, and are discussed below.</p>
 <blockquote>
-<p><strong>Warning</strong></p>
+<h3><a class="header" href="#warning-1" id="warning-1">Warning</a></h3>
 <p>Rust's <code>bool</code> has been made equivalent to C99's <code>_Bool</code> (aliased as <code>bool</code>
 in <code>&lt;stdbool.h&gt;</code>) and C++'s <code>bool</code>. However, loading a value other than 0 and
 1 as a <code>_Bool</code>/<code>bool</code> is an undefined behavior <em>on both sides</em>.
@@ -709,7 +709,7 @@ pub struct Foo(*mut RawFoo);
 </span><span class="boring">}
 </span></code></pre>
 <blockquote>
-<p><strong>Warning</strong></p>
+<h3><a class="header" href="#warning-2" id="warning-2">Warning</a></h3>
 <p>Because panics may lead to not running the <code>Drop::drop</code> method this solution
 is not sufficient for sensitive deallocation (such as wiping sensitive data)
 except if the code is guaranteed to never panic.</p>
