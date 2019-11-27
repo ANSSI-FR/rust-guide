@@ -264,7 +264,7 @@ assert!(T1 { a: 1, b: 1 } > T1 { a: 1, b: 0 });
 # }
 ```
 
-> **Warning**
+> ### Warning
 >
 > Derivation of comparison traits for compound types depends on the
 > **field order** not on their name.

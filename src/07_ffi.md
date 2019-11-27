@@ -172,7 +172,7 @@ Automated tools to generate bindings, such as [rust-bindgen] or
 
 <!-- -->
 
-> **Warning**
+> ### Warning
 >
 > For binding C/C++ to Rust, [rust-bindgen] is able to automatically generate
 > the low-level binding. A high-level safe binding is highly recommended (see
@@ -284,7 +284,7 @@ the safe and unsafe segments, the recommendation is to always use Rust to check
 when possible. Concerning risks, the most dangerous types are references,
 function references, and enums, and are discussed below.
 
-> **Warning**
+> ### Warning
 >
 > Rust's `bool` has been made equivalent to C99's `_Bool` (aliased as `bool`
 > in `<stdbool.h>`) and C++'s `bool`. However, loading a value other than 0 and
@@ -646,7 +646,7 @@ impl Drop for Foo {
 # }
 ```
 
-> **Warning**
+> ### Warning
 >
 > Because panics may lead to not running the `Drop::drop` method this solution
 > is not sufficient for sensitive deallocation (such as wiping sensitive data)
