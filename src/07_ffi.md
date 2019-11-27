@@ -39,7 +39,7 @@ fn main() {
 }
 ```
 
-> **Note**
+> ### Note
 >
 > Any foreign function imported in Rust through an `extern` block is
 > **automatically `unsafe`**. That is why, any call to a foreign function
@@ -218,7 +218,7 @@ the C standard library.
 
 <!-- -->
 
-> **Note**
+> ### Note
 >
 > Automatic binding generation tools (e.g. [cbindgen], [rust-bindgen]) are able
 > to ensure type consistency on a specific platform. They should be used during
@@ -392,7 +392,7 @@ int main() {
 }
 ```
 
-> **Note**
+> ### Note
 >
 > `Option<&T>` and `Option<&mut T>` for any `T: Sized` are allowable in FFI
 > instead of pointers with explicit nullity checks. Due to the Rust guaranteed

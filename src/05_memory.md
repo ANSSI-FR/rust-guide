@@ -99,7 +99,7 @@ compiler to the developer.
 
 <!-- -->
 
-> **Note**
+> ### Note
 >
 > In the case of `Box::into_raw`, manual cleanup is possible but a lot more
 > complicated than re-boxing the raw pointer and should be avoided:
@@ -137,7 +137,7 @@ The use of uninitialized memory may result in two distinct security issues:
 - drop of uninitialized memory (also a memory safety issue),
 - non-drop of initialized memory.
 
-> **Note**
+> ### Note
 >
 > `std::mem::MaybeUninit` is an improvement over `std::mem::uninitialized`.
 > Indeed, it makes dropping uninitialized values a lot more difficult.
