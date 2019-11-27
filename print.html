@@ -704,7 +704,7 @@ let _ = unsafe { Box::from_raw(raw_ptr) }; // will be freed
 </blockquote>
 <!-- -->
 <blockquote>
-<p><strong>Note</strong></p>
+<h3><a class="header" href="#note-1" id="note-1">Note</a></h3>
 <p>In the case of <code>Box::into_raw</code>, manual cleanup is possible but a lot more
 complicated than re-boxing the raw pointer and should be avoided:</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -741,7 +741,7 @@ justified when necessary.</p>
 <li>non-drop of initialized memory.</li>
 </ul>
 <blockquote>
-<p><strong>Note</strong></p>
+<h3><a class="header" href="#note-2" id="note-2">Note</a></h3>
 <p><code>std::mem::MaybeUninit</code> is an improvement over <code>std::mem::uninitialized</code>.
 Indeed, it makes dropping uninitialized values a lot more difficult.
 However, it does not change the second issue: the non-drop of an initialized
@@ -1107,7 +1107,7 @@ fn main() {
 }
 </code></pre></pre>
 <blockquote>
-<p><strong>Note</strong></p>
+<h3><a class="header" href="#note-3" id="note-3">Note</a></h3>
 <p>Any foreign function imported in Rust through an <code>extern</code> block is
 <strong>automatically <code>unsafe</code></strong>. That is why, any call to a foreign function
 must be done from an <code>unsafe</code> context.</p>
@@ -1262,7 +1262,7 @@ the binding is automatically generated for each platform (see Note below).</p>
 </blockquote>
 <!-- -->
 <blockquote>
-<p><strong>Note</strong></p>
+<h3><a class="header" href="#note-4" id="note-4">Note</a></h3>
 <p>Automatic binding generation tools (e.g. <a href="https://crates.io/crates/cbindgen">cbindgen</a>, <a href="https://crates.io/crates/rust-bindgen">rust-bindgen</a>) are able
 to ensure type consistency on a specific platform. They should be used during
 the build process for each target to ensure that the generation is sound for
@@ -1411,7 +1411,7 @@ int main() {
 }
 </code></pre>
 <blockquote>
-<p><strong>Note</strong></p>
+<h3><a class="header" href="#note-5" id="note-5">Note</a></h3>
 <p><code>Option&lt;&amp;T&gt;</code> and <code>Option&lt;&amp;mut T&gt;</code> for any <code>T: Sized</code> are allowable in FFI
 instead of pointers with explicit nullity checks. Due to the Rust guaranteed
 “nullable pointer optimization”, a nullable pointer is acceptable on the C

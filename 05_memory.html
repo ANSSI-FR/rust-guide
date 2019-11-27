@@ -242,7 +242,7 @@ let _ = unsafe { Box::from_raw(raw_ptr) }; // will be freed
 </blockquote>
 <!-- -->
 <blockquote>
-<p><strong>Note</strong></p>
+<h3><a class="header" href="#note" id="note">Note</a></h3>
 <p>In the case of <code>Box::into_raw</code>, manual cleanup is possible but a lot more
 complicated than re-boxing the raw pointer and should be avoided:</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -279,7 +279,7 @@ justified when necessary.</p>
 <li>non-drop of initialized memory.</li>
 </ul>
 <blockquote>
-<p><strong>Note</strong></p>
+<h3><a class="header" href="#note-1" id="note-1">Note</a></h3>
 <p><code>std::mem::MaybeUninit</code> is an improvement over <code>std::mem::uninitialized</code>.
 Indeed, it makes dropping uninitialized values a lot more difficult.
 However, it does not change the second issue: the non-drop of an initialized

@@ -183,7 +183,7 @@ fn main() {
 }
 </code></pre></pre>
 <blockquote>
-<p><strong>Note</strong></p>
+<h3><a class="header" href="#note" id="note">Note</a></h3>
 <p>Any foreign function imported in Rust through an <code>extern</code> block is
 <strong>automatically <code>unsafe</code></strong>. That is why, any call to a foreign function
 must be done from an <code>unsafe</code> context.</p>
@@ -338,7 +338,7 @@ the binding is automatically generated for each platform (see Note below).</p>
 </blockquote>
 <!-- -->
 <blockquote>
-<p><strong>Note</strong></p>
+<h3><a class="header" href="#note-1" id="note-1">Note</a></h3>
 <p>Automatic binding generation tools (e.g. <a href="https://crates.io/crates/cbindgen">cbindgen</a>, <a href="https://crates.io/crates/rust-bindgen">rust-bindgen</a>) are able
 to ensure type consistency on a specific platform. They should be used during
 the build process for each target to ensure that the generation is sound for
@@ -487,7 +487,7 @@ int main() {
 }
 </code></pre>
 <blockquote>
-<p><strong>Note</strong></p>
+<h3><a class="header" href="#note-2" id="note-2">Note</a></h3>
 <p><code>Option&lt;&amp;T&gt;</code> and <code>Option&lt;&amp;mut T&gt;</code> for any <code>T: Sized</code> are allowable in FFI
 instead of pointers with explicit nullity checks. Due to the Rust guaranteed
 “nullable pointer optimization”, a nullable pointer is acceptable on the C
