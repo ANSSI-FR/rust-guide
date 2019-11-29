@@ -15,7 +15,6 @@ an early memory reclamation that calls associated destructors when needed,
 `forget` skips any call to the destructors.
 
 ```rust
-# // use std::mem::drop; // drop is imported in scope automatically (in the prelude)
 let pair = ('↑', 0xBADD_CAFEu32);
 drop(pair); // here `forget` would be equivalent (no destructor to call)
 ```
