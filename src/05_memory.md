@@ -125,7 +125,7 @@ By default, Rust forces all values to be initialized, preventing the use of
 uninitialized memory (except if using `std::mem::uninitialized` or
 `std::mem::MaybeUninit`).
 
-> ### Rule {{#check MEM-UNINIT | Do not use uninitialized memory }}
+> ### Rule {{#check MEM-UNINIT | Do not use uninitialized memory}}
 >
 > The `std::mem::uninitialized` function (deprecated 1.38) or the
 > `std::mem::MaybeUninit` type (stabilized 1.36) must not be used, or explicitly

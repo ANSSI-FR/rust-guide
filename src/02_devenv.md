@@ -236,7 +236,7 @@ proposed fixes. In particular mode, some corrections (such as some of those
 provided with the `--edition-idioms`) are known to break the compilation
 or change the program semantics in some case.
 
-> ### Rule {{#check DENV-AUTOFIX | Manually check automatic fixes }}
+> ### Rule {{#check DENV-AUTOFIX | Manually check automatic fixes}}
 >
 > In a secure Rust development, any automatic fix (for instance, provided by
 > `rustfix`) must be verified by the developer.
