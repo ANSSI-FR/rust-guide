@@ -162,7 +162,6 @@ an early memory reclamation that calls associated destructors when needed,
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span><span class="boring">// use std::mem::drop; // drop is imported in scope automatically (in the prelude)
 </span>let pair = ('↑', 0xBADD_CAFEu32);
 drop(pair); // here `forget` would be equivalent (no destructor to call)
 <span class="boring">}
