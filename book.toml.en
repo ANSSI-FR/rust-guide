@@ -1,0 +1,8 @@
+[book]
+title       = "Secure Rust Guidelines"
+description = "Recommendations for secure applications development with Rust"
+src         = "src/en"
+language    = "en"
+
+[preprocessor.checklist]
+title = "Recommendations checklist"
