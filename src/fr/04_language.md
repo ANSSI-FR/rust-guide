@@ -9,7 +9,7 @@ conventions de nommage, d'abord dans la [RFC 430], puis dans le document des
 
 La règle de base consiste à utiliser :
 
-- la *`UpperCamelCase`* pour les types, traits et valeurs d'énumérations,
+- La *`UpperCamelCase`* pour les types, traits et valeurs d'énumérations,
 - la *`snake_case`* pour les fonctions, méthodes, macros, variables et modules,
 - la *`SCREAMING_SNAKE_CASE`* pour les variables statiques et les constantes,
 - la *`lowercase`* pour les durées de vie (*lifetimes*).
@@ -45,18 +45,18 @@ langage fournit le mot-clé `unsafe`.
 
 > ### Règle {{#check LANG-UNSAFE | Non-utilisation des blocs *unsafe*}}
 >
-> Pour un développement sécurise, les blocs `unsafe` doivent être évités.
+> Pour un développement sécurisé, les blocs `unsafe` doivent être évités.
 > Ci-dessous, nous listons les seuls cas pour lesquels des blocs `unsafe`
-> peuvent être utilisés, à la condition que leur usage soit justifé :
+> peuvent être utilisés, à la condition que leur usage soit justifié :
 >
->  - L'interfaçage entre Rust et d'autres langages (FFI) permets la déclaration
+>  - L'interfaçage entre Rust et d'autres langages (FFI) permet la déclaration
 >  de fonctions dont l'implantation est faite en C, en utilisant le préfixe
 >  `extern "C"`. Pour une utiliser une telle fonction, le mot-clé `unsafe` est
 >  requis. Un *wrapper* "sûr" doit être défini pour que le code C soit
 >  finalement appelé de façon souple et sûre.
 >
 >  - Pour la programmation des systèmes embarqués, les registres et autres
->  ressources sont souvent accèder au travers d'adresses mémoire fixées. Dans ce
+>  ressources sont souvent accéder au travers d'adresses mémoire fixées. Dans ce
 >  cas, des blocs `unsafe` sont nécessaires afin de pouvoir initialiser et
 >  déréférencer des pointeurs en Rust pour ces adresses. Afin de minimiser le
 >  nombre de déclarations `unsafe` pour permettre au programmeur de facilement
@@ -68,14 +68,14 @@ langage fournit le mot-clé `unsafe`.
 >  comportements non sûrs en fonction de ses arguments. Par exemple, cela arrive
 >  lorsqu'une fonction doit déréférencer un pointeur passé en argument.
 >
-> A l'exception de l'un ou plusieurs de ces cas, `#[forbid(unsafe_code)]` doit
+> À l'exception de l'un ou plusieurs de ces cas `#[forbid(unsafe_code)]` doit
 > apparaître dans le fichier `main.rs` afin de générer des erreurs de
 > compilation dans le cas ou le mot-clé `unsafe` est utilisé dans le projet.
 
 ## Dépassement d'entiers
 
 Bien que des vérifications soient effectuées par Rust en ce qui concerne les
-potentiels dépassements d'entiers, des précautions doivent être pris lors de
+potentiels dépassements d'entiers, des précautions doivent être prises lors de
 l'exécution d'opérations arithmétiques sur les entiers.
 
 En particulier, il doit être noté que les profils de compilation *debug* et
@@ -158,7 +158,7 @@ ou d'instructions qui peuvent échouer en engendrant un `panic`.
 
 Des motifs courants de code qui provoquent des `panic` sont :
 
-- une utilisation de `unwrap` ou de `expect`,
+- Une utilisation de `unwrap` ou de `expect`,
 - une utilisation de `assert`,
 - un accès non vérifié à un tableau,
 - un dépassement d'entier (en mode *debug*),
@@ -185,7 +185,7 @@ marquées avec `#[no_panic]`.
 
 ### FFI et `panic`s
 
-Lorsque du code Rust est appelé depuis depuis du code écrit dans un autre
+Lorsque du code Rust est appelé depuis du code écrit dans un autre
 langage (par exemple, du code C), le code Rust doit être écrit de sorte de ne
 jamais pouvoir paniquer.
 Dérouler (*unwinding*) depuis le code Rust vers le code étranger résulte en un
@@ -199,7 +199,7 @@ comportement indéfini.
 > langage appelant dans un état instable.
 
 Il est portée à l'attention du programmeur que `catch_unwind` ne va traiter que
-les cas de `panic`, en préservant d'autres types d'abandon de processus.
+les cas de `panic`, en préservant d'autres types d'abandons de processus.
 
 ## Macros
 

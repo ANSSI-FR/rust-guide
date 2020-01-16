@@ -1,6 +1,6 @@
 # Système de types
 
-## A propos du système de types de Rust
+## À propos du système de types de Rust
 
 <mark>TODO</mark> : identifier les pièges du système de types (par exemple,
 des confusions à propos du code qui est vraiment exécuté à la suite d'une
@@ -29,7 +29,7 @@ destruction. `Drop` est typiquement utilisé dans le cas du relâchement des
 ressources externes (connexions réseau, fichier, etc.) ou de ressources mémoire
 complexes (pointeurs intelligents comme les `Box` ou les `Rc` par exemple). Au
 final, il est probable que l'implémentation du trait `Drop` contienne des blocs
-`unsafe` ainsi que d'autres opérations critiques du point du vue de la sécurité.
+`unsafe` ainsi que d'autres opérations critiques du point de vue de la sécurité.
 
 > ### Recommandation {{#check LANG-DROP | Justification de l'implémentation du trait `Drop`}}
 >
@@ -40,7 +40,7 @@ Ensuite, le système de types de Rust assure seulement la sûreté mémoire et,
 du point de vue du typage, des `drop`s peuvent tout à fait être manqués.
 Plusieurs situations peuvent mener à manquer des `drop`s, comme :
 
-- un cycle dans la références (par exemple avec `Rc` ou `Arc`),
+- un cycle dans la référence (par exemple avec `Rc` ou `Arc`),
 - un appel explicite à `std::mem::forget` (ou `core::mem::forget`) (voir
   paragraphe à propos de [`Forget` et des fuites de mémoire](05_memory.html#forget-et-fuites-de-mémoire),
 - un `panic` dans un `drop`,
@@ -77,9 +77,9 @@ Lorsque correctement implémentés, ils permettent au compilateur Rust de garant
 l'absence de problèmes d'accès concurrents. Leur sémantique est définie comme
 suit :
 
-- un type est `Send` si il est sûr de l'envoyer (*move*) vers un autre fil
+- Un type est `Send` s’il est sûr de l'envoyer (*move*) vers un autre fil
   d'exécution,
-- un type est `Sync` si il est sûr de le partager par une référence immutable
+- un type est `Sync` s’il est sûr de le partager par une référence immutable
   avec un autre fil d'exécution.
 
 Ces deux traits sont des *_traits unsafe_*, c'est-à-dire que le compilateur Rust
@@ -87,13 +87,13 @@ ne vérifie d'aucune manière que leur implémentation est correcte. Le danger e
 réel : une implémentation incorrecte peut mener à un **comportement indéfini**.
 
 Heureusement, dans la plupart des cas, il n'est pas nécessaire de fournir une
-implémentation. En Rust, la quasi totalité des types primitifs implémentent
+implémentation. En Rust, la quasi-totalité des types primitifs implémente
 `Send` et `Sync`, et dans la majorité des cas, Rust fournit une implémentation
 de manière automatique pour les types composés. Quelques exceptions notables
 sont :
 
-- les pointeurs `raw`, qui n'implémentent ni `Send`, ni `Sync`, puisqu'ils
-  n'offrent aucune garantie quand à la sûreté,
+- Les pointeurs `raw`, qui n'implémentent ni `Send`, ni `Sync`, puisqu'ils
+  n'offrent aucune garantie quant à la sûreté,
 - les références `UnsafeCell`, qui n'implémentent pas `Sync` (et par extensions,
   les références `Cell` et `RefCell` non plus), puisqu'elles autorisent la
   mutabilité des valeurs contenues (*interior mutability*),
@@ -115,8 +115,8 @@ impl !Send for SpecialType {}
 impl !Sync for SpecialType {}
 ```
 L'implémentation négative de `Send` ou `Sync` est également utilisée dans la
-bibliothèque standard pour les exceptions, et sont automatiquement implémentées
-lorsqu'appropriées. En résultat, la documentation générée est toujours
+bibliothèque standard pour les exceptions, et est automatiquement implémentée
+lorsque cela est approprié. En résultat, la documentation générée est toujours
 explicite : un type implémente soit `Send` (respectivement `Sync`), soit
 `!Send` (respectivement `!Sync`).
 
@@ -156,7 +156,7 @@ Comme stipulé dans la documentation de la bibliothèque standard, Rust présupp
 
 - Pour `PartialEq`
 
-  - *Cohérence interne* : `a.ne(b)` est équivalent à `!a.eq(b)`, c.a.d., `ne`
+  - *Cohérence interne* : `a.ne(b)` est équivalent à `!a.eq(b)`, c.-à-d., `ne`
     est le strict inverse de `eq`. Cela correspond précisément à
     l'implémentation par défaut de `ne`.
 
@@ -185,7 +185,7 @@ Comme stipulé dans la documentation de la bibliothèque standard, Rust présupp
 
 - Pour `PartialOrd`
 
-  - *Consistence de la relation d'égalité* : `a.eq(b)` est équivalent à
+  - *Consistance de la relation d'égalité* : `a.eq(b)` est équivalent à
     `a.partial_cmp(b) == Some(std::ordering::Eq)`.
 
   - *Consistence interne* :
@@ -195,7 +195,7 @@ Comme stipulé dans la documentation de la bibliothèque standard, Rust présupp
     - `a.le(b)` ssi `a.lt(b) || a.eq(b)`,
     - `a.ge(b)` ssi `a.gt(b) || a.eq(b)`.
 
-    Il faut noter qu'en définissant seulement `partial_cmp`, la consistence
+    Il faut noter qu'en définissant seulement `partial_cmp`, la consistance
     interne est garantie par les implémentations par défaut de `lt`, `le`, `gt`,
     and `ge`.
 
@@ -205,7 +205,7 @@ Comme stipulé dans la documentation de la bibliothèque standard, Rust présupp
 
     - `A: PartialOrd<B>`,
     - `B: PartialOrd<A>`,
-    - les deux implémentations sont cohérentes les unes avec les autres.
+    - les deux implémentations sont cohérentes l'une avec l'autre.
 
   - *Transitivité* : `a.lt(b)` et `b.lt(c)` impliquent `a.lt(c)` (également avec
     `gt`, `le` et `ge`). Cela signifie que :
@@ -242,7 +242,7 @@ limiter au possible l'utilisation des blocs `unsafe`.
 > comparaison standards doit respecter les invariants décrits dans la
 > documentation.
 
-> ### Recommandation {{#check LANG-CMP-DEFAULTS | Utilisation des implémentation par défaut des traits de comparaison standards}}
+> ### Recommandation {{#check LANG-CMP-DEFAULTS | Utilisation des implémentations par défaut des traits de comparaison standards}}
 >
 > Dans un développement sécurisé en Rust, l'implémentation des traits de
 > comparaison standard ne doit être effectuée que par l'implémentation des
@@ -279,7 +279,7 @@ struct T1 {
 assert!(&T1 { a: 0, b: 0 } == Box::new(T1 { a: 0, b: 0 }).as_ref());
 assert!(T1 { a: 1, b: 0 } > T1 { a: 0, b: 0 });
 assert!(T1 { a: 1, b: 1 } > T1 { a: 1, b: 0 });
-# println!("tous les tests sont valdés.");
+# println!("tous les tests sont validés.");
 # }
 ```
 
@@ -302,7 +302,7 @@ assert!(T1 { a: 1, b: 1 } > T1 { a: 1, b: 0 });
 > `T2 {a: 1, b: 0} < T2 {a: 0, b: 1}`.
 >
 > Ensuite, si une comparaison sous-jacente provoque un `panic`, l'ordre peut
-> changer le résultat à cause de l'utilisation d'un opérateur logique court-
+> changer le résultat à cause de l'utilisation d'un opérateur logique court
 > circuitant dans l'implémentation automatique.
 >
 > Pour les énumérations, les comparaisons dérivées dépendent d'abord de

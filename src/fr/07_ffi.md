@@ -8,7 +8,7 @@ frontière est par nature **non sûre** (voir [Rust Book: Unsafe Rust]).
 
 Les fonctions marquées comme externes (mot-clé `extern`) sont rendues
 compatibles avec du code C à la compilation. Elles peuvent être appelées depuis
-un code C avec n'importe quel valeur en argument. La syntaxe complète est
+un code C avec n'importe quelle valeur en argument. La syntaxe complète est
 `extern "<ABI>"` où "<ABI>" décrit la convention d'appel et dépend de la
 plateforme d'exécution visée. Par défaut, elle vaut `C`, ce qui correspond à la
 manière standard en C d'appeler des fonctions.
@@ -128,7 +128,7 @@ struct PackedData {
 
 Les types suivants sont considérés comme compatibles avec le C :
 
-- les types primitifs entiers et à virgule flottante,
+- Les types primitifs entiers et à virgule flottante,
 - les `struct`s annotées avec `repr(C)`,
 - les `enum`s annotées avec `repr(C)` ou `repr(Int)` (où `Int` est un type
   primitif entier), contenant au moins un variant et dont tous les variants ne
@@ -142,7 +142,7 @@ Les types suivants ne sont pas compatibles avec le C :
 - les `enum`s dont les variants comportent des champs,
 - les n-uplets (sauf les `struct`s à n-uplet annotées avec `repr(C)`).
 
-Certains types sont compatibles, mais avec certains limitations :
+Certains types sont compatibles, mais avec certaines limitations :
 
 - Les types à taille nulle, qui ne sont pas spécifiés pour le C et mènent à des
   contradictions dans les spécifications du C++,
@@ -158,7 +158,7 @@ Certains types sont compatibles, mais avec certains limitations :
 >
 > Les types doivent être cohérents entre les deux côtés des frontières des FFI.
 >
-> Bien que certaines détails peuvent être masqués de la part d'un côté pour
+> Bien que certains détails peuvent être masqués de la part d'un côté pour
 > l'autre (typiquement, pour rendre un type opaque), les types des deux parties
 > doivent avoir la même taille et respecter le même alignement.
 
@@ -220,7 +220,7 @@ couvrent la quasi-entièreté de la bibliothèque standard du C.
 > Dans un développement sécurisé en Rust, lors de l'interfaçage avec du code
 > faisant usage de types dépendants de la plateforme d'exécution, comme les
 > `int`s et les `long`s du C, le code Rust doit utiliser les alias portables de
-> types, comme ceux fournits dans la bibliothèque standard ou dans la crate
+> types, comme ceux fournis dans la bibliothèque standard ou dans la crate
 > [libc], au lieu des types spécifiques à la plateforme, à l'exception du cas
 > où les *bindings* sont générés automatiquement pour chaque plateforme (voir
 > la note ci-dessous).
@@ -237,11 +237,11 @@ couvrent la quasi-entièreté de la bibliothèque standard du C.
 
 [libc]: https://crates.io/crates/libc
 
-### Types non robustes : références, pointeurs de fonction, enumérations
+### Types non robustes : références, pointeurs de fonction, énumérations
 
 Une *représentation piégeuse* d'un type particulier est une représentation
 (motif d'octets) qui respecte les contraintes de représentation du type (telles
-que sa taille et son alignement) mais qui ne représente pas une valeur valide
+que sa taille et son alignement), mais qui ne représente pas une valeur valide
 de ce type et mène à des comportements indéfinis.
 
 En d'autres termes, si une telle valeur invalide est affectée à une variable
@@ -261,7 +261,7 @@ Rust sont non robustes, même parmi les types compatibles avec le C :
 - les énumérations,
 - les flottants (même si de nombreux langages ont la même compréhension de ce
   qu'est un flottant valide),
-- les types composés qui contiennet au moins un champ ayant pour type un type
+- les types composés qui contiennent au moins un champ ayant pour type un type
   non robuste.
 
 De l'autre côté, les types entiers (`u*`/`i*`), les types composés *packés* qui
@@ -279,7 +279,7 @@ mettre cela en place.
 > robuste doit être vérifiée.
 >
 > Plus précisément, soit une conversion (en Rust) est effectuée depuis des types
-> robustes vers des types non-robustes à l'aide de vérifications explicites,
+> robustes vers des types non robustes à l'aide de vérifications explicites,
 > soit le langage extern offre des garanties fortes quant à la validité des
 > valeurs en question.
 
@@ -299,7 +299,7 @@ de faire beaucoup dans ce domaine à l'aide du typage. Parce que Rust sépare
 nativement les segments sûrs des segments non sûrs, la recommandation est de
 toujours utiliser Rust pour les vérifications lorsque c'est possible. En ce qui
 concerne les risques, les types présentant le plus de dangers sont les
-références, les références de fonction et les énumérations, qui sont discutés
+références, les références de fonction et les énumérations, qui sont discutées
 ci-dessous.
 
 > ### Attention
@@ -316,7 +316,7 @@ ci-dessous.
 
 #### Références et pointeurs
 
-Bien qu'autorisé par le compilateur Rust, l'utilisation des références Rust dans
+Bien qu'autorisée par le compilateur Rust, l'utilisation des références Rust dans
 une FFI peut casser la sûreté mémoire. Parce que leur côté non sûr est plus
 explicite, les pointeurs sont préférés aux références Rust pour un interfaçage
 avec un autre langage.
@@ -350,10 +350,10 @@ langages compatibles avec le C, incluants les variantes de C qui mettent en
 oeuvre la vérification que les pointeurs sont non nuls, comme du code annoté à
 l'aide Microsoft SAL par exemple.
 
-> ### Recommandation {{#check FFI-NOREF | Non-utilisation des types références, utilisation des types pointeurs}}
+> ### Recommandation {{#check FFI-NOREF | Non-utilisation des types références, utilisation des types pointeurs}}
 >
 > Dans un développement sécurisé en Rust, le code Rust ne doit pas utiliser de
-> types références mais des types pointeurs.
+> types références, mais des types pointeurs.
 >
 > Les exceptions sont :
 >
@@ -365,13 +365,13 @@ l'aide Microsoft SAL par exemple.
 >   environnement où les références de fonctions `extern "C"` sont encodées
 >   comme des pointeurs.
 
-D'un autre coté, les *types pointeur* Rust peuvent aussi mener à des
+D'un autre côté, les *types pointeur* Rust peuvent aussi mener à des
 comportements indéfinis, mais sont plus aisément vérifiables, principalement
-par la comparaison avec `std/code::ptr::null()` (`(void*)0` en C) mais aussi
+par la comparaison avec `std/code::ptr::null()` (`(void*)0` en C), mais aussi
 dans certains contextes par la vérification de l'appartenance à une plage
 d'adresses mémoire (en particulier dans des systèmes embarqués ou pour un
 développement au niveau noyau). Un autre avantage à utiliser les pointeurs Rust
-dans des FFI est que tout chargement de valeur pointée est clairement marquée
+dans des FFI est que tout chargement de valeur pointée est clairement marqué
 comme appartenant à un bloc ou à une fonction `unsafe`.
 
 > ### Règle {{#check FFI-CKPTR | Vérification des pointeurs externs}}
@@ -381,9 +381,9 @@ comme appartenant à un bloc ou à une fonction `unsafe`.
 > En particulier, les pointeurs doivent être vérifiés comme étant non nuls avant
 > toute utilisation.
 >
-> Des approches plus strictes sont recommandées lorsque possibles. Elles
+> Des approches plus strictes sont recommandées lorsque possible. Elles
 > comprennent la vérification des pointeurs comme appartenant à une plage
-> d'adresses mmoire valide ou comme étant des pointeurs avérés (étiquetés ou
+> d'adresses mémoire valide ou comme étant des pointeurs avérés (étiquetés ou
 > signés, approche particulièrement applicable si la valeur pointée est
 > seulement manipulée depuis le code Rust.
 
@@ -443,8 +443,8 @@ sécurité.
 > ### Règle {{#check FFI-MARKEDFUNPTR | Marquage des types de pointeurs de fonction dans les FFI comme `extern` et `unsafe`}}
 >
 > Dans un développement sécurisé en Rust, tout type de pointeur de fonction dont
-> les valeurs sont amenées à traverser les frontières d'une FFI doivent être
-> marquées comme `extern` (si possible avec l'ABI spécifiée) et comme `unsafe`.
+> les valeurs sont amenées à traverser les frontières d'une FFI doit être
+> marqué comme `extern` (si possible avec l'ABI spécifiée) et comme `unsafe`.
 
 Les pointeurs de fonction en Rust sont bien plus semblables aux références
 qu'aux pointeurs simples. En particulier, la validité des pointeurs de fonction
@@ -494,7 +494,7 @@ Les valeurs (motifs de bits) valides pour une énumération donnée sont en gén
 assez peu nombreuses par rapport à l'ensemble des valeurs qu'il est possible
 d'exprimer avec le même nombre de bits. Ne pas traiter correctement une valeur
 d'`enum` fournie par un code externe peut mener à une confusion de types et
-avoir de sérieures conséquences sur la sécurité d'un programme. Malheureusement,
+avoir de sérieuses conséquences sur la sécurité d'un programme. Malheureusement,
 vérifier la valeur d'une énumération aux bornes d'une FFI n'est pas une tâche
 triviale des deux côtés.
 
@@ -523,7 +523,7 @@ l'ABI `extern "C"` d'une `enum class` est définie par l'implémentation et doit
 
 Concernant les énumérations ne contenant aucun champ, des *crates* comme
 [`num_derive`] ou [`num_enum`] permettent au développeur de fournir facilement
-des opérations de conversions sûrs depuis une valeur entière vers une
+des opérations de conversions sûres depuis une valeur entière vers une
 énumération et peuvent être utilisées pour convertir de manière contrôlée un
 entier (fourni par une énumération C) vers une énumération C.
 
@@ -631,7 +631,7 @@ gestion de son allocation et de sa libération.
 >
 > - un seul langage est responsable de l'allocation et de la libération d'une
 >   donnée,
-> - l'autre langage ne doit ni allouer, ni libérer la donnée directement mais
+> - l'autre langage ne doit ni allouer, ni libérer la donnée directement, mais
 >   peut utiliser une fonction extern dédée fournie par le langage responsable
 >   choisie.
 
@@ -707,7 +707,7 @@ impl Drop for Foo {
 > Parce que des `panic`s peuvent mener ne pas exécuter la méthode `Drop::drop`,
 > cette solution n'est pas satisfaisante pour le cas de la libération de
 > ressources sensibles (pour effacer les données sensibles par exemple), à
-> moins que le code soit garanti exempt de `panic` potentielle.
+> moins que le code soit garanti exempt de `panic` potentiel.
 >
 > Pour le cas de l'effacement des données sensibles, le problème peut être géré
 > par l'utilisation d'un *handler* de `panic`.
@@ -870,10 +870,10 @@ pub unsafe extern "C" fn no_panic() -> i32 {
 
 ### `no_std`
 
-Dans le cas des programmes utilisant n'utilisant pas la bibliothèque standard
+Dans le cas des programmes n'utilisant pas la bibliothèque standard
 Rust (`#[no_std]`), un gestionnaire de `panic` (̀`#[panic_handler]`) doit être
 défini pour la sécurité du programme. Le gestionnaire de `panic` doit être écrit
-avec la plus grande précaution pour garantir non seulement la sécurité mais
+avec la plus grande précaution pour garantir non seulement la sécurité, mais
 aussi la sûreté du programme.
 
 Un approche alternative est de simplement s'assurer qu'il n'y a aucune

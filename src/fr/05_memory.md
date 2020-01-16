@@ -1,6 +1,6 @@
 # Gestion de la mémoire
 
-## A propos de la sûreté mémoire en Rust
+## À propos de la sûreté mémoire en Rust
 
 <mark>TODO</mark> : expliquer les allocations/désallocations sûres,
 l'ownership/borrowing, et identifier les constructions de langage qui peuvent
@@ -22,8 +22,8 @@ drop(pair); // ici, `forget` serait équivalent (pas de destructeur à appeler)
 ```
 
 Les deux fonctions sont considérées comme **sûres du point de vue mémoire** par
-Rust. Toutefois, `forget` rendra toute resource gérée par la valeur libérée
-inaccessible mais non libérée.
+Rust. Toutefois, `forget` rendra toute ressource gérée par la valeur libérée
+inaccessible, mais non libérée.
 
 ```rust
 # use std::mem::forget;
@@ -32,7 +32,7 @@ forget(s); // fuite mémoire
 ```
 
 En particulier, l'utilisation de `forget` peut causer la rétention en mémoire de
-ressources critiques, menant à des interblocages et à la persistence de données
+ressources critiques, menant à des interblocages et à la persistance de données
 sensibles en mémoire. C'est pourquoi `forget` doit être considérée comme
 **non sécurisé**.
 
@@ -46,7 +46,7 @@ sensibles en mémoire. C'est pourquoi `forget` doit être considérée comme
 > ### Recommandation {{#check MEM-FORGET-LINT | Utilisation du *lint* clippy pour détecter l'utilisation de `forget`}}
 >
 > Le *lint* `mem_forget` de Clippy peut être utilisé pour automatiquement
-> détecter tout utilisation de la fonction `forget`. Pour s'assurer de l'absence
+> détecter toute utilisation de la fonction `forget`. Pour s'assurer de l'absence
 > d'appel à `forget`, ajouter la directive suivante en début de fichier racine
 > (en général `src/lib.rs` ou `src/main.rs`) :
 >
@@ -54,7 +54,7 @@ sensibles en mémoire. C'est pourquoi `forget` doit être considérée comme
 > #![deny(clippy::mem_forget)]
 > ```
 
-La bibliothèque standard inclus d'autres moyens d'*oublier* une valeur :
+La bibliothèque standard inclut d'autres moyens d'*oublier* une valeur :
 
 - `Box::leak` pour libérer une ressource,
 - `Box::into_raw` pour exploiter une valeur dans un bloc *unsafe*, notamment
@@ -65,7 +65,7 @@ La bibliothèque standard inclus d'autres moyens d'*oublier* une valeur :
 Ces alternatives peuvent mener au même type de problème de sécurité, mais ont
 l'avantage de faire apparaître explicitement leur but.
 
-> ### Règle {{#check MEM-LEAK | Aucune fuite mémoire}}
+> ### Règle {{#check MEM-LEAK | Absence de fuite mémoire}}
 >
 > Dans un développement sécurisé en Rust, le code ne doit pas faire fuiter de la
 > mémoire ou des ressources *via* `Box::leak`.
@@ -82,7 +82,7 @@ la ressource concernée du compilateur au développeur.
 
 <!-- -->
 
-> ### Règle {{#check MEM-INTOFROMRAW | Appel systématique à `from_raw` pour les valeurs créée par `into_raw`}}
+> ### Règle {{#check MEM-INTOFROMRAW | Appel systématique à `from_raw` pour les valeurs créées avec `into_raw`}}
 >
 > Dans un développement sécurisé en Rust, tout pointeur créé par un appel à
 > `into_raw` (ou `into_raw_nonnull`) depuis un des types suivants :
@@ -108,7 +108,7 @@ la ressource concernée du compilateur au développeur.
 
 > ### Note
 >
-> Dans le cas de `Box::into_raw`, le nettoyage automatique est possible mais
+> Dans le cas de `Box::into_raw`, le nettoyage automatique est possible, mais
 > est bien plus compliqué que de *re-boxer* le pointeur brut et doit être
 > évité :
 >
@@ -138,19 +138,19 @@ l'utilisation de `std::mem::uninitialized` ou de `std::mem::MaybeUninit`).
 >
 > La fonction `std::mem::uninitialized` (dépréciée depuis la version 1.38) ou
 > le type `std::mem::MaybeUninit` (stabilisé dans la version 1.36) ne doivent
-> pas être utilisées, ou bien explicitement justifiés si nécessaire.
+> pas être utilisées, ou bien explicitement justifiées si nécessaire.
 
-L'utilisation de mémoire non-initialisée peut induire deux problèmes de
+L'utilisation de mémoire non initialisée peut induire deux problèmes de
 sécurité distincts :
 
-- la libération de mémoire non-initialisée (étant également un problème de
+- La libération de mémoire non initialisée (étant également un problème de
   sûreté mémoire),
 - la non-libération de mémoire initialisée.
 
 > ### Note
 >
 > Le type `std::mem::MaybeUninit` est une amélioration de la fonction
-> `std::mem::uninitialized`. En effet, il rend le relâchement des valeurs non-
+> `std::mem::uninitialized`. En effet, il rend le relâchement des valeurs non
 > initialisées bien plus difficile. Toutefois, cela ne change pas le second
 > problème : la non-libération de la mémoire initialisée est bien possible.
 > C'est problématique en particulier si l'on considère l'utilisation de `Drop`
@@ -163,7 +163,7 @@ en particulier dans lorsque le code Rust est utilisé *via* des FFI.
 
 > ### Règle {{#check MEM-ZERO | Mise à zéro des données sensibles après utilisation}}
 >
-> Les variables contenant des données sensibles doivent être mise à zéro après
+> Les variables contenant des données sensibles doivent être mises à zéro après
 > utilisation, en utilisant des fonctions dont les appels ne seront pas
 > supprimés par les optimisations du compilateur, comme
 > `std::ptr::write_volatile` ou bien la *crate* `zeroize`.

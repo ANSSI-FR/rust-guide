@@ -19,17 +19,17 @@ composants additionnels et de maintenir le tout à jour.
 
 [rustup]: https://github.com/rust-lang/rustup.rs
 
-### Editions Rust
+### Éditions Rust
 
 Il existe plusieurs variantes du langage Rust, appelées *éditions*. Le concept
 d'éditions a été introduit afin de distinguer la mise en place de nouvelles
 fonctionnalités dans le langage, et de rendre ce processus incrémental.
 Toutefois, comme mentionné dans le *[Edition Guide]*, cela ne signifie pas que
-des nouvelles fonctionnalités et améliorations ne seront incluses que dans la
+de nouvelles fonctionnalités et améliorations ne seront incluses que dans la
 dernière édition.
 
 Certaines éditions peuvent introduire de nouvelles constructions de langage et
-des nouveaux mots-clé. Les recommandations concernant ces fonctionnalités
+des nouveaux mots-clés. Les recommandations concernant ces fonctionnalités
 deviennent alors fortement liées à une édition en particulier. Dans le reste de
 ce guide, un effort sera réalisé pour mettre en évidence les règles qui ne
 s'appliqueraient qu'à certaines éditions de Rust en particulier.
@@ -46,14 +46,14 @@ s'appliqueraient qu'à certaines éditions de Rust en particulier.
 
 De manière orthogonale aux éditions qui permettent d'opter pour une variante du
 langage en termes de fonctionnalités, la chaîne d'outils du langage Rust est
-déclinée en trois variantes appelées *release channels*:
+déclinée en trois variantes appelées *release channels *:
 
-- la version *nightly* est produite une fois par jour,
+- La version *nightly* est produite une fois par jour,
 - la version *nightly* est promue en version *beta* toutes les six semaines,
 - la version *beta* est promue en version *stable* toutes les six semaines.
 
 Lors du développement d'un projet, il est important de vérifier non seulement
-la version par défaut de la chaîne d'outils, mais aussi les potentiels
+la version par défaut de la chaîne d'outils, mais aussi les potentielles
 surcharges qui peuvent être définies en fonction des répertoires:
 
 ```shell
@@ -99,7 +99,7 @@ $
 
 Une fois que la chaîne d'outils appropriée a été sélectionnée avec Rustup,
 l'outil [Cargo] est disponible pour exécuter ces différents outils en
-fournissant la command `cargo`. Cargo est le gestionnaire de paquetages de Rust.
+fournissant la commande `cargo`. Cargo est le gestionnaire de paquetages de Rust.
 Il joue plusieurs rôles fondamentaux lors de développements en Rust :
 
 - il structure le projet en fournissant un squelette de projet (`cargo new`),
@@ -114,7 +114,7 @@ Il joue plusieurs rôles fondamentaux lors de développements en Rust :
 
 > ### Attention
 >
-> Tout comme `rustup`, `cargo` effectue tous les téléchargements sur HTTPS mais
+> Tout comme `rustup`, `cargo` effectue tous les téléchargements sur HTTPS, mais
 > ne valide pas l'index du registre. Des discussions sont en cours pour
 > déterminer le meilleur moyen de protéger et de valider les *crates*. Pour le
 > moment, la sécurité de `cargo` repose sur la bonne sécurité du site web
@@ -130,7 +130,7 @@ Tout au long du développement d'une application sécurisée, certaines options
 requièrent une attention particulière. La section `[profile.*]` permet de
 configurer la façon dont le compilateur est invoqué. Par exemple :
 
-- la variable `debug-assertions` contrôle l'activation des assertions de
+- La variable `debug-assertions` contrôle l'activation des assertions de
   *debug*,
 - la variable `overflow-checks` contrôle l'activation de la vérification des
   dépassements d'entiers lors d'opérations arithmétiques.
@@ -176,7 +176,7 @@ Il est aussi recommandé d'installer `clippy` en tant que composant
 (`rustup component add clippy`) dans la chaîne d'outils stable plutôt que de
 l'installer comme une dépendance de chaque projet.
 
-L'outil fourni plusieurs catégories de *lints*, selon le type de problème qu'il
+L'outil fournit plusieurs catégories de *lints*, selon le type de problème qu'il
 vise à détecter dans le code. Les avertissements doivent être revérifiés par le
 programmeur avant d'appliquer la réparation suggérée par `clippy`, en
 particulier dans le cas des *lints* de la catégorie `clippy::nursery` puisque
@@ -195,7 +195,7 @@ ceux-ci sont encore en cours de développement et de mise au point.
 de consignes de style (*style guidelines*). La documentation de l'outil
 mentionne certaines limitations parmi lesquelles un support partiel des macros
 (déclaration et utilisation). L'option `--check`, qui affiche les différences
-de formatage entre le code actuel et le code proposé, doit être utilisé. A la
+de formatage entre le code actuel et le code proposé, doit être utilisé. À la
 suite de cette première utilisation, l'utilisateur doit vérifier les
 changements, puis les éventuellement les valider les en réinvoquant l'outil sans
 option.
