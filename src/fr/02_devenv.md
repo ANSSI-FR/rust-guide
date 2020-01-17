@@ -267,7 +267,7 @@ configuration, certaines réparations (comme celles proposées avec l'option
 `--edition-idions`) sont connues pour casser la compilation ou pour modifier
 la sémantique d'un programme dans certains cas.
 
-> ### Règles {{#check DENV-AUTOFIX | Vérification manuelle des réparations automatiques}}
+> ### Règle {{#check DENV-AUTOFIX | Vérification manuelle des réparations automatiques}}
 >
 > Dans le cadre du développement d'une application sécurisée, toute réparation
 > automatique (comme celles appliquées par `rustfix` par exemple) doit être
