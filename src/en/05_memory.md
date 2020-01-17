@@ -1,10 +1,12 @@
 # Memory management
 
-## About Rust memory safety
+<!-- ## About Rust memory safety -->
 
+<!--
 <mark>TODO</mark>: explain safe allocations/deallocations, ownership/borrowing,
 and identify language constructs that may break memory safety (for instance,
 unsound behaviors in older versions of the compiler).
+-->
 
 ## Forget and memory leaks
 

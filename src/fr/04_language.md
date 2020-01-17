@@ -123,7 +123,9 @@ else { println!("{}", res); }
 
 ## Gestion des erreurs
 
+<!--
 <mark>TODO</mark>: décrire les bonnes pratiques de gestion d'erreurs.
+-->
 
 Le type `Result` est la façon privilégiée en Rust pour décrire le type de retour
 des fonctions dont le traitement peut échouer. Un objet `Result` doit être
@@ -175,9 +177,11 @@ Des motifs courants de code qui provoquent des `panic` sont :
 > L'indice d'accès à un tableau doit être testé, ou la méthode `get` doit être
 > utilisée pour récupérer une `Option`.
 
+<!--
 <mark>TODO</mark> Vérifier si la crate *[no_panic](https://github.com/dtolnay/no-panic)*
 peut détecter tous les cas. Inconvénient : toutes les fonctions doivent être
 marquées avec `#[no_panic]`.
+-->
 <!--
 <mark>TODO</mark> Another possibility:
 [rustig](https://github.com/Technolution/rustig) (doesn't build here)
@@ -201,8 +205,9 @@ comportement indéfini.
 Il est porté à l'attention du programmeur que `catch_unwind` ne va traiter que
 les cas de `panic`, en préservant d'autres types d'abandons de processus.
 
-## Macros
+<!-- ## Macros -->
 
+<!--
 <mark>TODO</mark> : complexité cyclomatique du code macro-expansé, limites de
 récursion, ...
-
+-->

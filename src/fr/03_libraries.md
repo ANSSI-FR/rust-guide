@@ -43,13 +43,17 @@ un projet.
 
 [cargo-audit]: https://github.com/RustSec/cargo-audit
 
-## Code *unsafe* dans les bibliothèques
+<!-- ## Code *unsafe* dans les bibliothèques -->
 
+<!--
 <mark>TODO</mark>: les blocs de code `unsafe` sont discutés dans le chapitre 
 suivant. Le développeur a besoin de s'assurer que ces types de blocs ne sont pas
 mal utilisés dans les dépendances de son projet.
+-->
 
+<!--
 > ### Recommandation {{#check LIBS-UNSAFE | Vérification du code *unsafe* dans les dépendances}}
 >
 > <mark>TODO</mark>: vérifier qu'il n'y a pas de bloc `unsafe` dans les
 > dépendances (à l'aide d'un outil ?).
+-->

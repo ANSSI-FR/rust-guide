@@ -115,7 +115,7 @@ else { println!("{}", res); }
 
 ## Error handling
 
-<mark>TODO</mark>: explicit good practices in error handling.
+<!-- <mark>TODO</mark>: explicit good practices in error handling. -->
 
 The `Result` type is the preferred way of handling functions that can fail.
 A `Result` object must be tested, and never ignored.
@@ -161,9 +161,11 @@ Common patterns that can cause panics are:
 > Array indexing must be properly tested, or the `get` method should be used to
 > return an `Option`.
 
+<!--
 <mark>TODO</mark> Check if the [no_panic](https://github.com/dtolnay/no-panic)
 crate can catch all cases. Drawback: all functions need to be marked as
 `#[no_panic]`.
+-->
 <!--
 <mark>TODO</mark> Another possibility:
 [rustig](https://github.com/Technolution/rustig) (doesn't build here)
@@ -183,8 +185,9 @@ Unwinding from Rust code into foreign code results in undefined behavior.
 Note that `catch_unwind` will only catch unwinding panics, not those that abort
 the process.
 
-## Macros
+<!-- ## Macros -->
 
+<!--
 <mark>TODO</mark>: cyclomatic complexity of the macro expanded code, recursion
 limits, ...
-
+-->

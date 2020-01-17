@@ -840,7 +840,9 @@ trick: the linker fails if a non-trivially-dead branch leads to `panic!`.
 The crate [rust-bindgen] may be used to automatically generate the low-level
 part of the binding from C header files.
 
+<!--
 <mark>TODO</mark> example
+-->
 
 ## Binding a Rust library in another language
 

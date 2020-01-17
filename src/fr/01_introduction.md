@@ -66,6 +66,6 @@ nous proposons des recommandations en ce qui concerne l'utilisation des outils
 de l'écosystème Rust dans un cadre sécurisé. Le chapitre suivant porte sur les
 précautions à prendre durant le choix et l'utilisation de bibliothèques
 externes. Ensuite, les recommandations à propos des constructions du langage
-sont présentées. Enfin, nous discutons de la bonne utilisation des outils de
-test et de *fuzzing* pour un projet réalisé en Rust. Un résumé des règles et
+sont présentées. <!-- TODO: Enfin, nous discutons de la bonne utilisation des outils de
+test et de *fuzzing* pour un projet réalisé en Rust.--> Un résumé des règles et
 recommandations est disponible à la fin de ce guide.

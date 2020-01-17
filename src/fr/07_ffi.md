@@ -903,7 +903,9 @@ inaccessible mène à un appel à `panic!`.
 La *crate* [rust-bindgen] peut être utilisée pour générer automatiquement la
 partie bas-niveau du *binding* depuis les fichiers *header* C.
 
+<!--
 <mark>TODO</mark> example
+-->
 
 ## Liaison entre une bibliothèque Rust et du code d'un autre langage
 

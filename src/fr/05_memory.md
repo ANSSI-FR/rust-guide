@@ -1,11 +1,13 @@
 # Gestion de la mémoire
 
-## À propos de la sûreté mémoire en Rust
+<!-- ## À propos de la sûreté mémoire en Rust -->
 
+<!--
 <mark>TODO</mark> : expliquer les allocations/désallocations sûres,
 l'ownership/borrowing, et identifier les constructions de langage qui peuvent
 casser la sûreté mémoire (par exemple, comportements *unsounds* dans des
 versions plus anciennes du compilateur).
+-->
 
 ## `Forget` et fuites de mémoire
 
