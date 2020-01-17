@@ -42,7 +42,7 @@ Plusieurs situations peuvent mener à manquer des `drop`s, comme :
 
 - un cycle dans la référence (par exemple avec `Rc` ou `Arc`),
 - un appel explicite à `std::mem::forget` (ou `core::mem::forget`) (voir
-  paragraphe à propos de [`Forget` et des fuites de mémoire](05_memory.html#forget-et-fuites-de-mémoire),
+  paragraphe à propos de [`forget` et des fuites de mémoire](05_memory.html#forget-et-fuites-de-mémoire),
 - un `panic` dans un `drop`,
 - un arrêt du programme (et un `panic` lorsque `abort-on-panic` est activé).
 
@@ -102,7 +102,7 @@ sont :
 
 L'implémentation automatique de `Send` (respectivement `Sync`) a lieu pour les
 types composés (structures ou énumérations) lorsque tous les champs contenus
-implémentent `Send` (respectivement `Sync). Une fonctionnalité notable, mais
+implémentent `Send` (respectivement `Sync`). Une fonctionnalité notable, mais
 **instable**, de Rust (depuis 1.37.0) permet d'empêcher cette implémentation
 automatique en annotant explicitement le type considéré avec une
 _négation d'implementation_ :
@@ -137,7 +137,7 @@ struct SpecialType(u8, PhantomData<*const ()>);
 
 ### Les traits de comparaison : `PartialEq`, `Eq`, `PartialOrd`, `Ord`
 
-Les comparaisons (`==`, `!=`, `<`, `<=`, `>`, `>=`) en Rust repose sur quatre
+Les comparaisons (`==`, `!=`, `<`, `<=`, `>`, `>=`) en Rust reposent sur quatre
 traits de la bibliothèque standard disponibles dans `std::cmp` (ou `core::cmp`
 pour une compilation avec `no_std`) :
 

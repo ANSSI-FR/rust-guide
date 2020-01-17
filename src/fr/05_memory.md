@@ -34,7 +34,7 @@ forget(s); // fuite mémoire
 En particulier, l'utilisation de `forget` peut causer la rétention en mémoire de
 ressources critiques, menant à des interblocages et à la persistance de données
 sensibles en mémoire. C'est pourquoi `forget` doit être considérée comme
-**non sécurisé**.
+**non sécurisée**.
 
 > ### Règle {{#check MEM-FORGET | Non-utilisation de `forget`}}
 >

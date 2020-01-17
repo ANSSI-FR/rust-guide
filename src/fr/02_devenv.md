@@ -1,4 +1,4 @@
-# Development Environment
+# Environnement de développement
 
 ## Rustup
 

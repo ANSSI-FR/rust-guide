@@ -34,7 +34,7 @@ plus précises pour certaines constructions particulières :
 
 ## Code *unsafe*
 
-L'utilisation jointe du système de types et du système d'*ownership* vise à
+L'utilisation conjointe du système de types et du système d'*ownership* vise à
 apporter un haut niveau de sûreté quant à la gestion de la mémoire dans les
 programmes écrits en Rust. Le langage permet alors d'éviter les débordements
 mémoire, la construction de pointeurs nuls ou invalides, et les problèmes
@@ -186,7 +186,7 @@ marquées avec `#[no_panic]`.
 ### FFI et `panic`s
 
 Lorsque du code Rust est appelé depuis du code écrit dans un autre
-langage (par exemple, du code C), le code Rust doit être écrit de sorte de ne
+langage (par exemple, du code C), le code Rust doit être écrit de sorte à ne
 jamais pouvoir paniquer.
 Dérouler (*unwinding*) depuis le code Rust vers le code étranger résulte en un
 comportement indéfini.
@@ -198,7 +198,7 @@ comportement indéfini.
 > ne va pas abandonner un traitement et que l'exécution ne retourne dans le
 > langage appelant dans un état instable.
 
-Il est portée à l'attention du programmeur que `catch_unwind` ne va traiter que
+Il est porté à l'attention du programmeur que `catch_unwind` ne va traiter que
 les cas de `panic`, en préservant d'autres types d'abandons de processus.
 
 ## Macros
