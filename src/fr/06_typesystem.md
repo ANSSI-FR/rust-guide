@@ -236,7 +236,7 @@ second cas, cela peut mener à des problèmes classiques de sécurité liés à 
 violations de propriétés de sûreté mémoire. C'est là encore un atout que de
 limiter au possible l'utilisation des blocs `unsafe`.
 
-> ### Rule {{#check LANG-CMP-INV | Respect des invariants des traits de comparaison standards}}
+> ### Règle {{#check LANG-CMP-INV | Respect des invariants des traits de comparaison standards}}
 >
 > Dans un développement sécurisé en Rust, l'implémentation des traits de
 > comparaison standards doit respecter les invariants décrits dans la
