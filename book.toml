@@ -1,6 +1,1 @@
-[book]
-title = "Secure Rust Guidelines"
-description = "Recommendations for secure applications development with Rust"
-
-[preprocessor.checklist]
-title = "Recommendations checklist"
+book.toml.en

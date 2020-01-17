@@ -24,6 +24,12 @@ before_script:
     fi
 
 script:
+  - ./lang.sh fr
+  - mdbook clean
+  - mdbook build
+  - mdbook test
+  - ./lang.sh en
+  - mdbook clean
   - mdbook build
   - mdbook test
 

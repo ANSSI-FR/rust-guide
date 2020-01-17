@@ -1,0 +1,8 @@
+[book]
+title       = "Développement sécurisé en Rust"
+description = "Recommandations pour le développement d'applications sécurisées en Rust"
+src         = "src/fr"
+language    = "fr"
+
+[preprocessor.checklist]
+title = "Liste des recommandations"
