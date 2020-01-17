@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="expanded "><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development Environment</a></li><li class="expanded "><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li class="expanded "><a href="04_language.html"><strong aria-hidden="true">4.</strong> Language generalities</a></li><li class="expanded "><a href="05_memory.html" class="active"><strong aria-hidden="true">5.</strong> Memory management</a></li><li class="expanded "><a href="06_typesystem.html"><strong aria-hidden="true">6.</strong> Type system</a></li><li class="expanded "><a href="07_ffi.html"><strong aria-hidden="true">7.</strong> Foreign Function Interface</a></li><li class="expanded "><a href="08_testfuzz.html"><strong aria-hidden="true">8.</strong> Test and fuzzing</a></li><li class="expanded affix "><a href="LICENCE.html">Licence</a></li><li class="expanded affix "><a href="checklist.html">Checklist</a></li></ol>
+                <ol class="chapter"><li class="expanded "><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="expanded "><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development environment</a></li><li class="expanded "><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li class="expanded "><a href="04_language.html"><strong aria-hidden="true">4.</strong> Language generalities</a></li><li class="expanded "><a href="05_memory.html" class="active"><strong aria-hidden="true">5.</strong> Memory management</a></li><li class="expanded "><a href="06_typesystem.html"><strong aria-hidden="true">6.</strong> Type system</a></li><li class="expanded "><a href="07_ffi.html"><strong aria-hidden="true">7.</strong> Foreign Function Interface</a></li><li class="expanded affix "><a href="LICENCE.html">Licence</a></li><li class="expanded affix "><a href="checklist.html">Checklist</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -149,10 +149,12 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#memory-management" id="memory-management">Memory management</a></h1>
-<h2><a class="header" href="#about-rust-memory-safety" id="about-rust-memory-safety">About Rust memory safety</a></h2>
-<p><mark>TODO</mark>: explain safe allocations/deallocations, ownership/borrowing,
+<!-- ## About Rust memory safety -->
+<!--
+<mark>TODO</mark>: explain safe allocations/deallocations, ownership/borrowing,
 and identify language constructs that may break memory safety (for instance,
-unsound behaviors in older versions of the compiler).</p>
+unsound behaviors in older versions of the compiler).
+-->
 <h2><a class="header" href="#forget-and-memory-leaks" id="forget-and-memory-leaks">Forget and memory leaks</a></h2>
 <p>While the usual way for memory to be reclaimed is for a variable to go out of
 scope, Rust provides special functions to manually reclaim memory: <code>forget</code> and

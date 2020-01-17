@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="expanded "><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development Environment</a></li><li class="expanded "><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li class="expanded "><a href="04_language.html"><strong aria-hidden="true">4.</strong> Language generalities</a></li><li class="expanded "><a href="05_memory.html"><strong aria-hidden="true">5.</strong> Memory management</a></li><li class="expanded "><a href="06_typesystem.html"><strong aria-hidden="true">6.</strong> Type system</a></li><li class="expanded "><a href="07_ffi.html"><strong aria-hidden="true">7.</strong> Foreign Function Interface</a></li><li class="expanded "><a href="08_testfuzz.html"><strong aria-hidden="true">8.</strong> Test and fuzzing</a></li><li class="expanded affix "><a href="LICENCE.html">Licence</a></li><li class="expanded affix "><a href="checklist.html">Checklist</a></li></ol>
+                <ol class="chapter"><li class="expanded "><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="expanded "><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development environment</a></li><li class="expanded "><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li class="expanded "><a href="04_language.html"><strong aria-hidden="true">4.</strong> Language generalities</a></li><li class="expanded "><a href="05_memory.html"><strong aria-hidden="true">5.</strong> Memory management</a></li><li class="expanded "><a href="06_typesystem.html"><strong aria-hidden="true">6.</strong> Type system</a></li><li class="expanded "><a href="07_ffi.html"><strong aria-hidden="true">7.</strong> Foreign Function Interface</a></li><li class="expanded affix "><a href="LICENCE.html">Licence</a></li><li class="expanded affix "><a href="checklist.html">Checklist</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -198,11 +198,11 @@ phases of a typical (and simplified) development process. Firstly, we provide
 some advices for using tools of the Rust ecosystem to how to take advantage
 of them for secure development. A following chapter focuses on precautions to
 take when choosing and using external libraries. Then, recommendations about the
-Rust language constructs are exposed. Finally, we introduce advices for writing
-tests for a project in Rust, and for using Rust fuzzing tools. A summary of
+Rust language constructs are exposed.<!-- TODO: Finally, we introduce advices for writing
+tests for a project in Rust, and for using Rust fuzzing tools.--> A summary of
 recommendations presented throughout the document is listed at the end of this
 guide.</p>
-<h1><a class="header" href="#development-environment" id="development-environment">Development Environment</a></h1>
+<h1><a class="header" href="#development-environment" id="development-environment">Development environment</a></h1>
 <h2><a class="header" href="#rustup" id="rustup">Rustup</a></h2>
 <p><a href="https://github.com/rust-lang/rustup.rs">Rustup</a> is the Rust toolchain installer. Among other things, it enables
 switching between different flavors of the toolchain (stable, beta, nightly),
@@ -432,15 +432,17 @@ reported to the RustSec Advisory Database.</p>
 <p>The <code>cargo-audit</code> tool must be used to check for known vulnerabilities in
 dependencies.</p>
 </blockquote>
-<h2><a class="header" href="#unsafe-code-in-libraries" id="unsafe-code-in-libraries">Unsafe code in libraries</a></h2>
-<p><mark>TODO</mark>: <code>unsafe</code> blocks are discussed in the following chapter.
+<!-- ## Unsafe code in libraries -->
+<!--
+<mark>TODO</mark>: `unsafe` blocks are discussed in the following chapter.
 One needs to ensure that this kind of block is not misused in project
-dependencies.</p>
-<blockquote>
-<h3><a class="header" href="#recommendation-a-idlibs-unsafealibs-unsafe" id="recommendation-a-idlibs-unsafealibs-unsafe">Recommendation <a id="LIBS-UNSAFE"></a>LIBS-UNSAFE</a></h3>
-<p><mark>TODO</mark>: check that no <code>unsafe</code> blocks appear in the imported
-dependencies (with a tool?).</p>
-</blockquote>
+dependencies.
+-->
+<!--
+> ### Recommendation <a id="LIBS-UNSAFE"></a>LIBS-UNSAFE
+> <mark>TODO</mark>: check that no `unsafe` blocks appear in the imported
+> dependencies (with a tool?).
+-->
 <h1><a class="header" href="#language-generalities" id="language-generalities">Language generalities</a></h1>
 <h2><a class="header" href="#naming" id="naming">Naming</a></h2>
 <p>As of now, the standard library is the de facto standard for naming things in
@@ -547,7 +549,7 @@ specialized functions <code>overflowing_&lt;op&gt;</code>, <code>wrapping_&lt;op
 <code>Wrapping</code> type must be used.</p>
 </blockquote>
 <h2><a class="header" href="#error-handling" id="error-handling">Error handling</a></h2>
-<p><mark>TODO</mark>: explicit good practices in error handling.</p>
+<!-- <mark>TODO</mark>: explicit good practices in error handling. -->
 <p>The <code>Result</code> type is the preferred way of handling functions that can fail.
 A <code>Result</code> object must be tested, and never ignored.</p>
 <blockquote>
@@ -588,9 +590,11 @@ be used.</p>
 <p>Array indexing must be properly tested, or the <code>get</code> method should be used to
 return an <code>Option</code>.</p>
 </blockquote>
-<p><mark>TODO</mark> Check if the <a href="https://github.com/dtolnay/no-panic">no_panic</a>
+<!--
+<mark>TODO</mark> Check if the [no_panic](https://github.com/dtolnay/no-panic)
 crate can catch all cases. Drawback: all functions need to be marked as
-<code>#[no_panic]</code>.</p>
+`#[no_panic]`.
+-->
 <!--
 <mark>TODO</mark> Another possibility:
 [rustig](https://github.com/Technolution/rustig) (doesn't build here)
@@ -607,14 +611,18 @@ abort or return in an unstable state.</p>
 </blockquote>
 <p>Note that <code>catch_unwind</code> will only catch unwinding panics, not those that abort
 the process.</p>
-<h2><a class="header" href="#macros" id="macros">Macros</a></h2>
-<p><mark>TODO</mark>: cyclomatic complexity of the macro expanded code, recursion
-limits, ...</p>
+<!-- ## Macros -->
+<!--
+<mark>TODO</mark>: cyclomatic complexity of the macro expanded code, recursion
+limits, ...
+-->
 <h1><a class="header" href="#memory-management" id="memory-management">Memory management</a></h1>
-<h2><a class="header" href="#about-rust-memory-safety" id="about-rust-memory-safety">About Rust memory safety</a></h2>
-<p><mark>TODO</mark>: explain safe allocations/deallocations, ownership/borrowing,
+<!-- ## About Rust memory safety -->
+<!--
+<mark>TODO</mark>: explain safe allocations/deallocations, ownership/borrowing,
 and identify language constructs that may break memory safety (for instance,
-unsound behaviors in older versions of the compiler).</p>
+unsound behaviors in older versions of the compiler).
+-->
 <h2><a class="header" href="#forget-and-memory-leaks" id="forget-and-memory-leaks">Forget and memory leaks</a></h2>
 <p>While the usual way for memory to be reclaimed is for a variable to go out of
 scope, Rust provides special functions to manually reclaim memory: <code>forget</code> and
@@ -776,10 +784,12 @@ impl Drop for ZU32 {
 <span class="boring">}
 </span></code></pre></pre>
 <h1><a class="header" href="#type-system" id="type-system">Type system</a></h1>
-<h2><a class="header" href="#about-rust-type-system" id="about-rust-type-system">About Rust type system</a></h2>
-<p><mark>TODO</mark>: identify pitfalls with the type system (for instance,
+<!-- ## About Rust type system -->
+<!--
+<mark>TODO</mark>: identify pitfalls with the type system (for instance,
 misunderstanding of which code is actually executed when implementing complex
-patterns with traits).</p>
+patterns with traits).
+-->
 <h2><a class="header" href="#standard-library-traits" id="standard-library-traits">Standard library traits</a></h2>
 <h3><a class="header" href="#drop-trait-the-destructor" id="drop-trait-the-destructor"><code>Drop</code> trait, the destructor</a></h3>
 <p>Types implement the trait <code>std::ops::Drop</code> to perform some operations when the
@@ -1803,7 +1813,9 @@ crate with a name of the form <code>*-sys</code>.</p>
 </blockquote>
 <p>The crate <a href="https://crates.io/crates/rust-bindgen">rust-bindgen</a> may be used to automatically generate the low-level
 part of the binding from C header files.</p>
-<p><mark>TODO</mark> example</p>
+<!--
+<mark>TODO</mark> example
+-->
 <h2><a class="header" href="#binding-a-rust-library-in-another-language" id="binding-a-rust-library-in-another-language">Binding a Rust library in another language</a></h2>
 <blockquote>
 <h3><a class="header" href="#recommendation-a-idffi-capiaffi-capi" id="recommendation-a-idffi-capiaffi-capi">Recommendation <a id="FFI-CAPI"></a>FFI-CAPI</a></h3>
@@ -1920,12 +1932,6 @@ int main(int argc, const char** argv) {
     return 0;
 }
 </code></pre>
-<h1><a class="header" href="#test-and-fuzzing" id="test-and-fuzzing">Test and fuzzing</a></h1>
-<h2><a class="header" href="#writing-tests" id="writing-tests">Writing tests</a></h2>
-<p><mark>TODO</mark>: good practices in writing tests.</p>
-<h2><a class="header" href="#fuzzing" id="fuzzing">Fuzzing</a></h2>
-<h3><a class="header" href="#cargo-fuzz" id="cargo-fuzz">cargo-fuzz</a></h3>
-<p><mark>TODO</mark>: good practices in fuzzing programs or part of programs.</p>
 <h1><a class="header" href="#open-licence-20licence-ouverte-20" id="open-licence-20licence-ouverte-20">OPEN LICENCE 2.0/LICENCE OUVERTE 2.0</a></h1>
 <h2><a class="header" href="#reuse-of-the-information-covered-by-this-licence" id="reuse-of-the-information-covered-by-this-licence">“Reuse” of the “Information” covered by this licence</a></h2>
 <p>The “Grantor” grants the “Reuser” the free, non-exclusive right to “Reuse” the “Information” subject of this licence, for commercial or non-commercial purposes, worldwide and for an unlimited period, in accordance with the conditions stated below.</p>
@@ -1984,7 +1990,7 @@ int main(int argc, const char** argv) {
 <h1><a class="header" href="#checklist" id="checklist">Checklist</a></h1>
 <ul>
 <li>
-<p>Development Environment:</p>
+<p>Development environment:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
 Use a stable compilation toolchain (<a href="02_devenv.html#DENV-STABLE">DENV-STABLE</a>)</li>

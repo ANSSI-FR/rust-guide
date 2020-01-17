@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="expanded "><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development Environment</a></li><li class="expanded "><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li class="expanded "><a href="04_language.html" class="active"><strong aria-hidden="true">4.</strong> Language generalities</a></li><li class="expanded "><a href="05_memory.html"><strong aria-hidden="true">5.</strong> Memory management</a></li><li class="expanded "><a href="06_typesystem.html"><strong aria-hidden="true">6.</strong> Type system</a></li><li class="expanded "><a href="07_ffi.html"><strong aria-hidden="true">7.</strong> Foreign Function Interface</a></li><li class="expanded "><a href="08_testfuzz.html"><strong aria-hidden="true">8.</strong> Test and fuzzing</a></li><li class="expanded affix "><a href="LICENCE.html">Licence</a></li><li class="expanded affix "><a href="checklist.html">Checklist</a></li></ol>
+                <ol class="chapter"><li class="expanded "><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="expanded "><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development environment</a></li><li class="expanded "><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li class="expanded "><a href="04_language.html" class="active"><strong aria-hidden="true">4.</strong> Language generalities</a></li><li class="expanded "><a href="05_memory.html"><strong aria-hidden="true">5.</strong> Memory management</a></li><li class="expanded "><a href="06_typesystem.html"><strong aria-hidden="true">6.</strong> Type system</a></li><li class="expanded "><a href="07_ffi.html"><strong aria-hidden="true">7.</strong> Foreign Function Interface</a></li><li class="expanded affix "><a href="LICENCE.html">Licence</a></li><li class="expanded affix "><a href="checklist.html">Checklist</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -254,7 +254,7 @@ specialized functions <code>overflowing_&lt;op&gt;</code>, <code>wrapping_&lt;op
 <code>Wrapping</code> type must be used.</p>
 </blockquote>
 <h2><a class="header" href="#error-handling" id="error-handling">Error handling</a></h2>
-<p><mark>TODO</mark>: explicit good practices in error handling.</p>
+<!-- <mark>TODO</mark>: explicit good practices in error handling. -->
 <p>The <code>Result</code> type is the preferred way of handling functions that can fail.
 A <code>Result</code> object must be tested, and never ignored.</p>
 <blockquote>
@@ -295,9 +295,11 @@ be used.</p>
 <p>Array indexing must be properly tested, or the <code>get</code> method should be used to
 return an <code>Option</code>.</p>
 </blockquote>
-<p><mark>TODO</mark> Check if the <a href="https://github.com/dtolnay/no-panic">no_panic</a>
+<!--
+<mark>TODO</mark> Check if the [no_panic](https://github.com/dtolnay/no-panic)
 crate can catch all cases. Drawback: all functions need to be marked as
-<code>#[no_panic]</code>.</p>
+`#[no_panic]`.
+-->
 <!--
 <mark>TODO</mark> Another possibility:
 [rustig](https://github.com/Technolution/rustig) (doesn't build here)
@@ -314,9 +316,11 @@ abort or return in an unstable state.</p>
 </blockquote>
 <p>Note that <code>catch_unwind</code> will only catch unwinding panics, not those that abort
 the process.</p>
-<h2><a class="header" href="#macros" id="macros">Macros</a></h2>
-<p><mark>TODO</mark>: cyclomatic complexity of the macro expanded code, recursion
-limits, ...</p>
+<!-- ## Macros -->
+<!--
+<mark>TODO</mark>: cyclomatic complexity of the macro expanded code, recursion
+limits, ...
+-->
 
                     </main>
 
