@@ -269,10 +269,11 @@ assert!(T1 { a: 1, b: 1 } > T1 { a: 1, b: 0 });
 > ### Warning
 >
 > Derivation of comparison traits for compound types depends on the
-> **field order** not on their name.
+> **field order**, and not on their names.
 >
-> First, it means changing the order of two fields change the order. For
-> instance, provided this second ordered type:
+> First, it means that changing the order of declaration of two fields change
+> the resulting lexicographical order. For instance, provided this second
+> ordered type:
 >
 > ```rust,noplaypen
 > #[derive(PartialEq, Eq, PartialOrd, Ord)]
@@ -291,7 +292,7 @@ assert!(T1 { a: 1, b: 1 } > T1 { a: 1, b: 0 });
 > on the field order.
 
 Despite the ordering caveat, derived comparisons are a lot less error-prone
-than manual ones and makes code more shorter and easier to maintain:
+than manual ones and makes code shorter and easier to maintain.
 
 > ### Recommendation {{#check LANG-CMP-DERIVE | Derive comparison traits when possible}}
 >
