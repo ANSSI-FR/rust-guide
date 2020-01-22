@@ -1,13 +1,13 @@
 # Foreign Function Interface (FFI)
 
-Rust approach to interfacing with other languages relies on a strong
+The Rust approach to interfacing with other languages relies on a strong
 compatibility with C. However, this boundary is by its very nature **unsafe**
 (see [Rust Book: Unsafe Rust]).
 
 [Rust Book: Unsafe Rust]: https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html
 
-Functions that are marked `extern` are made compatible with C code at the
-compilation. They may be called from C code with any parameter.
+Functions that are marked `extern` are made compatible with C code during
+compilation. They may be called from C code with any parameter values.
 The exact syntax is `extern "<ABI>"` where ABI is a calling convention and
 depends on the target platform. The default one is `C` which corresponds to
 a standard C calling convention on the target platform.
@@ -231,12 +231,12 @@ the C standard library.
 
 A *trap representation* of a particular type is a representation (pattern of
 bits) that respects the type's representation constraints (such as size and
-alignment) but does not represent a valid value of this type and lead to
+alignment) but does not represent a valid value of this type and leads to
 undefined behavior.
 
-In simple term, if a Rust variable is set to such an invalid value,
-anything can happen from simple program crash to arbitrary code execution. When
-writing safe Rust, this cannot happen (except through a bug in the Rust
+In simple terms, if a Rust variable is set to such an invalid value,
+anything can happen from a simple program crash to arbitrary code execution.
+When writing safe Rust, this cannot happen (except through a bug in the Rust
 compiler). However, when writing unsafe Rust and in particular in FFI, it is
 really easy.
 
@@ -304,16 +304,6 @@ pointers are preferred over Rust references when binding to another language.
 On the one hand, reference types are very non-robust: they allow only pointers
 to valid memory objects. Any deviation leads to undefined behavior.
 
-> ### Rule {{#check FFI-CKREF | Do not use unchecked foreign references}}
->
-> In a secure Rust development, every foreign references that is transmitted to
-> Rust through FFI must be **checked on the foreign side** either automatically
-> (for instance, by a compiler) or manually.
->
-> Exceptions include Rust references in an opaque wrapping that is
-> created and manipulated only from the Rust side and `Option`-wrapped reference
-> (see Note below).
-
 When binding to and from C, the problem is particularly severe because C has
 no references (in the sense of valid pointers) and the compiler does not offer
 any safety guarantee.
@@ -326,6 +316,14 @@ against pointer/reference confusion.
 Rust references may be used reasonably with other C-compatible languages
 including C variants allowing for non-null type checking, e.g. Microsoft SAL
 annotated code.
+
+On the other hand, Rust's *pointer types* may also lead to undefined behaviors
+but are more verifiable, mostly against `std/core::ptr::null()` (C's `(void*)0`)
+but also in some context against a known valid memory range (particularly in
+embedded systems or kernel-level programming). Another advantage of using Rust
+pointers in FFI is that any load of the pointed value is clearly marked inside
+an `unsafe` block or function.
+
 
 > ### Recommendation {{#check FFI-NOREF | Do not use reference types but pointer types}}
 >
@@ -341,12 +339,14 @@ annotated code.
 >   variants or from C++ compiled in an environment where `extern "C"`
 >   references are encoded as pointers.
 
-On the other hand, Rust's *pointer types* may also lead to undefined behaviors
-but are more verifiable, mostly against `std/core::ptr::null()` (C's `(void*)0`)
-but also in some context against a known valid memory range (particularly in
-embedded systems or kernel-level programming). Another advantage of using Rust
-pointers in FFI is that any load of the pointed value is clearly marked inside
-an `unsafe` block or function.
+
+> ### Rule {{#check FFI-CKREF | Do not use unchecked foreign references}}
+>
+> In a secure Rust development, every foreign references that is transmitted to
+> Rust through FFI must be **checked on the foreign side** either automatically
+> (for instance, by a compiler) or manually.
+>
+
 
 > ### Rule {{#check FFI-CKPTR | Check foreign pointers}}
 >
@@ -471,7 +471,7 @@ environment.
 > ### Recommendation {{#check FFI-NOENUM | Do not use incoming Rust `enum` at FFI boundary}}
 >
 > In a secure Rust development, when interfacing with a foreign language,
-> the Rust code should not accept incoming values from Rust `enum` types.
+> the Rust code should not accept incoming values of type Rust `enum`.
 >
 > Exceptions include Rust `enum` types that are:
 >
@@ -570,7 +570,7 @@ In fact, it is advisable to only use `Copy` types. Note that `*const T` is
 
 However if not reclaiming memory and resources is bad, using reclaimed memory or
 reclaiming twice some resources is worst from a security point of view. In order
-to correctly release a resource only once one must known which language is
+to correctly release a resource only once, one must known which language is
 responsible for allocating and deallocating memory.
 
 > ### Rule {{#check FFI-MEM-OWNER | Ensure clear data ownership in FFI}}
@@ -592,7 +592,8 @@ wrapper around the foreign type:
 >
 > In a secure Rust development, any non-sensitive foreign piece of data that are
 > allocated and deallocated in the foreign language should be encapsulated in a
-> `Drop` type in such a way as to provide automatic deallocation in Rust.
+> `Drop` type in such a way as to provide automatic deallocation in Rust,
+> through an automatic call to the foreing language deallocation routine.
 
 A simple example of Rust wrapping over an external opaque type:
 
@@ -777,7 +778,7 @@ int main() {
 
 When calling Rust code from another language (e.g. C), the Rust code must
 be careful to never panic.
-Unwinding from Rust code into foreign code results is **undefined behavior**.
+Stack unwinding from Rust code into foreign code results in **undefined behavior**.
 
 > ### Rule {{#check FFI-NOPANIC | Handle `panic!` correctly in FFI}}
 >
