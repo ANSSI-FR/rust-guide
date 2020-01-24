@@ -30,7 +30,7 @@ plus précises pour certaines constructions particulières :
 > nommage décrites dans les [Rust API Guidelines].
 
 [rfc 430]: https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md
-[rust api guidelines]: https://rust-lang-nursery.github.io/api-guidelines/
+[rust api guidelines]: https://rust-lang.github.io/api-guidelines/
 
 ## Code *unsafe*
 
