@@ -37,7 +37,8 @@ and language features that are specific to a particular Rust edition.
 > that are expressed in relation to features offered by edition that has been
 > chosen.
 
-[edition guide]: https://rust-lang-nursery.github.io/edition-guide/editions/index.html
+[edition guide]: https://doc.rust-lang.org/edition-guide/
+
 
 ### Stable, nightly and beta toolchains
 

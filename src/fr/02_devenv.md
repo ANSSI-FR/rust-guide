@@ -40,7 +40,7 @@ s'appliqueraient qu'à certaines éditions de Rust en particulier.
 > conforme aux recommandations exprimées à propos des fonctionnalités que
 > l'édition utilisée propose.
 
-[edition guide]: https://rust-lang-nursery.github.io/edition-guide/editions/index.html
+[edition guide]: https://doc.rust-lang.org/edition-guide/
 
 ### Chaînes d'outils *stable*, *nightly* et *beta*
 
