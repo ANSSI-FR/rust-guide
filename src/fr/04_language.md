@@ -143,7 +143,7 @@ testé et jamais ignoré.
 > L'opérateur `?` doit être utilisé pour améliorer la lisibilité du code.
 > La macro `try!` ne doit pas être utilisée.
 
-Des *crates* tiers, peuvent être utilisés pour faciliter la gestion d'erreurs.
+Des *crates* tierses peuvent être utilisées pour faciliter la gestion d'erreurs.
 La plupart ([failure], [snafu], [thiserror]) adressent la création de types
 d'erreurs personnalisées qui implémentent les traits nécessaires et permettent
 l'encapsulation d'autres erreurs.
