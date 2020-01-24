@@ -259,7 +259,7 @@ specialized functions <code>overflowing_&lt;op&gt;</code>, <code>wrapping_&lt;op
 A <code>Result</code> object must be tested, and never ignored.</p>
 <blockquote>
 <h3><a class="header" href="#recommendation-a-idlang-errwrapalang-errwrap" id="recommendation-a-idlang-errwrapalang-errwrap">Recommendation <a id="LANG-ERRWRAP"></a>LANG-ERRWRAP</a></h3>
-<p>A crate can implement its own Error type, wrapping all possible errors.
+<p>A crate can implement its own <code>Error</code> type, wrapping all possible errors.
 It must be careful to make this type exception-safe (RFC 1236), and implement
 <code>Error + Send + Sync + 'static</code> as well as <code>Display</code>.</p>
 </blockquote>
@@ -268,7 +268,14 @@ It must be careful to make this type exception-safe (RFC 1236), and implement
 <p>The <code>?</code> operator should be used to improve readability of code.
 The <code>try!</code> macro should not be used.</p>
 </blockquote>
-<p>The <a href="https://crates.io/crates/error-chain">error-chain</a> and <a href="https://crates.io/crates/failure">failure</a> crates can be used to wrap errors.</p>
+<p>Third-party crates may be used to facilitate error handling. Most of them
+(notably <a href="https://crates.io/crates/failure">failure</a>, <a href="https://crates.io/crates/snafu">snafu</a>, <a href="https://crates.io/crates/thiserror">thiserror</a>) address the creation of new custom
+error types that implement the necessary traits and allow wrapping other
+errors.</p>
+<p>Another approach (notably proposed in the <a href="https://crates.io/crates/anyhow">anyhow</a> crate) consists in an automatic
+wrapping of errors into a single universal error type. Such wrappers should not
+be used in libraries and complex systems because they do not allow developers to
+provide context to the wrapped error.</p>
 <h3><a class="header" href="#panics" id="panics">Panics</a></h3>
 <p>Explicit error handling (<code>Result</code>) should always be preferred instead of calling
 <code>panic</code>.  The cause of the error should be available, and generic errors should
