@@ -29,7 +29,7 @@ Néanmoins, du fait de sa polyvalence, le langage offre des constructions et
 fonctionnalités qui, si elles ne sont pas utilisées correctement, peuvent
 potentiellement introduire des problèmes de sécurité, soit par construction,
 soit par la possibilité d'écrire du code qui serait mal interprété par un
-programmeur ou un relecteur. De plus, comme pour la plupart des outils dans le
+développeur ou un relecteur. De plus, comme pour la plupart des outils dans le
 domaine de la compilation et de la vérification logicielles, les outils utilisés
 pour développer, mettre au point, compiler et exécuter des programmes peuvent
 exposer des options et des possibilités de configuration qui, si mal utilisées,
@@ -51,10 +51,10 @@ fonctionnalité non sûre, trompeuse ou peu claire.
 Il ne vise pas à constituer un cours sur comment écrire des programmes en Rust,
 il existe déjà une grande quantité de ressources de qualité sur le sujet
 (par exemple, la [page principale de documentation de Rust](https://doc.rust-lang.org)).
-L'intention est plutôt de guider le programmeur et de l'informer à propos de
+L'intention est plutôt de guider le développeur et de l'informer à propos de
 certains pièges. Ces recommandations forment un complément au bon niveau de
 confiance que le langage Rust nous fournit déjà. Ceci étant dit, des rappels
-peuvent parfois être nécessaires pour la clarté du discours, et le programmeur
+peuvent parfois être nécessaires pour la clarté du discours, et le développeur 
 Rust expérimenté peut s'appuyer principalement sur le contenu des encarts
 (*Règle*, *Recommandation*, *Avertissement*, etc.).
 

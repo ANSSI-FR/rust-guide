@@ -58,9 +58,9 @@ sensibles en mémoire. C'est pourquoi `forget` doit être considérée comme
 
 La bibliothèque standard inclut d'autres moyens d'*oublier* une valeur :
 
-- `Box::leak` pour libérer une ressource,
+- `Box::leak` pour libérer une ressource ;
 - `Box::into_raw` pour exploiter une valeur dans un bloc *unsafe*, notamment
-  dans une FFI,
+  dans une FFI ;
 - `ManuallyDrop` (dans `std::mem` ou `core::mem`) pour assurer la libération
   manuelle d'une valeur.
 
@@ -87,18 +87,17 @@ la ressource concernée du compilateur au développeur.
 > ### Règle {{#check MEM-INTOFROMRAW | Appel systématique à `from_raw` pour les valeurs créées avec `into_raw`}}
 >
 > Dans un développement sécurisé en Rust, tout pointeur créé par un appel à
-> `into_raw` (ou `into_raw_nonnull`) depuis un des types suivants :
+> `into_raw` (ou `into_raw_nonnull`) depuis un des types suivants doit
+> finalement être transformé en valeur avec l'appel à la fonction `from_raw`
+> correspondant, pour permettre sa libération :
 > 
-> - `std::boxed::Box` (ou `alloc::boxed::Box`),
-> - `std::rc::Rc` (ou `alloc::rc::Rc`),
-> - `std::rc::Weak` (ou `alloc::rc::Weak`),
-> - `std::sync::Arc` (ou `alloc::sync::Arc`),
-> - `std::sync::Weak` (ou `alloc::sync::Weak`),
-> - `std::ffi::CString`,
-> - `std::ffi::OsString`,
->
-> doit finalement être transformé en valeur avec l'appel à la fonction
-> `from_raw` correspondant, pour permettre sa libération.
+> - `std::boxed::Box` (ou `alloc::boxed::Box`) ;
+> - `std::rc::Rc` (ou `alloc::rc::Rc`) ;
+> - `std::rc::Weak` (ou `alloc::rc::Weak`) ;
+> - `std::sync::Arc` (ou `alloc::sync::Arc`) ;
+> - `std::sync::Weak` (ou `alloc::sync::Weak`) ;
+> - `std::ffi::CString` ;
+> - `std::ffi::OsString`.
 >
 > ```rust
 > let boxed = Box::new(String::from("Crab"));
@@ -140,13 +139,13 @@ l'utilisation de `std::mem::uninitialized` ou de `std::mem::MaybeUninit`).
 >
 > La fonction `std::mem::uninitialized` (dépréciée depuis la version 1.38) ou
 > le type `std::mem::MaybeUninit` (stabilisé dans la version 1.36) ne doivent
-> pas être utilisées, ou bien explicitement justifiées si nécessaire.
+> pas être utilisés, ou bien explicitement justifiés si nécessaire.
 
 L'utilisation de mémoire non initialisée peut induire deux problèmes de
 sécurité distincts :
 
-- La libération de mémoire non initialisée (étant également un problème de
-  sûreté mémoire),
+- la libération de mémoire non initialisée (étant également un problème de
+  sûreté mémoire) ;
 - la non-libération de mémoire initialisée.
 
 > ### Note

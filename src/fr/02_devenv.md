@@ -48,9 +48,9 @@ De manière orthogonale aux éditions qui permettent d'opter pour une variante d
 langage en termes de fonctionnalités, la chaîne d'outils du langage Rust est
 déclinée en trois variantes appelées *release channels *:
 
-- La version *nightly* est produite une fois par jour,
-- la version *nightly* est promue en version *beta* toutes les six semaines,
-- la version *beta* est promue en version *stable* toutes les six semaines.
+- La version *nightly* est produite une fois par jour.
+- La version *nightly* est promue en version *beta* toutes les six semaines.
+- La version *beta* est promue en version *stable* toutes les six semaines.
 
 Lors du développement d'un projet, il est important de vérifier non seulement
 la version par défaut de la chaîne d'outils, mais aussi les potentielles
@@ -102,14 +102,14 @@ l'outil [Cargo] est disponible pour exécuter ces différents outils en
 fournissant la commande `cargo`. Cargo est le gestionnaire de paquetages de Rust.
 Il joue plusieurs rôles fondamentaux lors de développements en Rust :
 
-- il structure le projet en fournissant un squelette de projet (`cargo new`),
-- il lance la compilation du projet (`cargo build`),
-- il lance la génération de la documentation (`cargo doc`),
-- il lance les tests (`cargo test`) et les *benchmarks* (`cargo bench`),
-- il gère le téléchargement des dépendances,
-- il permet de rendre un projet distribuable et de les publier sur [crates.io]
-  (`cargo publish`),
-- il permet de lancer des outils complémentaires tels que ceux décrits ci-après,
+- Il structure le projet en fournissant un squelette de projet (`cargo new`).
+- Il lance la compilation du projet (`cargo build`).
+- Il lance la génération de la documentation (`cargo doc`).
+- Il lance les tests (`cargo test`) et les *benchmarks* (`cargo bench`).
+- Il gère le téléchargement des dépendances.
+- Il permet de rendre un projet distribuable et de les publier sur [crates.io]
+  (`cargo publish`).
+- Il permet de lancer des outils complémentaires tels que ceux décrits ci-après,
   sous la forme de sous-commandes.
 
 > ### Attention
@@ -131,8 +131,8 @@ requièrent une attention particulière. La section `[profile.*]` permet de
 configurer la façon dont le compilateur est invoqué. Par exemple :
 
 - La variable `debug-assertions` contrôle l'activation des assertions de
-  *debug*,
-- la variable `overflow-checks` contrôle l'activation de la vérification des
+  *debug*.
+- La variable `overflow-checks` contrôle l'activation de la vérification des
   dépassements d'entiers lors d'opérations arithmétiques.
 
 Changer les options par défaut pour ces variables peut mener à des *bugs* non
@@ -178,7 +178,7 @@ l'installer comme une dépendance de chaque projet.
 
 L'outil fournit plusieurs catégories de *lints*, selon le type de problème qu'il
 vise à détecter dans le code. Les avertissements doivent être revérifiés par le
-programmeur avant d'appliquer la réparation suggérée par `clippy`, en
+développeur avant d'appliquer la réparation suggérée par `clippy`, en
 particulier dans le cas des *lints* de la catégorie `clippy::nursery` puisque
 ceux-ci sont encore en cours de développement et de mise au point.
 
@@ -220,7 +220,7 @@ single_line_if_else_max_width = 40
 ```
 
 Pour plus d'informations à propos des règles de convention de style que
-`rustfmt` propose, voir le *[Rust Style Guide]*(https://github.com/rust-dev-tools/fmt-rfcs/blob/master/guide/guide.md).
+`rustfmt` propose, voir le [*Rust Style Guide*](https://github.com/rust-dev-tools/fmt-rfcs/blob/master/guide/guide.md).
 
 > ### Règle {{#check DENV-FORMAT | Utilisation d'un outil de formatage (rustfmt)}}
 >
@@ -280,4 +280,4 @@ la sémantique d'un programme dans certains cas.
 D'autres outils ou sous-commandes `cargo` utiles pour renforcer la sécurité
 d'un programme, que ce soit en cherchant des motifs de code particulier ou en
 fournissant des commandes de test ou de *fuzzing*, existent. Nous en discutons
-dans les chapitres suivants en fonction de leur portée et de leurs objectifs.
+dans les chapitres suivants en fonction de leurs portées et de leurs objectifs.

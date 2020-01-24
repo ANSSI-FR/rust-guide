@@ -2,26 +2,26 @@
 
 ## Nommage
 
-La bibliothèque standard est *de facto* le standard pour le nommage des éléments
-des programmes écrits en Rust. Un effort a été fait pour formaliser ces
-conventions de nommage, d'abord dans la [RFC 430], puis dans le document des
-*[Rust API Guidelines]*.
+La convention de nommage employée par la bibliothèque standard est *de facto* le
+standard pour le nommage des éléments des programmes écrits en Rust. Un effort a
+été fait pour formaliser ces conventions de nommage, d'abord dans la [RFC 430],
+puis dans le document des *[Rust API Guidelines]*.
 
 La règle de base consiste à utiliser :
 
-- La *`UpperCamelCase`* pour les types, traits et valeurs d'énumérations,
-- la *`snake_case`* pour les fonctions, méthodes, macros, variables et modules,
-- la *`SCREAMING_SNAKE_CASE`* pour les variables statiques et les constantes,
+- la *`UpperCamelCase`* pour les types, traits et valeurs d'énumérations ;
+- la *`snake_case`* pour les fonctions, méthodes, macros, variables et modules ;
+- la *`SCREAMING_SNAKE_CASE`* pour les variables statiques et les constantes ;
 - la *`lowercase`* pour les durées de vie (*lifetimes*).
 
-Les [Rust API Guidelines] recommandes également des conventions de nommages
+Les [Rust API Guidelines] recommandent également des conventions de nommages
 plus précises pour certaines constructions particulières :
 
-- (C-CONV) pour les méthodes de conversion (`as_`, `to_`, `into_`),
-- (C-GETTER) pour les accesseurs,
-- (C-ITER) pour les méthodes produisant des itérateurs,
-- (C-ITER-TY) pour les types itérateur,
-- (C-FEATURE) pour les noms de *features*,
+- (C-CONV) pour les méthodes de conversion (`as_`, `to_`, `into_`) ;
+- (C-GETTER) pour les accesseurs ;
+- (C-ITER) pour les méthodes produisant des itérateurs ;
+- (C-ITER-TY) pour les types itérateur ;
+- (C-FEATURE) pour les noms de *features* ;
 - (C-WORD-ORDER) pour la cohérence sur l'ordre des mots.
 
 > ### Règle {{#check LANG-NAMING | Respect des conventions de nommage}}
@@ -56,10 +56,10 @@ langage fournit le mot-clé `unsafe`.
 >  finalement appelé de façon souple et sûre.
 >
 >  - Pour la programmation des systèmes embarqués, les registres et autres
->  ressources sont souvent accéder au travers d'adresses mémoire fixées. Dans ce
+>  ressources sont souvent accédés au travers d'adresses mémoire fixées. Dans ce
 >  cas, des blocs `unsafe` sont nécessaires afin de pouvoir initialiser et
 >  déréférencer des pointeurs en Rust pour ces adresses. Afin de minimiser le
->  nombre de déclarations `unsafe` pour permettre au programmeur de facilement
+>  nombre de déclarations `unsafe` pour permettre au développeur de facilement
 >  identifier les accès critiques, une abstraction adaptée (structure de
 >  données ou module) doit être mise en place.
 >
@@ -160,11 +160,11 @@ ou d'instructions qui peuvent échouer en engendrant un `panic`.
 
 Des motifs courants de code qui provoquent des `panic` sont :
 
-- Une utilisation de `unwrap` ou de `expect`,
-- une utilisation de `assert`,
-- un accès non vérifié à un tableau,
-- un dépassement d'entier (en mode *debug*),
-- une division par zéro,
+- une utilisation de `unwrap` ou de `expect` ;
+- une utilisation de `assert` ;
+- un accès non vérifié à un tableau ;
+- un dépassement d'entier (en mode *debug*) ;
+- une division par zéro ;
 - l'utilisation de `format!` pour le formatage d'une chaîne de caractères.
 
 > ### Règle {{#check LANG-NOPANIC | Non-utilisation de fonctions qui peuvent causer des `panic`}}
@@ -202,7 +202,7 @@ comportement indéfini.
 > ne va pas abandonner un traitement et que l'exécution ne retourne dans le
 > langage appelant dans un état instable.
 
-Il est porté à l'attention du programmeur que `catch_unwind` ne va traiter que
+Il est porté à l'attention du développeur que `catch_unwind` ne va traiter que
 les cas de `panic`, en préservant d'autres types d'abandons de processus.
 
 <!-- ## Macros -->

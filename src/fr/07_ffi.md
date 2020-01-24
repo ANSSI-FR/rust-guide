@@ -128,24 +128,24 @@ struct PackedData {
 
 Les types suivants sont considérés comme compatibles avec le C :
 
-- Les types primitifs entiers et à virgule flottante,
-- les `struct`s annotées avec `repr(C)`,
+- les types primitifs entiers et à virgule flottante ;
+- les `struct`s annotées avec `repr(C)` ;
 - les `enum`s annotées avec `repr(C)` ou `repr(Int)` (où `Int` est un type
   primitif entier), contenant au moins un variant et dont tous les variants ne
-  comportent pas de champ,
+  comportent pas de champ ;
 - les pointeurs.
 
 Les types suivants ne sont pas compatibles avec le C :
 
-- les types à taille variable,
-- les `trait object`s,
-- les `enum`s dont les variants comportent des champs,
+- les types à taille variable ;
+- les `trait object`s ;
+- les `enum`s dont les variants comportent des champs ;
 - les n-uplets (sauf les `struct`s à n-uplet annotées avec `repr(C)`).
 
 Certains types sont compatibles, mais avec certaines limitations :
 
-- Les types à taille nulle, qui ne sont pas spécifiés pour le C et mènent à des
-  contradictions dans les spécifications du C++,
+- les types à taille nulle, qui ne sont pas spécifiés pour le C et mènent à des
+  contradictions dans les spécifications du C++ ;
 - les `enum`s avec champs annotés avec `repr(C)`, `repr(C, Int)` ou `repr(Int)`
   (voir [RFC 2195]).
 
@@ -198,18 +198,18 @@ En plus du type `c_void` de `std::ffi` (ou `core::ffi`) pour le type C `void`,
 la bibliothèque standard offre des alias de types portables dans `std::os::raw`
 (or `core::os::raw`) :
 
-- `c_char` pour `char` (soit `i8` ou bien `u8`),
-- `c_schar` pour `signed char` (toujours `i8`),
-- `c_uchar` pour `unsigned char` (toujours `u8`),
-- `c_short` pour `short`,
-- `c_ushort` pour `unsigned short`,
-- `c_int` pour `int`,
-- `c_uint` pour `unsigned int`,
-- `c_long` pour `long`,
-- `c_ulong` pour `unsigned long`,
-- `c_longlong` pour `long long`,
-- `c_ulonglong` pour `unsigned long long`,
-- `c_float` pour `float` (toujours `f32`),
+- `c_char` pour `char` (soit `i8` ou bien `u8`) ;
+- `c_schar` pour `signed char` (toujours `i8`) ;
+- `c_uchar` pour `unsigned char` (toujours `u8`) ;
+- `c_short` pour `short` ;
+- `c_ushort` pour `unsigned short` ;
+- `c_int` pour `int` ;
+- `c_uint` pour `unsigned int` ;
+- `c_long` pour `long` ;
+- `c_ulong` pour `unsigned long` ;
+- `c_longlong` pour `long long` ;
+- `c_ulonglong` pour `unsigned long long` ;
+- `c_float` pour `float` (toujours `f32`) ;
 - `c_double` pour `double` (toujours `f64`).
 
 La crate [libc] offre des types supplémentaires compatibles avec le C qui
@@ -255,12 +255,12 @@ Dans la suite, on appelle des **types non robustes** les types dont les valeurs
 peuvent avoir ces représentations piégeuses (au moins une). Beaucoup de types
 Rust sont non robustes, même parmi les types compatibles avec le C :
 
-- `bool` (1 octet, 256 représentations, seulement 2 d'entre elles valides),
-- les références,
-- les pointeurs de fonction,
-- les énumérations,
+- `bool` (1 octet, 256 représentations, seulement 2 d'entre elles valides) ;
+- les références ;
+- les pointeurs de fonction ;
+- les énumérations ;
 - les flottants (même si de nombreux langages ont la même compréhension de ce
-  qu'est un flottant valide),
+  qu'est un flottant valide) ;
 - les types composés qui contiennent au moins un champ ayant pour type un type
   non robuste.
 
@@ -280,12 +280,12 @@ mettre cela en place.
 >
 > Plus précisément, soit une conversion (en Rust) est effectuée depuis des types
 > robustes vers des types non robustes à l'aide de vérifications explicites,
-> soit le langage extern offre des garanties fortes quant à la validité des
+> soit le langage externe offre des garanties fortes quant à la validité des
 > valeurs en question.
 
 <!-- -->
 
-> ### Recommandation {{#check FFI-CKINRUST | Vérification des valeurs externs en Rust}}
+> ### Recommandation {{#check FFI-CKINRUST | Vérification des valeurs externes en Rust}}
 > 
 > Dans un développement Rust sécurisé, la vérification des valeurs provenant
 > d'un langage externe doit être effectuée du côté Rust lorsque c'est possible.
@@ -325,7 +325,7 @@ D'un autre côté, les types des références ne sont pas robustes : ils permett
 seulement de pointer vers des objets valides en mémoire. Toute déviation mène à
 des comportements indéfinis.
 
-> ### Règle {{#check FFI-CKREF | Vérification des références provenant d'un langage extern}}
+> ### Règle {{#check FFI-CKREF | Vérification des références provenant d'un langage externe}}
 >
 > Dans un développement sécurisé en Rust, les références externes transmises au
 > côté Rust par le biais d'une FFI doivent être **vérifiées du côté du langage
@@ -358,8 +358,8 @@ l'aide Microsoft SAL par exemple.
 > Les exceptions sont :
 >
 > - les références qui sont opaques dans le langage extern et qui sont seulement
->   manipulées du côté Rust,
-> - les références *wrappées* dans un type `Option` (voir note ci-dessous),
+>   manipulées du côté Rust ;
+> - les références *wrappées* dans un type `Option` (voir note ci-dessous) ;
 > - les références liées à des références sûres dans le langage externe, par
 >   exemple dans des variantes du C ou dans du code compilé en C++ dans un
 >   environnement où les références de fonctions `extern "C"` sont encodées
@@ -517,7 +517,7 @@ l'ABI `extern "C"` d'une `enum class` est définie par l'implémentation et doit
 > Les exceptions incluant des types `enum` Rust sont :
 >
 > - les types opaques du langage externe dont les valeurs sont uniquement
->   manipulées du côté Rust,
+>   manipulées du côté Rust ;
 > - les types liés à des types d'énumération sûrs du côté du langage externe,
 >   comme les `enum class` de C++ par exemple.
 
@@ -560,7 +560,7 @@ des blocs `extern`.
 
 > ### Recommandation {{#check FFI-C-OPAQUE | Utilisation de pointeurs vers des `struct`s C/C++ pour rendre des types opaques}}
 >
-> Dans une développement sécurisé en Rust, lors de l'interfaçage avec du C ou du
+> Dans un développement sécurisé en Rust, lors de l'interfaçage avec du C ou du
 > C++, les valeurs de types Rust considérés comme opaques dans la partie C/C++
 > doivent être transformés en valeur de type `struct` incomplet (c'est-à-dire
 > déclaré sans définition) et être fournies avec un constructeur et un
@@ -630,7 +630,7 @@ gestion de son allocation et de sa libération.
 > type, est échangée par une FFI, il est nécessaire de s'assurer que :
 >
 > - un seul langage est responsable de l'allocation et de la libération d'une
->   donnée,
+>   donnée ;
 > - l'autre langage ne doit ni allouer, ni libérer la donnée directement, mais
 >   peut utiliser une fonction extern dédée fournie par le langage responsable
 >   choisie.
@@ -704,10 +704,10 @@ impl Drop for Foo {
 
 > ### Attention
 >
-> Parce que des `panic`s peuvent mener ne pas exécuter la méthode `Drop::drop`,
-> cette solution n'est pas satisfaisante pour le cas de la libération de
-> ressources sensibles (pour effacer les données sensibles par exemple), à
-> moins que le code soit garanti exempt de `panic` potentiel.
+> Parce que des `panic`s peuvent mener à ne pas exécuter la méthode
+> `Drop::drop`, cette solution n'est pas satisfaisante pour le cas de la
+> libération de ressources sensibles (pour effacer les données sensibles par
+> exemple), à moins que le code soit garanti exempt de `panic` potentiel.
 >
 > Pour le cas de l'effacement des données sensibles, le problème peut être géré
 > par l'utilisation d'un *handler* de `panic`.
@@ -898,7 +898,7 @@ inaccessible mène à un appel à `panic!`.
 >   niveau de Rust.
 >
 > Si l'API bas-niveau est exposée, cela doit être fait dans un *crate* dédiée
-> ayant un nom de la form `*-sys`.
+> ayant un nom de la forme `*-sys`.
 
 La *crate* [rust-bindgen] peut être utilisée pour générer automatiquement la
 partie bas-niveau du *binding* depuis les fichiers *header* C.

@@ -42,10 +42,10 @@ Ensuite, le système de types de Rust assure seulement la sûreté mémoire et,
 du point de vue du typage, des `drop`s peuvent tout à fait être manqués.
 Plusieurs situations peuvent mener à manquer des `drop`s, comme :
 
-- un cycle dans la référence (par exemple avec `Rc` ou `Arc`),
+- un cycle dans la référence (par exemple avec `Rc` ou `Arc`) ;
 - un appel explicite à `std::mem::forget` (ou `core::mem::forget`) (voir
-  paragraphe à propos de [`forget` et des fuites de mémoire](05_memory.html#forget-et-fuites-de-mémoire),
-- un `panic` dans un `drop`,
+  paragraphe à propos de [`forget` et des fuites de mémoire](05_memory.html#forget-et-fuites-de-mémoire) ;
+- un `panic` dans un `drop` ;
 - un arrêt du programme (et un `panic` lorsque `abort-on-panic` est activé).
 
 Les `drop`s manqués peuvent mener à l'exposition de données sensibles ou bien
@@ -65,11 +65,13 @@ protégés.
 > Les valeurs dont le type implémente `Drop` ne doivent pas être incluses,
 > directement ou indirectement, dans un cycle de références à compteurs.
 
-> ### Recommandation {{#check LANG-DROP-SEC | 
+<!-- -->
+
+> ### Recommandation {{#check LANG-DROP-SEC | Sécurité assurée par d'autres mécanismes en plus du trait `Drop`}}
 >
 > Certaines opérations liées à la sécurité d'une application à la fin d'un
 > traitement (comme l'effacement de secrets cryptographiques par exemple) ne
-> doit pas reposer seulement sur l'implémentation du trait `Drop`.
+> doivent pas reposer seulement sur l'implémentation du trait `Drop`.
 
 ### Les traits `Send` et `Sync`
 
@@ -80,8 +82,8 @@ l'absence de problèmes d'accès concurrents. Leur sémantique est définie comm
 suit :
 
 - Un type est `Send` s’il est sûr de l'envoyer (*move*) vers un autre fil
-  d'exécution,
-- un type est `Sync` s’il est sûr de le partager par une référence immutable
+  d'exécution.
+- Un type est `Sync` s’il est sûr de le partager par une référence immutable
   avec un autre fil d'exécution.
 
 Ces deux traits sont des *_traits unsafe_*, c'est-à-dire que le compilateur Rust
@@ -94,11 +96,11 @@ implémentation. En Rust, la quasi-totalité des types primitifs implémente
 de manière automatique pour les types composés. Quelques exceptions notables
 sont :
 
-- Les pointeurs `raw`, qui n'implémentent ni `Send`, ni `Sync`, puisqu'ils
-  n'offrent aucune garantie quant à la sûreté,
+- les pointeurs `raw`, qui n'implémentent ni `Send`, ni `Sync`, puisqu'ils
+  n'offrent aucune garantie quant à la sûreté ;
 - les références `UnsafeCell`, qui n'implémentent pas `Sync` (et par extensions,
   les références `Cell` et `RefCell` non plus), puisqu'elles autorisent la
-  mutabilité des valeurs contenues (*interior mutability*),
+  mutabilité des valeurs contenues (*interior mutability*) ;
 - les références `Rc`, qui n'implémentent ni `Send`, ni `Sync`, puisque les
   compteurs de références seraient partagés en désynchronisés.
 
@@ -144,19 +146,19 @@ traits de la bibliothèque standard disponibles dans `std::cmp` (ou `core::cmp`
 pour une compilation avec `no_std`) :
 
 - `PartialEq<Rhs>` qui définit la relation d'équivalence partielle entre objets
-  de types `Self` et `Rhs`,
+  de types `Self` et `Rhs` ;
 - `PartialOrd<Rhs>` qui définit la relation d'ordre partiel entre les objets de
-  types `Self` et `Rhs`,
+  types `Self` et `Rhs` ;
 - `Eq` qui définit la relation d'équivalence totale entre les objets du même
   type. Il s'agit d'un trait de marquage qui requiert le trait
-  `PartialEq<Self>`.
+  `PartialEq<Self>` ;
 - `Ord` qui définit la relation d'ordre total entre les objets du même type.
   Le trait `PartialOrd<Self>` est alors requis.
 
 Comme stipulé dans la documentation de la bibliothèque standard, Rust présuppose
 **de nombreux invariants** lors de l'implémentation de ces traits :
 
-- Pour `PartialEq`
+- Pour `PartialEq` :
 
   - *Cohérence interne* : `a.ne(b)` est équivalent à `!a.eq(b)`, c.-à-d., `ne`
     est le strict inverse de `eq`. Cela correspond précisément à
@@ -165,36 +167,36 @@ Comme stipulé dans la documentation de la bibliothèque standard, Rust présupp
   - *Symétrie* : `a.eq(b)` et `b.eq(a)` sont équivalents. Du point de vue du
     développeur, cela signifie que :
 
-    - `PartialEq<B>` est implémenté pour le type `A` (noté `A: PartialEq<B>`),
-    - `PartialEq<A>` est implémenté pour le type `B` (noté `B: PartialEq<A>`),
-    - les deux implémentations sont cohérentes l'une avec l'autre.
+    - `PartialEq<B>` est implémenté pour le type `A` (noté `A: PartialEq<B>`).
+    - `PartialEq<A>` est implémenté pour le type `B` (noté `B: PartialEq<A>`).
+    - Les deux implémentations sont cohérentes l'une avec l'autre.
 
   - *Transitivité* : `a.eq(b)` et `b.eq(c)` impliquent `a.eq(c)`. Cela signifie
     que :
 
-    - `A: PartialEq<B>`,
-    - `B: PartialEq<C>`,
-    - `A: PartialEq<C>`,
-    - les trois implémentations sont cohérentes les unes avec les autres (ainsi
+    - `A: PartialEq<B>`.
+    - `B: PartialEq<C>`.
+    - `A: PartialEq<C>`.
+    - Les trois implémentations sont cohérentes les unes avec les autres (ainsi
       qu'avec leurs implémentations symétriques).
 
-- Pour `Eq`
+- Pour `Eq` :
 
   - `PartialEq<Self>` est implémenté.
 
   - *Réflexivité* : `a.eq(a)`. Cela signifie que `PartialEq<Self>` est
     implémenté (`Eq` ne fournit aucune méthode).
 
-- Pour `PartialOrd`
+- Pour `PartialOrd` :
 
   - *Consistance de la relation d'égalité* : `a.eq(b)` est équivalent à
     `a.partial_cmp(b) == Some(std::ordering::Eq)`.
 
   - *Consistence interne* :
 
-    - `a.lt(b)` ssi `a.partial_cmp(b) == Some(std::ordering::Less)`,
-    - `a.gt(b)` ssi `a.partial_cmp(b) == Some(std::ordering::Greater)`,
-    - `a.le(b)` ssi `a.lt(b) || a.eq(b)`,
+    - `a.lt(b)` ssi `a.partial_cmp(b) == Some(std::ordering::Less)`.
+    - `a.gt(b)` ssi `a.partial_cmp(b) == Some(std::ordering::Greater)`.
+    - `a.le(b)` ssi `a.lt(b) || a.eq(b)`.
     - `a.ge(b)` ssi `a.gt(b) || a.eq(b)`.
 
     Il faut noter qu'en définissant seulement `partial_cmp`, la consistance
@@ -205,20 +207,20 @@ Comme stipulé dans la documentation de la bibliothèque standard, Rust présupp
     (respectivement `b.lt(b)`). Du point de vue du développeur, cela signifie
     que :
 
-    - `A: PartialOrd<B>`,
-    - `B: PartialOrd<A>`,
-    - les deux implémentations sont cohérentes l'une avec l'autre.
+    - `A: PartialOrd<B>`.
+    - `B: PartialOrd<A>`.
+    - Les deux implémentations sont cohérentes l'une avec l'autre.
 
   - *Transitivité* : `a.lt(b)` et `b.lt(c)` impliquent `a.lt(c)` (également avec
     `gt`, `le` et `ge`). Cela signifie que :
 
-    - `A: PartialOrd<B>`,
-    - `B: PartialOrd<C>`,
-    - `A: PartialOrd<C>`,
-    - les trois implémentations sont cohérentes les unes avec les autres (et
+    - `A: PartialOrd<B>`.
+    - `B: PartialOrd<C>`.
+    - `A: PartialOrd<C>`.
+    - Les trois implémentations sont cohérentes les unes avec les autres (et
       avec leurs implémentations symétriques).
 
-- Pour `Ord`
+- Pour `Ord` :
 
   - `PartialOrd<Self>`
 
