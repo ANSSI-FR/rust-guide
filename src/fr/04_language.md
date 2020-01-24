@@ -143,11 +143,21 @@ testé et jamais ignoré.
 > L'opérateur `?` doit être utilisé pour améliorer la lisibilité du code.
 > La macro `try!` ne doit pas être utilisée.
 
-Les *crates* [error-chain] et [failure] peuvent être utilisées pour contenir les
-types d'erreurs.
+Des *crates* tiers, peuvent être utilisés pour faciliter la gestion d'erreurs.
+La plupart ([failure], [snafu], [thiserror]) adressent la création de types
+d'erreurs personnalisées qui implémentent les traits nécessaires et permettent
+l'encapsulation d'autres erreurs.
 
-[error-chain]: https://crates.io/crates/error-chain
+Une autre approche (notamment proposée dans [anyhow]) consiste à envelopper
+automatiquement les erreurs dans un seul type d'erreurs universel. Une telle
+approche ne devrait pas être utilisée dans des bibliothèques ou des systèmes
+complexes parce qu'elle ne permet pas de fournir de contexte aux erreurs
+contenues, contrairement à la première approche.
+
 [failure]: https://crates.io/crates/failure
+[snafu]: https://crates.io/crates/snafu
+[thiserror]: https://crates.io/crates/thiserror
+[anyhow]: https://crates.io/crates/anyhow
 
 ### *Panics*
 
