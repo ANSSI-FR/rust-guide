@@ -386,7 +386,7 @@ void add_in_place(uint32_t *a, uint32_t b);
 
 int main() {
     uint32_t x = 25;
-    add_in_place(x, 17);
+    add_in_place(&x, 17);
     printf("%" PRIu32 " == 42", x);
     return 0;
 }
