@@ -264,7 +264,7 @@ $ cargo fix --edition-idioms
 Il est important de noter que l'outil ne fournit que peu de garanties quant
 à la correction (*soundness*) des réparations proposées. Dans une certaine
 configuration, certaines réparations (comme celles proposées avec l'option
-`--edition-idions`) sont connues pour casser la compilation ou pour modifier
+`--edition-idioms`) sont connues pour casser la compilation ou pour modifier
 la sémantique d'un programme dans certains cas.
 
 > ### Règle {{#check DENV-AUTOFIX | Vérification manuelle des réparations automatiques}}
