@@ -667,21 +667,23 @@ In C for instance there is no easy way to check that the appropriate destructor
 is checked. A possible approach is to exploit callbacks to ensure that the
 reclamation is done.
 
-The following Rust code is a **thread-unsafe** example of a C-compatible API
-that provide callback to ensure safe resource
-reclamation:
+The following Rust code is an example of a C-compatible API that exploits
+callbacks to ensure safe resource reclamation:
 
-```rust,noplaypen
+```rust
 # use std::ops::Drop;
 #
-pub struct XtraResource {/*fields */}
+pub struct XtraResource { /* fields */ }
 
 impl XtraResource {
     pub fn new() -> Self {
         XtraResource { /* ... */}
     }
-    pub fn dosthg(&mut self) {
-        /*...*/
+    pub fn dosthg(&mut self, arg: u32) {
+        /*... things that may panic ... */
+#         if arg == 0xDEAD_C0DE {
+#             panic!("oops XtraResource.dosthg panics!");
+#         }
     }
 }
 
@@ -693,57 +695,55 @@ impl Drop for XtraResource {
 
 pub mod c_api {
     use super::XtraResource;
-    use std::panic::catch_unwind;
+    use std::panic::{catch_unwind, AssertUnwindSafe};
+    use std::sync::atomic::{AtomicU32, Ordering};
 
     const INVALID_TAG: u32 = 0;
     const VALID_TAG: u32 = 0xDEAD_BEEF;
     const ERR_TAG: u32 = 0xDEAF_CAFE;
 
-    static mut COUNTER: u32 = 0;
-
     pub struct CXtraResource {
-        tag: u32, // to detect accidental reuse
-        id: u32,
+        tag: AtomicU32, // to detect accidental reuse
         inner: XtraResource,
     }
 
     #[no_mangle]
-    pub unsafe extern "C" fn xtra_with(cb: extern "C" fn(*mut CXtraResource) -> ()) {
-        let inner = if let Ok(res) = catch_unwind(XtraResource::new) {
+    pub unsafe extern "C" fn xtra_with(cb: unsafe extern "C" fn(*mut CXtraResource) -> ()) {
+        let inner = if let Ok(res) = catch_unwind(AssertUnwindSafe(XtraResource::new)) {
             res
         } else {
 #             println!("cannot allocate resource");
             return;
         };
-        let id = COUNTER;
         let tag = VALID_TAG;
 
-        COUNTER = COUNTER.wrapping_add(1);
-        // Use heap memory and do not provide pointer to stack to C code!
-        let mut boxed = Box::new(CXtraResource { tag, id, inner });
+        let mut wrapped = CXtraResource {
+            tag: AtomicU32::new(tag),
+            inner
+        };
 
-#         println!("running the callback on {:p}", boxed.as_ref());
-        cb(boxed.as_mut() as *mut CXtraResource);
+#         println!("running the callback on {:p}", &wrapped);
+        cb(&mut wrapped as *mut CXtraResource);
 
-        if boxed.id == id && (boxed.tag == VALID_TAG || boxed.tag == ERR_TAG) {
-#             println!("freeing {:p}", boxed.as_ref());
-            boxed.tag = INVALID_TAG; // prevent accidental reuse
-                                 // implicit boxed drop
+        // prevent accidental reuse
+        let new_tag = wrapped.tag.swap(INVALID_TAG, Ordering::SeqCst);
+        if new_tag == VALID_TAG || new_tag == ERR_TAG {
+#             println!("freeing {:p}", &wrapped);
+            // implicit drop of wrappped
         } else {
-#             println!("forgetting {:p}", boxed.as_ref());
+#             println!("forgetting {:p}", &wrapped);
             // (...) error handling (should be fatal)
-            boxed.tag = INVALID_TAG; // prevent reuse
-            std::mem::forget(boxed); // boxed is corrupted it should not be
+            std::mem::forget(wrapped);
         }
     }
 
     #[no_mangle]
-    pub unsafe extern "C" fn xtra_dosthg(cxtra: *mut CXtraResource) {
-        let do_it = || {
+    pub unsafe extern "C" fn xtra_dosthg(cxtra: *mut CXtraResource, arg: u32) {
+        let do_it = move || {
             if let Some(cxtra) = cxtra.as_mut() {
-                if cxtra.tag == VALID_TAG {
+                if cxtra.tag.load(Ordering::SeqCst) == VALID_TAG {
 #                     println!("doing something with {:p}", cxtra);
-                    cxtra.inner.dosthg();
+                    cxtra.inner.dosthg(arg);
                     return;
                 }
             }
@@ -752,25 +752,40 @@ pub mod c_api {
         if catch_unwind(do_it).is_err() {
             if let Some(cxtra) = cxtra.as_mut() {
 #                 println!("panicking with {:p}", cxtra);
-                cxtra.tag = ERR_TAG;
+                cxtra.tag.store(ERR_TAG, Ordering::SeqCst);
             }
         };
     }
 }
 #
-# fn main() {}
+# fn main() {
+#     // do not use, only for testing purposes
+#     use c_api::*;
+#     unsafe {
+#         unsafe extern "C" fn cb_ok(p: *mut CXtraResource) {
+#             xtra_dosthg(p, 0);
+#         }
+#         unsafe extern "C" fn cb_panic(p: *mut CXtraResource) {
+#             xtra_dosthg(p, 0xDEADC0DE);
+#         }
+#         xtra_with(cb_ok);
+#         xtra_with(cb_panic);
+#     }
+# }
 ```
 
 A compatible C call:
 
 ```c
+#include <stdint.h>
+
 struct XtraResource;
-void xtra_with(void (*cb)(XtraResource* xtra));
+void xtra_with(void (*cb)(XtraResource* xtra), uint32_t arg);
 void xtra_sthg(XtraResource* xtra);
 
 void cb(XtraResource* xtra) {
     // ()...) do anything with the proposed C API for XtraResource
-    xtra_sthg(xtra);
+    xtra_sthg(xtra, 0);
 }
 
 int main() {
