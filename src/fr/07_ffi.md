@@ -22,7 +22,7 @@ unsafe extern "C" fn mylib_f(param: u32) -> i32 {
 ```
 
 Pour que la fonction `mylib_f` soit accessible avec le même nom, la fonction
-doit être annotée avec l'attribut `#[no_mangle]`).
+doit être annotée avec l'attribut `#[no_mangle]`.
 
 À l'inverse, il est possible d'appeler des fonctions écrites en C depuis du code
 Rust si celles-ci sont déclarées dans un bloc `extern` :
@@ -43,7 +43,7 @@ fn main() {
 > ### Note
 >
 > Toute fonction écrite dans un autre langage et importée dans Rust par l'usage
-> d'un bloc `extern` est **automatiquement *unsafe***. C'est pourquoi tout
+> d'un bloc `extern` est **automatiquement _unsafe_**. C'est pourquoi tout
 > appel à une telle fonction doit être fait dans un contexte `unsafe`.
 
 Les blocs `extern` peuvent également contenir des déclarations de variables
@@ -75,7 +75,7 @@ fn main() {
 
 Le typage est le moyen qu'utilise Rust pour assurer la sûreté mémoire. Lors de
 l'interfaçage avec d'autres langages, qui n'offrent peut-être pas les mêmes
-garanties, le choix des types lors du *binding* est essentiel pour maintenir
+garanties, le choix des types lors du _binding_ est essentiel pour maintenir
 au mieux cette sûreté mémoire.
 
 ### Agencement des données
@@ -165,22 +165,22 @@ Certains types sont compatibles, mais avec certaines limitations :
 En ce qui concerne les `enum`s avec des champs en particulier, les types
 correspondant en C (ou en C++) ne sont pas évidents ([RFC 2195]).
 
-Les outils permettant de générer automatiquement des *bindings*, comme
+Les outils permettant de générer automatiquement des _bindings_, comme
 [rust-bindgen] ou [cbindgen], peuvent aider à assurer la cohérence entre les
 types du côté C et ceux du côté Rust.
 
 > ### Recommandation {{#check FFI-AUTOMATE | Utilisation des outils de génération automatique de *bindings*}}
 >
 > Dans un développement sécurisé en Rust, les outils de génération automatique
-> de *bindings* doivent être utilisés lorsque cela est possible, et ce en
+> de _bindings_ doivent être utilisés lorsque cela est possible, et ce en
 > continu.
 
 <!-- -->
 
 > ### Attention
 >
-> Pour les *bindings* C/C++ vers Rust, [rust-bindgen] est capable de générer
-> automatiquement des *bindings* de bas niveau. L'écriture d'un *binding* de
+> Pour les _bindings_ C/C++ vers Rust, [rust-bindgen] est capable de générer
+> automatiquement des _bindings_ de bas niveau. L'écriture d'un _binding_ de
 > plus haut niveau est fortement recommandée (voir Recommandation
 > [FFI-SAFEWRAPPING](#FFI-SAFEWRAPPING)). Attention également à certaines
 > options dangereuses de `rust-bindgen`, en particulier `rustified_enum`.
@@ -222,14 +222,14 @@ couvrent la quasi-entièreté de la bibliothèque standard du C.
 > `int`s et les `long`s du C, le code Rust doit utiliser les alias portables de
 > types, comme ceux fournis dans la bibliothèque standard ou dans la crate
 > [libc], au lieu des types spécifiques à la plateforme, à l'exception du cas
-> où les *bindings* sont générés automatiquement pour chaque plateforme (voir
+> où les _bindings_ sont générés automatiquement pour chaque plateforme (voir
 > la note ci-dessous).
 
 <!-- -->
 
 > ### Note
 >
-> Les outils de génération automatiques de *bindings* (par exemple [cbindgen] ou
+> Les outils de génération automatiques de _bindings_ (par exemple [cbindgen] ou
 > [rust-bindgen]) sont capables d'assurer la cohérence des types dépendants de
 > la plateforme. Ils doivent être utilisés durant le processus de compilation
 > pour chaque cible afin d'assurer que la génération est cohérente pour la
@@ -239,15 +239,15 @@ couvrent la quasi-entièreté de la bibliothèque standard du C.
 
 ### Types non-robustes : références, pointeurs de fonction, énumérations
 
-Une *représentation piégeuse* d'un type particulier est une représentation
+Une _représentation piégeuse_ d'un type particulier est une représentation
 (motif d'octets) qui respecte les contraintes de représentation du type (telles
 que sa taille et son alignement), mais qui ne représente pas une valeur valide
 de ce type et mène à des comportements indéfinis.
 
 En d'autres termes, si une telle valeur invalide est affectée à une variable
-Rust, tout peut arriver ensuite, d'un simple *crash* à une exécution de code
+Rust, tout peut arriver ensuite, d'un simple _crash_ à une exécution de code
 arbitraire. Quand on écrit du code Rust sûr, ce genre de comportement ne peut
-arriver (à moins d'un *bug* dans le compilateur Rust). Toutefois, en écrivant
+arriver (à moins d'un _bug_ dans le compilateur Rust). Toutefois, en écrivant
 du code Rust non sûr, et en particulier dans des FFI, cela peut facilement
 avoir lieu.
 
@@ -264,9 +264,9 @@ Rust sont non-robustes, même parmi les types compatibles avec le C :
 - les types composés qui contiennent au moins un champ ayant pour type un type
   non-robuste.
 
-De l'autre côté, les types entiers (`u*`/`i*`), les types composés *packés* qui
+De l'autre côté, les types entiers (`u*`/`i*`), les types composés _packés_ qui
 ne contiennent pas de champs de type non-robuste, sont par exemple des
-*types robustes*.
+_types robustes_.
 
 Les types non-robustes engendrent des difficultés lors de l'interfaçage entre
 deux langages. Cela revient à décider **quel langage des deux est le plus
@@ -286,7 +286,7 @@ mettre cela en place.
 <!-- -->
 
 > ### Recommandation {{#check FFI-CKINRUST | Vérification des valeurs externes en Rust}}
-> 
+>
 > Dans un développement Rust sécurisé, la vérification des valeurs provenant
 > d'un langage externe doit être effectuée du côté Rust lorsque cela est
 > possible.
@@ -308,12 +308,12 @@ ci-dessous.
 > Le type `bool` de Rust a été rendu équivalent au type `_Bool` (renommé `bool`
 > dans `<stdbool.h>`) de C99 et au type `bool` de C++. Toutefois, charger une
 > valeur différente de 0 ou 1 en tant que `_Bool`/`bool` est un comportement
-> indéfini *des deux côtés*. La partie sûre de Rust assure ce fait. Les
+> indéfini _des deux côtés_. La partie sûre de Rust assure ce fait. Les
 > compilateurs C et C++ assurent qu'aucune autre valeur que 0 et 1 ne peut être
-> *stockée* dans un `_Bool`/`bool` mais ne peuvent garantir l'absence d'une
-> *réinterprétation incorrecte* (par exemple dans un type union ou *via* un
-> *cast* de pointeur). Pour détecter une telle réinterprétation, un
-> *sanitizer* tel que l'option `-fsanitize=bool` de LLVM peut être utilisé.
+> _stockée_ dans un `_Bool`/`bool` mais ne peuvent garantir l'absence d'une
+> _réinterprétation incorrecte_ (par exemple dans un type union ou _via_ un
+> _cast_ de pointeur). Pour détecter une telle réinterprétation, un
+> _sanitizer_ tel que l'option `-fsanitize=bool` de LLVM peut être utilisé.
 
 #### Références et pointeurs
 
@@ -333,15 +333,15 @@ des comportements indéfinis.
 > externe**, que ce soit de manière automatique (par exemple, par un
 > compilateur) ou de manière manuelle.
 >
-> Les exceptions comprennent les références Rust *wrappées* de façon opaque et
-> manipulées uniquement du côté Rust, et les références *wrappées* dans un type
+> Les exceptions comprennent les références Rust _wrappées_ de façon opaque et
+> manipulées uniquement du côté Rust, et les références _wrappées_ dans un type
 > `Option` (voir note ci-dessous).
 
-Lors d'un *binding* depuis et vers le C, le problème peut être particulièrement
+Lors d'un _binding_ depuis et vers le C, le problème peut être particulièrement
 sévère, parce que le langage C n'offre pas de références (dans le sens de
 pointeurs valides) et le compilateur n'offre pas de garantie de sûreté.
 
-Lors d'un *binding* avec le C++, les références Rust peuvent en pratique être
+Lors d'un _binding_ avec le C++, les références Rust peuvent en pratique être
 liées aux références C++ bien que l'ABI d'une fonction `extern "C"` en C++ avec
 des références soit défini par l'implémentation. Enfin, le code C++ doit être
 vérifié pour éviter toute confusion de pointeurs et de références.
@@ -360,13 +360,13 @@ l'aide Microsoft SAL par exemple.
 >
 > - les références qui sont opaques dans le langage externe et qui sont
 >   seulement manipulées du côté Rust ;
-> - les références *wrappées* dans un type `Option` (voir note ci-dessous) ;
+> - les références _wrappées_ dans un type `Option` (voir note ci-dessous) ;
 > - les références liées à des références sûres dans le langage externe, par
 >   exemple dans des variantes du C ou dans du code compilé en C++ dans un
 >   environnement où les références de fonctions `extern "C"` sont encodées
 >   comme des pointeurs.
 
-D'un autre côté, les *types pointeur* Rust peuvent aussi mener à des
+D'un autre côté, les _types pointeur_ Rust peuvent aussi mener à des
 comportements indéfinis, mais sont plus aisément vérifiables, principalement
 par la comparaison avec `std/code::ptr::null()` (`(void*)0` en C), mais aussi
 dans certains contextes par la vérification de l'appartenance à une plage
@@ -452,7 +452,7 @@ pointeurs simples. En particulier, la validité des pointeurs de fonction ne peu
 pas être vérifiée directement du côté Rust. Toutefois, Rust offre deux
 alternatives possibles :
 
-- l'utilisation de pointeurs de fonctions *wrappé* dans une valeur de type
+- l'utilisation de pointeurs de fonctions _wrappé_ dans une valeur de type
   `Option`, accompagnée d'un test contre la valeur nulle :
 
   ```rust,noplaypen
@@ -476,7 +476,7 @@ alternatives possibles :
   uint32_t repeat(uint32_t start, uint32_t n, uint32_t (*f)(uint32_t));
   ```
 
-- l'utilisation de pointeurs *bruts* avec une transformation `unsafe` vers un
+- l'utilisation de pointeurs _bruts_ avec une transformation `unsafe` vers un
   type pointeur de fonction, permettant des tests plus poussés au prix de
   l'ergonomie.
 
@@ -485,7 +485,7 @@ alternatives possibles :
 > Dans un développement sécurisé en Rust, tout pointeur de fonction provenant de
 > l'extérieur de l'écosystème Rust doit être vérifié à la frontière des FFI.
 
-Lors d'un *binding* avec le C ou encore le C++, il n'est pas simple de garantir
+Lors d'un _binding_ avec le C ou encore le C++, il n'est pas simple de garantir
 la validité d'un pointeur de fonction. Les foncteurs C++ ne sont pas compatibles
 avec le C.
 
@@ -500,7 +500,7 @@ vérifier la valeur d'une énumération aux bornes d'une FFI n'est pas une tâch
 triviale des deux côtés.
 
 Du côté Rust, cette vérification consiste à utiliser un type entier dans la
-déclaration du bloc `extern`, un type *robuste* donc, et d'effectuer une
+déclaration du bloc `extern`, un type _robuste_ donc, et d'effectuer une
 conversion contrôlée vers le type `enum`.
 
 Du côté externe, cela est possible uniquement si l'autre langage permet la mise
@@ -522,7 +522,7 @@ l'ABI `extern "C"` d'une `enum class` est définie par l'implémentation et doit
 > - les types liés à des types d'énumération sûrs du côté du langage externe,
 >   comme les `enum class` de C++ par exemple.
 
-Concernant les énumérations ne contenant aucun champ, des *crates* comme
+Concernant les énumérations ne contenant aucun champ, des _crates_ comme
 [`num_derive`] ou [`num_enum`] permettent au développeur de fournir facilement
 des opérations de conversions sûres depuis une valeur entière vers une
 énumération et peuvent être utilisées pour convertir de manière contrôlée un
@@ -539,7 +539,7 @@ développement impliquant plusieurs langages de programmation.
 
 > ### Recommandation {{#check FFI-R-OPAQUE | Utilisation de types Rust dédiés pour les types opaques externes}}
 >
-> Dans un développement sécurisé en Rust, lors d'un *binding* avec des types
+> Dans un développement sécurisé en Rust, lors d'un _binding_ avec des types
 > opaques externes, des pointeurs vers des types opaques dédiés doivent être
 > utilisés au lieu de pointeurs `c_void`.
 
@@ -553,6 +553,7 @@ extern "C" {
     fn foo(arg: *mut Foo);
 }
 ```
+
 La proposition [RFC 1861], non implémentée à la rédaction de ce guide, propose
 de faciliter cette situation en permettant de déclarer des types opaques dans
 des blocs `extern`.
@@ -601,13 +602,13 @@ Les langages de programmation ont de nombreuses façons de gérer la mémoire. E
 résultat, il est important de savoir quel langage est responsable de la
 réclamation de l'espace mémoire d'une donnée lorsqu'elle est échangée entre Rust
 et un autre langage. Il en va de même pour d'autres types de ressources comme
-les descripteurs de fichiers ou les *sockets*.
+les descripteurs de fichiers ou les _sockets_.
 
 Rust piste le responsable ainsi que la durée de vie des variables pour
 déterminer à la compilation si et quand la mémoire associée doit être libérée.
 Grâce au trait `Drop`, il est possible d'exploiter ce système pour récupérer
 toutes sortes de ressources comme des fichiers ou des accès au réseau.
-*Déplacer* une donnée depuis Rust vers un langage signifie également abandonner
+_Déplacer_ une donnée depuis Rust vers un langage signifie également abandonner
 de possibles réclamations de la mémoire qui lui est associée.
 
 > ### Règle {{#check FFI-MEM-NODROP | Non-utilisation de types qui implémentent `Drop` dans des FFI}}
@@ -619,11 +620,11 @@ de possibles réclamations de la mémoire qui lui est associée.
 En fait, il est même recommandé de n'utiliser que des types qui implémentent
 `Copy`. Il faut noter que `*const T` est `Copy` même si `T` ne l'est pas.
 
-Si ne pas récupérer la mémoire et les ressources est une mauvaise pratique, en
-termes de sécurité, utiliser de la mémoire récupérée plus d'une fois ou libérer
-deux fois certaines ressources peut être pire. Afin de libérer correctement une
-ressource une seule et unique fois, il faut savoir quel langage est responsable
-de la gestion de son allocation et de sa libération.
+Si ne pas récupérer la mémoire et les ressources est mauvais, en termes de
+sécurité, utiliser de la mémoire déjà libérée ou libérer deux fois
+certaines ressources peut être pire. Afin de libérer correctement une ressource
+une seule et unique fois, il faut savoir quel langage est responsable de la
+gestion de son allocation et de sa libération.
 
 > ### Règle {{#check FFI-MEM-OWNER | Identification du langage responsable de la libération des données dans les FFI}}
 >
@@ -637,11 +638,11 @@ de la gestion de son allocation et de sa libération.
 >   choisie.
 
 L'identification d'un langage responsable de la gestion des données en mémoire
-ne suffit pas. Il reste à s'assurer de la durée de vie correcte de ces données,
-principalement qu'elles ne sont plus utilisées après leur libération. C'est une
-étape bien plus difficile. Lorsque le langage externe est responsable de la
-mémoire, la même approche est de fournir un *wrapper* sûr autour du type
-externe.
+ne suffit pas. Il reste ensuite à s'assurer de la durée de vie correcte de ces
+données, c'est-à-dire principalement à vérifier qu'elles ne sont plus utilisées
+après leur libération. C'est une étape bien plus difficile. Lorsque le langage
+externe est responsable de la mémoire, la meilleure approche est de fournir un
+_wrapper_ sûr autour du type externe.
 
 > ### Recommandation {{#check FFI-MEM-WRAPPING | Encapsulation des données externes dans un type `Drop`}}
 >
@@ -652,7 +653,6 @@ externe.
 
 Voici un simple exemple d'encapsulation autour d'un type opaque externe :
 
-
 ```rust,ignore,noplaypen
 # use std::ops::Drop;
 #
@@ -662,7 +662,7 @@ struct RawFoo {
     _private: [u8; 0],
 }
 
-/// API C privée "raw"
+/// API C privée "brut"
 extern "C" {
     fn foo_create() -> *mut RawFoo;
     fn foo_do_something(this: *const RawFoo);
@@ -711,17 +711,17 @@ impl Drop for Foo {
 > exemple), à moins que le code soit garanti exempt de `panic` potentiel.
 >
 > Pour le cas de l'effacement des données sensibles, le problème peut être géré
-> par l'utilisation d'un *handler* de `panic`.
+> par l'utilisation d'un _handler_ de `panic`.
 
 Lorsque le langage externe exploite des ressources allouées depuis le côté Rust,
-il est encore plus difficile d'offrir quelque garantie qui soit.
+il est encore plus difficile d'offrir quelque garantie que ce soit.
 
 En C par exemple, il n'y a pas de moyen simple qui permette de vérifier que le
-destructeur correspondant est appelé. Il est possible d'utiliser des *callbacks*
+destructeur correspondant est appelé. Il est possible d'utiliser des _callbacks_
 pour assurer que la libération est effectivement faite.
 
-Le code Rust suivant est un exemple ***unsafe* du point de vue des threads**
-d'une API compatible avec le C qui fournit une *callback* pour assurer la
+Le code Rust suivant est un exemple **_unsafe_ du point de vue des threads**
+d'une API compatible avec le C qui fournit une _callback_ pour assurer la
 libération d'une ressource :
 
 ```rust,noplaypen
@@ -835,7 +835,7 @@ int main() {
 ## `Panic`s et code externe
 
 Lors de l'appel à du code Rust depuis un autre langage (par exemple, du C), le
-code Rust ne doit pas provoquer de `panic`. Dérouler (*unwinding*) depuis le
+code Rust ne doit pas provoquer de `panic`. Dérouler (_unwinding_) depuis le
 code Rust dans du code externe résulte en un **comportement indéfini**.
 
 > ### Règle {{#check FFI-NOPANIC | Gestion correcte des `panic`s dans les FFI}}
@@ -846,7 +846,7 @@ code Rust dans du code externe résulte en un **comportement indéfini**.
 > `std::panic::set_hook`, `#[panic_handler]`), afin d'assurer que la fonction
 > Rust ne peut pas quitter ou retourner dans un état instable.
 
-Il faut noter que `catch_unwind` rattrapera seulement les *unwinding `panic`s*
+Il faut noter que `catch_unwind` rattrapera seulement les _unwinding `panic`s_
 mais pas ceux provoquant un arrêt du processus.
 
 ```rust,unsafe,noplaypen,ignore
@@ -878,7 +878,7 @@ avec la plus grande précaution pour garantir non seulement la sécurité, mais
 aussi la sûreté du programme.
 
 Un approche alternative est de simplement s'assurer qu'il n'y a aucune
-utilisation de `panic!` avec la *crate* [`panic-never`]. Comme [`no-panic`],
+utilisation de `panic!` avec la _crate_ [`panic-never`]. Comme [`no-panic`],
 [`panic-never`] repose sur une astuce au moment de l'édition de liens : le
 programme d'édition de liens échoue si une branche non trivialement
 inaccessible mène à un appel à `panic!`.
@@ -893,16 +893,16 @@ inaccessible mène à un appel à `panic!`.
 > L'interfaçage entre une bibliothèque écrite dans un autre langage et
 > du code Rust doit être réalisé en deux parties :
 >
-> - un module bas-niveau, potentiellement *caché*, qui traduit de façon très
+> - un module bas-niveau, potentiellement _caché_, qui traduit de façon très
 >   proche l'API originale en des blocs `extern` ;
 > - un module qui assure la sûreté mémoire et les invariants de sécurité au
 >   niveau de Rust.
 >
-> Si l'API bas-niveau est exposée, cela doit être fait dans un *crate* dédiée
+> Si l'API bas-niveau est exposée, cela doit être fait dans un _crate_ dédiée
 > ayant un nom de la forme `*-sys`.
 
-La *crate* [rust-bindgen] peut être utilisée pour générer automatiquement la
-partie bas-niveau du *binding* depuis les fichiers *header* C.
+La _crate_ [rust-bindgen] peut être utilisée pour générer automatiquement la
+partie bas-niveau du _binding_ depuis les fichiers _header_ C.
 
 <!--
 <mark>TODO</mark> example
@@ -916,8 +916,8 @@ partie bas-niveau du *binding* depuis les fichiers *header* C.
 > langage externe doit être uniquement fait par le biais d'une **API dédiée et
 > compatible avec le C**.
 
-La *crate* [cbindgen] peut être utilisée pour générer automatiquement les
-*bindings* C ou C++ pour l'API Rust compatible avec le C d'une bibliothèque
+La _crate_ [cbindgen] peut être utilisée pour générer automatiquement les
+_bindings_ C ou C++ pour l'API Rust compatible avec le C d'une bibliothèque
 Rust.
 
 ### Exemple minimal d'une bibliothèque Rust exportée vers du C
@@ -987,7 +987,7 @@ pub unsafe extern fn counter_destroy(counter: *mut Counter) -> std::os::raw::c_i
 ```
 
 En utilisant [cbindgen] (`[cbindgen] -l c > counter.h`), il est possible de
-générer un *header* C cohérent, `counter.h` :
+générer un _header_ C cohérent, `counter.h` :
 
 ```c
 #include <stdarg.h>

@@ -229,7 +229,7 @@ the C standard library.
 
 ### Non-robust types: references, function pointers, enums
 
-A *trap representation* of a particular type is a representation (pattern of
+A _trap representation_ of a particular type is a representation (pattern of
 bits) that respects the type's representation constraints (such as size and
 alignment) but does not represent a valid value of this type and leads to
 undefined behavior.
@@ -253,7 +253,7 @@ the C-compatible types:
 - compound types that contain a field of a non-robust type.
 
 On the other hand, integer types (`u*`/`i*`), packed compound types that contain
-no non-robust fields, for instance are *robust types*.
+no non-robust fields, for instance are _robust types_.
 
 Non-robust types are a difficulty when interfacing two languages. It revolves
 into deciding **which language of the two is responsible in asserting the
@@ -261,7 +261,7 @@ validity of boundary-crossing values** and how to do it.
 
 > ### Rule {{#check FFI-CKNONROBUST | Do not use unchecked non-robust foreign values}}
 >
-> In a secure Rust development, there must not be any use of *unchecked* foreign
+> In a secure Rust development, there must not be any use of _unchecked_ foreign
 > values of non-robust types.
 >
 > In other words, either Rust translates robust types to non-robust types
@@ -288,10 +288,10 @@ function references, and enums, and are discussed below.
 >
 > Rust's `bool` has been made equivalent to C99's `_Bool` (aliased as `bool`
 > in `<stdbool.h>`) and C++'s `bool`. However, loading a value other than 0 and
-> 1 as a `_Bool`/`bool` is an undefined behavior *on both sides*.
+> 1 as a `_Bool`/`bool` is an undefined behavior _on both sides_.
 > Safe Rust ensures that. Standard-compliant C and C++ compilers ensure that no
-> value but 0 and 1 can be *stored* in a `_Bool`/`bool` value but cannot
-> guarantee the absence of an *incorrect reinterpretation* (e.g., union types,
+> value but 0 and 1 can be _stored_ in a `_Bool`/`bool` value but cannot
+> guarantee the absence of an _incorrect reinterpretation_ (e.g., union types,
 > pointer cast). To detect such a bad reinterpretation, sanitizers such as
 > LLVM's `-fsanitize=bool` may be used.
 
@@ -317,7 +317,7 @@ Rust references may be used reasonably with other C-compatible languages
 including C variants allowing for non-null type checking, e.g. Microsoft SAL
 annotated code.
 
-On the other hand, Rust's *pointer types* may also lead to undefined behaviors
+On the other hand, Rust's _pointer types_ may also lead to undefined behaviors
 but are more verifiable, mostly against `std/core::ptr::null()` (C's `(void*)0`)
 but also in some context against a known valid memory range (particularly in
 embedded systems or kernel-level programming). Another advantage of using Rust
@@ -345,7 +345,7 @@ an `unsafe` block or function.
 > In a secure Rust development, every foreign references that is transmitted to
 > Rust through FFI must be **checked on the foreign side** either automatically
 > (for instance, by a compiler) or manually.
-> 
+>
 > Exceptions include Rust references in an opaque wrapping that is created
 > and manipulated only from the Rust side and `Option`-wrapped references
 > (see Note below).
@@ -358,7 +358,7 @@ an `unsafe` block or function.
 > pointer must check their validity beforehand.
 > In particular, pointers must be checked to be non-null before any use.
 >
-> Stronger approaches are advisable when possible. They includes checking
+> Stronger approaches are advisable when possible. They include checking
 > pointers against known valid memory range or tagging (or signing) pointers
 > (particularly applicable if the pointed value is only manipulated from Rust).
 
@@ -378,7 +378,7 @@ pub unsafe extern fn add_in_place(a: *mut u32, b: u32) {
 ```
 
 Note that the methods `as_ref` and `as_mut` (for mutable pointers) allows easy
-access to a reference while ensuring a null check in a very *Rusty* way.
+access to a reference while ensuring a null check in a very _Rusty_ way.
 On the other side in C, it can be used as follows:
 
 ```c
@@ -463,7 +463,7 @@ severe consequences on software security. Unfortunately, checking an `enum`
 value at the FFI boundary is not simple on both sides.
 
 On the Rust side, it consists to actually use an integer type in the `extern`
-block declaration, a *robust* type, and then to perform a checked conversion
+block declaration, a _robust_ type, and then to perform a checked conversion
 to the enum type.
 
 On the foreign side, it is possible only if the other language allows for
@@ -560,13 +560,13 @@ The same is true for other kind of resources such as sockets or files.
 Rust tracks variable ownership and lifetime to determine at compilation time if
 and when memory should be deallocated. Thanks to the `Drop` trait, one can
 exploit this system to reclaim other kind of resources such as file or network
-access. *Moving* some piece of data from Rust to a foreign language means also
+access. _Moving_ some piece of data from Rust to a foreign language means also
 abandoning the possible reclamations associated with it.
 
 > ### Rule {{#check FFI-MEM-NODROP | Do not use types that implement `Drop` at FFI boundary}}
 >
 > In a secure Rust development, Rust code must not implement `Drop` for any
-> types that are directly transmitted to foreign code  (i.e. not through a
+> types that are directly transmitted to foreign code (i.e. not through a
 > pointer or reference).
 
 In fact, it is advisable to only use `Copy` types. Note that `*const T` is
@@ -594,10 +594,10 @@ wrapper around the foreign type:
 
 > ### Recommendation {{#check FFI-MEM-WRAPPING | Wrap foreign data in memory releasing wrapper}}
 >
-> In a secure Rust development, any non-sensitive foreign piece of data that are
+> In a secure Rust development, any non-sensitive foreign piece of data that is
 > allocated and deallocated in the foreign language should be encapsulated in a
 > `Drop` type in such a way as to provide automatic deallocation in Rust,
-> through an automatic call to the foreing language deallocation routine.
+> through an automatic call to the foreign language deallocation routine.
 
 A simple example of Rust wrapping over an external opaque type:
 
@@ -653,7 +653,7 @@ impl Drop for Foo {
 
 > ### Warning
 >
-> Because panics may lead to not running the `Drop::drop` method this solution
+> Because panics may lead to not running the `Drop::drop` method, this solution
 > is not sufficient for sensitive deallocation (such as wiping sensitive data)
 > except if the code is guaranteed to never panic.
 >
@@ -834,7 +834,7 @@ trick: the linker fails if a non-trivially-dead branch leads to `panic!`.
 > Interfacing a library written in another language in Rust should be done in
 > two parts:
 >
-> - a low-level, possibly *hidden*, module that closely translates the original
+> - a low-level, possibly _hidden_, module that closely translates the original
 >   C API into `extern` blocks,
 > - a safe wrapping module that ensures memory safety and security invariants at
 >   the Rust level.
