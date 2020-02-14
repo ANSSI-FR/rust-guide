@@ -58,6 +58,15 @@ peuvent parfois être nécessaires pour la clarté du discours, et le développe
 Rust expérimenté peut s'appuyer principalement sur le contenu des encarts
 (*Règle*, *Recommandation*, *Avertissement*, etc.).
 
+## Contributions
+
+Ce guide est rédigé de manière collaborative et ouverte, via la plateforme
+GitHub
+([https://github.com/ANSSI-FR/rust-guide](https://github.com/ANSSI-FR/rust-guide)).
+Toutes les contributions pour de futures versions sont les bienvenues, que ce
+soit directement sous la forme de propositions (*pull requests*) ou bien de
+suggestions et discussions (*issues*).
+
 ## Structure du document
 
 La structure de ce document vise à discuter successivement des différentes

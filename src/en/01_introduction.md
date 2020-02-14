@@ -50,6 +50,15 @@ the Rust language already provides. That said, recalls are sometimes necessary
 for clarity, and the experienced Rust programmer may rely solely on
 highlighted inserts (*Rule*, *Recommendation*, *Warning*, etc.).
 
+## Contributions
+
+This guide is written in a collaborative and open manner, via the GitHub
+platform
+([https://github.com/ANSSI-FR/rust-guide](https://github.com/ANSSI-FR/rust-guide)).
+All contributions for future versions are welcome, whether in the form of direct
+propositions (*pull requests*) or in the form of suggestions and discussions
+(*issues*).
+
 ## Structure of the Document
 
 The aim with the structure of this document is to consider separately different
