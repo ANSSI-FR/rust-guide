@@ -55,10 +55,10 @@ langage fournit le mot-clé `unsafe`.
 >  requis. Un *wrapper* "sûr" doit être défini pour que le code C soit
 >  finalement appelé de façon souple et sûre.
 >
->  - Pour la programmation des systèmes embarqués, les registres et autres
->  ressources sont souvent accédés au travers d'adresses mémoire fixées. Dans ce
->  cas, des blocs `unsafe` sont nécessaires afin de pouvoir initialiser et
->  déréférencer des pointeurs en Rust pour ces adresses. Afin de minimiser le
+>  - Pour la programmation des systèmes embarqués, on accède souvent aux
+>  registres et à d'autres ressources au travers d'adresses mémoire fixées
+>  Dans ce cas, des blocs `unsafe` sont nécessaires afin de pouvoir initialiser
+>  et déréférencer des pointeurs en Rust pour ces adresses. Afin de minimiser le
 >  nombre de déclarations `unsafe` pour permettre au développeur de facilement
 >  identifier les accès critiques, une abstraction adaptée (structure de
 >  données ou module) doit être mise en place.
@@ -143,16 +143,16 @@ testé et jamais ignoré.
 > L'opérateur `?` doit être utilisé pour améliorer la lisibilité du code.
 > La macro `try!` ne doit pas être utilisée.
 
-Des *crates* tierses peuvent être utilisées pour faciliter la gestion d'erreurs.
-La plupart ([failure], [snafu], [thiserror]) adressent la création de types
+Des *crates* tierces peuvent être utilisées pour faciliter la gestion d'erreurs.
+La plupart ([failure], [snafu], [thiserror]) proposent la création de types
 d'erreurs personnalisées qui implémentent les traits nécessaires et permettent
 l'encapsulation d'autres erreurs.
 
 Une autre approche (notamment proposée dans [anyhow]) consiste à envelopper
-automatiquement les erreurs dans un seul type d'erreurs universel. Une telle
+automatiquement les erreurs dans un seul type d'erreur universel. Une telle
 approche ne devrait pas être utilisée dans des bibliothèques ou des systèmes
-complexes parce qu'elle ne permet pas de fournir de contexte aux erreurs
-contenues, contrairement à la première approche.
+complexes parce qu'elle ne permet pas de fournir de contexte sur les erreurs
+ainsi initialement enveloppées, contrairement à la première approche.
 
 [failure]: https://crates.io/crates/failure
 [snafu]: https://crates.io/crates/snafu
@@ -162,8 +162,8 @@ contenues, contrairement à la première approche.
 ### *Panics*
 
 La gestion explicite des erreurs (`Result`) doit être préférée à la place de
-l'appel de la macro `panic`. La cause de l'erreur doit être rendue disponible,
-et les erreurs trop génériques doivent être évitées.
+l'utilisation de la macro `panic`. La cause de l'erreur doit être rendue
+disponible, et les erreurs trop génériques doivent être évitées.
 
 Les *crates* fournissant des bibliothèques ne doivent pas utiliser de fonctions
 ou d'instructions qui peuvent échouer en engendrant un `panic`.
@@ -213,7 +213,8 @@ comportement indéfini.
 > langage appelant dans un état instable.
 
 Il est porté à l'attention du développeur que `catch_unwind` ne va traiter que
-les cas de `panic`, en préservant d'autres types d'abandons de processus.
+les cas de `panic`, et va préserver les abandons de processus causés par
+d'autres raisons.
 
 <!-- ## Macros -->
 

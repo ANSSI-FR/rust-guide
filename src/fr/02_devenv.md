@@ -12,10 +12,10 @@ composants additionnels et de maintenir le tout à jour.
 > Du point de vue de la sécurité, `rustup` effectue tous les téléchargements en
 > HTTPS, mais ne valide pas les signatures des fichiers téléchargés. Les
 > protections contre les attaques par déclassement, le _pinning_ de certificats
-> et la validation des signatures sont des travaux actuellement en cours. Dans
-> certains cas, il peut être préférable d'opter pour une méthode d'installation
-> alternative comme celles listées dans la section *Install* du site officiel du
-> langage Rust.
+> et la validation des signatures sont des travaux actuellement en cours. Pour
+> les cas les plus sensibles, il peut être préférable d'opter pour une méthode
+> d'installation alternative comme celles listées dans la section *Install* du
+> site officiel du langage Rust.
 
 [rustup]: https://github.com/rust-lang/rustup.rs
 
@@ -101,8 +101,8 @@ $
 Une fois que la chaîne d'outils appropriée a été sélectionnée avec Rustup,
 l'outil [Cargo] est disponible pour exécuter ces différents outils en
 fournissant la commande `cargo`. Cargo est le gestionnaire de paquetages de Rust.
-Il joue plusieurs rôles fondamentaux lors de développements en Rust. Il permet
-notamment de :
+Il joue plusieurs rôles fondamentaux tout au long d'un développement en Rust. Il
+permet notamment de :
 
 - structurer le projet en fournissant un squelette de projet (`cargo new`) ;
 - lancer la compilation du projet (`cargo build`) ;
@@ -121,16 +121,17 @@ notamment de :
 > déterminer le meilleur moyen de protéger et de valider les *crates*. Pour le
 > moment, la sécurité de `cargo` repose sur la bonne sécurité du site web
 > [crates.io] ainsi que celle du dépôt, hébergé sur GitHub, contenant l'index du
-> registre de *crates*. Dans certains cas, il peut être préférable d'opter pour
-> une méthode d'installation alternative pour les dépendances.
+> registre de *crates*. Pour les cas les plus sensibles, il peut être préférable
+> d'opter pour une méthode d'installation alternative pour les dépendances.
 
 Cargo propose différentes commandes et options pour adapter le processus de
 compilation aux besoins de chaque projet, principalement au travers du fichier
 `Cargo.toml`. Pour une présentation complète, voir le *[Cargo Book]*.
 
-Tout au long du développement d'une application sécurisée, certaines options
-requièrent une attention particulière. La section `[profile.*]` permet de
-configurer la façon dont le compilateur est invoqué. Par exemple :
+Certaines de ces options requièrent une attention particulière.
+
+La section `[profile.*]` permet de configurer la façon dont le compilateur est
+invoqué. Par exemple :
 
 - La variable `debug-assertions` contrôle l'activation des assertions de
   *debug*.
@@ -281,6 +282,6 @@ la sémantique d'un programme dans certains cas.
 ### Autres
 
 D'autres outils ou sous-commandes `cargo` utiles pour renforcer la sécurité
-d'un programme, que ce soit en cherchant des motifs de code particulier ou en
-fournissant des commandes de test ou de *fuzzing*, existent. Nous en discutons
-dans les chapitres suivants en fonction de leurs portées et de leurs objectifs.
+d'un programme existent, par exemple, en recherchant des motifs de code
+particuliers. Nous en discutons dans les chapitres suivants en fonction de leurs
+portées et de leurs objectifs.

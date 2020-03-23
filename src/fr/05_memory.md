@@ -11,12 +11,13 @@ versions plus anciennes du compilateur).
 
 ## `Forget` et fuites de mémoire
 
-Tandis que la façon classique pour la mémoire d'être récupérée est qu'une
-variable sorte de la portée lexicale courante, Rust fournit des fonctions
-spéciales pour réclamer manuellement la mémoire : les fonctions `forget` et
-`drop` du module `std::mem` (ou `core::mem`). `drop` déclenche simplement une
-récupération prématurée de la mémoire tout en appelant les destructeurs associés
-lorsque nécessaire, `forget` quant à elle n'appelle pas ces destructeurs.
+En général, la mémoire est automatiquement récupérée en Rust lorsqu'une variable
+sort de la portée lexicale courante. En complément de ce mécanisme, Rust fournit
+des fonctions spéciales pour réclamer manuellement la mémoire : les fonctions
+`forget` et `drop` du module `std::mem` (ou `core::mem`). `drop` déclenche
+simplement une récupération prématurée de la mémoire tout en appelant les
+destructeurs associés lorsque nécessaire, `forget` quant à elle n'appelle pas
+ces destructeurs.
 
 ```rust
 let pair = ('↑', 0xBADD_CAFEu32);
@@ -131,7 +132,7 @@ la ressource concernée du compilateur au développeur.
 
 ## Mémoire non initialisée
 
-Par défaut, Rust force à ce que toutes les valeurs soient initialisées, pour
+Par défaut, le langage Rust impose que toutes les valeurs soient initialisées, pour
 prévenir l'utilisation de mémoire non initialisée (à l'exception de
 l'utilisation de `std::mem::uninitialized` ou de `std::mem::MaybeUninit`).
 
@@ -151,7 +152,7 @@ sécurité distincts :
 > ### Note
 >
 > Le type `std::mem::MaybeUninit` est une amélioration de la fonction
-> `std::mem::uninitialized`. En effet, il rend le relâchement des valeurs non
+> `std::mem::uninitialized`. En effet, il rend la libération des valeurs non
 > initialisées bien plus difficile. Toutefois, cela ne change pas le second
 > problème : la non-libération de la mémoire initialisée est bien possible.
 > C'est problématique en particulier si l'on considère l'utilisation de `Drop`
@@ -170,7 +171,7 @@ en particulier dans lorsque le code Rust est utilisé *via* des FFI.
 > `std::ptr::write_volatile` ou bien la *crate* `zeroize`.
 
 Le code suivant montre comment définir un type entier qui sera remis à zéro
-quand libéré, en utilisant le trait `Drop` :
+à sa libération, en utilisant le trait `Drop` :
 
 ```rust
 /// Exemple : newtype pour u32, réécrit à 0 quand libéré
