@@ -35,10 +35,10 @@ pour développer, mettre au point, compiler et exécuter des programmes peuvent
 exposer des options et des possibilités de configuration qui, si mal utilisées,
 peuvent mener à des vulnérabilités.
 
-L'objet de ce document est ainsi de rassembler une collection de pistes et de
-recommandations pour rester au maximum dans une zone sûre pour le développement
-d'applications sécurisées, tout en profitant au possible des possibilités que
-le langage peut offrir.
+L'objet de ce document est ainsi de rassembler une collection de conseils et de
+recommandations pour rester autant que possible dans une zone sûre pour le
+développement d'applications sécurisées, tout en profitant de la variété de
+possibilités que le langage Rust peut offrir.
 
 ## Public visé
 

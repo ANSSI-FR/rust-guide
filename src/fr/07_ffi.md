@@ -9,9 +9,9 @@ frontière est par nature **non sûre** (voir [Rust Book: Unsafe Rust]).
 Les fonctions marquées comme externes (mot-clé `extern`) sont rendues
 compatibles avec du code C à la compilation. Elles peuvent être appelées depuis
 un code C avec n'importe quelle valeur en argument. La syntaxe complète est
-`extern "<ABI>"` où "<ABI>" décrit la convention d'appel et dépend de la
-plateforme d'exécution visée. Par défaut, elle vaut `C`, ce qui correspond à la
-manière standard en C d'appeler des fonctions.
+`extern "<ABI>"` où `"<ABI>"` décrit la convention d'appel et dépend de la
+plateforme d'exécution visée. Par défaut, elle vaut `"C"`, ce qui correspond à
+la manière standard en C d'appeler des fonctions.
 
 ```rust
 // exportation d'une fonction compatible avec le C
@@ -24,7 +24,7 @@ unsafe extern "C" fn mylib_f(param: u32) -> i32 {
 Pour que la fonction `mylib_f` soit accessible avec le même nom, la fonction
 doit être annotée avec l'attribut `#[no_mangle]`).
 
-A l'inverse, il est possible d'appeler des fonctions écrites en C depuis du code
+À l'inverse, il est possible d'appeler des fonctions écrites en C depuis du code
 Rust si celles-ci sont déclarées dans un bloc `extern` :
 
 ```rust
@@ -43,7 +43,7 @@ fn main() {
 > ### Note
 >
 > Toute fonction écrite dans un autre langage et importée dans Rust par l'usage
-> d'un bloc `extern` est **automatiquement *unsafe* **. C'est pourquoi tout
+> d'un bloc `extern` est **automatiquement *unsafe***. C'est pourquoi tout
 > appel à une telle fonction doit être fait dans un contexte `unsafe`.
 
 Les blocs `extern` peuvent également contenir des déclarations de variables
@@ -158,7 +158,7 @@ Certains types sont compatibles, mais avec certaines limitations :
 >
 > Les types doivent être cohérents entre les deux côtés des frontières des FFI.
 >
-> Bien que certains détails peuvent être masqués de la part d'un côté pour
+> Bien que certains détails peuvent être masqués de la part d'un côté envers
 > l'autre (typiquement, pour rendre un type opaque), les types des deux parties
 > doivent avoir la même taille et respecter le même alignement.
 
@@ -237,7 +237,7 @@ couvrent la quasi-entièreté de la bibliothèque standard du C.
 
 [libc]: https://crates.io/crates/libc
 
-### Types non robustes : références, pointeurs de fonction, énumérations
+### Types non-robustes : références, pointeurs de fonction, énumérations
 
 Une *représentation piégeuse* d'un type particulier est une représentation
 (motif d'octets) qui respecte les contraintes de représentation du type (telles
@@ -251,35 +251,35 @@ arriver (à moins d'un *bug* dans le compilateur Rust). Toutefois, en écrivant
 du code Rust non sûr, et en particulier dans des FFI, cela peut facilement
 avoir lieu.
 
-Dans la suite, on appelle des **types non robustes** les types dont les valeurs
+Dans la suite, on appelle des **types non-robustes** les types dont les valeurs
 peuvent avoir ces représentations piégeuses (au moins une). Beaucoup de types
-Rust sont non robustes, même parmi les types compatibles avec le C :
+Rust sont non-robustes, même parmi les types compatibles avec le C :
 
-- `bool` (1 octet, 256 représentations, seulement 2 d'entre elles valides) ;
+- `bool` (1 octet, 256 représentations, seules deux d'entre elles valides) ;
 - les références ;
 - les pointeurs de fonction ;
 - les énumérations ;
 - les flottants (même si de nombreux langages ont la même compréhension de ce
   qu'est un flottant valide) ;
 - les types composés qui contiennent au moins un champ ayant pour type un type
-  non robuste.
+  non-robuste.
 
 De l'autre côté, les types entiers (`u*`/`i*`), les types composés *packés* qui
-ne contiennent pas de champs de type non robuste, sont par exemple des
+ne contiennent pas de champs de type non-robuste, sont par exemple des
 *types robustes*.
 
-Les types non robustes présentent des difficultés lors de l'interfaçage entre
+Les types non-robustes présentent des difficultés lors de l'interfaçage entre
 deux langages. Cela revient à décider **quel langage des deux est le plus
 responsable pour assurer la validité des valeurs hors bornes** et comment
 mettre cela en place.
 
-> ### Règle {{#check FFI-CKNONROBUST | Non vérification des valeurs de types non robustes}}
+> ### Règle {{#check FFI-CKNONROBUST | Non-vérification des valeurs de types non-robustes}}
 >
-> Dans un développement sécurisé en Rust, toute valeur externe de type non
+> Dans un développement sécurisé en Rust, toute valeur externe de type non-
 > robuste doit être vérifiée.
 >
 > Plus précisément, soit une conversion (en Rust) est effectuée depuis des types
-> robustes vers des types non robustes à l'aide de vérifications explicites,
+> robustes vers des types non-robustes à l'aide de vérifications explicites,
 > soit le langage externe offre des garanties fortes quant à la validité des
 > valeurs en question.
 
@@ -288,7 +288,8 @@ mettre cela en place.
 > ### Recommandation {{#check FFI-CKINRUST | Vérification des valeurs externes en Rust}}
 > 
 > Dans un développement Rust sécurisé, la vérification des valeurs provenant
-> d'un langage externe doit être effectuée du côté Rust lorsque c'est possible.
+> d'un langage externe doit être effectuée du côté Rust lorsque cela est
+> possible.
 
 Ces règles génériques peuvent être adaptées à un langage externe spécifique ou
 selon les risques associés. En ce qui concerne les langages, le C est
@@ -296,7 +297,7 @@ particulièrement inapte à offrir des garanties de validité. Toutefois, Rust
 n'est pas le seul langage à offrir de telles possibilités. Par exemple, un
 certain sous-ensemble de C++ (sans la réinterprétation) permet au développeur
 de faire beaucoup dans ce domaine à l'aide du typage. Parce que Rust sépare
-nativement les segments sûrs des segments non sûrs, la recommandation est de
+nativement les segments sûrs des segments non-sûrs, la recommandation est de
 toujours utiliser Rust pour les vérifications lorsque c'est possible. En ce qui
 concerne les risques, les types présentant le plus de dangers sont les
 références, les références de fonction et les énumérations, qui sont discutées
@@ -350,7 +351,7 @@ langages compatibles avec le C, incluants les variantes de C qui mettent en
 oeuvre la vérification que les pointeurs sont non nuls, comme du code annoté à
 l'aide Microsoft SAL par exemple.
 
-> ### Recommandation {{#check FFI-NOREF | Non-utilisation des types références, utilisation des types pointeurs}}
+> ### Recommandation {{#check FFI-NOREF | Non-utilisation des types références et utilisation des types pointeurs}}
 >
 > Dans un développement sécurisé en Rust, le code Rust ne doit pas utiliser de
 > types références, mais des types pointeurs.
@@ -383,7 +384,7 @@ comme appartenant à un bloc ou à une fonction `unsafe`.
 >
 > Des approches plus strictes sont recommandées lorsque possible. Elles
 > comprennent la vérification des pointeurs comme appartenant à une plage
-> d'adresses mémoire valide ou comme étant des pointeurs avérés (étiquetés ou
+> d'adresses mémoire valides ou comme étant des pointeurs avérés (étiquetés ou
 > signés, approche particulièrement applicable si la valeur pointée est
 > seulement manipulée depuis le code Rust.
 
@@ -432,7 +433,7 @@ int main() {
 > valeur `None`, tandis qu'un pointeur non nul est encapsulé dans le
 > constructeur `Some`. Bien qu'ergonomique, cette fonctionnalité ne permet par
 > contre pas des validations fortes des valeurs de pointeurs comme
-> l'appartenance à une plage d'adresse mémoire valide.
+> l'appartenance à une plage d'adresses mémoire valides.
 
 #### Pointeurs de fonction
 
@@ -452,7 +453,7 @@ ne peut pas être vérifiée directement du côté Rust. Toutefois, Rust offre d
 alternatives possibles :
 
 - l'utilisation de pointeurs de fonctions *wrappé* dans une valeur de type
-  `Option`, accompagnée de test contre la valeur nulle :
+  `Option`, accompagnée d'un test contre la valeur nulle :
 
   ```rust,noplaypen
   #[no_mangle]
@@ -562,7 +563,7 @@ des blocs `extern`.
 >
 > Dans un développement sécurisé en Rust, lors de l'interfaçage avec du C ou du
 > C++, les valeurs de types Rust considérés comme opaques dans la partie C/C++
-> doivent être transformés en valeur de type `struct` incomplet (c'est-à-dire
+> doivent être transformées en valeurs de type `struct` incomplet (c'est-à-dire
 > déclaré sans définition) et être fournies avec un constructeur et un
 > destructeur dédiés.
 
@@ -632,7 +633,7 @@ gestion de son allocation et de sa libération.
 > - un seul langage est responsable de l'allocation et de la libération d'une
 >   donnée ;
 > - l'autre langage ne doit ni allouer, ni libérer la donnée directement, mais
->   peut utiliser une fonction extern dédée fournie par le langage responsable
+>   peut utiliser une fonction externe dédiée fournie par le langage responsable
 >   choisie.
 
 L'identification d'un langage responsable de la gestion des données en mémoire
@@ -719,9 +720,9 @@ En C par exemple, il n'y a pas de moyen simple qui permette de vérifier que le
 destructeur correspondant est appelé. Il est possible d'utiliser des *callbacks*
 pour assurer que la libération est effectivement faite.
 
-Le code Rust suivant est un exemple **unsafe du point de vue des threads** d'une
-API compatible avec le C qui fournit une *callback* pour assurer la libération
-d'une ressource :
+Le code Rust suivant est un exemple ***unsafe* du point de vue des threads**
+d'une API compatible avec le C qui fournit une *callback* pour assurer la
+libération d'une ressource :
 
 ```rust,noplaypen
 # use std::ops::Drop;
@@ -893,7 +894,7 @@ inaccessible mène à un appel à `panic!`.
 > du code Rust doit être réalisé en deux parties :
 >
 > - un module bas-niveau, potentiellement *caché*, qui traduit de façon très
->   proche l'API originale en des blocs `extern`,
+>   proche l'API originale en des blocs `extern` ;
 > - un module qui assure la sûreté mémoire et les invariants de sécurité au
 >   niveau de Rust.
 >

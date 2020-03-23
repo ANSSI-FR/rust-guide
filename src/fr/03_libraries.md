@@ -1,6 +1,6 @@
 # Bibliothèques
 
-En complément à la bibliothèque standard du langage, Rust fournit un moyen
+En complément de la bibliothèque standard du langage, Rust fournit un moyen
 pratique d'intégrer des bibliothèques dans un projet, grâce à `cargo`. Les
 bibliothèques, appelées *crates* dans l'écosystème Rust, sont importées depuis
 le dépôt central de composants en sources ouvertes [crates.io](https://crates.io).

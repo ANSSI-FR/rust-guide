@@ -14,7 +14,7 @@ La règle de base consiste à utiliser :
 - la *`SCREAMING_SNAKE_CASE`* pour les variables statiques et les constantes ;
 - la *`lowercase`* pour les durées de vie (*lifetimes*).
 
-Les [Rust API Guidelines] recommandent également des conventions de nommages
+Les [Rust API Guidelines] recommandent également des conventions de nommage
 plus précises pour certaines constructions particulières :
 
 - (C-CONV) pour les méthodes de conversion (`as_`, `to_`, `into_`) ;
@@ -115,7 +115,7 @@ else { println!("{}", res); }
 # }
 ```
 
-> ### Règle {{#check LANG-ARITH | Utilisation des opérations arithmétiques appropriées au regarde des potentiels dépassements}}
+> ### Règle {{#check LANG-ARITH | Utilisation des opérations arithmétiques appropriées au regard des potentiels dépassements}}
 >
 > Lorsqu'une opération arithmétique peut produire un dépassement d'entier, les
 > fonctions spécialisées `overflowing_<op>`, `wrapping_<op>` ou le type
@@ -207,9 +207,9 @@ comportement indéfini.
 
 > ### Règle {{#check LANG-FFIPANIC | Gestion correcte des `panic!` dans les FFI}}
 >
-> Le code Rust appelé depuis une FFI doit soit être assuré de na pas paniquer,
+> Le code Rust appelé depuis une FFI doit soit être assuré de ne pas paniquer,
 > soit utiliser `catch_unwind` ou le module `std::panic` pour s'assurer qu'il
-> ne va pas abandonner un traitement et que l'exécution ne retourne dans le
+> ne va pas abandonner un traitement puis que l'exécution retourne dans le
 > langage appelant dans un état instable.
 
 Il est porté à l'attention du développeur que `catch_unwind` ne va traiter que

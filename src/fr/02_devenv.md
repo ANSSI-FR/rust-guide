@@ -9,8 +9,8 @@ composants additionnels et de maintenir le tout à jour.
 
 > ### Attention
 >
-> Du point de vue de la sécurité, `rustup` effectue tous les téléchargements sur
-> HTTPS, mais de valide pas les signatures des fichiers téléchargés. Les
+> Du point de vue de la sécurité, `rustup` effectue tous les téléchargements en
+> HTTPS, mais ne valide pas les signatures des fichiers téléchargés. Les
 > protections contre les attaques par déclassement, le _pinning_ de certificats
 > et la validation des signatures sont des travaux actuellement en cours. Dans
 > certains cas, il peut être préférable d'opter pour une méthode d'installation
@@ -28,15 +28,15 @@ Toutefois, comme mentionné dans le *[Edition Guide]*, cela ne signifie pas que
 de nouvelles fonctionnalités et améliorations ne seront incluses que dans la
 dernière édition.
 
-Certaines éditions peuvent introduire de nouvelles constructions de langage et
-des nouveaux mots-clés. Les recommandations concernant ces fonctionnalités
+Certaines éditions peuvent introduire de nouvelles constructions dans le langage
+et de nouveaux mots-clés. Les recommandations concernant ces fonctionnalités
 deviennent alors fortement liées à une édition en particulier. Dans le reste de
 ce guide, un effort sera réalisé pour mettre en évidence les règles qui ne
 s'appliqueraient qu'à certaines éditions de Rust en particulier.
 
 > ### Note
 >
-> Aucune édition en particulier n'est recommandée, tant que le développement se
+> Aucune édition spécifique n'est recommandée, tant que le développement se
 > conforme aux recommandations exprimées à propos des fonctionnalités que
 > l'édition utilisée propose.
 
@@ -46,15 +46,16 @@ s'appliqueraient qu'à certaines éditions de Rust en particulier.
 
 De manière orthogonale aux éditions qui permettent d'opter pour une variante du
 langage en termes de fonctionnalités, la chaîne d'outils du langage Rust est
-déclinée en trois variantes appelées *release channels *:
+déclinée en trois variantes appelées *release channels*.
 
 - La version *nightly* est produite une fois par jour.
 - La version *nightly* est promue en version *beta* toutes les six semaines.
 - La version *beta* est promue en version *stable* toutes les six semaines.
 
 Lors du développement d'un projet, il est important de vérifier non seulement
-la version par défaut de la chaîne d'outils, mais aussi les potentielles
-surcharges qui peuvent être définies en fonction des répertoires:
+la version de la chaîne d'outils couramment sélectionnée par défaut, mais aussi
+les potentielles surcharges qui peuvent être définies en fonction des
+répertoires :
 
 ```shell
 $ pwd
@@ -100,21 +101,22 @@ $
 Une fois que la chaîne d'outils appropriée a été sélectionnée avec Rustup,
 l'outil [Cargo] est disponible pour exécuter ces différents outils en
 fournissant la commande `cargo`. Cargo est le gestionnaire de paquetages de Rust.
-Il joue plusieurs rôles fondamentaux lors de développements en Rust :
+Il joue plusieurs rôles fondamentaux lors de développements en Rust. Il permet
+notamment de :
 
-- Il structure le projet en fournissant un squelette de projet (`cargo new`).
-- Il lance la compilation du projet (`cargo build`).
-- Il lance la génération de la documentation (`cargo doc`).
-- Il lance les tests (`cargo test`) et les *benchmarks* (`cargo bench`).
-- Il gère le téléchargement des dépendances.
-- Il permet de rendre un projet distribuable et de les publier sur [crates.io]
-  (`cargo publish`).
-- Il permet de lancer des outils complémentaires tels que ceux décrits ci-après,
-  sous la forme de sous-commandes.
+- structurer le projet en fournissant un squelette de projet (`cargo new`) ;
+- lancer la compilation du projet (`cargo build`) ;
+- lancer la génération de la documentation (`cargo doc`) ;
+- lancer les tests (`cargo test`) et les *benchmarks* (`cargo bench`) ;
+- gérer le téléchargement des dépendances ;
+- rendre le projet distribuable et le publier sur [crates.io]
+  (`cargo publish`) ;
+- lancer des outils complémentaires tels que ceux décrits ci-après, sous la
+  forme de sous-commandes.
 
 > ### Attention
 >
-> Tout comme `rustup`, `cargo` effectue tous les téléchargements sur HTTPS, mais
+> Tout comme `rustup`, `cargo` effectue tous les téléchargements en HTTPS, mais
 > ne valide pas l'index du registre. Des discussions sont en cours pour
 > déterminer le meilleur moyen de protéger et de valider les *crates*. Pour le
 > moment, la sécurité de `cargo` repose sur la bonne sécurité du site web
@@ -135,9 +137,10 @@ configurer la façon dont le compilateur est invoqué. Par exemple :
 - La variable `overflow-checks` contrôle l'activation de la vérification des
   dépassements d'entiers lors d'opérations arithmétiques.
 
-Changer les options par défaut pour ces variables peut mener à des *bugs* non
-détectés, même si le profil de *debug* qui active normalement les vérifications
-(par exemple, les [vérifications de dépassements d'entiers](./04_language.html#integer-overflows))
+Changer les options par défaut pour ces variables peut entraîner l'apparition de
+*bugs* non détectés, même si le profil de *debug* qui active normalement les
+vérifications (par exemple, les
+[vérifications de dépassements d'entiers](./04_language.html#integer-overflows))
 est utilisé.
 
 > ### Règle {{#check DENV-CARGO-OPTS | Conservation des valeurs par défaut des variables critiques dans les profils cargo}}
@@ -149,13 +152,13 @@ est utilisé.
 Cargo propose d'autres moyens de configuration afin de modifier son comportement
 sur un système donné. Cela peut être très pratique, mais il peut alors aussi
 être difficile de connaître et de se souvenir de toutes les options qui sont
-effectivement passées à cargo, et en particulier passées ensuite au compilateur
-Rust. Finalement, cela peut affecter la robustesse du processus de compilation
-et la confiance qu'on lui accorde. Il est préférable de centraliser les options
-de compilation dans le fichier de configuration `Cargo.toml`. Pour le cas
-spécifique de la variable d'environnement `RUSTC_WRAPPER`, utilisée par exemple
-pour générer une partie du code ou pour invoquer un outil externe avant la
-compilation, il est préférable d'utiliser la fonctionnalité de *scripts de
+effectivement passées à `cargo`, et en particulier passées ensuite au
+compilateur Rust. Finalement, cela peut affecter la robustesse du processus de
+compilation et la confiance qu'on lui accorde. Il est préférable de centraliser
+les options de compilation dans le fichier de configuration `Cargo.toml`. Pour
+le cas spécifique de la variable d'environnement `RUSTC_WRAPPER`, utilisée par
+exemple pour générer une partie du code ou pour invoquer un outil externe avant
+la compilation, il est préférable d'utiliser la fonctionnalité de *scripts de
 compilation* de Cargo.
 
 > ### Règle {{#check DENV-CARGO-ENVVARS | Conservation des valeurs par défaut des variables d'environnement à l'exécution de cargo}}
@@ -170,11 +173,11 @@ compilation* de Cargo.
 ### Clippy
 
 [Clippy] est un outil permettant la vérification de nombreux *lints* (*bugs*,
-style, problèmes de performances, etc.). Depuis que la chaîne d'outils stable en
-version 1.29, `clippy` peut être installé dans l'environnement `rustup` stable.
-Il est aussi recommandé d'installer `clippy` en tant que composant
-(`rustup component add clippy`) dans la chaîne d'outils stable plutôt que de
-l'installer comme une dépendance de chaque projet.
+style et lisibilité du code, problèmes de performances, etc.). Depuis la chaîne
+d'outils stable en version 1.29, `clippy` peut être installé dans
+l'environnement `rustup` stable. Il est aussi recommandé d'installer `clippy` en
+tant que composant (`rustup component add clippy`) dans la chaîne d'outils
+stable plutôt que de l'installer comme une dépendance de chaque projet.
 
 L'outil fournit plusieurs catégories de *lints*, selon le type de problème qu'il
 vise à détecter dans le code. Les avertissements doivent être revérifiés par le
@@ -197,7 +200,7 @@ mentionne certaines limitations parmi lesquelles un support partiel des macros
 (déclaration et utilisation). L'option `--check`, qui affiche les différences
 de formatage entre le code actuel et le code proposé, doit être utilisé. À la
 suite de cette première utilisation, l'utilisateur doit vérifier les
-changements, puis les éventuellement les valider les en réinvoquant l'outil sans
+changements, puis éventuellement les valider en réinvoquant l'outil sans
 option.
 
 En résumé :

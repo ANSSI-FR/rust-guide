@@ -29,7 +29,7 @@ Tout d'abord, l'implémentation de `Drop` ne doit pas être systématique. Elle 
 nécessaire uniquement lorsque le type requiert un traitement logique à la
 destruction. `Drop` est typiquement utilisé dans le cas du relâchement des
 ressources externes (connexions réseau, fichier, etc.) ou de ressources mémoire
-complexes (pointeurs intelligents comme les `Box` ou les `Rc` par exemple). Au
+complexes (*smart pointers* comme les `Box` ou les `Rc` par exemple). Au
 final, il est probable que l'implémentation du trait `Drop` contienne des blocs
 `unsafe` ainsi que d'autres opérations critiques du point de vue de la sécurité.
 
@@ -78,15 +78,15 @@ protégés.
 Les traits `Send` et `Sync` (définis dans `std::marker` ou `core::marker`) sont
 des marqueurs utilisés pour assurer la sûreté des accès concurrents en Rust.
 Lorsque correctement implémentés, ils permettent au compilateur Rust de garantir
-l'absence de problèmes d'accès concurrents. Leur sémantique est définie comme
-suit :
+l'absence de problèmes d'accès concurrents. Leurs sémantiques sont définies
+comme suit :
 
 - Un type est `Send` s’il est sûr de l'envoyer (*move*) vers un autre fil
   d'exécution.
 - Un type est `Sync` s’il est sûr de le partager par une référence immutable
   avec un autre fil d'exécution.
 
-Ces deux traits sont des *_traits unsafe_*, c'est-à-dire que le compilateur Rust
+Ces deux traits sont des traits *unsafe*, c'est-à-dire que le compilateur Rust
 ne vérifie d'aucune manière que leur implémentation est correcte. Le danger est
 réel : une implémentation incorrecte peut mener à un **comportement indéfini**.
 
@@ -102,7 +102,7 @@ sont :
   les références `Cell` et `RefCell` non plus), puisqu'elles autorisent la
   mutabilité des valeurs contenues (*interior mutability*) ;
 - les références `Rc`, qui n'implémentent ni `Send`, ni `Sync`, puisque les
-  compteurs de références seraient partagés en désynchronisés.
+  compteurs de références seraient partagés de manière désynchronisée.
 
 L'implémentation automatique de `Send` (respectivement `Sync`) a lieu pour les
 types composés (structures ou énumérations) lorsque tous les champs contenus
@@ -306,7 +306,7 @@ assert!(T1 { a: 1, b: 1 } > T1 { a: 1, b: 0 });
 > `T2 {a: 1, b: 0} < T2 {a: 0, b: 1}`.
 >
 > Ensuite, si une comparaison sous-jacente provoque un `panic`, l'ordre peut
-> changer le résultat à cause de l'utilisation d'un opérateur logique court
+> changer le résultat à cause de l'utilisation d'un opérateur logique court-
 > circuitant dans l'implémentation automatique.
 >
 > Pour les énumérations, les comparaisons dérivées dépendent d'abord de
@@ -314,9 +314,9 @@ assert!(T1 { a: 1, b: 1 } > T1 { a: 1, b: 0 });
 
 En dépit de ces avertissements sur les ordres dérivés, les comparaisons dérivées
 automatiquement sont bien moins sujettes à erreurs que des implémentations
-manuelles, et rendent le code plus court et plus simple à maintenir :
+manuelles, et rendent le code plus court et plus simple à maintenir.
 
-> ### Recommandation {{#check LANG-CMP-DERIVE | Dérivation des traits de comparaisons lorsque c'est possible}}
+> ### Recommandation {{#check LANG-CMP-DERIVE | Dérivation des traits de comparaison lorsque c'est possible}}
 >
 > Dans un développement sécurisé en Rust, l'implémentation des traits de
 > comparaison standard doit être automatiquement dérivée à l'aide de

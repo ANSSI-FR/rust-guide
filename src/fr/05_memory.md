@@ -155,7 +155,7 @@ sécurité distincts :
 > initialisées bien plus difficile. Toutefois, cela ne change pas le second
 > problème : la non-libération de la mémoire initialisée est bien possible.
 > C'est problématique en particulier si l'on considère l'utilisation de `Drop`
-> pour effacer les valeurs sensibles stockées en mémoire.
+> pour effacer des valeurs sensibles.
 
 ## Effacement sécurisé des informations sensibles
 
