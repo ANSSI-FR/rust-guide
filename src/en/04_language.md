@@ -29,7 +29,7 @@ some particular constructions:
 > outlined in the [Rust API Guidelines].
 
 [rfc 430]: https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md
-[rust api guidelines]: https://rust-lang-nursery.github.io/api-guidelines/
+[rust api guidelines]: https://rust-lang.github.io/api-guidelines/
 
 ## Unsafe code
 
@@ -121,18 +121,30 @@ The `Result` type is the preferred way of handling functions that can fail.
 A `Result` object must be tested, and never ignored.
 
 > ### Recommendation {{#check LANG-ERRWRAP | Implement custom `Error` type, wrapping all possible errors}}
-> A crate can implement its own Error type, wrapping all possible errors.
+>
+> A crate can implement its own `Error` type, wrapping all possible errors.
 > It must be careful to make this type exception-safe (RFC 1236), and implement
 > `Error + Send + Sync + 'static` as well as `Display`.
 
 > ### Recommendation {{#check LANG-ERRDO | Use the `?` operator and do not use the `try!` macro}}
+>
 > The `?` operator should be used to improve readability of code.
 > The `try!` macro should not be used.
 
-The [error-chain] and [failure] crates can be used to wrap errors.
+Third-party crates may be used to facilitate error handling. Most of them
+(notably [failure], [snafu], [thiserror]) address the creation of new custom
+error types that implement the necessary traits and allow wrapping other
+errors.
 
-[error-chain]: https://crates.io/crates/error-chain
+Another approach (notably proposed in the [anyhow] crate) consists in an automatic
+wrapping of errors into a single universal error type. Such wrappers should not
+be used in libraries and complex systems because they do not allow developers to
+provide context to the wrapped error.
+
 [failure]: https://crates.io/crates/failure
+[snafu]: https://crates.io/crates/snafu
+[thiserror]: https://crates.io/crates/thiserror
+[anyhow]: https://crates.io/crates/anyhow
 
 ### Panics
 

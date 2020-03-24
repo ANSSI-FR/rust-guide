@@ -37,7 +37,8 @@ and language features that are specific to a particular Rust edition.
 > recommendations related to the features offered by the edition that has been
 > chosen.
 
-[edition guide]: https://rust-lang-nursery.github.io/edition-guide/editions/index.html
+[edition guide]: https://doc.rust-lang.org/edition-guide/
+
 
 ### Stable, nightly and beta toolchains
 
@@ -135,7 +136,7 @@ and remember at a given time all the options that are effectively used, and
 in particular passed to the compiler. At the end, this can affect the confidence
 and robustness of the build process. It is preferable to centralize compiler
 options and flags in the configuration file `Cargo.toml`. For the case of
-environment variable `RUSTC_WRAPPER`, for example, that may is used to generate
+environment variable `RUSTC_WRAPPER`, for example, that may be used to generate
 part of code or to run external tools before Rust compilation, it is preferable
 to use the Cargo build scripts feature.
 

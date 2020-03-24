@@ -9,13 +9,13 @@ composants additionnels et de maintenir le tout à jour.
 
 > ### Attention
 >
-> Du point de vue de la sécurité, `rustup` effectue tous les téléchargements sur
-> HTTPS, mais de valide pas les signatures des fichiers téléchargés. Les
+> Du point de vue de la sécurité, `rustup` effectue tous les téléchargements en
+> HTTPS, mais ne valide pas les signatures des fichiers téléchargés. Les
 > protections contre les attaques par déclassement, le _pinning_ de certificats
-> et la validation des signatures sont des travaux actuellement en cours. Dans
-> certains cas, il peut être préférable d'opter pour une méthode d'installation
-> alternative comme celles listées dans la section *Install* du site officiel du
-> langage Rust.
+> et la validation des signatures sont des travaux actuellement en cours. Pour
+> les cas les plus sensibles, il peut être préférable d'opter pour une méthode
+> d'installation alternative comme celles listées dans la section *Install* du
+> site officiel du langage Rust.
 
 [rustup]: https://github.com/rust-lang/rustup.rs
 
@@ -28,33 +28,34 @@ Toutefois, comme mentionné dans le *[Edition Guide]*, cela ne signifie pas que
 de nouvelles fonctionnalités et améliorations ne seront incluses que dans la
 dernière édition.
 
-Certaines éditions peuvent introduire de nouvelles constructions de langage et
-des nouveaux mots-clés. Les recommandations concernant ces fonctionnalités
+Certaines éditions peuvent introduire de nouvelles constructions dans le langage
+et de nouveaux mots-clés. Les recommandations concernant ces fonctionnalités
 deviennent alors fortement liées à une édition en particulier. Dans le reste de
 ce guide, un effort sera réalisé pour mettre en évidence les règles qui ne
 s'appliqueraient qu'à certaines éditions de Rust en particulier.
 
 > ### Note
 >
-> Aucune édition en particulier n'est recommandée, tant que le développement se
+> Aucune édition spécifique n'est recommandée, tant que le développement se
 > conforme aux recommandations exprimées à propos des fonctionnalités que
 > l'édition utilisée propose.
 
-[edition guide]: https://rust-lang-nursery.github.io/edition-guide/editions/index.html
+[edition guide]: https://doc.rust-lang.org/edition-guide/
 
 ### Chaînes d'outils *stable*, *nightly* et *beta*
 
 De manière orthogonale aux éditions qui permettent d'opter pour une variante du
 langage en termes de fonctionnalités, la chaîne d'outils du langage Rust est
-déclinée en trois variantes appelées *release channels *:
+déclinée en trois variantes appelées *release channels*.
 
-- La version *nightly* est produite une fois par jour,
-- la version *nightly* est promue en version *beta* toutes les six semaines,
-- la version *beta* est promue en version *stable* toutes les six semaines.
+- La version *nightly* est produite une fois par jour.
+- La version *nightly* est promue en version *beta* toutes les six semaines.
+- La version *beta* est promue en version *stable* toutes les six semaines.
 
 Lors du développement d'un projet, il est important de vérifier non seulement
-la version par défaut de la chaîne d'outils, mais aussi les potentielles
-surcharges qui peuvent être définies en fonction des répertoires:
+la version de la chaîne d'outils couramment sélectionnée par défaut, mais aussi
+les potentielles surcharges qui peuvent être définies en fonction des
+répertoires :
 
 ```shell
 $ pwd
@@ -100,44 +101,47 @@ $
 Une fois que la chaîne d'outils appropriée a été sélectionnée avec Rustup,
 l'outil [Cargo] est disponible pour exécuter ces différents outils en
 fournissant la commande `cargo`. Cargo est le gestionnaire de paquetages de Rust.
-Il joue plusieurs rôles fondamentaux lors de développements en Rust :
+Il joue plusieurs rôles fondamentaux tout au long d'un développement en Rust. Il
+permet notamment de :
 
-- il structure le projet en fournissant un squelette de projet (`cargo new`),
-- il lance la compilation du projet (`cargo build`),
-- il lance la génération de la documentation (`cargo doc`),
-- il lance les tests (`cargo test`) et les *benchmarks* (`cargo bench`),
-- il gère le téléchargement des dépendances,
-- il permet de rendre un projet distribuable et de les publier sur [crates.io]
-  (`cargo publish`),
-- il permet de lancer des outils complémentaires tels que ceux décrits ci-après,
-  sous la forme de sous-commandes.
+- structurer le projet en fournissant un squelette de projet (`cargo new`) ;
+- lancer la compilation du projet (`cargo build`) ;
+- lancer la génération de la documentation (`cargo doc`) ;
+- lancer les tests (`cargo test`) et les *benchmarks* (`cargo bench`) ;
+- gérer le téléchargement des dépendances ;
+- rendre le projet distribuable et le publier sur [crates.io]
+  (`cargo publish`) ;
+- lancer des outils complémentaires tels que ceux décrits ci-après, sous la
+  forme de sous-commandes.
 
 > ### Attention
 >
-> Tout comme `rustup`, `cargo` effectue tous les téléchargements sur HTTPS, mais
+> Tout comme `rustup`, `cargo` effectue tous les téléchargements en HTTPS, mais
 > ne valide pas l'index du registre. Des discussions sont en cours pour
 > déterminer le meilleur moyen de protéger et de valider les *crates*. Pour le
 > moment, la sécurité de `cargo` repose sur la bonne sécurité du site web
 > [crates.io] ainsi que celle du dépôt, hébergé sur GitHub, contenant l'index du
-> registre de *crates*. Dans certains cas, il peut être préférable d'opter pour
-> une méthode d'installation alternative pour les dépendances.
+> registre de *crates*. Pour les cas les plus sensibles, il peut être préférable
+> d'opter pour une méthode d'installation alternative pour les dépendances.
 
 Cargo propose différentes commandes et options pour adapter le processus de
 compilation aux besoins de chaque projet, principalement au travers du fichier
 `Cargo.toml`. Pour une présentation complète, voir le *[Cargo Book]*.
 
-Tout au long du développement d'une application sécurisée, certaines options
-requièrent une attention particulière. La section `[profile.*]` permet de
-configurer la façon dont le compilateur est invoqué. Par exemple :
+Certaines de ces options requièrent une attention particulière.
+
+La section `[profile.*]` permet de configurer la façon dont le compilateur est
+invoqué. Par exemple :
 
 - La variable `debug-assertions` contrôle l'activation des assertions de
-  *debug*,
-- la variable `overflow-checks` contrôle l'activation de la vérification des
+  *debug*.
+- La variable `overflow-checks` contrôle l'activation de la vérification des
   dépassements d'entiers lors d'opérations arithmétiques.
 
-Changer les options par défaut pour ces variables peut mener à des *bugs* non
-détectés, même si le profil de *debug* qui active normalement les vérifications
-(par exemple, les [vérifications de dépassements d'entiers](./04_language.html#integer-overflows))
+Changer les options par défaut pour ces variables peut entraîner l'apparition de
+*bugs* non détectés, même si le profil de *debug* qui active normalement les
+vérifications (par exemple, les
+[vérifications de dépassements d'entiers](./04_language.html#integer-overflows))
 est utilisé.
 
 > ### Règle {{#check DENV-CARGO-OPTS | Conservation des valeurs par défaut des variables critiques dans les profils cargo}}
@@ -149,13 +153,13 @@ est utilisé.
 Cargo propose d'autres moyens de configuration afin de modifier son comportement
 sur un système donné. Cela peut être très pratique, mais il peut alors aussi
 être difficile de connaître et de se souvenir de toutes les options qui sont
-effectivement passées à cargo, et en particulier passées ensuite au compilateur
-Rust. Finalement, cela peut affecter la robustesse du processus de compilation
-et la confiance qu'on lui accorde. Il est préférable de centraliser les options
-de compilation dans le fichier de configuration `Cargo.toml`. Pour le cas
-spécifique de la variable d'environnement `RUSTC_WRAPPER`, utilisée par exemple
-pour générer une partie du code ou pour invoquer un outil externe avant la
-compilation, il est préférable d'utiliser la fonctionnalité de *scripts de
+effectivement passées à `cargo`, et en particulier passées ensuite au
+compilateur Rust. Finalement, cela peut affecter la robustesse du processus de
+compilation et la confiance qu'on lui accorde. Il est préférable de centraliser
+les options de compilation dans le fichier de configuration `Cargo.toml`. Pour
+le cas spécifique de la variable d'environnement `RUSTC_WRAPPER`, utilisée par
+exemple pour générer une partie du code ou pour invoquer un outil externe avant
+la compilation, il est préférable d'utiliser la fonctionnalité de *scripts de
 compilation* de Cargo.
 
 > ### Règle {{#check DENV-CARGO-ENVVARS | Conservation des valeurs par défaut des variables d'environnement à l'exécution de cargo}}
@@ -170,15 +174,15 @@ compilation* de Cargo.
 ### Clippy
 
 [Clippy] est un outil permettant la vérification de nombreux *lints* (*bugs*,
-style, problèmes de performances, etc.). Depuis que la chaîne d'outils stable en
-version 1.29, `clippy` peut être installé dans l'environnement `rustup` stable.
-Il est aussi recommandé d'installer `clippy` en tant que composant
-(`rustup component add clippy`) dans la chaîne d'outils stable plutôt que de
-l'installer comme une dépendance de chaque projet.
+style et lisibilité du code, problèmes de performances, etc.). Depuis la chaîne
+d'outils stable en version 1.29, `clippy` peut être installé dans
+l'environnement `rustup` stable. Il est aussi recommandé d'installer `clippy` en
+tant que composant (`rustup component add clippy`) dans la chaîne d'outils
+stable plutôt que de l'installer comme une dépendance de chaque projet.
 
 L'outil fournit plusieurs catégories de *lints*, selon le type de problème qu'il
 vise à détecter dans le code. Les avertissements doivent être revérifiés par le
-programmeur avant d'appliquer la réparation suggérée par `clippy`, en
+développeur avant d'appliquer la réparation suggérée par `clippy`, en
 particulier dans le cas des *lints* de la catégorie `clippy::nursery` puisque
 ceux-ci sont encore en cours de développement et de mise au point.
 
@@ -197,7 +201,7 @@ mentionne certaines limitations parmi lesquelles un support partiel des macros
 (déclaration et utilisation). L'option `--check`, qui affiche les différences
 de formatage entre le code actuel et le code proposé, doit être utilisé. À la
 suite de cette première utilisation, l'utilisateur doit vérifier les
-changements, puis les éventuellement les valider les en réinvoquant l'outil sans
+changements, puis éventuellement les valider en réinvoquant l'outil sans
 option.
 
 En résumé :
@@ -220,7 +224,7 @@ single_line_if_else_max_width = 40
 ```
 
 Pour plus d'informations à propos des règles de convention de style que
-`rustfmt` propose, voir le *[Rust Style Guide]*(https://github.com/rust-dev-tools/fmt-rfcs/blob/master/guide/guide.md).
+`rustfmt` propose, voir le [*Rust Style Guide*](https://github.com/rust-dev-tools/fmt-rfcs/blob/master/guide/guide.md).
 
 > ### Règle {{#check DENV-FORMAT | Utilisation d'un outil de formatage (rustfmt)}}
 >
@@ -264,7 +268,7 @@ $ cargo fix --edition-idioms
 Il est important de noter que l'outil ne fournit que peu de garanties quant
 à la correction (*soundness*) des réparations proposées. Dans une certaine
 configuration, certaines réparations (comme celles proposées avec l'option
-`--edition-idions`) sont connues pour casser la compilation ou pour modifier
+`--edition-idioms`) sont connues pour casser la compilation ou pour modifier
 la sémantique d'un programme dans certains cas.
 
 > ### Règle {{#check DENV-AUTOFIX | Vérification manuelle des réparations automatiques}}
@@ -278,6 +282,6 @@ la sémantique d'un programme dans certains cas.
 ### Autres
 
 D'autres outils ou sous-commandes `cargo` utiles pour renforcer la sécurité
-d'un programme, que ce soit en cherchant des motifs de code particulier ou en
-fournissant des commandes de test ou de *fuzzing*, existent. Nous en discutons
-dans les chapitres suivants en fonction de leur portée et de leurs objectifs.
+d'un programme existent, par exemple, en recherchant des motifs de code
+particuliers. Nous en discutons dans les chapitres suivants en fonction de leurs
+portées et de leurs objectifs.

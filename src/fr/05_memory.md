@@ -11,12 +11,13 @@ versions plus anciennes du compilateur).
 
 ## `Forget` et fuites de mémoire
 
-Tandis que la façon classique pour la mémoire d'être récupérée est qu'une
-variable sorte de la portée lexicale courante, Rust fournit des fonctions
-spéciales pour réclamer manuellement la mémoire : les fonctions `forget` et
-`drop` du module `std::mem` (ou `core::mem`). `drop` déclenche simplement une
-récupération prématurée de la mémoire tout en appelant les destructeurs associés
-lorsque nécessaire, `forget` quant à elle n'appelle pas ces destructeurs.
+En général, la mémoire est automatiquement récupérée en Rust lorsqu'une variable
+sort de la portée lexicale courante. En complément de ce mécanisme, Rust fournit
+des fonctions spéciales pour réclamer manuellement la mémoire : les fonctions
+`forget` et `drop` du module `std::mem` (ou `core::mem`). `drop` déclenche
+simplement une récupération prématurée de la mémoire tout en appelant les
+destructeurs associés lorsque nécessaire, `forget` quant à elle n'appelle pas
+ces destructeurs.
 
 ```rust
 let pair = ('↑', 0xBADD_CAFEu32);
@@ -58,9 +59,9 @@ sensibles en mémoire. C'est pourquoi `forget` doit être considérée comme
 
 La bibliothèque standard inclut d'autres moyens d'*oublier* une valeur :
 
-- `Box::leak` pour libérer une ressource,
+- `Box::leak` pour libérer une ressource ;
 - `Box::into_raw` pour exploiter une valeur dans un bloc *unsafe*, notamment
-  dans une FFI,
+  dans une FFI ;
 - `ManuallyDrop` (dans `std::mem` ou `core::mem`) pour assurer la libération
   manuelle d'une valeur.
 
@@ -87,18 +88,17 @@ la ressource concernée du compilateur au développeur.
 > ### Règle {{#check MEM-INTOFROMRAW | Appel systématique à `from_raw` pour les valeurs créées avec `into_raw`}}
 >
 > Dans un développement sécurisé en Rust, tout pointeur créé par un appel à
-> `into_raw` (ou `into_raw_nonnull`) depuis un des types suivants :
+> `into_raw` (ou `into_raw_nonnull`) depuis un des types suivants doit
+> finalement être transformé en valeur avec l'appel à la fonction `from_raw`
+> correspondant, pour permettre sa libération :
 > 
-> - `std::boxed::Box` (ou `alloc::boxed::Box`),
-> - `std::rc::Rc` (ou `alloc::rc::Rc`),
-> - `std::rc::Weak` (ou `alloc::rc::Weak`),
-> - `std::sync::Arc` (ou `alloc::sync::Arc`),
-> - `std::sync::Weak` (ou `alloc::sync::Weak`),
-> - `std::ffi::CString`,
-> - `std::ffi::OsString`,
->
-> doit finalement être transformé en valeur avec l'appel à la fonction
-> `from_raw` correspondant, pour permettre sa libération.
+> - `std::boxed::Box` (ou `alloc::boxed::Box`) ;
+> - `std::rc::Rc` (ou `alloc::rc::Rc`) ;
+> - `std::rc::Weak` (ou `alloc::rc::Weak`) ;
+> - `std::sync::Arc` (ou `alloc::sync::Arc`) ;
+> - `std::sync::Weak` (ou `alloc::sync::Weak`) ;
+> - `std::ffi::CString` ;
+> - `std::ffi::OsString`.
 >
 > ```rust
 > let boxed = Box::new(String::from("Crab"));
@@ -132,7 +132,7 @@ la ressource concernée du compilateur au développeur.
 
 ## Mémoire non initialisée
 
-Par défaut, Rust force à ce que toutes les valeurs soient initialisées, pour
+Par défaut, le langage Rust impose que toutes les valeurs soient initialisées, pour
 prévenir l'utilisation de mémoire non initialisée (à l'exception de
 l'utilisation de `std::mem::uninitialized` ou de `std::mem::MaybeUninit`).
 
@@ -140,23 +140,23 @@ l'utilisation de `std::mem::uninitialized` ou de `std::mem::MaybeUninit`).
 >
 > La fonction `std::mem::uninitialized` (dépréciée depuis la version 1.38) ou
 > le type `std::mem::MaybeUninit` (stabilisé dans la version 1.36) ne doivent
-> pas être utilisées, ou bien explicitement justifiées si nécessaire.
+> pas être utilisés, ou bien explicitement justifiés si nécessaire.
 
 L'utilisation de mémoire non initialisée peut induire deux problèmes de
 sécurité distincts :
 
-- La libération de mémoire non initialisée (étant également un problème de
-  sûreté mémoire),
+- la libération de mémoire non initialisée (étant également un problème de
+  sûreté mémoire) ;
 - la non-libération de mémoire initialisée.
 
 > ### Note
 >
 > Le type `std::mem::MaybeUninit` est une amélioration de la fonction
-> `std::mem::uninitialized`. En effet, il rend le relâchement des valeurs non
+> `std::mem::uninitialized`. En effet, il rend la libération des valeurs non
 > initialisées bien plus difficile. Toutefois, cela ne change pas le second
 > problème : la non-libération de la mémoire initialisée est bien possible.
 > C'est problématique en particulier si l'on considère l'utilisation de `Drop`
-> pour effacer les valeurs sensibles stockées en mémoire.
+> pour effacer des valeurs sensibles.
 
 ## Effacement sécurisé des informations sensibles
 
@@ -171,7 +171,7 @@ en particulier dans lorsque le code Rust est utilisé *via* des FFI.
 > `std::ptr::write_volatile` ou bien la *crate* `zeroize`.
 
 Le code suivant montre comment définir un type entier qui sera remis à zéro
-quand libéré, en utilisant le trait `Drop` :
+à sa libération, en utilisant le trait `Drop` :
 
 ```rust
 /// Exemple : newtype pour u32, réécrit à 0 quand libéré

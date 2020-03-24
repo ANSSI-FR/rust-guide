@@ -2,26 +2,26 @@
 
 ## Nommage
 
-La bibliothèque standard est *de facto* le standard pour le nommage des éléments
-des programmes écrits en Rust. Un effort a été fait pour formaliser ces
-conventions de nommage, d'abord dans la [RFC 430], puis dans le document des
-*[Rust API Guidelines]*.
+La convention de nommage employée par la bibliothèque standard est *de facto* le
+standard pour le nommage des éléments des programmes écrits en Rust. Un effort a
+été fait pour formaliser ces conventions de nommage, d'abord dans la [RFC 430],
+puis dans le document des *[Rust API Guidelines]*.
 
 La règle de base consiste à utiliser :
 
-- La *`UpperCamelCase`* pour les types, traits et valeurs d'énumérations,
-- la *`snake_case`* pour les fonctions, méthodes, macros, variables et modules,
-- la *`SCREAMING_SNAKE_CASE`* pour les variables statiques et les constantes,
+- la *`UpperCamelCase`* pour les types, traits et valeurs d'énumérations ;
+- la *`snake_case`* pour les fonctions, méthodes, macros, variables et modules ;
+- la *`SCREAMING_SNAKE_CASE`* pour les variables statiques et les constantes ;
 - la *`lowercase`* pour les durées de vie (*lifetimes*).
 
-Les [Rust API Guidelines] recommandes également des conventions de nommages
+Les [Rust API Guidelines] recommandent également des conventions de nommage
 plus précises pour certaines constructions particulières :
 
-- (C-CONV) pour les méthodes de conversion (`as_`, `to_`, `into_`),
-- (C-GETTER) pour les accesseurs,
-- (C-ITER) pour les méthodes produisant des itérateurs,
-- (C-ITER-TY) pour les types itérateur,
-- (C-FEATURE) pour les noms de *features*,
+- (C-CONV) pour les méthodes de conversion (`as_`, `to_`, `into_`) ;
+- (C-GETTER) pour les accesseurs ;
+- (C-ITER) pour les méthodes produisant des itérateurs ;
+- (C-ITER-TY) pour les types itérateur ;
+- (C-FEATURE) pour les noms de *features* ;
 - (C-WORD-ORDER) pour la cohérence sur l'ordre des mots.
 
 > ### Règle {{#check LANG-NAMING | Respect des conventions de nommage}}
@@ -30,7 +30,7 @@ plus précises pour certaines constructions particulières :
 > nommage décrites dans les [Rust API Guidelines].
 
 [rfc 430]: https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md
-[rust api guidelines]: https://rust-lang-nursery.github.io/api-guidelines/
+[rust api guidelines]: https://rust-lang.github.io/api-guidelines/
 
 ## Code *unsafe*
 
@@ -55,11 +55,11 @@ langage fournit le mot-clé `unsafe`.
 >  requis. Un *wrapper* "sûr" doit être défini pour que le code C soit
 >  finalement appelé de façon souple et sûre.
 >
->  - Pour la programmation des systèmes embarqués, les registres et autres
->  ressources sont souvent accéder au travers d'adresses mémoire fixées. Dans ce
->  cas, des blocs `unsafe` sont nécessaires afin de pouvoir initialiser et
->  déréférencer des pointeurs en Rust pour ces adresses. Afin de minimiser le
->  nombre de déclarations `unsafe` pour permettre au programmeur de facilement
+>  - Pour la programmation des systèmes embarqués, on accède souvent aux
+>  registres et à d'autres ressources au travers d'adresses mémoire fixées
+>  Dans ce cas, des blocs `unsafe` sont nécessaires afin de pouvoir initialiser
+>  et déréférencer des pointeurs en Rust pour ces adresses. Afin de minimiser le
+>  nombre de déclarations `unsafe` pour permettre au développeur de facilement
 >  identifier les accès critiques, une abstraction adaptée (structure de
 >  données ou module) doit être mise en place.
 >
@@ -115,7 +115,7 @@ else { println!("{}", res); }
 # }
 ```
 
-> ### Règle {{#check LANG-ARITH | Utilisation des opérations arithmétiques appropriées au regarde des potentiels dépassements}}
+> ### Règle {{#check LANG-ARITH | Utilisation des opérations arithmétiques appropriées au regard des potentiels dépassements}}
 >
 > Lorsqu'une opération arithmétique peut produire un dépassement d'entier, les
 > fonctions spécialisées `overflowing_<op>`, `wrapping_<op>` ou le type
@@ -143,28 +143,38 @@ testé et jamais ignoré.
 > L'opérateur `?` doit être utilisé pour améliorer la lisibilité du code.
 > La macro `try!` ne doit pas être utilisée.
 
-Les *crates* [error-chain] et [failure] peuvent être utilisées pour contenir les
-types d'erreurs.
+Des *crates* tierces peuvent être utilisées pour faciliter la gestion d'erreurs.
+La plupart ([failure], [snafu], [thiserror]) proposent la création de types
+d'erreurs personnalisées qui implémentent les traits nécessaires et permettent
+l'encapsulation d'autres erreurs.
 
-[error-chain]: https://crates.io/crates/error-chain
+Une autre approche (notamment proposée dans [anyhow]) consiste à envelopper
+automatiquement les erreurs dans un seul type d'erreur universel. Une telle
+approche ne devrait pas être utilisée dans des bibliothèques ou des systèmes
+complexes parce qu'elle ne permet pas de fournir de contexte sur les erreurs
+ainsi initialement enveloppées, contrairement à la première approche.
+
 [failure]: https://crates.io/crates/failure
+[snafu]: https://crates.io/crates/snafu
+[thiserror]: https://crates.io/crates/thiserror
+[anyhow]: https://crates.io/crates/anyhow
 
 ### *Panics*
 
 La gestion explicite des erreurs (`Result`) doit être préférée à la place de
-l'appel de la macro `panic`. La cause de l'erreur doit être rendue disponible,
-et les erreurs trop génériques doivent être évitées.
+l'utilisation de la macro `panic`. La cause de l'erreur doit être rendue
+disponible, et les erreurs trop génériques doivent être évitées.
 
 Les *crates* fournissant des bibliothèques ne doivent pas utiliser de fonctions
 ou d'instructions qui peuvent échouer en engendrant un `panic`.
 
 Des motifs courants de code qui provoquent des `panic` sont :
 
-- Une utilisation de `unwrap` ou de `expect`,
-- une utilisation de `assert`,
-- un accès non vérifié à un tableau,
-- un dépassement d'entier (en mode *debug*),
-- une division par zéro,
+- une utilisation de `unwrap` ou de `expect` ;
+- une utilisation de `assert` ;
+- un accès non vérifié à un tableau ;
+- un dépassement d'entier (en mode *debug*) ;
+- une division par zéro ;
 - l'utilisation de `format!` pour le formatage d'une chaîne de caractères.
 
 > ### Règle {{#check LANG-NOPANIC | Non-utilisation de fonctions qui peuvent causer des `panic`}}
@@ -197,13 +207,14 @@ comportement indéfini.
 
 > ### Règle {{#check LANG-FFIPANIC | Gestion correcte des `panic!` dans les FFI}}
 >
-> Le code Rust appelé depuis une FFI doit soit être assuré de na pas paniquer,
+> Le code Rust appelé depuis une FFI doit soit être assuré de ne pas paniquer,
 > soit utiliser `catch_unwind` ou le module `std::panic` pour s'assurer qu'il
-> ne va pas abandonner un traitement et que l'exécution ne retourne dans le
+> ne va pas abandonner un traitement puis que l'exécution retourne dans le
 > langage appelant dans un état instable.
 
-Il est porté à l'attention du programmeur que `catch_unwind` ne va traiter que
-les cas de `panic`, en préservant d'autres types d'abandons de processus.
+Il est porté à l'attention du développeur que `catch_unwind` ne va traiter que
+les cas de `panic`, et va préserver les abandons de processus causés par
+d'autres raisons.
 
 <!-- ## Macros -->
 

@@ -324,7 +324,6 @@ embedded systems or kernel-level programming). Another advantage of using Rust
 pointers in FFI is that any load of the pointed value is clearly marked inside
 an `unsafe` block or function.
 
-
 > ### Recommendation {{#check FFI-NOREF | Do not use reference types but pointer types}}
 >
 > In a secure Rust development, the Rust code should not use references types
@@ -339,14 +338,19 @@ an `unsafe` block or function.
 >   variants or from C++ compiled in an environment where `extern "C"`
 >   references are encoded as pointers.
 
+<!-- -->
 
 > ### Rule {{#check FFI-CKREF | Do not use unchecked foreign references}}
 >
 > In a secure Rust development, every foreign references that is transmitted to
 > Rust through FFI must be **checked on the foreign side** either automatically
 > (for instance, by a compiler) or manually.
->
+> 
+> Exceptions include Rust references in an opaque wrapping that is created
+> and manipulated only from the Rust side and `Option`-wrapped references
+> (see Note below).
 
+<!-- -->
 
 > ### Rule {{#check FFI-CKPTR | Check foreign pointers}}
 >
@@ -386,7 +390,7 @@ void add_in_place(uint32_t *a, uint32_t b);
 
 int main() {
     uint32_t x = 25;
-    add_in_place(x, 17);
+    add_in_place(&x, 17);
     printf("%" PRIu32 " == 42", x);
     return 0;
 }
@@ -471,7 +475,7 @@ environment.
 > ### Recommendation {{#check FFI-NOENUM | Do not use incoming Rust `enum` at FFI boundary}}
 >
 > In a secure Rust development, when interfacing with a foreign language,
-> the Rust code should not accept incoming values of type Rust `enum`.
+> the Rust code should not accept incoming values of any Rust `enum` type.
 >
 > Exceptions include Rust `enum` types that are:
 >

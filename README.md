@@ -1,6 +1,6 @@
 # Guide to develop secure applications with Rust
 
-[![Build Status](https://travis-ci.org/ANSSI-FR/rust-guide.svg?branch=master)](https://https://travis-ci.org/ANSSI-FR/rust-guide)
+[![Build Status](https://travis-ci.org/ANSSI-FR/rust-guide.svg?branch=master)](https://travis-ci.org/ANSSI-FR/rust-guide)
 
 ## Objectives
 
@@ -71,8 +71,8 @@ This document is published under the [Open Licence 2.0](LICENCE.md).
 
 - [The Rust programming language](https://www.rust-lang.org)
 - [The Rust book](https://doc.rust-lang.org/stable/book)
-- [About Rust editions](https://rust-lang-nursery.github.io/edition-guide)
-- [Rust API guidelines](https://rust-lang-nursery.github.io/api-guidelines)
+- [The Edition Guide](https://doc.rust-lang.org/edition-guide/)
+- [Rust API Guidelines](https://rust-lang.github.io/api-guidelines)
 
 One can also find an up-to-date list of various book resources about Rust and
 associated tools in the [Rust documentation main

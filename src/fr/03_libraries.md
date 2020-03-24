@@ -1,7 +1,7 @@
 # Bibliothèques
 
-En complément à la bibliothèque standard du langage, Rust fournit un moyen
-pratique d'intégrer des bibliothèques dans un projet, grâce à `cargo`. Les
+En complément de la bibliothèque standard du langage, l'outil `cargo` fournit un
+moyen pratique d'intégrer des bibliothèques tierces dans un projet en Rust. Ces
 bibliothèques, appelées *crates* dans l'écosystème Rust, sont importées depuis
 le dépôt central de composants en sources ouvertes [crates.io](https://crates.io).
 
@@ -9,7 +9,7 @@ Il doit être noté que la qualité (en termes de sécurité, de performances, d
 lisibilité, etc.) des *crates* publiées est très variable. De plus, leur
 maintenance peut être irrégulière ou interrompue. L'usage de chaque composant
 de ce dépôt doit donc être justifié, et le développeur doit également valider le
-bon respect des règles du présent guide sur le code en question. Plusieurs
+bon respect des règles du présent guide sur le code correspondant. Plusieurs
 outils peuvent l'aider dans cette tâche.
 
 ## Cargo-outdated
