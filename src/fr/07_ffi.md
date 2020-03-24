@@ -268,7 +268,7 @@ De l'autre côté, les types entiers (`u*`/`i*`), les types composés *packés* 
 ne contiennent pas de champs de type non-robuste, sont par exemple des
 *types robustes*.
 
-Les types non-robustes présentent des difficultés lors de l'interfaçage entre
+Les types non-robustes engendrent des difficultés lors de l'interfaçage entre
 deux langages. Cela revient à décider **quel langage des deux est le plus
 responsable pour assurer la validité des valeurs hors bornes** et comment
 mettre cela en place.
@@ -358,8 +358,8 @@ l'aide Microsoft SAL par exemple.
 >
 > Les exceptions sont :
 >
-> - les références qui sont opaques dans le langage extern et qui sont seulement
->   manipulées du côté Rust ;
+> - les références qui sont opaques dans le langage externe et qui sont
+>   seulement manipulées du côté Rust ;
 > - les références *wrappées* dans un type `Option` (voir note ci-dessous) ;
 > - les références liées à des références sûres dans le langage externe, par
 >   exemple dans des variantes du C ou dans du code compilé en C++ dans un
@@ -375,20 +375,20 @@ développement au niveau noyau). Un autre avantage à utiliser les pointeurs Rus
 dans des FFI est que tout chargement de valeur pointée est clairement marqué
 comme appartenant à un bloc ou à une fonction `unsafe`.
 
-> ### Règle {{#check FFI-CKPTR | Vérification des pointeurs externs}}
+> ### Règle {{#check FFI-CKPTR | Vérification des pointeurs externes}}
 >
 > Dans un développement sécurisé en Rust, tout code Rust qui déréférence un
-> pointeur extern doit vérifier leur validité au préalable.
+> pointeur externe doit vérifier sa validité au préalable.
 > En particulier, les pointeurs doivent être vérifiés comme étant non nuls avant
 > toute utilisation.
 >
-> Des approches plus strictes sont recommandées lorsque possible. Elles
+> Des approches plus strictes sont recommandées lorsque cela est possible. Elles
 > comprennent la vérification des pointeurs comme appartenant à une plage
 > d'adresses mémoire valides ou comme étant des pointeurs avérés (étiquetés ou
-> signés, approche particulièrement applicable si la valeur pointée est
-> seulement manipulée depuis le code Rust.
+> signés). Cette approche est particulièrement applicable si la valeur pointée
+> est seulement manipulée depuis le code Rust.
 
-Le code suivant est un simple exemple d'utilisation de pointeur extern dans une
+Le code suivant est un simple exemple d'utilisation de pointeur externe dans une
 fonction Rust exportée :
 
 ```rust,noplaypen
@@ -427,7 +427,7 @@ int main() {
 >
 > Les valeurs de type `Option<&T>` ou `Option<&mut T>`, pour tout T tel que
 > `T: Sized`, sont admissibles dans un FFI à la place de pointeurs avec
-> confrontation explicite avec la valeur nulle. En raison de la garantie de Rust
+> comparaison explicite avec la valeur nulle. En raison de la garantie de Rust
 > vis-à-vis des optimisations de pointeurs pouvant être nuls, un pointeur nul
 > est acceptable du côté C. La valeur C `NULL` est comprise par Rust comme la
 > valeur `None`, tandis qu'un pointeur non nul est encapsulé dans le
@@ -447,9 +447,9 @@ sécurité.
 > les valeurs sont amenées à traverser les frontières d'une FFI doit être
 > marqué comme `extern` (si possible avec l'ABI spécifiée) et comme `unsafe`.
 
-Les pointeurs de fonction en Rust sont bien plus semblables aux références
-qu'aux pointeurs simples. En particulier, la validité des pointeurs de fonction
-ne peut pas être vérifiée directement du côté Rust. Toutefois, Rust offre deux
+Les pointeurs de fonction en Rust ressemblent bien plus aux références qu'aux
+pointeurs simples. En particulier, la validité des pointeurs de fonction ne peut
+pas être vérifiée directement du côté Rust. Toutefois, Rust offre deux
 alternatives possibles :
 
 - l'utilisation de pointeurs de fonctions *wrappé* dans une valeur de type
@@ -614,16 +614,16 @@ de possibles réclamations de la mémoire qui lui est associée.
 >
 > Dans un développement sécurisé en Rust, le code Rust ne doit pas implémenter
 > `Drop` pour les valeurs de types qui sont directement transmis à du code
-> externe (c'est-à-dire pas par pointeur ou par référence).
+> externe (c'est-à-dire ni par pointeur, ni par référence).
 
 En fait, il est même recommandé de n'utiliser que des types qui implémentent
 `Copy`. Il faut noter que `*const T` est `Copy` même si `T` ne l'est pas.
 
-Si ne pas récupérer la mémoire et les ressources est mauvais, en termes de
-sécurité, utiliser de la mémoire récupérée plus d'une fois ou libérer deux fois
-certaines ressources peut être pire. Afin de libérer correctement une ressource
-une seule et unique fois, il faut savoir quel langage est responsable de la
-gestion de son allocation et de sa libération.
+Si ne pas récupérer la mémoire et les ressources est une mauvaise pratique, en
+termes de sécurité, utiliser de la mémoire récupérée plus d'une fois ou libérer
+deux fois certaines ressources peut être pire. Afin de libérer correctement une
+ressource une seule et unique fois, il faut savoir quel langage est responsable
+de la gestion de son allocation et de sa libération.
 
 > ### Règle {{#check FFI-MEM-OWNER | Identification du langage responsable de la libération des données dans les FFI}}
 >
@@ -638,10 +638,10 @@ gestion de son allocation et de sa libération.
 
 L'identification d'un langage responsable de la gestion des données en mémoire
 ne suffit pas. Il reste à s'assurer de la durée de vie correcte de ces données,
-principalement de s'assurer qu'elles ne sont plus utilisées après leur
-libération. C'est une étape bien plus difficile. Lorsque le langage externe est
-responsable de la mémoire, la même approche est de fournir un *wrapper* sûr
-autour du type externe.
+principalement qu'elles ne sont plus utilisées après leur libération. C'est une
+étape bien plus difficile. Lorsque le langage externe est responsable de la
+mémoire, la même approche est de fournir un *wrapper* sûr autour du type
+externe.
 
 > ### Recommandation {{#check FFI-MEM-WRAPPING | Encapsulation des données externes dans un type `Drop`}}
 >
