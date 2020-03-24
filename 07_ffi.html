@@ -148,11 +148,11 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#foreign-function-interface-ffi" id="foreign-function-interface-ffi">Foreign Function Interface (FFI)</a></h1>
-<p>Rust approach to interfacing with other languages relies on a strong
+<p>The Rust approach to interfacing with other languages relies on a strong
 compatibility with C. However, this boundary is by its very nature <strong>unsafe</strong>
 (see <a href="https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html">Rust Book: Unsafe Rust</a>).</p>
-<p>Functions that are marked <code>extern</code> are made compatible with C code at the
-compilation. They may be called from C code with any parameter.
+<p>Functions that are marked <code>extern</code> are made compatible with C code during
+compilation. They may be called from C code with any parameter values.
 The exact syntax is <code>extern &quot;&lt;ABI&gt;&quot;</code> where ABI is a calling convention and
 depends on the target platform. The default one is <code>C</code> which corresponds to
 a standard C calling convention on the target platform.</p>
@@ -346,11 +346,11 @@ the specific target platform.</p>
 <h3><a class="header" href="#non-robust-types-references-function-pointers-enums" id="non-robust-types-references-function-pointers-enums">Non-robust types: references, function pointers, enums</a></h3>
 <p>A <em>trap representation</em> of a particular type is a representation (pattern of
 bits) that respects the type's representation constraints (such as size and
-alignment) but does not represent a valid value of this type and lead to
+alignment) but does not represent a valid value of this type and leads to
 undefined behavior.</p>
-<p>In simple term, if a Rust variable is set to such an invalid value,
-anything can happen from simple program crash to arbitrary code execution. When
-writing safe Rust, this cannot happen (except through a bug in the Rust
+<p>In simple terms, if a Rust variable is set to such an invalid value,
+anything can happen from a simple program crash to arbitrary code execution.
+When writing safe Rust, this cannot happen (except through a bug in the Rust
 compiler). However, when writing unsafe Rust and in particular in FFI, it is
 really easy.</p>
 <p>In the following, <strong>non-robust types</strong> are types that have such trap
@@ -409,15 +409,6 @@ FFI may break Rust's memory safety. Because their “unsafety” is more explici
 pointers are preferred over Rust references when binding to another language.</p>
 <p>On the one hand, reference types are very non-robust: they allow only pointers
 to valid memory objects. Any deviation leads to undefined behavior.</p>
-<blockquote>
-<h3><a class="header" href="#rule-a-idffi-ckrefaffi-ckref" id="rule-a-idffi-ckrefaffi-ckref">Rule <a id="FFI-CKREF"></a>FFI-CKREF</a></h3>
-<p>In a secure Rust development, every foreign references that is transmitted to
-Rust through FFI must be <strong>checked on the foreign side</strong> either automatically
-(for instance, by a compiler) or manually.</p>
-<p>Exceptions include Rust references in an opaque wrapping that is
-created and manipulated only from the Rust side and <code>Option</code>-wrapped reference
-(see Note below).</p>
-</blockquote>
 <p>When binding to and from C, the problem is particularly severe because C has
 no references (in the sense of valid pointers) and the compiler does not offer
 any safety guarantee.</p>
@@ -428,6 +419,12 @@ against pointer/reference confusion.</p>
 <p>Rust references may be used reasonably with other C-compatible languages
 including C variants allowing for non-null type checking, e.g. Microsoft SAL
 annotated code.</p>
+<p>On the other hand, Rust's <em>pointer types</em> may also lead to undefined behaviors
+but are more verifiable, mostly against <code>std/core::ptr::null()</code> (C's <code>(void*)0</code>)
+but also in some context against a known valid memory range (particularly in
+embedded systems or kernel-level programming). Another advantage of using Rust
+pointers in FFI is that any load of the pointed value is clearly marked inside
+an <code>unsafe</code> block or function.</p>
 <blockquote>
 <h3><a class="header" href="#recommendation-a-idffi-norefaffi-noref" id="recommendation-a-idffi-norefaffi-noref">Recommendation <a id="FFI-NOREF"></a>FFI-NOREF</a></h3>
 <p>In a secure Rust development, the Rust code should not use references types
@@ -442,12 +439,17 @@ variants or from C++ compiled in an environment where <code>extern &quot;C&quot;
 references are encoded as pointers.</li>
 </ul>
 </blockquote>
-<p>On the other hand, Rust's <em>pointer types</em> may also lead to undefined behaviors
-but are more verifiable, mostly against <code>std/core::ptr::null()</code> (C's <code>(void*)0</code>)
-but also in some context against a known valid memory range (particularly in
-embedded systems or kernel-level programming). Another advantage of using Rust
-pointers in FFI is that any load of the pointed value is clearly marked inside
-an <code>unsafe</code> block or function.</p>
+<!-- -->
+<blockquote>
+<h3><a class="header" href="#rule-a-idffi-ckrefaffi-ckref" id="rule-a-idffi-ckrefaffi-ckref">Rule <a id="FFI-CKREF"></a>FFI-CKREF</a></h3>
+<p>In a secure Rust development, every foreign references that is transmitted to
+Rust through FFI must be <strong>checked on the foreign side</strong> either automatically
+(for instance, by a compiler) or manually.</p>
+<p>Exceptions include Rust references in an opaque wrapping that is created
+and manipulated only from the Rust side and <code>Option</code>-wrapped references
+(see Note below).</p>
+</blockquote>
+<!-- -->
 <blockquote>
 <h3><a class="header" href="#rule-a-idffi-ckptraffi-ckptr" id="rule-a-idffi-ckptraffi-ckptr">Rule <a id="FFI-CKPTR"></a>FFI-CKPTR</a></h3>
 <p>In a secure Rust development, any Rust code that dereferences a foreign
@@ -555,7 +557,7 @@ environment.</p>
 <blockquote>
 <h3><a class="header" href="#recommendation-a-idffi-noenumaffi-noenum" id="recommendation-a-idffi-noenumaffi-noenum">Recommendation <a id="FFI-NOENUM"></a>FFI-NOENUM</a></h3>
 <p>In a secure Rust development, when interfacing with a foreign language,
-the Rust code should not accept incoming values from Rust <code>enum</code> types.</p>
+the Rust code should not accept incoming values of any Rust <code>enum</code> type.</p>
 <p>Exceptions include Rust <code>enum</code> types that are:</p>
 <ul>
 <li>opaque in the foreign language and only manipulated from the
@@ -635,7 +637,7 @@ pointer or reference).</p>
 <code>Copy</code> even if T is not.</p>
 <p>However if not reclaiming memory and resources is bad, using reclaimed memory or
 reclaiming twice some resources is worst from a security point of view. In order
-to correctly release a resource only once one must known which language is
+to correctly release a resource only once, one must known which language is
 responsible for allocating and deallocating memory.</p>
 <blockquote>
 <h3><a class="header" href="#rule-a-idffi-mem-owneraffi-mem-owner" id="rule-a-idffi-mem-owneraffi-mem-owner">Rule <a id="FFI-MEM-OWNER"></a>FFI-MEM-OWNER</a></h3>
@@ -656,7 +658,8 @@ wrapper around the foreign type:</p>
 <h3><a class="header" href="#recommendation-a-idffi-mem-wrappingaffi-mem-wrapping" id="recommendation-a-idffi-mem-wrappingaffi-mem-wrapping">Recommendation <a id="FFI-MEM-WRAPPING"></a>FFI-MEM-WRAPPING</a></h3>
 <p>In a secure Rust development, any non-sensitive foreign piece of data that are
 allocated and deallocated in the foreign language should be encapsulated in a
-<code>Drop</code> type in such a way as to provide automatic deallocation in Rust.</p>
+<code>Drop</code> type in such a way as to provide automatic deallocation in Rust,
+through an automatic call to the foreing language deallocation routine.</p>
 </blockquote>
 <p>A simple example of Rust wrapping over an external opaque type:</p>
 <pre><code class="language-rust ignore noplaypen"><span class="boring">use std::ops::Drop;
@@ -828,7 +831,7 @@ int main() {
 <h2><a class="header" href="#panics-with-foreign-code" id="panics-with-foreign-code">Panics with foreign code</a></h2>
 <p>When calling Rust code from another language (e.g. C), the Rust code must
 be careful to never panic.
-Unwinding from Rust code into foreign code results is <strong>undefined behavior</strong>.</p>
+Stack unwinding from Rust code into foreign code results in <strong>undefined behavior</strong>.</p>
 <blockquote>
 <h3><a class="header" href="#rule-a-idffi-nopanicaffi-nopanic" id="rule-a-idffi-nopanicaffi-nopanic">Rule <a id="FFI-NOPANIC"></a>FFI-NOPANIC</a></h3>
 <p>Rust code called from FFI must either ensure the function cannot panic, or use

@@ -152,7 +152,7 @@
                         <h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
 <p><a href="https://www.rust-lang.org">Rust</a> is a multi-paradigm language with a focus on
 memory safety.</p>
-<p>It aims to be systems programming oriented, allowing fine-grained memory
+<p>It aims to be system programming oriented, allowing fine-grained memory
 management without garbage collection but also without tedious and error-prone
 manual memory allocations and deallocations. It achieves this goal by means of
 its ownership system (mostly related to variable aliasing). At any point of a
@@ -160,23 +160,23 @@ Rust program, the compiler tracks how many variables refer to a given data, and
 enforces a set of rules which enable automatic memory management, memory safety
 and data-race free programs.</p>
 <p>The language also focuses on performance, with powerful compilation
-optimizations and language constructs that allows writing zero-cost abstraction
+optimizations and language constructs that allow writing zero-cost abstraction
 code.</p>
 <p>Moreover, the Rust language provides some high-level programming features.
-Thanks to higher-order functions, closures, iterators, etc., it allows writing
+Thanks to higher-order functions, closures, iterators, etc., it allows to write
 program parts in the same vein as in functional programming languages.
 Besides, static typing discipline, type inference, and ad hoc polymorphism (in
 the form of traits) are other ways Rust provides to build libraries and programs
 in a safe manner.</p>
 <p>Nevertheless, due to its versatility, the language possibly offers some
 constructions that, if not used properly, can introduce security problems,
-either by or by making code misinterpreted by the programmer or a reviewer. In
-addition, as for every tool in the compilation or software verification field,
-the tools used to develop, compile and execute programs can expose certain
-features or configurations that, if misused, may lead to vulnerabilities.</p>
+by making code misinterpreted by the programmer or a reviewer. In addition, as
+for every tool in the compilation or software verification field, the tools used
+to develop, compile and execute programs can expose certain features or
+configurations that, if misused, may lead to vulnerabilities.</p>
 <p>Thus, the object of this document is to compile hints and recommendations to
 stay in a safe zone for secure applications development while taking advantage
-of the range of possibilities Rust language can offer.</p>
+of the range of possibilities the Rust language can offer.</p>
 <h2><a class="header" href="#target-audience" id="target-audience">Target Audience</a></h2>
 <p>The guide intents to group recommendations that should be applied for
 application development with strong security level requirements. Anyway, it can
@@ -186,8 +186,9 @@ platform are not invalidated due to unsafe, misleading or unclear feature usage.
 already plenty of good learning resources for this purpose
 (see for instance the
 <a href="https://doc.rust-lang.org">Rust documentation main page</a>).
-The purpose is rather to guide the programmer and to inform them about certain
-pitfalls. These recommendations form a complement to the good level of trust
+The purpose is rather to guide the programmer and inform him about some pitfalls
+he may encounter.
+These recommendations form a complement to the good level of trust
 the Rust language already provides. That said, recalls are sometimes necessary
 for clarity, and the experienced Rust programmer may rely solely on
 highlighted inserts (<em>Rule</em>, <em>Recommendation</em>, <em>Warning</em>, etc.).</p>
@@ -199,15 +200,17 @@ All contributions for future versions are welcome, whether in the form of direct
 propositions (<em>pull requests</em>) or in the form of suggestions and discussions
 (<em>issues</em>).</p>
 <h2><a class="header" href="#structure-of-the-document" id="structure-of-the-document">Structure of the Document</a></h2>
-<p>The aim with the structure of this document is to consider separately different
-phases of a typical (and simplified) development process. Firstly, we provide
-some advices for using tools of the Rust ecosystem to how to take advantage
-of them for secure development. A following chapter focuses on precautions to
-take when choosing and using external libraries. Then, recommendations about the
-Rust language constructs are exposed.<!-- TODO: Finally, we introduce advices for writing
-tests for a project in Rust, and for using Rust fuzzing tools.--> A summary of
-recommendations presented throughout the document is listed at the end of this
-guide.</p>
+<p>This document considers separately different phases of a typical (and simplified)
+development process.
+Firstly, we provide some advices on how to take advantage of using tools of the
+Rust ecosystem for secure development.
+A following chapter focuses on precautions to take when choosing and using
+external libraries.
+Then, recommendations about the Rust language constructs are exposed.</p>
+<!-- TODO: Finally, we introduce advices for writing
+tests for a project in Rust, and for using Rust fuzzing tools.-->
+<p>A summary of recommendations presented throughout the document is listed at the
+end of this guide.</p>
 <h1><a class="header" href="#development-environment" id="development-environment">Development environment</a></h1>
 <h2><a class="header" href="#rustup" id="rustup">Rustup</a></h2>
 <p><a href="https://github.com/rust-lang/rustup.rs">Rustup</a> is the Rust toolchain installer. Among other things, it enables
@@ -216,38 +219,37 @@ managing additional components installation and keeping them up to date.</p>
 <blockquote>
 <h3><a class="header" href="#warning" id="warning">Warning</a></h3>
 <p>From a security perspective, <code>rustup</code> does perform all downloads over HTTPS,
-but does not validate signatures of downloads. Protection against downgrade
-attacks, certificate pinning, validation of signatures are works that are
-currently in progress. In some cases, it may be preferable to opt for
-an alternative installation method listed in the <em>Install</em> section of the
-official Rust website.</p>
+but does not yet validate signatures of downloads. Protection against
+downgrade attacks, certificate pinning, validation of signatures are still
+works in progress.
+In some cases, it may be preferable to opt for an alternative installation
+method listed in the <em>Install</em> section of the official Rust website.</p>
 </blockquote>
 <h3><a class="header" href="#rust-editions" id="rust-editions">Rust Editions</a></h3>
-<p>Several flavors, called <em>editions</em>, of the Rust language coexist.
-The concept of editions has been introduced to clarify new features
-implementation and to make them incremental. But as stated in the
-<a href="https://doc.rust-lang.org/edition-guide/">Edition Guide</a>, this doesn’t mean that new features and improvements will be
-shipped on the last edition only.</p>
-<p>However, some editions could bring new keywords and language constructs.
-Recommendations for secure applications development then remain closely
-linked to features that are used in such applications rather than the actual
-edition that is declared in it.
+<p>Several flavors, called <em>editions</em>, of the Rust language coexist.</p>
+<p>The concept of editions has been introduced to clarify new features
+implementation and to make them incremental. A new edition will be produced
+every two or three years, as stated in the <a href="https://doc.rust-lang.org/edition-guide/">Edition Guide</a>, but this doesn’t
+mean that new features and improvements will only be shipped in a new edition.</p>
+<p>Some editions bring new keywords and language constructs. Recommendations for
+secure applications development then remain closely linked to features of the
+langage, that are used in such applications, rather than to Rust editions.
 In the rest of this guide, best effort will be made to highlight constructions
 and language features that are specific to a particular Rust edition.</p>
 <blockquote>
 <h3><a class="header" href="#note" id="note">Note</a></h3>
-<p>No specific edition is recommended, as long as users follow recommendations
-that are expressed in relation to features offered by edition that has been
+<p>No specific edition is recommended, as long as users follow the
+recommendations related to the features offered by the edition that has been
 chosen.</p>
 </blockquote>
 <h3><a class="header" href="#stable-nightly-and-beta-toolchains" id="stable-nightly-and-beta-toolchains">Stable, nightly and beta toolchains</a></h3>
-<p>Orthogonally to editions that allows one to select a flavor (a set of features)
+<p>Orthogonally to editions that allow one to select a flavor (a set of features)
 of the Rust language, the Rust toolchain is provided in three different
 versions, called <em>release channels</em>:</p>
 <ul>
 <li><em>nightly</em> releases are created once a day,</li>
-<li><em>nightly</em> releases are promoted every six weeks to <em>beta</em> releases,</li>
-<li><em>beta</em> releases are promoted every six weeks to <em>stable</em> releases.</li>
+<li><em>beta</em> releases are created every six weeks, from promoted <em>nightly</em> releases,</li>
+<li><em>stable</em> releases are created every six weeks, from promoted <em>beta</em> releases.</li>
 </ul>
 <p>When playing with different toolchains, it is important to check not only what
 the default toolchain is, but also if overrides are currently set for some
@@ -297,8 +299,8 @@ described below, in the form of sub-commands.</li>
 <blockquote>
 <h3><a class="header" href="#warning-1" id="warning-1">Warning</a></h3>
 <p>Like <code>rustup</code>, <code>cargo</code> does perform all downloads over HTTPS, but does not
-validate the registry index. Ongoing discussions occur on how best protect and
-verify crates. For now, the security relies on the good security of the
+validate the registry index. Ongoing discussions occur on how to best protect
+and verify crates. For now, the security relies on the good security of the
 website <a href="https://crates.io">crates.io</a> and the GitHub hosted repository containing the
 registry index. In some cases, it may be preferable to opt for an alternative
 installation method for dependencies.</p>
@@ -322,27 +324,27 @@ using the debug profile that normally enables runtime checks (for example
 <p>The variables <code>debug-assertions</code> and <code>overflow-checks</code> must not be overridden
 in development profiles sections (<code>[profile.dev]</code> and <code>[profile.test]</code>).</p>
 </blockquote>
-<p>Cargo proposes other ways to setup configuration and change its behavior on
+<p>Cargo proposes other ways to setup its configuration and change its behavior on
 a given system. This can be very useful, but it may also be difficult to know
-and remember at a given time all of the options that are effectively used, and
+and remember at a given time all the options that are effectively used, and
 in particular passed to the compiler. At the end, this can affect the confidence
 and robustness of the build process. It is preferable to centralize compiler
 options and flags in the configuration file <code>Cargo.toml</code>. For the case of
-environment variable <code>RUSTC_WRAPPER</code>, for example to generate part of code or
-to run external tools before Rust compilation, it is preferable to use the Cargo
-build scripts feature.</p>
+environment variable <code>RUSTC_WRAPPER</code>, for example, that may be used to generate
+part of code or to run external tools before Rust compilation, it is preferable
+to use the Cargo build scripts feature.</p>
 <blockquote>
 <h3><a class="header" href="#rule-a-iddenv-cargo-envvarsadenv-cargo-envvars" id="rule-a-iddenv-cargo-envvarsadenv-cargo-envvars">Rule <a id="DENV-CARGO-ENVVARS"></a>DENV-CARGO-ENVVARS</a></h3>
 <p>The environment variables <code>RUSTC</code>, <code>RUSTC_WRAPPER</code> and <code>RUSTFLAGS</code> must not
-be overriden when using Cargo to build project.</p>
+be overriden when using Cargo to build the project.</p>
 </blockquote>
 <h3><a class="header" href="#clippy" id="clippy">Clippy</a></h3>
 <p><a href="https://github.com/rust-lang/rust-clippy">Clippy</a> is a tool that provides and checks many lints (bugs, styling, performance
-issues, etc.). Since the stable toolchain has reached version 1.29, <code>clippy</code> can
-be used within the stable <code>rustup</code> environment. It is also recommended
-to install <code>clippy</code> as a component (<code>rustup component add clippy</code>) in the
-stable toolchain instead of installing it as a project dependency.</p>
-<p>The tool comes with some lint categories regarding the kind of issue it aims to
+issues, etc.). Since version 1.29, <code>clippy</code> can be used within the stable
+<code>rustup</code> environment. It is recommended to install <code>clippy</code> as a component
+(<code>rustup component add clippy</code>) in the stable toolchain instead of installing it
+as a project dependency.</p>
+<p>The tool comes with some lint categories regarding the kind of issues it aims to
 detect. The warnings should be re-checked by the programmer before committing
 the fix that is suggested by <code>clippy</code>, especially in the case of lints of the
 category <code>clippy::nursery</code> since those hints are still under development.</p>
@@ -353,9 +355,9 @@ a secure application.</p>
 </blockquote>
 <h3><a class="header" href="#rustfmt" id="rustfmt">Rustfmt</a></h3>
 <p><a href="https://github.com/rust-lang/rustfmt">Rustfmt</a> is a tool that formats your code according to style guidelines. The
-documentation of the tool states some limitations, among others partial macro
-declarations and uses support. One should use the <code>--check</code> option that prints
-found differences, review these changes, and finally apply them if the code
+documentation of the tool states some limitations, among others partial support
+of macro declarations and uses. One should use the <code>--check</code> option that prints
+proposed changes, review these changes, and finally apply them if the code
 readability is not affected.</p>
 <p>So, to launch it:</p>
 <pre><code class="language-shell">$ cargo fmt -- --check
@@ -374,7 +376,7 @@ single_line_if_else_max_width = 40
 at the <a href="https://github.com/rust-dev-tools/fmt-rfcs/blob/master/guide/guide.md">Rust Style Guide</a>.</p>
 <blockquote>
 <h3><a class="header" href="#rule-a-iddenv-formatadenv-format" id="rule-a-iddenv-formatadenv-format">Rule <a id="DENV-FORMAT"></a>DENV-FORMAT</a></h3>
-<p>The tool <code>rustfmt</code> can be used to ensure that the codebase respect style
+<p>The tool <code>rustfmt</code> can be used to ensure that the codebase respects style
 guidelines (as described in <code>rustfmt.toml</code> file), with <code>--check</code> option and
 manual review.</p>
 </blockquote>
@@ -387,7 +389,7 @@ fixing compiler warnings as well as easing transitions between editions.</p>
 <pre><code class="language-shell">$ cargo fix --edition
 </code></pre>
 <p>Rustfix will either fix the code to be compatible with Rust 2018 or print a
-warning that explain the problem. This problem will have to be fixed manually.
+warning that explains the problem. This problem will have to be fixed manually.
 By running the command (and possibly fixing manually some issues) until there
 is no warning, one can ensure the code is compatible with both Rust 2015 and
 Rust 2018.</p>
@@ -409,10 +411,10 @@ security whether by searching for specific code patterns or by providing
 convenient commands for testing or fuzzing. They are discussed in the following
 chapters, according to their goals.</p>
 <h1><a class="header" href="#libraries" id="libraries">Libraries</a></h1>
-<p>In addition to a standard library, Rust provides an easy way to import libraries
-in a project, thanks to <code>cargo</code>. The libraries, known as <em>crates</em> in the Rust
-ecosystem, are imported from the open-source components central repository
-<a href="https://crates.io">crates.io</a>.</p>
+<p>In addition to the standard library, Rust provides an easy way to import other
+libraries in a project, thanks to <code>cargo</code>. The libraries, known as <em>crates</em> in
+the Rust ecosystem, are imported from the open-source components central
+repository <a href="https://crates.io">crates.io</a>.</p>
 <p>It should be noticed that the quality (in terms of security, performances,
 readability, etc.) of the published crates is very variable. Moreover, their
 maintenance can be irregular or interrupted. The usage of each component from
@@ -478,11 +480,11 @@ outlined in the <a href="https://rust-lang.github.io/api-guidelines/">Rust API G
 </blockquote>
 <h2><a class="header" href="#unsafe-code" id="unsafe-code">Unsafe code</a></h2>
 <p>The joint utilization of the type system and the ownership system aims to
-enforce safety regarding the memory management in Rust's programs. So the
-language aims to avoid memory overflows, null or invalid pointer constructions,
-and data races.
-To perform risky actions such as system calls, type coercions, or memory
-pointers direct manipulations, the language provides the <code>unsafe</code> keyword.</p>
+enforce safety regarding memory management in Rust's programs. So the language
+aims to avoid memory overflows, null or invalid pointer constructions, and data
+races.
+To perform risky actions such as system calls, type coercions, or direct
+manipulations of memory pointers, the language provides the <code>unsafe</code> keyword.</p>
 <blockquote>
 <h3><a class="header" href="#rule-a-idlang-unsafealang-unsafe" id="rule-a-idlang-unsafealang-unsafe">Rule <a id="LANG-UNSAFE"></a>LANG-UNSAFE</a></h3>
 <p>For a secured development, the <code>unsafe</code> blocks must be avoided. Afterward,
@@ -491,7 +493,7 @@ with a proper justification:</p>
 <ul>
 <li>
 <p>The Foreign Function Interface (FFI) of Rust allows for describing
-functions whose implementation is written in C, using the <code>extern &quot;C&quot;</code>
+functions whose implementations are written in C, using the <code>extern &quot;C&quot;</code>
 prefix. To use such a function, the <code>unsafe</code> keyword is required. “Safe”
 wrapper shall be defined to safely and seamlessly call C code.</p>
 </li>
@@ -514,9 +516,9 @@ tries to dereference a pointer passed as an argument.</p>
 <code>main.rs</code> to generate compilation errors if <code>unsafe</code> is used in the code base.</p>
 </blockquote>
 <h2><a class="header" href="#integer-overflows" id="integer-overflows">Integer overflows</a></h2>
-<p>Although some verification is performed by Rust regarding the potential
-integer overflows, precautions should be taken when executing arithmetic
-operations on integers.</p>
+<p>Although some verification is performed by Rust regarding potential integer
+overflows, precautions should be taken when executing arithmetic operations on
+integers.</p>
 <p>In particular, it should be noted that using debug or release compilation
 profile changes integer overflow behavior. In debug configuration, overflow
 cause the termination of the program (<code>panic</code>), whereas in the release
@@ -615,7 +617,7 @@ crate can catch all cases. Drawback: all functions need to be marked as
 <h3><a class="header" href="#ffi-and-panics" id="ffi-and-panics">FFI and panics</a></h3>
 <p>When calling Rust code from another language (for ex. C), the Rust code must
 be careful to never panic.
-Unwinding from Rust code into foreign code results in undefined behavior.</p>
+Stack unwinding from Rust code into foreign code results in undefined behavior.</p>
 <blockquote>
 <h3><a class="header" href="#rule-a-idlang-ffipanicalang-ffipanic" id="rule-a-idlang-ffipanicalang-ffipanic">Rule <a id="LANG-FFIPANIC"></a>LANG-FFIPANIC</a></h3>
 <p>Rust code called from FFI must either ensure the function cannot panic, or use
@@ -1070,9 +1072,10 @@ assert!(T1 { a: 1, b: 1 } &gt; T1 { a: 1, b: 0 });
 <blockquote>
 <h3><a class="header" href="#warning-2" id="warning-2">Warning</a></h3>
 <p>Derivation of comparison traits for compound types depends on the
-<strong>field order</strong> not on their name.</p>
-<p>First, it means changing the order of two fields change the order. For
-instance, provided this second ordered type:</p>
+<strong>field order</strong>, and not on their names.</p>
+<p>First, it means that changing the order of declaration of two fields change
+the resulting lexicographical order. For instance, provided this second
+ordered type:</p>
 <pre><code class="language-rust noplaypen">#[derive(PartialEq, Eq, PartialOrd, Ord)]
 struct T2{
    b: u8, a: u8
@@ -1086,7 +1089,7 @@ result due to the use of short-circuit logic in the automatic implementation.</p
 on the field order.</p>
 </blockquote>
 <p>Despite the ordering caveat, derived comparisons are a lot less error-prone
-than manual ones and makes code more shorter and easier to maintain:</p>
+than manual ones and makes code shorter and easier to maintain.</p>
 <blockquote>
 <h3><a class="header" href="#recommendation-a-idlang-cmp-derivealang-cmp-derive" id="recommendation-a-idlang-cmp-derivealang-cmp-derive">Recommendation <a id="LANG-CMP-DERIVE"></a>LANG-CMP-DERIVE</a></h3>
 <p>In a secure Rust development, the implementation of standard comparison traits
@@ -1095,11 +1098,11 @@ and lexicographical comparison is needed. Any manual implementation of
 standard comparison traits should be documented and justified.</p>
 </blockquote>
 <h1><a class="header" href="#foreign-function-interface-ffi" id="foreign-function-interface-ffi">Foreign Function Interface (FFI)</a></h1>
-<p>Rust approach to interfacing with other languages relies on a strong
+<p>The Rust approach to interfacing with other languages relies on a strong
 compatibility with C. However, this boundary is by its very nature <strong>unsafe</strong>
 (see <a href="https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html">Rust Book: Unsafe Rust</a>).</p>
-<p>Functions that are marked <code>extern</code> are made compatible with C code at the
-compilation. They may be called from C code with any parameter.
+<p>Functions that are marked <code>extern</code> are made compatible with C code during
+compilation. They may be called from C code with any parameter values.
 The exact syntax is <code>extern &quot;&lt;ABI&gt;&quot;</code> where ABI is a calling convention and
 depends on the target platform. The default one is <code>C</code> which corresponds to
 a standard C calling convention on the target platform.</p>
@@ -1293,11 +1296,11 @@ the specific target platform.</p>
 <h3><a class="header" href="#non-robust-types-references-function-pointers-enums" id="non-robust-types-references-function-pointers-enums">Non-robust types: references, function pointers, enums</a></h3>
 <p>A <em>trap representation</em> of a particular type is a representation (pattern of
 bits) that respects the type's representation constraints (such as size and
-alignment) but does not represent a valid value of this type and lead to
+alignment) but does not represent a valid value of this type and leads to
 undefined behavior.</p>
-<p>In simple term, if a Rust variable is set to such an invalid value,
-anything can happen from simple program crash to arbitrary code execution. When
-writing safe Rust, this cannot happen (except through a bug in the Rust
+<p>In simple terms, if a Rust variable is set to such an invalid value,
+anything can happen from a simple program crash to arbitrary code execution.
+When writing safe Rust, this cannot happen (except through a bug in the Rust
 compiler). However, when writing unsafe Rust and in particular in FFI, it is
 really easy.</p>
 <p>In the following, <strong>non-robust types</strong> are types that have such trap
@@ -1356,15 +1359,6 @@ FFI may break Rust's memory safety. Because their “unsafety” is more explici
 pointers are preferred over Rust references when binding to another language.</p>
 <p>On the one hand, reference types are very non-robust: they allow only pointers
 to valid memory objects. Any deviation leads to undefined behavior.</p>
-<blockquote>
-<h3><a class="header" href="#rule-a-idffi-ckrefaffi-ckref" id="rule-a-idffi-ckrefaffi-ckref">Rule <a id="FFI-CKREF"></a>FFI-CKREF</a></h3>
-<p>In a secure Rust development, every foreign references that is transmitted to
-Rust through FFI must be <strong>checked on the foreign side</strong> either automatically
-(for instance, by a compiler) or manually.</p>
-<p>Exceptions include Rust references in an opaque wrapping that is
-created and manipulated only from the Rust side and <code>Option</code>-wrapped reference
-(see Note below).</p>
-</blockquote>
 <p>When binding to and from C, the problem is particularly severe because C has
 no references (in the sense of valid pointers) and the compiler does not offer
 any safety guarantee.</p>
@@ -1375,6 +1369,12 @@ against pointer/reference confusion.</p>
 <p>Rust references may be used reasonably with other C-compatible languages
 including C variants allowing for non-null type checking, e.g. Microsoft SAL
 annotated code.</p>
+<p>On the other hand, Rust's <em>pointer types</em> may also lead to undefined behaviors
+but are more verifiable, mostly against <code>std/core::ptr::null()</code> (C's <code>(void*)0</code>)
+but also in some context against a known valid memory range (particularly in
+embedded systems or kernel-level programming). Another advantage of using Rust
+pointers in FFI is that any load of the pointed value is clearly marked inside
+an <code>unsafe</code> block or function.</p>
 <blockquote>
 <h3><a class="header" href="#recommendation-a-idffi-norefaffi-noref" id="recommendation-a-idffi-norefaffi-noref">Recommendation <a id="FFI-NOREF"></a>FFI-NOREF</a></h3>
 <p>In a secure Rust development, the Rust code should not use references types
@@ -1389,12 +1389,17 @@ variants or from C++ compiled in an environment where <code>extern &quot;C&quot;
 references are encoded as pointers.</li>
 </ul>
 </blockquote>
-<p>On the other hand, Rust's <em>pointer types</em> may also lead to undefined behaviors
-but are more verifiable, mostly against <code>std/core::ptr::null()</code> (C's <code>(void*)0</code>)
-but also in some context against a known valid memory range (particularly in
-embedded systems or kernel-level programming). Another advantage of using Rust
-pointers in FFI is that any load of the pointed value is clearly marked inside
-an <code>unsafe</code> block or function.</p>
+<!-- -->
+<blockquote>
+<h3><a class="header" href="#rule-a-idffi-ckrefaffi-ckref" id="rule-a-idffi-ckrefaffi-ckref">Rule <a id="FFI-CKREF"></a>FFI-CKREF</a></h3>
+<p>In a secure Rust development, every foreign references that is transmitted to
+Rust through FFI must be <strong>checked on the foreign side</strong> either automatically
+(for instance, by a compiler) or manually.</p>
+<p>Exceptions include Rust references in an opaque wrapping that is created
+and manipulated only from the Rust side and <code>Option</code>-wrapped references
+(see Note below).</p>
+</blockquote>
+<!-- -->
 <blockquote>
 <h3><a class="header" href="#rule-a-idffi-ckptraffi-ckptr" id="rule-a-idffi-ckptraffi-ckptr">Rule <a id="FFI-CKPTR"></a>FFI-CKPTR</a></h3>
 <p>In a secure Rust development, any Rust code that dereferences a foreign
@@ -1502,7 +1507,7 @@ environment.</p>
 <blockquote>
 <h3><a class="header" href="#recommendation-a-idffi-noenumaffi-noenum" id="recommendation-a-idffi-noenumaffi-noenum">Recommendation <a id="FFI-NOENUM"></a>FFI-NOENUM</a></h3>
 <p>In a secure Rust development, when interfacing with a foreign language,
-the Rust code should not accept incoming values from Rust <code>enum</code> types.</p>
+the Rust code should not accept incoming values of any Rust <code>enum</code> type.</p>
 <p>Exceptions include Rust <code>enum</code> types that are:</p>
 <ul>
 <li>opaque in the foreign language and only manipulated from the
@@ -1582,7 +1587,7 @@ pointer or reference).</p>
 <code>Copy</code> even if T is not.</p>
 <p>However if not reclaiming memory and resources is bad, using reclaimed memory or
 reclaiming twice some resources is worst from a security point of view. In order
-to correctly release a resource only once one must known which language is
+to correctly release a resource only once, one must known which language is
 responsible for allocating and deallocating memory.</p>
 <blockquote>
 <h3><a class="header" href="#rule-a-idffi-mem-owneraffi-mem-owner" id="rule-a-idffi-mem-owneraffi-mem-owner">Rule <a id="FFI-MEM-OWNER"></a>FFI-MEM-OWNER</a></h3>
@@ -1603,7 +1608,8 @@ wrapper around the foreign type:</p>
 <h3><a class="header" href="#recommendation-a-idffi-mem-wrappingaffi-mem-wrapping" id="recommendation-a-idffi-mem-wrappingaffi-mem-wrapping">Recommendation <a id="FFI-MEM-WRAPPING"></a>FFI-MEM-WRAPPING</a></h3>
 <p>In a secure Rust development, any non-sensitive foreign piece of data that are
 allocated and deallocated in the foreign language should be encapsulated in a
-<code>Drop</code> type in such a way as to provide automatic deallocation in Rust.</p>
+<code>Drop</code> type in such a way as to provide automatic deallocation in Rust,
+through an automatic call to the foreing language deallocation routine.</p>
 </blockquote>
 <p>A simple example of Rust wrapping over an external opaque type:</p>
 <pre><code class="language-rust ignore noplaypen"><span class="boring">use std::ops::Drop;
@@ -1775,7 +1781,7 @@ int main() {
 <h2><a class="header" href="#panics-with-foreign-code" id="panics-with-foreign-code">Panics with foreign code</a></h2>
 <p>When calling Rust code from another language (e.g. C), the Rust code must
 be careful to never panic.
-Unwinding from Rust code into foreign code results is <strong>undefined behavior</strong>.</p>
+Stack unwinding from Rust code into foreign code results in <strong>undefined behavior</strong>.</p>
 <blockquote>
 <h3><a class="header" href="#rule-a-idffi-nopanicaffi-nopanic" id="rule-a-idffi-nopanicaffi-nopanic">Rule <a id="FFI-NOPANIC"></a>FFI-NOPANIC</a></h3>
 <p>Rust code called from FFI must either ensure the function cannot panic, or use
@@ -2107,9 +2113,9 @@ Do not use unchecked non-robust foreign values (<a href="07_ffi.html#FFI-CKNONRO
 <li><input disabled="" type="checkbox"/>
 Check foreign values in Rust (<a href="07_ffi.html#FFI-CKINRUST">FFI-CKINRUST</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Do not use unchecked foreign references (<a href="07_ffi.html#FFI-CKREF">FFI-CKREF</a>)</li>
-<li><input disabled="" type="checkbox"/>
 Do not use reference types but pointer types (<a href="07_ffi.html#FFI-NOREF">FFI-NOREF</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Do not use unchecked foreign references (<a href="07_ffi.html#FFI-CKREF">FFI-CKREF</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Check foreign pointers (<a href="07_ffi.html#FFI-CKPTR">FFI-CKPTR</a>)</li>
 <li><input disabled="" type="checkbox"/>

@@ -421,9 +421,10 @@ assert!(T1 { a: 1, b: 1 } &gt; T1 { a: 1, b: 0 });
 <blockquote>
 <h3><a class="header" href="#warning" id="warning">Warning</a></h3>
 <p>Derivation of comparison traits for compound types depends on the
-<strong>field order</strong> not on their name.</p>
-<p>First, it means changing the order of two fields change the order. For
-instance, provided this second ordered type:</p>
+<strong>field order</strong>, and not on their names.</p>
+<p>First, it means that changing the order of declaration of two fields change
+the resulting lexicographical order. For instance, provided this second
+ordered type:</p>
 <pre><code class="language-rust noplaypen">#[derive(PartialEq, Eq, PartialOrd, Ord)]
 struct T2{
    b: u8, a: u8
@@ -437,7 +438,7 @@ result due to the use of short-circuit logic in the automatic implementation.</p
 on the field order.</p>
 </blockquote>
 <p>Despite the ordering caveat, derived comparisons are a lot less error-prone
-than manual ones and makes code more shorter and easier to maintain:</p>
+than manual ones and makes code shorter and easier to maintain.</p>
 <blockquote>
 <h3><a class="header" href="#recommendation-a-idlang-cmp-derivealang-cmp-derive" id="recommendation-a-idlang-cmp-derivealang-cmp-derive">Recommendation <a id="LANG-CMP-DERIVE"></a>LANG-CMP-DERIVE</a></h3>
 <p>In a secure Rust development, the implementation of standard comparison traits

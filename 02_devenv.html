@@ -155,38 +155,37 @@ managing additional components installation and keeping them up to date.</p>
 <blockquote>
 <h3><a class="header" href="#warning" id="warning">Warning</a></h3>
 <p>From a security perspective, <code>rustup</code> does perform all downloads over HTTPS,
-but does not validate signatures of downloads. Protection against downgrade
-attacks, certificate pinning, validation of signatures are works that are
-currently in progress. In some cases, it may be preferable to opt for
-an alternative installation method listed in the <em>Install</em> section of the
-official Rust website.</p>
+but does not yet validate signatures of downloads. Protection against
+downgrade attacks, certificate pinning, validation of signatures are still
+works in progress.
+In some cases, it may be preferable to opt for an alternative installation
+method listed in the <em>Install</em> section of the official Rust website.</p>
 </blockquote>
 <h3><a class="header" href="#rust-editions" id="rust-editions">Rust Editions</a></h3>
-<p>Several flavors, called <em>editions</em>, of the Rust language coexist.
-The concept of editions has been introduced to clarify new features
-implementation and to make them incremental. But as stated in the
-<a href="https://doc.rust-lang.org/edition-guide/">Edition Guide</a>, this doesn’t mean that new features and improvements will be
-shipped on the last edition only.</p>
-<p>However, some editions could bring new keywords and language constructs.
-Recommendations for secure applications development then remain closely
-linked to features that are used in such applications rather than the actual
-edition that is declared in it.
+<p>Several flavors, called <em>editions</em>, of the Rust language coexist.</p>
+<p>The concept of editions has been introduced to clarify new features
+implementation and to make them incremental. A new edition will be produced
+every two or three years, as stated in the <a href="https://doc.rust-lang.org/edition-guide/">Edition Guide</a>, but this doesn’t
+mean that new features and improvements will only be shipped in a new edition.</p>
+<p>Some editions bring new keywords and language constructs. Recommendations for
+secure applications development then remain closely linked to features of the
+langage, that are used in such applications, rather than to Rust editions.
 In the rest of this guide, best effort will be made to highlight constructions
 and language features that are specific to a particular Rust edition.</p>
 <blockquote>
 <h3><a class="header" href="#note" id="note">Note</a></h3>
-<p>No specific edition is recommended, as long as users follow recommendations
-that are expressed in relation to features offered by edition that has been
+<p>No specific edition is recommended, as long as users follow the
+recommendations related to the features offered by the edition that has been
 chosen.</p>
 </blockquote>
 <h3><a class="header" href="#stable-nightly-and-beta-toolchains" id="stable-nightly-and-beta-toolchains">Stable, nightly and beta toolchains</a></h3>
-<p>Orthogonally to editions that allows one to select a flavor (a set of features)
+<p>Orthogonally to editions that allow one to select a flavor (a set of features)
 of the Rust language, the Rust toolchain is provided in three different
 versions, called <em>release channels</em>:</p>
 <ul>
 <li><em>nightly</em> releases are created once a day,</li>
-<li><em>nightly</em> releases are promoted every six weeks to <em>beta</em> releases,</li>
-<li><em>beta</em> releases are promoted every six weeks to <em>stable</em> releases.</li>
+<li><em>beta</em> releases are created every six weeks, from promoted <em>nightly</em> releases,</li>
+<li><em>stable</em> releases are created every six weeks, from promoted <em>beta</em> releases.</li>
 </ul>
 <p>When playing with different toolchains, it is important to check not only what
 the default toolchain is, but also if overrides are currently set for some
@@ -236,8 +235,8 @@ described below, in the form of sub-commands.</li>
 <blockquote>
 <h3><a class="header" href="#warning-1" id="warning-1">Warning</a></h3>
 <p>Like <code>rustup</code>, <code>cargo</code> does perform all downloads over HTTPS, but does not
-validate the registry index. Ongoing discussions occur on how best protect and
-verify crates. For now, the security relies on the good security of the
+validate the registry index. Ongoing discussions occur on how to best protect
+and verify crates. For now, the security relies on the good security of the
 website <a href="https://crates.io">crates.io</a> and the GitHub hosted repository containing the
 registry index. In some cases, it may be preferable to opt for an alternative
 installation method for dependencies.</p>
@@ -261,27 +260,27 @@ using the debug profile that normally enables runtime checks (for example
 <p>The variables <code>debug-assertions</code> and <code>overflow-checks</code> must not be overridden
 in development profiles sections (<code>[profile.dev]</code> and <code>[profile.test]</code>).</p>
 </blockquote>
-<p>Cargo proposes other ways to setup configuration and change its behavior on
+<p>Cargo proposes other ways to setup its configuration and change its behavior on
 a given system. This can be very useful, but it may also be difficult to know
-and remember at a given time all of the options that are effectively used, and
+and remember at a given time all the options that are effectively used, and
 in particular passed to the compiler. At the end, this can affect the confidence
 and robustness of the build process. It is preferable to centralize compiler
 options and flags in the configuration file <code>Cargo.toml</code>. For the case of
-environment variable <code>RUSTC_WRAPPER</code>, for example to generate part of code or
-to run external tools before Rust compilation, it is preferable to use the Cargo
-build scripts feature.</p>
+environment variable <code>RUSTC_WRAPPER</code>, for example, that may be used to generate
+part of code or to run external tools before Rust compilation, it is preferable
+to use the Cargo build scripts feature.</p>
 <blockquote>
 <h3><a class="header" href="#rule-a-iddenv-cargo-envvarsadenv-cargo-envvars" id="rule-a-iddenv-cargo-envvarsadenv-cargo-envvars">Rule <a id="DENV-CARGO-ENVVARS"></a>DENV-CARGO-ENVVARS</a></h3>
 <p>The environment variables <code>RUSTC</code>, <code>RUSTC_WRAPPER</code> and <code>RUSTFLAGS</code> must not
-be overriden when using Cargo to build project.</p>
+be overriden when using Cargo to build the project.</p>
 </blockquote>
 <h3><a class="header" href="#clippy" id="clippy">Clippy</a></h3>
 <p><a href="https://github.com/rust-lang/rust-clippy">Clippy</a> is a tool that provides and checks many lints (bugs, styling, performance
-issues, etc.). Since the stable toolchain has reached version 1.29, <code>clippy</code> can
-be used within the stable <code>rustup</code> environment. It is also recommended
-to install <code>clippy</code> as a component (<code>rustup component add clippy</code>) in the
-stable toolchain instead of installing it as a project dependency.</p>
-<p>The tool comes with some lint categories regarding the kind of issue it aims to
+issues, etc.). Since version 1.29, <code>clippy</code> can be used within the stable
+<code>rustup</code> environment. It is recommended to install <code>clippy</code> as a component
+(<code>rustup component add clippy</code>) in the stable toolchain instead of installing it
+as a project dependency.</p>
+<p>The tool comes with some lint categories regarding the kind of issues it aims to
 detect. The warnings should be re-checked by the programmer before committing
 the fix that is suggested by <code>clippy</code>, especially in the case of lints of the
 category <code>clippy::nursery</code> since those hints are still under development.</p>
@@ -292,9 +291,9 @@ a secure application.</p>
 </blockquote>
 <h3><a class="header" href="#rustfmt" id="rustfmt">Rustfmt</a></h3>
 <p><a href="https://github.com/rust-lang/rustfmt">Rustfmt</a> is a tool that formats your code according to style guidelines. The
-documentation of the tool states some limitations, among others partial macro
-declarations and uses support. One should use the <code>--check</code> option that prints
-found differences, review these changes, and finally apply them if the code
+documentation of the tool states some limitations, among others partial support
+of macro declarations and uses. One should use the <code>--check</code> option that prints
+proposed changes, review these changes, and finally apply them if the code
 readability is not affected.</p>
 <p>So, to launch it:</p>
 <pre><code class="language-shell">$ cargo fmt -- --check
@@ -313,7 +312,7 @@ single_line_if_else_max_width = 40
 at the <a href="https://github.com/rust-dev-tools/fmt-rfcs/blob/master/guide/guide.md">Rust Style Guide</a>.</p>
 <blockquote>
 <h3><a class="header" href="#rule-a-iddenv-formatadenv-format" id="rule-a-iddenv-formatadenv-format">Rule <a id="DENV-FORMAT"></a>DENV-FORMAT</a></h3>
-<p>The tool <code>rustfmt</code> can be used to ensure that the codebase respect style
+<p>The tool <code>rustfmt</code> can be used to ensure that the codebase respects style
 guidelines (as described in <code>rustfmt.toml</code> file), with <code>--check</code> option and
 manual review.</p>
 </blockquote>
@@ -326,7 +325,7 @@ fixing compiler warnings as well as easing transitions between editions.</p>
 <pre><code class="language-shell">$ cargo fix --edition
 </code></pre>
 <p>Rustfix will either fix the code to be compatible with Rust 2018 or print a
-warning that explain the problem. This problem will have to be fixed manually.
+warning that explains the problem. This problem will have to be fixed manually.
 By running the command (and possibly fixing manually some issues) until there
 is no warning, one can ensure the code is compatible with both Rust 2015 and
 Rust 2018.</p>

@@ -176,11 +176,11 @@ outlined in the <a href="https://rust-lang.github.io/api-guidelines/">Rust API G
 </blockquote>
 <h2><a class="header" href="#unsafe-code" id="unsafe-code">Unsafe code</a></h2>
 <p>The joint utilization of the type system and the ownership system aims to
-enforce safety regarding the memory management in Rust's programs. So the
-language aims to avoid memory overflows, null or invalid pointer constructions,
-and data races.
-To perform risky actions such as system calls, type coercions, or memory
-pointers direct manipulations, the language provides the <code>unsafe</code> keyword.</p>
+enforce safety regarding memory management in Rust's programs. So the language
+aims to avoid memory overflows, null or invalid pointer constructions, and data
+races.
+To perform risky actions such as system calls, type coercions, or direct
+manipulations of memory pointers, the language provides the <code>unsafe</code> keyword.</p>
 <blockquote>
 <h3><a class="header" href="#rule-a-idlang-unsafealang-unsafe" id="rule-a-idlang-unsafealang-unsafe">Rule <a id="LANG-UNSAFE"></a>LANG-UNSAFE</a></h3>
 <p>For a secured development, the <code>unsafe</code> blocks must be avoided. Afterward,
@@ -189,7 +189,7 @@ with a proper justification:</p>
 <ul>
 <li>
 <p>The Foreign Function Interface (FFI) of Rust allows for describing
-functions whose implementation is written in C, using the <code>extern &quot;C&quot;</code>
+functions whose implementations are written in C, using the <code>extern &quot;C&quot;</code>
 prefix. To use such a function, the <code>unsafe</code> keyword is required. “Safe”
 wrapper shall be defined to safely and seamlessly call C code.</p>
 </li>
@@ -212,9 +212,9 @@ tries to dereference a pointer passed as an argument.</p>
 <code>main.rs</code> to generate compilation errors if <code>unsafe</code> is used in the code base.</p>
 </blockquote>
 <h2><a class="header" href="#integer-overflows" id="integer-overflows">Integer overflows</a></h2>
-<p>Although some verification is performed by Rust regarding the potential
-integer overflows, precautions should be taken when executing arithmetic
-operations on integers.</p>
+<p>Although some verification is performed by Rust regarding potential integer
+overflows, precautions should be taken when executing arithmetic operations on
+integers.</p>
 <p>In particular, it should be noted that using debug or release compilation
 profile changes integer overflow behavior. In debug configuration, overflow
 cause the termination of the program (<code>panic</code>), whereas in the release
@@ -313,7 +313,7 @@ crate can catch all cases. Drawback: all functions need to be marked as
 <h3><a class="header" href="#ffi-and-panics" id="ffi-and-panics">FFI and panics</a></h3>
 <p>When calling Rust code from another language (for ex. C), the Rust code must
 be careful to never panic.
-Unwinding from Rust code into foreign code results in undefined behavior.</p>
+Stack unwinding from Rust code into foreign code results in undefined behavior.</p>
 <blockquote>
 <h3><a class="header" href="#rule-a-idlang-ffipanicalang-ffipanic" id="rule-a-idlang-ffipanicalang-ffipanic">Rule <a id="LANG-FFIPANIC"></a>LANG-FFIPANIC</a></h3>
 <p>Rust code called from FFI must either ensure the function cannot panic, or use
