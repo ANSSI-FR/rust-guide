@@ -34,42 +34,42 @@ some particular constructions:
 ## Unsafe code
 
 The joint utilization of the type system and the ownership system aims to
-enforce safety regarding the memory management in Rust's programs. So the
-language aims to avoid memory overflows, null or invalid pointer constructions,
-and data races.
-To perform risky actions such as system calls, type coercions, or memory
-pointers direct manipulations, the language provides the `unsafe` keyword.
+enforce safety regarding memory management in Rust's programs. So the language
+aims to avoid memory overflows, null or invalid pointer constructions, and data
+races.
+To perform risky actions such as system calls, type coercions, or direct
+manipulations of memory pointers, the language provides the `unsafe` keyword.
 
 > ### Rule {{#check LANG-UNSAFE | Don't use unsafe blocks}}
 > For a secured development, the `unsafe` blocks must be avoided. Afterward,
 > we list the only cases where `unsafe` may be used, provided that they come
 > with a proper justification:
-> 
+>
 >  - The Foreign Function Interface (FFI) of Rust allows for describing
->  functions whose implementation is written in C, using the `extern "C"`
+>  functions whose implementations are written in C, using the `extern "C"`
 >  prefix. To use such a function, the `unsafe` keyword is required. “Safe”
 >  wrapper shall be defined to safely and seamlessly call C code.
-> 
+>
 >  - For embedded device programming, registers and various other resources are
 >  often accessed through a fixed memory address. In this case, `unsafe` blocks
 >  are required to initialize and dereference those particular pointers in Rust.
 >  In order to minimize the number of unsafe accesses in the code and to allow
 >  easier identification of them by a programmer, a proper abstraction (data
 >  structure or module) shall be provided.
-> 
+>
 >  - A function can be marked unsafe globally (by prefixing its declaration with
 >  the `unsafe` keyword) when it may exhibit unsafe behaviors based on its
 >  arguments, that are unavoidable. For instance, this happens when a function
 >  tries to dereference a pointer passed as an argument.
-> 
+>
 > With the exception of these cases, `#[forbid(unsafe_code)]` must appear in
 > `main.rs` to generate compilation errors if `unsafe` is used in the code base.
 
 ## Integer overflows
 
-Although some verification is performed by Rust regarding the potential
-integer overflows, precautions should be taken when executing arithmetic
-operations on integers.
+Although some verification is performed by Rust regarding potential integer
+overflows, precautions should be taken when executing arithmetic operations on
+integers.
 
 In particular, it should be noted that using debug or release compilation
 profile changes integer overflow behavior. In debug configuration, overflow
@@ -187,7 +187,7 @@ crate can catch all cases. Drawback: all functions need to be marked as
 
 When calling Rust code from another language (for ex. C), the Rust code must
 be careful to never panic.
-Unwinding from Rust code into foreign code results in undefined behavior.
+Stack unwinding from Rust code into foreign code results in undefined behavior.
 
 > ### Rule {{#check LANG-FFIPANIC | Handle correctly `panic!` in FFI}}
 > Rust code called from FFI must either ensure the function cannot panic, or use

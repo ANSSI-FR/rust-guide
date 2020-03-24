@@ -1,9 +1,9 @@
 # Libraries
 
-In addition to a standard library, Rust provides an easy way to import libraries
-in a project, thanks to `cargo`. The libraries, known as *crates* in the Rust
-ecosystem, are imported from the open-source components central repository
-[crates.io](https://crates.io).
+In addition to the standard library, Rust provides an easy way to import other
+libraries in a project, thanks to `cargo`. The libraries, known as *crates* in
+the Rust ecosystem, are imported from the open-source components central
+repository [crates.io](https://crates.io).
 
 It should be noticed that the quality (in terms of security, performances,
 readability, etc.) of the published crates is very variable. Moreover, their
