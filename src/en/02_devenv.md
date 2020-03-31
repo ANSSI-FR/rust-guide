@@ -28,7 +28,7 @@ mean that new features and improvements will only be shipped in a new edition.
 
 Some editions bring new keywords and language constructs. Recommendations for
 secure applications development then remain closely linked to features of the
-langage, that are used in such applications, rather than to Rust editions.
+language, that are used in such applications, rather than to Rust editions.
 In the rest of this guide, best effort will be made to highlight constructions
 and language features that are specific to a particular Rust edition.
 
