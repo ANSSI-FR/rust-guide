@@ -82,8 +82,8 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="expanded "><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development environment</a></li><li class="expanded "><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li class="expanded "><a href="04_language.html"><strong aria-hidden="true">4.</strong> Language generalities</a></li><li class="expanded "><a href="05_memory.html"><strong aria-hidden="true">5.</strong> Memory management</a></li><li class="expanded "><a href="06_typesystem.html"><strong aria-hidden="true">6.</strong> Type system</a></li><li class="expanded "><a href="07_ffi.html"><strong aria-hidden="true">7.</strong> Foreign Function Interface</a></li><li class="expanded affix "><a href="LICENCE.html">Licence</a></li><li class="expanded affix "><a href="checklist.html">Checklist</a></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development environment</a></li><li class="chapter-item expanded "><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li class="chapter-item expanded "><a href="04_language.html"><strong aria-hidden="true">4.</strong> Language generalities</a></li><li class="chapter-item expanded "><a href="05_memory.html"><strong aria-hidden="true">5.</strong> Memory management</a></li><li class="chapter-item expanded "><a href="06_typesystem.html"><strong aria-hidden="true">6.</strong> Type system</a></li><li class="chapter-item expanded "><a href="07_ffi.html"><strong aria-hidden="true">7.</strong> Foreign Function Interface</a></li><li class="chapter-item expanded affix "><a href="LICENCE.html">Licence</a></li><li class="chapter-item expanded affix "><a href="checklist.html">Checklist</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -1931,16 +1931,16 @@ int counter_incr(Counter *counter);
 #include &quot;counter.h&quot;
 
 int main(int argc, const char** argv) {
-    Counter* c = counter_create();
-
     if (argc &lt; 2) {
         return -1;
     }
     size_t n = (size_t)strtoull(argv[1], NULL, 10);
 
+    Counter* c = counter_create();
     for (size_t i=0; i &lt; n; i++) {
         if (counter_incr(c) != 0) {
             printf(&quot;overflow\n&quot;);
+            counter_destroy(c);
             return -1;
         }
     }
