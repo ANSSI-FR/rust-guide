@@ -5,12 +5,19 @@
         <meta charset="UTF-8">
         <title>Memory management - Secure Rust Guidelines</title>
         
+        
+
+
+        <!-- Custom HTML head -->
+        
+
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Recommendations for secure applications development with Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        <link rel="icon" href="favicon.svg">
         <link rel="shortcut icon" href="favicon.png">
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
@@ -19,8 +26,9 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -36,7 +44,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -160,8 +168,8 @@ scope, Rust provides special functions to manually reclaim memory: <code>forget<
 <code>drop</code> of the <code>std::mem</code> module (or <code>core::mem</code>). While <code>drop</code> simply triggers
 an early memory reclamation that calls associated destructors when needed,
 <code>forget</code> skips any call to the destructors.</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let pair = ('↑', 0xBADD_CAFEu32);
 drop(pair); // here `forget` would be equivalent (no destructor to call)
@@ -169,8 +177,8 @@ drop(pair); // here `forget` would be equivalent (no destructor to call)
 </span></code></pre></pre>
 <p>Both functions are <strong>memory safe</strong> in Rust. However, <code>forget</code> will make any
 resource managed by the value unreachable and unclaimed.</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::mem::forget;
 </span>let s = String::from(&quot;Hello&quot;);
@@ -231,8 +239,8 @@ or manually released (unsafe <code>ManuallyDrop::drop</code>).</p>
 </ul>
 <p>must eventually be transformed into a value with a call to the respective
 <code>from_raw</code> to allow for their reclamation.</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let boxed = Box::new(String::from(&quot;Crab&quot;));
 let raw_ptr = unsafe { Box::into_raw(boxed) };
@@ -245,8 +253,8 @@ let _ = unsafe { Box::from_raw(raw_ptr) }; // will be freed
 <h3><a class="header" href="#note" id="note">Note</a></h3>
 <p>In the case of <code>Box::into_raw</code>, manual cleanup is possible but a lot more
 complicated than re-boxing the raw pointer and should be avoided:</p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// Excerpt from the standard library documentation
 use std::alloc::{dealloc, Layout};
@@ -297,7 +305,7 @@ functions that will not be removed by the compiler optimizations, like
 </blockquote>
 <p>The following code shows how to define an integer type that will be set to
 0 when freed, using the <code>Drop</code> trait:</p>
-<pre><pre class="playpen"><code class="language-rust">/// Example: u32 newtype, set to 0 when freed
+<pre><pre class="playground"><code class="language-rust">/// Example: u32 newtype, set to 0 when freed
 pub struct ZU32(pub u32);
 
 impl Drop for ZU32 {
@@ -357,10 +365,10 @@ impl Drop for ZU32 {
         
 
         
-        
+
         
         <script type="text/javascript">
-            window.playpen_copyable = true;
+            window.playground_copyable = true;
         </script>
         
 
