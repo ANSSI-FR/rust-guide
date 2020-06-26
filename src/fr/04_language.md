@@ -51,7 +51,7 @@ langage fournit le mot-clé `unsafe`.
 >
 >  - L'interfaçage entre Rust et d'autres langages (FFI) permet la déclaration
 >  de fonctions dont l'implantation est faite en C, en utilisant le préfixe
->  `extern "C"`. Pour une utiliser une telle fonction, le mot-clé `unsafe` est
+>  `extern "C"`. Pour utiliser une telle fonction, le mot-clé `unsafe` est
 >  requis. Un *wrapper* "sûr" doit être défini pour que le code C soit
 >  finalement appelé de façon souple et sûre.
 >
