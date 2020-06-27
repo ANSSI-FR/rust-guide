@@ -68,9 +68,10 @@ langage fournit le mot-clé `unsafe`.
 >  comportements non sûrs en fonction de ses arguments. Par exemple, cela arrive
 >  lorsqu'une fonction doit déréférencer un pointeur passé en argument.
 >
-> À l'exception de l'un ou plusieurs de ces cas `#[forbid(unsafe_code)]` doit
-> apparaître dans le fichier `main.rs` afin de générer des erreurs de
-> compilation dans le cas ou le mot-clé `unsafe` est utilisé dans le projet.
+> À l'exception de l'un ou plusieurs de ces cas `#![forbid(unsafe_code)]` doit
+> apparaître dans à la racine de la *crate* (typiquemnt `main.rs` ou `lib.rs`)
+> afin de générer des erreurs de compilation dans le cas ou le mot-clé `unsafe`
+> est utilisé dans le projet.
 
 ## Dépassement d'entiers
 
