@@ -29,7 +29,7 @@ for every tool in the compilation or software verification field, the tools used
  to develop, compile and execute programs can expose certain features or
  configurations that, if misused, may lead to vulnerabilities.
 
-Thus, the object of this document is to compile hints and recommendations to
+Thus, the objective of this document is to compile hints and recommendations to
 stay in a safe zone for secure applications development while taking advantage
 of the range of possibilities the Rust language can offer.
 
