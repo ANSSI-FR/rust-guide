@@ -2,8 +2,10 @@
 
 L'approche de Rust en ce qui concerne l'interfaçage avec des fonctions d'autres
 langages repose sur une compatibilité forte avec le C. Toutefois, cette
-frontière est par nature **non sûre** (voir [Rust Book: Unsafe Rust]).
+frontière est par nature **non sûre** (voir [Le livre Rust : Le Rust non
+sécurisé] ou [Rust Book: Unsafe Rust]).
 
+[Le livre Rust : Le Rust non sécurisé]: https://jimskapt.github.io/rust-book-fr/ch19-01-unsafe-rust.html
 [Rust Book: Unsafe Rust]: https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html
 
 Les fonctions marquées comme externes (mot-clé `extern`) sont rendues
