@@ -69,7 +69,7 @@ langage fournit le mot-clé `unsafe`.
 >  lorsqu'une fonction doit déréférencer un pointeur passé en argument.
 >
 > À l'exception de l'un ou plusieurs de ces cas `#![forbid(unsafe_code)]` doit
-> apparaître dans à la racine de la *crate* (typiquemnt `main.rs` ou `lib.rs`)
+> apparaître dans à la racine de la *crate* (typiquement `main.rs` ou `lib.rs`)
 > afin de générer des erreurs de compilation dans le cas ou le mot-clé `unsafe`
 > est utilisé dans le projet.
 
