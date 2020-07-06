@@ -216,8 +216,9 @@ arguments, that are unavoidable. For instance, this happens when a function
 tries to dereference a pointer passed as an argument.</p>
 </li>
 </ul>
-<p>With the exception of these cases, <code>#[forbid(unsafe_code)]</code> must appear in
-<code>main.rs</code> to generate compilation errors if <code>unsafe</code> is used in the code base.</p>
+<p>With the exception of these cases, <code>#![forbid(unsafe_code)]</code> must appear in
+the crate root (typically <code>main.rs</code> or <code>lib.rs</code>) to generate compilation
+errors if <code>unsafe</code> is used in the code base.</p>
 </blockquote>
 <h2><a class="header" href="#integer-overflows" id="integer-overflows">Integer overflows</a></h2>
 <p>Although some verification is performed by Rust regarding potential integer
