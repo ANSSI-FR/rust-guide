@@ -204,3 +204,74 @@ the process.
 <mark>TODO</mark>: cyclomatic complexity of the macro expanded code, recursion
 limits, ...
 -->
+
+## Value displacement
+
+Values in Rust may have three distinct semantics when considering value displacement:
+
+- Either it has _move_ semantics, this behavior is the default one.
+- Or it has move _move_ semantics plus the _drop_ semantics, i.e. its type implements the `Drop` trait.
+- Or it has copy semantics, by having its type implementing the `Copy` trait.
+
+However, some problem appears when using the `std::ptr::read` function.
+According to the [documentation](https://doc.rust-lang.org/std/ptr/fn.read.html), the function:
+> Reads the value from src without moving it. This leaves the memory in src unchanged.
+
+To be clear, this function is somehow copying the value pointed by the raw pointer, regardless of its type semantics.
+This is a dangerous behavior as it can lead to double-free and/or double-drop in some cases.
+
+To illustrate the copy on a type having the move semantics let's consider the following snippet:
+
+```rust
+# use std::ops::Drop;
+#
+#[derive(Debug)]
+struct MyStruct(u8);
+
+impl Drop for MyStruct {
+    fn drop(&mut self) {
+#        println!("---Dropping an object---\nBefore zeroing: {} @ {:p}", self.0, &self.0 as *const u8);
+        self.0 = 0;
+#        println!("After zeroing: {} @ {:p}", self.0, &self.0 as *const u8);
+    }
+}
+
+fn main(){
+  let obj: MyStruct = MyStruct(100);
+  let ptr: *const MyStruct = &test as *const MyStruct;
+  println!("{:?} @ {:p}", unsafe { std::ptr::read(ptr) }, ptr);
+}
+```
+
+Here we can see that a second object is created by the call to `std::ptr::read`, i.e. a copy of a _non-copy_ object is performed.
+Here, the problem is not really a huge one, except if some cleaning outside of the drop implementation is performed (as it is recommended): some sensitive data might survive within the memory.
+
+However, this behavior might cause some resilience issue when this function is used with a raw pointer pointing to some data allocated on the heap with move semantic as illustrated by this snippet:
+
+```rust
+# use std::boxed::Box;
+# use std::ops::Drop;
+#
+#[derive(Debug)]
+struct MyStructBoxed(Box<u8>);
+
+impl Drop for MyStructBoxed {
+  fn drop(&mut self) {
+#    println!("---Dropping an object---\nBefore zeroing: {} @ {:p}", self.0, self.0);
+    let value: &mut u8 = self.0.as_mut();
+    *value = 0;
+#    println!("After zeroing: {} @ {:p}", self.0, self.0);
+  }
+}
+
+fn main(){
+  let test: MyStructBoxed = MyStructBoxed(Box::new(100));
+  let ptr: *const MyStructBoxed = &test as *const MyStructBoxed;
+  println!("{:?} @ {:p}", unsafe { std::ptr::read(ptr) }, unsafe { &*ptr }.0 );
+}
+```
+
+> ### Rule {{#check LANG-RAW-PTR | Avoid the use of `std::ptr::read` }}
+>
+> As shown above, `std::ptr::read` as side effect depending on the way the type of the raw pointer is moving through different context.
+> It is preferable to use the operation of referencing/dereferencing (`&*`) to avoid those side effect.
