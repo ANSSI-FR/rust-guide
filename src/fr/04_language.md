@@ -292,5 +292,5 @@ fn main(){
 
 > ### Règle {{#check LANG-RAW-PTR | Éviter d'utiliser `std::ptr::read`}}
 >
-> Comme illustrer, `std::ptr::read` peut avoir des effets de bords indésriables en fonction du mode déplacement du type pointé par le *raw pointer* source.
+> `std::ptr::read` peut avoir des effets de bords indésirables en fonction du mode déplacement du type pointé par le *raw pointer* source.
 > Il est donc préférable d'utiliser l'opération de référencement/déréférencement (`&*`) pour les éviter.
