@@ -237,10 +237,20 @@ impl Drop for MyStruct {
 }
 
 fn main(){
-  let obj: MyStruct = MyStruct(100);
-  let ptr: *const MyStruct = &test as *const MyStruct;
+  let obj: MyStruct = MyStruct(42);
+  let ptr: *const MyStruct = &obj as *const MyStruct;
   println!("{:?} @ {:p}", unsafe { std::ptr::read(ptr) }, ptr);
 }
+```
+Output (may vary):
+```
+MyStruct(42) @ 0x7ffcb01ec737
+---Dropping an object---
+Before zeroing: 42 @ 0x7ffcb01ec7a7
+After zeroing: 0 @ 0x7ffcb01ec7a7
+Before zeroing: 42 @ 0x7ffcb01ec737
+---Dropping an object---
+After zeroing: 0 @ 0x7ffcb01ec737
 ```
 
 We can see that a second object is created by the call to `std::ptr::read`, i.e. a copy of a _non-copy_ object is performed.
@@ -265,10 +275,19 @@ impl Drop for MyStructBoxed {
 }
 
 fn main(){
-  let test: MyStructBoxed = MyStructBoxed(Box::new(100));
-  let ptr: *const MyStructBoxed = &test as *const MyStructBoxed;
+  let obj: MyStructBoxed = MyStructBoxed(Box::new(42));
+  let ptr: *const MyStructBoxed = &obj as *const MyStructBoxed;
   println!("{:?} @ {:p}", unsafe { std::ptr::read(ptr) }, unsafe { &*ptr }.0 );
 }
+```
+Output (may vary):
+```
+MyStructBoxed(42) @ 0x55fe454b3c10
+Before zeroing: 42 @ 0x55fe454b3c10
+After zeroing: 0 @ 0x55fe454b3c10
+Before zeroing: 179 @ 0x55fe454b3c10
+After zeroing: 0 @ 0x55fe454b3c10
+free(): double free detected in tcache 2
 ```
 
 > ### Rule {{#check LANG-RAW-PTR | Avoid the use of `std::ptr::read` }}
