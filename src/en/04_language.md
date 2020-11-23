@@ -210,14 +210,14 @@ limits, ...
 Values in Rust may have three distinct semantics when considering value displacement:
 
 - Either it has _move_ semantics, this behavior is the default one.
-- Or it has move _move_ semantics plus the _drop_ semantics, i.e. its type implements the `Drop` trait.
+- Or it has move _move_ semantics plus the _drop_ semantics, i.e. its type has [_drop glue_](https://docs.rs/core/mem/fn.needs_drop.html) (by directly implementing `Drop` or by containing a field with _drop glue_).
 - Or it has copy semantics, by having its type implementing the `Copy` trait.
 
 However, some problem may appear when using the `std::ptr::read` function.
 According to the [documentation](https://doc.rust-lang.org/std/ptr/fn.read.html), the function:
 > Reads the value from src without moving it. This leaves the memory in src unchanged.
 
-To be clear, this function is somehow copying the value pointed by the raw pointer, regardless of its type semantics.
+To be clear, this function is performing a bit-wise (shallow) copy of the pointee (value pointed to by the raw pointer), regardless of its type semantics.
 This is a dangerous behavior as it can lead to double-drop and, in some cases, to double-free.
 
 To illustrate the copy on a type having the move semantics let's consider the following snippet:
