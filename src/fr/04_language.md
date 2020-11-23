@@ -229,15 +229,15 @@ récursion, ...
 Rust propose trois différents modes de déplacement de valeur:
 
 - Soit par *déplacement*, qui est le comportement par défaut.
-- Ou par *déplacement* plus un *drop* de la valeur si le type implément le trait `Drop`.
+- Ou par *déplacement* plus un *drop* de la valeur si le type implémente le trait `Drop`.
 - Ou par *copie*, si son type implémente le trait `Copy`
 
 Cependant, des problèmes peuvent être constater lors de l'utilisation de la fonction `std::ptr::read`.
 Selon la [documentation](https://doc.rust-lang.org/std/ptr/fn.read.html), cette fonction:
 > Lis la valeur pointée par src sans la déplacer. Ce qui laisse la mémoire pointée intact.
 
-Cette fonction est donc responsable d'effectuer une copie de la valeur pointée, indépemment du mode de déplacement du type en question.
-Ce comportement peut être dangeureux car il peut mener à des *double-free* et/ou des *double-drop*.
+Cette fonction est donc responsable d'effectuer une copie de la valeur pointée, indépendamment du mode de déplacement du type en question.
+Ce comportement peut être dangereux car il peut mener à des *double-free* et/ou des *double-drop*.
 
 Pour illustrer ce comportement, considérons le code suivant :
 
@@ -263,7 +263,7 @@ fn main(){
 ```
 
 On peut observer qu'un deuxième objet a implicitement été créé lors de l'appel à  `std::ptr::read`, i.e. une copie d'un objet *non copiable* est effectuée.
-Ici, le problème n'est pas réellement dangeureux, sauf si du nettoyage de mémoire en dehors de l'implémentation de `drop` est réalisée (tel que recommandé): des données sensibles peuvent donc persister en mémoire.
+Ici, le problème n'est pas réellement dangereux, sauf si du nettoyage de mémoire en dehors de l'implémentation de `drop` est réalisée (tel que recommandé): des données sensibles peuvent donc persister en mémoire.
 
 Mais ce comportement peut causer des problèmes de résilience lors de l'utilisation de cette fonction avec un *raw pointer* pointant vers des données allouées sur le tas avec un mode de déplacement par déplacement, tel qu'illustré ici :
 
