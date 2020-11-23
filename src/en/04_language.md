@@ -210,7 +210,7 @@ limits, ...
 Values in Rust may have three distinct semantics when considering value displacement:
 
 - Either it has _move_ semantics, this behavior is the default one.
-- Or it has move _move_ semantics plus the _drop_ semantics, i.e. its type has [_drop glue_](https://docs.rs/core/mem/fn.needs_drop.html) (by directly implementing `Drop` or by containing a field with _drop glue_).
+- Or it has move _move_ semantics plus the _drop_ semantics, i.e. its type has [_drop glue_](https://doc.rust-lang.org/core/mem/fn.needs_drop.html) (by directly implementing `Drop` or by containing a field with _drop glue_).
 - Or it has copy semantics, by having its type implementing the `Copy` trait.
 
 However, some problem may appear when using the `std::ptr::read` function.
