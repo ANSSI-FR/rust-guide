@@ -1,0 +1,32 @@
+name: Build and Deploy
+on:
+  push:
+    branches: [ master ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build-and-deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Prepare
+      run: cargo install mdbook mdbook-checklist
+    - name: Build EN version
+      run: |
+        ./lang.sh en
+        mdbook build
+    - name: Build FR version
+      run: |
+        ./lang.sh fr
+        mdbook build
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@v4.2.5
+      with:
+        branch: gh-pages
+        folder: book
+        clean: true
