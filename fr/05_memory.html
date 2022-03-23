@@ -1,0 +1,376 @@
+<!DOCTYPE HTML>
+<html lang="fr" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Gestion de la mémoire - Développement sécurisé en Rust</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Recommandations pour le développement d&#x27;applications sécurisées en Rust">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Environnement de développement</a></li><li class="chapter-item expanded "><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Bibliothèques</a></li><li class="chapter-item expanded "><a href="04_language.html"><strong aria-hidden="true">4.</strong> Généralités sur le langage</a></li><li class="chapter-item expanded "><a href="05_memory.html" class="active"><strong aria-hidden="true">5.</strong> Gestion de la mémoire</a></li><li class="chapter-item expanded "><a href="06_typesystem.html"><strong aria-hidden="true">6.</strong> Système de types</a></li><li class="chapter-item expanded "><a href="07_ffi.html"><strong aria-hidden="true">7.</strong> FFI</a></li><li class="chapter-item expanded affix "><a href="LICENSE.html">License</a></li><li class="chapter-item expanded affix "><a href="checklist.html">Checklist</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Développement sécurisé en Rust</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="gestion-de-la-mémoire"><a class="header" href="#gestion-de-la-mémoire">Gestion de la mémoire</a></h1>
+<!-- ## À propos de la sûreté mémoire en Rust -->
+<!--
+<mark>TODO</mark> : expliquer les allocations/désallocations sûres,
+l'ownership/borrowing, et identifier les constructions de langage qui peuvent
+casser la sûreté mémoire (par exemple, comportements *unsounds* dans des
+versions plus anciennes du compilateur).
+-->
+<h2 id="forget-et-fuites-de-mémoire"><a class="header" href="#forget-et-fuites-de-mémoire"><code>Forget</code> et fuites de mémoire</a></h2>
+<p>En général, la mémoire est automatiquement récupérée en Rust lorsqu'une variable
+sort de la portée lexicale courante. En complément de ce mécanisme, Rust fournit
+des fonctions spéciales pour réclamer manuellement la mémoire : les fonctions
+<code>forget</code> et <code>drop</code> du module <code>std::mem</code> (ou <code>core::mem</code>). <code>drop</code> déclenche
+simplement une récupération prématurée de la mémoire tout en appelant les
+destructeurs associés lorsque nécessaire, <code>forget</code> quant à elle n'appelle pas
+ces destructeurs.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let pair = ('↑', 0xBADD_CAFEu32);
+drop(pair); // ici, `forget` serait équivalent (pas de destructeur à appeler)
+<span class="boring">}
+</span></code></pre></pre>
+<p>Les deux fonctions sont considérées comme <strong>sûres du point de vue mémoire</strong> par
+Rust. Toutefois, <code>forget</code> rendra toute ressource gérée par la valeur libérée
+inaccessible, mais non libérée.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">use std::mem::forget;
+</span>let s = String::from(&quot;Hello&quot;);
+forget(s); // fuite mémoire
+<span class="boring">}
+</span></code></pre></pre>
+<p>En particulier, l'utilisation de <code>forget</code> peut causer la rétention en mémoire de
+ressources critiques, menant à des interblocages et à la persistance de données
+sensibles en mémoire. C'est pourquoi <code>forget</code> doit être considérée comme
+<strong>non sécurisée</strong>.</p>
+<blockquote>
+<h3 id="règle-mem-forget"><a class="header" href="#règle-mem-forget">Règle <a id="MEM-FORGET"></a>MEM-FORGET</a></h3>
+<p>Dans un développement sécurisé en Rust, la fonction <code>forget</code> de <code>std::mem</code>
+(<code>core::mem</code>) ne doit pas être utilisée.</p>
+</blockquote>
+<!-- -->
+<blockquote>
+<h3 id="recommandation-mem-forget-lint"><a class="header" href="#recommandation-mem-forget-lint">Recommandation <a id="MEM-FORGET-LINT"></a>MEM-FORGET-LINT</a></h3>
+<p>Le <em>lint</em> <code>mem_forget</code> de Clippy peut être utilisé pour automatiquement
+détecter toute utilisation de la fonction <code>forget</code>. Pour s'assurer de l'absence
+d'appel à <code>forget</code>, ajouter la directive suivante en début de fichier racine
+(en général <code>src/lib.rs</code> ou <code>src/main.rs</code>) :</p>
+<pre><code class="language-rust noplaypen ignore">#![deny(clippy::mem_forget)]
+</code></pre>
+</blockquote>
+<p>La bibliothèque standard inclut d'autres moyens d'<em>oublier</em> une valeur :</p>
+<ul>
+<li><code>Box::leak</code> pour libérer une ressource ;</li>
+<li><code>Box::into_raw</code> pour exploiter une valeur dans un bloc <em>unsafe</em>, notamment
+dans une FFI ;</li>
+<li><code>ManuallyDrop</code> (dans <code>std::mem</code> ou <code>core::mem</code>) pour assurer la libération
+manuelle d'une valeur.</li>
+</ul>
+<p>Ces alternatives peuvent mener au même type de problème de sécurité, mais ont
+l'avantage de faire apparaître explicitement leur but.</p>
+<blockquote>
+<h3 id="règle-mem-leak"><a class="header" href="#règle-mem-leak">Règle <a id="MEM-LEAK"></a>MEM-LEAK</a></h3>
+<p>Dans un développement sécurisé en Rust, le code ne doit pas faire fuiter de la
+mémoire ou des ressources <em>via</em> <code>Box::leak</code>.</p>
+</blockquote>
+<p><code>ManuallyDrop</code> et <code>Box::into_raw</code> passent la responsabilité de la libération de
+la ressource concernée du compilateur au développeur.</p>
+<blockquote>
+<h3 id="règle-mem-manuallydrop"><a class="header" href="#règle-mem-manuallydrop">Règle <a id="MEM-MANUALLYDROP"></a>MEM-MANUALLYDROP</a></h3>
+<p>Dans un développement sécurisé en Rust, toute valeur <em>wrappée</em> dans le type
+<code>ManuallyDrop</code> doit être <em>unwrapped</em> pour permettre sa libération automatique
+(<code>ManuallyDrop::into_inner</code>) ou bien doit être manuellement libérée (<em>unsafe</em>
+<code>ManuallyDrop::drop</code>).</p>
+</blockquote>
+<!-- -->
+<blockquote>
+<h3 id="règle-mem-intofromraw"><a class="header" href="#règle-mem-intofromraw">Règle <a id="MEM-INTOFROMRAW"></a>MEM-INTOFROMRAW</a></h3>
+<p>Dans un développement sécurisé en Rust, tout pointeur créé par un appel à
+<code>into_raw</code> (ou <code>into_raw_nonnull</code>) depuis un des types suivants doit
+finalement être transformé en valeur avec l'appel à la fonction <code>from_raw</code>
+correspondant, pour permettre sa libération :</p>
+<ul>
+<li><code>std::boxed::Box</code> (ou <code>alloc::boxed::Box</code>) ;</li>
+<li><code>std::rc::Rc</code> (ou <code>alloc::rc::Rc</code>) ;</li>
+<li><code>std::rc::Weak</code> (ou <code>alloc::rc::Weak</code>) ;</li>
+<li><code>std::sync::Arc</code> (ou <code>alloc::sync::Arc</code>) ;</li>
+<li><code>std::sync::Weak</code> (ou <code>alloc::sync::Weak</code>) ;</li>
+<li><code>std::ffi::CString</code> ;</li>
+<li><code>std::ffi::OsString</code>.</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let boxed = Box::new(String::from(&quot;Crab&quot;));
+let raw_ptr = unsafe { Box::into_raw(boxed) };
+let _ = unsafe { Box::from_raw(raw_ptr) }; // sera libéré
+<span class="boring">}
+</span></code></pre></pre>
+</blockquote>
+<!-- -->
+<blockquote>
+<h3 id="note"><a class="header" href="#note">Note</a></h3>
+<p>Dans le cas de <code>Box::into_raw</code>, le nettoyage automatique est possible, mais
+est bien plus compliqué que de <em>re-boxer</em> le pointeur brut et doit être
+évité :</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// extrait de la documentation de la bibliothèque standard
+use std::alloc::{dealloc, Layout};
+use std::ptr;
+
+let x = Box::new(String::from(&quot;Hello&quot;));
+let p = Box::into_raw(x);
+unsafe {
+    ptr::drop_in_place(p);
+    dealloc(p as *mut u8, Layout::new::&lt;String&gt;());
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Puisque les autres types (<code>Rc</code> et <code>Arc</code>) sont opaques et plus complexes, la
+libération manuelle n'est pas possible.</p>
+</blockquote>
+<h2 id="mémoire-non-initialisée"><a class="header" href="#mémoire-non-initialisée">Mémoire non initialisée</a></h2>
+<p>Par défaut, le langage Rust impose que toutes les valeurs soient initialisées, pour
+prévenir l'utilisation de mémoire non initialisée (à l'exception de
+l'utilisation de <code>std::mem::uninitialized</code> ou de <code>std::mem::MaybeUninit</code>).</p>
+<blockquote>
+<h3 id="règle-mem-uninit"><a class="header" href="#règle-mem-uninit">Règle <a id="MEM-UNINIT"></a>MEM-UNINIT</a></h3>
+<p>La fonction <code>std::mem::uninitialized</code> (dépréciée depuis la version 1.38) ou
+le type <code>std::mem::MaybeUninit</code> (stabilisé dans la version 1.36) ne doivent
+pas être utilisés, ou bien explicitement justifiés si nécessaire.</p>
+</blockquote>
+<p>L'utilisation de mémoire non initialisée peut induire deux problèmes de
+sécurité distincts :</p>
+<ul>
+<li>la libération de mémoire non initialisée (étant également un problème de
+sûreté mémoire) ;</li>
+<li>la non-libération de mémoire initialisée.</li>
+</ul>
+<blockquote>
+<h3 id="note-1"><a class="header" href="#note-1">Note</a></h3>
+<p>Le type <code>std::mem::MaybeUninit</code> est une amélioration de la fonction
+<code>std::mem::uninitialized</code>. En effet, il rend la libération des valeurs non
+initialisées bien plus difficile. Toutefois, cela ne change pas le second
+problème : la non-libération de la mémoire initialisée est bien possible.
+C'est problématique en particulier si l'on considère l'utilisation de <code>Drop</code>
+pour effacer des valeurs sensibles.</p>
+</blockquote>
+<h2 id="effacement-sécurisé-des-informations-sensibles"><a class="header" href="#effacement-sécurisé-des-informations-sensibles">Effacement sécurisé des informations sensibles</a></h2>
+<p>L'effacement sécurisé (mise à zéro) est nécessaire pour les variables sensibles,
+en particulier dans lorsque le code Rust est utilisé <em>via</em> des FFI.</p>
+<blockquote>
+<h3 id="règle-mem-zero"><a class="header" href="#règle-mem-zero">Règle <a id="MEM-ZERO"></a>MEM-ZERO</a></h3>
+<p>Les variables contenant des données sensibles doivent être mises à zéro après
+utilisation, en utilisant des fonctions dont les appels ne seront pas
+supprimés par les optimisations du compilateur, comme
+<code>std::ptr::write_volatile</code> ou bien la <em>crate</em> <code>zeroize</code>.</p>
+</blockquote>
+<p>Le code suivant montre comment définir un type entier qui sera remis à zéro
+à sa libération, en utilisant le trait <code>Drop</code> :</p>
+<pre><pre class="playground"><code class="language-rust">/// Exemple : newtype pour u32, réécrit à 0 quand libéré
+pub struct ZU32(pub u32);
+
+impl Drop for ZU32 {
+    fn drop(&amp;mut self) {
+        println!(&quot;zeroing memory&quot;);
+        unsafe{ ::std::ptr::write_volatile(&amp;mut self.0, 0) };
+    }
+}
+
+<span class="boring">fn main() {
+</span>{
+    let i = ZU32(42);
+    // ...
+} // i est libéré ici
+<span class="boring">}
+</span></code></pre></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="04_language.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="06_typesystem.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="04_language.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="06_typesystem.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

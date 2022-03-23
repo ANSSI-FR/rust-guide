@@ -4,14 +4,10 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Language generalities - Secure Rust Guidelines</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Recommendations for secure applications development with Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -36,9 +30,7 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -97,8 +89,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -114,11 +105,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Secure Rust Guidelines</h1>
@@ -127,14 +116,13 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -142,7 +130,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -155,8 +142,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#language-generalities" id="language-generalities">Language generalities</a></h1>
-<h2><a class="header" href="#naming" id="naming">Naming</a></h2>
+                        <h1 id="language-generalities"><a class="header" href="#language-generalities">Language generalities</a></h1>
+<h2 id="naming"><a class="header" href="#naming">Naming</a></h2>
 <p>As of now, the standard library is the de facto standard for naming things in
 the Rust world. However, an effort has been made to formalize it, first in
 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">RFC 430</a>, then in the <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a>.</p>
@@ -178,11 +165,11 @@ some particular constructions:</p>
 <li>(C-WORD-ORDER) for word order consistency.</li>
 </ul>
 <blockquote>
-<h3><a class="header" href="#rule-a-idlang-namingalang-naming" id="rule-a-idlang-namingalang-naming">Rule <a id="LANG-NAMING"></a>LANG-NAMING</a></h3>
+<h3 id="rule-lang-naming"><a class="header" href="#rule-lang-naming">Rule <a id="LANG-NAMING"></a>LANG-NAMING</a></h3>
 <p>Development of a secure application must follow the naming conventions
 outlined in the <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a>.</p>
 </blockquote>
-<h2><a class="header" href="#unsafe-code" id="unsafe-code">Unsafe code</a></h2>
+<h2 id="unsafe-code"><a class="header" href="#unsafe-code">Unsafe code</a></h2>
 <p>The joint utilization of the type system and the ownership system aims to
 enforce safety regarding memory management in Rust's programs. So the language
 aims to avoid memory overflows, null or invalid pointer constructions, and data
@@ -190,7 +177,7 @@ races.
 To perform risky actions such as system calls, type coercions, or direct
 manipulations of memory pointers, the language provides the <code>unsafe</code> keyword.</p>
 <blockquote>
-<h3><a class="header" href="#rule-a-idlang-unsafealang-unsafe" id="rule-a-idlang-unsafealang-unsafe">Rule <a id="LANG-UNSAFE"></a>LANG-UNSAFE</a></h3>
+<h3 id="rule-lang-unsafe"><a class="header" href="#rule-lang-unsafe">Rule <a id="LANG-UNSAFE"></a>LANG-UNSAFE</a></h3>
 <p>For a secured development, the <code>unsafe</code> blocks must be avoided. Afterward,
 we list the only cases where <code>unsafe</code> may be used, provided that they come
 with a proper justification:</p>
@@ -220,7 +207,7 @@ tries to dereference a pointer passed as an argument.</p>
 the crate root (typically <code>main.rs</code> or <code>lib.rs</code>) to generate compilation
 errors if <code>unsafe</code> is used in the code base.</p>
 </blockquote>
-<h2><a class="header" href="#integer-overflows" id="integer-overflows">Integer overflows</a></h2>
+<h2 id="integer-overflows"><a class="header" href="#integer-overflows">Integer overflows</a></h2>
 <p>Although some verification is performed by Rust regarding potential integer
 overflows, precautions should be taken when executing arithmetic operations on
 integers.</p>
@@ -256,23 +243,23 @@ else { println!(&quot;{}&quot;, res); }
 </span><span class="boring">}
 </span></code></pre></pre>
 <blockquote>
-<h3><a class="header" href="#rule-a-idlang-arithalang-arith" id="rule-a-idlang-arithalang-arith">Rule <a id="LANG-ARITH"></a>LANG-ARITH</a></h3>
+<h3 id="rule-lang-arith"><a class="header" href="#rule-lang-arith">Rule <a id="LANG-ARITH"></a>LANG-ARITH</a></h3>
 <p>When assuming that an arithmetic operation can produce an overflow, the
 specialized functions <code>overflowing_&lt;op&gt;</code>, <code>wrapping_&lt;op&gt;</code>, or the
 <code>Wrapping</code> type must be used.</p>
 </blockquote>
-<h2><a class="header" href="#error-handling" id="error-handling">Error handling</a></h2>
+<h2 id="error-handling"><a class="header" href="#error-handling">Error handling</a></h2>
 <!-- <mark>TODO</mark>: explicit good practices in error handling. -->
 <p>The <code>Result</code> type is the preferred way of handling functions that can fail.
 A <code>Result</code> object must be tested, and never ignored.</p>
 <blockquote>
-<h3><a class="header" href="#recommendation-a-idlang-errwrapalang-errwrap" id="recommendation-a-idlang-errwrapalang-errwrap">Recommendation <a id="LANG-ERRWRAP"></a>LANG-ERRWRAP</a></h3>
+<h3 id="recommendation-lang-errwrap"><a class="header" href="#recommendation-lang-errwrap">Recommendation <a id="LANG-ERRWRAP"></a>LANG-ERRWRAP</a></h3>
 <p>A crate can implement its own <code>Error</code> type, wrapping all possible errors.
 It must be careful to make this type exception-safe (RFC 1236), and implement
 <code>Error + Send + Sync + 'static</code> as well as <code>Display</code>.</p>
 </blockquote>
 <blockquote>
-<h3><a class="header" href="#recommendation-a-idlang-errdoalang-errdo" id="recommendation-a-idlang-errdoalang-errdo">Recommendation <a id="LANG-ERRDO"></a>LANG-ERRDO</a></h3>
+<h3 id="recommendation-lang-errdo"><a class="header" href="#recommendation-lang-errdo">Recommendation <a id="LANG-ERRDO"></a>LANG-ERRDO</a></h3>
 <p>The <code>?</code> operator should be used to improve readability of code.
 The <code>try!</code> macro should not be used.</p>
 </blockquote>
@@ -284,7 +271,7 @@ errors.</p>
 wrapping of errors into a single universal error type. Such wrappers should not
 be used in libraries and complex systems because they do not allow developers to
 provide context to the wrapped error.</p>
-<h3><a class="header" href="#panics" id="panics">Panics</a></h3>
+<h3 id="panics"><a class="header" href="#panics">Panics</a></h3>
 <p>Explicit error handling (<code>Result</code>) should always be preferred instead of calling
 <code>panic</code>.  The cause of the error should be available, and generic errors should
 be avoided.</p>
@@ -301,12 +288,12 @@ fail and cause the code to panic.</p>
 <li>string formatting using <code>format!</code>.</li>
 </ul>
 <blockquote>
-<h3><a class="header" href="#rule-a-idlang-nopanicalang-nopanic" id="rule-a-idlang-nopanicalang-nopanic">Rule <a id="LANG-NOPANIC"></a>LANG-NOPANIC</a></h3>
+<h3 id="rule-lang-nopanic"><a class="header" href="#rule-lang-nopanic">Rule <a id="LANG-NOPANIC"></a>LANG-NOPANIC</a></h3>
 <p>Functions or instructions that can cause the code to panic at runtime must not
 be used.</p>
 </blockquote>
 <blockquote>
-<h3><a class="header" href="#rule-a-idlang-arrindexingalang-arrindexing" id="rule-a-idlang-arrindexingalang-arrindexing">Rule <a id="LANG-ARRINDEXING"></a>LANG-ARRINDEXING</a></h3>
+<h3 id="rule-lang-arrindexing"><a class="header" href="#rule-lang-arrindexing">Rule <a id="LANG-ARRINDEXING"></a>LANG-ARRINDEXING</a></h3>
 <p>Array indexing must be properly tested, or the <code>get</code> method should be used to
 return an <code>Option</code>.</p>
 </blockquote>
@@ -319,12 +306,12 @@ crate can catch all cases. Drawback: all functions need to be marked as
 <mark>TODO</mark> Another possibility:
 [rustig](https://github.com/Technolution/rustig) (doesn't build here)
 -->
-<h3><a class="header" href="#ffi-and-panics" id="ffi-and-panics">FFI and panics</a></h3>
+<h3 id="ffi-and-panics"><a class="header" href="#ffi-and-panics">FFI and panics</a></h3>
 <p>When calling Rust code from another language (for ex. C), the Rust code must
 be careful to never panic.
 Stack unwinding from Rust code into foreign code results in undefined behavior.</p>
 <blockquote>
-<h3><a class="header" href="#rule-a-idlang-ffipanicalang-ffipanic" id="rule-a-idlang-ffipanicalang-ffipanic">Rule <a id="LANG-FFIPANIC"></a>LANG-FFIPANIC</a></h3>
+<h3 id="rule-lang-ffipanic"><a class="header" href="#rule-lang-ffipanic">Rule <a id="LANG-FFIPANIC"></a>LANG-FFIPANIC</a></h3>
 <p>Rust code called from FFI must either ensure the function cannot panic, or use
 <code>catch_unwind</code> or the <code>std::panic</code> module to ensure the rust code will not
 abort or return in an unstable state.</p>
@@ -341,17 +328,13 @@ limits, ...
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="03_libraries.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="05_memory.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -359,49 +342,35 @@ limits, ...
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="03_libraries.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="05_memory.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

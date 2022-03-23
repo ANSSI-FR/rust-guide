@@ -4,14 +4,10 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Type system - Secure Rust Guidelines</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Recommendations for secure applications development with Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -36,9 +30,7 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -97,8 +89,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -114,11 +105,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Secure Rust Guidelines</h1>
@@ -127,14 +116,13 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -142,7 +130,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -155,15 +142,15 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#type-system" id="type-system">Type system</a></h1>
+                        <h1 id="type-system"><a class="header" href="#type-system">Type system</a></h1>
 <!-- ## About Rust type system -->
 <!--
 <mark>TODO</mark>: identify pitfalls with the type system (for instance,
 misunderstanding of which code is actually executed when implementing complex
 patterns with traits).
 -->
-<h2><a class="header" href="#standard-library-traits" id="standard-library-traits">Standard library traits</a></h2>
-<h3><a class="header" href="#drop-trait-the-destructor" id="drop-trait-the-destructor"><code>Drop</code> trait, the destructor</a></h3>
+<h2 id="standard-library-traits"><a class="header" href="#standard-library-traits">Standard library traits</a></h2>
+<h3 id="drop-trait-the-destructor"><a class="header" href="#drop-trait-the-destructor"><code>Drop</code> trait, the destructor</a></h3>
 <p>Types implement the trait <code>std::ops::Drop</code> to perform some operations when the
 memory associated with a value of this type is to be reclaimed. <code>Drop</code> is the
 Rust equivalent of a destructor in C++ or a finalizer in Java.</p>
@@ -181,7 +168,7 @@ or to release memory (e.g. in smart pointers such as <code>Box</code> or <code>R
 As a result, <code>Drop</code> trait implementations are likely to contain <code>unsafe</code> code
 blocks as well as other security-critical operations.</p>
 <blockquote>
-<h3><a class="header" href="#recommendation-a-idlang-dropalang-drop" id="recommendation-a-idlang-dropalang-drop">Recommendation <a id="LANG-DROP"></a>LANG-DROP</a></h3>
+<h3 id="recommendation-lang-drop"><a class="header" href="#recommendation-lang-drop">Recommendation <a id="LANG-DROP"></a>LANG-DROP</a></h3>
 <p>In a Rust secure development, the implementation of the <code>std::ops::Drop</code> trait
 should be justified, documented and peer-reviewed.</p>
 </blockquote>
@@ -198,23 +185,23 @@ on <a href="05_memory.html#forget-and-memory-leaks">Forget and memory leaks</a>,
 <p>And missing drops may lead to exposing sensitive data or to lock limited
 resources leading to unavailability issues.</p>
 <blockquote>
-<h3><a class="header" href="#rule-a-idlang-drop-no-panicalang-drop-no-panic" id="rule-a-idlang-drop-no-panicalang-drop-no-panic">Rule <a id="LANG-DROP-NO-PANIC"></a>LANG-DROP-NO-PANIC</a></h3>
+<h3 id="rule-lang-drop-no-panic"><a class="header" href="#rule-lang-drop-no-panic">Rule <a id="LANG-DROP-NO-PANIC"></a>LANG-DROP-NO-PANIC</a></h3>
 <p>In a Rust secure development, the implementation of the <code>std::ops::Drop</code> trait
 must not panic.</p>
 </blockquote>
 <p>Beside panics, secure-critical drop should be protected.</p>
 <blockquote>
-<h3><a class="header" href="#rule-a-idlang-drop-no-cyclealang-drop-no-cycle" id="rule-a-idlang-drop-no-cyclealang-drop-no-cycle">Rule <a id="LANG-DROP-NO-CYCLE"></a>LANG-DROP-NO-CYCLE</a></h3>
+<h3 id="rule-lang-drop-no-cycle"><a class="header" href="#rule-lang-drop-no-cycle">Rule <a id="LANG-DROP-NO-CYCLE"></a>LANG-DROP-NO-CYCLE</a></h3>
 <p>Value whose type implements <code>Drop</code> must not be embedded directly or indirectly
 in a cycle of reference-counted references.</p>
 </blockquote>
 <blockquote>
-<h3><a class="header" href="#recommendation-a-idlang-drop-secalang-drop-sec" id="recommendation-a-idlang-drop-secalang-drop-sec">Recommendation <a id="LANG-DROP-SEC"></a>LANG-DROP-SEC</a></h3>
+<h3 id="recommendation-lang-drop-sec"><a class="header" href="#recommendation-lang-drop-sec">Recommendation <a id="LANG-DROP-SEC"></a>LANG-DROP-SEC</a></h3>
 <p>Ensuring security operations at the end of some treatment (such as key erasure
 at the end of a cryptographic encryption) should not rely only on the <code>Drop</code>
 trait implementation.</p>
 </blockquote>
-<h3><a class="header" href="#send-and-sync-traits" id="send-and-sync-traits"><code>Send</code> and <code>Sync</code> traits</a></h3>
+<h3 id="send-and-sync-traits"><a class="header" href="#send-and-sync-traits"><code>Send</code> and <code>Sync</code> traits</a></h3>
 <p>The <code>Send</code> and <code>Sync</code> traits (defined in <code>std::marker</code> or <code>core::marker</code>) are
 marker traits used to ensure the safety of concurrency in Rust. When implemented
 correctly, they allow the Rust compiler to guarantee the absence of data races.
@@ -261,12 +248,12 @@ field:</p>
 </span>struct SpecialType(u8, PhantomData&lt;*const ()&gt;);
 </code></pre>
 <blockquote>
-<h3><a class="header" href="#recommendation-a-idlang-sync-traitsalang-sync-traits" id="recommendation-a-idlang-sync-traitsalang-sync-traits">Recommendation <a id="LANG-SYNC-TRAITS"></a>LANG-SYNC-TRAITS</a></h3>
+<h3 id="recommendation-lang-sync-traits"><a class="header" href="#recommendation-lang-sync-traits">Recommendation <a id="LANG-SYNC-TRAITS"></a>LANG-SYNC-TRAITS</a></h3>
 <p>In a Rust secure development, the manual implementation of the <code>Send</code> and
 <code>Sync</code> traits should be avoided and, if necessary, should be justified,
 documented and peer-reviewed.</p>
 </blockquote>
-<h3><a class="header" href="#comparison-traits-partialeq-eq-partialord-ord" id="comparison-traits-partialeq-eq-partialord-ord">Comparison traits (<code>PartialEq</code>, <code>Eq</code>, <code>PartialOrd</code>, <code>Ord</code>)</a></h3>
+<h3 id="comparison-traits-partialeq-eq-partialord-ord"><a class="header" href="#comparison-traits-partialeq-eq-partialord-ord">Comparison traits (<code>PartialEq</code>, <code>Eq</code>, <code>PartialOrd</code>, <code>Ord</code>)</a></h3>
 <p>Comparisons (<code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>) in Rust relies on four standard
 traits available in <code>std::cmp</code> (or <code>core::cmp</code> for <code>no_std</code> compilation):</p>
 <ul>
@@ -388,12 +375,12 @@ In the second use, it may lead to classical security issues linked to memory
 safety violations. That is again a factor in the practice of limiting the use
 of <code>unsafe</code> blocks.</p>
 <blockquote>
-<h3><a class="header" href="#rule-a-idlang-cmp-invalang-cmp-inv" id="rule-a-idlang-cmp-invalang-cmp-inv">Rule <a id="LANG-CMP-INV"></a>LANG-CMP-INV</a></h3>
+<h3 id="rule-lang-cmp-inv"><a class="header" href="#rule-lang-cmp-inv">Rule <a id="LANG-CMP-INV"></a>LANG-CMP-INV</a></h3>
 <p>In a Rust secure development, the implementation of standard comparison traits
 must respect the invariants described in the documentation.</p>
 </blockquote>
 <blockquote>
-<h3><a class="header" href="#recommendation-a-idlang-cmp-defaultsalang-cmp-defaults" id="recommendation-a-idlang-cmp-defaultsalang-cmp-defaults">Recommendation <a id="LANG-CMP-DEFAULTS"></a>LANG-CMP-DEFAULTS</a></h3>
+<h3 id="recommendation-lang-cmp-defaults"><a class="header" href="#recommendation-lang-cmp-defaults">Recommendation <a id="LANG-CMP-DEFAULTS"></a>LANG-CMP-DEFAULTS</a></h3>
 <p>In a Rust secure development, the implementation of standard comparison traits
 should only define methods with no default implementation, so as to reduce
 the risk of violating the invariants associated with the traits.</p>
@@ -427,7 +414,7 @@ assert!(T1 { a: 1, b: 1 } &gt; T1 { a: 1, b: 0 });
 </span><span class="boring">}
 </span></code></pre></pre>
 <blockquote>
-<h3><a class="header" href="#warning" id="warning">Warning</a></h3>
+<h3 id="warning"><a class="header" href="#warning">Warning</a></h3>
 <p>Derivation of comparison traits for compound types depends on the
 <strong>field order</strong>, and not on their names.</p>
 <p>First, it means that changing the order of declaration of two fields change
@@ -448,7 +435,7 @@ on the field order.</p>
 <p>Despite the ordering caveat, derived comparisons are a lot less error-prone
 than manual ones and makes code shorter and easier to maintain.</p>
 <blockquote>
-<h3><a class="header" href="#recommendation-a-idlang-cmp-derivealang-cmp-derive" id="recommendation-a-idlang-cmp-derivealang-cmp-derive">Recommendation <a id="LANG-CMP-DERIVE"></a>LANG-CMP-DERIVE</a></h3>
+<h3 id="recommendation-lang-cmp-derive"><a class="header" href="#recommendation-lang-cmp-derive">Recommendation <a id="LANG-CMP-DERIVE"></a>LANG-CMP-DERIVE</a></h3>
 <p>In a secure Rust development, the implementation of standard comparison traits
 should be automatically derived with <code>#[derive(...)]</code> when structural equality
 and lexicographical comparison is needed. Any manual implementation of
@@ -459,17 +446,13 @@ standard comparison traits should be documented and justified.</p>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="05_memory.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="07_ffi.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -477,49 +460,35 @@ standard comparison traits should be documented and justified.</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="05_memory.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="07_ffi.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>
