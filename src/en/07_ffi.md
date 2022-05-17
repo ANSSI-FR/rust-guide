@@ -180,7 +180,7 @@ Automated tools to generate bindings, such as [rust-bindgen] or
 > Also some options of rust-bindgen may result in dangerous translations, in
 > particular `rustified_enum`.
 
-[rust-bindgen]: https://crates.io/crates/rust-bindgen
+[rust-bindgen]: https://crates.io/crates/bindgen
 [cbindgen]: https://crates.io/crates/cbindgen
 
 ### Platform-dependent types
