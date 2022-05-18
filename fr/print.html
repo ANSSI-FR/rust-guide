@@ -1331,7 +1331,7 @@ doivent avoir la même taille et respecter le même alignement.</p>
 <p>En ce qui concerne les <code>enum</code>s avec des champs en particulier, les types
 correspondant en C (ou en C++) ne sont pas évidents (<a href="https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html">RFC 2195</a>).</p>
 <p>Les outils permettant de générer automatiquement des <em>bindings</em>, comme
-<a href="https://crates.io/crates/rust-bindgen">rust-bindgen</a> ou <a href="https://crates.io/crates/cbindgen">cbindgen</a>, peuvent aider à assurer la cohérence entre les
+<a href="https://crates.io/crates/bindgen">rust-bindgen</a> ou <a href="https://crates.io/crates/cbindgen">cbindgen</a>, peuvent aider à assurer la cohérence entre les
 types du côté C et ceux du côté Rust.</p>
 <blockquote>
 <h3 id="recommandation-ffi-automate"><a class="header" href="#recommandation-ffi-automate">Recommandation <a id="FFI-AUTOMATE"></a>FFI-AUTOMATE</a></h3>
@@ -1342,7 +1342,7 @@ continu.</p>
 <!-- -->
 <blockquote>
 <h3 id="attention-3"><a class="header" href="#attention-3">Attention</a></h3>
-<p>Pour les <em>bindings</em> C/C++ vers Rust, <a href="https://crates.io/crates/rust-bindgen">rust-bindgen</a> est capable de générer
+<p>Pour les <em>bindings</em> C/C++ vers Rust, <a href="https://crates.io/crates/bindgen">rust-bindgen</a> est capable de générer
 automatiquement des <em>bindings</em> de bas niveau. L'écriture d'un <em>binding</em> de
 plus haut niveau est fortement recommandée (voir Recommandation
 <a href="07_ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>). Attention également à certaines
@@ -1386,7 +1386,7 @@ la note ci-dessous).</p>
 <blockquote>
 <h3 id="note-4"><a class="header" href="#note-4">Note</a></h3>
 <p>Les outils de génération automatiques de <em>bindings</em> (par exemple <a href="https://crates.io/crates/cbindgen">cbindgen</a> ou
-<a href="https://crates.io/crates/rust-bindgen">rust-bindgen</a>) sont capables d'assurer la cohérence des types dépendants de
+<a href="https://crates.io/crates/bindgen">rust-bindgen</a>) sont capables d'assurer la cohérence des types dépendants de
 la plateforme. Ils doivent être utilisés durant le processus de compilation
 pour chaque cible afin d'assurer que la génération est cohérente pour la
 plateforme visée.</p>
@@ -1979,7 +1979,7 @@ niveau de Rust.</li>
 <p>Si l'API bas-niveau est exposée, cela doit être fait dans un <em>crate</em> dédiée
 ayant un nom de la forme <code>*-sys</code>.</p>
 </blockquote>
-<p>La <em>crate</em> <a href="https://crates.io/crates/rust-bindgen">rust-bindgen</a> peut être utilisée pour générer automatiquement la
+<p>La <em>crate</em> <a href="https://crates.io/crates/bindgen">rust-bindgen</a> peut être utilisée pour générer automatiquement la
 partie bas-niveau du <em>binding</em> depuis les fichiers <em>header</em> C.</p>
 <!--
 <mark>TODO</mark> example

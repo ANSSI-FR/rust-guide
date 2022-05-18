@@ -284,7 +284,7 @@ and the same alignment requirement.</p>
 </blockquote>
 <p>Concerning enums with fields in particular, the corresponding types in C (or
 C++) are not obvious, cf. <a href="https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html">RFC 2195</a>.</p>
-<p>Automated tools to generate bindings, such as <a href="https://crates.io/crates/rust-bindgen">rust-bindgen</a> or
+<p>Automated tools to generate bindings, such as <a href="https://crates.io/crates/bindgen">rust-bindgen</a> or
 <a href="https://crates.io/crates/cbindgen">cbindgen</a>, may be of help in making types consistent between C and Rust.</p>
 <blockquote>
 <h3 id="recommendation-ffi-automate"><a class="header" href="#recommendation-ffi-automate">Recommendation <a id="FFI-AUTOMATE"></a>FFI-AUTOMATE</a></h3>
@@ -294,7 +294,7 @@ generate bindings when possible and to maintain them continually.</p>
 <!-- -->
 <blockquote>
 <h3 id="warning"><a class="header" href="#warning">Warning</a></h3>
-<p>For binding C/C++ to Rust, <a href="https://crates.io/crates/rust-bindgen">rust-bindgen</a> is able to automatically generate
+<p>For binding C/C++ to Rust, <a href="https://crates.io/crates/bindgen">rust-bindgen</a> is able to automatically generate
 the low-level binding. A high-level safe binding is highly recommended (see
 Recommendation <a href="#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>).
 Also some options of rust-bindgen may result in dangerous translations, in
@@ -333,7 +333,7 @@ the binding is automatically generated for each platform (see Note below).</p>
 <!-- -->
 <blockquote>
 <h3 id="note-1"><a class="header" href="#note-1">Note</a></h3>
-<p>Automatic binding generation tools (e.g. <a href="https://crates.io/crates/cbindgen">cbindgen</a>, <a href="https://crates.io/crates/rust-bindgen">rust-bindgen</a>) are able
+<p>Automatic binding generation tools (e.g. <a href="https://crates.io/crates/cbindgen">cbindgen</a>, <a href="https://crates.io/crates/bindgen">rust-bindgen</a>) are able
 to ensure type consistency on a specific platform. They should be used during
 the build process for each target to ensure that the generation is sound for
 the specific target platform.</p>
@@ -875,7 +875,7 @@ the Rust level.</li>
 <p>If the low-level API is exposed to the world, it should be done in a dedicated
 crate with a name of the form <code>*-sys</code>.</p>
 </blockquote>
-<p>The crate <a href="https://crates.io/crates/rust-bindgen">rust-bindgen</a> may be used to automatically generate the low-level
+<p>The crate <a href="https://crates.io/crates/bindgen">rust-bindgen</a> may be used to automatically generate the low-level
 part of the binding from C header files.</p>
 <!--
 <mark>TODO</mark> example
