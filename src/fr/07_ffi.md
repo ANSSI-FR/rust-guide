@@ -185,7 +185,7 @@ types du côté C et ceux du côté Rust.
 > [FFI-SAFEWRAPPING](#FFI-SAFEWRAPPING)). Attention également à certaines
 > options dangereuses de `rust-bindgen`, en particulier `rustified_enum`.
 
-[rust-bindgen]: https://crates.io/crates/rust-bindgen
+[rust-bindgen]: https://crates.io/crates/bindgen
 [cbindgen]: https://crates.io/crates/cbindgen
 
 ### Types dépendants de la plateforme d'exécution

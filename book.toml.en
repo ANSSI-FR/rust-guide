@@ -1,8 +1,11 @@
 [book]
-title       = "Secure Rust Guidelines"
+title = "Secure Rust Guidelines"
 description = "Recommendations for secure applications development with Rust"
-src         = "src/en"
-language    = "en"
+src = "src/en"
+language = "en"
+
+[build]
+build-dir = "book"
 
 [preprocessor.checklist]
 title = "Recommendations checklist"
