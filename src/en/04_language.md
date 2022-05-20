@@ -254,10 +254,31 @@ After zeroing: 0 @ 0x7ffcb01ec737
 ```
 
 We can see that a second object is created by the call to `std::ptr::read`, i.e. a copy of a _non-copy_ object is performed.
-Here, the problem is not really a huge one, except if some cleaning outside of the drop implementation is performed (as it is recommended): some sensitive data might survive within the memory.
 
-However, this behavior might cause some resilience issue when this function is used with a raw pointer pointing to some data allocated on the heap with move semantic as illustrated by this snippet:
+This causes problems of varying severity:
 
+  - In some _rare_ cases (no _drop glue_, no non-aliasing guarantees, no _safety invariants_ attached to the type; basically when the type should have been `Copy` itself), it can be harmless.
+    
+  - In most cases, there may be _safety_ or _validity_ invariants (such as pointer aliasing, or rather, lack thereof) which make one instance become `unsafe` to use, or even UB to use, the moment the other instance is.
+  
+      - Example:
+      
+        ```rust,no_run
+        # use ::core::mem;
+        #
+        let box_1: Box<i32> = Box::new(42);
+        let at_box_1: *const Box<i32> = &box_1;
+        let box_2: Box<i32> = unsafe { at_box_1.read() };
+        mem::forget(box_1); // `Box` non-aliasing guarantees invalidates the pointer in `box_2`
+        drop(box_2); // UB: "usage" of invalidated pointer.
+        ```
+        See [Stacked Borrows](https://plv.mpi-sws.org/rustbelt/stacked-borrows/) for more info.
+  
+  - If the type has drop glue, then, when one of the two instances is dropped, any usage of the other may cause a use-after-free, the most notable example being that the second instance will be, in and of itself, freed, causing a double-free.
+
+    **This is Undefined Behavior, and is a source of major vulnerabilities**.
+
+The following snippet showcases this double-free bug:
 ```rust
 # use std::boxed::Box;
 # use std::ops::Drop;
@@ -294,3 +315,5 @@ free(): double free detected in tcache 2
 >
 > `std::ptr::read` might have undesired side effect depending on the way the type of the raw pointer is moving through different context.
 > It is preferable to use the operation of referencing/dereferencing (`&*`) to avoid those side effect.
+> 
+> Moreover, if pointee `T` is `Copy`, the `*`-dereference operator should be used.
