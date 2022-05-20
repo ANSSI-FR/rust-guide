@@ -1,11 +1,9 @@
 # Guide to develop secure applications with Rust
 
-[![Build Status](https://travis-ci.org/ANSSI-FR/rust-guide.svg?branch=master)](https://travis-ci.org/ANSSI-FR/rust-guide)
-
 ## Objectives
 
-The object of this document is to provide hints and recommendations for secure
-applications development using the Rust programming language.
+The objective of this document is to provide hints and recommendations for
+secure applications development using the Rust programming language.
 
 It is not intended to be a course on how to write Rust programs, there are
 already plenty of good learning resources for this purpose (see the *External
