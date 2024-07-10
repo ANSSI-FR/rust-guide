@@ -196,7 +196,7 @@ single_line_if_else_max_width = 40
 ```
 
 For more information about the guidelines that `rustfmt` will check, have a look
-at the [Rust Style Guide](https://github.com/rust-lang/rust/tree/master/src/doc/style-guide/src).
+at the [Rust Style Guide](https://github.com/rust-lang/rust/tree/1.79.0/src/doc/style-guide/src/README.md).
 
 > ### Rule {{#check DENV-FORMAT | Use Rust formatter (rustfmt)}}
 > The tool `rustfmt` can be used to ensure that the codebase respects style
