@@ -250,3 +250,77 @@ There exist other useful tools or `cargo` subcommands for enforcing program
 security whether by searching for specific code patterns or by providing
 convenient commands for testing or fuzzing. They are discussed in the following
 chapters, according to their goals.
+
+## Using an internal registry
+
+The default Rust registry is [crates.io](https://crates.io). However, it is now possible to set up an internal registry for your organisation. 
+
+This allows you to limit the libraries and versions available within an organisation. 
+
+> ### Rule {{#check DENV-REGISTRY | Use of internal registry}}
+>
+> It is recommended that an internal registry is created if the organisation wishes or needs to have full control over the technical stack that may be used for projects.
+
+### Deploying a server
+
+There are two ways of deploying an internal registry.
+One way is to develop your own solution. This must meet the API requirements [described here](https://doc.rust-lang.org/cargo/reference/registry-web-api.html).
+
+Second, it is possible to use a solution that has already been built. A relatively exhaustive list, validated by the rust project, can be found on the [cargo project wiki pages](https://github.com/rust-lang/cargo/wiki/Third-party-registries
+)
+
+> ### Rule {{#check DENV-REGISTRY-LC | Internal registry management processes}}
+>
+> If an internal register is deployed, a lifecycle management process needs to be put in place. 
+> 
+> This should contain procedures for : 
+> - requesting the addition of a crate
+> - validating of a crate on
+>   - a security point of view
+>   - ensuring that the tool/lib is consistent with the company's requirements
+> - updating the various crates
+> - removing/deleting crates
+
+### Using multiple registers
+
+It is possible to configure `cargo` to retrieve data from multiple registries. This is done by adding the registers to the `.cargo/config.toml` file.
+
+```toml
+[registries]
+<registry-name> = { index = "https://<fqdn>:<port>/git/index" }
+```
+
+Each new registry must be added by a new line in the configuration file. The name of the registry is defined by the value of \<registry-name\>.
+
+> ### Rule {{#check DENV-REGISTRY-CONF | Authorised registry configuration}}
+>
+> All registries authorised within an organisation must be approved and reviewed on a regular basis by the various competent bodies.
+> 
+>The naming of registries must be consistent throughout the organisation in order to guarantee the operation of projects, regardless of the developer.
+
+### Setting up a default registry
+
+To globally configure the use of a default registry, you need to modify the `.cargo/config.toml` file to add the lines below.
+
+```toml
+[registry]
+default = "<registry-name>"
+```
+
+> ### Rule {{#check DENV-REGISTRY-DEFAULT | Setting up a default registry}}
+>
+> In the event that an internal registry is deployed, it is advisable to set the organisation's internal registry as the default Rust registry.
+
+### Publishing a project
+
+If a user wishes to publish their project internally only or on several private registries, then they need to add the following lines to their `Cargo.toml` file.
+
+
+```toml
+[package]
+publish = ["<registry-name>"]
+```
+
+> ### Rule {{#check DENV-REGISTRY-PUBLISH | Publication in internal registry}}
+>
+> If a project or library is developed in an internal context and is not intended to be made public, then it is necessary to ensure that the package is published in the internal registry only.
