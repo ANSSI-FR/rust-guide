@@ -112,25 +112,57 @@ else { println!("{}", res); }
 > specialized functions `overflowing_<op>`, `wrapping_<op>`, or the
 > `Wrapping` type must be used.
 
-
-
 ## Error handling
-
-<!-- <mark>TODO</mark>: explicit good practices in error handling. -->
 
 The `Result` type is the preferred way of handling functions that can fail.
 A `Result` object must be tested, and never ignored.
+
+> ### Recommendation {{#check LANG-ERRDO | Use the `?` operator and do not use the `try!` macro}}
+>
+> The `?` operator should be used to improve readability of code.
+> The `try!` macro should not be used.
+
+### Custom Error type implementation
 
 > ### Recommendation {{#check LANG-ERRWRAP | Implement custom `Error` type, wrapping all possible errors}}
 >
 > A crate can implement its own `Error` type, wrapping all possible errors.
 > It must be careful to make this type exception-safe (RFC 1236), and implement
 > `Error + Send + Sync + 'static` as well as `Display`.
+ 
+To ensure that the above recommendation is implemented correctly, you can use the following code: 
+```rust
+pub enum Error {
+ ... // Implement Error enum here
+}  
 
-> ### Recommendation {{#check LANG-ERRDO | Use the `?` operator and do not use the `try!` macro}}
+#[cfg(test)]
+mod test {
+	fn rfc1236<T: std::error::Error + Send + Sync + 'static >(){}
+
+	#[test]
+	fn test_rfc1236(){
+		rfc1236::<super::Error>();
+	}
+
+}
+```
+> ### Recommendation {{#check LANG-ERR-FLAT | root positioning of type `Error` }}
 >
-> The `?` operator should be used to improve readability of code.
-> The `try!` macro should not be used.
+> It is advisable to publicly position this type at the root of your API. For example: `crate::Error`.
+
+To do this, you can flatten the `Result` and `Error` types using the following piece of code placed at the root of the `src/lib.rs` or `src/main.rs` file: 
+
+```rust
+pub use error::Error;
+```
+
+The advantage of this technique is that, in your code, you can make the position of the type in your project agnostic for the user or for yourself.
+
+When using external libraries, you can either wrap the type or use a library such as [derive_more].
+
+[derive_more]: https://crates.io/crates/derive_more
+### Third-party library use
 
 Third-party crates may be used to facilitate error handling. Most of them
 (notably [failure], [snafu], [thiserror]) address the creation of new custom

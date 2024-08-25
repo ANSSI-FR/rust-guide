@@ -124,13 +124,16 @@ else { println!("{}", res); }
 
 ## Gestion des erreurs
 
-<!--
-<mark>TODO</mark>: décrire les bonnes pratiques de gestion d'erreurs.
--->
-
 Le type `Result` est la façon privilégiée en Rust pour décrire le type de retour
 des fonctions dont le traitement peut échouer. Un objet `Result` doit être
 testé et jamais ignoré.
+
+> ### Recommandation {{#check LANG-ERRDO | Utilisation de l'opérateur `?` et non-utilisation de la macro `try!`}}
+>
+> L'opérateur `?` doit être utilisé pour améliorer la lisibilité du code.
+> La macro `try!` ne doit pas être utilisée.
+
+### Implémentation d'un type d'Erreur personnalisé
 
 > ### Recommandation {{#check LANG-ERRWRAP | Mise en place d'un type `Error` personnalisé, pouvant contenir toutes les erreurs possibles}}
 >
@@ -139,10 +142,39 @@ testé et jamais ignoré.
 > ce type doit être *exception-safe* (RFC 1236) et implémenter les traits
 > `Error + Send + Sync + 'static` ainsi que `Display`.
 
-> ### Recommandation {{#check LANG-ERRDO | Utilisation de l'opérateur `?` et non-utilisation de la macro `try!`}}
+Pour s'assurer que la recommandation ci-dessus soit bien implémenter, vous pouvez utiliser le code suivant : 
+```rust
+pub enum Error {
+ ... // Implement Error enum here
+}  
+
+#[cfg(test)]
+mod test {
+	fn rfc1236<T: std::error::Error + Send + Sync + 'static >(){}
+
+	#[test]
+	fn test_rfc1236(){
+		rfc1236::<super::Error>();
+	}
+
+}
+```
+
+> ### Recommandation {{#check LANG-ERR-FLAT | positionnement à la racine du type `Error` }}
 >
-> L'opérateur `?` doit être utilisé pour améliorer la lisibilité du code.
-> La macro `try!` ne doit pas être utilisée.
+> Il est conseillé de positionner publiquement ce type à la racine de votre API. Par exemple : `crate::Error`.
+
+Pour ce faire, vous pouvez aplatir les types `Result` et `Error` via le morceau de code suivant placé à la racine du fichier `src/lib.rs` ou  `src/main.rs` : 
+```rust
+pub use error::Error;
+```
+
+L'avantage de cette technique, est qu'elle permet, dans votre code, de rendre agnostique pour l'utilisateur ou pour vous-même, la position du type dans votre projet.
+
+Lorsque vous utilisez des bibliothèques externes, vous pouvez soit wrapper le type soit utiliser une bibliothèque comme [derive_more].
+
+[derive_more]: https://crates.io/crates/derive_more
+### Utilisation de bibliothèque tierce
 
 Des *crates* tierces peuvent être utilisées pour faciliter la gestion d'erreurs.
 La plupart ([failure], [snafu], [thiserror]) proposent la création de types
