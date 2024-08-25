@@ -69,7 +69,7 @@ Rust ecosystem for secure development.
 A following chapter focuses on precautions to take when choosing and using
 external libraries.
 Then, recommendations about the Rust language constructs are exposed.
-<!-- TODO: Finally, we introduce advices for writing
-tests for a project in Rust, and for using Rust fuzzing tools.-->
+TODO: Finally, we introduce advices for writing
+tests for a project in Rust<!-- , and for using Rust fuzzing tools-->.
 A summary of recommendations presented throughout the document is listed at the
 end of this guide.
