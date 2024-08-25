@@ -69,8 +69,6 @@ $ rustup override list
 $
 ```
 
-<!-- -->
-
 > ### Règle {{#check DENV-STABLE | Utilisation de la chaîne d'outils *stable*}}
 >
 > Le développement d'applications sécurisées doit être mené en utilisant la
@@ -286,28 +284,27 @@ d'un programme existent, par exemple, en recherchant des motifs de code
 particuliers. Nous en discutons dans les chapitres suivants en fonction de leurs
 portées et de leurs objectifs.
 
-
 ## Utilisation d'un registre interne
 
-Le registre Rust par défaut est [crates.io](https://crates.io). Cependant, il est maintenant possible de mettre en place pour son organisme un registre internes. 
+Le registre Rust par défaut est [crates.io](https://crates.io). Cependant, il est maintenant possible de mettre en place pour son organisme un registre interne. 
 
 Celui-ci permet de limiter les librairies et les versions disponibles au sein de ladite organisation. 
 
-> ### Règle {{#check DENV-REGISTRY | Utilisation d'un registres internes}}
+> ### Règle {{#check DENV-REGISTRY | Utilisation d'un registres interne}}
 >
-> Il est conseillé de mettre en place un registre internes dans le cas où l'organisation souhaiterait ou aurait la nécessité de maîtriser entièrement la stack techniques pouvant être utilisées par les projets.
+> Il est conseillé de mettre en place un registre interne dans le cas où l'organisation souhaiterait ou aurait la nécessité de maîtriser entièrement la stack techniques pouvant être utilisées par les projets.
 
 ### Déploiment d'un serveur
 
-Pour pouvoir utiliser un registre interne, il existe deux façon de faire.
-Tout d'abord, il est possible de développer sa propre solution. Celle-ci doit répondres aux exigences d'API [décrite ici](https://doc.rust-lang.org/cargo/reference/registry-web-api.html).
+Pour pouvoir utiliser un registre interne, il existe deux façons de faire.
+Tout d'abord, il est possible de développer sa propre solution. Celle-ci doit répondre aux exigences d'API [décrite ici](https://doc.rust-lang.org/cargo/reference/registry-web-api.html).
 
-Enfin, il est possible d'utiliser une solution déjà construite. Une liste relativement exhaustive et validé par le projet rust est dispoble dans les [pages du wiki du projet cargo](https://github.com/rust-lang/cargo/wiki/Third-party-registries
+Enfin, il est possible d'utiliser une solution déjà construite. Une liste relativement exhaustive et validée par le projet rust est disponible dans les [pages du wiki du projet cargo](https://github.com/rust-lang/cargo/wiki/Third-party-registries
 )
 
-> ### Règle {{#check DENV-REGISTRY-LC | Processus de gestions du registre internes}}
+> ### Règle {{#check DENV-REGISTRY-LC | Processus de gestions du registre interne}}
 >
-> Dans le cas où un registre internes serait déployé, il est nécessaire de mettre en place un processus de gestion de son cycle de vie. 
+> Dans le cas où un registre interne serait déployé, il est nécessaire de mettre en place un processus de gestion de son cycle de vie. 
 > 
 > Celui-ci devra contenir les procédures permettant : 
 > - de demande d'ajout d'une crate
@@ -319,24 +316,24 @@ Enfin, il est possible d'utiliser une solution déjà construite. Une liste rela
 
 ### Utilisation de multiples registres
 
-Il est possible de configurer `cargo` afin que celui-ci puisse récuperer des données depuis plusieurs registres. Pour ce faire, il faut ajouter les registres dans le fichier `.cargo/config.toml`.
+Il est possible de configurer `cargo` afin que celui-ci puisse récupérer des données depuis plusieurs registres. Pour ce faire, il faut ajouter les registres dans le fichier `.cargo/config.toml`.
 
 ```toml
 [registries]
 <registry-name> = { index = "https://<fqdn>:<port>/git/index" }
 ```
 
-Chaque nouveau registre devra être ajouté par une nouvelle ligne dans le fichier de configuration. Le nom du registre qui est définis par la valeur de \<registry-name\>
+Chaque nouveau registre devra être ajouté par une nouvelle ligne dans le fichier de configuration. Le nom du registre qui est défini par la valeur de \<registry-name\>
 
 > ### Règle {{#check DENV-REGISTRY-CONF | Configuration de registre autorisée}}
 >
-> L'ensemble des registres autorisées dans une organisation doivent être approuvée et revue de manière régulière par les différentes entitées compétentes.
+> L'ensemble des registres autorisées dans une organisation doivent être approuvée et revue de manière régulière par les différentes entités compétentes.
 > 
->Le nommage des registres devra être cohérent au sein de l'organisation afin de garantir le fonctionnement des projets quelques soit le développeur.
+>Le nommage des registres devra être cohérent au sein de l'organisation afin de garantir le fonctionnement des projets quel que soit le développeur.
 
 ### Mise en place d'un registre par défaut
 
-Pour configurer de manière globale l'utilisation d'un registre par défaut il faut modifier le fichier `.cargo/config.toml` pour y ajouter les lignes ci-dessous.
+Pour configurer de manière globale l'utilisation d'un registre par défaut, il faut modifier le fichier `.cargo/config.toml` pour y ajouter les lignes ci-dessous.
 
 ```toml
 [registry]
@@ -345,11 +342,11 @@ default = "<registry-name>"
 
 > ### Règle {{#check DENV-REGISTRY-DEFAULT | Mise en place d'un registry par défaut}}
 >
->  Dans le cas où un registre internes serait déployé, il est conseillés de mettre le registre interne à l'organisation en tant que registre Rust par défaut.
+>  Dans le cas où un registre interne serait déployé, il est conseillé de mettre le registre interne à l'organisation en tant que registre Rust par défaut.
 
 ### Publication d'une projet
 
-Dans le cas où un utilisateur souhaiterais publiquer son projet en interne uniquement ou sur plusieur registres privées alors il lui faut ajouter les lignes suivantes dans son fichier `Cargo.toml`.
+Dans le cas où un utilisateur souhaiterait publier son projet en interne uniquement ou sur plusieurs registres privées alors il lui faut ajouter les lignes suivantes dans son fichier `Cargo.toml`.
 
 ```toml
 [package]

@@ -73,6 +73,19 @@ langage fournit le mot-clé `unsafe`.
 > afin de générer des erreurs de compilation dans le cas ou le mot-clé `unsafe`
 > est utilisé dans le projet.
 
+> ### Information
+>
+>Il est également possible d'obtenir le même résultat en rajoutant l'un des deux blocs ci-dessous au fichier `Cargo.toml`.
+
+```toml
+[lints.rust]
+unsafe_code="forbid"
+```
+
+```toml
+[lints.clippy]
+unsafe_code = "forbid"
+```
 ## Dépassement d'entiers
 
 Bien que des vérifications soient effectuées par Rust en ce qui concerne les

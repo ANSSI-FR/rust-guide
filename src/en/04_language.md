@@ -66,6 +66,19 @@ manipulations of memory pointers, the language provides the `unsafe` keyword.
 > the crate root (typically `main.rs` or `lib.rs`) to generate compilation
 > errors if `unsafe` is used in the code base.
 
+ > ### Information
+>
+>You can also obtain the same result by adding one of the two blocks below to the `Cargo.toml` file.
+
+```toml
+[lints.rust]
+unsafe_code="forbid"
+```
+
+```toml
+[lints.clippy]
+unsafe_code = "forbid"
+```
 ## Integer overflows
 
 Although some verification is performed by Rust regarding potential integer
