@@ -75,8 +75,22 @@ Pour plus d'information, veuillez consulter la [documentation officielle] de l'o
 [cargo-vet]: https://github.com/mozilla/cargo-vet
 [cargo-crev]: https://github.com/crev-dev/cargo-crev
 [documentation officielle]: https://github.com/crev-dev/cargo-crev/blob/main/cargo-crev/src/doc/getting_started.md
+## Code *unsafe* dans les bibliothèques
 
+[Cargo-geiger] est un outil maintenu par le groupe de travail permettant de sécuriser Rust.
+Son but est de détecter l'utilisation du block `unsafe` dans la supply-chain d'un projet.
+
+Les résultats possèdent trois niveaux : 
+1) 🔒  = pas d'utilisation du bloc  `unsafe` trouvée, la ligne #![forbid(unsafe_code)] est déclarés
+2) ❓  = pas d'utilisation du bloc `unsafe` trouvée, la ligne n'est pas  #![forbid(unsafe_code)] est déclarés
+3) ☢️   = utilisation de bloc `unsafe` trouvée dans le code
+
+> ### Règle {{#check LIBS-UNSAFE | Vérification du code *unsafe* dans les dépendances}}
 >
-> <mark>TODO</mark>: vérifier qu'il n'y a pas de bloc `unsafe` dans les
-> dépendances (à l'aide d'un outil ?).
--->
+> Utiliser l'outil `cargo-geiger` afin de vérifier que les usages du block `unsafe` respectent bien les recommandations décrites dans la section suivantes de ce guide.
+
+> Attention
+>
+> To date, the `cargo-geiger` tool does not take into account when #![forbid(unsafe_code)] is in its second form in the `Cargo.toml` file.
+
+[cargo-geiger]: https://github.com/geiger-rs/cargo-geiger
