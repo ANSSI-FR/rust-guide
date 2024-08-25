@@ -38,16 +38,37 @@ reported to the RustSec Advisory Database.
 
 [cargo-audit]: https://github.com/RustSec/cargo-audit
 
-<!-- ## Unsafe code in libraries -->
+## Checking the supply chain
 
-<!--
-<mark>TODO</mark>: `unsafe` blocks are discussed in the following chapter.
-One needs to ensure that this kind of block is not misused in project
-dependencies.
--->
+Through its security working group, Rust offers a number of tools for checking the security of a program's supply-chain at library level.
 
-<!--
-> ### Recommendation {{#check LIBS-UNSAFE | Check for unsafe code in dependencies}}
-> <mark>TODO</mark>: check that no `unsafe` blocks appear in the imported
-> dependencies (with a tool?).
--->
+### Cargo supply-chain
+
+[Cargo-supply-chain] is the tool developed by the rust foundation's official working group, which collects all the people who can work on the libraries used by the project.
+
+> ### Rule {{#check LIBS-SUPPLY-CHAIN | Check developers implicitly trusted}}
+>
+> The `cargo-supply-chain` tool must be used to find out who your organisation implicitly trust to run your project.
+
+[cargo-supply-chain]: https://github.com/rust-secure-code/cargo-supply-chain
+### Cargo vet / crev
+
+[Cargo-vet] is a tool developed by the Mozilla Foundation that allows you to check whether the libraries you can use have been audited by trusted third parties.
+
+> Rule {{#check LIBS-VET | Priority use of libraries that have been audited}}
+>
+> It is advisable to use the `cargo-vet` tool to prioritise the use of libraries which have been audited by third parties.
+
+Security audits can be created using a tool called [Cargo-crev]. The use of this tool will not be detailed in this guide.
+
+For more information, please consult the tool's [official documentation].
+
+> ### Advises
+>
+> We recommend that you carry out security audits using the `cargo-crev` tool in order to check the security of the 
+> of the libraries used in your project and to share them with the community.
+
+[cargo-vet]: https://github.com/mozilla/cargo-vet
+[cargo-crev]: https://github.com/crev-dev/cargo-crev
+[documentation officielle]: https://github.com/crev-dev/cargo-crev/blob/main/cargo-crev/src/doc/getting_started.md
+
