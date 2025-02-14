@@ -155,23 +155,9 @@ testé et jamais ignoré.
 > ce type doit être *exception-safe* (RFC 1236) et implémenter les traits
 > `Error + Send + Sync + 'static` ainsi que `Display`.
 
-Pour s'assurer que la recommandation ci-dessus soit bien implémenter, vous pouvez utiliser le code suivant : 
-```rust
-pub enum Error {
- ... // Implement Error enum here
-}  
+Pour s'assurer que la recommandation ci-dessus soit bien implémenter, vous pouvez vous réferez à la section
+concernant [les tests de bonnes implémentations](08_testfuzz.md#Implémentation-de-trait) des traits de ce guide.
 
-#[cfg(test)]
-mod test {
-	fn rfc1236<T: std::error::Error + Send + Sync + 'static >(){}
-
-	#[test]
-	fn test_rfc1236(){
-		rfc1236::<super::Error>();
-	}
-
-}
-```
 
 > ### Recommandation {{#check LANG-ERR-FLAT | positionnement à la racine du type `Error` }}
 >

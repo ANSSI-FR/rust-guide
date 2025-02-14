@@ -75,12 +75,11 @@ For more information, please consult the tool's [official documentation].
 ## Unsafe code in libraries
 
 [Cargo-geiger] is a tool maintained by the Rust security working group.
-Its aim is to detect the use of the `unsafe` block in a project's supply chain.
+Its aim is to detect the use of the `unsafe` block in a project's supply chain. The results have three levels:
 
-The results have three levels: 
-1) 🔒  = No `unsafe` usage found, declares #![forbid(unsafe_code)]
-2) ❓  = No `unsafe` usage found, missing #![forbid(unsafe_code)]
-3) ☢️   = `unsafe` usage found
+- `🔒` means that no `unsafe` usage found and the create declares #![forbid(unsafe_code)]
+- `❓` means that no `unsafe` usage found and the create missing #![forbid(unsafe_code)]
+- `☢️` means that `unsafe` usage found
 
 > ### Rule {{#check LIBS-UNSAFE | Check *unsafe* code in dependencies}}
 >

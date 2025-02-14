@@ -78,12 +78,12 @@ Pour plus d'information, veuillez consulter la [documentation officielle] de l'o
 ## Code *unsafe* dans les bibliothèques
 
 [Cargo-geiger] est un outil maintenu par le groupe de travail permettant de sécuriser Rust.
-Son but est de détecter l'utilisation du block `unsafe` dans la supply-chain d'un projet.
+Son but est de détecter l'utilisation du block `unsafe` dans la supply-chain d'un projet. Les résultats possèdent trois
+niveaux :
 
-Les résultats possèdent trois niveaux : 
-1) 🔒  = pas d'utilisation du bloc  `unsafe` trouvée, la ligne #![forbid(unsafe_code)] est déclarés
-2) ❓  = pas d'utilisation du bloc `unsafe` trouvée, la ligne n'est pas  #![forbid(unsafe_code)] est déclarés
-3) ☢️   = utilisation de bloc `unsafe` trouvée dans le code
+- `🔒` lorsqu'il n'y a pas d'utilisation du bloc  `unsafe` trouvée et la ligne #![forbid(unsafe_code)] est déclarés
+- `❓` lorsqu'il n'y a pas d'utilisation du bloc `unsafe` trouvée et la ligne #![forbid(unsafe_code)] est déclarés
+- `☢️`   = utilisation de bloc `unsafe` trouvée dans le code
 
 > ### Règle {{#check LIBS-UNSAFE | Vérification du code *unsafe* dans les dépendances}}
 >

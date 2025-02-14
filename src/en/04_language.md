@@ -142,24 +142,10 @@ A `Result` object must be tested, and never ignored.
 > A crate can implement its own `Error` type, wrapping all possible errors.
 > It must be careful to make this type exception-safe (RFC 1236), and implement
 > `Error + Send + Sync + 'static` as well as `Display`.
- 
-To ensure that the above recommendation is implemented correctly, you can use the following code: 
-```rust
-pub enum Error {
- ... // Implement Error enum here
-}  
 
-#[cfg(test)]
-mod test {
-	fn rfc1236<T: std::error::Error + Send + Sync + 'static >(){}
+To ensure that the above recommendation is implemented correctly, you may check
+the [test implementing trait](08_testfuzz.md#implementing-a-trait) section of this guide.
 
-	#[test]
-	fn test_rfc1236(){
-		rfc1236::<super::Error>();
-	}
-
-}
-```
 > ### Recommendation {{#check LANG-ERR-FLAT | root positioning of type `Error` }}
 >
 > It is advisable to publicly position this type at the root of your API. For example: `crate::Error`.
