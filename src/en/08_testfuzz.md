@@ -14,11 +14,11 @@ In this section, we will discuss these two types of test as well as a rather spe
 Internal tests define all the tests present in the `src/` folder of a Rust project. They have the great advantage of being able to test all the functions (even private ones) if they are placed in the same file as the project.
 
 
-> ### Recommendation {{#check TEST-INTERNE | Test all functions}}
+> ### Recommendation {{#check TEST-UNIT | Test all functions}}
 >
-> It is advisable to test all the functions of your programme, even those that may seem the most trivial.
+> It is advisable to test all the functions of your program, even those that may seem the most trivial.
 > 
-> This way, if a future modification causes a side-effect that modifies the behaviour of another function, you will notice it much more quickly.
+> This way, if a future modification causes a side-effect that modifies the behavior of another function, you will notice it much more quickly.
 > This also helps to limit the number of bugs as early as possible. 
 
 ```rust
@@ -104,9 +104,9 @@ These tests are run at the same time as all the other tests using the following 
 cargo test
 ```
 
-> ### Rule {{#check TEST-IMPL | Check that the public behaviour of the API is as expected}}
+> ### Rule {{#check TEST-IMPL | Check that the public behavior of the API is as expected}}
 >
-> Integration tests must ensure that the library's behaviour is as expected. These tests must cover all the solution's public functions (including the import of types, functions, enums, etc.).
+> Integration tests must ensure that the library's behavior is as expected. These tests must cover all the solution's public functions (including the import of types, functions, enums, etc.).
 > 
 > This also ensures that the API is user-friendly.
 

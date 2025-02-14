@@ -12,7 +12,7 @@ Dans cette section, nous discuterons de ces deux types de tests ainsi que d'un t
 
 Les tests dits internes définissent l'ensemble des tests étant présent dans le dossier `src/` d'un projet Rust. Ceux-ci présentent le grand avantage de pouvoir tester l'ensemble des fonctions (même privées) si placé dans le même fichier que celui-ci.
 
-> ### Recommandation {{#check TEST-INTERNE | Tester aux maximum les différentes fonctionnalités}}
+> ### Recommandation {{#check TEST-UNIT | Tester aux maximum les différentes fonctionnalités}}
 >
 > Il est conseillé l'ensemble des fonctions de votre programme même celle qui peuvent sembler le plus trivial.
 > 

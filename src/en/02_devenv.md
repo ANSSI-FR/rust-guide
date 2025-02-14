@@ -253,7 +253,7 @@ chapters, according to their goals.
 
 ## Using an internal registry
 
-The default Rust registry is [crates.io](https://crates.io). However, it is now possible to set up an internal registry for your organisation. 
+The default Rust registry is [crates.io](https://crates.io). However, it is now possible to set up an internal registry for an organisation. 
 
 This allows you to limit the libraries and versions available within an organisation. 
 
