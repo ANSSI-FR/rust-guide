@@ -77,9 +77,10 @@ mod test{
 
 > ### Rules {{#check TEST-CFG | Wrap tests in a sub-module with the attribute `#[cfg(test)]`}}
 >
-> All internal tests must be wrapped in a sub-module with the `#[cfg(test)]` attribute.
-> 
-> Similarly, any potential functions you may develop to help these tests must also have the `#[cfg(test)]` attribute.
+> All internal tests must be wrapped in a sub-module with the `#[cfg(test)]` attribute. Similarly, any potential functions you may develop to help these tests must also have the `#[cfg(test)]` attribute.
+>
+> The use of a sub-module makes it possible to bring together all the tests and functions required for their proper execution. This makes it quick and easy to ensure that the code does not end up in the final binary or library and compromise the application's security.
+
 ### Integration
 
 > Attention

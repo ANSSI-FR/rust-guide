@@ -75,9 +75,9 @@ mod test{
 
 > ### Règles {{#check TEST-CFG | Encadrer les tests dans un sous-module ayant l'attribue `#[cfg(test)]`}}
 >
-> L'ensemble des tests internes doivent être englobé dans un sous-module ayant l'attribue `#[cfg(test)]`.
+> L'ensemble des tests internes doivent être englobé dans un sous-module ayant l'attribue `#[cfg(test)]`. De même, les potentielles fonctions que vous pouvant être développé pour aider ces tests doivent avoir également avoir l'attribue `#[cfg(test)]`.
 > 
-> De même, les potentielles fonctions que vous pouvant être développé pour aider ces tests doivent avoir également avoir l'attribue `#[cfg(test)]`.
+> L'utilisation d'un sous-module permet de réunir l'ensemble des tests et fonctions permettant leur bonne exécution. Cela permet de facilement et rapidement s'assurer que ce code ne se retrouvera pas dans le binaire ou la librairie finale et ne pourra compromettre la sécurité de l'application.
 
 ### Intégration
 
