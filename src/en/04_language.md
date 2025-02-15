@@ -130,11 +130,6 @@ else { println!("{}", res); }
 The `Result` type is the preferred way of handling functions that can fail.
 A `Result` object must be tested, and never ignored.
 
-> ### Recommendation {{#check LANG-ERRDO | Use the `?` operator and do not use the `try!` macro}}
->
-> The `?` operator should be used to improve readability of code.
-> The `try!` macro should not be used.
-
 ### Custom Error type implementation
 
 > ### Recommendation {{#check LANG-ERRWRAP | Implement custom `Error` type, wrapping all possible errors}}

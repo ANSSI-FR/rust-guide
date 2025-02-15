@@ -141,11 +141,6 @@ Le type `Result` est la façon privilégiée en Rust pour décrire le type de re
 des fonctions dont le traitement peut échouer. Un objet `Result` doit être
 testé et jamais ignoré.
 
-> ### Recommandation {{#check LANG-ERRDO | Utilisation de l'opérateur `?` et non-utilisation de la macro `try!`}}
->
-> L'opérateur `?` doit être utilisé pour améliorer la lisibilité du code.
-> La macro `try!` ne doit pas être utilisée.
-
 ### Implémentation d'un type d'Erreur personnalisé
 
 > ### Recommandation {{#check LANG-ERRWRAP | Mise en place d'un type `Error` personnalisé, pouvant contenir toutes les erreurs possibles}}
