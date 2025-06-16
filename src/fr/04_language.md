@@ -232,7 +232,7 @@ Rust propose trois différents modes de déplacement de valeur:
 - Ou par *déplacement* plus un *drop* si `mem::needs_drop::<T>()` renvoie `true`.
 - Ou par *copie*, si son type implémente le trait `Copy`
 
-Cependant, des problèmes peuvent être constater lors de l'utilisation de la fonction `std::ptr::read`.
+Cependant, des problèmes peuvent être constaté lors de l'utilisation de la fonction `std::ptr::read`.
 Selon la [documentation](https://doc.rust-lang.org/std/ptr/fn.read.html), cette fonction:
 > Lis la valeur pointée par src sans la déplacer. Ce qui laisse la mémoire pointée intact.
 
