@@ -242,16 +242,14 @@ Ce comportement peut être dangereux car il peut mener à des *double-free* et/o
 Pour illustrer ce comportement, considérons le code suivant :
 
 ```rust
-# use std::ops::Drop;
-#
 #[derive(Debug)]
 struct MyStruct(u8);
 
 impl Drop for MyStruct {
     fn drop(&mut self) {
-#        println!("---Dropping an object---\nBefore zeroing: {} @ {:p}", self.0, &self.0 as *const u8);
+//        println!("---Dropping an object---\nBefore zeroing: {} @ {:p}", self.0, &self.0 as *const u8);
         self.0 = 0;
-#        println!("After zeroing: {} @ {:p}", self.0, &self.0 as *const u8);
+//        println!("After zeroing: {} @ {:p}", self.0, &self.0 as *const u8);
     }
 }
 
