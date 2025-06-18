@@ -279,7 +279,17 @@ comme <strong>opaques</strong> du côté du langage externe.</p>
 <li>les <code>enum</code>s annotées avec <code>repr(C)</code> ou <code>repr(Int)</code> (où <code>Int</code> est un type
 primitif entier), contenant au moins un variant et dont tous les variants ne
 comportent pas de champ ;</li>
-<li>les pointeurs.</li>
+<li>les pointeurs ;</li>
+<li>les <code>Option&lt;T&gt;</code> où <code>T</code> est:
+<ul>
+<li><code>core::ptr::NonNull&lt;U&gt;</code> et <code>U</code> est un type compatible avec le C et <code>Sized</code>,
+auquel cas le type est équivalent à un pointeur <code>*const T</code> et <code>*mut T</code>,</li>
+<li><code>core::num::NonZero*</code>, auquel cas le type est équivalent au type primitif
+entier correspondant ;</li>
+</ul>
+</li>
+<li>les <code>struct</code>s annotées avec <code>repr(transparent)</code> possédant un seul champ, qui
+est d'un type C-compatible.</li>
 </ul>
 <p>Les types suivants ne sont pas compatibles avec le C :</p>
 <ul>
