@@ -1211,7 +1211,17 @@ side.</p>
 <li><code>repr(C)</code>-annotated <code>struct</code>,</li>
 <li><code>repr(C)</code> or <code>repr(Int)</code>-annotated <code>enum</code> with at least one variant and only
 fieldless variants (where <code>Int</code> is an integral primitive type),</li>
-<li>pointers.</li>
+<li>pointers,</li>
+<li>an <code>Option&lt;T&gt;</code> where <code>T</code> is either
+<ul>
+<li><code>core::ptr::NonNull&lt;U&gt;</code> and <code>U</code> is a <code>Sized</code> C-compatible type, then it is
+compatible to a <code>*const T</code> and <code>*mut T</code> pointer;</li>
+<li><code>core::num::NonZero*</code>, then is compatible to the corresponding integral
+primitive type;</li>
+</ul>
+</li>
+<li>a <code>repr(transparent)</code>-annotated <code>struct</code> with only one field, where that
+field has a C-compatible type.</li>
 </ul>
 <p>The following types are not C-compatible:</p>
 <ul>
