@@ -224,7 +224,7 @@ single_line_if_else_max_width = 40
 ```
 
 Pour plus d'informations à propos des règles de convention de style que
-`rustfmt` propose, voir le [*Rust Style Guide*](https://github.com/rust-dev-tools/fmt-rfcs/blob/master/guide/guide.md).
+`rustfmt` propose, voir le [*Rust Style Guide*](https://doc.rust-lang.org/style-guide/index.html).
 
 > ### Règle {{#check DENV-FORMAT | Utilisation d'un outil de formatage (rustfmt)}}
 >
