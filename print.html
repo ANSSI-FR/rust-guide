@@ -1,18 +1,17 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Secure Rust Guidelines</title>
-        <meta name="robots" content="noindex" />
+        <meta name="robots" content="noindex">
 
 
         <!-- Custom HTML head -->
-        
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
         <meta name="description" content="Recommendations for secure applications development with Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="favicon.svg">
         <link rel="shortcut icon" href="favicon.png">
@@ -26,25 +25,40 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
     </head>
     <body>
-        <!-- Provide site root to javascript -->
-        <script type="text/javascript">
-            var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
-        </script>
-
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -57,56 +71,66 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
-            var theme;
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
-            html.classList.remove('no-js')
+            const html = document.documentElement;
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            html.classList.add("js");
         </script>
 
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
-            var html = document.querySelector('html');
-            var sidebar = 'hidden';
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
+            sidebar_toggle.checked = sidebar === 'visible';
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="02_devenv.html"><strong aria-hidden="true">2.</strong> Development environment</a></li><li class="chapter-item expanded "><a href="03_libraries.html"><strong aria-hidden="true">3.</strong> Libraries</a></li><li class="chapter-item expanded "><a href="04_language.html"><strong aria-hidden="true">4.</strong> Language generalities</a></li><li class="chapter-item expanded "><a href="05_memory.html"><strong aria-hidden="true">5.</strong> Memory management</a></li><li class="chapter-item expanded "><a href="06_typesystem.html"><strong aria-hidden="true">6.</strong> Type system</a></li><li class="chapter-item expanded "><a href="07_ffi.html"><strong aria-hidden="true">7.</strong> Foreign Function Interface</a></li><li class="chapter-item expanded affix "><a href="LICENCE.html">Licence</a></li><li class="chapter-item expanded affix "><a href="checklist.html">Checklist</a></li></ol>
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                                <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
@@ -133,7 +157,7 @@
                 </div>
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -367,7 +391,7 @@ max_width = 120
 single_line_if_else_max_width = 40
 </code></pre>
 <p>For more information about the guidelines that <code>rustfmt</code> will check, have a look
-at the <a href="https://github.com/rust-dev-tools/fmt-rfcs/blob/master/guide/guide.md">Rust Style Guide</a>.</p>
+at the <a href="https://doc.rust-lang.org/style-guide/index.html">Rust Style Guide</a>.</p>
 <blockquote>
 <h3 id="rule-denv-format"><a class="header" href="#rule-denv-format">Rule <a id="DENV-FORMAT"></a>DENV-FORMAT</a></h3>
 <p>The tool <code>rustfmt</code> can be used to ensure that the codebase respects style
@@ -487,7 +511,7 @@ with a proper justification:</p>
 <ul>
 <li>
 <p>The Foreign Function Interface (FFI) of Rust allows for describing
-functions whose implementations are written in C, using the <code>extern &quot;C&quot;</code>
+functions whose implementations are written in C, using the <code>extern "C"</code>
 prefix. To use such a function, the <code>unsafe</code> keyword is required. “Safe”
 wrapper shall be defined to safely and seamlessly call C code.</p>
 </li>
@@ -529,22 +553,21 @@ or the <code>overflowing_&lt;op&gt;</code> and <code>wrapping_&lt;op&gt;</code> 
 </span>let x: u8 = 242;
 
 <span class="boring">let result = panic::catch_unwind(|| {
-</span>println!(&quot;{}&quot;, x + 50);                      // panics in debug, prints 36 in release.
+</span>println!("{}", x + 50);                      // panics in debug, prints 36 in release.
 <span class="boring">});
-</span><span class="boring">if result.is_err() { println!(&quot;panic&quot;); }
-</span>println!(&quot;{}&quot;, x.overflowing_add(50).0);     // always prints 36.
-println!(&quot;{}&quot;, x.wrapping_add(50));          // always prints 36.
-println!(&quot;{}&quot;, Wrapping(x) + Wrapping(50));  // always prints 36.
+</span><span class="boring">if result.is_err() { println!("panic"); }
+</span>println!("{}", x.overflowing_add(50).0);     // always prints 36.
+println!("{}", x.wrapping_add(50));          // always prints 36.
+println!("{}", Wrapping(x) + Wrapping(50));  // always prints 36.
 
 // always panics:
 let (res, c) = x.overflowing_add(50);
 <span class="boring">let result = panic::catch_unwind(|| {
-</span>if c { panic!(&quot;custom error&quot;); }
-else { println!(&quot;{}&quot;, res); }
+</span>if c { panic!("custom error"); }
+else { println!("{}", res); }
 <span class="boring">});
-</span><span class="boring">if result.is_err() { println!(&quot;panic&quot;); }
-</span><span class="boring">}
-</span></code></pre></pre>
+</span><span class="boring">if result.is_err() { println!("panic"); }
+</span><span class="boring">}</span></code></pre></pre>
 <blockquote>
 <h3 id="rule-lang-arith"><a class="header" href="#rule-lang-arith">Rule <a id="LANG-ARITH"></a>LANG-ARITH</a></h3>
 <p>When assuming that an arithmetic operation can produce an overflow, the
@@ -639,23 +662,19 @@ scope, Rust provides special functions to manually reclaim memory: <code>forget<
 <code>drop</code> of the <code>std::mem</code> module (or <code>core::mem</code>). While <code>drop</code> simply triggers
 an early memory reclamation that calls associated destructors when needed,
 <code>forget</code> skips any call to the destructors.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let pair = ('↑', 0xBADD_CAFEu32);
 drop(pair); // here `forget` would be equivalent (no destructor to call)
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Both functions are <strong>memory safe</strong> in Rust. However, <code>forget</code> will make any
 resource managed by the value unreachable and unclaimed.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::mem::forget;
-</span>let s = String::from(&quot;Hello&quot;);
+</span>let s = String::from("Hello");
 forget(s); // Leak memory
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>In particular, using <code>forget</code> may result in not releasing critical resources
 leading to deadlocks or not erasing sensitive data from the memory. That is why,
 <code>forget</code> is <strong>unsecure</strong>.</p>
@@ -670,8 +689,7 @@ leading to deadlocks or not erasing sensitive data from the memory. That is why,
 <p>The lint <code>mem_forget</code> of Clippy may be used to automatically detect any use of
 <code>forget</code>. To enforce the absence of <code>forget</code> in a crate, add the following
 line at the top of the root file (usually <code>src/lib.rs</code> or <code>src/main.rs</code>):</p>
-<pre><code class="language-rust noplaypen ignore">#![deny(clippy::mem_forget)]
-</code></pre>
+<pre><code class="language-rust noplaypen ignore">#![deny(clippy::mem_forget)]</code></pre>
 </blockquote>
 <p>The standard library includes other way to <em>forget</em> dropping values:</p>
 <ul>
@@ -710,35 +728,31 @@ or manually released (unsafe <code>ManuallyDrop::drop</code>).</p>
 </ul>
 <p>must eventually be transformed into a value with a call to the respective
 <code>from_raw</code> to allow for their reclamation.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let boxed = Box::new(String::from(&quot;Crab&quot;));
+</span>let boxed = Box::new(String::from("Crab"));
 let raw_ptr = unsafe { Box::into_raw(boxed) };
 let _ = unsafe { Box::from_raw(raw_ptr) }; // will be freed
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 </blockquote>
 <!-- -->
 <blockquote>
 <h3 id="note-1"><a class="header" href="#note-1">Note</a></h3>
 <p>In the case of <code>Box::into_raw</code>, manual cleanup is possible but a lot more
 complicated than re-boxing the raw pointer and should be avoided:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// Excerpt from the standard library documentation
 use std::alloc::{dealloc, Layout};
 use std::ptr;
 
-let x = Box::new(String::from(&quot;Hello&quot;));
+let x = Box::new(String::from("Hello"));
 let p = Box::into_raw(x);
 unsafe {
     ptr::drop_in_place(p);
     dealloc(p as *mut u8, Layout::new::&lt;String&gt;());
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Because the other types (<code>Rc</code> and <code>Arc</code>) are opaque and more complex, manual
 cleanup is not possible.</p>
 </blockquote>
@@ -781,7 +795,7 @@ pub struct ZU32(pub u32);
 
 impl Drop for ZU32 {
     fn drop(&amp;mut self) {
-        println!(&quot;zeroing memory&quot;);
+        println!("zeroing memory");
         unsafe{ ::std::ptr::write_volatile(&amp;mut self.0, 0) };
     }
 }
@@ -791,8 +805,7 @@ impl Drop for ZU32 {
     let i = ZU32(42);
     // ...
 } // i is freed here
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="type-system"><a class="header" href="#type-system">Type system</a></h1>
 <!-- ## About Rust type system -->
 <!--
@@ -886,8 +899,7 @@ automatic implementation of those traits with a manual
 
 struct SpecialType(u8);
 impl !Send for SpecialType {}
-impl !Sync for SpecialType {}
-</code></pre>
+impl !Sync for SpecialType {}</code></pre>
 <p>The negative implementation of <code>Send</code> or <code>Sync</code> are also used in the standard
 library for the exceptions, and are automatically implemented when appropriate.
 As a result, the generated documentation is always explicit: a type implements
@@ -896,8 +908,7 @@ either <code>Send</code> or <code>!Send</code> (resp. <code>Sync</code> or <code
 field:</p>
 <pre><code class="language-rust noplaypen"><span class="boring">use std::marker::PhantomData;
 </span><span class="boring">
-</span>struct SpecialType(u8, PhantomData&lt;*const ()&gt;);
-</code></pre>
+</span>struct SpecialType(u8, PhantomData&lt;*const ()&gt;);</code></pre>
 <blockquote>
 <h3 id="recommendation-lang-sync-traits"><a class="header" href="#recommendation-lang-sync-traits">Recommendation <a id="LANG-SYNC-TRAITS"></a>LANG-SYNC-TRAITS</a></h3>
 <p>In a Rust secure development, the manual implementation of the <code>Send</code> and
@@ -1061,9 +1072,8 @@ struct T1 {
 </span>assert!(&amp;T1 { a: 0, b: 0 } == Box::new(T1 { a: 0, b: 0 }).as_ref());
 assert!(T1 { a: 1, b: 0 } &gt; T1 { a: 0, b: 0 });
 assert!(T1 { a: 1, b: 1 } &gt; T1 { a: 1, b: 0 });
-<span class="boring">println!(&quot;all tests passed.&quot;);
-</span><span class="boring">}
-</span></code></pre></pre>
+<span class="boring">println!("all tests passed.");
+</span><span class="boring">}</span></code></pre></pre>
 <blockquote>
 <h3 id="warning-2"><a class="header" href="#warning-2">Warning</a></h3>
 <p>Derivation of comparison traits for compound types depends on the
@@ -1074,8 +1084,7 @@ ordered type:</p>
 <pre><code class="language-rust noplaypen">#[derive(PartialEq, Eq, PartialOrd, Ord)]
 struct T2{
    b: u8, a: u8
-};
-</code></pre>
+};</code></pre>
 <p>we have <code>T1 {a: 1, b: 0} &gt; T1 {a: 0, b: 1}</code> but
 <code>T2 {a: 1, b: 0} &lt; T2 {a: 0, b: 1}</code>.</p>
 <p>Second, if one of the underlying comparison panics, the order may change the
@@ -1098,34 +1107,31 @@ compatibility with C. However, this boundary is by its very nature <strong>unsaf
 (see <a href="https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html">Rust Book: Unsafe Rust</a>).</p>
 <p>Functions that are marked <code>extern</code> are made compatible with C code during
 compilation. They may be called from C code with any parameter values.
-The exact syntax is <code>extern &quot;&lt;ABI&gt;&quot;</code> where ABI is a calling convention and
+The exact syntax is <code>extern "&lt;ABI&gt;"</code> where ABI is a calling convention and
 depends on the target platform. The default one is <code>C</code> which corresponds to
 a standard C calling convention on the target platform.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// export a C-compatible function
 #[no_mangle]
-unsafe extern &quot;C&quot; fn mylib_f(param: u32) -&gt; i32 {
+unsafe extern "C" fn mylib_f(param: u32) -&gt; i32 {
     if param == 0xCAFEBABE { 0 } else { -1 }
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>For the function <code>mylib_f</code> to be accessible with the same name, the function
 must also be annotated with the <code>#[no_mangle]</code> attribute.</p>
 <p>Conversely, one can call C functions from Rust if they are declared in an
 <code>extern</code> block:</p>
 <pre><pre class="playground"><code class="language-rust">use std::os::raw::c_int;
 // import an external function from libc
-extern &quot;C&quot; {
+extern "C" {
     fn abs(args: c_int) -&gt; c_int;
 }
 
 fn main() {
     let x = -1;
-    println!(&quot;{} {}\n&quot;, x, unsafe { abs(x) });
-}
-</code></pre></pre>
+    println!("{} {}\n", x, unsafe { abs(x) });
+}</code></pre></pre>
 <blockquote>
 <h3 id="note-3"><a class="header" href="#note-3">Note</a></h3>
 <p>Any foreign function imported in Rust through an <code>extern</code> block is
@@ -1139,7 +1145,7 @@ with the <code>static</code> keyword:</p>
 
 extern {
     // Libc global variable
-    #[link_name = &quot;environ&quot;]
+    #[link_name = "environ"]
     static libc_environ: *const *const std::os::raw::c_char;
 }
 
@@ -1148,12 +1154,11 @@ fn main() {
     while !next.is_null() &amp;&amp; !unsafe { *next }.is_null() {
         let env = unsafe { std::ffi::CStr::from_ptr(*next) }
             .to_str()
-            .unwrap_or(&quot;&lt;invalid&gt;&quot;);
-        println!(&quot;{}&quot;, env);
+            .unwrap_or("&lt;invalid&gt;");
+        println!("{}", env);
         next = unsafe { next.offset(1) };
     }
-}
-</code></pre></pre>
+}</code></pre></pre>
 <h2 id="typing"><a class="header" href="#typing">Typing</a></h2>
 <p>Typing is the way Rust ensures memory safety. When interfacing with other
 languages, which may not offer the same guarantee, the choice of types in the
@@ -1164,8 +1169,7 @@ laid out in the memory. The only way to make data compatible with a foreign
 language is through explicit use of a C-compatible data layout with the <code>repr</code>
 attribute (see <a href="https://doc.rust-lang.org/reference/type-layout.html">Rust Reference: Type Layout</a>). For instance, the following Rust
 types:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[repr(C)]
 struct Data {
@@ -1179,8 +1183,7 @@ struct PackedData {
     b: u16,
     c: u64,
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>are compatible with the following C types:</p>
 <pre><code class="language-c">struct Data {
     uint32_t a;
@@ -1358,7 +1361,7 @@ to valid memory objects. Any deviation leads to undefined behavior.</p>
 no references (in the sense of valid pointers) and the compiler does not offer
 any safety guarantee.</p>
 <p>When binding with C++, Rust references may be bound to C++ references in
-practice even though the actual ABI of an <code>extern &quot;C&quot;</code> function in C++ with
+practice even though the actual ABI of an <code>extern "C"</code> function in C++ with
 references is “implementation-defined”. Also, the C++ code should be checked
 against pointer/reference confusion.</p>
 <p>Rust references may be used reasonably with other C-compatible languages
@@ -1380,7 +1383,7 @@ but pointer types.</p>
 from the Rust side,</li>
 <li><code>Option</code>-wrapped references (see Note below),</li>
 <li>references bound to foreign safe references, e.g. from some augmented C
-variants or from C++ compiled in an environment where <code>extern &quot;C&quot;</code>
+variants or from C++ compiled in an environment where <code>extern "C"</code>
 references are encoded as pointers.</li>
 </ul>
 </blockquote>
@@ -1414,8 +1417,7 @@ pub unsafe extern fn add_in_place(a: *mut u32, b: u32) {
     if let Some(a) = a.as_mut() {
         *a += b
     }
-}
-</code></pre>
+}</code></pre>
 <p>Note that the methods <code>as_ref</code> and <code>as_mut</code> (for mutable pointers) allows easy
 access to a reference while ensuring a null check in a very <em>Rusty</em> way.
 On the other side in C, it can be used as follows:</p>
@@ -1428,7 +1430,7 @@ void add_in_place(uint32_t *a, uint32_t b);
 int main() {
     uint32_t x = 25;
     add_in_place(&amp;x, 17);
-    printf(&quot;%&quot; PRIu32 &quot; == 42&quot;, x);
+    printf("%" PRIu32 " == 42", x);
     return 0;
 }
 </code></pre>
@@ -1457,7 +1459,7 @@ possibilities:</p>
 <li>
 <p>use <code>Option</code>-wrapped function pointer and check against <code>null</code>:</p>
 <pre><code class="language-rust noplaypen">#[no_mangle]
-pub unsafe extern &quot;C&quot; fn repeat(start: u32, n: u32, f: Option&lt;unsafe extern &quot;C&quot; fn(u32) -&gt; u32&gt;) -&gt; u32 {
+pub unsafe extern "C" fn repeat(start: u32, n: u32, f: Option&lt;unsafe extern "C" fn(u32) -&gt; u32&gt;) -&gt; u32 {
     if let Some(f) = f {
         let mut value = start;
         for _ in 0..n {
@@ -1467,8 +1469,7 @@ pub unsafe extern &quot;C&quot; fn repeat(start: u32, n: u32, f: Option&lt;unsaf
     } else {
         start
     }
-}
-</code></pre>
+}</code></pre>
 <p>On the C side:</p>
 <pre><code class="language-c">uint32_t repeat(uint32_t start, uint32_t n, uint32_t (*f)(uint32_t));
 </code></pre>
@@ -1496,7 +1497,7 @@ block declaration, a <em>robust</em> type, and then to perform a checked convers
 to the enum type.</p>
 <p>On the foreign side, it is possible only if the other language allows for
 stricter checks than plain C. <code>enum class</code> in C++ are for instance allowable.
-Note however that as for reference the actual <code>extern &quot;C&quot;</code> ABI of
+Note however that as for reference the actual <code>extern "C"</code> ABI of
 <code>enum class</code> is implementation defined and should be verified for each
 environment.</p>
 <blockquote>
@@ -1524,10 +1525,9 @@ use pointers to dedicated opaque types rather than <code>c_void</code> pointers.
 <p>Currently the recommended way to make a foreign opaque type is like so:</p>
 <pre><code class="language-rust unsafe noplaypen">#[repr(C)]
 pub struct Foo {_private: [u8; 0]}
-extern &quot;C&quot; {
+extern "C" {
     fn foo(arg: *mut Foo);
-}
-</code></pre>
+}</code></pre>
 <p>The not yet implemented <a href="https://rust-lang.github.io/rfcs/1861-extern-types.html">RFC 1861</a> proposes to facilitate the coding by allowing
 to declare opaque types in <code>extern</code> blocks.</p>
 <blockquote>
@@ -1545,7 +1545,7 @@ a dedicated constructor and destructor.</p>
 }
 
 #[no_mangle]
-pub unsafe extern &quot;C&quot; fn new_opaque() -&gt; *mut Opaque {
+pub unsafe extern "C" fn new_opaque() -&gt; *mut Opaque {
     catch_unwind(|| // Catch panics, see below
         Box::into_raw(Box::new(Opaque {
             // (...) actual construction
@@ -1554,14 +1554,13 @@ pub unsafe extern &quot;C&quot; fn new_opaque() -&gt; *mut Opaque {
 }
 
 #[no_mangle]
-pub unsafe extern &quot;C&quot; fn destroy_opaque(o: *mut Opaque) {
+pub unsafe extern "C" fn destroy_opaque(o: *mut Opaque) {
     catch_unwind(||
         if !o.is_null() {
             drop(Box::from_raw(o))
         }
     ); // Only needed if Opaque or one of its subfield is Drop
-}
-</code></pre>
+}</code></pre>
 <h2 id="memory-and-resource-management"><a class="header" href="#memory-and-resource-management">Memory and resource management</a></h2>
 <p>Programming languages handle memory in various ways. As a result, it is
 important to known when transmitting data between Rust and another language
@@ -1616,7 +1615,7 @@ struct RawFoo {
 }
 
 /// Private “raw” C API
-extern &quot;C&quot; {
+extern "C" {
     fn foo_create() -&gt; *mut RawFoo;
     fn foo_do_something(this: *const RawFoo);
     fn foo_destroy(this: *mut RawFoo);
@@ -1651,10 +1650,9 @@ pub struct Foo(*mut RawFoo);
 }
 
 <span class="boring">fn main() {
-</span><span class="boring">    let foo = Foo::new().expect(&quot;cannot create Foo&quot;);
+</span><span class="boring">    let foo = Foo::new().expect("cannot create Foo");
 </span><span class="boring">    foo.do_something();
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <blockquote>
 <h3 id="warning-5"><a class="header" href="#warning-5">Warning</a></h3>
 <p>Because panics may lead to not running the <code>Drop::drop</code> method this solution
@@ -1686,7 +1684,7 @@ impl XtraResource {
 
 impl Drop for XtraResource {
     fn drop(&amp;mut self) {
-        println!(&quot;xtra drop&quot;);
+        println!("xtra drop");
     }
 }
 
@@ -1707,11 +1705,11 @@ pub mod c_api {
     }
 
     #[no_mangle]
-    pub unsafe extern &quot;C&quot; fn xtra_with(cb: extern &quot;C&quot; fn(*mut CXtraResource) -&gt; ()) {
+    pub unsafe extern "C" fn xtra_with(cb: extern "C" fn(*mut CXtraResource) -&gt; ()) {
         let inner = if let Ok(res) = catch_unwind(XtraResource::new) {
             res
         } else {
-<span class="boring">            println!(&quot;cannot allocate resource&quot;);
+<span class="boring">            println!("cannot allocate resource");
 </span>            return;
         };
         let id = COUNTER;
@@ -1721,15 +1719,15 @@ pub mod c_api {
         // Use heap memory and do not provide pointer to stack to C code!
         let mut boxed = Box::new(CXtraResource { tag, id, inner });
 
-<span class="boring">        println!(&quot;running the callback on {:p}&quot;, boxed.as_ref());
+<span class="boring">        println!("running the callback on {:p}", boxed.as_ref());
 </span>        cb(boxed.as_mut() as *mut CXtraResource);
 
         if boxed.id == id &amp;&amp; (boxed.tag == VALID_TAG || boxed.tag == ERR_TAG) {
-<span class="boring">            println!(&quot;freeing {:p}&quot;, boxed.as_ref());
+<span class="boring">            println!("freeing {:p}", boxed.as_ref());
 </span>            boxed.tag = INVALID_TAG; // prevent accidental reuse
                                  // implicit boxed drop
         } else {
-<span class="boring">            println!(&quot;forgetting {:p}&quot;, boxed.as_ref());
+<span class="boring">            println!("forgetting {:p}", boxed.as_ref());
 </span>            // (...) error handling (should be fatal)
             boxed.tag = INVALID_TAG; // prevent reuse
             std::mem::forget(boxed); // boxed is corrupted it should not be
@@ -1737,28 +1735,27 @@ pub mod c_api {
     }
 
     #[no_mangle]
-    pub unsafe extern &quot;C&quot; fn xtra_dosthg(cxtra: *mut CXtraResource) {
+    pub unsafe extern "C" fn xtra_dosthg(cxtra: *mut CXtraResource) {
         let do_it = || {
             if let Some(cxtra) = cxtra.as_mut() {
                 if cxtra.tag == VALID_TAG {
-<span class="boring">                    println!(&quot;doing something with {:p}&quot;, cxtra);
+<span class="boring">                    println!("doing something with {:p}", cxtra);
 </span>                    cxtra.inner.dosthg();
                     return;
                 }
             }
-            println!(&quot;doing nothing with {:p}&quot;, cxtra);
+            println!("doing nothing with {:p}", cxtra);
         };
         if catch_unwind(do_it).is_err() {
             if let Some(cxtra) = cxtra.as_mut() {
-<span class="boring">                println!(&quot;panicking with {:p}&quot;, cxtra);
+<span class="boring">                println!("panicking with {:p}", cxtra);
 </span>                cxtra.tag = ERR_TAG;
             }
         };
     }
 }
 <span class="boring">
-</span><span class="boring">fn main() {}
-</span></code></pre>
+</span><span class="boring">fn main() {}</span></code></pre>
 <p>A compatible C call:</p>
 <pre><code class="language-c">struct XtraResource;
 void xtra_with(void (*cb)(XtraResource* xtra));
@@ -1791,19 +1788,18 @@ the process.</p>
 </span>
 fn may_panic() {
     if rand::random() {
-        panic!(&quot;panic happens&quot;);
+        panic!("panic happens");
     }
 }
 
 #[no_mangle]
-pub unsafe extern &quot;C&quot; fn no_panic() -&gt; i32 {
+pub unsafe extern "C" fn no_panic() -&gt; i32 {
     let result = catch_unwind(may_panic);
     match result {
         Ok(_) =&gt; 0,
         Err(_) =&gt; -1,
     }
-}
-</code></pre>
+}</code></pre>
 <h3 id="no_std"><a class="header" href="#no_std"><code>no_std</code></a></h3>
 <p>In the case of <code>#![no_std]</code> program, a panic handler (<code>#[panic_handler]</code>) must
 be defined to ensure security. The panic handler should be written with great
@@ -1866,12 +1862,12 @@ impl Counter {
 // C-compatible API
 
 #[no_mangle]
-pub unsafe extern &quot;C&quot; fn counter_create() -&gt; *mut Counter {
+pub unsafe extern "C" fn counter_create() -&gt; *mut Counter {
     Box::into_raw(Box::new(Counter::new()))
 }
 
 #[no_mangle]
-pub unsafe extern &quot;C&quot; fn counter_incr(counter: *mut Counter) -&gt; std::os::raw::c_int {
+pub unsafe extern "C" fn counter_incr(counter: *mut Counter) -&gt; std::os::raw::c_int {
     if let Some(counter) = counter.as_mut() {
         if counter.incr() {
             0
@@ -1884,7 +1880,7 @@ pub unsafe extern &quot;C&quot; fn counter_incr(counter: *mut Counter) -&gt; std
 }
 
 #[no_mangle]
-pub unsafe extern &quot;C&quot; fn counter_get(counter: *const Counter) -&gt; u32 {
+pub unsafe extern "C" fn counter_get(counter: *const Counter) -&gt; u32 {
     if let Some(counter) = counter.as_ref() {
         return counter.get();
     }
@@ -1898,8 +1894,7 @@ pub unsafe extern fn counter_destroy(counter: *mut Counter) -&gt; std::os::raw::
         return 0;
     }
     return -1;
-}
-</code></pre>
+}</code></pre>
 <p>Using <a href="https://crates.io/crates/cbindgen">cbindgen</a> (<code>[cbindgen] -l c &gt; counter.h</code>), one can generate a consistent
 C header, <code>counter.h</code>:</p>
 <pre><code class="language-c">#include &lt;stdarg.h&gt;
@@ -1923,7 +1918,7 @@ int counter_incr(Counter *counter);
 #include &lt;stdlib.h&gt;
 #include &lt;inttypes.h&gt;
 
-#include &quot;counter.h&quot;
+#include "counter.h"
 
 int main(int argc, const char** argv) {
     if (argc &lt; 2) {
@@ -1934,13 +1929,13 @@ int main(int argc, const char** argv) {
     Counter* c = counter_create();
     for (size_t i=0; i &lt; n; i++) {
         if (counter_incr(c) != 0) {
-            printf(&quot;overflow\n&quot;);
+            printf("overflow\n");
             counter_destroy(c);
             return -1;
         }
     }
 
-    printf(&quot;%&quot; PRIu32 &quot;\n&quot;, counter_get(c));
+    printf("%" PRIu32 "\n", counter_get(c));
     counter_destroy(c);
 
     return 0;
@@ -2159,26 +2154,27 @@ Expose dedicated C-compatible API only (<a href="07_ffi.html#FFI-CAPI">FFI-CAPI<
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
 
-        <script type="text/javascript">
+        <script>
         window.addEventListener('load', function() {
             window.setTimeout(window.print, 100);
         });
         </script>
 
+    </div>
     </body>
 </html>
