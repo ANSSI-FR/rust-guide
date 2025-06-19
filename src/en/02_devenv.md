@@ -199,7 +199,7 @@ For more information about the guidelines that `rustfmt` will check, have a look
 at the [Rust Style Guide](https://doc.rust-lang.org/style-guide/index.html).
 
 > ### Rule {{#check DENV-FORMAT | Use Rust formatter (rustfmt)}}
-> The tool `rustfmt` can be used to ensure that the codebase respects style
+> The tool `rustfmt` must be used to ensure that the codebase respects style
 > guidelines (as described in `rustfmt.toml` file), with `--check` option and
 > manual review.
 

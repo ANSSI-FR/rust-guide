@@ -228,7 +228,7 @@ Pour plus d'informations à propos des règles de convention de style que
 
 > ### Règle {{#check DENV-FORMAT | Utilisation d'un outil de formatage (rustfmt)}}
 >
-> L'outil de formatage `rustfmt` peut être utilisé pour assurer le respect de
+> L'outil de formatage `rustfmt` doit être utilisé pour assurer le respect de
 > règles de convention de style (comme décrites dans le fichier `rustfmt.toml`)
 > sur une base de code, avec l'option `--check` ainsi qu'une revue de code
 > manuelle.
