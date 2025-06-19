@@ -31,7 +31,7 @@ or to release memory (e.g. in smart pointers such as `Box` or `Rc`).
 As a result, `Drop` trait implementations are likely to contain `unsafe` code
 blocks as well as other security-critical operations.
 
-> ### Recommendation {{#check LANG-DROP | Justify `Drop` implementation}}
+> **Recommendation {{#check LANG-DROP | Justify `Drop` implementation}}**
 >
 > In a Rust secure development, the implementation of the `std::ops::Drop` trait
 > should be justified, documented and peer-reviewed.
@@ -50,19 +50,19 @@ missing drops, such as:
 And missing drops may lead to exposing sensitive data or to lock limited
 resources leading to unavailability issues.
 
-> ### Rule {{#check LANG-DROP-NO-PANIC | Do not panic in `Drop` implementation}}
+> **Rule {{#check LANG-DROP-NO-PANIC | Do not panic in `Drop` implementation}}**
 >
 > In a Rust secure development, the implementation of the `std::ops::Drop` trait
 > must not panic.
 
 Beside panics, secure-critical drop should be protected.
 
-> ### Rule {{#check LANG-DROP-NO-CYCLE | Do not allow cycles of reference-counted `Drop`}}
+> **Rule {{#check LANG-DROP-NO-CYCLE | Do not allow cycles of reference-counted `Drop`}}**
 >
 > Value whose type implements `Drop` must not be embedded directly or indirectly
 > in a cycle of reference-counted references.
 
-> ### Recommendation {{#check LANG-DROP-SEC | Do not rely only on `Drop` to ensure security}}
+> **Recommendation {{#check LANG-DROP-SEC | Do not rely only on `Drop` to ensure security}}**
 >
 > Ensuring security operations at the end of some treatment (such as key erasure
 > at the end of a cryptographic encryption) should not rely only on the `Drop`
@@ -123,7 +123,7 @@ field:
 struct SpecialType(u8, PhantomData<*const ()>);
 ```
 
-> ### Recommendation {{#check LANG-SYNC-TRAITS | Justify `Send` and `Sync` implementation}}
+> **Recommendation {{#check LANG-SYNC-TRAITS | Justify `Send` and `Sync` implementation}}**
 >
 > In a Rust secure development, the manual implementation of the `Send` and
 > `Sync` traits should be avoided and, if necessary, should be justified,
@@ -223,12 +223,12 @@ In the second use, it may lead to classical security issues linked to memory
 safety violations. That is again a factor in the practice of limiting the use
 of `unsafe` blocks.
 
-> ### Rule {{#check LANG-CMP-INV | Respect the invariants of standard comparison traits}}
+> **Rule {{#check LANG-CMP-INV | Respect the invariants of standard comparison traits}}**
 >
 > In a Rust secure development, the implementation of standard comparison traits
 > must respect the invariants described in the documentation.
 
-> ### Recommendation {{#check LANG-CMP-DEFAULTS | Use the default method implementation of standard comparison traits}}
+> **Recommendation {{#check LANG-CMP-DEFAULTS | Use the default method implementation of standard comparison traits}}**
 >
 > In a Rust secure development, the implementation of standard comparison traits
 > should only define methods with no default implementation, so as to reduce
@@ -266,7 +266,7 @@ assert!(T1 { a: 1, b: 1 } > T1 { a: 1, b: 0 });
 # }
 ```
 
-> ### Warning
+> **Warning**
 >
 > Derivation of comparison traits for compound types depends on the
 > **field order**, and not on their names.
@@ -294,7 +294,7 @@ assert!(T1 { a: 1, b: 1 } > T1 { a: 1, b: 0 });
 Despite the ordering caveat, derived comparisons are a lot less error-prone
 than manual ones and makes code shorter and easier to maintain.
 
-> ### Recommendation {{#check LANG-CMP-DERIVE | Derive comparison traits when possible}}
+> **Recommendation {{#check LANG-CMP-DERIVE | Derive comparison traits when possible}}**
 >
 > In a secure Rust development, the implementation of standard comparison traits
 > should be automatically derived with `#[derive(...)]` when structural equality

@@ -7,7 +7,7 @@ Entre autres choses, il permet de basculer entre différentes variantes de la
 chaîne d'outils (_stable_, _beta_, _nightly_), de gérer l'installation des
 composants additionnels et de maintenir le tout à jour.
 
-> ### Attention
+> **Attention**
 >
 > Du point de vue de la sécurité, `rustup` effectue tous les téléchargements en
 > HTTPS, mais ne valide pas les signatures des fichiers téléchargés. Les
@@ -34,7 +34,7 @@ deviennent alors fortement liées à une édition en particulier. Dans le reste 
 ce guide, un effort sera réalisé pour mettre en évidence les règles qui ne
 s'appliqueraient qu'à certaines éditions de Rust en particulier.
 
-> ### Note
+> **Note**
 >
 > Aucune édition spécifique n'est recommandée, tant que le développement se
 > conforme aux recommandations exprimées à propos des fonctionnalités que
@@ -71,7 +71,7 @@ $
 
 <!-- -->
 
-> ### Règle {{#check DENV-STABLE | Utilisation de la chaîne d'outils *stable*}}
+> **Règle {{#check DENV-STABLE | Utilisation de la chaîne d'outils *stable*}}**
 >
 > Le développement d'applications sécurisées doit être mené en utilisant la
 > chaîne d'outils dans sa version *stable*, afin de limiter les potentiels
@@ -114,7 +114,7 @@ permet notamment de :
 - lancer des outils complémentaires tels que ceux décrits ci-après, sous la
   forme de sous-commandes.
 
-> ### Attention
+> **Attention**
 >
 > Tout comme `rustup`, `cargo` effectue tous les téléchargements en HTTPS, mais
 > ne valide pas l'index du registre. Des discussions sont en cours pour
@@ -144,7 +144,7 @@ vérifications (par exemple, les
 [vérifications de dépassements d'entiers](./04_language.html#integer-overflows))
 est utilisé.
 
-> ### Règle {{#check DENV-CARGO-OPTS | Conservation des valeurs par défaut des variables critiques dans les profils cargo}}
+> **Règle {{#check DENV-CARGO-OPTS | Conservation des valeurs par défaut des variables critiques dans les profils cargo}}**
 >
 > Les variables `debug-assertions` et `overflow-checks` ne doivent pas être
 > modifiées dans les sections de profils de développement (`[profile.dev]` and
@@ -162,7 +162,7 @@ exemple pour générer une partie du code ou pour invoquer un outil externe avan
 la compilation, il est préférable d'utiliser la fonctionnalité de *scripts de
 compilation* de Cargo.
 
-> ### Règle {{#check DENV-CARGO-ENVVARS | Conservation des valeurs par défaut des variables d'environnement à l'exécution de cargo}}
+> **Règle {{#check DENV-CARGO-ENVVARS | Conservation des valeurs par défaut des variables d'environnement à l'exécution de cargo}}**
 >
 > Les variables d'environnement `RUSTC`, `RUSTC_WRAPPER` et `RUSTFLAGS` ne
 > doivent pas être modifiées lorsque Cargo est appelé pour compiler un projet.
@@ -186,7 +186,7 @@ développeur avant d'appliquer la réparation suggérée par `clippy`, en
 particulier dans le cas des *lints* de la catégorie `clippy::nursery` puisque
 ceux-ci sont encore en cours de développement et de mise au point.
 
-> ### Règle {{#check DENV-LINTER | Utilisation régulière d'un *linter*}}
+> **Règle {{#check DENV-LINTER | Utilisation régulière d'un *linter*}}**
 >
 > Un *linter* comme `clippy` doit être utilisé régulièrement tout au long du
 > développement d'une application sécurisée.
@@ -226,7 +226,7 @@ single_line_if_else_max_width = 40
 Pour plus d'informations à propos des règles de convention de style que
 `rustfmt` propose, voir le [*Rust Style Guide*](https://doc.rust-lang.org/style-guide/index.html).
 
-> ### Règle {{#check DENV-FORMAT | Utilisation d'un outil de formatage (rustfmt)}}
+> **Règle {{#check DENV-FORMAT | Utilisation d'un outil de formatage (rustfmt)}}**
 >
 > L'outil de formatage `rustfmt` peut être utilisé pour assurer le respect de
 > règles de convention de style (comme décrites dans le fichier `rustfmt.toml`)
@@ -271,7 +271,7 @@ configuration, certaines réparations (comme celles proposées avec l'option
 `--edition-idioms`) sont connues pour casser la compilation ou pour modifier
 la sémantique d'un programme dans certains cas.
 
-> ### Règle {{#check DENV-AUTOFIX | Vérification manuelle des réparations automatiques}}
+> **Règle {{#check DENV-AUTOFIX | Vérification manuelle des réparations automatiques}}**
 >
 > Dans le cadre du développement d'une application sécurisée, toute réparation
 > automatique (comme celles appliquées par `rustfix` par exemple) doit être
