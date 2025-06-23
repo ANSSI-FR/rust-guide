@@ -115,8 +115,9 @@ mod test{
 
 > ### Recommendation {{#check TEST-TRAIT | Create tests to ensure that certain traits are implemented for structures/enums}}
 >
-> In certain contexts, it is necessary for certain struct or enum to implement particular traits. 
-> In such cases, it is strongly recommended that you implement this type of test.
+> In certain situations, it is essential that certain struct or enum implement specific traits. This type of test is therefore highly recommended.
+> 
+> One relevant scenario is where it is necessary to ensure that certain exposed API traits are correctly implemented. Another example, more related to the subject of this guide, concerns the validation of the implementation of the `std::hash::Hash` trait, which can be crucial in situations where data integrity is paramount.
 
 <!-- ## Fuzzing
 

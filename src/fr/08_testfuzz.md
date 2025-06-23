@@ -112,8 +112,9 @@ mod test{
 
 > ### Recommandation {{#check TEST-TRAIT | Créer des tests permettant de s'assurer que certains traits sont bien implémenter pour des structures/enums}}
 >
-> Dans certains contextes, il est nécessaires que certaines struct ou enum implémente certains traits particuliers. 
-> Dans ce genre de cas, il est vivement conseillé d'implémenter ce genre de test.
+> Dans certaines situations, il est essentiel que certaines struct ou enum implémentent des traits spécifiques. Il est donc fortement recommandé de mettre en place ce type de test.
+> 
+> Un des scénarios pertinents est celui où il est nécessaire de garantir que certains traits d'API exposés sont correctement implémentés. Un autre exemple, plus en lien avec le sujet de ce guide, concerne la validation de l'implémentation du trait `std::hash::Hash`, qui peut s'avérer crucial dans les situations où l'intégrité des données est primordiale
  
 <!-- ## <mark>TODO</mark> : Fuzzing
 
