@@ -141,21 +141,6 @@ A `Result` object must be tested, and never ignored.
 To ensure that the above recommendation is implemented correctly, you may check
 the [test implementing trait](08_testfuzz.md#implementing-a-trait) section of this guide.
 
-> ### Recommendation {{#check LANG-ERR-FLAT | root positioning of type `Error` }}
->
-> It is advisable to publicly position this type at the root of your API. For example: `crate::Error`.
-
-To do this, you can flatten the `Result` and `Error` types using the following piece of code placed at the root of the `src/lib.rs` or `src/main.rs` file: 
-
-```rust
-pub use error::Error;
-```
-
-The advantage of this technique is that, in your code, you can make the position of the type in your project agnostic for the user or for yourself.
-
-When using external libraries, you can either wrap the type or use a library such as [derive_more].
-
-[derive_more]: https://crates.io/crates/derive_more
 ### Third-party library use
 
 Third-party crates may be used to facilitate error handling. Most of them

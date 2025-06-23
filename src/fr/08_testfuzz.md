@@ -12,12 +12,11 @@ Dans cette section, nous discuterons de ces deux types de tests ainsi que d'un t
 
 Les tests dits internes définissent l'ensemble des tests étant présent dans le dossier `src/` d'un projet Rust. Ceux-ci présentent le grand avantage de pouvoir tester l'ensemble des fonctions (même privées) si placé dans le même fichier que celui-ci.
 
-> ### Recommandation {{#check TEST-UNIT | Tester aux maximum les différentes fonctionnalités}}
+> ### Recommandation {{#check TEST-UNIT | Test du chemin critique de votre code}}
 >
-> Il est conseillé l'ensemble des fonctions de votre programme même celle qui peuvent sembler le plus trivial.
-> 
-> Ainsi, dans le cas où une modification future provoquerait un effet de bord modifiant le comportement d'une autre fonction, vous le remarquerez bien plus rapidement.
-> Cela permet également de limiter le nombre de bugs au plus tôt. 
+> Il est important de tester intégralement le chemin critique de votre code.
+>
+> De cette façon, si une modification future provoque un effet de bord qui altère son comportement, vous le remarquerez beaucoup plus tôt. Cela permet également de limiter le nombre de bugs au plus tôt.
 
 ```rust
 // fonction privée
@@ -33,26 +32,6 @@ mod tests{
 	}
 }
 ```
-
-Il est également possible d'ignorer certains tests dans le cas où ceux-ci prendraient trop de temps à être effectué. Cela peut être fait en rajouter `#[ignore]` au-dessus de la fonction de test.
-
-```rust
-#[cfg(test)]
-mod tests{
-	#[test]
-	fn test_non_ignore(){ ... }
-
-	#[ignore]
-	#[test]
-	fn test_ignore() { ... }
-}
-```
-
-> ### Important
->
-> Dans le cas où un test est marqué comme étant a ignorer, il ne sera plus possible de l’exécuter même si vous précisez son nom en utilisant la commande `cargo test <test_name>`. 
-> 
-> Le seul moyen qu'il puisse être lancé et de lui enlever le `#[ignore]` au-dessus de lui.
 
 > ### Recommandation {{#check TEST-IGNORE | Limiter au maximum le nombre de tests ignoré}}
 >

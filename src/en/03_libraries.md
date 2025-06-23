@@ -48,7 +48,7 @@ Through its security working group, Rust offers a number of tools for checking t
 
 > ### Rule {{#check LIBS-SUPPLY-CHAIN | Check developers implicitly trusted}}
 >
-> The `cargo-supply-chain` tool must be used to find out who your organisation implicitly trust to run your project.
+> The `cargo-supply-chain` tool may be used to find out contributors of the project dependencies.
 
 [cargo-supply-chain]: https://github.com/rust-secure-code/cargo-supply-chain
 ### Cargo vet / crev
@@ -81,9 +81,11 @@ Its aim is to detect the use of the `unsafe` block in a project's supply chain. 
 - `❓` means that no `unsafe` usage found and the create missing #![forbid(unsafe_code)]
 - `☢️` means that `unsafe` usage found
 
-> ### Rule {{#check LIBS-UNSAFE | Check *unsafe* code in dependencies}}
+> ### Rule {{#check LIBS-AUDIT-UNSAFE | Use fully audited libraries}}
 >
-> Use the `cargo-geiger` tool to check that uses of the `unsafe` block comply with the recommendations described in the following section of this guide.
+> We strongly advise you to use only libraries that have been properly audited by trusted third parties or entities within your organization. 
+> 
+> Particular attention should be paid to libraries using `unsafe` code. As `unsafe` code does not benefit from the language's memory management protection mechanisms, it is more likely to contain security flaws.
 
 
 [cargo-geiger]: https://github.com/geiger-rs/cargo-geiger

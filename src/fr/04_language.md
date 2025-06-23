@@ -153,21 +153,6 @@ testé et jamais ignoré.
 Pour s'assurer que la recommandation ci-dessus soit bien implémenter, vous pouvez vous réferez à la section
 concernant [les tests de bonnes implémentations](08_testfuzz.md#Implémentation-de-trait) des traits de ce guide.
 
-
-> ### Recommandation {{#check LANG-ERR-FLAT | positionnement à la racine du type `Error` }}
->
-> Il est conseillé de positionner publiquement ce type à la racine de votre API. Par exemple : `crate::Error`.
-
-Pour ce faire, vous pouvez aplatir les types `Result` et `Error` via le morceau de code suivant placé à la racine du fichier `src/lib.rs` ou  `src/main.rs` : 
-```rust
-pub use error::Error;
-```
-
-L'avantage de cette technique, est qu'elle permet, dans votre code, de rendre agnostique pour l'utilisateur ou pour vous-même, la position du type dans votre projet.
-
-Lorsque vous utilisez des bibliothèques externes, vous pouvez soit wrapper le type soit utiliser une bibliothèque comme [derive_more].
-
-[derive_more]: https://crates.io/crates/derive_more
 ### Utilisation de bibliothèque tierce
 
 Des *crates* tierces peuvent être utilisées pour faciliter la gestion d'erreurs.
