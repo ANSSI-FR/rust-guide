@@ -55,26 +55,7 @@ Rust propose, via son groupe de travail sur la sécurité un certain nombre d'ou
 > L'outil `cargo-supply-chain` devrait être utilisé afin de connaître les contributeurs des différentes dépendances que votre projet utilise.
 
 [cargo-supply-chain]: https://github.com/rust-secure-code/cargo-supply-chain
-### Cargo vet / crev
 
-[Cargo-vet] est un outil développé par la fondation mozilla et qui permet de vérifier si les librairies que vous pouvez utiliser son audité par des tiers de confiance.
-
-> ### Règle {{#check LIBS-VET | Utilisation en priorité de librairie ayant été audité}}
->
-> Il est conseillé d'utiliser l'outil `cargo-vet` afin d'utiliser en priorité des librairies ayant été audités par des tiers.
-
-Les audits de sécurités peuvent être créés à l'aide d'un outil nommé [Cargo-crev]. L'utilisation de cet outil ne sera pas détaillée dans ce guide.
-
-Pour plus d'information, veuillez consulter la [documentation officielle] de l'outil.
-
-> ### Conseille
->
-> Il est conseillés de faire d'audits de sécurités via l'outil `cargo-crev` afin de vérifier la sécurité 
-> des librairies utilisées dans votre projet et d'en faire profiter la communauté.
-
-[cargo-vet]: https://github.com/mozilla/cargo-vet
-[cargo-crev]: https://github.com/crev-dev/cargo-crev
-[documentation officielle]: https://github.com/crev-dev/cargo-crev/blob/main/cargo-crev/src/doc/getting_started.md
 ## Code *unsafe* dans les bibliothèques
 
 [Cargo-geiger] est un outil maintenu par le groupe de travail permettant de sécuriser Rust.

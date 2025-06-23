@@ -51,26 +51,6 @@ Through its security working group, Rust offers a number of tools for checking t
 > The `cargo-supply-chain` tool may be used to find out contributors of the project dependencies.
 
 [cargo-supply-chain]: https://github.com/rust-secure-code/cargo-supply-chain
-### Cargo vet / crev
-
-[Cargo-vet] is a tool developed by the Mozilla Foundation that allows you to check whether the libraries you can use have been audited by trusted third parties.
-
-> Rule {{#check LIBS-VET | Priority use of libraries that have been audited}}
->
-> It is advisable to use the `cargo-vet` tool to prioritise the use of libraries which have been audited by third parties.
-
-Security audits can be created using a tool called [Cargo-crev]. The use of this tool will not be detailed in this guide.
-
-For more information, please consult the tool's [official documentation].
-
-> ### Advises
->
-> We recommend that you carry out security audits using the `cargo-crev` tool in order to check the security of the 
-> of the libraries used in your project and to share them with the community.
-
-[cargo-vet]: https://github.com/mozilla/cargo-vet
-[cargo-crev]: https://github.com/crev-dev/cargo-crev
-[official documentation]: https://github.com/crev-dev/cargo-crev/blob/main/cargo-crev/src/doc/getting_started.md
 
 ## Unsafe code in libraries
 
