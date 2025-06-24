@@ -42,37 +42,3 @@ un projet.
 > connues dans les dépendances d'un projet.
 
 [cargo-audit]: https://github.com/RustSec/cargo-audit
-## Vérification de la supply-chain
-
-Rust propose, via son groupe de travail sur la sécurité un certain nombre d'outils permettant de s'assurer de la sécurité de la supply-chain d'un programme au niveau de ses bibliothèques.
-
-### Cargo supply-chain
-
-[Cargo-supply-chain] est l'outil développé par le groupe de travail officiel de la fondation rust et qui collecte l'ensemble des personnes qui peuvent intervenir sur les bibliothèques utilisées par le projet.
-
-> ### Règle {{#check LIBS-SUPPLY-CHAIN | Vérification des développeurs implicitement de confiance}}
->
-> L'outil `cargo-supply-chain` devrait être utilisé afin de connaître les contributeurs des différentes dépendances que votre projet utilise.
-
-[cargo-supply-chain]: https://github.com/rust-secure-code/cargo-supply-chain
-
-## Code *unsafe* dans les bibliothèques
-
-[Cargo-geiger] est un outil maintenu par le groupe de travail permettant de sécuriser Rust.
-Son but est de détecter l'utilisation du block `unsafe` dans la supply-chain d'un projet. Les résultats possèdent trois
-niveaux :
-
-- `🔒` lorsqu'il n'y a pas d'utilisation du bloc  `unsafe` trouvée et la ligne #![forbid(unsafe_code)] est déclarés
-- `❓` lorsqu'il n'y a pas d'utilisation du bloc `unsafe` trouvée et la ligne #![forbid(unsafe_code)] est déclarés
-- `☢️`   = utilisation de bloc `unsafe` trouvée dans le code
-
-> ### Règle {{#check LIBS-AUDIT-UNSAFE | Utiliser des librairies proprement auditées}}
-> Il est fortement conseillé de n'utiliser que des bibliothèques qui ont été proprement auditées par des tiers de confiances ou des entités de votre organisation.
->
-> Une attention toute particulière doit être donnée aux bibliothèques utilisant du code `unsafe`. En effet, les codes `unsafe` ne bénéficiant pas des mécanismes de protection de la gestion mémorielles du langage, ils sont plus susceptibles de contenir des failles de sécurités.
-
-> Attention
->
-> A ce jour, l'outil `cargo-geiger` ne prend pas en compte quand # ![forbid(unsafe_code)] est dans le fichier `Cargo.toml`.
-
-[cargo-geiger]: https://github.com/geiger-rs/cargo-geiger
