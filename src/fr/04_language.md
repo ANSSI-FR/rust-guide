@@ -1,5 +1,28 @@
 # Généralités sur le langage
 
+## Garanties du langage
+
+La liste complète est donnée [ici](https://doc.rust-lang.org/reference/behavior-considered-undefined.html).
+On notera les garanties suivantes :
+
+* Pas de pointeur vers une adresse mémoire non allouée (*dangling pointer*)
+* Pas de dépassement de tableau
+* Tous les pointeurs sont bien alignés. Par exemple, un pointeur sur un élément d'un tableau pointe exclusivement sur cet élément, et pas sur l'élément suivant.
+* Les valeurs pointées sont cohérentes avec le type du pointeur. Par exemple, une valeur pointée par un pointeur booléen sera l'octet 1 ou 0.
+* Respect des règles d'[*aliasing*](https://doc.rust-lang.org/nomicon/aliasing.html) : une référence mutable ne peux être partagée.
+* Pas d'accès concurrent à la même adresse mémoire ([*data race*](https://doc.rust-lang.org/nomicon/races.html))
+
+En particulier, le langage ***ne protège pas*** contre les erreurs suivantes :
+
+* fuite de resources (mémoire, IO, ...)
+* dépassement numériques
+
+### Références
+
+* https://doc.rust-lang.org/reference/unsafety.html
+* https://doc.rust-lang.org/nomicon/what-unsafe-does.html
+* https://github.com/ANSSI-FR/rust-guide/pull/3
+
 ## Nommage
 
 La convention de nommage employée par la bibliothèque standard est *de facto* le
