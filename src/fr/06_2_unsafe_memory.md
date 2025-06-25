@@ -9,10 +9,18 @@ casser la sûreté mémoire (par exemple, comportements *unsounds* dans des
 versions plus anciennes du compilateur).
 -->
 
-## Fuites de mémoire
+Dans la très grande majorité des cas, en Rust non-*unsafe*, le **compilateur** détermine **automatiquement** 
+quand il peut libérer la mémoire occupée par une valeur du programme. 
+Mais, comme rappelé dans les [généralités du langage](04_language.md), ce n'est pas une garantie : un
+code non-*unsafe* peut mener à des fuites mémoires. Aussi certaines règles présentées dans 
+ce chapitre ne sont pas strictement *unsafe*. Cependant,
 
-En général, la mémoire est automatiquement récupérée en Rust lorsqu'une variable
-sort de la portée lexicale courante. En complément de ce mécanisme, Rust fournit
+> même si certaines des fonctions présentées dans la suite ne sont pas `unsafe`, elle
+> elle ne devrait être utilisée qu'en Rust *unsafe*.
+
+## `Forget` et fuites de mémoire
+
+Rust fournit
 des fonctions spéciales pour réclamer manuellement la mémoire : les fonctions
 `forget` et `drop` du module `std::mem` (ou `core::mem`). `drop` déclenche
 simplement une récupération prématurée de la mémoire tout en appelant les
@@ -41,7 +49,7 @@ sensibles en mémoire. C'est pourquoi `forget` doit être considérée comme
 
 > **Règle {{#check MEM-FORGET | Non-utilisation de `forget`}}**
 >
-> Dans un développement sécurisé en Rust, la fonction `forget` de `std::mem`
+> Dans un développement sécurisé en Rust (*unsafe* ou non), la fonction `forget` de `std::mem`
 > (`core::mem`) ne doit pas être utilisée.
 
 <!-- -->
@@ -70,7 +78,7 @@ l'avantage de faire apparaître explicitement leur but.
 
 > **Règle {{#check MEM-LEAK | Non-utilisation de `Box::leak`}}**
 >
-> Dans un développement sécurisé en Rust, le code ne doit pas faire fuiter de la
+> Dans un développement sécurisé (*unsafe* ou non) en Rust, le code ne doit pas faire fuiter de la
 > mémoire ou des ressources *via* `Box::leak`.
 
 `ManuallyDrop` et `Box::into_raw` passent la responsabilité de la libération de
@@ -184,6 +192,8 @@ sécurité distincts :
 
 ## Effacement sécurisé des informations sensibles
 
+> TODO : sensibiliser sur la difficulté de l'effacement sécurisé
+
 L'effacement sécurisé (mise à zéro) est nécessaire pour les variables sensibles,
 en particulier dans lorsque le code Rust est utilisé *via* des FFI.
 
@@ -215,6 +225,14 @@ impl Drop for ZU32 {
 } // i est libéré ici
 # }
 ```
+
+<div class="warning">
+
+Ce code n'assure pas que la mémoire sera nettoyée du contenu de `i` à la fin du programme.
+En effet, lors d'un déplacement, le cotenu de la mémoire de `i` peut se retrouvé déplacé
+à un autre endroit dans la mémoire ***sans que le contenu de l'ancien emplacement n'ait été nettoyé***.
+
+</div>
 
 ## Cycle dans les références comptées (`Rc` et `Arc`)
 
