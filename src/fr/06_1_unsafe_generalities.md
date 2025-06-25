@@ -14,6 +14,26 @@
 
 * https://doc.rust-lang.org/reference/unsafety.html
 
+## Usages du mot-clef `unsafe`
+
+Le mot-clef `unsafe` a deux usages : dans une API et dans une implémentation.
+
+### `unsafe` dans une API
+
+L'usage de ce mot clef dans une API *met en garde* l'utilisateur de l'API contre
+les potentiels effets néfaste de l'usage de l'API.
+
+* Dans le cas d'une fonction, `unsafe` signifie que le comportement de la fonction
+  peut conduire à des *UB* si le contrat d'usage de la fonction (dans sa documentation)
+  n'est pas respecté.
+* Dans le cas d'un trait, `unsafe` signifie qu'une implémentation erronée de ce trait
+  peut conduire à des UB
+
+### `unsafe` dans une implémentation
+
+L'usage de ce mot clef dans une implémentation (un bloc de code) est imposé par le compilateur
+pour empêcher l'usage *par inadvertance* de fonctions *unsafe*s.
+
 ## Utilisation de Rust *unsafe*
 
 L'utilisation conjointe du système de types et du système d'*ownership* vise à
@@ -57,8 +77,173 @@ langage fournit le mot-clé `unsafe`.
 
 ## Précaution générale d'un code unsafe
 
+### (Non-)localité d'un bloc *unsafe*
+
 ***TODO***
 
-### Références
+#### Références
 
 * https://doc.rust-lang.org/nomicon/working-with-unsafe.html
+
+### Relation de confiance *safe*/*unsafe*
+
+<!-- Revoir la reformulation -->
+
+#### Principe
+
+Le *mantra* de Rust pourrait se résumer à :
+
+> un code sans `unsafe` ne peut pas mal se comporter, c'est à dire qu'il ne peut pas 
+> produire d'*UA*.
+
+C'est la promesse faite au développeur de code sans `unsafe`.
+
+*A contrario*, un développeur de code *unsafe* n'a pas cette garantie, et c'est donc à lui
+de s'assurer qu'aucun *UB* ne peut se produire dans son code.
+
+En particulier, un bug dans une fonction *safe* utilisée dans un bloc *unsafe*
+**doit être contournée par ce code *unsafe*** de manière à ce qu'il n'engendre pas
+d'*UB*.
+
+#### Exemple
+
+On peut illustrer ce principe par le cas suivant.
+
+On souhaite parcourir la mémoire pour y trouver un objet d'un type donné.
+On demande donc à l'utilisateur de l'API de fournir une implémentation à ce trait
+
+```rust
+trait Locatable {
+    /// Find object of type `Self` in the buffer `buf`.
+    /// Returns the index of the first byte representing
+    /// an object of type `Self`
+    fn locate_instance_into(buf: &[u8]) -> Option<usize>;
+}
+```
+L'implémentation d'un tel trait peut être réalisé en utilisant du code **sans** `unsafe`.
+
+Par exemple, on peut implémenter ce trait pour le type `bool` comme suit.
+
+```rust
+impl Locatable for bool {
+    fn locate_instance_into(buf: &[u8]) -> Option<usize> {
+        buf.iter().position(|u| *u == 0 || *u == 1)
+    }
+}
+```
+
+D'autre part, la fonction permettant de reconstruire un type `Locatable` pourrait être la suivante.
+
+```rust
+fn locate<T: Locatable + Clone>(start: *const u8, len: usize) -> Option<T> {
+    let buf = unsafe { from_raw_parts(start, len) };
+    match T::locate_instance_into(buf) {
+        Some(begin) => unsafe {
+            let start_T: *const T = start.byte_add(begin).cast();
+            match start_T.as_ref() {
+                None => None, // if start_T is null
+                Some(r) => Some(r.clone()),
+            }
+        },
+        None => None,
+    }
+}
+```
+
+<div class="warning">
+
+Cette implémentation est mauvaise car,
+
+* dans le cas où l'implémentation de `Locatable` ne donne pas le bon index de 
+  départ de l'objet, alors la fonction `as_ref` peut produire un *UB*.
+* dans le cas où l'implémentation de `Locatable` renvoie une valeur host du tableau,
+  un dépassement de tableau se produit.
+
+</div>
+
+Par exemple, si l'implémentation de `Locatable` est
+
+```rust
+impl Locatable for bool {
+    fn locate_instance_into(buf: &[u8]) -> Option<usize> {
+        buf.iter().position(|u| *u == 0 || *u == 1).map(|n| n - 2)
+    }
+}
+```
+
+l'exécution du programme suivant produit un *UB*
+
+```rust,should_panic
+fn main() {
+    let buf = [4, 1, 99];
+    let start = buf.as_ptr();
+    let located_bool: Option<bool> = locate(start, buf.len()); // UB here!
+    println!("{:?}", located_bool)
+}
+```
+
+Voici le retour obtenu avec `valgrind`
+
+```
+$ valgrind ./target/release/rust-unsafe
+==123651== Memcheck, a memory error detector
+==123651== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==123651== Using Valgrind-3.19.0 and LibVEX; rerun with -h for copyright info
+==123651== Command: ./target/release/rust-unsafe
+==123651== 
+==123651== valgrind: Unrecognised instruction at address 0x10f860.
+==123651==    at 0x10F860: rust_unsafe::main (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651==    by 0x10F842: std::sys::backtrace::__rust_begin_short_backtrace (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651==    by 0x10F838: std::rt::lang_start::{{closure}} (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651==    by 0x129F0F: std::rt::lang_start_internal (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651==    by 0x10F894: main (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651== Your program just tried to execute an instruction that Valgrind
+==123651== did not recognise.  There are two possible reasons for this.
+==123651== 1. Your program has a bug and erroneously jumped to a non-code
+==123651==    location.  If you are running Memcheck and you just saw a
+==123651==    warning about a bad jump, it's probably your program's fault.
+==123651== 2. The instruction is legitimate but Valgrind doesn't handle it,
+==123651==    i.e. it's Valgrind's fault.  If you think this is the case or
+==123651==    you are not sure, please let us know and we'll try to fix it.
+==123651== Either way, Valgrind will now raise a SIGILL signal which will
+==123651== probably kill your program.
+==123651== 
+==123651== Process terminating with default action of signal 4 (SIGILL)
+==123651==  Illegal opcode at address 0x10F860
+==123651==    at 0x10F860: rust_unsafe::main (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651==    by 0x10F842: std::sys::backtrace::__rust_begin_short_backtrace (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651==    by 0x10F838: std::rt::lang_start::{{closure}} (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651==    by 0x129F0F: std::rt::lang_start_internal (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651==    by 0x10F894: main (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651== 
+==123651== HEAP SUMMARY:
+==123651==     in use at exit: 0 bytes in 0 blocks
+==123651==   total heap usage: 7 allocs, 7 frees, 2,072 bytes allocated
+==123651== 
+==123651== All heap blocks were freed -- no leaks are possible
+==123651== 
+==123651== For lists of detected and suppressed errors, rerun with: -s
+==123651== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+```
+
+#### Conclusion
+
+Dans cet exemple, il est rappelé que la responsabilité de l'exécution *safe* 
+(sans *UB*) d'un code Rust incombe à la personne utilisant des blocs *unsafe*.
+
+S'il n'est pas possible de se prémunir d'*UB* lors de l'écriture de bloc *unsafe*,
+deux solutions sont possibles :
+
+* marquer sa fonction comme *unsafe* : ainsi la responsabilité de sa bonne exécution
+  revient à la personne utilisant cette fonction, notamment en l'obligeant à vérifier
+  dans la documentation de la fonction que les arguments fournis répondent bien à la 
+  spécification de la fonction
+  <!-- à voir car ce n'est pas ce que dit la doc rust -->
+* marquer le trait dont dépend la fonction comme *unsafe* : ainsi, de même, la responsabilité
+  de la bonne exécution du programme revient à l'implémenteur du trait en s'assurant que
+  l'implémentation répond bien aux spécifications du trait (présente dans sa documentation).
+
+#### Références
+
+* https://doc.rust-lang.org/nomicon/safe-unsafe-meaning.html
+

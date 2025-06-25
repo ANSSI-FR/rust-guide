@@ -2,7 +2,20 @@
 
 ## Garanties du langage
 
-La liste complète est donnée [ici](https://doc.rust-lang.org/reference/behavior-considered-undefined.html).
+### Comportements indéfinis
+
+> Le comportement d'un programme est *défini* lorsque le résultat de son exécution,
+> c'est à dire l'ensemble des interactions qu'il a avec son environnement (mémoire, réseau, disque, ...)
+> est décrit dans la sémantique du langage. Le comportement d'un programme est donc *indéfini* (*UB* pour *Undefined Behavior*)
+> lorsqu'il dépend uniquement du *Système d'Exploitation*.
+
+Par exemple le déréférencement d'un pointeur null est un *UB* car c'est une erreur au niveau *système*
+et pas au niveau du langage.
+
+*A contrario*, un `unwrap` sur l'objet `None` est bien *défini* car c'est le langage qui traite cette erreur
+(en lançant un `panic`).
+
+La liste complète d'*UB* est donnée [ici](https://doc.rust-lang.org/reference/behavior-considered-undefined.html).
 On notera les garanties suivantes :
 
 * Pas de pointeur vers une adresse mémoire non allouée (*dangling pointer*)
@@ -12,7 +25,11 @@ On notera les garanties suivantes :
 * Respect des règles d'[*aliasing*](https://doc.rust-lang.org/nomicon/aliasing.html) : une référence mutable ne peux être partagée.
 * Pas d'accès concurrent à la même adresse mémoire ([*data race*](https://doc.rust-lang.org/nomicon/races.html))
 
-En particulier, le langage ***ne protège pas*** contre les erreurs suivantes :
+### Garantie de Rust
+
+> La volonté du langage est d'assurer l'absence d'*UB* dans un programme utilisant uniquement la partie non *unsafe* de Rust.
+
+Cependant, le langage ***ne protège pas*** contre les erreurs suivantes :
 
 * fuite de resources (mémoire, IO, ...)
 * dépassement numériques
