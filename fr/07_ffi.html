@@ -199,7 +199,7 @@ fn main() {
     println!("{} {}\n", x, unsafe { abs(x) });
 }</code></pre></pre>
 <blockquote>
-<h3 id="note"><a class="header" href="#note">Note</a></h3>
+<p><strong>Note</strong></p>
 <p>Toute fonction écrite dans un autre langage et importée dans Rust par l'usage
 d'un bloc <code>extern</code> est <strong>automatiquement <em>unsafe</em></strong>. C'est pourquoi tout
 appel à une telle fonction doit être fait dans un contexte <code>unsafe</code>.</p>
@@ -265,7 +265,7 @@ struct PackedData {
 }
 </code></pre>
 <blockquote>
-<h3 id="règle-ffi-ctype"><a class="header" href="#règle-ffi-ctype">Règle <a id="FFI-CTYPE"></a>FFI-CTYPE</a></h3>
+<p><strong>Règle <a id="FFI-CTYPE"></a>FFI-CTYPE</strong></p>
 <p>Dans un développement sécurisé, seuls les types compatibles avec le C peuvent
 être utilisés comme argument ou type de retour des fonctions importées ou
 exportées et comme type de variables globales importées ou exportées.</p>
@@ -307,7 +307,7 @@ contradictions dans les spécifications du C++ ;</li>
 </ul>
 <h3 id="cohérence-du-typage"><a class="header" href="#cohérence-du-typage">Cohérence du typage</a></h3>
 <blockquote>
-<h3 id="règle-ffi-tcons"><a class="header" href="#règle-ffi-tcons">Règle <a id="FFI-TCONS"></a>FFI-TCONS</a></h3>
+<p><strong>Règle <a id="FFI-TCONS"></a>FFI-TCONS</strong></p>
 <p>Les types doivent être cohérents entre les deux côtés des frontières des FFI.</p>
 <p>Bien que certains détails peuvent être masqués de la part d'un côté envers
 l'autre (typiquement, pour rendre un type opaque), les types des deux parties
@@ -319,14 +319,14 @@ correspondant en C (ou en C++) ne sont pas évidents (<a href="https://rust-lang
 <a href="https://crates.io/crates/bindgen">rust-bindgen</a> ou <a href="https://crates.io/crates/cbindgen">cbindgen</a>, peuvent aider à assurer la cohérence entre les
 types du côté C et ceux du côté Rust.</p>
 <blockquote>
-<h3 id="recommandation-ffi-automate"><a class="header" href="#recommandation-ffi-automate">Recommandation <a id="FFI-AUTOMATE"></a>FFI-AUTOMATE</a></h3>
+<p><strong>Recommandation <a id="FFI-AUTOMATE"></a>FFI-AUTOMATE</strong></p>
 <p>Dans un développement sécurisé en Rust, les outils de génération automatique
 de <em>bindings</em> doivent être utilisés lorsque cela est possible, et ce en
 continu.</p>
 </blockquote>
 <!-- -->
 <blockquote>
-<h3 id="attention"><a class="header" href="#attention">Attention</a></h3>
+<p><strong>Attention</strong></p>
 <p>Pour les <em>bindings</em> C/C++ vers Rust, <a href="https://crates.io/crates/bindgen">rust-bindgen</a> est capable de générer
 automatiquement des <em>bindings</em> de bas niveau. L'écriture d'un <em>binding</em> de
 plus haut niveau est fortement recommandée (voir Recommandation
@@ -358,7 +358,7 @@ la bibliothèque standard offre des alias de types portables dans <code>std::os:
 <p>La crate <a href="https://crates.io/crates/libc">libc</a> offre des types supplémentaires compatibles avec le C qui
 couvrent la quasi-entièreté de la bibliothèque standard du C.</p>
 <blockquote>
-<h3 id="règle-ffi-pftype"><a class="header" href="#règle-ffi-pftype">Règle <a id="FFI-PFTYPE"></a>FFI-PFTYPE</a></h3>
+<p><strong>Règle <a id="FFI-PFTYPE"></a>FFI-PFTYPE</strong></p>
 <p>Dans un développement sécurisé en Rust, lors de l'interfaçage avec du code
 faisant usage de types dépendants de la plateforme d'exécution, comme les
 <code>int</code>s et les <code>long</code>s du C, le code Rust doit utiliser les alias portables de
@@ -369,7 +369,7 @@ la note ci-dessous).</p>
 </blockquote>
 <!-- -->
 <blockquote>
-<h3 id="note-1"><a class="header" href="#note-1">Note</a></h3>
+<p><strong>Note</strong></p>
 <p>Les outils de génération automatiques de <em>bindings</em> (par exemple <a href="https://crates.io/crates/cbindgen">cbindgen</a> ou
 <a href="https://crates.io/crates/bindgen">rust-bindgen</a>) sont capables d'assurer la cohérence des types dépendants de
 la plateforme. Ils doivent être utilisés durant le processus de compilation
@@ -408,7 +408,7 @@ deux langages. Cela revient à décider <strong>quel langage des deux est le plu
 responsable pour assurer la validité des valeurs hors bornes</strong> et comment
 mettre cela en place.</p>
 <blockquote>
-<h3 id="règle-ffi-cknonrobust"><a class="header" href="#règle-ffi-cknonrobust">Règle <a id="FFI-CKNONROBUST"></a>FFI-CKNONROBUST</a></h3>
+<p><strong>Règle <a id="FFI-CKNONROBUST"></a>FFI-CKNONROBUST</strong></p>
 <p>Dans un développement sécurisé en Rust, toute valeur externe de type non-
 robuste doit être vérifiée.</p>
 <p>Plus précisément, soit une conversion (en Rust) est effectuée depuis des types
@@ -418,7 +418,7 @@ valeurs en question.</p>
 </blockquote>
 <!-- -->
 <blockquote>
-<h3 id="recommandation-ffi-ckinrust"><a class="header" href="#recommandation-ffi-ckinrust">Recommandation <a id="FFI-CKINRUST"></a>FFI-CKINRUST</a></h3>
+<p><strong>Recommandation <a id="FFI-CKINRUST"></a>FFI-CKINRUST</strong></p>
 <p>Dans un développement Rust sécurisé, la vérification des valeurs provenant
 d'un langage externe doit être effectuée du côté Rust lorsque cela est
 possible.</p>
@@ -435,7 +435,7 @@ concerne les risques, les types présentant le plus de dangers sont les
 références, les références de fonction et les énumérations, qui sont discutées
 ci-dessous.</p>
 <blockquote>
-<h3 id="attention-1"><a class="header" href="#attention-1">Attention</a></h3>
+<p><strong>Attention</strong></p>
 <p>Le type <code>bool</code> de Rust a été rendu équivalent au type <code>_Bool</code> (renommé <code>bool</code>
 dans <code>&lt;stdbool.h&gt;</code>) de C99 et au type <code>bool</code> de C++. Toutefois, charger une
 valeur différente de 0 ou 1 en tant que <code>_Bool</code>/<code>bool</code> est un comportement
@@ -455,7 +455,7 @@ avec un autre langage.</p>
 seulement de pointer vers des objets valides en mémoire. Toute déviation mène à
 des comportements indéfinis.</p>
 <blockquote>
-<h3 id="règle-ffi-ckref"><a class="header" href="#règle-ffi-ckref">Règle <a id="FFI-CKREF"></a>FFI-CKREF</a></h3>
+<p><strong>Règle <a id="FFI-CKREF"></a>FFI-CKREF</strong></p>
 <p>Dans un développement sécurisé en Rust, les références externes transmises au
 côté Rust par le biais d'une FFI doivent être <strong>vérifiées du côté du langage
 externe</strong>, que ce soit de manière automatique (par exemple, par un
@@ -476,7 +476,7 @@ langages compatibles avec le C, incluants les variantes de C qui mettent en
 oeuvre la vérification que les pointeurs sont non nuls, comme du code annoté à
 l'aide Microsoft SAL par exemple.</p>
 <blockquote>
-<h3 id="recommandation-ffi-noref"><a class="header" href="#recommandation-ffi-noref">Recommandation <a id="FFI-NOREF"></a>FFI-NOREF</a></h3>
+<p><strong>Recommandation <a id="FFI-NOREF"></a>FFI-NOREF</strong></p>
 <p>Dans un développement sécurisé en Rust, le code Rust ne doit pas utiliser de
 types références, mais des types pointeurs.</p>
 <p>Les exceptions sont :</p>
@@ -499,7 +499,7 @@ développement au niveau noyau). Un autre avantage à utiliser les pointeurs Rus
 dans des FFI est que tout chargement de valeur pointée est clairement marqué
 comme appartenant à un bloc ou à une fonction <code>unsafe</code>.</p>
 <blockquote>
-<h3 id="règle-ffi-ckptr"><a class="header" href="#règle-ffi-ckptr">Règle <a id="FFI-CKPTR"></a>FFI-CKPTR</a></h3>
+<p><strong>Règle <a id="FFI-CKPTR"></a>FFI-CKPTR</strong></p>
 <p>Dans un développement sécurisé en Rust, tout code Rust qui déréférence un
 pointeur externe doit vérifier sa validité au préalable.
 En particulier, les pointeurs doivent être vérifiés comme étant non nuls avant
@@ -539,7 +539,7 @@ int main() {
 }
 </code></pre>
 <blockquote>
-<h3 id="note-2"><a class="header" href="#note-2">Note</a></h3>
+<p><strong>Note</strong></p>
 <p>Les valeurs de type <code>Option&lt;&amp;T&gt;</code> ou <code>Option&lt;&amp;mut T&gt;</code>, pour tout T tel que
 <code>T: Sized</code>, sont admissibles dans un FFI à la place de pointeurs avec
 comparaison explicite avec la valeur nulle. En raison de la garantie de Rust
@@ -555,7 +555,7 @@ l'appartenance à une plage d'adresses mémoire valides.</p>
 à de l'exécution de code arbitraire et impliquent donc des risques réels de
 sécurité.</p>
 <blockquote>
-<h3 id="règle-ffi-markedfunptr"><a class="header" href="#règle-ffi-markedfunptr">Règle <a id="FFI-MARKEDFUNPTR"></a>FFI-MARKEDFUNPTR</a></h3>
+<p><strong>Règle <a id="FFI-MARKEDFUNPTR"></a>FFI-MARKEDFUNPTR</strong></p>
 <p>Dans un développement sécurisé en Rust, tout type de pointeur de fonction dont
 les valeurs sont amenées à traverser les frontières d'une FFI doit être
 marqué comme <code>extern</code> (si possible avec l'ABI spécifiée) et comme <code>unsafe</code>.</p>
@@ -591,7 +591,7 @@ l'ergonomie.</p>
 </li>
 </ul>
 <blockquote>
-<h3 id="règle-ffi-ckfunptr"><a class="header" href="#règle-ffi-ckfunptr">Règle <a id="FFI-CKFUNPTR"></a>FFI-CKFUNPTR</a></h3>
+<p><strong>Règle <a id="FFI-CKFUNPTR"></a>FFI-CKFUNPTR</strong></p>
 <p>Dans un développement sécurisé en Rust, tout pointeur de fonction provenant de
 l'extérieur de l'écosystème Rust doit être vérifié à la frontière des FFI.</p>
 </blockquote>
@@ -615,7 +615,7 @@ possible en C++ avec les <code>enum class</code>. Notons toutefois pour référe
 l'ABI <code>extern "C"</code> d'une <code>enum class</code> est définie par l'implémentation et doit
 être vérifiée pour chaque environnement d'exécution.</p>
 <blockquote>
-<h3 id="recommandation-ffi-noenum"><a class="header" href="#recommandation-ffi-noenum">Recommandation <a id="FFI-NOENUM"></a>FFI-NOENUM</a></h3>
+<p><strong>Recommandation <a id="FFI-NOENUM"></a>FFI-NOENUM</strong></p>
 <p>Dans un développement sécurisé en Rust, lors de l'interfaçage avec un
 langage externe, le code Rust ne doit pas accepter de valeurs provenant de
 l'extérieur en tant que valeur d'un type <code>enum</code>.</p>
@@ -637,7 +637,7 @@ entier (fourni par une énumération C) vers une énumération C.</p>
 un développement logiciel. C'est notamment une pratique assez courante dans un
 développement impliquant plusieurs langages de programmation.</p>
 <blockquote>
-<h3 id="recommandation-ffi-r-opaque"><a class="header" href="#recommandation-ffi-r-opaque">Recommandation <a id="FFI-R-OPAQUE"></a>FFI-R-OPAQUE</a></h3>
+<p><strong>Recommandation <a id="FFI-R-OPAQUE"></a>FFI-R-OPAQUE</strong></p>
 <p>Dans un développement sécurisé en Rust, lors d'un <em>binding</em> avec des types
 opaques externes, des pointeurs vers des types opaques dédiés doivent être
 utilisés au lieu de pointeurs <code>c_void</code>.</p>
@@ -653,7 +653,7 @@ extern "C" {
 de faciliter cette situation en permettant de déclarer des types opaques dans
 des blocs <code>extern</code>.</p>
 <blockquote>
-<h3 id="recommandation-ffi-c-opaque"><a class="header" href="#recommandation-ffi-c-opaque">Recommandation <a id="FFI-C-OPAQUE"></a>FFI-C-OPAQUE</a></h3>
+<p><strong>Recommandation <a id="FFI-C-OPAQUE"></a>FFI-C-OPAQUE</strong></p>
 <p>Dans un développement sécurisé en Rust, lors de l'interfaçage avec du C ou du
 C++, les valeurs de types Rust considérés comme opaques dans la partie C/C++
 doivent être transformées en valeurs de type <code>struct</code> incomplet (c'est-à-dire
@@ -697,7 +697,7 @@ toutes sortes de ressources comme des fichiers ou des accès au réseau.
 <em>Déplacer</em> une donnée depuis Rust vers un langage signifie également abandonner
 de possibles réclamations de la mémoire qui lui est associée.</p>
 <blockquote>
-<h3 id="règle-ffi-mem-nodrop"><a class="header" href="#règle-ffi-mem-nodrop">Règle <a id="FFI-MEM-NODROP"></a>FFI-MEM-NODROP</a></h3>
+<p><strong>Règle <a id="FFI-MEM-NODROP"></a>FFI-MEM-NODROP</strong></p>
 <p>Dans un développement sécurisé en Rust, le code Rust ne doit pas implémenter
 <code>Drop</code> pour les valeurs de types qui sont directement transmis à du code
 externe (c'est-à-dire ni par pointeur, ni par référence).</p>
@@ -710,7 +710,7 @@ deux fois certaines ressources peut être pire. Afin de libérer correctement un
 ressource une seule et unique fois, il faut savoir quel langage est responsable
 de la gestion de son allocation et de sa libération.</p>
 <blockquote>
-<h3 id="règle-ffi-mem-owner"><a class="header" href="#règle-ffi-mem-owner">Règle <a id="FFI-MEM-OWNER"></a>FFI-MEM-OWNER</a></h3>
+<p><strong>Règle <a id="FFI-MEM-OWNER"></a>FFI-MEM-OWNER</strong></p>
 <p>Dans un développement sécurisé en Rust, lorsqu'une donnée, quel que soit son
 type, est échangée par une FFI, il est nécessaire de s'assurer que :</p>
 <ul>
@@ -728,7 +728,7 @@ principalement qu'elles ne sont plus utilisées après leur libération. C'est u
 mémoire, la même approche est de fournir un <em>wrapper</em> sûr autour du type
 externe.</p>
 <blockquote>
-<h3 id="recommandation-ffi-mem-wrapping"><a class="header" href="#recommandation-ffi-mem-wrapping">Recommandation <a id="FFI-MEM-WRAPPING"></a>FFI-MEM-WRAPPING</a></h3>
+<p><strong>Recommandation <a id="FFI-MEM-WRAPPING"></a>FFI-MEM-WRAPPING</strong></p>
 <p>Dans un développement sécurisé en Rust, toute donnée à caractère non sensible
 allouée et libérée du côté du langage externe doit être encapsulée dans un
 type implémentant <code>Drop</code>, de telle sorte que Rust fournisse l'appel
@@ -783,7 +783,7 @@ pub struct Foo(*mut RawFoo);
 </span><span class="boring">    foo.do_something();
 </span><span class="boring">}</span></code></pre>
 <blockquote>
-<h3 id="attention-2"><a class="header" href="#attention-2">Attention</a></h3>
+<p><strong>Attention</strong></p>
 <p>Parce que des <code>panic</code>s peuvent mener à ne pas exécuter la méthode
 <code>Drop::drop</code>, cette solution n'est pas satisfaisante pour le cas de la
 libération de ressources sensibles (pour effacer les données sensibles par
@@ -906,7 +906,7 @@ int main() {
 code Rust ne doit pas provoquer de <code>panic</code>. Dérouler (<em>unwinding</em>) depuis le
 code Rust dans du code externe résulte en un <strong>comportement indéfini</strong>.</p>
 <blockquote>
-<h3 id="règle-ffi-nopanic"><a class="header" href="#règle-ffi-nopanic">Règle <a id="FFI-NOPANIC"></a>FFI-NOPANIC</a></h3>
+<p><strong>Règle <a id="FFI-NOPANIC"></a>FFI-NOPANIC</strong></p>
 <p>Le code Rust appelé depuis un langage externe doit soit s'assurer que la
 fonction ne peut pas provoquer de <code>panic</code>, soit utiliser un mécanisme de
 récupération de <code>panic</code> (comme <code>std::panic::catch_unwind</code>,
@@ -945,7 +945,7 @@ programme d'édition de liens échoue si une branche non trivialement
 inaccessible mène à un appel à <code>panic!</code>.</p>
 <h2 id="liaison-dune-bibliothèque-externe-à-du-code-rust"><a class="header" href="#liaison-dune-bibliothèque-externe-à-du-code-rust">Liaison d'une bibliothèque externe à du code Rust</a></h2>
 <blockquote>
-<h3 id="recommandation-ffi-safewrapping"><a class="header" href="#recommandation-ffi-safewrapping">Recommandation <a id="FFI-SAFEWRAPPING"></a>FFI-SAFEWRAPPING</a></h3>
+<p><strong>Recommandation <a id="FFI-SAFEWRAPPING"></a>FFI-SAFEWRAPPING</strong></p>
 <p>L'interfaçage entre une bibliothèque écrite dans un autre langage et
 du code Rust doit être réalisé en deux parties :</p>
 <ul>
@@ -964,7 +964,7 @@ partie bas-niveau du <em>binding</em> depuis les fichiers <em>header</em> C.</p>
 -->
 <h2 id="liaison-entre-une-bibliothèque-rust-et-du-code-dun-autre-langage"><a class="header" href="#liaison-entre-une-bibliothèque-rust-et-du-code-dun-autre-langage">Liaison entre une bibliothèque Rust et du code d'un autre langage</a></h2>
 <blockquote>
-<h3 id="recommandation-ffi-capi"><a class="header" href="#recommandation-ffi-capi">Recommandation <a id="FFI-CAPI"></a>FFI-CAPI</a></h3>
+<p><strong>Recommandation <a id="FFI-CAPI"></a>FFI-CAPI</strong></p>
 <p>Dans un développement sécurisé en Rust, exposer un bibliothèque Rust à un
 langage externe doit être uniquement fait par le biais d'une <strong>API dédiée et
 compatible avec le C</strong>.</p>

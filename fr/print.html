@@ -241,7 +241,7 @@ Entre autres choses, il permet de basculer entre différentes variantes de la
 chaîne d'outils (<em>stable</em>, <em>beta</em>, <em>nightly</em>), de gérer l'installation des
 composants additionnels et de maintenir le tout à jour.</p>
 <blockquote>
-<h3 id="attention"><a class="header" href="#attention">Attention</a></h3>
+<p><strong>Attention</strong></p>
 <p>Du point de vue de la sécurité, <code>rustup</code> effectue tous les téléchargements en
 HTTPS, mais ne valide pas les signatures des fichiers téléchargés. Les
 protections contre les attaques par déclassement, le <em>pinning</em> de certificats
@@ -263,7 +263,7 @@ deviennent alors fortement liées à une édition en particulier. Dans le reste 
 ce guide, un effort sera réalisé pour mettre en évidence les règles qui ne
 s'appliqueraient qu'à certaines éditions de Rust en particulier.</p>
 <blockquote>
-<h3 id="note"><a class="header" href="#note">Note</a></h3>
+<p><strong>Note</strong></p>
 <p>Aucune édition spécifique n'est recommandée, tant que le développement se
 conforme aux recommandations exprimées à propos des fonctionnalités que
 l'édition utilisée propose.</p>
@@ -293,7 +293,7 @@ $
 </code></pre>
 <!-- -->
 <blockquote>
-<h3 id="règle-denv-stable"><a class="header" href="#règle-denv-stable">Règle <a id="DENV-STABLE"></a>DENV-STABLE</a></h3>
+<p><strong>Règle <a id="DENV-STABLE"></a>DENV-STABLE</strong></p>
 <p>Le développement d'applications sécurisées doit être mené en utilisant la
 chaîne d'outils dans sa version <em>stable</em>, afin de limiter les potentiels
 <em>bugs</em> à la compilation, à l'exécution et lors de l'utilisation d'outils
@@ -332,7 +332,7 @@ permet notamment de :</p>
 forme de sous-commandes.</li>
 </ul>
 <blockquote>
-<h3 id="attention-1"><a class="header" href="#attention-1">Attention</a></h3>
+<p><strong>Attention</strong></p>
 <p>Tout comme <code>rustup</code>, <code>cargo</code> effectue tous les téléchargements en HTTPS, mais
 ne valide pas l'index du registre. Des discussions sont en cours pour
 déterminer le meilleur moyen de protéger et de valider les <em>crates</em>. Pour le
@@ -359,7 +359,7 @@ vérifications (par exemple, les
 <a href="./04_language.html#integer-overflows">vérifications de dépassements d'entiers</a>)
 est utilisé.</p>
 <blockquote>
-<h3 id="règle-denv-cargo-opts"><a class="header" href="#règle-denv-cargo-opts">Règle <a id="DENV-CARGO-OPTS"></a>DENV-CARGO-OPTS</a></h3>
+<p><strong>Règle <a id="DENV-CARGO-OPTS"></a>DENV-CARGO-OPTS</strong></p>
 <p>Les variables <code>debug-assertions</code> et <code>overflow-checks</code> ne doivent pas être
 modifiées dans les sections de profils de développement (<code>[profile.dev]</code> and
 <code>[profile.test]</code>).</p>
@@ -376,7 +376,7 @@ exemple pour générer une partie du code ou pour invoquer un outil externe avan
 la compilation, il est préférable d'utiliser la fonctionnalité de <em>scripts de
 compilation</em> de Cargo.</p>
 <blockquote>
-<h3 id="règle-denv-cargo-envvars"><a class="header" href="#règle-denv-cargo-envvars">Règle <a id="DENV-CARGO-ENVVARS"></a>DENV-CARGO-ENVVARS</a></h3>
+<p><strong>Règle <a id="DENV-CARGO-ENVVARS"></a>DENV-CARGO-ENVVARS</strong></p>
 <p>Les variables d'environnement <code>RUSTC</code>, <code>RUSTC_WRAPPER</code> et <code>RUSTFLAGS</code> ne
 doivent pas être modifiées lorsque Cargo est appelé pour compiler un projet.</p>
 </blockquote>
@@ -393,7 +393,7 @@ développeur avant d'appliquer la réparation suggérée par <code>clippy</code>
 particulier dans le cas des <em>lints</em> de la catégorie <code>clippy::nursery</code> puisque
 ceux-ci sont encore en cours de développement et de mise au point.</p>
 <blockquote>
-<h3 id="règle-denv-linter"><a class="header" href="#règle-denv-linter">Règle <a id="DENV-LINTER"></a>DENV-LINTER</a></h3>
+<p><strong>Règle <a id="DENV-LINTER"></a>DENV-LINTER</strong></p>
 <p>Un <em>linter</em> comme <code>clippy</code> doit être utilisé régulièrement tout au long du
 développement d'une application sécurisée.</p>
 </blockquote>
@@ -422,7 +422,7 @@ single_line_if_else_max_width = 40
 <p>Pour plus d'informations à propos des règles de convention de style que
 <code>rustfmt</code> propose, voir le <a href="https://doc.rust-lang.org/style-guide/index.html"><em>Rust Style Guide</em></a>.</p>
 <blockquote>
-<h3 id="règle-denv-format"><a class="header" href="#règle-denv-format">Règle <a id="DENV-FORMAT"></a>DENV-FORMAT</a></h3>
+<p><strong>Règle <a id="DENV-FORMAT"></a>DENV-FORMAT</strong></p>
 <p>L'outil de formatage <code>rustfmt</code> peut être utilisé pour assurer le respect de
 règles de convention de style (comme décrites dans le fichier <code>rustfmt.toml</code>)
 sur une base de code, avec l'option <code>--check</code> ainsi qu'une revue de code
@@ -453,7 +453,7 @@ configuration, certaines réparations (comme celles proposées avec l'option
 <code>--edition-idioms</code>) sont connues pour casser la compilation ou pour modifier
 la sémantique d'un programme dans certains cas.</p>
 <blockquote>
-<h3 id="règle-denv-autofix"><a class="header" href="#règle-denv-autofix">Règle <a id="DENV-AUTOFIX"></a>DENV-AUTOFIX</a></h3>
+<p><strong>Règle <a id="DENV-AUTOFIX"></a>DENV-AUTOFIX</strong></p>
 <p>Dans le cadre du développement d'une application sécurisée, toute réparation
 automatique (comme celles appliquées par <code>rustfix</code> par exemple) doit être
 vérifiée par le développeur.</p>
@@ -481,7 +481,7 @@ dépendances.</p>
 (dépendances listées dans le fichier <code>Cargo.toml</code>), et vérifie s'il s'agit de la
 dernière version compatible disponible ainsi que la dernière version en général.</p>
 <blockquote>
-<h3 id="règle-libs-outdated"><a class="header" href="#règle-libs-outdated">Règle <a id="LIBS-OUTDATED"></a>LIBS-OUTDATED</a></h3>
+<p><strong>Règle <a id="LIBS-OUTDATED"></a>LIBS-OUTDATED</strong></p>
 <p>L'outil <code>cargo-outdated</code> doit être utilisé pour vérifier le statut des
 dépendances. Ensuite, chaque dépendance importée en version obsolète doit
 être mise à jour ou bien, le cas échéant, le choix de la version doit être
@@ -492,7 +492,7 @@ justifié.</p>
 connues dans la <em>RustSec Advisory Database</em> pour les dépendances utilisées dans
 un projet.</p>
 <blockquote>
-<h3 id="règle-libs-audit"><a class="header" href="#règle-libs-audit">Règle <a id="LIBS-AUDIT"></a>LIBS-AUDIT</a></h3>
+<p><strong>Règle <a id="LIBS-AUDIT"></a>LIBS-AUDIT</strong></p>
 <p>L'outil <code>cargo-audit</code> doit être utilisé pour rechercher des vulnérabilités
 connues dans les dépendances d'un projet.</p>
 </blockquote>
@@ -503,7 +503,7 @@ suivant. Le développeur a besoin de s'assurer que ces types de blocs ne sont pa
 mal utilisés dans les dépendances de son projet.
 -->
 <!--
-> ### Recommandation <a id="LIBS-UNSAFE"></a>LIBS-UNSAFE
+> **Recommandation <a id="LIBS-UNSAFE"></a>LIBS-UNSAFE**
 >
 > <mark>TODO</mark>: vérifier qu'il n'y a pas de bloc `unsafe` dans les
 > dépendances (à l'aide d'un outil ?).
@@ -532,7 +532,7 @@ plus précises pour certaines constructions particulières :</p>
 <li>(C-WORD-ORDER) pour la cohérence sur l'ordre des mots.</li>
 </ul>
 <blockquote>
-<h3 id="règle-lang-naming"><a class="header" href="#règle-lang-naming">Règle <a id="LANG-NAMING"></a>LANG-NAMING</a></h3>
+<p><strong>Règle <a id="LANG-NAMING"></a>LANG-NAMING</strong></p>
 <p>Le développement d'une application sécurisée doit suivre les conventions de
 nommage décrites dans les <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a>.</p>
 </blockquote>
@@ -546,7 +546,7 @@ Pour effectuer des actions considérées risquées comme des appels système, de
 conversions de types ou la manipulation directe de pointeurs mémoire, le
 langage fournit le mot-clé <code>unsafe</code>.</p>
 <blockquote>
-<h3 id="règle-lang-unsafe"><a class="header" href="#règle-lang-unsafe">Règle <a id="LANG-UNSAFE"></a>LANG-UNSAFE</a></h3>
+<p><strong>Règle <a id="LANG-UNSAFE"></a>LANG-UNSAFE</strong></p>
 <p>Pour un développement sécurisé, les blocs <code>unsafe</code> doivent être évités.
 Ci-dessous, nous listons les seuls cas pour lesquels des blocs <code>unsafe</code>
 peuvent être utilisés, à la condition que leur usage soit justifié :</p>
@@ -616,7 +616,7 @@ else { println!("{}", res); }
 </span><span class="boring">if result.is_err() { println!("panic"); }
 </span><span class="boring">}</span></code></pre></pre>
 <blockquote>
-<h3 id="règle-lang-arith"><a class="header" href="#règle-lang-arith">Règle <a id="LANG-ARITH"></a>LANG-ARITH</a></h3>
+<p><strong>Règle <a id="LANG-ARITH"></a>LANG-ARITH</strong></p>
 <p>Lorsqu'une opération arithmétique peut produire un dépassement d'entier, les
 fonctions spécialisées <code>overflowing_&lt;op&gt;</code>, <code>wrapping_&lt;op&gt;</code> ou le type
 <code>Wrapping</code> doivent être utilisés.</p>
@@ -629,14 +629,14 @@ fonctions spécialisées <code>overflowing_&lt;op&gt;</code>, <code>wrapping_&lt
 des fonctions dont le traitement peut échouer. Un objet <code>Result</code> doit être
 testé et jamais ignoré.</p>
 <blockquote>
-<h3 id="recommandation-lang-errwrap"><a class="header" href="#recommandation-lang-errwrap">Recommandation <a id="LANG-ERRWRAP"></a>LANG-ERRWRAP</a></h3>
+<p><strong>Recommandation <a id="LANG-ERRWRAP"></a>LANG-ERRWRAP</strong></p>
 <p>Une <em>crate</em> peut implanter son propre type <code>Error</code> qui peut contenir toutes
 les erreurs possibles. Des précautions supplémentaires doivent être prises :
 ce type doit être <em>exception-safe</em> (RFC 1236) et implémenter les traits
 <code>Error + Send + Sync + 'static</code> ainsi que <code>Display</code>.</p>
 </blockquote>
 <blockquote>
-<h3 id="recommandation-lang-errdo"><a class="header" href="#recommandation-lang-errdo">Recommandation <a id="LANG-ERRDO"></a>LANG-ERRDO</a></h3>
+<p><strong>Recommandation <a id="LANG-ERRDO"></a>LANG-ERRDO</strong></p>
 <p>L'opérateur <code>?</code> doit être utilisé pour améliorer la lisibilité du code.
 La macro <code>try!</code> ne doit pas être utilisée.</p>
 </blockquote>
@@ -665,12 +665,12 @@ ou d'instructions qui peuvent échouer en engendrant un <code>panic</code>.</p>
 <li>l'utilisation de <code>format!</code> pour le formatage d'une chaîne de caractères.</li>
 </ul>
 <blockquote>
-<h3 id="règle-lang-nopanic"><a class="header" href="#règle-lang-nopanic">Règle <a id="LANG-NOPANIC"></a>LANG-NOPANIC</a></h3>
+<p><strong>Règle <a id="LANG-NOPANIC"></a>LANG-NOPANIC</strong></p>
 <p>Les fonctions et instructions qui peuvent causer des <code>panic</code> à l'exécution
 ne doivent pas être utilisées.</p>
 </blockquote>
 <blockquote>
-<h3 id="règle-lang-arrindexing"><a class="header" href="#règle-lang-arrindexing">Règle <a id="LANG-ARRINDEXING"></a>LANG-ARRINDEXING</a></h3>
+<p><strong>Règle <a id="LANG-ARRINDEXING"></a>LANG-ARRINDEXING</strong></p>
 <p>L'indice d'accès à un tableau doit être testé, ou la méthode <code>get</code> doit être
 utilisée pour récupérer une <code>Option</code>.</p>
 </blockquote>
@@ -690,7 +690,7 @@ jamais pouvoir paniquer.
 Dérouler (<em>unwinding</em>) depuis le code Rust vers le code étranger résulte en un
 comportement indéfini.</p>
 <blockquote>
-<h3 id="règle-lang-ffipanic"><a class="header" href="#règle-lang-ffipanic">Règle <a id="LANG-FFIPANIC"></a>LANG-FFIPANIC</a></h3>
+<p><strong>Règle <a id="LANG-FFIPANIC"></a>LANG-FFIPANIC</strong></p>
 <p>Le code Rust appelé depuis une FFI doit soit être assuré de ne pas paniquer,
 soit utiliser <code>catch_unwind</code> ou le module <code>std::panic</code> pour s'assurer qu'il
 ne va pas abandonner un traitement puis que l'exécution retourne dans le
@@ -739,13 +739,13 @@ ressources critiques, menant à des interblocages et à la persistance de donné
 sensibles en mémoire. C'est pourquoi <code>forget</code> doit être considérée comme
 <strong>non sécurisée</strong>.</p>
 <blockquote>
-<h3 id="règle-mem-forget"><a class="header" href="#règle-mem-forget">Règle <a id="MEM-FORGET"></a>MEM-FORGET</a></h3>
+<p><strong>Règle <a id="MEM-FORGET"></a>MEM-FORGET</strong></p>
 <p>Dans un développement sécurisé en Rust, la fonction <code>forget</code> de <code>std::mem</code>
 (<code>core::mem</code>) ne doit pas être utilisée.</p>
 </blockquote>
 <!-- -->
 <blockquote>
-<h3 id="recommandation-mem-forget-lint"><a class="header" href="#recommandation-mem-forget-lint">Recommandation <a id="MEM-FORGET-LINT"></a>MEM-FORGET-LINT</a></h3>
+<p><strong>Recommandation <a id="MEM-FORGET-LINT"></a>MEM-FORGET-LINT</strong></p>
 <p>Le <em>lint</em> <code>mem_forget</code> de Clippy peut être utilisé pour automatiquement
 détecter toute utilisation de la fonction <code>forget</code>. Pour s'assurer de l'absence
 d'appel à <code>forget</code>, ajouter la directive suivante en début de fichier racine
@@ -763,14 +763,14 @@ manuelle d'une valeur.</li>
 <p>Ces alternatives peuvent mener au même type de problème de sécurité, mais ont
 l'avantage de faire apparaître explicitement leur but.</p>
 <blockquote>
-<h3 id="règle-mem-leak"><a class="header" href="#règle-mem-leak">Règle <a id="MEM-LEAK"></a>MEM-LEAK</a></h3>
+<p><strong>Règle <a id="MEM-LEAK"></a>MEM-LEAK</strong></p>
 <p>Dans un développement sécurisé en Rust, le code ne doit pas faire fuiter de la
 mémoire ou des ressources <em>via</em> <code>Box::leak</code>.</p>
 </blockquote>
 <p><code>ManuallyDrop</code> et <code>Box::into_raw</code> passent la responsabilité de la libération de
 la ressource concernée du compilateur au développeur.</p>
 <blockquote>
-<h3 id="règle-mem-manuallydrop"><a class="header" href="#règle-mem-manuallydrop">Règle <a id="MEM-MANUALLYDROP"></a>MEM-MANUALLYDROP</a></h3>
+<p><strong>Règle <a id="MEM-MANUALLYDROP"></a>MEM-MANUALLYDROP</strong></p>
 <p>Dans un développement sécurisé en Rust, toute valeur <em>wrappée</em> dans le type
 <code>ManuallyDrop</code> doit être <em>unwrapped</em> pour permettre sa libération automatique
 (<code>ManuallyDrop::into_inner</code>) ou bien doit être manuellement libérée (<em>unsafe</em>
@@ -778,7 +778,7 @@ la ressource concernée du compilateur au développeur.</p>
 </blockquote>
 <!-- -->
 <blockquote>
-<h3 id="règle-mem-intofromraw"><a class="header" href="#règle-mem-intofromraw">Règle <a id="MEM-INTOFROMRAW"></a>MEM-INTOFROMRAW</a></h3>
+<p><strong>Règle <a id="MEM-INTOFROMRAW"></a>MEM-INTOFROMRAW</strong></p>
 <p>Dans un développement sécurisé en Rust, tout pointeur créé par un appel à
 <code>into_raw</code> (ou <code>into_raw_nonnull</code>) depuis un des types suivants doit
 finalement être transformé en valeur avec l'appel à la fonction <code>from_raw</code>
@@ -801,7 +801,7 @@ let _ = unsafe { Box::from_raw(raw_ptr) }; // sera libéré
 </blockquote>
 <!-- -->
 <blockquote>
-<h3 id="note-1"><a class="header" href="#note-1">Note</a></h3>
+<p><strong>Note</strong></p>
 <p>Dans le cas de <code>Box::into_raw</code>, le nettoyage automatique est possible, mais
 est bien plus compliqué que de <em>re-boxer</em> le pointeur brut et doit être
 évité :</p>
@@ -826,7 +826,7 @@ libération manuelle n'est pas possible.</p>
 prévenir l'utilisation de mémoire non initialisée (à l'exception de
 l'utilisation de <code>std::mem::uninitialized</code> ou de <code>std::mem::MaybeUninit</code>).</p>
 <blockquote>
-<h3 id="règle-mem-uninit"><a class="header" href="#règle-mem-uninit">Règle <a id="MEM-UNINIT"></a>MEM-UNINIT</a></h3>
+<p><strong>Règle <a id="MEM-UNINIT"></a>MEM-UNINIT</strong></p>
 <p>La fonction <code>std::mem::uninitialized</code> (dépréciée depuis la version 1.38) ou
 le type <code>std::mem::MaybeUninit</code> (stabilisé dans la version 1.36) ne doivent
 pas être utilisés, ou bien explicitement justifiés si nécessaire.</p>
@@ -839,7 +839,7 @@ sûreté mémoire) ;</li>
 <li>la non-libération de mémoire initialisée.</li>
 </ul>
 <blockquote>
-<h3 id="note-2"><a class="header" href="#note-2">Note</a></h3>
+<p><strong>Note</strong></p>
 <p>Le type <code>std::mem::MaybeUninit</code> est une amélioration de la fonction
 <code>std::mem::uninitialized</code>. En effet, il rend la libération des valeurs non
 initialisées bien plus difficile. Toutefois, cela ne change pas le second
@@ -851,7 +851,7 @@ pour effacer des valeurs sensibles.</p>
 <p>L'effacement sécurisé (mise à zéro) est nécessaire pour les variables sensibles,
 en particulier dans lorsque le code Rust est utilisé <em>via</em> des FFI.</p>
 <blockquote>
-<h3 id="règle-mem-zero"><a class="header" href="#règle-mem-zero">Règle <a id="MEM-ZERO"></a>MEM-ZERO</a></h3>
+<p><strong>Règle <a id="MEM-ZERO"></a>MEM-ZERO</strong></p>
 <p>Les variables contenant des données sensibles doivent être mises à zéro après
 utilisation, en utilisant des fonctions dont les appels ne seront pas
 supprimés par les optimisations du compilateur, comme
@@ -903,7 +903,7 @@ complexes (<em>smart pointers</em> comme les <code>Box</code> ou les <code>Rc</c
 final, il est probable que l'implémentation du trait <code>Drop</code> contienne des blocs
 <code>unsafe</code> ainsi que d'autres opérations critiques du point de vue de la sécurité.</p>
 <blockquote>
-<h3 id="recommandation-lang-drop"><a class="header" href="#recommandation-lang-drop">Recommandation <a id="LANG-DROP"></a>LANG-DROP</a></h3>
+<p><strong>Recommandation <a id="LANG-DROP"></a>LANG-DROP</strong></p>
 <p>Dans un développement sécurisé en Rust, l'implémentation du trait
 <code>std::ops::Drop</code> doit être justifiée, documentée et examinée par des pairs.</p>
 </blockquote>
@@ -921,20 +921,20 @@ paragraphe à propos de <a href="05_memory.html#forget-et-fuites-de-m%C3%A9moire
 encore à l'épuisement de ressources limitées et par là même à des problèmes
 d'indisponibilité.</p>
 <blockquote>
-<h3 id="règle-lang-drop-no-panic"><a class="header" href="#règle-lang-drop-no-panic">Règle <a id="LANG-DROP-NO-PANIC"></a>LANG-DROP-NO-PANIC</a></h3>
+<p><strong>Règle <a id="LANG-DROP-NO-PANIC"></a>LANG-DROP-NO-PANIC</strong></p>
 <p>Dans un développement sécurisé en Rust, l'implémentation du trait
 <code>std::ops::Drop</code> ne doit pas causer de <code>panic</code>.</p>
 </blockquote>
 <p>En plus des <code>panic</code>s, les <code>drop</code>s contenant du code critique doivent être
 protégés.</p>
 <blockquote>
-<h3 id="règle-lang-drop-no-cycle"><a class="header" href="#règle-lang-drop-no-cycle">Règle <a id="LANG-DROP-NO-CYCLE"></a>LANG-DROP-NO-CYCLE</a></h3>
+<p><strong>Règle <a id="LANG-DROP-NO-CYCLE"></a>LANG-DROP-NO-CYCLE</strong></p>
 <p>Les valeurs dont le type implémente <code>Drop</code> ne doivent pas être incluses,
 directement ou indirectement, dans un cycle de références à compteurs.</p>
 </blockquote>
 <!-- -->
 <blockquote>
-<h3 id="recommandation-lang-drop-sec"><a class="header" href="#recommandation-lang-drop-sec">Recommandation <a id="LANG-DROP-SEC"></a>LANG-DROP-SEC</a></h3>
+<p><strong>Recommandation <a id="LANG-DROP-SEC"></a>LANG-DROP-SEC</strong></p>
 <p>Certaines opérations liées à la sécurité d'une application à la fin d'un
 traitement (comme l'effacement de secrets cryptographiques par exemple) ne
 doivent pas reposer uniquement sur l'implémentation du trait <code>Drop</code>.</p>
@@ -990,7 +990,7 @@ d'utiliser un champ typé par un type fantôme (<code>PhantomData</code>) :</p>
 </span><span class="boring">
 </span>struct SpecialType(u8, PhantomData&lt;*const ()&gt;);</code></pre>
 <blockquote>
-<h3 id="recommandation-lang-sync-traits"><a class="header" href="#recommandation-lang-sync-traits">Recommandation <a id="LANG-SYNC-TRAITS"></a>LANG-SYNC-TRAITS</a></h3>
+<p><strong>Recommandation <a id="LANG-SYNC-TRAITS"></a>LANG-SYNC-TRAITS</strong></p>
 <p>Dans un développement sécurisé en Rust, l'implémentation manuelle des traits
 <code>Send</code> et <code>Sync</code> doit être évitée, et, si nécessaire, doit être justifiée,
 documentée et révisée par des pairs.</p>
@@ -1124,13 +1124,13 @@ second cas, cela peut mener à des problèmes classiques de sécurité liés à 
 violations de propriétés de sûreté mémoire. C'est là encore un atout que de
 limiter au possible l'utilisation des blocs <code>unsafe</code>.</p>
 <blockquote>
-<h3 id="règle-lang-cmp-inv"><a class="header" href="#règle-lang-cmp-inv">Règle <a id="LANG-CMP-INV"></a>LANG-CMP-INV</a></h3>
+<p><strong>Règle <a id="LANG-CMP-INV"></a>LANG-CMP-INV</strong></p>
 <p>Dans un développement sécurisé en Rust, l'implémentation des traits de
 comparaison standards doit respecter les invariants décrits dans la
 documentation.</p>
 </blockquote>
 <blockquote>
-<h3 id="recommandation-lang-cmp-defaults"><a class="header" href="#recommandation-lang-cmp-defaults">Recommandation <a id="LANG-CMP-DEFAULTS"></a>LANG-CMP-DEFAULTS</a></h3>
+<p><strong>Recommandation <a id="LANG-CMP-DEFAULTS"></a>LANG-CMP-DEFAULTS</strong></p>
 <p>Dans un développement sécurisé en Rust, l'implémentation des traits de
 comparaison standard ne doit être effectuée que par l'implémentation des
 méthodes ne fournissant pas d'implémentation par défaut, dans le but de
@@ -1166,7 +1166,7 @@ assert!(T1 { a: 1, b: 1 } &gt; T1 { a: 1, b: 0 });
 <span class="boring">println!("tous les tests sont validés.");
 </span><span class="boring">}</span></code></pre></pre>
 <blockquote>
-<h3 id="attention-2"><a class="header" href="#attention-2">Attention</a></h3>
+<p><strong>Attention</strong></p>
 <p>La dérivation des traits de comparaison pour les types composites dépend de
 <strong>l'ordre de déclaration des champs</strong> et non de leur nom.</p>
 <p>D'abord, cela implique que changer l'ordre des champs modifie l'ordre des
@@ -1187,7 +1187,7 @@ circuitant dans l'implémentation automatique.</p>
 automatiquement sont bien moins sujettes à erreurs que des implémentations
 manuelles, et rendent le code plus court et plus simple à maintenir.</p>
 <blockquote>
-<h3 id="recommandation-lang-cmp-derive"><a class="header" href="#recommandation-lang-cmp-derive">Recommandation <a id="LANG-CMP-DERIVE"></a>LANG-CMP-DERIVE</a></h3>
+<p><strong>Recommandation <a id="LANG-CMP-DERIVE"></a>LANG-CMP-DERIVE</strong></p>
 <p>Dans un développement sécurisé en Rust, l'implémentation des traits de
 comparaison standard doit être automatiquement dérivée à l'aide de
 <code>#[derive(...)]</code> lorsque l'égalité structurelle et l'ordre lexicographique
@@ -1227,7 +1227,7 @@ fn main() {
     println!("{} {}\n", x, unsafe { abs(x) });
 }</code></pre></pre>
 <blockquote>
-<h3 id="note-3"><a class="header" href="#note-3">Note</a></h3>
+<p><strong>Note</strong></p>
 <p>Toute fonction écrite dans un autre langage et importée dans Rust par l'usage
 d'un bloc <code>extern</code> est <strong>automatiquement <em>unsafe</em></strong>. C'est pourquoi tout
 appel à une telle fonction doit être fait dans un contexte <code>unsafe</code>.</p>
@@ -1293,7 +1293,7 @@ struct PackedData {
 }
 </code></pre>
 <blockquote>
-<h3 id="règle-ffi-ctype"><a class="header" href="#règle-ffi-ctype">Règle <a id="FFI-CTYPE"></a>FFI-CTYPE</a></h3>
+<p><strong>Règle <a id="FFI-CTYPE"></a>FFI-CTYPE</strong></p>
 <p>Dans un développement sécurisé, seuls les types compatibles avec le C peuvent
 être utilisés comme argument ou type de retour des fonctions importées ou
 exportées et comme type de variables globales importées ou exportées.</p>
@@ -1335,7 +1335,7 @@ contradictions dans les spécifications du C++ ;</li>
 </ul>
 <h3 id="cohérence-du-typage"><a class="header" href="#cohérence-du-typage">Cohérence du typage</a></h3>
 <blockquote>
-<h3 id="règle-ffi-tcons"><a class="header" href="#règle-ffi-tcons">Règle <a id="FFI-TCONS"></a>FFI-TCONS</a></h3>
+<p><strong>Règle <a id="FFI-TCONS"></a>FFI-TCONS</strong></p>
 <p>Les types doivent être cohérents entre les deux côtés des frontières des FFI.</p>
 <p>Bien que certains détails peuvent être masqués de la part d'un côté envers
 l'autre (typiquement, pour rendre un type opaque), les types des deux parties
@@ -1347,14 +1347,14 @@ correspondant en C (ou en C++) ne sont pas évidents (<a href="https://rust-lang
 <a href="https://crates.io/crates/bindgen">rust-bindgen</a> ou <a href="https://crates.io/crates/cbindgen">cbindgen</a>, peuvent aider à assurer la cohérence entre les
 types du côté C et ceux du côté Rust.</p>
 <blockquote>
-<h3 id="recommandation-ffi-automate"><a class="header" href="#recommandation-ffi-automate">Recommandation <a id="FFI-AUTOMATE"></a>FFI-AUTOMATE</a></h3>
+<p><strong>Recommandation <a id="FFI-AUTOMATE"></a>FFI-AUTOMATE</strong></p>
 <p>Dans un développement sécurisé en Rust, les outils de génération automatique
 de <em>bindings</em> doivent être utilisés lorsque cela est possible, et ce en
 continu.</p>
 </blockquote>
 <!-- -->
 <blockquote>
-<h3 id="attention-3"><a class="header" href="#attention-3">Attention</a></h3>
+<p><strong>Attention</strong></p>
 <p>Pour les <em>bindings</em> C/C++ vers Rust, <a href="https://crates.io/crates/bindgen">rust-bindgen</a> est capable de générer
 automatiquement des <em>bindings</em> de bas niveau. L'écriture d'un <em>binding</em> de
 plus haut niveau est fortement recommandée (voir Recommandation
@@ -1386,7 +1386,7 @@ la bibliothèque standard offre des alias de types portables dans <code>std::os:
 <p>La crate <a href="https://crates.io/crates/libc">libc</a> offre des types supplémentaires compatibles avec le C qui
 couvrent la quasi-entièreté de la bibliothèque standard du C.</p>
 <blockquote>
-<h3 id="règle-ffi-pftype"><a class="header" href="#règle-ffi-pftype">Règle <a id="FFI-PFTYPE"></a>FFI-PFTYPE</a></h3>
+<p><strong>Règle <a id="FFI-PFTYPE"></a>FFI-PFTYPE</strong></p>
 <p>Dans un développement sécurisé en Rust, lors de l'interfaçage avec du code
 faisant usage de types dépendants de la plateforme d'exécution, comme les
 <code>int</code>s et les <code>long</code>s du C, le code Rust doit utiliser les alias portables de
@@ -1397,7 +1397,7 @@ la note ci-dessous).</p>
 </blockquote>
 <!-- -->
 <blockquote>
-<h3 id="note-4"><a class="header" href="#note-4">Note</a></h3>
+<p><strong>Note</strong></p>
 <p>Les outils de génération automatiques de <em>bindings</em> (par exemple <a href="https://crates.io/crates/cbindgen">cbindgen</a> ou
 <a href="https://crates.io/crates/bindgen">rust-bindgen</a>) sont capables d'assurer la cohérence des types dépendants de
 la plateforme. Ils doivent être utilisés durant le processus de compilation
@@ -1436,7 +1436,7 @@ deux langages. Cela revient à décider <strong>quel langage des deux est le plu
 responsable pour assurer la validité des valeurs hors bornes</strong> et comment
 mettre cela en place.</p>
 <blockquote>
-<h3 id="règle-ffi-cknonrobust"><a class="header" href="#règle-ffi-cknonrobust">Règle <a id="FFI-CKNONROBUST"></a>FFI-CKNONROBUST</a></h3>
+<p><strong>Règle <a id="FFI-CKNONROBUST"></a>FFI-CKNONROBUST</strong></p>
 <p>Dans un développement sécurisé en Rust, toute valeur externe de type non-
 robuste doit être vérifiée.</p>
 <p>Plus précisément, soit une conversion (en Rust) est effectuée depuis des types
@@ -1446,7 +1446,7 @@ valeurs en question.</p>
 </blockquote>
 <!-- -->
 <blockquote>
-<h3 id="recommandation-ffi-ckinrust"><a class="header" href="#recommandation-ffi-ckinrust">Recommandation <a id="FFI-CKINRUST"></a>FFI-CKINRUST</a></h3>
+<p><strong>Recommandation <a id="FFI-CKINRUST"></a>FFI-CKINRUST</strong></p>
 <p>Dans un développement Rust sécurisé, la vérification des valeurs provenant
 d'un langage externe doit être effectuée du côté Rust lorsque cela est
 possible.</p>
@@ -1463,7 +1463,7 @@ concerne les risques, les types présentant le plus de dangers sont les
 références, les références de fonction et les énumérations, qui sont discutées
 ci-dessous.</p>
 <blockquote>
-<h3 id="attention-4"><a class="header" href="#attention-4">Attention</a></h3>
+<p><strong>Attention</strong></p>
 <p>Le type <code>bool</code> de Rust a été rendu équivalent au type <code>_Bool</code> (renommé <code>bool</code>
 dans <code>&lt;stdbool.h&gt;</code>) de C99 et au type <code>bool</code> de C++. Toutefois, charger une
 valeur différente de 0 ou 1 en tant que <code>_Bool</code>/<code>bool</code> est un comportement
@@ -1483,7 +1483,7 @@ avec un autre langage.</p>
 seulement de pointer vers des objets valides en mémoire. Toute déviation mène à
 des comportements indéfinis.</p>
 <blockquote>
-<h3 id="règle-ffi-ckref"><a class="header" href="#règle-ffi-ckref">Règle <a id="FFI-CKREF"></a>FFI-CKREF</a></h3>
+<p><strong>Règle <a id="FFI-CKREF"></a>FFI-CKREF</strong></p>
 <p>Dans un développement sécurisé en Rust, les références externes transmises au
 côté Rust par le biais d'une FFI doivent être <strong>vérifiées du côté du langage
 externe</strong>, que ce soit de manière automatique (par exemple, par un
@@ -1504,7 +1504,7 @@ langages compatibles avec le C, incluants les variantes de C qui mettent en
 oeuvre la vérification que les pointeurs sont non nuls, comme du code annoté à
 l'aide Microsoft SAL par exemple.</p>
 <blockquote>
-<h3 id="recommandation-ffi-noref"><a class="header" href="#recommandation-ffi-noref">Recommandation <a id="FFI-NOREF"></a>FFI-NOREF</a></h3>
+<p><strong>Recommandation <a id="FFI-NOREF"></a>FFI-NOREF</strong></p>
 <p>Dans un développement sécurisé en Rust, le code Rust ne doit pas utiliser de
 types références, mais des types pointeurs.</p>
 <p>Les exceptions sont :</p>
@@ -1527,7 +1527,7 @@ développement au niveau noyau). Un autre avantage à utiliser les pointeurs Rus
 dans des FFI est que tout chargement de valeur pointée est clairement marqué
 comme appartenant à un bloc ou à une fonction <code>unsafe</code>.</p>
 <blockquote>
-<h3 id="règle-ffi-ckptr"><a class="header" href="#règle-ffi-ckptr">Règle <a id="FFI-CKPTR"></a>FFI-CKPTR</a></h3>
+<p><strong>Règle <a id="FFI-CKPTR"></a>FFI-CKPTR</strong></p>
 <p>Dans un développement sécurisé en Rust, tout code Rust qui déréférence un
 pointeur externe doit vérifier sa validité au préalable.
 En particulier, les pointeurs doivent être vérifiés comme étant non nuls avant
@@ -1567,7 +1567,7 @@ int main() {
 }
 </code></pre>
 <blockquote>
-<h3 id="note-5"><a class="header" href="#note-5">Note</a></h3>
+<p><strong>Note</strong></p>
 <p>Les valeurs de type <code>Option&lt;&amp;T&gt;</code> ou <code>Option&lt;&amp;mut T&gt;</code>, pour tout T tel que
 <code>T: Sized</code>, sont admissibles dans un FFI à la place de pointeurs avec
 comparaison explicite avec la valeur nulle. En raison de la garantie de Rust
@@ -1583,7 +1583,7 @@ l'appartenance à une plage d'adresses mémoire valides.</p>
 à de l'exécution de code arbitraire et impliquent donc des risques réels de
 sécurité.</p>
 <blockquote>
-<h3 id="règle-ffi-markedfunptr"><a class="header" href="#règle-ffi-markedfunptr">Règle <a id="FFI-MARKEDFUNPTR"></a>FFI-MARKEDFUNPTR</a></h3>
+<p><strong>Règle <a id="FFI-MARKEDFUNPTR"></a>FFI-MARKEDFUNPTR</strong></p>
 <p>Dans un développement sécurisé en Rust, tout type de pointeur de fonction dont
 les valeurs sont amenées à traverser les frontières d'une FFI doit être
 marqué comme <code>extern</code> (si possible avec l'ABI spécifiée) et comme <code>unsafe</code>.</p>
@@ -1619,7 +1619,7 @@ l'ergonomie.</p>
 </li>
 </ul>
 <blockquote>
-<h3 id="règle-ffi-ckfunptr"><a class="header" href="#règle-ffi-ckfunptr">Règle <a id="FFI-CKFUNPTR"></a>FFI-CKFUNPTR</a></h3>
+<p><strong>Règle <a id="FFI-CKFUNPTR"></a>FFI-CKFUNPTR</strong></p>
 <p>Dans un développement sécurisé en Rust, tout pointeur de fonction provenant de
 l'extérieur de l'écosystème Rust doit être vérifié à la frontière des FFI.</p>
 </blockquote>
@@ -1643,7 +1643,7 @@ possible en C++ avec les <code>enum class</code>. Notons toutefois pour référe
 l'ABI <code>extern "C"</code> d'une <code>enum class</code> est définie par l'implémentation et doit
 être vérifiée pour chaque environnement d'exécution.</p>
 <blockquote>
-<h3 id="recommandation-ffi-noenum"><a class="header" href="#recommandation-ffi-noenum">Recommandation <a id="FFI-NOENUM"></a>FFI-NOENUM</a></h3>
+<p><strong>Recommandation <a id="FFI-NOENUM"></a>FFI-NOENUM</strong></p>
 <p>Dans un développement sécurisé en Rust, lors de l'interfaçage avec un
 langage externe, le code Rust ne doit pas accepter de valeurs provenant de
 l'extérieur en tant que valeur d'un type <code>enum</code>.</p>
@@ -1665,7 +1665,7 @@ entier (fourni par une énumération C) vers une énumération C.</p>
 un développement logiciel. C'est notamment une pratique assez courante dans un
 développement impliquant plusieurs langages de programmation.</p>
 <blockquote>
-<h3 id="recommandation-ffi-r-opaque"><a class="header" href="#recommandation-ffi-r-opaque">Recommandation <a id="FFI-R-OPAQUE"></a>FFI-R-OPAQUE</a></h3>
+<p><strong>Recommandation <a id="FFI-R-OPAQUE"></a>FFI-R-OPAQUE</strong></p>
 <p>Dans un développement sécurisé en Rust, lors d'un <em>binding</em> avec des types
 opaques externes, des pointeurs vers des types opaques dédiés doivent être
 utilisés au lieu de pointeurs <code>c_void</code>.</p>
@@ -1681,7 +1681,7 @@ extern "C" {
 de faciliter cette situation en permettant de déclarer des types opaques dans
 des blocs <code>extern</code>.</p>
 <blockquote>
-<h3 id="recommandation-ffi-c-opaque"><a class="header" href="#recommandation-ffi-c-opaque">Recommandation <a id="FFI-C-OPAQUE"></a>FFI-C-OPAQUE</a></h3>
+<p><strong>Recommandation <a id="FFI-C-OPAQUE"></a>FFI-C-OPAQUE</strong></p>
 <p>Dans un développement sécurisé en Rust, lors de l'interfaçage avec du C ou du
 C++, les valeurs de types Rust considérés comme opaques dans la partie C/C++
 doivent être transformées en valeurs de type <code>struct</code> incomplet (c'est-à-dire
@@ -1725,7 +1725,7 @@ toutes sortes de ressources comme des fichiers ou des accès au réseau.
 <em>Déplacer</em> une donnée depuis Rust vers un langage signifie également abandonner
 de possibles réclamations de la mémoire qui lui est associée.</p>
 <blockquote>
-<h3 id="règle-ffi-mem-nodrop"><a class="header" href="#règle-ffi-mem-nodrop">Règle <a id="FFI-MEM-NODROP"></a>FFI-MEM-NODROP</a></h3>
+<p><strong>Règle <a id="FFI-MEM-NODROP"></a>FFI-MEM-NODROP</strong></p>
 <p>Dans un développement sécurisé en Rust, le code Rust ne doit pas implémenter
 <code>Drop</code> pour les valeurs de types qui sont directement transmis à du code
 externe (c'est-à-dire ni par pointeur, ni par référence).</p>
@@ -1738,7 +1738,7 @@ deux fois certaines ressources peut être pire. Afin de libérer correctement un
 ressource une seule et unique fois, il faut savoir quel langage est responsable
 de la gestion de son allocation et de sa libération.</p>
 <blockquote>
-<h3 id="règle-ffi-mem-owner"><a class="header" href="#règle-ffi-mem-owner">Règle <a id="FFI-MEM-OWNER"></a>FFI-MEM-OWNER</a></h3>
+<p><strong>Règle <a id="FFI-MEM-OWNER"></a>FFI-MEM-OWNER</strong></p>
 <p>Dans un développement sécurisé en Rust, lorsqu'une donnée, quel que soit son
 type, est échangée par une FFI, il est nécessaire de s'assurer que :</p>
 <ul>
@@ -1756,7 +1756,7 @@ principalement qu'elles ne sont plus utilisées après leur libération. C'est u
 mémoire, la même approche est de fournir un <em>wrapper</em> sûr autour du type
 externe.</p>
 <blockquote>
-<h3 id="recommandation-ffi-mem-wrapping"><a class="header" href="#recommandation-ffi-mem-wrapping">Recommandation <a id="FFI-MEM-WRAPPING"></a>FFI-MEM-WRAPPING</a></h3>
+<p><strong>Recommandation <a id="FFI-MEM-WRAPPING"></a>FFI-MEM-WRAPPING</strong></p>
 <p>Dans un développement sécurisé en Rust, toute donnée à caractère non sensible
 allouée et libérée du côté du langage externe doit être encapsulée dans un
 type implémentant <code>Drop</code>, de telle sorte que Rust fournisse l'appel
@@ -1811,7 +1811,7 @@ pub struct Foo(*mut RawFoo);
 </span><span class="boring">    foo.do_something();
 </span><span class="boring">}</span></code></pre>
 <blockquote>
-<h3 id="attention-5"><a class="header" href="#attention-5">Attention</a></h3>
+<p><strong>Attention</strong></p>
 <p>Parce que des <code>panic</code>s peuvent mener à ne pas exécuter la méthode
 <code>Drop::drop</code>, cette solution n'est pas satisfaisante pour le cas de la
 libération de ressources sensibles (pour effacer les données sensibles par
@@ -1934,7 +1934,7 @@ int main() {
 code Rust ne doit pas provoquer de <code>panic</code>. Dérouler (<em>unwinding</em>) depuis le
 code Rust dans du code externe résulte en un <strong>comportement indéfini</strong>.</p>
 <blockquote>
-<h3 id="règle-ffi-nopanic"><a class="header" href="#règle-ffi-nopanic">Règle <a id="FFI-NOPANIC"></a>FFI-NOPANIC</a></h3>
+<p><strong>Règle <a id="FFI-NOPANIC"></a>FFI-NOPANIC</strong></p>
 <p>Le code Rust appelé depuis un langage externe doit soit s'assurer que la
 fonction ne peut pas provoquer de <code>panic</code>, soit utiliser un mécanisme de
 récupération de <code>panic</code> (comme <code>std::panic::catch_unwind</code>,
@@ -1973,7 +1973,7 @@ programme d'édition de liens échoue si une branche non trivialement
 inaccessible mène à un appel à <code>panic!</code>.</p>
 <h2 id="liaison-dune-bibliothèque-externe-à-du-code-rust"><a class="header" href="#liaison-dune-bibliothèque-externe-à-du-code-rust">Liaison d'une bibliothèque externe à du code Rust</a></h2>
 <blockquote>
-<h3 id="recommandation-ffi-safewrapping"><a class="header" href="#recommandation-ffi-safewrapping">Recommandation <a id="FFI-SAFEWRAPPING"></a>FFI-SAFEWRAPPING</a></h3>
+<p><strong>Recommandation <a id="FFI-SAFEWRAPPING"></a>FFI-SAFEWRAPPING</strong></p>
 <p>L'interfaçage entre une bibliothèque écrite dans un autre langage et
 du code Rust doit être réalisé en deux parties :</p>
 <ul>
@@ -1992,7 +1992,7 @@ partie bas-niveau du <em>binding</em> depuis les fichiers <em>header</em> C.</p>
 -->
 <h2 id="liaison-entre-une-bibliothèque-rust-et-du-code-dun-autre-langage"><a class="header" href="#liaison-entre-une-bibliothèque-rust-et-du-code-dun-autre-langage">Liaison entre une bibliothèque Rust et du code d'un autre langage</a></h2>
 <blockquote>
-<h3 id="recommandation-ffi-capi"><a class="header" href="#recommandation-ffi-capi">Recommandation <a id="FFI-CAPI"></a>FFI-CAPI</a></h3>
+<p><strong>Recommandation <a id="FFI-CAPI"></a>FFI-CAPI</strong></p>
 <p>Dans un développement sécurisé en Rust, exposer un bibliothèque Rust à un
 langage externe doit être uniquement fait par le biais d'une <strong>API dédiée et
 compatible avec le C</strong>.</p>

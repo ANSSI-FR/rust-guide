@@ -173,7 +173,7 @@ Entre autres choses, il permet de basculer entre différentes variantes de la
 chaîne d'outils (<em>stable</em>, <em>beta</em>, <em>nightly</em>), de gérer l'installation des
 composants additionnels et de maintenir le tout à jour.</p>
 <blockquote>
-<h3 id="attention"><a class="header" href="#attention">Attention</a></h3>
+<p><strong>Attention</strong></p>
 <p>Du point de vue de la sécurité, <code>rustup</code> effectue tous les téléchargements en
 HTTPS, mais ne valide pas les signatures des fichiers téléchargés. Les
 protections contre les attaques par déclassement, le <em>pinning</em> de certificats
@@ -195,7 +195,7 @@ deviennent alors fortement liées à une édition en particulier. Dans le reste 
 ce guide, un effort sera réalisé pour mettre en évidence les règles qui ne
 s'appliqueraient qu'à certaines éditions de Rust en particulier.</p>
 <blockquote>
-<h3 id="note"><a class="header" href="#note">Note</a></h3>
+<p><strong>Note</strong></p>
 <p>Aucune édition spécifique n'est recommandée, tant que le développement se
 conforme aux recommandations exprimées à propos des fonctionnalités que
 l'édition utilisée propose.</p>
@@ -225,7 +225,7 @@ $
 </code></pre>
 <!-- -->
 <blockquote>
-<h3 id="règle-denv-stable"><a class="header" href="#règle-denv-stable">Règle <a id="DENV-STABLE"></a>DENV-STABLE</a></h3>
+<p><strong>Règle <a id="DENV-STABLE"></a>DENV-STABLE</strong></p>
 <p>Le développement d'applications sécurisées doit être mené en utilisant la
 chaîne d'outils dans sa version <em>stable</em>, afin de limiter les potentiels
 <em>bugs</em> à la compilation, à l'exécution et lors de l'utilisation d'outils
@@ -264,7 +264,7 @@ permet notamment de :</p>
 forme de sous-commandes.</li>
 </ul>
 <blockquote>
-<h3 id="attention-1"><a class="header" href="#attention-1">Attention</a></h3>
+<p><strong>Attention</strong></p>
 <p>Tout comme <code>rustup</code>, <code>cargo</code> effectue tous les téléchargements en HTTPS, mais
 ne valide pas l'index du registre. Des discussions sont en cours pour
 déterminer le meilleur moyen de protéger et de valider les <em>crates</em>. Pour le
@@ -291,7 +291,7 @@ vérifications (par exemple, les
 <a href="./04_language.html#integer-overflows">vérifications de dépassements d'entiers</a>)
 est utilisé.</p>
 <blockquote>
-<h3 id="règle-denv-cargo-opts"><a class="header" href="#règle-denv-cargo-opts">Règle <a id="DENV-CARGO-OPTS"></a>DENV-CARGO-OPTS</a></h3>
+<p><strong>Règle <a id="DENV-CARGO-OPTS"></a>DENV-CARGO-OPTS</strong></p>
 <p>Les variables <code>debug-assertions</code> et <code>overflow-checks</code> ne doivent pas être
 modifiées dans les sections de profils de développement (<code>[profile.dev]</code> and
 <code>[profile.test]</code>).</p>
@@ -308,7 +308,7 @@ exemple pour générer une partie du code ou pour invoquer un outil externe avan
 la compilation, il est préférable d'utiliser la fonctionnalité de <em>scripts de
 compilation</em> de Cargo.</p>
 <blockquote>
-<h3 id="règle-denv-cargo-envvars"><a class="header" href="#règle-denv-cargo-envvars">Règle <a id="DENV-CARGO-ENVVARS"></a>DENV-CARGO-ENVVARS</a></h3>
+<p><strong>Règle <a id="DENV-CARGO-ENVVARS"></a>DENV-CARGO-ENVVARS</strong></p>
 <p>Les variables d'environnement <code>RUSTC</code>, <code>RUSTC_WRAPPER</code> et <code>RUSTFLAGS</code> ne
 doivent pas être modifiées lorsque Cargo est appelé pour compiler un projet.</p>
 </blockquote>
@@ -325,7 +325,7 @@ développeur avant d'appliquer la réparation suggérée par <code>clippy</code>
 particulier dans le cas des <em>lints</em> de la catégorie <code>clippy::nursery</code> puisque
 ceux-ci sont encore en cours de développement et de mise au point.</p>
 <blockquote>
-<h3 id="règle-denv-linter"><a class="header" href="#règle-denv-linter">Règle <a id="DENV-LINTER"></a>DENV-LINTER</a></h3>
+<p><strong>Règle <a id="DENV-LINTER"></a>DENV-LINTER</strong></p>
 <p>Un <em>linter</em> comme <code>clippy</code> doit être utilisé régulièrement tout au long du
 développement d'une application sécurisée.</p>
 </blockquote>
@@ -354,7 +354,7 @@ single_line_if_else_max_width = 40
 <p>Pour plus d'informations à propos des règles de convention de style que
 <code>rustfmt</code> propose, voir le <a href="https://doc.rust-lang.org/style-guide/index.html"><em>Rust Style Guide</em></a>.</p>
 <blockquote>
-<h3 id="règle-denv-format"><a class="header" href="#règle-denv-format">Règle <a id="DENV-FORMAT"></a>DENV-FORMAT</a></h3>
+<p><strong>Règle <a id="DENV-FORMAT"></a>DENV-FORMAT</strong></p>
 <p>L'outil de formatage <code>rustfmt</code> peut être utilisé pour assurer le respect de
 règles de convention de style (comme décrites dans le fichier <code>rustfmt.toml</code>)
 sur une base de code, avec l'option <code>--check</code> ainsi qu'une revue de code
@@ -385,7 +385,7 @@ configuration, certaines réparations (comme celles proposées avec l'option
 <code>--edition-idioms</code>) sont connues pour casser la compilation ou pour modifier
 la sémantique d'un programme dans certains cas.</p>
 <blockquote>
-<h3 id="règle-denv-autofix"><a class="header" href="#règle-denv-autofix">Règle <a id="DENV-AUTOFIX"></a>DENV-AUTOFIX</a></h3>
+<p><strong>Règle <a id="DENV-AUTOFIX"></a>DENV-AUTOFIX</strong></p>
 <p>Dans le cadre du développement d'une application sécurisée, toute réparation
 automatique (comme celles appliquées par <code>rustfix</code> par exemple) doit être
 vérifiée par le développeur.</p>

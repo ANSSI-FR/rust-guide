@@ -190,7 +190,7 @@ plus précises pour certaines constructions particulières :</p>
 <li>(C-WORD-ORDER) pour la cohérence sur l'ordre des mots.</li>
 </ul>
 <blockquote>
-<h3 id="règle-lang-naming"><a class="header" href="#règle-lang-naming">Règle <a id="LANG-NAMING"></a>LANG-NAMING</a></h3>
+<p><strong>Règle <a id="LANG-NAMING"></a>LANG-NAMING</strong></p>
 <p>Le développement d'une application sécurisée doit suivre les conventions de
 nommage décrites dans les <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a>.</p>
 </blockquote>
@@ -204,7 +204,7 @@ Pour effectuer des actions considérées risquées comme des appels système, de
 conversions de types ou la manipulation directe de pointeurs mémoire, le
 langage fournit le mot-clé <code>unsafe</code>.</p>
 <blockquote>
-<h3 id="règle-lang-unsafe"><a class="header" href="#règle-lang-unsafe">Règle <a id="LANG-UNSAFE"></a>LANG-UNSAFE</a></h3>
+<p><strong>Règle <a id="LANG-UNSAFE"></a>LANG-UNSAFE</strong></p>
 <p>Pour un développement sécurisé, les blocs <code>unsafe</code> doivent être évités.
 Ci-dessous, nous listons les seuls cas pour lesquels des blocs <code>unsafe</code>
 peuvent être utilisés, à la condition que leur usage soit justifié :</p>
@@ -274,7 +274,7 @@ else { println!("{}", res); }
 </span><span class="boring">if result.is_err() { println!("panic"); }
 </span><span class="boring">}</span></code></pre></pre>
 <blockquote>
-<h3 id="règle-lang-arith"><a class="header" href="#règle-lang-arith">Règle <a id="LANG-ARITH"></a>LANG-ARITH</a></h3>
+<p><strong>Règle <a id="LANG-ARITH"></a>LANG-ARITH</strong></p>
 <p>Lorsqu'une opération arithmétique peut produire un dépassement d'entier, les
 fonctions spécialisées <code>overflowing_&lt;op&gt;</code>, <code>wrapping_&lt;op&gt;</code> ou le type
 <code>Wrapping</code> doivent être utilisés.</p>
@@ -287,14 +287,14 @@ fonctions spécialisées <code>overflowing_&lt;op&gt;</code>, <code>wrapping_&lt
 des fonctions dont le traitement peut échouer. Un objet <code>Result</code> doit être
 testé et jamais ignoré.</p>
 <blockquote>
-<h3 id="recommandation-lang-errwrap"><a class="header" href="#recommandation-lang-errwrap">Recommandation <a id="LANG-ERRWRAP"></a>LANG-ERRWRAP</a></h3>
+<p><strong>Recommandation <a id="LANG-ERRWRAP"></a>LANG-ERRWRAP</strong></p>
 <p>Une <em>crate</em> peut implanter son propre type <code>Error</code> qui peut contenir toutes
 les erreurs possibles. Des précautions supplémentaires doivent être prises :
 ce type doit être <em>exception-safe</em> (RFC 1236) et implémenter les traits
 <code>Error + Send + Sync + 'static</code> ainsi que <code>Display</code>.</p>
 </blockquote>
 <blockquote>
-<h3 id="recommandation-lang-errdo"><a class="header" href="#recommandation-lang-errdo">Recommandation <a id="LANG-ERRDO"></a>LANG-ERRDO</a></h3>
+<p><strong>Recommandation <a id="LANG-ERRDO"></a>LANG-ERRDO</strong></p>
 <p>L'opérateur <code>?</code> doit être utilisé pour améliorer la lisibilité du code.
 La macro <code>try!</code> ne doit pas être utilisée.</p>
 </blockquote>
@@ -323,12 +323,12 @@ ou d'instructions qui peuvent échouer en engendrant un <code>panic</code>.</p>
 <li>l'utilisation de <code>format!</code> pour le formatage d'une chaîne de caractères.</li>
 </ul>
 <blockquote>
-<h3 id="règle-lang-nopanic"><a class="header" href="#règle-lang-nopanic">Règle <a id="LANG-NOPANIC"></a>LANG-NOPANIC</a></h3>
+<p><strong>Règle <a id="LANG-NOPANIC"></a>LANG-NOPANIC</strong></p>
 <p>Les fonctions et instructions qui peuvent causer des <code>panic</code> à l'exécution
 ne doivent pas être utilisées.</p>
 </blockquote>
 <blockquote>
-<h3 id="règle-lang-arrindexing"><a class="header" href="#règle-lang-arrindexing">Règle <a id="LANG-ARRINDEXING"></a>LANG-ARRINDEXING</a></h3>
+<p><strong>Règle <a id="LANG-ARRINDEXING"></a>LANG-ARRINDEXING</strong></p>
 <p>L'indice d'accès à un tableau doit être testé, ou la méthode <code>get</code> doit être
 utilisée pour récupérer une <code>Option</code>.</p>
 </blockquote>
@@ -348,7 +348,7 @@ jamais pouvoir paniquer.
 Dérouler (<em>unwinding</em>) depuis le code Rust vers le code étranger résulte en un
 comportement indéfini.</p>
 <blockquote>
-<h3 id="règle-lang-ffipanic"><a class="header" href="#règle-lang-ffipanic">Règle <a id="LANG-FFIPANIC"></a>LANG-FFIPANIC</a></h3>
+<p><strong>Règle <a id="LANG-FFIPANIC"></a>LANG-FFIPANIC</strong></p>
 <p>Le code Rust appelé depuis une FFI doit soit être assuré de ne pas paniquer,
 soit utiliser <code>catch_unwind</code> ou le module <code>std::panic</code> pour s'assurer qu'il
 ne va pas abandonner un traitement puis que l'exécution retourne dans le

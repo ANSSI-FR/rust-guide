@@ -189,7 +189,7 @@ some particular constructions:</p>
 <li>(C-WORD-ORDER) for word order consistency.</li>
 </ul>
 <blockquote>
-<h3 id="rule-lang-naming"><a class="header" href="#rule-lang-naming">Rule <a id="LANG-NAMING"></a>LANG-NAMING</a></h3>
+<p><strong>Rule <a id="LANG-NAMING"></a>LANG-NAMING</strong></p>
 <p>Development of a secure application must follow the naming conventions
 outlined in the <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a>.</p>
 </blockquote>
@@ -201,7 +201,7 @@ races.
 To perform risky actions such as system calls, type coercions, or direct
 manipulations of memory pointers, the language provides the <code>unsafe</code> keyword.</p>
 <blockquote>
-<h3 id="rule-lang-unsafe"><a class="header" href="#rule-lang-unsafe">Rule <a id="LANG-UNSAFE"></a>LANG-UNSAFE</a></h3>
+<p><strong>Rule <a id="LANG-UNSAFE"></a>LANG-UNSAFE</strong></p>
 <p>For a secured development, the <code>unsafe</code> blocks must be avoided. Afterward,
 we list the only cases where <code>unsafe</code> may be used, provided that they come
 with a proper justification:</p>
@@ -266,7 +266,7 @@ else { println!("{}", res); }
 </span><span class="boring">if result.is_err() { println!("panic"); }
 </span><span class="boring">}</span></code></pre></pre>
 <blockquote>
-<h3 id="rule-lang-arith"><a class="header" href="#rule-lang-arith">Rule <a id="LANG-ARITH"></a>LANG-ARITH</a></h3>
+<p><strong>Rule <a id="LANG-ARITH"></a>LANG-ARITH</strong></p>
 <p>When assuming that an arithmetic operation can produce an overflow, the
 specialized functions <code>overflowing_&lt;op&gt;</code>, <code>wrapping_&lt;op&gt;</code>, or the
 <code>Wrapping</code> type must be used.</p>
@@ -276,13 +276,13 @@ specialized functions <code>overflowing_&lt;op&gt;</code>, <code>wrapping_&lt;op
 <p>The <code>Result</code> type is the preferred way of handling functions that can fail.
 A <code>Result</code> object must be tested, and never ignored.</p>
 <blockquote>
-<h3 id="recommendation-lang-errwrap"><a class="header" href="#recommendation-lang-errwrap">Recommendation <a id="LANG-ERRWRAP"></a>LANG-ERRWRAP</a></h3>
+<p><strong>Recommendation <a id="LANG-ERRWRAP"></a>LANG-ERRWRAP</strong></p>
 <p>A crate can implement its own <code>Error</code> type, wrapping all possible errors.
 It must be careful to make this type exception-safe (RFC 1236), and implement
 <code>Error + Send + Sync + 'static</code> as well as <code>Display</code>.</p>
 </blockquote>
 <blockquote>
-<h3 id="recommendation-lang-errdo"><a class="header" href="#recommendation-lang-errdo">Recommendation <a id="LANG-ERRDO"></a>LANG-ERRDO</a></h3>
+<p><strong>Recommendation <a id="LANG-ERRDO"></a>LANG-ERRDO</strong></p>
 <p>The <code>?</code> operator should be used to improve readability of code.
 The <code>try!</code> macro should not be used.</p>
 </blockquote>
@@ -311,12 +311,12 @@ fail and cause the code to panic.</p>
 <li>string formatting using <code>format!</code>.</li>
 </ul>
 <blockquote>
-<h3 id="rule-lang-nopanic"><a class="header" href="#rule-lang-nopanic">Rule <a id="LANG-NOPANIC"></a>LANG-NOPANIC</a></h3>
+<p><strong>Rule <a id="LANG-NOPANIC"></a>LANG-NOPANIC</strong></p>
 <p>Functions or instructions that can cause the code to panic at runtime must not
 be used.</p>
 </blockquote>
 <blockquote>
-<h3 id="rule-lang-arrindexing"><a class="header" href="#rule-lang-arrindexing">Rule <a id="LANG-ARRINDEXING"></a>LANG-ARRINDEXING</a></h3>
+<p><strong>Rule <a id="LANG-ARRINDEXING"></a>LANG-ARRINDEXING</strong></p>
 <p>Array indexing must be properly tested, or the <code>get</code> method should be used to
 return an <code>Option</code>.</p>
 </blockquote>
@@ -334,7 +334,7 @@ crate can catch all cases. Drawback: all functions need to be marked as
 be careful to never panic.
 Stack unwinding from Rust code into foreign code results in undefined behavior.</p>
 <blockquote>
-<h3 id="rule-lang-ffipanic"><a class="header" href="#rule-lang-ffipanic">Rule <a id="LANG-FFIPANIC"></a>LANG-FFIPANIC</a></h3>
+<p><strong>Rule <a id="LANG-FFIPANIC"></a>LANG-FFIPANIC</strong></p>
 <p>Rust code called from FFI must either ensure the function cannot panic, or use
 <code>catch_unwind</code> or the <code>std::panic</code> module to ensure the rust code will not
 abort or return in an unstable state.</p>

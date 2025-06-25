@@ -184,7 +184,7 @@ dépendances.</p>
 (dépendances listées dans le fichier <code>Cargo.toml</code>), et vérifie s'il s'agit de la
 dernière version compatible disponible ainsi que la dernière version en général.</p>
 <blockquote>
-<h3 id="règle-libs-outdated"><a class="header" href="#règle-libs-outdated">Règle <a id="LIBS-OUTDATED"></a>LIBS-OUTDATED</a></h3>
+<p><strong>Règle <a id="LIBS-OUTDATED"></a>LIBS-OUTDATED</strong></p>
 <p>L'outil <code>cargo-outdated</code> doit être utilisé pour vérifier le statut des
 dépendances. Ensuite, chaque dépendance importée en version obsolète doit
 être mise à jour ou bien, le cas échéant, le choix de la version doit être
@@ -195,7 +195,7 @@ justifié.</p>
 connues dans la <em>RustSec Advisory Database</em> pour les dépendances utilisées dans
 un projet.</p>
 <blockquote>
-<h3 id="règle-libs-audit"><a class="header" href="#règle-libs-audit">Règle <a id="LIBS-AUDIT"></a>LIBS-AUDIT</a></h3>
+<p><strong>Règle <a id="LIBS-AUDIT"></a>LIBS-AUDIT</strong></p>
 <p>L'outil <code>cargo-audit</code> doit être utilisé pour rechercher des vulnérabilités
 connues dans les dépendances d'un projet.</p>
 </blockquote>
@@ -206,7 +206,7 @@ suivant. Le développeur a besoin de s'assurer que ces types de blocs ne sont pa
 mal utilisés dans les dépendances de son projet.
 -->
 <!--
-> ### Recommandation <a id="LIBS-UNSAFE"></a>LIBS-UNSAFE
+> **Recommandation <a id="LIBS-UNSAFE"></a>LIBS-UNSAFE**
 >
 > <mark>TODO</mark>: vérifier qu'il n'y a pas de bloc `unsafe` dans les
 > dépendances (à l'aide d'un outil ?).

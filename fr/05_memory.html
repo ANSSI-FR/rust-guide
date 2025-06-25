@@ -201,13 +201,13 @@ ressources critiques, menant à des interblocages et à la persistance de donné
 sensibles en mémoire. C'est pourquoi <code>forget</code> doit être considérée comme
 <strong>non sécurisée</strong>.</p>
 <blockquote>
-<h3 id="règle-mem-forget"><a class="header" href="#règle-mem-forget">Règle <a id="MEM-FORGET"></a>MEM-FORGET</a></h3>
+<p><strong>Règle <a id="MEM-FORGET"></a>MEM-FORGET</strong></p>
 <p>Dans un développement sécurisé en Rust, la fonction <code>forget</code> de <code>std::mem</code>
 (<code>core::mem</code>) ne doit pas être utilisée.</p>
 </blockquote>
 <!-- -->
 <blockquote>
-<h3 id="recommandation-mem-forget-lint"><a class="header" href="#recommandation-mem-forget-lint">Recommandation <a id="MEM-FORGET-LINT"></a>MEM-FORGET-LINT</a></h3>
+<p><strong>Recommandation <a id="MEM-FORGET-LINT"></a>MEM-FORGET-LINT</strong></p>
 <p>Le <em>lint</em> <code>mem_forget</code> de Clippy peut être utilisé pour automatiquement
 détecter toute utilisation de la fonction <code>forget</code>. Pour s'assurer de l'absence
 d'appel à <code>forget</code>, ajouter la directive suivante en début de fichier racine
@@ -225,14 +225,14 @@ manuelle d'une valeur.</li>
 <p>Ces alternatives peuvent mener au même type de problème de sécurité, mais ont
 l'avantage de faire apparaître explicitement leur but.</p>
 <blockquote>
-<h3 id="règle-mem-leak"><a class="header" href="#règle-mem-leak">Règle <a id="MEM-LEAK"></a>MEM-LEAK</a></h3>
+<p><strong>Règle <a id="MEM-LEAK"></a>MEM-LEAK</strong></p>
 <p>Dans un développement sécurisé en Rust, le code ne doit pas faire fuiter de la
 mémoire ou des ressources <em>via</em> <code>Box::leak</code>.</p>
 </blockquote>
 <p><code>ManuallyDrop</code> et <code>Box::into_raw</code> passent la responsabilité de la libération de
 la ressource concernée du compilateur au développeur.</p>
 <blockquote>
-<h3 id="règle-mem-manuallydrop"><a class="header" href="#règle-mem-manuallydrop">Règle <a id="MEM-MANUALLYDROP"></a>MEM-MANUALLYDROP</a></h3>
+<p><strong>Règle <a id="MEM-MANUALLYDROP"></a>MEM-MANUALLYDROP</strong></p>
 <p>Dans un développement sécurisé en Rust, toute valeur <em>wrappée</em> dans le type
 <code>ManuallyDrop</code> doit être <em>unwrapped</em> pour permettre sa libération automatique
 (<code>ManuallyDrop::into_inner</code>) ou bien doit être manuellement libérée (<em>unsafe</em>
@@ -240,7 +240,7 @@ la ressource concernée du compilateur au développeur.</p>
 </blockquote>
 <!-- -->
 <blockquote>
-<h3 id="règle-mem-intofromraw"><a class="header" href="#règle-mem-intofromraw">Règle <a id="MEM-INTOFROMRAW"></a>MEM-INTOFROMRAW</a></h3>
+<p><strong>Règle <a id="MEM-INTOFROMRAW"></a>MEM-INTOFROMRAW</strong></p>
 <p>Dans un développement sécurisé en Rust, tout pointeur créé par un appel à
 <code>into_raw</code> (ou <code>into_raw_nonnull</code>) depuis un des types suivants doit
 finalement être transformé en valeur avec l'appel à la fonction <code>from_raw</code>
@@ -263,7 +263,7 @@ let _ = unsafe { Box::from_raw(raw_ptr) }; // sera libéré
 </blockquote>
 <!-- -->
 <blockquote>
-<h3 id="note"><a class="header" href="#note">Note</a></h3>
+<p><strong>Note</strong></p>
 <p>Dans le cas de <code>Box::into_raw</code>, le nettoyage automatique est possible, mais
 est bien plus compliqué que de <em>re-boxer</em> le pointeur brut et doit être
 évité :</p>
@@ -288,7 +288,7 @@ libération manuelle n'est pas possible.</p>
 prévenir l'utilisation de mémoire non initialisée (à l'exception de
 l'utilisation de <code>std::mem::uninitialized</code> ou de <code>std::mem::MaybeUninit</code>).</p>
 <blockquote>
-<h3 id="règle-mem-uninit"><a class="header" href="#règle-mem-uninit">Règle <a id="MEM-UNINIT"></a>MEM-UNINIT</a></h3>
+<p><strong>Règle <a id="MEM-UNINIT"></a>MEM-UNINIT</strong></p>
 <p>La fonction <code>std::mem::uninitialized</code> (dépréciée depuis la version 1.38) ou
 le type <code>std::mem::MaybeUninit</code> (stabilisé dans la version 1.36) ne doivent
 pas être utilisés, ou bien explicitement justifiés si nécessaire.</p>
@@ -301,7 +301,7 @@ sûreté mémoire) ;</li>
 <li>la non-libération de mémoire initialisée.</li>
 </ul>
 <blockquote>
-<h3 id="note-1"><a class="header" href="#note-1">Note</a></h3>
+<p><strong>Note</strong></p>
 <p>Le type <code>std::mem::MaybeUninit</code> est une amélioration de la fonction
 <code>std::mem::uninitialized</code>. En effet, il rend la libération des valeurs non
 initialisées bien plus difficile. Toutefois, cela ne change pas le second
@@ -313,7 +313,7 @@ pour effacer des valeurs sensibles.</p>
 <p>L'effacement sécurisé (mise à zéro) est nécessaire pour les variables sensibles,
 en particulier dans lorsque le code Rust est utilisé <em>via</em> des FFI.</p>
 <blockquote>
-<h3 id="règle-mem-zero"><a class="header" href="#règle-mem-zero">Règle <a id="MEM-ZERO"></a>MEM-ZERO</a></h3>
+<p><strong>Règle <a id="MEM-ZERO"></a>MEM-ZERO</strong></p>
 <p>Les variables contenant des données sensibles doivent être mises à zéro après
 utilisation, en utilisant des fonctions dont les appels ne seront pas
 supprimés par les optimisations du compilateur, comme

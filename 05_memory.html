@@ -196,13 +196,13 @@ forget(s); // Leak memory
 leading to deadlocks or not erasing sensitive data from the memory. That is why,
 <code>forget</code> is <strong>unsecure</strong>.</p>
 <blockquote>
-<h3 id="rule-mem-forget"><a class="header" href="#rule-mem-forget">Rule <a id="MEM-FORGET"></a>MEM-FORGET</a></h3>
+<p><strong>Rule <a id="MEM-FORGET"></a>MEM-FORGET</strong></p>
 <p>In a secure Rust development, the <code>forget</code> function of <code>std::mem</code>
 (<code>core::mem</code>) must not be used.</p>
 </blockquote>
 <!-- -->
 <blockquote>
-<h3 id="recommendation-mem-forget-lint"><a class="header" href="#recommendation-mem-forget-lint">Recommendation <a id="MEM-FORGET-LINT"></a>MEM-FORGET-LINT</a></h3>
+<p><strong>Recommendation <a id="MEM-FORGET-LINT"></a>MEM-FORGET-LINT</strong></p>
 <p>The lint <code>mem_forget</code> of Clippy may be used to automatically detect any use of
 <code>forget</code>. To enforce the absence of <code>forget</code> in a crate, add the following
 line at the top of the root file (usually <code>src/lib.rs</code> or <code>src/main.rs</code>):</p>
@@ -217,21 +217,21 @@ line at the top of the root file (usually <code>src/lib.rs</code> or <code>src/m
 <p>Those alternatives may lead to the same security issue but they have the
 additional benefit of making their goal obvious.</p>
 <blockquote>
-<h3 id="rule-mem-leak"><a class="header" href="#rule-mem-leak">Rule <a id="MEM-LEAK"></a>MEM-LEAK</a></h3>
+<p><strong>Rule <a id="MEM-LEAK"></a>MEM-LEAK</strong></p>
 <p>In a secure Rust development, the code must not leak memory or resource in
 particular via <code>Box::leak</code>.</p>
 </blockquote>
 <p><code>ManuallyDrop</code> and <code>Box::into_raw</code> shift the release responsibility from the
 compiler to the developer.</p>
 <blockquote>
-<h3 id="rule-mem-manuallydrop"><a class="header" href="#rule-mem-manuallydrop">Rule <a id="MEM-MANUALLYDROP"></a>MEM-MANUALLYDROP</a></h3>
+<p><strong>Rule <a id="MEM-MANUALLYDROP"></a>MEM-MANUALLYDROP</strong></p>
 <p>In a secure Rust development, any value wrapped in <code>ManuallyDrop</code> must be
 unwrapped to allow for automatic release (<code>ManuallyDrop::into_inner</code>)
 or manually released (unsafe <code>ManuallyDrop::drop</code>).</p>
 </blockquote>
 <!-- -->
 <blockquote>
-<h3 id="rule-mem-intofromraw"><a class="header" href="#rule-mem-intofromraw">Rule <a id="MEM-INTOFROMRAW"></a>MEM-INTOFROMRAW</a></h3>
+<p><strong>Rule <a id="MEM-INTOFROMRAW"></a>MEM-INTOFROMRAW</strong></p>
 <p>In a secure Rust development, any pointer created with a call to <code>into_raw</code>
 (or <code>into_raw_nonnull</code>) from one of the following types:</p>
 <ul>
@@ -254,7 +254,7 @@ let _ = unsafe { Box::from_raw(raw_ptr) }; // will be freed
 </blockquote>
 <!-- -->
 <blockquote>
-<h3 id="note"><a class="header" href="#note">Note</a></h3>
+<p><strong>Note</strong></p>
 <p>In the case of <code>Box::into_raw</code>, manual cleanup is possible but a lot more
 complicated than re-boxing the raw pointer and should be avoided:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
@@ -278,7 +278,7 @@ cleanup is not possible.</p>
 uninitialized memory (except if using <code>std::mem::uninitialized</code> or
 <code>std::mem::MaybeUninit</code>).</p>
 <blockquote>
-<h3 id="rule-mem-uninit"><a class="header" href="#rule-mem-uninit">Rule <a id="MEM-UNINIT"></a>MEM-UNINIT</a></h3>
+<p><strong>Rule <a id="MEM-UNINIT"></a>MEM-UNINIT</strong></p>
 <p>The <code>std::mem::uninitialized</code> function (deprecated 1.38) or the
 <code>std::mem::MaybeUninit</code> type (stabilized 1.36) must not be used, or explicitly
 justified when necessary.</p>
@@ -289,7 +289,7 @@ justified when necessary.</p>
 <li>non-drop of initialized memory.</li>
 </ul>
 <blockquote>
-<h3 id="note-1"><a class="header" href="#note-1">Note</a></h3>
+<p><strong>Note</strong></p>
 <p><code>std::mem::MaybeUninit</code> is an improvement over <code>std::mem::uninitialized</code>.
 Indeed, it makes dropping uninitialized values a lot more difficult.
 However, it does not change the second issue: the non-drop of an initialized
@@ -300,7 +300,7 @@ the use of <code>Drop</code> to erase sensitive memory.</p>
 <p>Zeroing memory is useful for sensitive variables, especially if the
 Rust code is used through FFI.</p>
 <blockquote>
-<h3 id="rule-mem-zero"><a class="header" href="#rule-mem-zero">Rule <a id="MEM-ZERO"></a>MEM-ZERO</a></h3>
+<p><strong>Rule <a id="MEM-ZERO"></a>MEM-ZERO</strong></p>
 <p>Variables containing sensitive data must be zeroed out after use, using
 functions that will not be removed by the compiler optimizations, like
 <code>std::ptr::write_volatile</code> or the <code>zeroize</code> crate.</p>
