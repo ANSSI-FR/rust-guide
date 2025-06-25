@@ -9,7 +9,7 @@ casser la sûreté mémoire (par exemple, comportements *unsounds* dans des
 versions plus anciennes du compilateur).
 -->
 
-## `Forget` et fuites de mémoire
+## Fuites de mémoire
 
 En général, la mémoire est automatiquement récupérée en Rust lorsqu'une variable
 sort de la portée lexicale courante. En complément de ce mécanisme, Rust fournit
@@ -68,7 +68,7 @@ La bibliothèque standard inclut d'autres moyens d'*oublier* une valeur :
 Ces alternatives peuvent mener au même type de problème de sécurité, mais ont
 l'avantage de faire apparaître explicitement leur but.
 
-> **Règle {{#check MEM-LEAK | Absence de fuite mémoire}}**
+> **Règle {{#check MEM-LEAK | Non-utilisation de `Box::leak`}}**
 >
 > Dans un développement sécurisé en Rust, le code ne doit pas faire fuiter de la
 > mémoire ou des ressources *via* `Box::leak`.
@@ -85,10 +85,23 @@ la ressource concernée du compilateur au développeur.
 
 <!-- -->
 
+## *Raw pointers*
+
+L'utilisation principale des pointeurs *raw* est de traduire les pointeurs C en Rust.
+Comme leur nom l'indique, ces types sont *bruts* et n'ont pas toutes les capacités des
+pointeurs *intelligents* (*smart pointer*) de Rust. En particulier, leur libération est
+à la charge du programmeur.
+
+> **Règle {{#check MEM-NORAWPOINTER | Pas de conversion en pointeur *raw* en Rust non-*usafe*}}**
+>
+> Dans un développement sécurisé en Rust non-*unsafe*, les références et les *smart pointers*
+> ne doivent pas être convertis en *raw pointers*. En particulier, les fonctions `into_raw` ou `into_non_null`
+> des *smart pointers* `Box`, `Rc`, `Arc` ou `Weak` ne doivent pas être utilisées dans un code Rust non-*unsafe*.
+
 > **Règle {{#check MEM-INTOFROMRAW | Appel systématique à `from_raw` pour les valeurs créées avec `into_raw`}}**
 >
 > Dans un développement sécurisé en Rust, tout pointeur créé par un appel à
-> `into_raw` (ou `into_raw_nonnull`) depuis un des types suivants doit
+> `into_raw` (ou `into_non_null`) depuis un des types suivants doit
 > finalement être transformé en valeur avec l'appel à la fonction `from_raw`
 > correspondant, pour permettre sa libération :
 > 
@@ -105,6 +118,17 @@ la ressource concernée du compilateur au développeur.
 > let raw_ptr = unsafe { Box::into_raw(boxed) };
 > let _ = unsafe { Box::from_raw(raw_ptr) }; // sera libéré
 > ```
+
+La réciproque est aussi vrai, c'est à dire que les fonctions `from_raw` ne
+devraient pas être utilisées sur des *raw pointers* qui ne sont pas issus de la fonction
+`into_raw` associée. En effet, pour les cas comme `Rc`, la documentation officielle 
+[limite](https://doc.rust-lang.org/std/rc/struct.Rc.html#method.from_raw) explicitement ces fonctions
+à ce cas d'usage, et, dans le cas de `Box`, la conversion de pointeurs C en Box 
+[n'est pas sûre](https://doc.rust-lang.org/std/boxed/index.html#memory-layout), 
+
+> **Règle {{#check MEM-INTOFROMRAW | Appel de `from_raw` uniquement pour les valeurs issues de `into_raw`}}**
+> Dans un développement de sécurité en Rust, les fonctions `from_raw` ne doivent être appelées que sur des
+> valeurs issues de la fonction `into_raw`
 
 <!-- -->
 

@@ -8,7 +8,7 @@ and identify language constructs that may break memory safety (for instance,
 unsound behaviors in older versions of the compiler).
 -->
 
-## Forget and memory leaks
+## Memory leaks
 
 While the usual way for memory to be reclaimed is for a variable to go out of
 scope, Rust provides special functions to manually reclaim memory: `forget` and
@@ -60,7 +60,7 @@ The standard library includes other way to *forget* dropping values:
 Those alternatives may lead to the same security issue but they have the
 additional benefit of making their goal obvious.
 
-> **Rule {{#check MEM-LEAK | Do not leak memory}}**
+> **Rule {{#check MEM-LEAK | Do not use `leak` function}}**
 >
 > In a secure Rust development, the code must not leak memory or resource in
 > particular via `Box::leak`.
@@ -76,10 +76,22 @@ compiler to the developer.
 
 <!-- -->
 
+## Raw pointers
+
+This pointers are mainly used to use C pointer. They do not have the same protections
+than *smart pointers* and often have to be used in `unsafe` context. For instance, freeing 
+raw pointer must be done manually without Rust warranties.
+
+> **Rule {{#check MEM-NORAWPOINTER | Do no convert smart pointer into raw pointer in Rust without `unsafe`}}**
+>
+> In a secure Rust development without `unsafe`, references and *smart pointers*
+> should not be converted into *raw pointers*. For instance, functions `into_raw` ou `into_non_null`
+> of smart pointers `Box`, `Rc`, `Arc` or `Weak` should not be used.
+
 > **Rule {{#check MEM-INTOFROMRAW | Always call `from_raw` on `into_raw`ed value}}**
 >
 > In a secure Rust development, any pointer created with a call to `into_raw`
-> (or `into_raw_nonnull`) from one of the following types:
+> (or `into_non_null`) from one of the following types:
 >
 > - `std::boxed::Box` (or `alloc::boxed::Box`),
 > - `std::rc::Rc` (or `alloc::rc::Rc`),
@@ -97,6 +109,13 @@ compiler to the developer.
 > let raw_ptr = unsafe { Box::into_raw(boxed) };
 > let _ = unsafe { Box::from_raw(raw_ptr) }; // will be freed
 > ```
+
+Converse is true! That is `from_raw` should be call **only** on `into_raw`ed value. For instance,
+`Rc` smart pointer [explicitly request for this condition](https://doc.rust-lang.org/std/rc/struct.Rc.html#method.from_raw)
+and, for `Box` smart pointer, conversion of C pointer into `Box` is [discouraged](https://doc.rust-lang.org/std/boxed/index.html#memory-layout).
+
+> **Règle {{#check MEM-INTOFROMRAW | Call `from_raw` *only* on `into_raw`ed value}}**
+> In a secure Rust development, `from_raw` should only be called on `into_raw`ed value
 
 <!-- -->
 
