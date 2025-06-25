@@ -630,12 +630,9 @@ pub struct Foo(*mut RawFoo);
 impl Foo {
     /// Create a Foo
     pub fn new() -> Option<Foo> {
-        let raw_ptr = unsafe { foo_create() };
-        if raw_ptr.is_null() {
-            None
-        } else {
-            Some(Foo(raw_ptr))
-        }
+        // The `?` operator here ensures `None` is returned on `NULL`.
+        let raw_ptr = unsafe { foo_create().as_mut()? };
+        Some(Foo(raw_ptr))
     }
 #
     /// Do something on a Foo
