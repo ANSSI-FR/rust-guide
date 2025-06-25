@@ -296,8 +296,8 @@ uninitialized memory (except if using <code>std::mem::uninitialized</code> or
 <code>std::mem::MaybeUninit</code>).</p>
 <blockquote>
 <p><strong>Rule <a id="MEM-UNINIT"></a>MEM-UNINIT</strong></p>
-<p>The <code>std::mem::uninitialized</code> function (deprecated 1.38) or the
-<code>std::mem::MaybeUninit</code> type (stabilized 1.36) must not be used, or explicitly
+<p>The <code>std::mem::uninitialized</code> function (deprecated 1.38) must never be used.
+Each usage of the <code>std::mem::MaybeUninit</code> type (stabilized 1.36) must be explicitly
 justified when necessary.</p>
 </blockquote>
 <p>The use of uninitialized memory may result in two distinct security issues:</p>

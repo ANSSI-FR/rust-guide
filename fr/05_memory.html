@@ -311,9 +311,9 @@ prévenir l'utilisation de mémoire non initialisée (à l'exception de
 l'utilisation de <code>std::mem::uninitialized</code> ou de <code>std::mem::MaybeUninit</code>).</p>
 <blockquote>
 <p><strong>Règle <a id="MEM-UNINIT"></a>MEM-UNINIT</strong></p>
-<p>La fonction <code>std::mem::uninitialized</code> (dépréciée depuis la version 1.38) ou
-le type <code>std::mem::MaybeUninit</code> (stabilisé dans la version 1.36) ne doivent
-pas être utilisés, ou bien explicitement justifiés si nécessaire.</p>
+<p>La fonction <code>std::mem::uninitialized</code> (dépréciée depuis la version 1.38) ne doit jamais être utilisée.
+Le type <code>std::mem::MaybeUninit</code> (stabilisé dans la version 1.36) ne doit être
+utilisé qu'en fournissant une justification pour chaque cas d'usage.</p>
 </blockquote>
 <p>L'utilisation de mémoire non initialisée peut induire deux problèmes de
 sécurité distincts :</p>
