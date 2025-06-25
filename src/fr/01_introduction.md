@@ -3,10 +3,12 @@
 [Rust](https://www.rust-lang.org) est un langage multiparadigmes orienté vers
 la sûreté mémoire.
 
-Il est entre autres orienté programmation système, en permettant une gestion
-fine de la mémoire sans ramasse-miettes, mais également sans nécessiter
-d'allocations et de désallocations manuelles, souvent sources d'erreurs et de
-confusions. Le langage atteint ce but en introduisant un système
+Il est entre autres orienté programmation système, en permettant par exemple 
+une gestion de la mémoire sans ramasse-miettes et sans nécessiter
+d'allocations et de libérations manuelles, ou encore protège la mémoire contre
+les accès concurrents (*data race*).
+
+Le langage atteint ce but en introduisant un système
 d'*ownership* (fortement lié à l'*aliasing* des variables). À tout point d'un
 programme Rust, le compilateur recense les variables qui se réfèrent à une
 même donnée, et applique un ensemble de règles qui permettent la récupération
@@ -14,10 +16,10 @@ automatique de la mémoire, la sûreté mémoire et l'absence de problèmes d'ac
 concurrents.
 
 Le langage est également axé sur la performance, avec des constructions
-permettant des abstractions à coût nul et un compilateur proposant de puissantes
+permettant des *abstractions à coût nul* et un compilateur proposant de puissantes
 optimisations.
 
-Enfin, le langage Rust fournit des fonctionnalités de programmation de
+De plus, le langage Rust fournit des fonctionnalités de programmation de
 haut niveau. Grâce aux fonctions d'ordre supérieur, aux fermetures, aux
 itérateurs, etc., il permet d'écrire tout ou parties des programmes dans un
 style proche des langages de programmation fonctionnelle.
@@ -25,7 +27,11 @@ En outre, le typage statique, l'inférence de types et le polymorphisme
 *ad hoc* (sous la forme de *traits*) sont d'autres moyens que Rust propose pour
 construire des bibliothèques et des programmes de façon sûre.
 
-Néanmoins, du fait de sa polyvalence, le langage offre des constructions et
+Enfin, les outils d'accès à la chaîne de compilation (`rustup`, `cargo`) facilitent
+grandement l'utilisation de Rust en simplifiant la configuration de la construction
+du logiciel, tout en privilégiant les bonnes pratiques de sécurité de compilation.
+
+Néanmoins, le langage offre des constructions et
 fonctionnalités qui, si elles ne sont pas utilisées correctement, peuvent
 potentiellement introduire des problèmes de sécurité, soit par construction,
 soit en permettant d'écrire du code qui serait mal interprété par un développeur
