@@ -43,7 +43,7 @@ Pour effectuer des actions considérées risquées comme des appels système, de
 conversions de types ou la manipulation directe de pointeurs mémoire, le
 langage fournit le mot-clé `unsafe`.
 
-> ### Règle {{#check LANG-UNSAFE | Non-utilisation des blocs *unsafe*}}
+> **Règle {{#check LANG-UNSAFE | Non-utilisation des blocs *unsafe*}}**
 >
 > Pour un développement sécurisé, les blocs `unsafe` doivent être évités.
 > Ci-dessous, nous listons les seuls cas pour lesquels des blocs `unsafe`

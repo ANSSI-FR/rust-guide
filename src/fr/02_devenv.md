@@ -69,7 +69,7 @@ $ rustup override list
 $
 ```
 
-> ### Règle {{#check DENV-STABLE | Utilisation de la chaîne d'outils *stable*}}
+> **Règle {{#check DENV-STABLE | Utilisation de la chaîne d'outils *stable*}}**
 >
 > Le développement d'applications sécurisées doit être mené en utilisant la
 > chaîne d'outils dans sa version *stable*, afin de limiter les potentiels

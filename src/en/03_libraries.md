@@ -37,3 +37,18 @@ reported to the RustSec Advisory Database.
 > dependencies.
 
 [cargo-audit]: https://github.com/RustSec/cargo-audit
+
+<!-- ## Unsafe code in libraries -->
+
+<!--
+<mark>TODO</mark>: `unsafe` blocks are discussed in the following chapter.
+One needs to ensure that this kind of block is not misused in project
+dependencies.
+-->
+
+<!--
+> **Recommendation {{#check LIBS-UNSAFE | Check for unsafe code in dependencies}}**
+>
+> <mark>TODO</mark>: check that no `unsafe` blocks appear in the imported
+> dependencies (with a tool?).
+-->

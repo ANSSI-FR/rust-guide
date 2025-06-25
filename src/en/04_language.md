@@ -132,7 +132,7 @@ A `Result` object must be tested, and never ignored.
 
 ### Custom Error type implementation
 
-> ### Recommendation {{#check LANG-ERRWRAP | Implement custom `Error` type, wrapping all possible errors}}
+> **Recommendation {{#check LANG-ERRWRAP | Implement custom `Error` type, wrapping all possible errors}}**
 >
 > A crate can implement its own `Error` type, wrapping all possible errors.
 > It must be careful to make this type exception-safe (RFC 1236), and implement
@@ -140,7 +140,6 @@ A `Result` object must be tested, and never ignored.
 
 To ensure that the above recommendation is implemented correctly, you may check
 the [test implementing trait](08_testfuzz.md#implementing-a-trait) section of this guide.
-
 ### Third-party library use
 
 Third-party crates may be used to facilitate error handling. Most of them
