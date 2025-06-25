@@ -225,11 +225,15 @@ Non-utilisation de <code>forget</code> (<a href="05_memory.html#MEM-FORGET">MEM-
 <li><input disabled="" type="checkbox"/>
 Utilisation du <em>lint</em> clippy pour détecter l'utilisation de <code>forget</code> (<a href="05_memory.html#MEM-FORGET-LINT">MEM-FORGET-LINT</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Absence de fuite mémoire (<a href="05_memory.html#MEM-LEAK">MEM-LEAK</a>)</li>
+Non-utilisation de <code>Box::leak</code> (<a href="05_memory.html#MEM-LEAK">MEM-LEAK</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Libération des valeurs <em>wrappées</em> dans <code>ManuallyDrop</code> (<a href="05_memory.html#MEM-MANUALLYDROP">MEM-MANUALLYDROP</a>)</li>
 <li><input disabled="" type="checkbox"/>
+Pas de conversion en pointeur <em>raw</em> en Rust non-<em>usafe</em> (<a href="05_memory.html#MEM-NORAWPOINTER">MEM-NORAWPOINTER</a>)</li>
+<li><input disabled="" type="checkbox"/>
 Appel systématique à <code>from_raw</code> pour les valeurs créées avec <code>into_raw</code> (<a href="05_memory.html#MEM-INTOFROMRAW">MEM-INTOFROMRAW</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Appel de <code>from_raw</code> uniquement pour les valeurs issues de <code>into_raw</code> (<a href="05_memory.html#MEM-INTOFROMRAW">MEM-INTOFROMRAW</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Pas de mémoire non initialisée (<a href="05_memory.html#MEM-UNINIT">MEM-UNINIT</a>)</li>
 <li><input disabled="" type="checkbox"/>

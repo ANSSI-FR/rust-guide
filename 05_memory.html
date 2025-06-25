@@ -173,7 +173,7 @@
 and identify language constructs that may break memory safety (for instance,
 unsound behaviors in older versions of the compiler).
 -->
-<h2 id="forget-and-memory-leaks"><a class="header" href="#forget-and-memory-leaks">Forget and memory leaks</a></h2>
+<h2 id="memory-leaks"><a class="header" href="#memory-leaks">Memory leaks</a></h2>
 <p>While the usual way for memory to be reclaimed is for a variable to go out of
 scope, Rust provides special functions to manually reclaim memory: <code>forget</code> and
 <code>drop</code> of the <code>std::mem</code> module (or <code>core::mem</code>). While <code>drop</code> simply triggers
@@ -230,10 +230,20 @@ unwrapped to allow for automatic release (<code>ManuallyDrop::into_inner</code>)
 or manually released (unsafe <code>ManuallyDrop::drop</code>).</p>
 </blockquote>
 <!-- -->
+<h2 id="raw-pointers"><a class="header" href="#raw-pointers">Raw pointers</a></h2>
+<p>This pointers are mainly used to use C pointer. They do not have the same protections
+than <em>smart pointers</em> and often have to be used in <code>unsafe</code> context. For instance, freeing
+raw pointer must be done manually without Rust warranties.</p>
+<blockquote>
+<p><strong>Rule <a id="MEM-NORAWPOINTER"></a>MEM-NORAWPOINTER</strong></p>
+<p>In a secure Rust development without <code>unsafe</code>, references and <em>smart pointers</em>
+should not be converted into <em>raw pointers</em>. For instance, functions <code>into_raw</code> ou <code>into_non_null</code>
+of smart pointers <code>Box</code>, <code>Rc</code>, <code>Arc</code> or <code>Weak</code> should not be used.</p>
+</blockquote>
 <blockquote>
 <p><strong>Rule <a id="MEM-INTOFROMRAW"></a>MEM-INTOFROMRAW</strong></p>
 <p>In a secure Rust development, any pointer created with a call to <code>into_raw</code>
-(or <code>into_raw_nonnull</code>) from one of the following types:</p>
+(or <code>into_non_null</code>) from one of the following types:</p>
 <ul>
 <li><code>std::boxed::Box</code> (or <code>alloc::boxed::Box</code>),</li>
 <li><code>std::rc::Rc</code> (or <code>alloc::rc::Rc</code>),</li>
@@ -251,6 +261,13 @@ or manually released (unsafe <code>ManuallyDrop::drop</code>).</p>
 let raw_ptr = unsafe { Box::into_raw(boxed) };
 let _ = unsafe { Box::from_raw(raw_ptr) }; // will be freed
 <span class="boring">}</span></code></pre></pre>
+</blockquote>
+<p>Converse is true! That is <code>from_raw</code> should be call <strong>only</strong> on <code>into_raw</code>ed value. For instance,
+<code>Rc</code> smart pointer <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html#method.from_raw">explicitly request for this condition</a>
+and, for <code>Box</code> smart pointer, conversion of C pointer into <code>Box</code> is <a href="https://doc.rust-lang.org/std/boxed/index.html#memory-layout">discouraged</a>.</p>
+<blockquote>
+<p><strong>Règle <a id="MEM-INTOFROMRAW"></a>MEM-INTOFROMRAW</strong>
+In a secure Rust development, <code>from_raw</code> should only be called on <code>into_raw</code>ed value</p>
 </blockquote>
 <!-- -->
 <blockquote>

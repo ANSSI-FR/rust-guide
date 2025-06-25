@@ -225,11 +225,15 @@ Do not use <code>forget</code> (<a href="05_memory.html#MEM-FORGET">MEM-FORGET</
 <li><input disabled="" type="checkbox"/>
 Use clippy lint to detect use of <code>forget</code> (<a href="05_memory.html#MEM-FORGET-LINT">MEM-FORGET-LINT</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Do not leak memory (<a href="05_memory.html#MEM-LEAK">MEM-LEAK</a>)</li>
+Do not use <code>leak</code> function (<a href="05_memory.html#MEM-LEAK">MEM-LEAK</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Do release value wrapped in <code>ManuallyDrop</code> (<a href="05_memory.html#MEM-MANUALLYDROP">MEM-MANUALLYDROP</a>)</li>
 <li><input disabled="" type="checkbox"/>
+Do no convert smart pointer into raw pointer in Rust without <code>unsafe</code> (<a href="05_memory.html#MEM-NORAWPOINTER">MEM-NORAWPOINTER</a>)</li>
+<li><input disabled="" type="checkbox"/>
 Always call <code>from_raw</code> on <code>into_raw</code>ed value (<a href="05_memory.html#MEM-INTOFROMRAW">MEM-INTOFROMRAW</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Call <code>from_raw</code> <em>only</em> on <code>into_raw</code>ed value (<a href="05_memory.html#MEM-INTOFROMRAW">MEM-INTOFROMRAW</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Do not use uninitialized memory (<a href="05_memory.html#MEM-UNINIT">MEM-UNINIT</a>)</li>
 <li><input disabled="" type="checkbox"/>

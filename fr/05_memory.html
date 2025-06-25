@@ -174,7 +174,7 @@ l'ownership/borrowing, et identifier les constructions de langage qui peuvent
 casser la sûreté mémoire (par exemple, comportements *unsounds* dans des
 versions plus anciennes du compilateur).
 -->
-<h2 id="forget-et-fuites-de-mémoire"><a class="header" href="#forget-et-fuites-de-mémoire"><code>Forget</code> et fuites de mémoire</a></h2>
+<h2 id="fuites-de-mémoire"><a class="header" href="#fuites-de-mémoire">Fuites de mémoire</a></h2>
 <p>En général, la mémoire est automatiquement récupérée en Rust lorsqu'une variable
 sort de la portée lexicale courante. En complément de ce mécanisme, Rust fournit
 des fonctions spéciales pour réclamer manuellement la mémoire : les fonctions
@@ -239,10 +239,21 @@ la ressource concernée du compilateur au développeur.</p>
 <code>ManuallyDrop::drop</code>).</p>
 </blockquote>
 <!-- -->
+<h2 id="raw-pointers"><a class="header" href="#raw-pointers"><em>Raw pointers</em></a></h2>
+<p>L'utilisation principale des pointeurs <em>raw</em> est de traduire les pointeurs C en Rust.
+Comme leur nom l'indique, ces types sont <em>bruts</em> et n'ont pas toutes les capacités des
+pointeurs <em>intelligents</em> (<em>smart pointer</em>) de Rust. En particulier, leur libération est
+à la charge du programmeur.</p>
+<blockquote>
+<p><strong>Règle <a id="MEM-NORAWPOINTER"></a>MEM-NORAWPOINTER</strong></p>
+<p>Dans un développement sécurisé en Rust non-<em>unsafe</em>, les références et les <em>smart pointers</em>
+ne doivent pas être convertis en <em>raw pointers</em>. En particulier, les fonctions <code>into_raw</code> ou <code>into_non_null</code>
+des <em>smart pointers</em> <code>Box</code>, <code>Rc</code>, <code>Arc</code> ou <code>Weak</code> ne doivent pas être utilisées dans un code Rust non-<em>unsafe</em>.</p>
+</blockquote>
 <blockquote>
 <p><strong>Règle <a id="MEM-INTOFROMRAW"></a>MEM-INTOFROMRAW</strong></p>
 <p>Dans un développement sécurisé en Rust, tout pointeur créé par un appel à
-<code>into_raw</code> (ou <code>into_raw_nonnull</code>) depuis un des types suivants doit
+<code>into_raw</code> (ou <code>into_non_null</code>) depuis un des types suivants doit
 finalement être transformé en valeur avec l'appel à la fonction <code>from_raw</code>
 correspondant, pour permettre sa libération :</p>
 <ul>
@@ -260,6 +271,17 @@ correspondant, pour permettre sa libération :</p>
 let raw_ptr = unsafe { Box::into_raw(boxed) };
 let _ = unsafe { Box::from_raw(raw_ptr) }; // sera libéré
 <span class="boring">}</span></code></pre></pre>
+</blockquote>
+<p>La réciproque est aussi vrai, c'est à dire que les fonctions <code>from_raw</code> ne
+devraient pas être utilisées sur des <em>raw pointers</em> qui ne sont pas issus de la fonction
+<code>into_raw</code> associée. En effet, pour les cas comme <code>Rc</code>, la documentation officielle
+<a href="https://doc.rust-lang.org/std/rc/struct.Rc.html#method.from_raw">limite</a> explicitement ces fonctions
+à ce cas d'usage, et, dans le cas de <code>Box</code>, la conversion de pointeurs C en Box
+<a href="https://doc.rust-lang.org/std/boxed/index.html#memory-layout">n'est pas sûre</a>,</p>
+<blockquote>
+<p><strong>Règle <a id="MEM-INTOFROMRAW"></a>MEM-INTOFROMRAW</strong>
+Dans un développement de sécurité en Rust, les fonctions <code>from_raw</code> ne doivent être appelées que sur des
+valeurs issues de la fonction <code>into_raw</code></p>
 </blockquote>
 <!-- -->
 <blockquote>
