@@ -223,3 +223,96 @@ d'autres raisons.
 <mark>TODO</mark> : complexité cyclomatique du code macro-expansé, limites de
 récursion, ...
 -->
+
+## Déplacement de valeurs
+
+Rust propose trois différents modes de déplacement de valeur:
+
+- Soit par *déplacement*, qui est le comportement par défaut.
+- Ou par *déplacement* plus un *drop* si `mem::needs_drop::<T>()` renvoie `true`.
+- Ou par *copie*, si son type implémente le trait `Copy`
+
+Cependant, des problèmes peuvent être constaté lors de l'utilisation de la fonction `std::ptr::read`.
+Selon la [documentation](https://doc.rust-lang.org/std/ptr/fn.read.html), cette fonction:
+> Lis la valeur pointée par src sans la déplacer. Ce qui laisse la mémoire pointée intact.
+
+Cette fonction est donc responsable d'effectuer une copie de la valeur pointée, indépendamment du mode de déplacement du type en question.
+Ce comportement peut être dangereux car il peut mener à des *double-free* et/ou des *double-drop*.
+
+Pour illustrer ce comportement, considérons le code suivant :
+
+```rust
+#[derive(Debug)]
+struct MyStruct(u8);
+
+impl Drop for MyStruct {
+    fn drop(&mut self) {
+//        println!("---Dropping an object---\nBefore zeroing: {} @ {:p}", self.0, &self.0 as *const u8);
+        self.0 = 0;
+//        println!("After zeroing: {} @ {:p}", self.0, &self.0 as *const u8);
+    }
+}
+
+fn main(){
+  let obj: MyStruct = MyStruct(100);
+  let ptr: *const MyStruct = &test as *const MyStruct;
+  println!("{:?} @ {:p}", unsafe { std::ptr::read(ptr) }, ptr);
+}
+```
+
+On peut observer qu'un deuxième objet a implicitement été créé lors de l'appel à  `std::ptr::read`, i.e. une copie d'un objet *non copiable* est effectuée.
+
+Cela peut poser différents problèmes :
+
+  - Dans certains _rares_ cas (pas de _drop glue_, ni de guarantie de non-aliasing, ni d'invariants de sûreté reliés au type; i.e. quand le type aurait dû être `Copy`), cela peut être sans danger.
+    
+  - Dans la plupart des cas, il pourrait y avoir des invariants de sûreté ou de validité (tel que l'aliasing de pointeur) ce qui rend une instance `unsafe` à utilisé, voire même UB, au moment où l'autre instance est utilisée.
+  
+      - Exemple:
+      
+        ```rust,no_run
+        # use ::core::mem;
+        #
+        let box_1: Box<i32> = Box::new(42);
+        let at_box_1: *const Box<i32> = &box_1;
+        let box_2: Box<i32> = unsafe { at_box_1.read() };
+        mem::forget(box_1); // `Box` non-aliasing guarantees invalidates the pointer in `box_2`
+        drop(box_2); // UB: "usage" of invalidated pointer.
+        ```
+        Cf. [Stacked Borrows](https://plv.mpi-sws.org/rustbelt/stacked-borrows/) pour plus d'informations.
+  
+  - Si le type doit être *drop* (i.e. `mem::needs_drop::<T>()` renvoie vraie), alors quand une des deux instances est *drop*, toute utilisation de l'autre peu causer un *use-after-free*, l'exemple le plus notable étant que la seconde instance sera également *drop*, ce qui causera un *double-free*.
+
+    **Ceci est un Comportement Non Défini (*Undefined Behavior*), et est responsable de vulnérabilités majeures**.
+
+Le code suivant illustre ce problème :
+
+```rust
+# use std::boxed::Box;
+# use std::ops::Drop;
+#
+#[derive(Debug)]
+struct MyStructBoxed(Box<u8>);
+
+impl Drop for MyStructBoxed {
+  fn drop(&mut self) {
+#    println!("---Dropping an object---\nBefore zeroing: {} @ {:p}", self.0, self.0);
+    let value: &mut u8 = self.0.as_mut();
+    *value = 0;
+#    println!("After zeroing: {} @ {:p}", self.0, self.0);
+  }
+}
+
+fn main(){
+  let test: MyStructBoxed = MyStructBoxed(Box::new(100));
+  let ptr: *const MyStructBoxed = &test as *const MyStructBoxed;
+  println!("{:?} @ {:p}", unsafe { std::ptr::read(ptr) }, unsafe { &*ptr }.0 );
+}
+```
+
+> ### Règle {{#check LANG-RAW-PTR | Éviter d'utiliser `std::ptr::read`}}
+>
+> `std::ptr::read` peut avoir des effets de bords indésirables en fonction du mode déplacement du type pointé par le *raw pointer* source.
+> Il est donc préférable d'utiliser l'opération de référencement/déréférencement (`&*`) pour les éviter.
+> 
+> De plus, si le la valeur `T` pointée est `Copy`, l'opérateur de `*`-déréférencement doit être utilisé.
