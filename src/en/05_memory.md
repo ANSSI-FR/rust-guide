@@ -148,8 +148,8 @@ uninitialized memory (except if using `std::mem::uninitialized` or
 
 > **Rule {{#check MEM-UNINIT | Do not use uninitialized memory}}**
 >
-> The `std::mem::uninitialized` function (deprecated 1.38) or the
-> `std::mem::MaybeUninit` type (stabilized 1.36) must not be used, or explicitly
+> The `std::mem::uninitialized` function (deprecated 1.38) must never be used.
+> Each usage of the `std::mem::MaybeUninit` type (stabilized 1.36) must be explicitly
 > justified when necessary.
 
 The use of uninitialized memory may result in two distinct security issues:

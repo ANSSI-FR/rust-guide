@@ -162,9 +162,9 @@ l'utilisation de `std::mem::uninitialized` ou de `std::mem::MaybeUninit`).
 
 > **Règle {{#check MEM-UNINIT | Pas de mémoire non initialisée}}**
 >
-> La fonction `std::mem::uninitialized` (dépréciée depuis la version 1.38) ou
-> le type `std::mem::MaybeUninit` (stabilisé dans la version 1.36) ne doivent
-> pas être utilisés, ou bien explicitement justifiés si nécessaire.
+> La fonction `std::mem::uninitialized` (dépréciée depuis la version 1.38) ne doit jamais être utilisée.
+> Le type `std::mem::MaybeUninit` (stabilisé dans la version 1.36) ne doit être
+> utilisé qu'en fournissant une justification pour chaque cas d'usage.
 
 L'utilisation de mémoire non initialisée peut induire deux problèmes de
 sécurité distincts :
