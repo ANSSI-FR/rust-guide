@@ -178,3 +178,69 @@ impl Drop for ZU32 {
 } // i is freed here
 # }
 ```
+
+## Cyclic reference counted pointers (`Rc` and `Arc`)
+
+Combining [interior mutability](https://doc.rust-lang.org/reference/interior-mutability.html), recurcivity and reference counted pointer into type definitions is unsafe. It can produce memory leaks which can result in DDoS attack or secret leaks.
+
+The following example show such a memory leak in safe Rust:
+
+```rust
+use std::{cell::Cell, rc::Rc};
+
+struct LinkedStruct {
+    other: Cell<Option<Rc<LinkedStruct>>>,
+}
+
+fn main() {
+    println!("Hello, world!");
+    let a = Rc::new(LinkedStruct {
+        other: Cell::new(None),
+    });
+    let b = Rc::new(LinkedStruct {
+        other: Cell::new(None),
+    });
+    let aa = a.clone();
+    let bb = b.clone();
+    a.other.set(Some(bb));
+    b.other.set(Some(aa));
+}
+```
+
+Memory leak is shown with `valgrind`:
+
+```
+$ valgrind --leak-check=full target/release/safe-rust-leak 
+==153637== Memcheck, a memory error detector
+==153637== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==153637== Using Valgrind-3.19.0 and LibVEX; rerun with -h for copyright info
+==153637== Command: target/release/safe-rust-leak
+==153637== 
+Hello, world!
+==153637== 
+==153637== HEAP SUMMARY:
+==153637==     in use at exit: 48 bytes in 2 blocks
+==153637==   total heap usage: 10 allocs, 8 frees, 3,144 bytes allocated
+==153637== 
+==153637== 48 (24 direct, 24 indirect) bytes in 1 blocks are definitely lost in loss record 2 of 2
+==153637==    at 0x48417B4: malloc (vg_replace_malloc.c:381)
+==153637==    by 0x10F8D4: safe_rust_leak::main (in /home/toto/src/safe-rust-leak/target/release/safe-rust-leak)
+==153637==    by 0x10F7E2: std::sys::backtrace::__rust_begin_short_backtrace (in /home/toto/src/safe-rust-leak/target/release/safe-rust-leak)
+==153637==    by 0x10F7D8: std::rt::lang_start::{{closure}} (in /home/toto/src/safe-rust-leak/target/release/safe-rust-leak)
+==153637==    by 0x12A90F: std::rt::lang_start_internal (in /home/toto/src/safe-rust-leak/target/release/safe-rust-leak)
+==153637==    by 0x10FA54: main (in /home/toto/src/safe-rust-leak/target/release/safe-rust-leak)
+==153637== 
+==153637== LEAK SUMMARY:
+==153637==    definitely lost: 24 bytes in 1 blocks
+==153637==    indirectly lost: 24 bytes in 1 blocks
+==153637==      possibly lost: 0 bytes in 0 blocks
+==153637==    still reachable: 0 bytes in 0 blocks
+==153637==         suppressed: 0 bytes in 0 blocks
+==153637== 
+==153637== For lists of detected and suppressed errors, rerun with: -s
+==153637== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+```
+
+> **Règle {{#check MEM-MUT-REC-RC | Avoid cyclic reference counted pointers}}**
+>
+> Avoid recursive types whose recursivity use reference counted pointers together with interior mutability.
