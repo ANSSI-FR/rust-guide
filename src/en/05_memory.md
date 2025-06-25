@@ -34,14 +34,14 @@ In particular, using `forget` may result in not releasing critical resources
 leading to deadlocks or not erasing sensitive data from the memory. That is why,
 `forget` is **unsecure**.
 
-> ### Rule {{#check MEM-FORGET | Do not use `forget`}}
+> **Rule {{#check MEM-FORGET | Do not use `forget`}}**
 >
 > In a secure Rust development, the `forget` function of `std::mem`
 > (`core::mem`) must not be used.
 
 <!-- -->
 
-> ### Recommendation {{#check MEM-FORGET-LINT | Use clippy lint to detect use of `forget`}}
+> **Recommendation {{#check MEM-FORGET-LINT | Use clippy lint to detect use of `forget`}}**
 >
 > The lint `mem_forget` of Clippy may be used to automatically detect any use of
 > `forget`. To enforce the absence of `forget` in a crate, add the following
@@ -60,7 +60,7 @@ The standard library includes other way to *forget* dropping values:
 Those alternatives may lead to the same security issue but they have the
 additional benefit of making their goal obvious.
 
-> ### Rule {{#check MEM-LEAK | Do not leak memory}}
+> **Rule {{#check MEM-LEAK | Do not leak memory}}**
 >
 > In a secure Rust development, the code must not leak memory or resource in
 > particular via `Box::leak`.
@@ -68,7 +68,7 @@ additional benefit of making their goal obvious.
 `ManuallyDrop` and `Box::into_raw` shift the release responsibility from the
 compiler to the developer.
 
-> ### Rule {{#check MEM-MANUALLYDROP | Do release value wrapped in `ManuallyDrop`}}
+> **Rule {{#check MEM-MANUALLYDROP | Do release value wrapped in `ManuallyDrop`}}**
 >
 > In a secure Rust development, any value wrapped in `ManuallyDrop` must be
 > unwrapped to allow for automatic release (`ManuallyDrop::into_inner`)
@@ -76,7 +76,7 @@ compiler to the developer.
 
 <!-- -->
 
-> ### Rule {{#check MEM-INTOFROMRAW | Always call `from_raw` on `into_raw`ed value}}
+> **Rule {{#check MEM-INTOFROMRAW | Always call `from_raw` on `into_raw`ed value}}**
 >
 > In a secure Rust development, any pointer created with a call to `into_raw`
 > (or `into_raw_nonnull`) from one of the following types:
@@ -100,7 +100,7 @@ compiler to the developer.
 
 <!-- -->
 
-> ### Note
+> **Note**
 >
 > In the case of `Box::into_raw`, manual cleanup is possible but a lot more
 > complicated than re-boxing the raw pointer and should be avoided:
@@ -127,7 +127,7 @@ By default, Rust forces all values to be initialized, preventing the use of
 uninitialized memory (except if using `std::mem::uninitialized` or
 `std::mem::MaybeUninit`).
 
-> ### Rule {{#check MEM-UNINIT | Do not use uninitialized memory}}
+> **Rule {{#check MEM-UNINIT | Do not use uninitialized memory}}**
 >
 > The `std::mem::uninitialized` function (deprecated 1.38) or the
 > `std::mem::MaybeUninit` type (stabilized 1.36) must not be used, or explicitly
@@ -138,7 +138,7 @@ The use of uninitialized memory may result in two distinct security issues:
 - drop of uninitialized memory (also a memory safety issue),
 - non-drop of initialized memory.
 
-> ### Note
+> **Note**
 >
 > `std::mem::MaybeUninit` is an improvement over `std::mem::uninitialized`.
 > Indeed, it makes dropping uninitialized values a lot more difficult.
@@ -151,7 +151,8 @@ The use of uninitialized memory may result in two distinct security issues:
 Zeroing memory is useful for sensitive variables, especially if the
 Rust code is used through FFI.
 
-> ### Rule {{#check MEM-ZERO | Zero out memory of sensitive data after use}}
+> **Rule {{#check MEM-ZERO | Zero out memory of sensitive data after use}}**
+>
 > Variables containing sensitive data must be zeroed out after use, using
 > functions that will not be removed by the compiler optimizations, like
 > `std::ptr::write_volatile` or the `zeroize` crate.

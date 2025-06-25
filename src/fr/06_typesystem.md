@@ -33,7 +33,7 @@ complexes (*smart pointers* comme les `Box` ou les `Rc` par exemple). Au
 final, il est probable que l'implémentation du trait `Drop` contienne des blocs
 `unsafe` ainsi que d'autres opérations critiques du point de vue de la sécurité.
 
-> ### Recommandation {{#check LANG-DROP | Justification de l'implémentation du trait `Drop`}}
+> **Recommandation {{#check LANG-DROP | Justification de l'implémentation du trait `Drop`}}**
 >
 > Dans un développement sécurisé en Rust, l'implémentation du trait
 > `std::ops::Drop` doit être justifiée, documentée et examinée par des pairs.
@@ -52,7 +52,7 @@ Les `drop`s manqués peuvent mener à l'exposition de données sensibles ou bien
 encore à l'épuisement de ressources limitées et par là même à des problèmes
 d'indisponibilité.
 
-> ### Règle {{#check LANG-DROP-NO-PANIC | Absence de `panic` dans l'implémentation de `Drop`}}
+> **Règle {{#check LANG-DROP-NO-PANIC | Absence de `panic` dans l'implémentation de `Drop`}}**
 >
 > Dans un développement sécurisé en Rust, l'implémentation du trait
 > `std::ops::Drop` ne doit pas causer de `panic`.
@@ -60,14 +60,14 @@ d'indisponibilité.
 En plus des `panic`s, les `drop`s contenant du code critique doivent être
 protégés.
 
-> ### Règle {{#check LANG-DROP-NO-CYCLE | Absence de cycles de références avec valeurs `Drop`ables}}
+> **Règle {{#check LANG-DROP-NO-CYCLE | Absence de cycles de références avec valeurs `Drop`ables}}**
 >
 > Les valeurs dont le type implémente `Drop` ne doivent pas être incluses,
 > directement ou indirectement, dans un cycle de références à compteurs.
 
 <!-- -->
 
-> ### Recommandation {{#check LANG-DROP-SEC | Sécurité assurée par d'autres mécanismes en plus du trait `Drop`}}
+> **Recommandation {{#check LANG-DROP-SEC | Sécurité assurée par d'autres mécanismes en plus du trait `Drop`}}**
 >
 > Certaines opérations liées à la sécurité d'une application à la fin d'un
 > traitement (comme l'effacement de secrets cryptographiques par exemple) ne
@@ -133,7 +133,7 @@ d'utiliser un champ typé par un type fantôme (`PhantomData`) :
 struct SpecialType(u8, PhantomData<*const ()>);
 ```
 
-> ### Recommandation {{#check LANG-SYNC-TRAITS | Justification de l'implémentation des traits `Send` et `Sync`}}
+> **Recommandation {{#check LANG-SYNC-TRAITS | Justification de l'implémentation des traits `Send` et `Sync`}}**
 >
 > Dans un développement sécurisé en Rust, l'implémentation manuelle des traits
 > `Send` et `Sync` doit être évitée, et, si nécessaire, doit être justifiée,
@@ -240,13 +240,13 @@ second cas, cela peut mener à des problèmes classiques de sécurité liés à 
 violations de propriétés de sûreté mémoire. C'est là encore un atout que de
 limiter au possible l'utilisation des blocs `unsafe`.
 
-> ### Règle {{#check LANG-CMP-INV | Respect des invariants des traits de comparaison standards}}
+> **Règle {{#check LANG-CMP-INV | Respect des invariants des traits de comparaison standards}}**
 >
 > Dans un développement sécurisé en Rust, l'implémentation des traits de
 > comparaison standards doit respecter les invariants décrits dans la
 > documentation.
 
-> ### Recommandation {{#check LANG-CMP-DEFAULTS | Utilisation des implémentations par défaut des traits de comparaison standards}}
+> **Recommandation {{#check LANG-CMP-DEFAULTS | Utilisation des implémentations par défaut des traits de comparaison standards}}**
 >
 > Dans un développement sécurisé en Rust, l'implémentation des traits de
 > comparaison standard ne doit être effectuée que par l'implémentation des
@@ -287,7 +287,7 @@ assert!(T1 { a: 1, b: 1 } > T1 { a: 1, b: 0 });
 # }
 ```
 
-> ### Attention
+> **Attention**
 >
 > La dérivation des traits de comparaison pour les types composites dépend de
 > **l'ordre de déclaration des champs** et non de leur nom.
@@ -316,7 +316,7 @@ En dépit de ces avertissements sur les ordres dérivés, les comparaisons déri
 automatiquement sont bien moins sujettes à erreurs que des implémentations
 manuelles, et rendent le code plus court et plus simple à maintenir.
 
-> ### Recommandation {{#check LANG-CMP-DERIVE | Dérivation des traits de comparaison lorsque c'est possible}}
+> **Recommandation {{#check LANG-CMP-DERIVE | Dérivation des traits de comparaison lorsque c'est possible}}**
 >
 > Dans un développement sécurisé en Rust, l'implémentation des traits de
 > comparaison standard doit être automatiquement dérivée à l'aide de

@@ -39,14 +39,14 @@ ressources critiques, menant à des interblocages et à la persistance de donné
 sensibles en mémoire. C'est pourquoi `forget` doit être considérée comme
 **non sécurisée**.
 
-> ### Règle {{#check MEM-FORGET | Non-utilisation de `forget`}}
+> **Règle {{#check MEM-FORGET | Non-utilisation de `forget`}}**
 >
 > Dans un développement sécurisé en Rust, la fonction `forget` de `std::mem`
 > (`core::mem`) ne doit pas être utilisée.
 
 <!-- -->
 
-> ### Recommandation {{#check MEM-FORGET-LINT | Utilisation du *lint* clippy pour détecter l'utilisation de `forget`}}
+> **Recommandation {{#check MEM-FORGET-LINT | Utilisation du *lint* clippy pour détecter l'utilisation de `forget`}}**
 >
 > Le *lint* `mem_forget` de Clippy peut être utilisé pour automatiquement
 > détecter toute utilisation de la fonction `forget`. Pour s'assurer de l'absence
@@ -68,7 +68,7 @@ La bibliothèque standard inclut d'autres moyens d'*oublier* une valeur :
 Ces alternatives peuvent mener au même type de problème de sécurité, mais ont
 l'avantage de faire apparaître explicitement leur but.
 
-> ### Règle {{#check MEM-LEAK | Absence de fuite mémoire}}
+> **Règle {{#check MEM-LEAK | Absence de fuite mémoire}}**
 >
 > Dans un développement sécurisé en Rust, le code ne doit pas faire fuiter de la
 > mémoire ou des ressources *via* `Box::leak`.
@@ -76,7 +76,7 @@ l'avantage de faire apparaître explicitement leur but.
 `ManuallyDrop` et `Box::into_raw` passent la responsabilité de la libération de
 la ressource concernée du compilateur au développeur.
 
-> ### Règle {{#check MEM-MANUALLYDROP | Libération des valeurs *wrappées* dans `ManuallyDrop`}}
+> **Règle {{#check MEM-MANUALLYDROP | Libération des valeurs *wrappées* dans `ManuallyDrop`}}**
 >
 > Dans un développement sécurisé en Rust, toute valeur *wrappée* dans le type
 > `ManuallyDrop` doit être *unwrapped* pour permettre sa libération automatique
@@ -85,7 +85,7 @@ la ressource concernée du compilateur au développeur.
 
 <!-- -->
 
-> ### Règle {{#check MEM-INTOFROMRAW | Appel systématique à `from_raw` pour les valeurs créées avec `into_raw`}}
+> **Règle {{#check MEM-INTOFROMRAW | Appel systématique à `from_raw` pour les valeurs créées avec `into_raw`}}**
 >
 > Dans un développement sécurisé en Rust, tout pointeur créé par un appel à
 > `into_raw` (ou `into_raw_nonnull`) depuis un des types suivants doit
@@ -108,7 +108,7 @@ la ressource concernée du compilateur au développeur.
 
 <!-- -->
 
-> ### Note
+> **Note**
 >
 > Dans le cas de `Box::into_raw`, le nettoyage automatique est possible, mais
 > est bien plus compliqué que de *re-boxer* le pointeur brut et doit être
@@ -136,7 +136,7 @@ Par défaut, le langage Rust impose que toutes les valeurs soient initialisées,
 prévenir l'utilisation de mémoire non initialisée (à l'exception de
 l'utilisation de `std::mem::uninitialized` ou de `std::mem::MaybeUninit`).
 
-> ### Règle {{#check MEM-UNINIT | Pas de mémoire non initialisée}}
+> **Règle {{#check MEM-UNINIT | Pas de mémoire non initialisée}}**
 >
 > La fonction `std::mem::uninitialized` (dépréciée depuis la version 1.38) ou
 > le type `std::mem::MaybeUninit` (stabilisé dans la version 1.36) ne doivent
@@ -149,7 +149,7 @@ sécurité distincts :
   sûreté mémoire) ;
 - la non-libération de mémoire initialisée.
 
-> ### Note
+> **Note**
 >
 > Le type `std::mem::MaybeUninit` est une amélioration de la fonction
 > `std::mem::uninitialized`. En effet, il rend la libération des valeurs non
@@ -163,7 +163,7 @@ sécurité distincts :
 L'effacement sécurisé (mise à zéro) est nécessaire pour les variables sensibles,
 en particulier dans lorsque le code Rust est utilisé *via* des FFI.
 
-> ### Règle {{#check MEM-ZERO | Mise à zéro des données sensibles après utilisation}}
+> **Règle {{#check MEM-ZERO | Mise à zéro des données sensibles après utilisation}}**
 >
 > Les variables contenant des données sensibles doivent être mises à zéro après
 > utilisation, en utilisant des fonctions dont les appels ne seront pas

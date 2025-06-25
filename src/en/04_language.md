@@ -23,7 +23,7 @@ some particular constructions:
 - (C-FEATURE) for feature naming,
 - (C-WORD-ORDER) for word order consistency.
 
-> ### Rule {{#check LANG-NAMING | Respect naming conventions}}
+> **Rule {{#check LANG-NAMING | Respect naming conventions}}**
 >
 > Development of a secure application must follow the naming conventions
 > outlined in the [Rust API Guidelines].
@@ -40,7 +40,8 @@ races.
 To perform risky actions such as system calls, type coercions, or direct
 manipulations of memory pointers, the language provides the `unsafe` keyword.
 
-> ### Rule {{#check LANG-UNSAFE | Don't use unsafe blocks}}
+> **Rule {{#check LANG-UNSAFE | Don't use unsafe blocks}}**
+>
 > For a secured development, the `unsafe` blocks must be avoided. Afterward,
 > we list the only cases where `unsafe` may be used, provided that they come
 > with a proper justification:
@@ -107,7 +108,8 @@ else { println!("{}", res); }
 # }
 ```
 
-> ### Rule {{#check LANG-ARITH | Use appropriate arithmetic operations regarding potential overflows}}
+> **Rule {{#check LANG-ARITH | Use appropriate arithmetic operations regarding potential overflows}}**
+>
 > When assuming that an arithmetic operation can produce an overflow, the
 > specialized functions `overflowing_<op>`, `wrapping_<op>`, or the
 > `Wrapping` type must be used.
@@ -121,13 +123,13 @@ else { println!("{}", res); }
 The `Result` type is the preferred way of handling functions that can fail.
 A `Result` object must be tested, and never ignored.
 
-> ### Recommendation {{#check LANG-ERRWRAP | Implement custom `Error` type, wrapping all possible errors}}
+> **Recommendation {{#check LANG-ERRWRAP | Implement custom `Error` type, wrapping all possible errors}}**
 >
 > A crate can implement its own `Error` type, wrapping all possible errors.
 > It must be careful to make this type exception-safe (RFC 1236), and implement
 > `Error + Send + Sync + 'static` as well as `Display`.
 
-> ### Recommendation {{#check LANG-ERRDO | Use the `?` operator and do not use the `try!` macro}}
+> **Recommendation {{#check LANG-ERRDO | Use the `?` operator and do not use the `try!` macro}}**
 >
 > The `?` operator should be used to improve readability of code.
 > The `try!` macro should not be used.
@@ -166,11 +168,13 @@ Common patterns that can cause panics are:
 - large allocations,
 - string formatting using `format!`.
 
-> ### Rule {{#check LANG-NOPANIC | Don't use functions that can cause `panic!`}}
+> **Rule {{#check LANG-NOPANIC | Don't use functions that can cause `panic!`}}**
+>
 > Functions or instructions that can cause the code to panic at runtime must not
 > be used.
 
-> ### Rule {{#check LANG-ARRINDEXING | Test properly array indexing or use the `get` method}}
+> **Rule {{#check LANG-ARRINDEXING | Test properly array indexing or use the `get` method}}**
+>
 > Array indexing must be properly tested, or the `get` method should be used to
 > return an `Option`.
 
@@ -190,7 +194,8 @@ When calling Rust code from another language (for ex. C), the Rust code must
 be careful to never panic.
 Stack unwinding from Rust code into foreign code results in undefined behavior.
 
-> ### Rule {{#check LANG-FFIPANIC | Handle correctly `panic!` in FFI}}
+> **Rule {{#check LANG-FFIPANIC | Handle correctly `panic!` in FFI}}**
+>
 > Rust code called from FFI must either ensure the function cannot panic, or use
 > `catch_unwind` or the `std::panic` module to ensure the rust code will not
 > abort or return in an unstable state.
