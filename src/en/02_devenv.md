@@ -103,14 +103,45 @@ It has a fundamental role in most Rust development:
 - It’s also a front-end to run complementary tools such as those that are
   described below, in the form of sub-commands.
 
-> **Warning**
+Cargo enables automatic dependencies resolution before compilation 
+by checking their checksums.
+File `Cargo.lock` contains all dependencies checksums which are compared to
+the one downloaded.
+If a difference is detected, compilation fails:
+
+```
+error: checksum for `sha256 v1.6.0` changed between lock files
+
+this could be indicative of a few possible errors:
+
+    * the lock file is corrupt
+    * a replacement source in use (e.g., a mirror) returned a different checksum
+    * the source itself may be corrupt in one way or another
+
+unable to verify that `sha256 v1.6.0` is the same as when the lockfile was generated
+```
+
+When the `Cargo.lock` file is missing, it is generated on first build and records the
+dependencies' checksums, adhering to a TOFU (*Trust On First Use*) policy.
+This file can also be created manually with `cargo generate-lockfile`. If it already exists,
+the file is overwritten with the latest available version of every crate.
+
+> **Rule {{#check DENV-CARGO-LOCK | Track Cargo.lock in version control system}}**
 >
-> Like `rustup`, `cargo` does perform all downloads over HTTPS, but does not
-> validate the registry index. Ongoing discussions occur on how to best protect
-> and verify crates. For now, the security relies on the good security of the
-> website [crates.io] and the GitHub hosted repository containing the
-> registry index. In some cases, it may be preferable to opt for an alternative
-> installation method for dependencies.
+> `Cargo.lock` files must be tracked by version control system.
+
+<div class="warning">
+
+**Warning**
+
+Ongoing discussions occur on how to best protect
+and verify crates *on their first download* (according TOFU rule).
+For now, the security of the first download relies on the good security of the
+website [crates.io] and the GitHub hosted repository containing the
+registry index. In some cases, it may be preferable to opt for an alternative
+installation method for dependencies.
+
+</div>
 
 Cargo proposes many different commands and options to adapt the build process to
 your project needs, mainly through the manifest file `Cargo.toml`. For a
