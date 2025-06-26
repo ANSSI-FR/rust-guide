@@ -77,13 +77,59 @@ langage fournit le mot-clé `unsafe`.
 
 ## Précaution générale d'un code unsafe
 
-### (Non-)localité d'un bloc *unsafe*
+### Préservation des invariants
 
-***TODO***
+La protection des invariants d'une librairie est primordiale pour se prémunir de
+bugs en général, d'*UB* en particulier.
 
-#### Références
+L'exemple qui suit est extrait du [Rustonomicon](https://doc.rust-lang.org/nomicon/working-with-unsafe.html).
 
-* https://doc.rust-lang.org/nomicon/working-with-unsafe.html
+Si l'on souhait réimplémenter le type `Vec`, on peut utiliser le code suivant
+
+
+```rust
+use std::ptr;
+
+pub struct Vec<T> {
+    ptr: *mut T,
+    len: usize,
+    cap: usize,
+}
+
+// Note this implementation does not correctly handle zero-sized types.
+impl<T> Vec<T> {
+    pub fn push(&mut self, elem: T) {
+        if self.len == self.cap {
+            // not important for this example
+            self.reallocate();
+        }
+        unsafe {
+            ptr::write(self.ptr.add(self.len), elem);
+            self.len += 1;
+        }
+    }
+}
+```
+
+La sûreté de ce code repose sur plusieurs invariants, dont l'un stipule que
+la plage d'octets allant de `self.ptr` à `self.ptr + self.cap * size_of<T>()` est allouée.
+
+Or, il est possible de casser cet invariant avec du code *safe*. Par exemple
+
+
+```rust
+fn make_room(&mut self) {
+    // grow the capacity
+    self.cap += 1;
+}
+```
+
+Si elle peut être tout à fait légitime pour du code *interne* à l'API,
+cette fonction ne doit pas être exposée par l'API ou alors doit être annotée 
+par `unsafe` car elle peut conduire à des *UB* (même si elle ne comporte pas de blocs *unsafe*s).
+
+Lors de l'écriture d'une API *safe* à partir de code *unsafe*, il est très important de bien
+spécifier ce qui est *publique* de ce qui ne l'est pas.
 
 ### Relation de confiance *safe*/*unsafe*
 
@@ -94,7 +140,7 @@ langage fournit le mot-clé `unsafe`.
 Le *mantra* de Rust pourrait se résumer à :
 
 > un code sans `unsafe` ne peut pas mal se comporter, c'est à dire qu'il ne peut pas 
-> produire d'*UA*.
+> produire d'*UB*.
 
 C'est la promesse faite au développeur de code sans `unsafe`.
 
