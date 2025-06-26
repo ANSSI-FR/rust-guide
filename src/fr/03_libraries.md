@@ -12,23 +12,32 @@ de ce dépôt doit donc être justifié, et le développeur doit également vali
 bon respect des règles du présent guide sur le code correspondant. Plusieurs
 outils peuvent l'aider dans cette tâche.
 
-## Cargo-outdated
+## Mise à jour des dépendances
 
-L'outil [Cargo-outdated] permet de faciliter la gestion des versions des
-dépendances.
+La mise à jour des bibliothèques tierces est primordiale pour assurer la bonne 
+correction d'éventuelles vulnérabilités.
 
-Pour une *crate* donnée, l'outil liste les versions utilisées des dépendances
-(dépendances listées dans le fichier `Cargo.toml`), et vérifie s'il s'agit de la
-dernière version compatible disponible ainsi que la dernière version en général.
+Le mécanisme de résolution des dépendances s'appuie sur les fichiers `Cargo.toml` et
+`Cargo.lock`.
 
-> **Règle {{#check LIBS-OUTDATED | Vérification des dépendances obsolètes (cargo-outdated)}}**
->
-> L'outil `cargo-outdated` doit être utilisé pour vérifier le statut des
-> dépendances. Ensuite, chaque dépendance importée en version obsolète doit
-> être mise à jour ou bien, le cas échéant, le choix de la version doit être
-> justifié.
+* Le fichier `Cargo.toml` liste les contraintes imposées par les développeur
+* Le fichier `Cargo.lock` trace la résolution de ces contraintes par Cargo *à un moment donnée*.
 
-[cargo-outdated]: https://github.com/kbknapp/cargo-outdated
+Aussi, la mise à jour des dépendances intervient à plusieurs niveau.
+
+* Le fichier `Cargo.toml` peut être mis à jour pour utiliser une nouvelle version d'une dépendance.
+  À la prochaine compilation, le fichier `Cargo.lock` sera mis à jour en conséquence.
+* Pour un fichier `Cargo.toml` donné, la résolution des dépendances par cargo peut changer entre deux instants.
+  En effet, de nouvelles version de dépendances on pu être publiées dans ce lapse de temps.
+  Aussi, pour mettre à jour les dépendances tout en conservant les contraintes de `Cargo.toml`, on 
+  peut mettre à jour le fichier `Cargo.lock` grâce à la commande `cargo update`,
+  ce qui revient à supprimer le fichier `Cargo.lock` et le reconstruire ou d'appliquer `cargo generate-lockfile`. <!-- vérifié par le test mais est-ce tout le temps le cas ? -->
+
+  La commande `cargo update` permet aussi de ne mettre à jour qu'une partie des dépendances. Par exemple
+
+  ```
+  cargo update serde clap
+  ```
 
 ## Cargo-audit
 
