@@ -24,7 +24,7 @@ plus précises pour certaines constructions particulières :
 - (C-FEATURE) pour les noms de *features* ;
 - (C-WORD-ORDER) pour la cohérence sur l'ordre des mots.
 
-> ### Règle {{#check LANG-NAMING | Respect des conventions de nommage}}
+> **Règle {{#check LANG-NAMING | Respect des conventions de nommage}}**
 >
 > Le développement d'une application sécurisée doit suivre les conventions de
 > nommage décrites dans les [Rust API Guidelines].
@@ -129,7 +129,7 @@ else { println!("{}", res); }
 # }
 ```
 
-> ### Règle {{#check LANG-ARITH | Utilisation des opérations arithmétiques appropriées au regard des potentiels dépassements}}
+> **Règle {{#check LANG-ARITH | Utilisation des opérations arithmétiques appropriées au regard des potentiels dépassements}}**
 >
 > Lorsqu'une opération arithmétique peut produire un dépassement d'entier, les
 > fonctions spécialisées `overflowing_<op>`, `wrapping_<op>` ou le type
@@ -143,7 +143,7 @@ testé et jamais ignoré.
 
 ### Implémentation d'un type d'Erreur personnalisé
 
-> ### Recommandation {{#check LANG-ERRWRAP | Mise en place d'un type `Error` personnalisé, pouvant contenir toutes les erreurs possibles}}
+> **Recommandation {{#check LANG-ERRWRAP | Mise en place d'un type `Error` personnalisé, pouvant contenir toutes les erreurs possibles}}**
 >
 > Une *crate* peut implanter son propre type `Error` qui peut contenir toutes
 > les erreurs possibles. Des précautions supplémentaires doivent être prises :
@@ -152,6 +152,11 @@ testé et jamais ignoré.
 
 Pour s'assurer que la recommandation ci-dessus soit bien implémenter, vous pouvez vous réferez à la section
 concernant [les tests de bonnes implémentations](08_testfuzz.md#Implémentation-de-trait) des traits de ce guide.
+
+> **Recommandation {{#check LANG-ERRDO | Utilisation de l'opérateur `?` et non-utilisation de la macro `try!`}}**
+>
+> L'opérateur `?` doit être utilisé pour améliorer la lisibilité du code.
+> La macro `try!` ne doit pas être utilisée.
 
 ### Utilisation de bibliothèque tierce
 
@@ -189,12 +194,12 @@ Des motifs courants de code qui provoquent des `panic` sont :
 - une division par zéro ;
 - l'utilisation de `format!` pour le formatage d'une chaîne de caractères.
 
-> ### Règle {{#check LANG-NOPANIC | Non-utilisation de fonctions qui peuvent causer des `panic`}}
+> **Règle {{#check LANG-NOPANIC | Non-utilisation de fonctions qui peuvent causer des `panic`}}**
 >
 > Les fonctions et instructions qui peuvent causer des `panic` à l'exécution
 > ne doivent pas être utilisées.
 
-> ### Règle {{#check LANG-ARRINDEXING | Test des indices d'accès aux tableaux ou utilisation de la méthode `get`}}
+> **Règle {{#check LANG-ARRINDEXING | Test des indices d'accès aux tableaux ou utilisation de la méthode `get`}}**
 >
 > L'indice d'accès à un tableau doit être testé, ou la méthode `get` doit être
 > utilisée pour récupérer une `Option`.
@@ -217,7 +222,7 @@ jamais pouvoir paniquer.
 Dérouler (*unwinding*) depuis le code Rust vers le code étranger résulte en un
 comportement indéfini.
 
-> ### Règle {{#check LANG-FFIPANIC | Gestion correcte des `panic!` dans les FFI}}
+> **Règle {{#check LANG-FFIPANIC | Gestion correcte des `panic!` dans les FFI}}**
 >
 > Le code Rust appelé depuis une FFI doit soit être assuré de ne pas paniquer,
 > soit utiliser `catch_unwind` ou le module `std::panic` pour s'assurer qu'il

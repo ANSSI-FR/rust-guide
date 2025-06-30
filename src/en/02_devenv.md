@@ -6,7 +6,7 @@
 switching between different flavors of the toolchain (stable, beta, nightly),
 managing additional components installation and keeping them up to date.
 
-> ### Warning
+> **Warning**
 >
 > From a security perspective, `rustup` does perform all downloads over HTTPS,
 > but does not yet validate signatures of downloads. Protection against
@@ -32,7 +32,8 @@ language, that are used in such applications, rather than to Rust editions.
 In the rest of this guide, best effort will be made to highlight constructions
 and language features that are specific to a particular Rust edition.
 
-> ### Note
+> **Note**
+>
 > No specific edition is recommended, as long as users follow the
 > recommendations related to the features offered by the edition that has been
 > chosen.
@@ -66,7 +67,8 @@ $ rustup override list
 $
 ```
 
-> ### Rule {{#check DENV-STABLE | Use a stable compilation toolchain}}
+> **Rule {{#check DENV-STABLE | Use a stable compilation toolchain}}**
+>
 > Development of a secure application must be done using a fully stable
 > toolchain, for limiting potential compiler, runtime or tool bugs.
 
@@ -101,7 +103,7 @@ It has a fundamental role in most Rust development:
 - It’s also a front-end to run complementary tools such as those that are
   described below, in the form of sub-commands.
 
-> ### Warning
+> **Warning**
 >
 > Like `rustup`, `cargo` does perform all downloads over HTTPS, but does not
 > validate the registry index. Ongoing discussions occur on how to best protect
@@ -126,7 +128,8 @@ Overriding the default options may cause bugs not being detected, even when
 using the debug profile that normally enables runtime checks (for example
 [integer overflow checks](./04_language.html#integer-overflows)).
 
-> ### Rule {{#check DENV-CARGO-OPTS | Keep default values for critical variables in cargo profiles}}
+> **Rule {{#check DENV-CARGO-OPTS | Keep default values for critical variables in cargo profiles}}**
+>
 > The variables `debug-assertions` and `overflow-checks` must not be overridden
 > in development profiles sections (`[profile.dev]` and `[profile.test]`).
 
@@ -140,7 +143,8 @@ environment variable `RUSTC_WRAPPER`, for example, that may be used to generate
 part of code or to run external tools before Rust compilation, it is preferable
 to use the Cargo build scripts feature.
 
-> ### Rule {{#check DENV-CARGO-ENVVARS | Keep default values for compiler environment variables when running cargo}}
+> **Rule {{#check DENV-CARGO-ENVVARS | Keep default values for compiler environment variables when running cargo}}**
+>
 > The environment variables `RUSTC`, `RUSTC_WRAPPER` and `RUSTFLAGS` must not
 > be overriden when using Cargo to build the project.
 
@@ -161,7 +165,7 @@ detect. The warnings should be re-checked by the programmer before committing
 the fix that is suggested by `clippy`, especially in the case of lints of the
 category `clippy::nursery` since those hints are still under development.
 
-> ### Rule {{#check DENV-LINTER | Use linter regularly}}
+> **Rule {{#check DENV-LINTER | Use linter regularly}}**
 >
 > A linter, such as `clippy`, must be used regularly during the development of
 > a secure application.
@@ -196,9 +200,10 @@ single_line_if_else_max_width = 40
 ```
 
 For more information about the guidelines that `rustfmt` will check, have a look
-at the [Rust Style Guide](https://github.com/rust-dev-tools/fmt-rfcs/blob/master/guide/guide.md).
+at the [Rust Style Guide](https://doc.rust-lang.org/style-guide/index.html).
 
-> ### Rule {{#check DENV-FORMAT | Use Rust formatter (rustfmt)}}
+> **Rule {{#check DENV-FORMAT | Use Rust formatter (rustfmt)}}**
+>
 > The tool `rustfmt` can be used to ensure that the codebase respects style
 > guidelines (as described in `rustfmt.toml` file), with `--check` option and
 > manual review.
@@ -237,7 +242,7 @@ proposed fixes. In particular mode, some corrections (such as some of those
 provided with the `--edition-idioms`) are known to break the compilation
 or change the program semantics in some case.
 
-> ### Rule {{#check DENV-AUTOFIX | Manually check automatic fixes}}
+> **Rule {{#check DENV-AUTOFIX | Manually check automatic fixes}}**
 >
 > In a secure Rust development, any automatic fix (for instance, provided by
 > `rustfix`) must be verified by the developer.
