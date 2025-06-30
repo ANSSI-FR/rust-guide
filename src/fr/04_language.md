@@ -73,6 +73,19 @@ langage fournit le mot-clé `unsafe`.
 > afin de générer des erreurs de compilation dans le cas ou le mot-clé `unsafe`
 > est utilisé dans le projet.
 
+> ### Information
+>
+>Il est également possible d'obtenir le même résultat en rajoutant l'un des deux blocs ci-dessous au fichier `Cargo.toml`.
+
+```toml
+[lints.rust]
+unsafe_code="forbid"
+```
+
+```toml
+[lints.clippy]
+unsafe_code = "forbid"
+```
 ## Dépassement d'entiers
 
 Bien que des vérifications soient effectuées par Rust en ce qui concerne les
@@ -124,13 +137,11 @@ else { println!("{}", res); }
 
 ## Gestion des erreurs
 
-<!--
-<mark>TODO</mark>: décrire les bonnes pratiques de gestion d'erreurs.
--->
-
 Le type `Result` est la façon privilégiée en Rust pour décrire le type de retour
 des fonctions dont le traitement peut échouer. Un objet `Result` doit être
 testé et jamais ignoré.
+
+### Implémentation d'un type d'Erreur personnalisé
 
 > **Recommandation {{#check LANG-ERRWRAP | Mise en place d'un type `Error` personnalisé, pouvant contenir toutes les erreurs possibles}}**
 >
@@ -139,10 +150,15 @@ testé et jamais ignoré.
 > ce type doit être *exception-safe* (RFC 1236) et implémenter les traits
 > `Error + Send + Sync + 'static` ainsi que `Display`.
 
+Pour s'assurer que la recommandation ci-dessus soit bien implémenter, vous pouvez vous réferez à la section
+concernant [les tests de bonnes implémentations](08_testfuzz.md#Implémentation-de-trait) des traits de ce guide.
+
 > **Recommandation {{#check LANG-ERRDO | Utilisation de l'opérateur `?` et non-utilisation de la macro `try!`}}**
 >
 > L'opérateur `?` doit être utilisé pour améliorer la lisibilité du code.
 > La macro `try!` ne doit pas être utilisée.
+
+### Utilisation de bibliothèque tierce
 
 Des *crates* tierces peuvent être utilisées pour faciliter la gestion d'erreurs.
 La plupart ([failure], [snafu], [thiserror]) proposent la création de types

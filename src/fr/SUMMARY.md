@@ -7,7 +7,7 @@
 - [Gestion de la mémoire](05_memory.md)
 - [Système de types](06_typesystem.md)
 - [FFI](07_ffi.md)
+- [Test et fuzzing](08_testfuzz.md)
 
 [License](LICENSE.md)
 
-<!-- TODO: - [Test et fuzzing](08_testfuzz.md) -->

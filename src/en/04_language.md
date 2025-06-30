@@ -67,6 +67,19 @@ manipulations of memory pointers, the language provides the `unsafe` keyword.
 > the crate root (typically `main.rs` or `lib.rs`) to generate compilation
 > errors if `unsafe` is used in the code base.
 
+ > ### Information
+>
+>You can also obtain the same result by adding one of the two blocks below to the `Cargo.toml` file.
+
+```toml
+[lints.rust]
+unsafe_code="forbid"
+```
+
+```toml
+[lints.clippy]
+unsafe_code = "forbid"
+```
 ## Integer overflows
 
 Although some verification is performed by Rust regarding potential integer
@@ -114,14 +127,12 @@ else { println!("{}", res); }
 > specialized functions `overflowing_<op>`, `wrapping_<op>`, or the
 > `Wrapping` type must be used.
 
-
-
 ## Error handling
-
-<!-- <mark>TODO</mark>: explicit good practices in error handling. -->
 
 The `Result` type is the preferred way of handling functions that can fail.
 A `Result` object must be tested, and never ignored.
+
+### Custom Error type implementation
 
 > **Recommendation {{#check LANG-ERRWRAP | Implement custom `Error` type, wrapping all possible errors}}**
 >
@@ -129,10 +140,10 @@ A `Result` object must be tested, and never ignored.
 > It must be careful to make this type exception-safe (RFC 1236), and implement
 > `Error + Send + Sync + 'static` as well as `Display`.
 
-> **Recommendation {{#check LANG-ERRDO | Use the `?` operator and do not use the `try!` macro}}**
->
-> The `?` operator should be used to improve readability of code.
-> The `try!` macro should not be used.
+To ensure that the above recommendation is implemented correctly, you may check
+the [test implementing trait](08_testfuzz.md#implementing-a-trait) section of this guide.
+
+### Third-party library use
 
 Third-party crates may be used to facilitate error handling. Most of them
 (notably [failure], [snafu], [thiserror]) address the creation of new custom
