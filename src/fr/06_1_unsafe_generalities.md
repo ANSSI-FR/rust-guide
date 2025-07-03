@@ -11,6 +11,26 @@ Les capacités du langages peuvent être étendues en utilisant du code *unsafe*
 
 Si ces capacités sont nécessaires à la programmation système, elles font perdre au langage ses [propriétés de sûreté](04_language.md#garanties-du-langage).
 
+## Usages du mot-clé `unsafe`
+
+Le mot-clé `unsafe` a deux usages : dans une API et dans une implémentation.
+
+### `unsafe` dans une API
+
+L'usage de ce mot-clé dans une API *met en garde* l'utilisateur de l'API contre
+les potentiels effets néfaste de l'usage de l'API.
+
+* Dans une signature de fonction, `unsafe` signifie que le comportement de la fonction
+  peut conduire à des *UB* si le contrat d'usage de la fonction (dans sa documentation)
+  n'est pas respecté.
+* Dans la définition d'un trait, `unsafe` signifie qu'une implémentation erronée de ce trait
+  peut conduire à des UB
+
+### `unsafe` dans une implémentation
+
+L'usage de ce mot-clé dans une implémentation (un bloc de code) est imposé par le compilateur
+pour empêcher l'usage *par inadvertance* de fonctions marquées `unsafe`.
+
 ## Utilisation de Rust *unsafe*
 
 L'utilisation conjointe du système de types et du système d'*ownership* vise à

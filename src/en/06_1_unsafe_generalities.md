@@ -11,6 +11,21 @@ Language capabilities can be extended using unsafe code. The full list of these 
 
 These capabilities may be necessary for system programming but they cause the language to lose its [security properties](04_language.md#language-guarantees).
 
+## `unsafe` keyword
+
+The `unsafe` keyword is used both for API and implementation.
+
+### `unsafe` in API
+
+The use of this keyword in an API *warns* the API user against the potential harmful effects of the use of the API.
+
+* In a function signature, `unsafe` means that the behavior of the function may lead to *UB*s if the use of the function does not comply with its interface contract (informally described in its documentation).
+* In a trait definition, `unsafe` means that an erroneous implementation of this trait may lead to *UB*s.
+
+### `unsafe` in implementation
+
+Using this keyword in an implementation (a code block) is imposed by the compiler to prevent the inadvertent use of `unsafe` functions.
+
 ## Unsafe code
 
 The combined use of the type system and the ownership system
