@@ -182,40 +182,6 @@ sécurité distincts :
 > C'est problématique en particulier si l'on considère l'utilisation de `Drop`
 > pour effacer des valeurs sensibles.
 
-## Effacement sécurisé des informations sensibles
-
-L'effacement sécurisé (mise à zéro) est nécessaire pour les variables sensibles,
-en particulier dans lorsque le code Rust est utilisé *via* des FFI.
-
-> **Règle {{#check MEM-ZERO | Mise à zéro des données sensibles après utilisation}}**
->
-> Les variables contenant des données sensibles doivent être mises à zéro après
-> utilisation, en utilisant des fonctions dont les appels ne seront pas
-> supprimés par les optimisations du compilateur, comme
-> `std::ptr::write_volatile` ou bien la *crate* `zeroize`.
-
-Le code suivant montre comment définir un type entier qui sera remis à zéro
-à sa libération, en utilisant le trait `Drop` :
-
-```rust
-/// Exemple : newtype pour u32, réécrit à 0 quand libéré
-pub struct ZU32(pub u32);
-
-impl Drop for ZU32 {
-    fn drop(&mut self) {
-        println!("zeroing memory");
-        unsafe{ ::std::ptr::write_volatile(&mut self.0, 0) };
-    }
-}
-
-# fn main() {
-{
-    let i = ZU32(42);
-    // ...
-} // i est libéré ici
-# }
-```
-
 ## Cycle dans les références comptées (`Rc` et `Arc`)
 
 La **combinaison** de la mutabilité *[intérieure](https://doc.rust-lang.org/reference/interior-mutability.html)*, des références comptées et des types récursifs n'est pas sûre. En effet, elle peut conduire à fuites mémoire, et donc éventuellement à des attaques par déni de service et en des fuites de secrets.
