@@ -1,5 +1,16 @@
 # Généralités sur l'utilisation de `unsafe`
 
+## Comportements ajoutés par Rust *unsafe*
+
+Les capacités du langages peuvent être étendues en utilisant du code *unsafe*. La liste complète de ces capacités est donnée dans le [manuel de Rust](https://doc.rust-lang.org/reference/unsafety.html). On notera les capacités suivantes.
+
+* Déréférencer un *raw pointer*
+* Modifier une variable mutable statique
+* Accéder aux champs d'une `union`
+* Déclarer un block `extern`
+
+Si ces capacités sont nécessaires à la programmation système, elles font perdre au langage ses [propriétés de sûreté](04_language.md#garanties-du-langage).
+
 ## Utilisation de Rust *unsafe*
 
 L'utilisation conjointe du système de types et du système d'*ownership* vise à

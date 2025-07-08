@@ -1,5 +1,16 @@
 # General information on `unsafe`
 
+## *Unsafe* capacities
+
+Language capabilities can be extended using unsafe code. The full list of these capacities is given in the [Rust reference](https://doc.rust-lang.org/reference/unsafety.html). Notice the following one's.
+
+* Dereference a raw pointer
+* Modify a static mutable variable
+* Access to the fields of a `union`
+* Declaring an `extern` block
+
+These capabilities may be necessary for system programming but they cause the language to lose its [security properties](04_language.md#language-guarantees).
+
 ## Unsafe code
 
 The combined use of the type system and the ownership system
