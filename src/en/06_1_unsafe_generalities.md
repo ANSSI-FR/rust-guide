@@ -2,9 +2,8 @@
 
 ## Unsafe code
 
-The joint utilization of the type system and the ownership system aims to
-enforce safety regarding memory management in Rust's programs. So the language
-aims to avoid memory overflows, null or invalid pointer constructions, and data
+The combined use of the type system and the ownership system
+enforces a high-level memory safety in Rust programs. This way, the language helps prevent memory overflows, null or invalid pointer constructions, and data
 races.
 To perform risky actions such as system calls, type coercions, or direct
 manipulations of memory pointers, the language provides the `unsafe` keyword.
