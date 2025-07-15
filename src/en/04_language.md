@@ -207,3 +207,116 @@ the process.
 <mark>TODO</mark>: cyclomatic complexity of the macro expanded code, recursion
 limits, ...
 -->
+
+## Value displacement
+
+Values in Rust may have three distinct semantics when considering value displacement:
+
+- Either it has _move_ semantics, this behavior is the default one.
+- Or it has move _move_ semantics plus the _drop_ semantics, i.e. its type has [_drop glue_](https://doc.rust-lang.org/core/mem/fn.needs_drop.html) (by directly implementing `Drop` or by containing a field with _drop glue_).
+- Or it has copy semantics, by having its type implementing the `Copy` trait.
+
+However, some problem may appear when using the `std::ptr::read` function.
+According to the [documentation](https://doc.rust-lang.org/std/ptr/fn.read.html), the function:
+> Reads the value from src without moving it. This leaves the memory in src unchanged.
+
+To be clear, this function is performing a bit-wise (shallow) copy of the pointee (value pointed to by the raw pointer), regardless of its type semantics.
+This is a dangerous behavior as it can lead to double-drop and, in some cases, to double-free.
+
+To illustrate the copy on a type having the move semantics let's consider the following snippet:
+
+```rust
+# use std::ops::Drop;
+#
+#[derive(Debug)]
+struct MyStruct(u8);
+
+impl Drop for MyStruct {
+    fn drop(&mut self) {
+#        println!("---Dropping an object---\nBefore zeroing: {} @ {:p}", self.0, &self.0 as *const u8);
+        self.0 = 0;
+#        println!("After zeroing: {} @ {:p}", self.0, &self.0 as *const u8);
+    }
+}
+
+fn main(){
+  let obj: MyStruct = MyStruct(42);
+  let ptr: *const MyStruct = &obj as *const MyStruct;
+  println!("{:?} @ {:p}", unsafe { std::ptr::read(ptr) }, ptr);
+}
+```
+Output (may vary):
+```
+MyStruct(42) @ 0x7ffcb01ec737
+---Dropping an object---
+Before zeroing: 42 @ 0x7ffcb01ec7a7
+After zeroing: 0 @ 0x7ffcb01ec7a7
+Before zeroing: 42 @ 0x7ffcb01ec737
+---Dropping an object---
+After zeroing: 0 @ 0x7ffcb01ec737
+```
+
+We can see that a second object is created by the call to `std::ptr::read`, i.e. a copy of a _non-copy_ object is performed.
+
+This causes problems of varying severity:
+
+  - In some _rare_ cases (no _drop glue_, no non-aliasing guarantees, no _safety invariants_ attached to the type; basically when the type should have been `Copy` itself), it can be harmless.
+    
+  - In most cases, there may be _safety_ or _validity_ invariants (such as pointer aliasing, or rather, lack thereof) which make one instance become `unsafe` to use, or even UB to use, the moment the other instance is.
+  
+      - Example:
+      
+        ```rust,no_run
+        # use ::core::mem;
+        #
+        let box_1: Box<i32> = Box::new(42);
+        let at_box_1: *const Box<i32> = &box_1;
+        let box_2: Box<i32> = unsafe { at_box_1.read() };
+        mem::forget(box_1); // `Box` non-aliasing guarantees invalidates the pointer in `box_2`
+        drop(box_2); // UB: "usage" of invalidated pointer.
+        ```
+        See [Stacked Borrows](https://plv.mpi-sws.org/rustbelt/stacked-borrows/) for more info.
+  
+  - If the type has drop glue, then, when one of the two instances is dropped, any usage of the other may cause a use-after-free, the most notable example being that the second instance will be, in and of itself, freed, causing a double-free.
+
+    **This is Undefined Behavior, and is a source of major vulnerabilities**.
+
+The following snippet showcases this double-free bug:
+```rust
+# use std::boxed::Box;
+# use std::ops::Drop;
+#
+#[derive(Debug)]
+struct MyStructBoxed(Box<u8>);
+
+impl Drop for MyStructBoxed {
+  fn drop(&mut self) {
+#    println!("---Dropping an object---\nBefore zeroing: {} @ {:p}", self.0, self.0);
+    let value: &mut u8 = self.0.as_mut();
+    *value = 0;
+#    println!("After zeroing: {} @ {:p}", self.0, self.0);
+  }
+}
+
+fn main(){
+  let obj: MyStructBoxed = MyStructBoxed(Box::new(42));
+  let ptr: *const MyStructBoxed = &obj as *const MyStructBoxed;
+  println!("{:?} @ {:p}", unsafe { std::ptr::read(ptr) }, unsafe { &*ptr }.0 );
+}
+```
+Output (may vary):
+```
+MyStructBoxed(42) @ 0x55fe454b3c10
+Before zeroing: 42 @ 0x55fe454b3c10
+After zeroing: 0 @ 0x55fe454b3c10
+Before zeroing: 179 @ 0x55fe454b3c10
+After zeroing: 0 @ 0x55fe454b3c10
+free(): double free detected in tcache 2
+```
+
+> ### Rule {{#check LANG-RAW-PTR | Avoid the use of `std::ptr::read` }}
+>
+> `std::ptr::read` might have undesired side effect depending on the way the type of the raw pointer is moving through different context.
+> It is preferable to use the operation of referencing/dereferencing (`&*`) to avoid those side effect.
+> 
+> Moreover, if pointee `T` is `Copy`, the `*`-dereference operator should be used.
