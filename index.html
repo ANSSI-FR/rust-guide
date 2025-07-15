@@ -36,6 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc.js"></script>
@@ -92,10 +93,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -146,7 +150,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -169,15 +178,16 @@
                         <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
 <p><a href="https://www.rust-lang.org">Rust</a> is a multi-paradigm language with a focus on
 memory safety.</p>
-<p>It aims to be system programming oriented, allowing fine-grained memory
-management without garbage collection but also without tedious and error-prone
-manual memory allocations and deallocations. It achieves this goal by means of
+<p>It aims to be system programming oriented, for instance allowing fine-grained memory
+management without garbage collection and without tedious and error-prone
+manual memory allocations and deallocations, or preventing data-races.</p>
+<p>It achieves this goal by means of
 its ownership system (mostly related to variable aliasing). At any point of a
 Rust program, the compiler tracks how many variables refer to a given data, and
 enforces a set of rules which enable automatic memory management, memory safety
 and data-race free programs.</p>
 <p>The language also focuses on performance, with powerful compilation
-optimizations and language constructs that allow writing zero-cost abstraction
+optimizations and language constructs that allow writing <em>zero-cost abstraction</em>
 code.</p>
 <p>Moreover, the Rust language provides some high-level programming features.
 Thanks to higher-order functions, closures, iterators, etc., it allows to write
@@ -185,6 +195,9 @@ program parts in the same vein as in functional programming languages.
 Besides, static typing discipline, type inference, and ad hoc polymorphism (in
 the form of traits) are other ways Rust provides to build libraries and programs
 in a safe manner.</p>
+<p>Finally, the toolchain (rustup, cargo) greatly facilitate the use of Rust by simplifying
+the configuration of the software construction, while giving priority to good compilation
+safety practices.</p>
 <p>Nevertheless, due to its versatility, the language possibly offers some
 constructions that, if not used properly, can introduce security problems,
 by making code misinterpreted by the programmer or a reviewer. In addition, as
@@ -269,6 +282,7 @@ end of this guide.</p>
         <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
+
 
 
     </div>

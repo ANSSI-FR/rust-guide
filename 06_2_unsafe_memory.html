@@ -36,6 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc.js"></script>
@@ -92,10 +93,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -146,7 +150,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -173,7 +182,15 @@
 and identify language constructs that may break memory safety (for instance,
 unsound behaviors in older versions of the compiler).
 -->
-<h2 id="memory-leaks"><a class="header" href="#memory-leaks">Memory leaks</a></h2>
+<p>In the vast majority of cases, in non-<code>unsafe</code> Rust (i.e., code that does not use <code>unsafe</code>), the compiler <strong>automatically</strong> determines when it can release the memory occupied by a value in the program.
+But, as <a href="04_language.html#rust-guarantees">noted earlier</a>, this is not
+a guarantee: code without <code>unsafe</code> can still lead to memory leaks. Therefore, some of the
+rules presented in this chapter are not strictly related to the <code>unsafe</code> keyword. However,</p>
+<blockquote>
+<p>even if a function in the following is not <code>unsafe</code>,
+it should only be used in Rust <em>unsafe</em>.</p>
+</blockquote>
+<h2 id="forget-and-memory-leaks"><a class="header" href="#forget-and-memory-leaks"><code>forget</code> and memory leaks</a></h2>
 <p>While the usual way for memory to be reclaimed is for a variable to go out of
 scope, Rust provides special functions to manually reclaim memory: <code>forget</code> and
 <code>drop</code> of the <code>std::mem</code> module (or <code>core::mem</code>). While <code>drop</code> simply triggers
@@ -313,33 +330,6 @@ However, it does not change the second issue: the non-drop of an initialized
 memory is as much likely. It is problematic, in particular when considering
 the use of <code>Drop</code> to erase sensitive memory.</p>
 </blockquote>
-<h2 id="secure-memory-zeroing-for-sensitive-information"><a class="header" href="#secure-memory-zeroing-for-sensitive-information">Secure memory zeroing for sensitive information</a></h2>
-<p>Zeroing memory is useful for sensitive variables, especially if the
-Rust code is used through FFI.</p>
-<blockquote>
-<p><strong>Rule <a id="MEM-ZERO"></a>MEM-ZERO</strong></p>
-<p>Variables containing sensitive data must be zeroed out after use, using
-functions that will not be removed by the compiler optimizations, like
-<code>std::ptr::write_volatile</code> or the <code>zeroize</code> crate.</p>
-</blockquote>
-<p>The following code shows how to define an integer type that will be set to
-0 when freed, using the <code>Drop</code> trait:</p>
-<pre><pre class="playground"><code class="language-rust">/// Example: u32 newtype, set to 0 when freed
-pub struct ZU32(pub u32);
-
-impl Drop for ZU32 {
-    fn drop(&amp;mut self) {
-        println!("zeroing memory");
-        unsafe{ ::std::ptr::write_volatile(&amp;mut self.0, 0) };
-    }
-}
-
-<span class="boring">fn main() {
-</span>{
-    let i = ZU32(42);
-    // ...
-} // i is freed here
-<span class="boring">}</span></code></pre></pre>
 <h2 id="cyclic-reference-counted-pointers-rc-and-arc"><a class="header" href="#cyclic-reference-counted-pointers-rc-and-arc">Cyclic reference counted pointers (<code>Rc</code> and <code>Arc</code>)</a></h2>
 <p>Combining <a href="https://doc.rust-lang.org/reference/interior-mutability.html">interior mutability</a>, recurcivity and reference counted pointer into type definitions is unsafe. It can produce memory leaks which can result in DDoS attack or secret leaks.</p>
 <p>The following example show such a memory leak in safe Rust:</p>
@@ -402,11 +392,11 @@ Hello, world!
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="04_language.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="06_1_unsafe_generalities.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="06_typesystem.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="06_3_unsafe_ffi.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -416,11 +406,11 @@ Hello, world!
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="04_language.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="06_1_unsafe_generalities.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="06_typesystem.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="06_3_unsafe_ffi.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -444,6 +434,7 @@ Hello, world!
         <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
+
 
 
     </div>

@@ -1,0 +1,452 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Generalities - Secure Rust Guidelines</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Recommendations for secure applications development with Rust">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Secure Rust Guidelines</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="general-information-on-unsafe"><a class="header" href="#general-information-on-unsafe">General information on <code>unsafe</code></a></h1>
+<h2 id="unsafe-capacities"><a class="header" href="#unsafe-capacities"><em>Unsafe</em> capacities</a></h2>
+<p>Language capabilities can be extended using unsafe code. The full list of these capacities is given in the <a href="https://doc.rust-lang.org/reference/unsafety.html">Rust reference</a>. Notice the following one's.</p>
+<ul>
+<li>Dereference a raw pointer</li>
+<li>Modify a static mutable variable</li>
+<li>Access to the fields of a <code>union</code></li>
+<li>Declaring an <code>extern</code> block</li>
+</ul>
+<p>These capabilities may be necessary for system programming but they cause the language to lose its <a href="04_language.html#language-guarantees">security properties</a>.</p>
+<h2 id="unsafe-keyword"><a class="header" href="#unsafe-keyword"><code>unsafe</code> keyword</a></h2>
+<p>The <code>unsafe</code> keyword is used both for API and implementation.</p>
+<h3 id="unsafe-in-api"><a class="header" href="#unsafe-in-api"><code>unsafe</code> in API</a></h3>
+<p>The use of this keyword in an API <em>warns</em> the API user against the potential harmful effects of the use of the API.</p>
+<ul>
+<li>In a function signature, <code>unsafe</code> means that the behavior of the function may lead to <em>UB</em>s if the use of the function does not comply with its interface contract (informally described in its documentation).</li>
+<li>In a trait definition, <code>unsafe</code> means that an erroneous implementation of this trait may lead to <em>UB</em>s.</li>
+</ul>
+<h3 id="unsafe-in-implementation"><a class="header" href="#unsafe-in-implementation"><code>unsafe</code> in implementation</a></h3>
+<p>Using this keyword in an implementation (a code block) is imposed by the compiler to prevent the inadvertent use of <code>unsafe</code> functions.</p>
+<h2 id="unsafe-code"><a class="header" href="#unsafe-code">Unsafe code</a></h2>
+<p>The combined use of the type system and the ownership system
+enforces a high-level memory safety in Rust programs. This way, the language helps prevent memory overflows, null or invalid pointer constructions, and data
+races.
+To perform risky actions such as system calls, type coercions, or direct
+manipulations of memory pointers, the language provides the <code>unsafe</code> keyword.</p>
+<blockquote>
+<p><strong>Rule <a id="LANG-UNSAFE"></a>LANG-UNSAFE</strong></p>
+<p>For a secured development, the <code>unsafe</code> blocks must be avoided. Afterward,
+we list the only cases where <code>unsafe</code> may be used, provided that they come
+with a proper justification:</p>
+<ul>
+<li>
+<p>The Foreign Function Interface (FFI) of Rust allows for describing
+functions whose implementations are written in C, using the <code>extern "C"</code>
+prefix. To use such a function, the <code>unsafe</code> keyword is required. “Safe”
+wrapper shall be defined to safely and seamlessly call C code.</p>
+</li>
+<li>
+<p>For embedded device programming, registers and various other resources are
+often accessed through a fixed memory address. In this case, <code>unsafe</code> blocks
+are required to initialize and dereference those particular pointers in Rust.
+In order to minimize the number of unsafe accesses in the code and to allow
+easier identification of them by a programmer, a proper abstraction (data
+structure or module) shall be provided.</p>
+</li>
+<li>
+<p>A function can be marked unsafe globally (by prefixing its declaration with
+the <code>unsafe</code> keyword) when it may exhibit unsafe behaviors based on its
+arguments, that are unavoidable. For instance, this happens when a function
+tries to dereference a pointer passed as an argument.</p>
+</li>
+</ul>
+<p>With the exception of these cases, <code>#![forbid(unsafe_code)]</code> must appear in
+the crate root (typically <code>main.rs</code> or <code>lib.rs</code>) to generate compilation
+errors if <code>unsafe</code> is used in the code base.</p>
+</blockquote>
+<h2 id="general-warnings"><a class="header" href="#general-warnings">General warnings</a></h2>
+<h3 id="invariants-and-wrapping-unsafe"><a class="header" href="#invariants-and-wrapping-unsafe">Invariants and wrapping <em>unsafe</em></a></h3>
+<p>Exposed APIs are responsible for preserving invariants to avoid bugs in general and, when handling <code>unsafe</code> code, <em>UB</em>s in particular.</p>
+<p>The following code comes from the <a href="https://doc.rust-lang.org/nomicon/working-with-unsafe.html">Rustonomicon</a>.
+It could be used to implement a custom <code>Vec</code> type.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::ptr;
+
+pub struct Vec&lt;T&gt; {
+    ptr: *mut T,
+    len: usize,
+    cap: usize,
+}
+
+// Note this implementation does not correctly handle zero-sized types.
+impl&lt;T&gt; Vec&lt;T&gt; {
+    pub fn push(&amp;mut self, elem: T) {
+        if self.len == self.cap {
+            // not important for this example
+            self.reallocate();
+        }
+        unsafe {
+            ptr::write(self.ptr.add(self.len), elem);
+            self.len += 1;
+        }
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Soundness and safety of this code rely on the fact that bytes from address <code>self.ptr</code> to <code>self.ptr + self.cap * size_of&lt;T&gt;()</code> are allocated.</p>
+<p>This invariant can be broken with <em>safe</em> code. For instance</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn make_room(&amp;mut self) {
+    // grow the capacity
+    self.cap += 1;
+}
+<span class="boring">}</span></code></pre></pre>
+<p>This function my be necessary for internal use, but it should not be exposed in the API, or it should be marked with <code>unsafe</code> keyword, because its use can lead to <em>UB</em>.</p>
+<h3 id="trust-relation-between-safe-and-unsafe"><a class="header" href="#trust-relation-between-safe-and-unsafe">Trust relation between <em>safe</em> and <em>unsafe</em></a></h3>
+<h4 id="principle"><a class="header" href="#principle">Principle</a></h4>
+<p>In Rust paradigm,</p>
+<blockquote>
+<p><code>unsafe</code>-free code cannot go wrong</p>
+</blockquote>
+<p>which means it cannot result in <em>UB</em>.
+This property is lost when the developers use <em>unsafe</em> code, that is why they are responsible of not producing <em>UB</em> in any scenario.
+Consequently, even <em>safe</em> function must be handled carefully in <em>unsafe</em> context.</p>
+<h4 id="example"><a class="header" href="#example">Example</a></h4>
+<p>Suppose one wants to propose an API find object of a given type in the memory.
+This API could ask implementing the following trait</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Locatable {
+    /// Find object of type `Self` in the buffer `buf`.
+    /// Returns the index of the first byte representing
+    /// an object of type `Self`
+    fn locate_instance_into(buf: &amp;[u8]) -&gt; Option&lt;usize&gt;;
+}
+<span class="boring">}</span></code></pre></pre>
+<p>This trait can be implemented <strong>without</strong> <code>unsafe</code>.</p>
+<p>For instance, <code>bool</code> type can implement this trait as follows:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl Locatable for bool {
+    fn locate_instance_into(buf: &amp;[u8]) -&gt; Option&lt;usize&gt; {
+        buf.iter().position(|u| *u == 0 || *u == 1)
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Moreover the function searching a <code>Locatable</code> type in the memory could be the following.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn locate&lt;T: Locatable + Clone&gt;(start: *const u8, len: usize) -&gt; Option&lt;T&gt; {
+    let buf = unsafe { from_raw_parts(start, len) };
+    match T::locate_instance_into(buf) {
+        Some(begin) =&gt; unsafe {
+            let start_T: *const T = start.byte_add(begin).cast();
+            match start_T.as_ref() {
+                None =&gt; None, // if start_T is null
+                Some(r) =&gt; Some(r.clone()),
+            }
+        },
+        None =&gt; None,
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<div class="warning">
+<p>This implementation is harmful for two reasons:</p>
+<ul>
+<li>If the <code>Locatable</code> implementation gives the wrong index, the <code>as_ref</code> function produce an <em>UB</em>.</li>
+<li>If the <code>Locatable</code> implementation gives an outbound index, the subsequent buffer overflow is an <em>UB</em>.</li>
+</ul>
+</div>
+<p>For instance, the following <code>Locatable</code> implementation is wrong <strong>but</strong> it is of the responsibility of the API maker to take it into account.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl Locatable for bool {
+    fn locate_instance_into(buf: &amp;[u8]) -&gt; Option&lt;usize&gt; {
+        buf.iter().position(|u| *u == 0 || *u == 1).map(|n| n + 2)
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>The following program produces <em>UB</em>.</p>
+<pre><pre class="playground"><code class="language-rust should_panic">fn main() {
+    let buf = [4, 1, 99];
+    let start = buf.as_ptr();
+    let located_bool: Option&lt;bool&gt; = locate(start, buf.len()); // UB here!
+    println!("{:?}", located_bool)
+}</code></pre></pre>
+<p>The error can be shown with <code>valgrind</code></p>
+<pre><code>$ valgrind ./target/release/rust-unsafe
+==123651== Memcheck, a memory error detector
+==123651== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==123651== Using Valgrind-3.19.0 and LibVEX; rerun with -h for copyright info
+==123651== Command: ./target/release/rust-unsafe
+==123651== 
+==123651== valgrind: Unrecognised instruction at address 0x10f860.
+==123651==    at 0x10F860: rust_unsafe::main (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651==    by 0x10F842: std::sys::backtrace::__rust_begin_short_backtrace (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651==    by 0x10F838: std::rt::lang_start::{{closure}} (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651==    by 0x129F0F: std::rt::lang_start_internal (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651==    by 0x10F894: main (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651== Your program just tried to execute an instruction that Valgrind
+==123651== did not recognise.  There are two possible reasons for this.
+==123651== 1. Your program has a bug and erroneously jumped to a non-code
+==123651==    location.  If you are running Memcheck and you just saw a
+==123651==    warning about a bad jump, it's probably your program's fault.
+==123651== 2. The instruction is legitimate but Valgrind doesn't handle it,
+==123651==    i.e. it's Valgrind's fault.  If you think this is the case or
+==123651==    you are not sure, please let us know and we'll try to fix it.
+==123651== Either way, Valgrind will now raise a SIGILL signal which will
+==123651== probably kill your program.
+==123651== 
+==123651== Process terminating with default action of signal 4 (SIGILL)
+==123651==  Illegal opcode at address 0x10F860
+==123651==    at 0x10F860: rust_unsafe::main (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651==    by 0x10F842: std::sys::backtrace::__rust_begin_short_backtrace (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651==    by 0x10F838: std::rt::lang_start::{{closure}} (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651==    by 0x129F0F: std::rt::lang_start_internal (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651==    by 0x10F894: main (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651== 
+==123651== HEAP SUMMARY:
+==123651==     in use at exit: 0 bytes in 0 blocks
+==123651==   total heap usage: 7 allocs, 7 frees, 2,072 bytes allocated
+==123651== 
+==123651== All heap blocks were freed -- no leaks are possible
+==123651== 
+==123651== For lists of detected and suppressed errors, rerun with: -s
+==123651== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+</code></pre>
+<h4 id="conclusion"><a class="header" href="#conclusion">Conclusion</a></h4>
+<p>This example shows that developers using <code>unsafe</code> blocks
+cannot assume <em>safe</em> functions/traits they
+use are well implemented, and thus must prevent <em>UB</em>
+in case these <em>safe</em> functions have bad behavior.</p>
+<p>If they cannot protect their function against badly implemented <em>safe</em> functions/traits, they could either</p>
+<ul>
+<li>mark the function they <em>write</em> as <code>unsafe</code>: thus it is the user's responsibility to feed this function with correct arguments (by checking <em>unsafe</em> function documentation).</li>
+<li>mark the traits they <em>use</em> as <code>unsafe</code> : thus it is user's responsibility to simplement the trait properly (again reading the trait documentation).</li>
+</ul>
+<h4 id="références"><a class="header" href="#références">Références</a></h4>
+<ul>
+<li>https://doc.rust-lang.org/nomicon/safe-unsafe-meaning.html</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="06_unsafe.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="06_2_unsafe_memory.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="06_unsafe.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="06_2_unsafe_memory.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

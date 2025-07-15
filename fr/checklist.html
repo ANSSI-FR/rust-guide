@@ -36,6 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc.js"></script>
@@ -92,10 +93,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -146,7 +150,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -202,8 +211,6 @@ Vérification du code <em>unsafe</em> dans les dépendances (<a href="03_librari
 <li><input disabled="" type="checkbox"/>
 Respect des conventions de nommage (<a href="04_language.html#LANG-NAMING">LANG-NAMING</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Non-utilisation des blocs <em>unsafe</em> (<a href="04_language.html#LANG-UNSAFE">LANG-UNSAFE</a>)</li>
-<li><input disabled="" type="checkbox"/>
 Utilisation des opérations arithmétiques appropriées au regard des potentiels dépassements (<a href="04_language.html#LANG-ARITH">LANG-ARITH</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Mise en place d'un type <code>Error</code> personnalisé, pouvant contenir toutes les erreurs possibles (<a href="04_language.html#LANG-ERRWRAP">LANG-ERRWRAP</a>)</li>
@@ -218,94 +225,99 @@ Gestion correcte des <code>panic!</code> dans les FFI (<a href="04_language.html
 </ul>
 </li>
 <li>
-<p>Gestion de la mémoire:</p>
-<ul>
-<li><input disabled="" type="checkbox"/>
-Non-utilisation de <code>forget</code> (<a href="05_memory.html#MEM-FORGET">MEM-FORGET</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Utilisation du <em>lint</em> clippy pour détecter l'utilisation de <code>forget</code> (<a href="05_memory.html#MEM-FORGET-LINT">MEM-FORGET-LINT</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Non-utilisation de <code>Box::leak</code> (<a href="05_memory.html#MEM-LEAK">MEM-LEAK</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Libération des valeurs <em>wrappées</em> dans <code>ManuallyDrop</code> (<a href="05_memory.html#MEM-MANUALLYDROP">MEM-MANUALLYDROP</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Pas de conversion en pointeur <em>raw</em> en Rust non-<em>usafe</em> (<a href="05_memory.html#MEM-NORAWPOINTER">MEM-NORAWPOINTER</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Appel systématique à <code>from_raw</code> pour les valeurs créées avec <code>into_raw</code> (<a href="05_memory.html#MEM-INTOFROMRAW">MEM-INTOFROMRAW</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Appel de <code>from_raw</code> uniquement pour les valeurs issues de <code>into_raw</code> (<a href="05_memory.html#MEM-INTOFROMRAW">MEM-INTOFROMRAW</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Pas de mémoire non initialisée (<a href="05_memory.html#MEM-UNINIT">MEM-UNINIT</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Mise à zéro des données sensibles après utilisation (<a href="05_memory.html#MEM-ZERO">MEM-ZERO</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Éviter les références comptées récursives mutables (<a href="05_memory.html#MEM-MUT-REC-RC">MEM-MUT-REC-RC</a>)</li>
-</ul>
-</li>
-<li>
 <p>Système de types:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Justification de l'implémentation du trait <code>Drop</code> (<a href="06_typesystem.html#LANG-DROP">LANG-DROP</a>)</li>
+Justification de l'implémentation du trait <code>Drop</code> (<a href="05_typesystem.html#LANG-DROP">LANG-DROP</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Absence de <code>panic</code> dans l'implémentation de <code>Drop</code> (<a href="06_typesystem.html#LANG-DROP-NO-PANIC">LANG-DROP-NO-PANIC</a>)</li>
+Absence de <code>panic</code> dans l'implémentation de <code>Drop</code> (<a href="05_typesystem.html#LANG-DROP-NO-PANIC">LANG-DROP-NO-PANIC</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Absence de cycles de références avec valeurs <code>Drop</code>ables (<a href="06_typesystem.html#LANG-DROP-NO-CYCLE">LANG-DROP-NO-CYCLE</a>)</li>
+Absence de cycles de références avec valeurs <code>Drop</code>ables (<a href="05_typesystem.html#LANG-DROP-NO-CYCLE">LANG-DROP-NO-CYCLE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Sécurité assurée par d'autres mécanismes en plus du trait <code>Drop</code> (<a href="06_typesystem.html#LANG-DROP-SEC">LANG-DROP-SEC</a>)</li>
+Sécurité assurée par d'autres mécanismes en plus du trait <code>Drop</code> (<a href="05_typesystem.html#LANG-DROP-SEC">LANG-DROP-SEC</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Justification de l'implémentation des traits <code>Send</code> et <code>Sync</code> (<a href="06_typesystem.html#LANG-SYNC-TRAITS">LANG-SYNC-TRAITS</a>)</li>
+Justification de l'implémentation des traits <code>Send</code> et <code>Sync</code> (<a href="05_typesystem.html#LANG-SYNC-TRAITS">LANG-SYNC-TRAITS</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Respect des invariants des traits de comparaison standards (<a href="06_typesystem.html#LANG-CMP-INV">LANG-CMP-INV</a>)</li>
+Respect des invariants des traits de comparaison standards (<a href="05_typesystem.html#LANG-CMP-INV">LANG-CMP-INV</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Utilisation des implémentations par défaut des traits de comparaison standards (<a href="06_typesystem.html#LANG-CMP-DEFAULTS">LANG-CMP-DEFAULTS</a>)</li>
+Utilisation des implémentations par défaut des traits de comparaison standards (<a href="05_typesystem.html#LANG-CMP-DEFAULTS">LANG-CMP-DEFAULTS</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Dérivation des traits de comparaison lorsque c'est possible (<a href="06_typesystem.html#LANG-CMP-DERIVE">LANG-CMP-DERIVE</a>)</li>
+Dérivation des traits de comparaison lorsque c'est possible (<a href="05_typesystem.html#LANG-CMP-DERIVE">LANG-CMP-DERIVE</a>)</li>
+</ul>
+</li>
+<li>
+<p>Généralités:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Non-utilisation des blocs <em>unsafe</em> (<a href="06_1_unsafe_generalities.html#LANG-UNSAFE">LANG-UNSAFE</a>)</li>
+</ul>
+</li>
+<li>
+<p>Gestion de la mémoire:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Non-utilisation de <code>forget</code> (<a href="06_2_unsafe_memory.html#MEM-FORGET">MEM-FORGET</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Utilisation du <em>lint</em> clippy pour détecter l'utilisation de <code>forget</code> (<a href="06_2_unsafe_memory.html#MEM-FORGET-LINT">MEM-FORGET-LINT</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Non-utilisation de <code>Box::leak</code> (<a href="06_2_unsafe_memory.html#MEM-LEAK">MEM-LEAK</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Libération des valeurs <em>wrappées</em> dans <code>ManuallyDrop</code> (<a href="06_2_unsafe_memory.html#MEM-MANUALLYDROP">MEM-MANUALLYDROP</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Pas de conversion en pointeur <em>raw</em> en Rust non-<em>usafe</em> (<a href="06_2_unsafe_memory.html#MEM-NORAWPOINTER">MEM-NORAWPOINTER</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Appel systématique à <code>from_raw</code> pour les valeurs créées avec <code>into_raw</code> (<a href="06_2_unsafe_memory.html#MEM-INTOFROMRAW">MEM-INTOFROMRAW</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Appel de <code>from_raw</code> uniquement pour les valeurs issues de <code>into_raw</code> (<a href="06_2_unsafe_memory.html#MEM-INTOFROMRAW">MEM-INTOFROMRAW</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Pas de mémoire non initialisée (<a href="06_2_unsafe_memory.html#MEM-UNINIT">MEM-UNINIT</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Éviter les références comptées récursives mutables (<a href="06_2_unsafe_memory.html#MEM-MUT-REC-RC">MEM-MUT-REC-RC</a>)</li>
 </ul>
 </li>
 <li>
 <p>FFI:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Utilisation exclusive de types compatibles avec le C dans les FFI (<a href="07_ffi.html#FFI-CTYPE">FFI-CTYPE</a>)</li>
+Utilisation exclusive de types compatibles avec le C dans les FFI (<a href="06_3_unsafe_ffi.html#FFI-CTYPE">FFI-CTYPE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Utilisation de types cohérents pour les FFI (<a href="07_ffi.html#FFI-TCONS">FFI-TCONS</a>)</li>
+Utilisation de types cohérents pour les FFI (<a href="06_3_unsafe_ffi.html#FFI-TCONS">FFI-TCONS</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Utilisation des outils de génération automatique de <em>bindings</em> (<a href="07_ffi.html#FFI-AUTOMATE">FFI-AUTOMATE</a>)</li>
+Utilisation des outils de génération automatique de <em>bindings</em> (<a href="06_3_unsafe_ffi.html#FFI-AUTOMATE">FFI-AUTOMATE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Utilisation des alias portables <code>c_*</code> pour faire correspondre les types dépendants de la plateforme d'exécution (<a href="07_ffi.html#FFI-PFTYPE">FFI-PFTYPE</a>)</li>
+Utilisation des alias portables <code>c_*</code> pour faire correspondre les types dépendants de la plateforme d'exécution (<a href="06_3_unsafe_ffi.html#FFI-PFTYPE">FFI-PFTYPE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Non-vérification des valeurs de types non-robustes (<a href="07_ffi.html#FFI-CKNONROBUST">FFI-CKNONROBUST</a>)</li>
+Non-vérification des valeurs de types non-robustes (<a href="06_3_unsafe_ffi.html#FFI-CKNONROBUST">FFI-CKNONROBUST</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Vérification des valeurs externes en Rust (<a href="07_ffi.html#FFI-CKINRUST">FFI-CKINRUST</a>)</li>
+Vérification des valeurs externes en Rust (<a href="06_3_unsafe_ffi.html#FFI-CKINRUST">FFI-CKINRUST</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Vérification des références provenant d'un langage externe (<a href="07_ffi.html#FFI-CKREF">FFI-CKREF</a>)</li>
+Vérification des références provenant d'un langage externe (<a href="06_3_unsafe_ffi.html#FFI-CKREF">FFI-CKREF</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Non-utilisation des types références et utilisation des types pointeurs (<a href="07_ffi.html#FFI-NOREF">FFI-NOREF</a>)</li>
+Non-utilisation des types références et utilisation des types pointeurs (<a href="06_3_unsafe_ffi.html#FFI-NOREF">FFI-NOREF</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Vérification des pointeurs externes (<a href="07_ffi.html#FFI-CKPTR">FFI-CKPTR</a>)</li>
+Vérification des pointeurs externes (<a href="06_3_unsafe_ffi.html#FFI-CKPTR">FFI-CKPTR</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Marquage des types de pointeurs de fonction dans les FFI comme <code>extern</code> et <code>unsafe</code> (<a href="07_ffi.html#FFI-MARKEDFUNPTR">FFI-MARKEDFUNPTR</a>)</li>
+Marquage des types de pointeurs de fonction dans les FFI comme <code>extern</code> et <code>unsafe</code> (<a href="06_3_unsafe_ffi.html#FFI-MARKEDFUNPTR">FFI-MARKEDFUNPTR</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Vérification des pointeurs de fonction provenant d'une FFI (<a href="07_ffi.html#FFI-CKFUNPTR">FFI-CKFUNPTR</a>)</li>
+Vérification des pointeurs de fonction provenant d'une FFI (<a href="06_3_unsafe_ffi.html#FFI-CKFUNPTR">FFI-CKFUNPTR</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Non-utilisation d'<code>enum</code>s Rust provenant de l'extérieur par une FFI (<a href="07_ffi.html#FFI-NOENUM">FFI-NOENUM</a>)</li>
+Non-utilisation d'<code>enum</code>s Rust provenant de l'extérieur par une FFI (<a href="06_3_unsafe_ffi.html#FFI-NOENUM">FFI-NOENUM</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Utilisation de types Rust dédiés pour les types opaques externes (<a href="07_ffi.html#FFI-R-OPAQUE">FFI-R-OPAQUE</a>)</li>
+Utilisation de types Rust dédiés pour les types opaques externes (<a href="06_3_unsafe_ffi.html#FFI-R-OPAQUE">FFI-R-OPAQUE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Utilisation de pointeurs vers des <code>struct</code>s C/C++ pour rendre des types opaques (<a href="07_ffi.html#FFI-C-OPAQUE">FFI-C-OPAQUE</a>)</li>
+Utilisation de pointeurs vers des <code>struct</code>s C/C++ pour rendre des types opaques (<a href="06_3_unsafe_ffi.html#FFI-C-OPAQUE">FFI-C-OPAQUE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Non-utilisation de types qui implémentent <code>Drop</code> dans des FFI (<a href="07_ffi.html#FFI-MEM-NODROP">FFI-MEM-NODROP</a>)</li>
+Non-utilisation de types qui implémentent <code>Drop</code> dans des FFI (<a href="06_3_unsafe_ffi.html#FFI-MEM-NODROP">FFI-MEM-NODROP</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Identification du langage responsable de la libération des données dans les FFI (<a href="07_ffi.html#FFI-MEM-OWNER">FFI-MEM-OWNER</a>)</li>
+Identification du langage responsable de la libération des données dans les FFI (<a href="06_3_unsafe_ffi.html#FFI-MEM-OWNER">FFI-MEM-OWNER</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Encapsulation des données externes dans un type <code>Drop</code> (<a href="07_ffi.html#FFI-MEM-WRAPPING">FFI-MEM-WRAPPING</a>)</li>
+Encapsulation des données externes dans un type <code>Drop</code> (<a href="06_3_unsafe_ffi.html#FFI-MEM-WRAPPING">FFI-MEM-WRAPPING</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Gestion correcte des <code>panic</code>s dans les FFI (<a href="07_ffi.html#FFI-NOPANIC">FFI-NOPANIC</a>)</li>
+Gestion correcte des <code>panic</code>s dans les FFI (<a href="06_3_unsafe_ffi.html#FFI-NOPANIC">FFI-NOPANIC</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Mise en place d'une encapsulation sûre pour les bibliothèques externes (<a href="07_ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>)</li>
+Mise en place d'une encapsulation sûre pour les bibliothèques externes (<a href="06_3_unsafe_ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Exposition exclusive d'API dédiée et compatible avec le C (<a href="07_ffi.html#FFI-CAPI">FFI-CAPI</a>)</li>
+Exposition exclusive d'API dédiée et compatible avec le C (<a href="06_3_unsafe_ffi.html#FFI-CAPI">FFI-CAPI</a>)</li>
 </ul>
 </li>
 </ul>
@@ -350,6 +362,7 @@ Exposition exclusive d'API dédiée et compatible avec le C (<a href="07_ffi.htm
         <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
+
 
 
     </div>

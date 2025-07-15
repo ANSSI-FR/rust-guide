@@ -36,6 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc.js"></script>
@@ -92,10 +93,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -146,7 +150,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -169,26 +178,30 @@
                         <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
 <p><a href="https://www.rust-lang.org">Rust</a> est un langage multiparadigmes orienté vers
 la sûreté mémoire.</p>
-<p>Il est entre autres orienté programmation système, en permettant une gestion
-fine de la mémoire sans ramasse-miettes, mais également sans nécessiter
-d'allocations et de désallocations manuelles, souvent sources d'erreurs et de
-confusions. Le langage atteint ce but en introduisant un système
+<p>Il est entre autres orienté programmation système, en permettant par exemple
+une gestion de la mémoire sans ramasse-miettes et sans nécessiter
+d'allocations et de libérations manuelles, ou encore protège la mémoire contre
+les accès concurrents (<em>data race</em>).</p>
+<p>Le langage atteint ce but en introduisant un système
 d'<em>ownership</em> (fortement lié à l'<em>aliasing</em> des variables). À tout point d'un
 programme Rust, le compilateur recense les variables qui se réfèrent à une
 même donnée, et applique un ensemble de règles qui permettent la récupération
 automatique de la mémoire, la sûreté mémoire et l'absence de problèmes d'accès
 concurrents.</p>
 <p>Le langage est également axé sur la performance, avec des constructions
-permettant des abstractions à coût nul et un compilateur proposant de puissantes
+permettant des <em>abstractions à coût nul</em> et un compilateur proposant de puissantes
 optimisations.</p>
-<p>Enfin, le langage Rust fournit des fonctionnalités de programmation de
+<p>De plus, le langage Rust fournit des fonctionnalités de programmation de
 haut niveau. Grâce aux fonctions d'ordre supérieur, aux fermetures, aux
 itérateurs, etc., il permet d'écrire tout ou parties des programmes dans un
 style proche des langages de programmation fonctionnelle.
 En outre, le typage statique, l'inférence de types et le polymorphisme
 <em>ad hoc</em> (sous la forme de <em>traits</em>) sont d'autres moyens que Rust propose pour
 construire des bibliothèques et des programmes de façon sûre.</p>
-<p>Néanmoins, du fait de sa polyvalence, le langage offre des constructions et
+<p>Enfin, les outils d'accès à la chaîne de compilation (<code>rustup</code>, <code>cargo</code>) facilitent
+grandement l'utilisation de Rust en simplifiant la configuration de la construction
+du logiciel, tout en privilégiant les bonnes pratiques de sécurité de compilation.</p>
+<p>Néanmoins, le langage offre des constructions et
 fonctionnalités qui, si elles ne sont pas utilisées correctement, peuvent
 potentiellement introduire des problèmes de sécurité, soit par construction,
 soit en permettant d'écrire du code qui serait mal interprété par un développeur
@@ -274,6 +287,7 @@ recommandations est disponible à la fin de ce guide.</p>
         <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
+
 
 
     </div>

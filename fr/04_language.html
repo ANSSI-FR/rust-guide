@@ -36,6 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc.js"></script>
@@ -92,10 +93,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -146,7 +150,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -167,6 +176,45 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="généralités-sur-le-langage"><a class="header" href="#généralités-sur-le-langage">Généralités sur le langage</a></h1>
+<h2 id="garanties-du-langage"><a class="header" href="#garanties-du-langage">Garanties du langage</a></h2>
+<h3 id="comportements-indéfinis"><a class="header" href="#comportements-indéfinis">Comportements indéfinis</a></h3>
+<blockquote>
+<p>Le comportement d'un programme est <em>indéfini</em> (<em>UB</em> pour <em>Undefined Behavior</em>) lorsque sa sémantique n'est
+pas décrite dans le langage Rust.</p>
+</blockquote>
+<p>L'existence d'<em>UB</em> est considéré comme une <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general">erreur</a>.</p>
+<p>Par exemple le déréférencement d'un pointeur null est un <em>UB</em>.
+<em>A contrario</em>, un <code>unwrap</code> sur l'objet <code>None</code> est bien <em>défini</em> car c'est le langage qui traite cette erreur
+(en lançant un <code>panic</code>).</p>
+<p>La liste actuelle des <em>UB</em> est donnée <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html">ici</a>.
+On notera les garanties suivantes :</p>
+<ul>
+<li>Pas de déréférencement de pointeur vers une adresse mémoire non allouée (<em>dangling pointer</em>) ou non alignée, ce qui implique
+<ul>
+<li>Pas de dépassement de tableau</li>
+<li>Pas d'accès à de la mémoire libérée</li>
+<li>Accès toujours aligné quelque soit la plateforme</li>
+</ul>
+</li>
+<li>Les valeurs pointées sont <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.invalid">cohérentes</a> avec le type du pointeur. Par exemple, une valeur pointée par un pointeur booléen sera l'octet 1 ou 0.</li>
+<li>Respect des règles d'<a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias"><em>aliasing</em></a> (voir aussi le <a href="https://doc.rust-lang.org/nomicon/aliasing.html">nomicon</a>): une référence mutable ne peux être partagée.</li>
+<li>Pas d'accès concurrent (un accès en lecture et un autre en écriture ou en lecture) à la même adresse mémoire (<a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race"><em>data race</em></a>, voir aussi le <a href="https://doc.rust-lang.org/nomicon/races.html">nomicon</a>)</li>
+</ul>
+<h3 id="garantie-de-rust"><a class="header" href="#garantie-de-rust">Garantie de Rust</a></h3>
+<blockquote>
+<p>La volonté du langage est d'assurer l'absence d'<em>UB</em> dans un programme utilisant uniquement la partie non <em>unsafe</em> de Rust.</p>
+</blockquote>
+<p>Cependant, le langage <em><strong>ne protège pas</strong></em> contre les erreurs suivantes :</p>
+<ul>
+<li>fuites de resources (mémoire, IO, ...) ;</li>
+<li>dépassements numériques.</li>
+</ul>
+<h3 id="références"><a class="header" href="#références">Références</a></h3>
+<ul>
+<li>https://doc.rust-lang.org/reference/unsafety.html</li>
+<li>https://doc.rust-lang.org/nomicon/what-unsafe-does.html</li>
+</ul>
+<!-- * https://github.com/ANSSI-FR/rust-guide/pull/3 -->
 <h2 id="nommage"><a class="header" href="#nommage">Nommage</a></h2>
 <p>La convention de nommage employée par la bibliothèque standard est <em>de facto</em> le
 standard pour le nommage des éléments des programmes écrits en Rust. Un effort a
@@ -193,49 +241,6 @@ plus précises pour certaines constructions particulières :</p>
 <p><strong>Règle <a id="LANG-NAMING"></a>LANG-NAMING</strong></p>
 <p>Le développement d'une application sécurisée doit suivre les conventions de
 nommage décrites dans les <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a>.</p>
-</blockquote>
-<h2 id="code-unsafe"><a class="header" href="#code-unsafe">Code <em>unsafe</em></a></h2>
-<p>L'utilisation conjointe du système de types et du système d'<em>ownership</em> vise à
-apporter un haut niveau de sûreté quant à la gestion de la mémoire dans les
-programmes écrits en Rust. Le langage permet alors d'éviter les débordements
-mémoire, la construction de pointeurs nuls ou invalides, et les problèmes
-d'accès concurrents à la mémoire.
-Pour effectuer des actions considérées risquées comme des appels système, des
-conversions de types ou la manipulation directe de pointeurs mémoire, le
-langage fournit le mot-clé <code>unsafe</code>.</p>
-<blockquote>
-<p><strong>Règle <a id="LANG-UNSAFE"></a>LANG-UNSAFE</strong></p>
-<p>Pour un développement sécurisé, les blocs <code>unsafe</code> doivent être évités.
-Ci-dessous, nous listons les seuls cas pour lesquels des blocs <code>unsafe</code>
-peuvent être utilisés, à la condition que leur usage soit justifié :</p>
-<ul>
-<li>
-<p>L'interfaçage entre Rust et d'autres langages (FFI) permet la déclaration
-de fonctions dont l'implantation est faite en C, en utilisant le préfixe
-<code>extern "C"</code>. Pour utiliser une telle fonction, le mot-clé <code>unsafe</code> est
-requis. Un <em>wrapper</em> "sûr" doit être défini pour que le code C soit
-finalement appelé de façon souple et sûre.</p>
-</li>
-<li>
-<p>Pour la programmation des systèmes embarqués, on accède souvent aux
-registres et à d'autres ressources au travers d'adresses mémoire fixées
-Dans ce cas, des blocs <code>unsafe</code> sont nécessaires afin de pouvoir initialiser
-et déréférencer des pointeurs en Rust pour ces adresses. Afin de minimiser le
-nombre de déclarations <code>unsafe</code> pour permettre au développeur de facilement
-identifier les accès critiques, une abstraction adaptée (structure de
-données ou module) doit être mise en place.</p>
-</li>
-<li>
-<p>Une fonction peut être marquée globalement comme non sûre (en préfixant sa
-déclaration par le mot-clé <code>unsafe</code>) lorsqu'elle exhibe inévitablement des
-comportements non sûrs en fonction de ses arguments. Par exemple, cela arrive
-lorsqu'une fonction doit déréférencer un pointeur passé en argument.</p>
-</li>
-</ul>
-<p>À l'exception de l'un ou plusieurs de ces cas <code>#![forbid(unsafe_code)]</code> doit
-apparaître dans à la racine de la <em>crate</em> (typiquement <code>main.rs</code> ou <code>lib.rs</code>)
-afin de générer des erreurs de compilation dans le cas ou le mot-clé <code>unsafe</code>
-est utilisé dans le projet.</p>
 </blockquote>
 <h2 id="dépassement-dentiers"><a class="header" href="#dépassement-dentiers">Dépassement d'entiers</a></h2>
 <p>Bien que des vérifications soient effectuées par Rust en ce qui concerne les
@@ -371,7 +376,7 @@ récursion, ...
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="05_memory.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="05_typesystem.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -385,7 +390,7 @@ récursion, ...
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="05_memory.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="05_typesystem.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -409,6 +414,7 @@ récursion, ...
         <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
+
 
 
     </div>

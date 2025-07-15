@@ -36,6 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc.js"></script>
@@ -92,10 +93,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -146,7 +150,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -167,6 +176,40 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="language-generalities"><a class="header" href="#language-generalities">Language generalities</a></h1>
+<h2 id="language-guarantees"><a class="header" href="#language-guarantees">Language guarantees</a></h2>
+<h3 id="undefined-behaviors-ub"><a class="header" href="#undefined-behaviors-ub">Undefined Behaviors (<em>UB</em>)</a></h3>
+<blockquote>
+<p>The behavior of a program is <em>undefined</em> when its semantics is not described in the Rust language.</p>
+</blockquote>
+<p>The existence of UB is considered an <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general">error</a>.</p>
+<p>For example, dereferencing the null pointer is a <em>UB</em>. On the other hand, <code>unwrap</code>ing the <code>None</code> object is well defined because it is the language that processes this error (by launching a panic).</p>
+<p>The current list of <em>UBs</em> is given in the language <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html">reference</a>. Notice the following guarantees:</p>
+<ul>
+<li>No dereference of pointer to an unallocated or unaligned memory address (dangling pointer), which implies
+<ul>
+<li>No buffer overflow</li>
+<li>No access to freed memory</li>
+<li>No non-aligned access</li>
+</ul>
+</li>
+<li>The pointed values are <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.invalid">consistent</a> with the pointer's type. For example, a value pointed at by a boolean pointer will be byte of value 1 or 0.</li>
+<li>Respect of <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias">aliasing rules</a> (see also <a href="https://doc.rust-lang.org/nomicon/aliasing.html">nomicon</a>): a mutable reference cannot be shared.</li>
+<li>No concurrent access (reading/writing is not possible while writing) to the same memory address (<a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race">data race</a>, see also <a href="https://doc.rust-lang.org/nomicon/races.html">nomicon</a>)</li>
+</ul>
+<h3 id="rust-guarantees"><a class="header" href="#rust-guarantees">Rust guarantees</a></h3>
+<blockquote>
+<p>The language paradigm is to ensure the absence of a UB in a program using only the non-<em>unsafe</em> part of Rust.</p>
+</blockquote>
+<p>However, the language does not prevent</p>
+<ul>
+<li>resource leaks (memory, IO, ...),</li>
+<li>numeric overflows.</li>
+</ul>
+<h3 id="references"><a class="header" href="#references">References</a></h3>
+<ul>
+<li>https://doc.rust-lang.org/reference/unsafety.html</li>
+<li>https://doc.rust-lang.org/nomicon/what-unsafe-does.html</li>
+</ul>
 <h2 id="naming"><a class="header" href="#naming">Naming</a></h2>
 <p>As of now, the standard library is the de facto standard for naming things in
 the Rust world. However, an effort has been made to formalize it, first in
@@ -192,44 +235,6 @@ some particular constructions:</p>
 <p><strong>Rule <a id="LANG-NAMING"></a>LANG-NAMING</strong></p>
 <p>Development of a secure application must follow the naming conventions
 outlined in the <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a>.</p>
-</blockquote>
-<h2 id="unsafe-code"><a class="header" href="#unsafe-code">Unsafe code</a></h2>
-<p>The joint utilization of the type system and the ownership system aims to
-enforce safety regarding memory management in Rust's programs. So the language
-aims to avoid memory overflows, null or invalid pointer constructions, and data
-races.
-To perform risky actions such as system calls, type coercions, or direct
-manipulations of memory pointers, the language provides the <code>unsafe</code> keyword.</p>
-<blockquote>
-<p><strong>Rule <a id="LANG-UNSAFE"></a>LANG-UNSAFE</strong></p>
-<p>For a secured development, the <code>unsafe</code> blocks must be avoided. Afterward,
-we list the only cases where <code>unsafe</code> may be used, provided that they come
-with a proper justification:</p>
-<ul>
-<li>
-<p>The Foreign Function Interface (FFI) of Rust allows for describing
-functions whose implementations are written in C, using the <code>extern "C"</code>
-prefix. To use such a function, the <code>unsafe</code> keyword is required. “Safe”
-wrapper shall be defined to safely and seamlessly call C code.</p>
-</li>
-<li>
-<p>For embedded device programming, registers and various other resources are
-often accessed through a fixed memory address. In this case, <code>unsafe</code> blocks
-are required to initialize and dereference those particular pointers in Rust.
-In order to minimize the number of unsafe accesses in the code and to allow
-easier identification of them by a programmer, a proper abstraction (data
-structure or module) shall be provided.</p>
-</li>
-<li>
-<p>A function can be marked unsafe globally (by prefixing its declaration with
-the <code>unsafe</code> keyword) when it may exhibit unsafe behaviors based on its
-arguments, that are unavoidable. For instance, this happens when a function
-tries to dereference a pointer passed as an argument.</p>
-</li>
-</ul>
-<p>With the exception of these cases, <code>#![forbid(unsafe_code)]</code> must appear in
-the crate root (typically <code>main.rs</code> or <code>lib.rs</code>) to generate compilation
-errors if <code>unsafe</code> is used in the code base.</p>
 </blockquote>
 <h2 id="integer-overflows"><a class="header" href="#integer-overflows">Integer overflows</a></h2>
 <p>Although some verification is performed by Rust regarding potential integer
@@ -355,7 +360,7 @@ limits, ...
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="05_memory.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="05_typesystem.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -369,7 +374,7 @@ limits, ...
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="05_memory.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="05_typesystem.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -393,6 +398,7 @@ limits, ...
         <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
+
 
 
     </div>

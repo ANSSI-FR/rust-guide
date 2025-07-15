@@ -36,6 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc.js"></script>
@@ -92,10 +93,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -146,7 +150,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -174,9 +183,17 @@ l'ownership/borrowing, et identifier les constructions de langage qui peuvent
 casser la sûreté mémoire (par exemple, comportements *unsounds* dans des
 versions plus anciennes du compilateur).
 -->
-<h2 id="fuites-de-mémoire"><a class="header" href="#fuites-de-mémoire">Fuites de mémoire</a></h2>
-<p>En général, la mémoire est automatiquement récupérée en Rust lorsqu'une variable
-sort de la portée lexicale courante. En complément de ce mécanisme, Rust fournit
+<p>Dans la très grande majorité des cas, en Rust non-<em>unsafe</em>, le compilateur détermine <strong>automatiquement</strong>
+quand il peut libérer la mémoire occupée par une valeur du programme.
+Mais, comme rappelé dans les <a href="04_language.html#garantie-de-rust">généralités du langage</a>, ce n'est pas une garantie : un
+code non-<em>unsafe</em> peut mener à des fuites mémoires. Aussi certaines règles présentées dans
+ce chapitre ne sont pas strictement <em>unsafe</em>. Cependant,</p>
+<blockquote>
+<p>même si certaines des fonctions présentées dans la suite ne sont pas <code>unsafe</code>, elle
+elle ne devrait être utilisée qu'en Rust <em>unsafe</em>.</p>
+</blockquote>
+<h2 id="forget-et-fuites-de-mémoire"><a class="header" href="#forget-et-fuites-de-mémoire"><code>forget</code> et fuites de mémoire</a></h2>
+<p>Rust fournit
 des fonctions spéciales pour réclamer manuellement la mémoire : les fonctions
 <code>forget</code> et <code>drop</code> du module <code>std::mem</code> (ou <code>core::mem</code>). <code>drop</code> déclenche
 simplement une récupération prématurée de la mémoire tout en appelant les
@@ -202,7 +219,7 @@ sensibles en mémoire. C'est pourquoi <code>forget</code> doit être considéré
 <strong>non sécurisée</strong>.</p>
 <blockquote>
 <p><strong>Règle <a id="MEM-FORGET"></a>MEM-FORGET</strong></p>
-<p>Dans un développement sécurisé en Rust, la fonction <code>forget</code> de <code>std::mem</code>
+<p>Dans un développement sécurisé en Rust (<em>unsafe</em> ou non), la fonction <code>forget</code> de <code>std::mem</code>
 (<code>core::mem</code>) ne doit pas être utilisée.</p>
 </blockquote>
 <!-- -->
@@ -226,7 +243,7 @@ manuelle d'une valeur.</li>
 l'avantage de faire apparaître explicitement leur but.</p>
 <blockquote>
 <p><strong>Règle <a id="MEM-LEAK"></a>MEM-LEAK</strong></p>
-<p>Dans un développement sécurisé en Rust, le code ne doit pas faire fuiter de la
+<p>Dans un développement sécurisé (<em>unsafe</em> ou non) en Rust, le code ne doit pas faire fuiter de la
 mémoire ou des ressources <em>via</em> <code>Box::leak</code>.</p>
 </blockquote>
 <p><code>ManuallyDrop</code> et <code>Box::into_raw</code> passent la responsabilité de la libération de
@@ -331,34 +348,6 @@ problème : la non-libération de la mémoire initialisée est bien possible.
 C'est problématique en particulier si l'on considère l'utilisation de <code>Drop</code>
 pour effacer des valeurs sensibles.</p>
 </blockquote>
-<h2 id="effacement-sécurisé-des-informations-sensibles"><a class="header" href="#effacement-sécurisé-des-informations-sensibles">Effacement sécurisé des informations sensibles</a></h2>
-<p>L'effacement sécurisé (mise à zéro) est nécessaire pour les variables sensibles,
-en particulier dans lorsque le code Rust est utilisé <em>via</em> des FFI.</p>
-<blockquote>
-<p><strong>Règle <a id="MEM-ZERO"></a>MEM-ZERO</strong></p>
-<p>Les variables contenant des données sensibles doivent être mises à zéro après
-utilisation, en utilisant des fonctions dont les appels ne seront pas
-supprimés par les optimisations du compilateur, comme
-<code>std::ptr::write_volatile</code> ou bien la <em>crate</em> <code>zeroize</code>.</p>
-</blockquote>
-<p>Le code suivant montre comment définir un type entier qui sera remis à zéro
-à sa libération, en utilisant le trait <code>Drop</code> :</p>
-<pre><pre class="playground"><code class="language-rust">/// Exemple : newtype pour u32, réécrit à 0 quand libéré
-pub struct ZU32(pub u32);
-
-impl Drop for ZU32 {
-    fn drop(&amp;mut self) {
-        println!("zeroing memory");
-        unsafe{ ::std::ptr::write_volatile(&amp;mut self.0, 0) };
-    }
-}
-
-<span class="boring">fn main() {
-</span>{
-    let i = ZU32(42);
-    // ...
-} // i est libéré ici
-<span class="boring">}</span></code></pre></pre>
 <h2 id="cycle-dans-les-références-comptées-rc-et-arc"><a class="header" href="#cycle-dans-les-références-comptées-rc-et-arc">Cycle dans les références comptées (<code>Rc</code> et <code>Arc</code>)</a></h2>
 <p>La <strong>combinaison</strong> de la mutabilité <em><a href="https://doc.rust-lang.org/reference/interior-mutability.html">intérieure</a></em>, des références comptées et des types récursifs n'est pas sûre. En effet, elle peut conduire à fuites mémoire, et donc éventuellement à des attaques par déni de service et en des fuites de secrets.</p>
 <p>L'exemple non-<code>unsafe</code> suivant montre, la création d'une fuite mémoire en utilisant la mutabilité intérieure et les références comptées.</p>
@@ -421,11 +410,11 @@ Hello, world!
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="04_language.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="06_1_unsafe_generalities.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="06_typesystem.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="06_3_unsafe_ffi.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -435,11 +424,11 @@ Hello, world!
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="04_language.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="06_1_unsafe_generalities.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="06_typesystem.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="06_3_unsafe_ffi.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -463,6 +452,7 @@ Hello, world!
         <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
+
 
 
     </div>

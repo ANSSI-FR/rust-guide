@@ -1,14 +1,14 @@
 <!DOCTYPE HTML>
-<html lang="en" class="light sidebar-visible" dir="ltr">
+<html lang="fr" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Libraries - Secure Rust Guidelines</title>
+        <title>Unsafe Rust - Développement sécurisé en Rust</title>
 
 
         <!-- Custom HTML head -->
 
-        <meta name="description" content="Recommendations for secure applications development with Rust">
+        <meta name="description" content="Recommandations pour le développement d&#x27;applications sécurisées en Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
@@ -138,7 +138,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">Secure Rust Guidelines</h1>
+                    <h1 class="menu-title">Développement sécurisé en Rust</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -175,58 +175,17 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="libraries"><a class="header" href="#libraries">Libraries</a></h1>
-<p>In addition to the standard library, Rust provides an easy way to import other
-libraries in a project, thanks to <code>cargo</code>. The libraries, known as <em>crates</em> in
-the Rust ecosystem, are imported from the open-source components central
-repository <a href="https://crates.io">crates.io</a>.</p>
-<p>It should be noticed that the quality (in terms of security, performances,
-readability, etc.) of the published crates is very variable. Moreover, their
-maintenance can be irregular or interrupted. The usage of each component from
-this repository should be justified, and the developer should validate the
-correct application of rules from the current guide in its code. Several tools
-can aid in that task.</p>
-<h2 id="cargo-outdated"><a class="header" href="#cargo-outdated">Cargo-outdated</a></h2>
-<p><a href="https://github.com/kbknapp/cargo-outdated">Cargo-outdated</a> tool allows one to easily manage dependencies versions.</p>
-<p>For a given crate, it lists current dependencies versions (using its
-<code>Cargo.toml</code>), and checks latest compatible version and also latest general
-version.</p>
-<blockquote>
-<p><strong>Rule <a id="LIBS-OUTDATED"></a>LIBS-OUTDATED</strong></p>
-<p>The <code>cargo-outdated</code> tool must be used to check dependencies status. Then,
-each outdated dependency must be updated or the choice of the version must be
-justified.</p>
-</blockquote>
-<h2 id="cargo-audit"><a class="header" href="#cargo-audit">Cargo-audit</a></h2>
-<p><a href="https://github.com/RustSec/cargo-audit">Cargo-audit</a> tool allows one to easily check for security vulnerabilities
-reported to the RustSec Advisory Database.</p>
-<blockquote>
-<p><strong>Rule <a id="LIBS-AUDIT"></a>LIBS-AUDIT</strong></p>
-<p>The <code>cargo-audit</code> tool must be used to check for known vulnerabilities in
-dependencies.</p>
-</blockquote>
-<!-- ## Unsafe code in libraries -->
-<!--
-<mark>TODO</mark>: `unsafe` blocks are discussed in the following chapter.
-One needs to ensure that this kind of block is not misused in project
-dependencies.
--->
-<!--
-> **Recommendation <a id="LIBS-UNSAFE"></a>LIBS-UNSAFE**
->
-> <mark>TODO</mark>: check that no `unsafe` blocks appear in the imported
-> dependencies (with a tool?).
--->
+                        <h1 id="rust-unsafe"><a class="header" href="#rust-unsafe">Rust unsafe</a></h1>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="02_devenv.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="05_typesystem.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="04_language.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="06_1_unsafe_generalities.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -236,11 +195,11 @@ dependencies.
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="02_devenv.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="05_typesystem.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="04_language.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="06_1_unsafe_generalities.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
