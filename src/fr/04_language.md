@@ -1,5 +1,44 @@
 # Généralités sur le langage
 
+## Garanties du langage
+
+### Comportements indéfinis
+
+> Le comportement d'un programme est *indéfini* (*UB* pour *Undefined Behavior*) lorsque sa sémantique n'est 
+> pas décrite dans le langage Rust.
+
+L'existence d'*UB* est considéré comme une [erreur](https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general).
+
+Par exemple le déréférencement d'un pointeur null est un *UB*.
+*A contrario*, un `unwrap` sur l'objet `None` est bien *défini* car c'est le langage qui traite cette erreur
+(en lançant un `panic`).
+
+La liste actuelle des *UB* est donnée [ici](https://doc.rust-lang.org/reference/behavior-considered-undefined.html).
+On notera les garanties suivantes :
+
+* Pas de déréférencement de pointeur vers une adresse mémoire non allouée (*dangling pointer*) ou non alignée, ce qui implique
+  * Pas de dépassement de tableau
+  * Pas d'accès à de la mémoire libérée
+  * Accès toujours aligné quelque soit la plateforme
+* Les valeurs pointées sont [cohérentes](https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.invalid) avec le type du pointeur. Par exemple, une valeur pointée par un pointeur booléen sera l'octet 1 ou 0.
+* Respect des règles d'[*aliasing*](https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias) (voir aussi le [nomicon](https://doc.rust-lang.org/nomicon/aliasing.html)): une référence mutable ne peux être partagée.
+* Pas d'accès concurrent (un accès en lecture et un autre en écriture ou en lecture) à la même adresse mémoire ([*data race*](https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race), voir aussi le [nomicon](https://doc.rust-lang.org/nomicon/races.html))
+
+### Garantie de Rust
+
+> La volonté du langage est d'assurer l'absence d'*UB* dans un programme utilisant uniquement la partie non *unsafe* de Rust.
+
+Cependant, le langage ***ne protège pas*** contre les erreurs suivantes :
+
+* fuites de resources (mémoire, IO, ...) ;
+* dépassements numériques.
+
+### Références
+
+* https://doc.rust-lang.org/reference/unsafety.html
+* https://doc.rust-lang.org/nomicon/what-unsafe-does.html
+<!-- * https://github.com/ANSSI-FR/rust-guide/pull/3 -->
+
 ## Nommage
 
 La convention de nommage employée par la bibliothèque standard est *de facto* le
@@ -32,46 +71,7 @@ plus précises pour certaines constructions particulières :
 [rfc 430]: https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md
 [rust api guidelines]: https://rust-lang.github.io/api-guidelines/
 
-## Code *unsafe*
 
-L'utilisation conjointe du système de types et du système d'*ownership* vise à
-apporter un haut niveau de sûreté quant à la gestion de la mémoire dans les
-programmes écrits en Rust. Le langage permet alors d'éviter les débordements
-mémoire, la construction de pointeurs nuls ou invalides, et les problèmes
-d'accès concurrents à la mémoire.
-Pour effectuer des actions considérées risquées comme des appels système, des
-conversions de types ou la manipulation directe de pointeurs mémoire, le
-langage fournit le mot-clé `unsafe`.
-
-> **Règle {{#check LANG-UNSAFE | Non-utilisation des blocs *unsafe*}}**
->
-> Pour un développement sécurisé, les blocs `unsafe` doivent être évités.
-> Ci-dessous, nous listons les seuls cas pour lesquels des blocs `unsafe`
-> peuvent être utilisés, à la condition que leur usage soit justifié :
->
->  - L'interfaçage entre Rust et d'autres langages (FFI) permet la déclaration
->  de fonctions dont l'implantation est faite en C, en utilisant le préfixe
->  `extern "C"`. Pour utiliser une telle fonction, le mot-clé `unsafe` est
->  requis. Un *wrapper* "sûr" doit être défini pour que le code C soit
->  finalement appelé de façon souple et sûre.
->
->  - Pour la programmation des systèmes embarqués, on accède souvent aux
->  registres et à d'autres ressources au travers d'adresses mémoire fixées
->  Dans ce cas, des blocs `unsafe` sont nécessaires afin de pouvoir initialiser
->  et déréférencer des pointeurs en Rust pour ces adresses. Afin de minimiser le
->  nombre de déclarations `unsafe` pour permettre au développeur de facilement
->  identifier les accès critiques, une abstraction adaptée (structure de
->  données ou module) doit être mise en place.
->
->  - Une fonction peut être marquée globalement comme non sûre (en préfixant sa
->  déclaration par le mot-clé `unsafe`) lorsqu'elle exhibe inévitablement des
->  comportements non sûrs en fonction de ses arguments. Par exemple, cela arrive
->  lorsqu'une fonction doit déréférencer un pointeur passé en argument.
->
-> À l'exception de l'un ou plusieurs de ces cas `#![forbid(unsafe_code)]` doit
-> apparaître dans à la racine de la *crate* (typiquement `main.rs` ou `lib.rs`)
-> afin de générer des erreurs de compilation dans le cas ou le mot-clé `unsafe`
-> est utilisé dans le projet.
 
 ## Dépassement d'entiers
 

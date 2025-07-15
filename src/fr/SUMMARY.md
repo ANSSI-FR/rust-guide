@@ -4,9 +4,11 @@
 - [Environnement de développement](02_devenv.md)
 - [Bibliothèques](03_libraries.md)
 - [Généralités sur le langage](04_language.md)
-- [Gestion de la mémoire](05_memory.md)
-- [Système de types](06_typesystem.md)
-- [FFI](07_ffi.md)
+- [Système de types](05_typesystem.md)
+- [Unsafe Rust](06_unsafe.md)
+  - [Généralités](06_1_unsafe_generalities.md)
+  - [Gestion de la mémoire](06_2_unsafe_memory.md)
+  - [FFI](06_3_unsafe_ffi.md)
 
 [License](LICENSE.md)
 

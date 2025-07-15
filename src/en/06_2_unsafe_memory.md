@@ -8,7 +8,15 @@ and identify language constructs that may break memory safety (for instance,
 unsound behaviors in older versions of the compiler).
 -->
 
-## Memory leaks
+In the vast majority of cases, in non-`unsafe` Rust (i.e., code that does not use `unsafe`), the compiler **automatically** determines when it can release the memory occupied by a value in the program.
+But, as [noted earlier](04_language.md#rust-guarantees), this is not
+a guarantee: code without `unsafe` can still lead to memory leaks. Therefore, some of the
+rules presented in this chapter are not strictly related to the `unsafe` keyword. However,
+
+> even if a function in the following is not `unsafe`,
+> it should only be used in Rust *unsafe*.
+
+## `forget` and memory leaks
 
 While the usual way for memory to be reclaimed is for a variable to go out of
 scope, Rust provides special functions to manually reclaim memory: `forget` and
@@ -164,39 +172,6 @@ The use of uninitialized memory may result in two distinct security issues:
 > However, it does not change the second issue: the non-drop of an initialized
 > memory is as much likely. It is problematic, in particular when considering
 > the use of `Drop` to erase sensitive memory.
-
-## Secure memory zeroing for sensitive information
-
-Zeroing memory is useful for sensitive variables, especially if the
-Rust code is used through FFI.
-
-> **Rule {{#check MEM-ZERO | Zero out memory of sensitive data after use}}**
->
-> Variables containing sensitive data must be zeroed out after use, using
-> functions that will not be removed by the compiler optimizations, like
-> `std::ptr::write_volatile` or the `zeroize` crate.
-
-The following code shows how to define an integer type that will be set to
-0 when freed, using the `Drop` trait:
-
-```rust
-/// Example: u32 newtype, set to 0 when freed
-pub struct ZU32(pub u32);
-
-impl Drop for ZU32 {
-    fn drop(&mut self) {
-        println!("zeroing memory");
-        unsafe{ ::std::ptr::write_volatile(&mut self.0, 0) };
-    }
-}
-
-# fn main() {
-{
-    let i = ZU32(42);
-    // ...
-} // i is freed here
-# }
-```
 
 ## Cyclic reference counted pointers (`Rc` and `Arc`)
 
