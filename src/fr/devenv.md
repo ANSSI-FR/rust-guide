@@ -297,7 +297,7 @@ et des composants écrits dans un ou les langages n'assurant pas la sûreté
 mémoire. En effet, il a été montré que du code Rust peut être utilisé pour
 contourner des durcissements d'un code C vulnérable.
 
-> ** Règles {{#check DENV-MIXED | Activer les durcissements pour tous les langages d'un logiciel mixte}}**
+> **Règle {{#check DENV-MIXED | Activer les durcissements pour tous les langages d'un logiciel mixte}}**
 >
 > Dans le cadre du développement d'une application sécurisée comportant des
 > composants dans plusieurs langages, les compilations des composants (y compris
