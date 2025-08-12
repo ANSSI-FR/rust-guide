@@ -107,6 +107,23 @@ fn make_room(&mut self) {
 
 This function my be necessary for internal use, but it should not be exposed in the API, or it should be marked with `unsafe` keyword, because its use can lead to *UB*.
 
+> **Rule {{#check LANG-UNSAFE-ENCP | Encapsulation of *unsafe* features}}**
+>
+> In secure development of a Rust software component (crate or module), all
+> *unsafe* code must be encapsulated in such a way that:
+>
+> * either it exposes a safe behavior to the user, in which no safe interaction
+>   can result in UB (undefined behavior);
+> * or it exposes features marked as unsafe whose usage conditions
+>   (preconditions, sequencing, etc.) are exhaustively documented.
+
+Thus, a function using `unsafe` operations can be *safe* if the `unsafe`
+operations do not present any *UB* (undefined behavior) given the component's
+invariants (typically the type invariant for a method). Conversely, a function
+without an `unsafe` block must be marked as `unsafe` if it breaks these
+invariants. The choice and knowledge of these invariants are therefore crucial
+for secure development.
+
 ### Trust relation between *safe* and *unsafe*
 
 #### Principle
@@ -248,23 +265,6 @@ If they cannot protect their function against badly implemented *safe* functions
 * mark the function they *write* as `unsafe`: thus it is the user's responsibility to feed this function with correct arguments (by checking *unsafe* function documentation).
 * mark the traits they *use* as `unsafe` : thus it is user's responsibility to implement the trait properly (again reading the trait documentation).
 
-> **Rule {{#check LANG-UNSAFE-ENCP | Encapsulation of _unsafe_ features}}**
->
-> In secure development of a Rust software component (crate or module), all
-> _unsafe_ code must be encapsulated in such a way that:
->
-> - either it exposes a safe behavior to the user, in which no safe interaction
->   can result in UB (undefined behavior);
-> - or it exposes features marked as unsafe whose usage conditions
->   (preconditions, sequencing, etc.) are exhaustively documented.
+#### References
 
-Thus, a function using `unsafe` operations can be _safe_ if the `unsafe` operations do
-not present any _UB_ (undefined behavior) given the component's invariants
-(typically the type invariant for a method). Conversely, a function without an
-`unsafe` block must be marked as `unsafe` if it breaks these invariants. The choice
-and knowledge of these invariants are therefore crucial for secure
-development.
-
-#### Références
-
-* https://doc.rust-lang.org/nomicon/safe-unsafe-meaning.html
+* <https://doc.rust-lang.org/nomicon/safe-unsafe-meaning.html>
