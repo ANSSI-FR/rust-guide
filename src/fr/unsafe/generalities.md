@@ -124,6 +124,23 @@ Si elle peut être tout à fait légitime pour du code *interne* à l'API,
 cette fonction ne doit pas être exposée par l'API ou alors doit être annotée 
 par `unsafe` car elle peut conduire à des *UB* (même si elle ne comporte pas de blocs *unsafe*s).
 
+> **Règle {{#check LANG-UNSAFE-ENCP | Encapsulation des fonctionnalités *unsafe*}}**
+>
+> Dans un développement sécurisé d'un composant logiciel Rust (*crate* ou module),
+> tout code *unsafe* doit être encapsulé de manière :
+>
+> * soit à exposer un comportement *safe* à l'utilisateur dans lequel aucune
+>   interaction *safe* ne peut aboutir à un *UB* (comportement indéfini) ;
+> * soit à exposer des fonctionnalités marquées `unsafe` dont les conditions
+>   d'usages (préconditions, séquencements, etc.) sont exhaustivement données.
+
+Ainsi, une fonction utilisant des opérations `unsafe` peut-être sûre (et donc
+sans marque `unsafe`) si les opérations `unsafe` ne présentent pas d'*UB* étant
+donnés les invariants du composant (typiquement l'invariant de type pour une
+méthode). Inversement, une fonction sans bloc `unsafe` doit être marquée
+`unsafe` si elle casse ces invariants. Le choix et la connaissance de ces
+invariants sont donc cruciaux pour le développement sécurisé.
+
 ### Relation de confiance *safe*/*unsafe*
 
 <!-- Revoir la reformulation -->
@@ -280,23 +297,6 @@ deux solutions sont possibles :
 * marquer le trait dont dépend la fonction comme *unsafe* : ainsi, de même, la responsabilité
   de la bonne exécution du programme revient à l'implémenteur du trait en s'assurant que
   l'implémentation répond bien aux spécifications du trait (présente dans sa documentation).
-
-> **Règle {{#check LANG-UNSAFE-ENCP | Encapsulation des fonctionnalités *unsafe*}}**
->
-> Dans un développement sécurisé d'un composant logiciel Rust (_crate_ ou module),
-> tout code _unsafe_ doit être encapsulé de manière :
->
-> - soit à exposer un comportement _safe_ à l'utilisateur dans lequel aucune
->   interaction _safe_ ne peut aboutir à un _UB_ (comportement indéfini) ;
-> - soit à exposer des fonctionnalités marquées `unsafe` dont les conditions
->   d'usages (préconditions, séquencements, etc.) sont exhaustivement données.
-
-Ainsi, une fonction utilisant des opérations `unsafe` peut-être sûre (et donc
-sans marque `unsafe`) si les opérations `unsafe` ne présentent pas d'_UB_ étant
-donnés les invariants du composant (typiquement l'invariant de type pour une
-méthode). Inversement, une fonction sans bloc `unsafe` doit être marquée
-`unsafe` si elle casse ces invariants. Le choix et la connaissance de ces
-invariants sont donc cruciaux pour le développement sécurisé.
 
 #### Références
 
