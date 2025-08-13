@@ -7,9 +7,11 @@ puis dans le document des *[Rust API Guidelines]*.
 
 La règle de base consiste à utiliser :
 
-- `UpperCamelCase` pour les types, traits et valeurs d'énumérations ;
-- `snake_case` pour les fonctions, méthodes, macros, variables et modules ;
-- `SCREAMING_SNAKE_CASE` pour les variables statiques et les constantes ;
+- `UpperCamelCase` pour les types, traits et variants d'énumérations ;
+- `snake_case` pour les fonctions, les méthodes, les macros, les variables et
+  les modules ;
+- `SCREAMING_SNAKE_CASE` pour les statiques, les constantes et les paramètres
+  génériques constants ;
 - `'lowercase` pour les durées de vie (*lifetimes*).
 
 Les [Rust API Guidelines] recommandent également des conventions de nommage
@@ -18,8 +20,9 @@ plus précises pour certaines constructions particulières :
 - (C-CONV) pour les méthodes de conversion (`as_`, `to_`, `into_`) ;
 - (C-GETTER) pour les accesseurs ;
 - (C-ITER) pour les méthodes produisant des itérateurs ;
-- (C-ITER-TY) pour les types itérateur ;
-- (C-FEATURE) pour les noms de *features* ;
+- (C-ITER-TY) pour les types d'itérateurs ;
+- (C-FEATURE) pour les noms de *features* (fonctionnalités accessibles par
+  configuration) ;
 - (C-WORD-ORDER) pour la cohérence sur l'ordre des mots.
 
 > **Règle {{#check LANG-NAMING | Respect des conventions de nommage}}**
@@ -29,4 +32,3 @@ plus précises pour certaines constructions particulières :
 
 [rfc 430]: https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md
 [rust api guidelines]: https://rust-lang.github.io/api-guidelines/
-
