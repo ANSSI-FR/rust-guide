@@ -1,33 +1,52 @@
-# Language guarantees
+# Language Guarantees
 
-## Undefined Behaviors (*UB*)
+## Undefined Behavior (*UB*)
 
-> The behavior of a program is *undefined* when its semantics is not described in the Rust language.
+> The behavior of a program is *undefined* when its semantics is not described
+> by the Rust language.
 
-The existence of UB is considered an [error](https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general).
+The existence of UB is considered an [error][reference ub].
 
-For example, dereferencing the null pointer is a *UB*. On the other hand, `unwrap`ing the `None` object is well defined because it is the language that processes this error (by launching a panic).
+For example, dereferencing a null pointer is *UB*. On the other hand,
+`unwrap`ping the `None` value is well defined because the language handles this
+error (most often by triggering a panic).
 
-The current list of *UBs* is given in the language [reference](https://doc.rust-lang.org/reference/behavior-considered-undefined.html). Notice the following guarantees:
+The current list of *UBs* is given in the language [reference]. Note the
+following guarantees:
 
-* No dereference of pointer to an unallocated or unaligned memory address (dangling pointer), which implies
-  * No buffer overflow
-  * No access to freed memory
-  * No non-aligned access
-* The pointed values are [consistent](https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.invalid) with the pointer's type. For example, a value pointed at by a boolean pointer will be byte of value 1 or 0.
-* Respect of [aliasing rules](https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias) (see also [nomicon](https://doc.rust-lang.org/nomicon/aliasing.html)): a mutable reference cannot be shared.
-* No concurrent access (reading/writing is not possible while writing) to the same memory address ([data race](https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race), see also [nomicon](https://doc.rust-lang.org/nomicon/races.html))
+- No dereferencing of pointers to unallocated or unaligned memory addresses
+  (dangling pointers), which implies:
+  - No buffer overflows
+  - No access to freed memory
+  - No unaligned access
+- [Consistency] between pointer types and pointed-to values (on read or write). For example, a
+  value pointed to by a Boolean pointer will be a byte with value 1 or 0.
+- Respect for [aliasing rules][reference aliasing]
+  (see also [nomicon][nomicon aliasing]): a
+  mutable reference cannot be shared.
+- No concurrent access (reading/writing is not possible while writing) to the
+  same memory address ([data race][reference data race],
+  see also [nomicon][nomicon data race]).
 
-## Rust guarantees
+## Rust Guarantees
 
-> The language paradigm is to ensure the absence of a UB in a program using only the non-*unsafe* part of Rust.
+> The language paradigm is to ensure the absence of UB in a program using only
+> the non-*unsafe* parts of Rust.
 
-However, the language does not prevent
+However, **the language does not prevent**:
 
-* resource leaks (memory, IO, ...),
-* numeric overflows.
+- resource leaks (memory, IO, etc.),
+- numeric overflows.
 
 ## References
 
-* https://doc.rust-lang.org/reference/unsafety.html
-* https://doc.rust-lang.org/nomicon/what-unsafe-does.html
+- <https://doc.rust-lang.org/reference/unsafety.html>
+- <https://doc.rust-lang.org/nomicon/what-unsafe-does.html>
+
+[consistency]: https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.invalid
+[nomicon aliasing]: https://doc.rust-lang.org/nomicon/aliasing.html
+[nomicon data race]: https://doc.rust-lang.org/nomicon/races.html
+[reference]: https://doc.rust-lang.org/reference/behavior-considered-undefined.html
+[reference aliasing]: https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias
+[reference data race]: https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race
+[reference ub]: https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general
