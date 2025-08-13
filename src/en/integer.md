@@ -2,34 +2,48 @@
 
 ## Integer overflows
 
-Although some verification is performed by Rust regarding potential integer
-overflows, precautions should be taken when executing arithmetic operations on
-integers.
+Although Rust performs some checks for potential integer overflows, precautions
+should be taken when executing arithmetic operations on integers.
 
-In particular, it should be noted that using debug or release compilation
-profile changes integer overflow behavior. In debug configuration, overflow
-cause the termination of the program (`panic`), whereas in the release
-configuration the computed value silently wraps around the maximum value that
-can be stored.
+In particular, note that the compilation profile (typically, *dev*, the default
+debug build, or *release*, the standard optimized build) changes integer
+overflow behavior. In the *dev* configuration, overflow causes the termination
+of the program (`panic`), whereas in the *release* configuration, the computed
+value is silently truncated to the number of bits of the numeric type, giving it
+this wrap-around semantics.
 
-This last behavior can be made explicit by using the `Wrapping` generic type,
-or the `overflowing_<op>` and `wrapping_<op>` operations on integers
-(the `<op>` part being `add`, `mul`, `sub`, `shr`, etc.).
+When an overflow is possible, the behavior can be made explicit by using
+specific methods `<mode>_<op>`, where `<op>` can be `add`, `mul`, `sub`, `shr`,
+etc.:
+
+- `checked_<op>` returns `None` in case of overflow,
+- `overflowing_<op>` returns both a possibly wrapped result and a Boolean
+  indicating whether overflow occurred,
+- `wrapping_<op>` always returns the wrapped result,
+- `saturating_<op>` always returns the saturated result.
+
+For the last two choices, an alternative is to use the generic types `Wrapping`
+and `Saturating` (from `std::num`) to accomplish the same thing in a more
+concise way. Indeed, once the values are wrapped inside all subsequent
+operations are made with the given semantics.
 
 ```rust
-use std::num::Wrapping;
+use std::num::{Saturating, Wrapping};
 # use std::panic;
 
 # fn main() {
 let x: u8 = 242;
 
 # let result = panic::catch_unwind(|| {
-println!("{}", x + 50);                      // panics in debug, prints 36 in release.
+println!("{}", x + 50);     // panics in debug, prints 36 in release.
 # });
 # if result.is_err() { println!("panic"); }
-println!("{}", x.overflowing_add(50).0);     // always prints 36.
-println!("{}", x.wrapping_add(50));          // always prints 36.
-println!("{}", Wrapping(x) + Wrapping(50));  // always prints 36.
+println!("{:?}", x.checked_add(50));            // always prints None.
+println!("{}", x.overflowing_add(50).0);        // always prints 36.
+println!("{}", x.wrapping_add(50));             // always prints 36.
+println!("{}", x.saturating_add(50));           // always prints 255.
+println!("{}", Wrapping(x) + Wrapping(50));     // always prints 36.
+println!("{}", Saturating(x) + Saturating(50)); // always prints 255.
 
 // always panics:
 let (res, c) = x.overflowing_add(50);
@@ -43,6 +57,6 @@ else { println!("{}", res); }
 
 > **Rule {{#check LANG-ARITH | Use appropriate arithmetic operations regarding potential overflows}}**
 >
-> When assuming that an arithmetic operation can produce an overflow, the
-> specialized functions `overflowing_<op>`, `wrapping_<op>`, or the
-> `Wrapping` type must be used.
+> When an arithmetic operation may produce an overflow, specialized methods like
+> `checked_<op>`, `overflowing_<op>`, `wrapping_<op>`, or `saturating_<op>`, or
+> specialized wrapper types like `Wrapping` or `Saturating` must be used.
