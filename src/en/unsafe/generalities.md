@@ -2,7 +2,7 @@
 
 ## *Unsafe* capacities
 
-Language capabilities can be extended using unsafe code. The full list of these capacities is given in the [Rust reference](https://doc.rust-lang.org/reference/unsafety.html). Notice the following one's.
+Language capabilities can be extended using unsafe code. The full list of these capacities is given in the [Rust reference](https://doc.rust-lang.org/reference/unsafety.html). Notice the following ones.
 
 * Dereference a raw pointer
 * Modify a static mutable variable
@@ -36,14 +36,14 @@ manipulations of memory pointers, the language provides the `unsafe` keyword.
 
 > **Rule {{#check LANG-UNSAFE | Don't use unsafe blocks}}**
 >
-> For a secured development, the `unsafe` blocks must be avoided. Afterward,
+> In a secure Rust development, the `unsafe` blocks must be avoided. In the following,
 > we list the only cases where `unsafe` may be used, provided that they come
 > with a proper justification:
 >
->  - The Foreign Function Interface (FFI) of Rust allows for describing
+>  - The Foreign Function Interface (FFI) of Rust allows describing
 >  functions whose implementations are written in C, using the `extern "C"`
 >  prefix. To use such a function, the `unsafe` keyword is required. “Safe”
->  wrapper shall be defined to safely and seamlessly call C code.
+>  wrappers shall be defined to safely and seamlessly call C code.
 >
 >  - For embedded device programming, registers and various other resources are
 >  often accessed through a fixed memory address. In this case, `unsafe` blocks
@@ -121,14 +121,14 @@ Consequently, even *safe* function must be handled carefully in *unsafe* context
 
 #### Example
 
-Suppose one wants to propose an API find object of a given type in the memory.
+Suppose one wants to propose an API to find objects of a given type in the memory.
 This API could ask implementing the following trait
 
 ```rust
 trait Locatable {
-    /// Find object of type `Self` in the buffer `buf`.
-    /// Returns the index of the first byte representing
-    /// an object of type `Self`
+    /// Find objects of type `Self` in the buffer `buf`.
+    /// Return the index of the first byte representing
+    /// an object of type `Self`.
     fn locate_instance_into(buf: &[u8]) -> Option<usize>;
 }
 ```
@@ -167,11 +167,11 @@ fn locate<T: Locatable + Clone>(start: *const u8, len: usize) -> Option<T> {
 This implementation is harmful for two reasons:
 
 * If the `Locatable` implementation gives the wrong index, the `as_ref` function produce an *UB*.
-* If the `Locatable` implementation gives an outbound index, the subsequent buffer overflow is an *UB*.
+* If the `Locatable` implementation gives an out-of-bounds index, the subsequent buffer overflow is an *UB*.
 
 </div>
 
-For instance, the following `Locatable` implementation is wrong **but** it is of the responsibility of the API maker to take it into account.
+For instance, the following `Locatable` implementation is wrong **but** it is the responsibility of the API maker to take it into account.
 
 ```rust
 impl Locatable for bool {
@@ -181,7 +181,7 @@ impl Locatable for bool {
 }
 ```
 
-The following program produces *UB*.
+The following program produces a *UB*.
 
 ```rust,should_panic
 fn main() {
@@ -246,7 +246,7 @@ in case these *safe* functions have bad behavior.
 If they cannot protect their function against badly implemented *safe* functions/traits, they could either
 
 * mark the function they *write* as `unsafe`: thus it is the user's responsibility to feed this function with correct arguments (by checking *unsafe* function documentation).
-* mark the traits they *use* as `unsafe` : thus it is user's responsibility to simplement the trait properly (again reading the trait documentation).
+* mark the traits they *use* as `unsafe` : thus it is user's responsibility to implement the trait properly (again reading the trait documentation).
 
 #### Références
 
