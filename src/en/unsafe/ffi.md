@@ -74,7 +74,7 @@ fn main() {
 
 Typing is the way Rust ensures memory safety. When interfacing with other
 languages, which may not offer the same guarantee, the choice of types in the
-binding is essential to maintain the memory safety.
+binding is essential to maintain memory safety.
 
 ### Data layout
 
@@ -134,7 +134,7 @@ The following types are considered C-compatible:
 - an `Option<T>` where `T` is either
   - `core::ptr::NonNull<U>` and `U` is a `Sized` C-compatible type, then it is
       compatible to a `*const T` and `*mut T` pointer;
-  - `core::num::NonZero*`, then is compatible to the corresponding integral
+  - `core::num::NonZero*`, then is compatible with the corresponding integral
       primitive type;
 - a `repr(transparent)`-annotated `struct` with only one field, where that
   field has a C-compatible type.
@@ -146,9 +146,9 @@ The following types are not C-compatible:
 - Enums with fields,
 - Tuples (but `repr(C)` tuple structures are OK).
 
-Some types are compatibles with some caveats:
+Some types are compatible with some caveats:
 
-- Zero-sized types, which is really zero sized (which is let unspecified in C
+- Zero-sized types, which is really zero sized (which is left unspecified in C
   and contradicts the C++ specification),
 - `repr(C)`, `repr(C, Int)`, or `repr(Int)`-annotated enum with fields
   (see [RFC 2195]).
@@ -219,7 +219,7 @@ the C standard library.
 >
 > In a secure Rust development, when interfacing with foreign code that
 > uses platform-dependent types, such as C's `int` and `long`, Rust code must
-> use portable type aliases, such as provided by the standard library or the
+> use portable type aliases, such as the ones provided by the standard library or the
 > [libc] crate, rather than platform-specific types, except if
 > the binding is automatically generated for each platform (see Note below).
 
@@ -255,15 +255,15 @@ the C-compatible types:
 - references,
 - function pointers,
 - enums,
-- floats (even if almost every language have the same understanding of what is
+- floats (even if almost all languages have the same understanding of what is
   a valid float),
 - compound types that contain a field of a non-robust type.
 
 On the other hand, integer types (`u*`/`i*`), packed compound types that contain
-no non-robust fields, for instance are *robust types*.
+no non-robust fields, are instances of *robust types*.
 
 Non-robust types are a difficulty when interfacing two languages. It revolves
-into deciding **which language of the two is responsible in asserting the
+around deciding **which language of the two is responsible for asserting the
 validity of boundary-crossing values** and how to do it.
 
 > **Rule {{#check FFI-CKNONROBUST | Do not use unchecked non-robust foreign values}}**
@@ -271,7 +271,7 @@ validity of boundary-crossing values** and how to do it.
 > In a secure Rust development, there must not be any use of *unchecked* foreign
 > values of non-robust types.
 >
-> In other words, either Rust translates robust types to non-robust types
+> In other words, either Rust translates robust types into non-robust types
 > through explicit checking or the foreign side offers strong guarantees of the
 > validity of the value.
 
@@ -283,7 +283,7 @@ validity of boundary-crossing values** and how to do it.
 > be done in Rust when possible.
 
 Those generic rules are to be adapted to a specific foreign language or for the
-associated risks. Concerning languages, C is particularly unfit to offer
+associated risks. Concerning languages, C is particularly unfit for offering
 guarantees about validity. However, Rust is not the only language to offer
 strong guarantees. For instance, some C++ subset (without reinterpretation)
 allows developers to do lot of type checking. Because Rust natively separates
@@ -293,7 +293,7 @@ function references, and enums, and are discussed below.
 
 > **Warning**
 >
-> Rust's `bool` has been made equivalent to C99's `_Bool` (aliased as `bool`
+> Rust `bool` has been made equivalent to C99's `_Bool` (aliased as `bool`
 > in `<stdbool.h>`) and C++'s `bool`. However, loading a value other than 0 and
 > 1 as a `_Bool`/`bool` is an undefined behavior *on both sides*.
 > Safe Rust ensures that. Standard-compliant C and C++ compilers ensure that no
@@ -305,7 +305,7 @@ function references, and enums, and are discussed below.
 #### References and pointers
 
 Although they are allowed by the Rust compiler, the use of Rust references in
-FFI may break Rust's memory safety. Because their “unsafety” is more explicit,
+FFI may break Rust memory safety. Because their “unsafety” is more explicit,
 pointers are preferred over Rust references when binding to another language.
 
 On the one hand, reference types are very non-robust: they allow only pointers
@@ -324,16 +324,16 @@ Rust references may be used reasonably with other C-compatible languages
 including C variants allowing for non-null type checking, e.g. Microsoft SAL
 annotated code.
 
-On the other hand, Rust's *pointer types* may also lead to undefined behaviors
+On the other hand, Rust *pointer types* may also lead to undefined behaviors
 but are more verifiable, mostly against `std/core::ptr::null()` (C's `(void*)0`)
-but also in some context against a known valid memory range (particularly in
+but also in some contexts against a known valid memory range (particularly in
 embedded systems or kernel-level programming). Another advantage of using Rust
 pointers in FFI is that any load of the pointed value is clearly marked inside
 an `unsafe` block or function.
 
 > **Recommendation {{#check FFI-NOREF | Do not use reference types but pointer types}}**
 >
-> In a secure Rust development, the Rust code should not use references types
+> In a secure Rust development, the Rust code should not use reference types
 > but pointer types.
 >
 > Exceptions include:
@@ -349,11 +349,11 @@ an `unsafe` block or function.
 
 > **Rule {{#check FFI-CKREF | Do not use unchecked foreign references}}**
 >
-> In a secure Rust development, every foreign references that is transmitted to
+> In a secure Rust development, every foreign reference that is transmitted to
 > Rust through FFI must be **checked on the foreign side** either automatically
 > (for instance, by a compiler) or manually.
 > 
-> Exceptions include Rust references in an opaque wrapping that is created
+> Exceptions include Rust references in an opaque wrapping that are created
 > and manipulated only from the Rust side and `Option`-wrapped references
 > (see Note below).
 
@@ -365,7 +365,7 @@ an `unsafe` block or function.
 > pointer must check their validity beforehand.
 > In particular, pointers must be checked to be non-null before any use.
 >
-> Stronger approaches are advisable when possible. They includes checking
+> Stronger approaches are advisable when possible. They include checking
 > pointers against known valid memory range or tagging (or signing) pointers
 > (particularly applicable if the pointed value is only manipulated from Rust).
 
@@ -415,7 +415,7 @@ int main() {
 #### Function pointers
 
 Function pointers that cross FFI boundaries may ultimately lead to arbitrary code
-execution and represents a real security risks.
+execution and represent a real security risks.
 
 > **Rule {{#check FFI-MARKEDFUNPTR | Mark function pointer types in FFI as `extern` and `unsafe`}}**
 >
@@ -458,8 +458,8 @@ possibilities:
 > In a secure Rust development, any foreign function pointer must be checked at
 > the FFI boundary.
 
-When binding with C or even C++, one cannot guarantee easily the validity of the
-function pointer. C++ functors are not C-compatible.
+When binding with C or even C++, one cannot guarantee easily the validity of 
+function pointers. C++ functors are not C-compatible.
 
 #### Enums
 
@@ -469,14 +469,14 @@ respect to the number of possible bit patterns of the same size. Mishandling an
 severe consequences on software security. Unfortunately, checking an `enum`
 value at the FFI boundary is not simple on both sides.
 
-On the Rust side, it consists to actually use an integer type in the `extern`
-block declaration, a *robust* type, and then to perform a checked conversion
+On the Rust side, it consists in actually using an integer type in the `extern`
+block declaration, a *robust* type, and then performing a checked conversion
 to the enum type.
 
 On the foreign side, it is possible only if the other language allows for
 stricter checks than plain C. `enum class` in C++ are for instance allowable.
-Note however that as for reference the actual `extern "C"` ABI of
-`enum class` is implementation defined and should be verified for each
+Note however that as for a reference, the actual `extern "C"` ABI of
+`enum class` is implementation-defined and should be verified for each
 environment.
 
 > **Recommendation {{#check FFI-NOENUM | Do not use incoming Rust `enum` at FFI boundary}}**
@@ -490,8 +490,8 @@ environment.
 >   Rust side,
 > - bound to safe enums in the foreign language, e.g. `enum class` types in C++.
 
-Concerning fieldless enums, crates like [`num_derive`] or [`num_enum`] allows
-developer to easily provide safe conversion from integer to enumeration and may
+Concerning fieldless enums, crates like [`num_derive`] or [`num_enum`] allow
+developers to easily provide safe conversions from integer to enumeration and may
 be use to safely convert an integer (provided from a C `enum`) into a Rust enum.
 
 [num_derive]: https://crates.io/crates/num_derive
@@ -517,7 +517,7 @@ extern "C" {
 }
 ```
 
-The not yet implemented [RFC 1861] proposes to facilitate the coding by allowing
+The not-yet-implemented [RFC 1861] proposes to facilitate this encoding by allowing
 to declare opaque types in `extern` blocks.
 
 [RFC 1861]: https://rust-lang.github.io/rfcs/1861-extern-types.html
@@ -526,7 +526,7 @@ to declare opaque types in `extern` blocks.
 >
 > In a secure Rust development, when interfacing with C or C++, Rust types that
 > are to be considered opaque in C/C++ should be translated as incomplete
-> `struct` type (i,e., declared without definition) and be provided with
+> `struct` types (i,e., declared without definition) and be provided with
 > a dedicated constructor and destructor.
 
 Example of opaque Rust type:
@@ -604,7 +604,7 @@ wrapper around the foreign type:
 > In a secure Rust development, any non-sensitive foreign piece of data that are
 > allocated and deallocated in the foreign language should be encapsulated in a
 > `Drop` type in such a way as to provide automatic deallocation in Rust,
-> through an automatic call to the foreing language deallocation routine.
+> through an automatic call to the foreign language deallocation routine.
 
 A simple example of Rust wrapping over an external opaque type:
 
@@ -664,18 +664,18 @@ impl Drop for Foo {
 > is not sufficient for sensitive deallocation (such as wiping sensitive data)
 > except if the code is guaranteed to never panic.
 >
-> For wiping sensitive data case, one could address the issue with a dedicated
+> For wiping sensitive data, one could address the issue with a dedicated
 > panic handler.
 
 When the foreign language is the one exploiting Rust allocated resources, it is
 a lot more difficult to offer any guarantee.
 
-In C for instance there is no easy way to check that the appropriate destructor
-is checked. A possible approach is to exploit callbacks to ensure that the
+In C for instance, there is no easy way to check that the appropriate destructor
+is called. A possible approach is to exploit callbacks to ensure that the
 reclamation is done.
 
 The following Rust code is a **thread-unsafe** example of a C-compatible API
-that provide callback to ensure safe resource
+that provides a callback to ensure safe resource
 reclamation:
 
 ```rust,noplaypen

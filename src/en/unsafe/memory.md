@@ -39,7 +39,7 @@ forget(s); // Leak memory
 ```
 
 In particular, using `forget` may result in not releasing critical resources
-leading to deadlocks or not erasing sensitive data from the memory. That is why,
+leading to deadlocks or not erasing sensitive data from the memory. This is why
 `forget` is **unsecure**.
 
 > **Rule {{#check MEM-FORGET | Do not use `forget`}}**
@@ -86,9 +86,9 @@ compiler to the developer.
 
 ## Raw pointers
 
-This pointers are mainly used to use C pointer. They do not have the same protections
-than *smart pointers* and often have to be used in `unsafe` context. For instance, freeing 
-raw pointer must be done manually without Rust warranties.
+These pointers are mainly used for C pointers. They do not have the same protections
+as *smart pointers* and often have to be used in `unsafe` context. For instance, freeing 
+raw pointers must be done manually without Rust guaranties.
 
 > **Rule {{#check MEM-NORAWPOINTER | Do no convert smart pointer into raw pointer in Rust without `unsafe`}}**
 >
@@ -118,12 +118,13 @@ raw pointer must be done manually without Rust warranties.
 > let _ = unsafe { Box::from_raw(raw_ptr) }; // will be freed
 > ```
 
-Converse is true! That is `from_raw` should be call **only** on `into_raw`ed value. For instance,
-`Rc` smart pointer [explicitly request for this condition](https://doc.rust-lang.org/std/rc/struct.Rc.html#method.from_raw)
-and, for `Box` smart pointer, conversion of C pointer into `Box` is [discouraged](https://doc.rust-lang.org/std/boxed/index.html#memory-layout).
+The converse is also true! That is, `from_raw` should be call **only** on `into_raw`ed value. For instance,
+`Rc` smart pointers [explicitly request for this condition](https://doc.rust-lang.org/std/rc/struct.Rc.html#method.from_raw)
+and, for `Box` smart pointers, conversion of C pointers into `Box` is [discouraged](https://doc.rust-lang.org/std/boxed/index.html#memory-layout).
 
-> **Règle {{#check MEM-INTOFROMRAW | Call `from_raw` *only* on `into_raw`ed value}}**
-> In a secure Rust development, `from_raw` should only be called on `into_raw`ed value
+> **Rule {{#check MEM-INTOFROMRAW | Call `from_raw` *only* on `into_raw`ed value}}**
+>
+> In a secure Rust development, `from_raw` should only be called on `into_raw`ed values.
 
 <!-- -->
 
@@ -151,7 +152,7 @@ and, for `Box` smart pointer, conversion of C pointer into `Box` is [discouraged
 ## Uninitialized memory
 
 By default, Rust forces all values to be initialized, preventing the use of
-uninitialized memory (except if using `std::mem::uninitialized` or
+uninitialized memory (except when using `std::mem::uninitialized` or
 `std::mem::MaybeUninit`).
 
 > **Rule {{#check MEM-UNINIT | Do not use uninitialized memory}}**
@@ -170,14 +171,14 @@ The use of uninitialized memory may result in two distinct security issues:
 > `std::mem::MaybeUninit` is an improvement over `std::mem::uninitialized`.
 > Indeed, it makes dropping uninitialized values a lot more difficult.
 > However, it does not change the second issue: the non-drop of an initialized
-> memory is as much likely. It is problematic, in particular when considering
+> memory remains. It is problematic, in particular when considering
 > the use of `Drop` to erase sensitive memory.
 
 ## Cyclic reference counted pointers (`Rc` and `Arc`)
 
-Combining [interior mutability](https://doc.rust-lang.org/reference/interior-mutability.html), recurcivity and reference counted pointer into type definitions is unsafe. It can produce memory leaks which can result in DDoS attack or secret leaks.
+Combining [interior mutability](https://doc.rust-lang.org/reference/interior-mutability.html), recursivity and reference counted pointer into type definitions is unsafe. It can produce memory leaks which can result in DDoS attacks or leaking secrets.
 
-The following example show such a memory leak in safe Rust:
+The following example shows such a memory leak in safe Rust:
 
 ```rust
 use std::{cell::Cell, rc::Rc};
@@ -235,6 +236,6 @@ Hello, world!
 ==153637== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 ```
 
-> **Règle {{#check MEM-MUT-REC-RC | Avoid cyclic reference counted pointers}}**
+> **Rule {{#check MEM-MUT-REC-RC | Avoid cyclic reference counted pointers}}**
 >
-> Avoid recursive types whose recursivity use reference counted pointers together with interior mutability.
+> Avoid recursive types whose recursivity uses reference counted pointers together with interior mutability.
