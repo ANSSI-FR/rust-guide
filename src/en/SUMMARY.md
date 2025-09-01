@@ -1,15 +1,31 @@
 # Summary
 
-- [Introduction](01_introduction.md)
-- [Development environment](02_devenv.md)
-- [Libraries](03_libraries.md)
-- [Language generalities](04_language.md)
-- [Type system](05_typesystem.md)
-- [Unsafe Rust](06_unsafe.md)
-  - [Generalities](06_1_unsafe_generalities.md)
-  - [Memory management](06_2_unsafe_memory.md)
-  - [Foreign Function Interface](06_3_unsafe_ffi.md)
+[Introduction](introduction.md)
+
+# Lifecycle
+
+- [Development environment](devenv.md)
+- [Libraries](libraries.md)
+
+# Language
+
+- [Language guarantees](guarantees.md)
+- [Naming](naming.md)
+<!-- - [Macros](macros.md) -->
+- [Integer operations](integer.md)
+- [Secure erasure](erasure.md)
+- [Error handling](errors.md)
+<!-- - [Type system](typesystem.md) -->
+- [Central traits](central_traits.md)
+- [Unsafe Rust](unsafe.md)
+  - [Generalities](unsafe/generalities.md)
+  - [Memory management](unsafe/memory.md)
+  - [Foreign Function Interface](unsafe/ffi.md)
+
+# Ecosystem
+
+- [Standard library](standard.md)
 
 [Licence](LICENCE.md)
 
-<!-- TODO - [Test and fuzzing](08_testfuzz.md) -->
+<!-- TODO - [Test and fuzzing](testfuzz.md) -->
