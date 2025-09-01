@@ -17,9 +17,9 @@
 <!-- - [Type system](typesystem.md) -->
 - [Central traits](central_traits.md)
 - [Unsafe Rust](unsafe.md)
-  - [Generalities](unsafe_generalities.md)
-  - [Memory management](unsafe_memory.md)
-  - [Foreign Function Interface](unsafe_ffi.md)
+  - [Generalities](unsafe/generalities.md)
+  - [Memory management](unsafe/memory.md)
+  - [Foreign Function Interface](unsafe/ffi.md)
 
 # Ecosystem
 
