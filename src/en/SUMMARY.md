@@ -13,6 +13,7 @@
 - [Naming](naming.md)
 <!-- - [Macros](macros.md) -->
 - [Integer operations](integer.md)
+- [Secure erasure](erasure.md)
 - [Error handling](errors.md)
 <!-- - [Type system](typesystem.md) -->
 - [Central traits](central_traits.md)

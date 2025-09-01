@@ -9,10 +9,12 @@
 
 # Langage
 
+- [Sémantique](semantics.md)
 - [Garanties du langage](guarantees.md)
 - [Nommage](naming.md)
 <!-- - [Macros](macros.md) -->
 - [Gestion des entiers](integer.md)
+- [Effacement sécurisé](erasure.md)
 - [Gestion des erreurs](errors.md)
 <!-- - [Système de types](typesystem.md) -->
 - [Traits centraux](central_traits.md)
