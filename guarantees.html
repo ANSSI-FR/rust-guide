@@ -1,14 +1,14 @@
 <!DOCTYPE HTML>
-<html lang="fr" class="light sidebar-visible" dir="ltr">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Unsafe Rust - Développement sécurisé en Rust</title>
+        <title>Language guarantees - Secure Rust Guidelines</title>
 
 
         <!-- Custom HTML head -->
 
-        <meta name="description" content="Recommandations pour le développement d&#x27;applications sécurisées en Rust">
+        <meta name="description" content="Recommendations for secure applications development with Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
@@ -138,7 +138,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">Développement sécurisé en Rust</h1>
+                    <h1 class="menu-title">Secure Rust Guidelines</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -175,17 +175,50 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="rust-unsafe"><a class="header" href="#rust-unsafe">Rust unsafe</a></h1>
+                        <h1 id="language-guarantees"><a class="header" href="#language-guarantees">Language guarantees</a></h1>
+<h2 id="undefined-behaviors-ub"><a class="header" href="#undefined-behaviors-ub">Undefined Behaviors (<em>UB</em>)</a></h2>
+<blockquote>
+<p>The behavior of a program is <em>undefined</em> when its semantics is not described in the Rust language.</p>
+</blockquote>
+<p>The existence of UB is considered an <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general">error</a>.</p>
+<p>For example, dereferencing the null pointer is a <em>UB</em>. On the other hand, <code>unwrap</code>ing the <code>None</code> object is well defined because it is the language that processes this error (by launching a panic).</p>
+<p>The current list of <em>UBs</em> is given in the language <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html">reference</a>. Notice the following guarantees:</p>
+<ul>
+<li>No dereference of pointer to an unallocated or unaligned memory address (dangling pointer), which implies
+<ul>
+<li>No buffer overflow</li>
+<li>No access to freed memory</li>
+<li>No non-aligned access</li>
+</ul>
+</li>
+<li>The pointed values are <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.invalid">consistent</a> with the pointer's type. For example, a value pointed at by a boolean pointer will be byte of value 1 or 0.</li>
+<li>Respect of <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias">aliasing rules</a> (see also <a href="https://doc.rust-lang.org/nomicon/aliasing.html">nomicon</a>): a mutable reference cannot be shared.</li>
+<li>No concurrent access (reading/writing is not possible while writing) to the same memory address (<a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race">data race</a>, see also <a href="https://doc.rust-lang.org/nomicon/races.html">nomicon</a>)</li>
+</ul>
+<h2 id="rust-guarantees"><a class="header" href="#rust-guarantees">Rust guarantees</a></h2>
+<blockquote>
+<p>The language paradigm is to ensure the absence of a UB in a program using only the non-<em>unsafe</em> part of Rust.</p>
+</blockquote>
+<p>However, the language does not prevent</p>
+<ul>
+<li>resource leaks (memory, IO, ...),</li>
+<li>numeric overflows.</li>
+</ul>
+<h2 id="references"><a class="header" href="#references">References</a></h2>
+<ul>
+<li>https://doc.rust-lang.org/reference/unsafety.html</li>
+<li>https://doc.rust-lang.org/nomicon/what-unsafe-does.html</li>
+</ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="05_typesystem.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="libraries.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="06_1_unsafe_generalities.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="naming.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -195,11 +228,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="05_typesystem.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="libraries.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="06_1_unsafe_generalities.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="naming.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

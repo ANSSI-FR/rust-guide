@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Système de types - Développement sécurisé en Rust</title>
+        <title>Bibliothèque standard - Développement sécurisé en Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -175,71 +175,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="système-de-types"><a class="header" href="#système-de-types">Système de types</a></h1>
-<!-- ## À propos du système de types de Rust -->
-<!--
-<mark>TODO</mark> : identifier les pièges du système de types (par exemple,
-des confusions à propos du code qui est vraiment exécuté à la suite d'une
-résolution de contraintes de traits complexes).
--->
-<h2 id="traits-de-la-bibliothèque-standard"><a class="header" href="#traits-de-la-bibliothèque-standard">Traits de la bibliothèque standard</a></h2>
-<h3 id="trait-drop--le-destructeur"><a class="header" href="#trait-drop--le-destructeur">Trait <code>Drop</code> : le destructeur</a></h3>
-<p>Les types implémentent le trait <code>std::ops::Drop</code> dans le but d'effectuer
-certaines opérations lorsque la mémoire associée à une valeur est réclamée.
-<code>Drop</code> est l'équivalent Rust d'un destructeur en C++ ou un finaliseur en Java.</p>
-<p><code>Drop</code> agit récursivement, depuis la valeur externe vers les valeurs imbriquées.
-Lorsqu'une valeur sort du scope (ou est explicitement relâchée avec
-<code>std::mem::drop</code>), elle est relâchée en deux étapes. La première étape a lieu
-uniquement si le type de la valeur en question implémente le trait <code>Drop</code> et
-consiste en l'appel de la méthode <code>drop</code>. La seconde étape consiste en la
-répétition de processus de <em>drop</em> récursivement sur tous les champs que contient
-la valeur. Il est à noter que l'implémentation de <code>Drop</code> est
-<em>responsable uniquement de la valeur extérieure</em>.</p>
-<p>Tout d'abord, l'implémentation de <code>Drop</code> ne doit pas être systématique. Elle est
-nécessaire uniquement lorsque le type requiert un traitement logique à la
-destruction. <code>Drop</code> est typiquement utilisé dans le cas du relâchement des
-ressources externes (connexions réseau, fichier, etc.) ou de ressources mémoire
-complexes (<em>smart pointers</em> comme les <code>Box</code> ou les <code>Rc</code> par exemple). Au
-final, il est probable que l'implémentation du trait <code>Drop</code> contienne des blocs
-<code>unsafe</code> ainsi que d'autres opérations critiques du point de vue de la sécurité.</p>
-<blockquote>
-<p><strong>Recommandation <a id="LANG-DROP"></a>LANG-DROP</strong></p>
-<p>Dans un développement sécurisé en Rust, l'implémentation du trait
-<code>std::ops::Drop</code> doit être justifiée, documentée et examinée par des pairs.</p>
-</blockquote>
-<p>Ensuite, le système de types de Rust assure seulement la sûreté mémoire et,
-du point de vue du typage, des <code>drop</code>s peuvent tout à fait être manqués.
-Plusieurs situations peuvent mener à manquer des <code>drop</code>s, comme :</p>
-<ul>
-<li>un cycle dans la référence (par exemple avec <code>Rc</code> ou <code>Arc</code>) ;</li>
-<li>un appel explicite à <code>std::mem::forget</code> (ou <code>core::mem::forget</code>) (voir
-paragraphe à propos de <a href="05_memory.html#forget-et-fuites-de-m%C3%A9moire"><code>forget</code> et des fuites de mémoire</a> ;</li>
-<li>un <code>panic</code> dans un <code>drop</code> ;</li>
-<li>un arrêt du programme (et un <code>panic</code> lorsque <code>abort-on-panic</code> est activé).</li>
-</ul>
-<p>Les <code>drop</code>s manqués peuvent mener à l'exposition de données sensibles ou bien
-encore à l'épuisement de ressources limitées et par là même à des problèmes
-d'indisponibilité.</p>
-<blockquote>
-<p><strong>Règle <a id="LANG-DROP-NO-PANIC"></a>LANG-DROP-NO-PANIC</strong></p>
-<p>Dans un développement sécurisé en Rust, l'implémentation du trait
-<code>std::ops::Drop</code> ne doit pas causer de <code>panic</code>.</p>
-</blockquote>
-<p>En plus des <code>panic</code>s, les <code>drop</code>s contenant du code critique doivent être
-protégés.</p>
-<blockquote>
-<p><strong>Règle <a id="LANG-DROP-NO-CYCLE"></a>LANG-DROP-NO-CYCLE</strong></p>
-<p>Les valeurs dont le type implémente <code>Drop</code> ne doivent pas être incluses,
-directement ou indirectement, dans un cycle de références à compteurs.</p>
-</blockquote>
-<!-- -->
-<blockquote>
-<p><strong>Recommandation <a id="LANG-DROP-SEC"></a>LANG-DROP-SEC</strong></p>
-<p>Certaines opérations liées à la sécurité d'une application à la fin d'un
-traitement (comme l'effacement de secrets cryptographiques par exemple) ne
-doivent pas reposer uniquement sur l'implémentation du trait <code>Drop</code>.</p>
-</blockquote>
-<h3 id="les-traits-send-et-sync"><a class="header" href="#les-traits-send-et-sync">Les traits <code>Send</code> et <code>Sync</code></a></h3>
+                        <h1 id="bibliothèque-standard"><a class="header" href="#bibliothèque-standard">Bibliothèque standard</a></h1>
+<h2 id="les-traits-send-et-sync"><a class="header" href="#les-traits-send-et-sync">Les traits <code>Send</code> et <code>Sync</code></a></h2>
 <p>Les traits <code>Send</code> et <code>Sync</code> (définis dans <code>std::marker</code> ou <code>core::marker</code>) sont
 des marqueurs utilisés pour assurer la sûreté des accès concurrents en Rust.
 Lorsqu'ils sont correctement implémentés, ils permettent au compilateur Rust de
@@ -295,7 +232,7 @@ d'utiliser un champ typé par un type fantôme (<code>PhantomData</code>) :</p>
 <code>Send</code> et <code>Sync</code> doit être évitée, et, si nécessaire, doit être justifiée,
 documentée et révisée par des pairs.</p>
 </blockquote>
-<h3 id="les-traits-de-comparaison--partialeq-eq-partialord-ord"><a class="header" href="#les-traits-de-comparaison--partialeq-eq-partialord-ord">Les traits de comparaison : <code>PartialEq</code>, <code>Eq</code>, <code>PartialOrd</code>, <code>Ord</code></a></h3>
+<h2 id="les-traits-de-comparaison--partialeq-eq-partialord-ord"><a class="header" href="#les-traits-de-comparaison--partialeq-eq-partialord-ord">Les traits de comparaison : <code>PartialEq</code>, <code>Eq</code>, <code>PartialOrd</code>, <code>Ord</code></a></h2>
 <p>Les comparaisons (<code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>) en Rust reposent sur quatre
 traits de la bibliothèque standard disponibles dans <code>std::cmp</code> (ou <code>core::cmp</code>
 pour une compilation avec <code>no_std</code>) :</p>
@@ -499,11 +436,11 @@ standard doit être justifiée et documentée.</p>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="04_language.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="unsafe/ffi.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="06_unsafe.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="LICENSE.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -513,11 +450,11 @@ standard doit être justifiée et documentée.</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="04_language.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="unsafe/ffi.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="06_unsafe.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="LICENSE.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

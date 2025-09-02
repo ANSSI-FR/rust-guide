@@ -521,9 +521,8 @@ mal utilisés dans les dépendances de son projet.
 > <mark>TODO</mark>: vérifier qu'il n'y a pas de bloc `unsafe` dans les
 > dépendances (à l'aide d'un outil ?).
 -->
-<div style="break-before: page; page-break-before: always;"></div><h1 id="généralités-sur-le-langage"><a class="header" href="#généralités-sur-le-langage">Généralités sur le langage</a></h1>
-<h2 id="garanties-du-langage"><a class="header" href="#garanties-du-langage">Garanties du langage</a></h2>
-<h3 id="comportements-indéfinis"><a class="header" href="#comportements-indéfinis">Comportements indéfinis</a></h3>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="garanties-du-langage"><a class="header" href="#garanties-du-langage">Garanties du langage</a></h1>
+<h2 id="comportements-indéfinis"><a class="header" href="#comportements-indéfinis">Comportements indéfinis</a></h2>
 <blockquote>
 <p>Le comportement d'un programme est <em>indéfini</em> (<em>UB</em> pour <em>Undefined Behavior</em>) lorsque sa sémantique n'est
 pas décrite dans le langage Rust.</p>
@@ -546,7 +545,7 @@ On notera les garanties suivantes :</p>
 <li>Respect des règles d'<a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias"><em>aliasing</em></a> (voir aussi le <a href="https://doc.rust-lang.org/nomicon/aliasing.html">nomicon</a>): une référence mutable ne peux être partagée.</li>
 <li>Pas d'accès concurrent (un accès en lecture et un autre en écriture ou en lecture) à la même adresse mémoire (<a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race"><em>data race</em></a>, voir aussi le <a href="https://doc.rust-lang.org/nomicon/races.html">nomicon</a>)</li>
 </ul>
-<h3 id="garantie-de-rust"><a class="header" href="#garantie-de-rust">Garantie de Rust</a></h3>
+<h2 id="garantie-de-rust"><a class="header" href="#garantie-de-rust">Garantie de Rust</a></h2>
 <blockquote>
 <p>La volonté du langage est d'assurer l'absence d'<em>UB</em> dans un programme utilisant uniquement la partie non <em>unsafe</em> de Rust.</p>
 </blockquote>
@@ -555,13 +554,13 @@ On notera les garanties suivantes :</p>
 <li>fuites de resources (mémoire, IO, ...) ;</li>
 <li>dépassements numériques.</li>
 </ul>
-<h3 id="références"><a class="header" href="#références">Références</a></h3>
+<h2 id="références"><a class="header" href="#références">Références</a></h2>
 <ul>
 <li>https://doc.rust-lang.org/reference/unsafety.html</li>
 <li>https://doc.rust-lang.org/nomicon/what-unsafe-does.html</li>
 </ul>
 <!-- * https://github.com/ANSSI-FR/rust-guide/pull/3 -->
-<h2 id="nommage"><a class="header" href="#nommage">Nommage</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="nommage"><a class="header" href="#nommage">Nommage</a></h1>
 <p>La convention de nommage employée par la bibliothèque standard est <em>de facto</em> le
 standard pour le nommage des éléments des programmes écrits en Rust. Un effort a
 été fait pour formaliser ces conventions de nommage, d'abord dans la <a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">RFC 430</a>,
@@ -588,6 +587,7 @@ plus précises pour certaines constructions particulières :</p>
 <p>Le développement d'une application sécurisée doit suivre les conventions de
 nommage décrites dans les <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a>.</p>
 </blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="traitements-des-entiers"><a class="header" href="#traitements-des-entiers">Traitements des entiers</a></h1>
 <h2 id="dépassement-dentiers"><a class="header" href="#dépassement-dentiers">Dépassement d'entiers</a></h2>
 <p>Bien que des vérifications soient effectuées par Rust en ce qui concerne les
 potentiels dépassements d'entiers, des précautions doivent être prises lors de
@@ -630,7 +630,7 @@ else { println!("{}", res); }
 fonctions spécialisées <code>overflowing_&lt;op&gt;</code>, <code>wrapping_&lt;op&gt;</code> ou le type
 <code>Wrapping</code> doivent être utilisés.</p>
 </blockquote>
-<h2 id="gestion-des-erreurs"><a class="header" href="#gestion-des-erreurs">Gestion des erreurs</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="gestion-des-erreurs"><a class="header" href="#gestion-des-erreurs">Gestion des erreurs</a></h1>
 <!--
 <mark>TODO</mark>: décrire les bonnes pratiques de gestion d'erreurs.
 -->
@@ -658,7 +658,7 @@ automatiquement les erreurs dans un seul type d'erreur universel. Une telle
 approche ne devrait pas être utilisée dans des bibliothèques ou des systèmes
 complexes parce qu'elle ne permet pas de fournir de contexte sur les erreurs
 ainsi initialement enveloppées, contrairement à la première approche.</p>
-<h3 id="panics"><a class="header" href="#panics"><em>Panics</em></a></h3>
+<h2 id="panics"><a class="header" href="#panics"><em>Panics</em></a></h2>
 <p>La gestion explicite des erreurs (<code>Result</code>) doit être préférée à la place de
 l'utilisation de la macro <code>panic</code>. La cause de l'erreur doit être rendue
 disponible, et les erreurs trop génériques doivent être évitées.</p>
@@ -692,7 +692,7 @@ marquées avec `#[no_panic]`.
 <mark>TODO</mark> Another possibility:
 [rustig](https://github.com/Technolution/rustig) (doesn't build here)
 -->
-<h3 id="ffi-et-panics"><a class="header" href="#ffi-et-panics">FFI et <code>panic</code>s</a></h3>
+<h2 id="ffi-et-panics"><a class="header" href="#ffi-et-panics">FFI et <code>panic</code>s</a></h2>
 <p>Lorsque du code Rust est appelé depuis du code écrit dans un autre
 langage (par exemple, du code C), le code Rust doit être écrit de sorte à ne
 jamais pouvoir paniquer.
@@ -713,15 +713,9 @@ d'autres raisons.</p>
 <mark>TODO</mark> : complexité cyclomatique du code macro-expansé, limites de
 récursion, ...
 -->
-<div style="break-before: page; page-break-before: always;"></div><h1 id="système-de-types"><a class="header" href="#système-de-types">Système de types</a></h1>
-<!-- ## À propos du système de types de Rust -->
-<!--
-<mark>TODO</mark> : identifier les pièges du système de types (par exemple,
-des confusions à propos du code qui est vraiment exécuté à la suite d'une
-résolution de contraintes de traits complexes).
--->
-<h2 id="traits-de-la-bibliothèque-standard"><a class="header" href="#traits-de-la-bibliothèque-standard">Traits de la bibliothèque standard</a></h2>
-<h3 id="trait-drop--le-destructeur"><a class="header" href="#trait-drop--le-destructeur">Trait <code>Drop</code> : le destructeur</a></h3>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="traits-centraux"><a class="header" href="#traits-centraux">Traits centraux</a></h1>
+<p>Implémenter ces traits modifie la sémantique d'exécution du langage.</p>
+<h2 id="trait-drop--le-destructeur"><a class="header" href="#trait-drop--le-destructeur">Trait <code>Drop</code> : le destructeur</a></h2>
 <p>Les types implémentent le trait <code>std::ops::Drop</code> dans le but d'effectuer
 certaines opérations lorsque la mémoire associée à une valeur est réclamée.
 <code>Drop</code> est l'équivalent Rust d'un destructeur en C++ ou un finaliseur en Java.</p>
@@ -777,261 +771,6 @@ directement ou indirectement, dans un cycle de références à compteurs.</p>
 traitement (comme l'effacement de secrets cryptographiques par exemple) ne
 doivent pas reposer uniquement sur l'implémentation du trait <code>Drop</code>.</p>
 </blockquote>
-<h3 id="les-traits-send-et-sync"><a class="header" href="#les-traits-send-et-sync">Les traits <code>Send</code> et <code>Sync</code></a></h3>
-<p>Les traits <code>Send</code> et <code>Sync</code> (définis dans <code>std::marker</code> ou <code>core::marker</code>) sont
-des marqueurs utilisés pour assurer la sûreté des accès concurrents en Rust.
-Lorsqu'ils sont correctement implémentés, ils permettent au compilateur Rust de
-garantir l'absence de problèmes d'accès concurrents. Leurs sémantiques sont
-définies comme suit :</p>
-<ul>
-<li>Un type est <code>Send</code> s’il est sûr d'envoyer (<em>move</em>) des valeurs de ce type vers
-un autre fil d'exécution.</li>
-<li>Un type est <code>Sync</code> s’il est sûr de partager des valeurs de ce type par une
-référence immutable avec un autre fil d'exécution.</li>
-</ul>
-<p>Ces deux traits sont des traits <em>unsafe</em>, c'est-à-dire que le compilateur Rust
-ne vérifie d'aucune manière que leur implémentation est correcte. Le danger est
-réel : une implémentation incorrecte peut mener à un <strong>comportement indéfini</strong>.</p>
-<p>Heureusement, dans la plupart des cas, il n'est pas nécessaire de fournir une
-implémentation. En Rust, la quasi-totalité des types primitifs implémente
-<code>Send</code> et <code>Sync</code>, et dans la majorité des cas, Rust fournit de manière
-automatique une implémentation pour les types composés. Quelques exceptions
-notables sont :</p>
-<ul>
-<li>les pointeurs <code>raw</code>, qui n'implémentent ni <code>Send</code>, ni <code>Sync</code>, puisqu'ils
-n'offrent aucune garantie quant à la sûreté ;</li>
-<li>les références <code>UnsafeCell</code>, qui n'implémentent pas <code>Sync</code> (et par extensions,
-les références <code>Cell</code> et <code>RefCell</code> non plus), puisqu'elles autorisent la
-mutabilité des valeurs contenues (<em>interior mutability</em>) ;</li>
-<li>les références <code>Rc</code>, qui n'implémentent ni <code>Send</code>, ni <code>Sync</code>, puisque les
-compteurs de références seraient partagés de manière désynchronisée.</li>
-</ul>
-<p>L'implémentation automatique de <code>Send</code> (respectivement <code>Sync</code>) a lieu pour les
-types composés (structures ou énumérations) lorsque tous les champs contenus
-implémentent <code>Send</code> (respectivement <code>Sync</code>). Une fonctionnalité notable, mais
-<strong>instable</strong>, de Rust (depuis 1.37.0) permet d'empêcher cette implémentation
-automatique en annotant explicitement le type considéré avec une
-<em>négation d'implementation</em> :</p>
-<pre><code class="language-rust ignore noplaypen">#![feature(option_builtin_traits)]
-
-struct SpecialType(u8);
-impl !Send for SpecialType {}
-impl !Sync for SpecialType {}</code></pre>
-<p>L'implémentation négative de <code>Send</code> ou <code>Sync</code> est également utilisée dans la
-bibliothèque standard pour les exceptions, et est automatiquement implémentée
-lorsque cela est approprié. En résultat, la documentation générée est toujours
-explicite : un type implémente soit <code>Send</code> (respectivement <code>Sync</code>), soit
-<code>!Send</code> (respectivement <code>!Sync</code>).</p>
-<p>En guise d'alternative <em>stable</em> à l'implémentation négative, il est possible
-d'utiliser un champ typé par un type fantôme (<code>PhantomData</code>) :</p>
-<pre><code class="language-rust noplaypen"><span class="boring">use std::marker::PhantomData;
-</span><span class="boring">
-</span>struct SpecialType(u8, PhantomData&lt;*const ()&gt;);</code></pre>
-<blockquote>
-<p><strong>Recommandation <a id="LANG-SYNC-TRAITS"></a>LANG-SYNC-TRAITS</strong></p>
-<p>Dans un développement sécurisé en Rust, l'implémentation manuelle des traits
-<code>Send</code> et <code>Sync</code> doit être évitée, et, si nécessaire, doit être justifiée,
-documentée et révisée par des pairs.</p>
-</blockquote>
-<h3 id="les-traits-de-comparaison--partialeq-eq-partialord-ord"><a class="header" href="#les-traits-de-comparaison--partialeq-eq-partialord-ord">Les traits de comparaison : <code>PartialEq</code>, <code>Eq</code>, <code>PartialOrd</code>, <code>Ord</code></a></h3>
-<p>Les comparaisons (<code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>) en Rust reposent sur quatre
-traits de la bibliothèque standard disponibles dans <code>std::cmp</code> (ou <code>core::cmp</code>
-pour une compilation avec <code>no_std</code>) :</p>
-<ul>
-<li><code>PartialEq&lt;Rhs&gt;</code> qui définit la relation d'équivalence partielle entre objets
-de types <code>Self</code> et <code>Rhs</code> ;</li>
-<li><code>PartialOrd&lt;Rhs&gt;</code> qui définit la relation d'ordre partiel entre les objets de
-types <code>Self</code> et <code>Rhs</code> ;</li>
-<li><code>Eq</code> qui définit la relation d'équivalence totale entre les objets du même
-type. Il s'agit d'un trait de marquage qui requiert le trait
-<code>PartialEq&lt;Self&gt;</code> ;</li>
-<li><code>Ord</code> qui définit la relation d'ordre total entre les objets du même type.
-Le trait <code>PartialOrd&lt;Self&gt;</code> est alors requis.</li>
-</ul>
-<p>Comme stipulé dans la documentation de la bibliothèque standard, Rust présuppose
-<strong>de nombreux invariants</strong> lors de l'implémentation de ces traits :</p>
-<ul>
-<li>
-<p>Pour <code>PartialEq</code> :</p>
-<ul>
-<li>
-<p><em>Cohérence interne</em> : <code>a.ne(b)</code> est équivalent à <code>!a.eq(b)</code>, c.-à-d., <code>ne</code>
-est le strict inverse de <code>eq</code>. Cela correspond précisément à
-l'implémentation par défaut de <code>ne</code>.</p>
-</li>
-<li>
-<p><em>Symétrie</em> : <code>a.eq(b)</code> et <code>b.eq(a)</code> sont équivalents. Du point de vue du
-développeur, cela signifie que :</p>
-<ul>
-<li><code>PartialEq&lt;B&gt;</code> est implémenté pour le type <code>A</code> (noté <code>A: PartialEq&lt;B&gt;</code>).</li>
-<li><code>PartialEq&lt;A&gt;</code> est implémenté pour le type <code>B</code> (noté <code>B: PartialEq&lt;A&gt;</code>).</li>
-<li>Les deux implémentations sont cohérentes l'une avec l'autre.</li>
-</ul>
-</li>
-<li>
-<p><em>Transitivité</em> : <code>a.eq(b)</code> et <code>b.eq(c)</code> impliquent <code>a.eq(c)</code>. Cela signifie
-que :</p>
-<ul>
-<li><code>A: PartialEq&lt;B&gt;</code>.</li>
-<li><code>B: PartialEq&lt;C&gt;</code>.</li>
-<li><code>A: PartialEq&lt;C&gt;</code>.</li>
-<li>Les trois implémentations sont cohérentes les unes avec les autres (ainsi
-qu'avec leurs implémentations symétriques).</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>Pour <code>Eq</code> :</p>
-<ul>
-<li>
-<p><code>PartialEq&lt;Self&gt;</code> est implémenté.</p>
-</li>
-<li>
-<p><em>Réflexivité</em> : <code>a.eq(a)</code>. Cela signifie que <code>PartialEq&lt;Self&gt;</code> est
-implémenté (<code>Eq</code> ne fournit aucune méthode).</p>
-</li>
-</ul>
-</li>
-<li>
-<p>Pour <code>PartialOrd</code> :</p>
-<ul>
-<li>
-<p><em>Consistance de la relation d'égalité</em> : <code>a.eq(b)</code> est équivalent à
-<code>a.partial_cmp(b) == Some(std::ordering::Eq)</code>.</p>
-</li>
-<li>
-<p><em>Consistence interne</em> :</p>
-<ul>
-<li><code>a.lt(b)</code> ssi <code>a.partial_cmp(b) == Some(std::ordering::Less)</code>.</li>
-<li><code>a.gt(b)</code> ssi <code>a.partial_cmp(b) == Some(std::ordering::Greater)</code>.</li>
-<li><code>a.le(b)</code> ssi <code>a.lt(b) || a.eq(b)</code>.</li>
-<li><code>a.ge(b)</code> ssi <code>a.gt(b) || a.eq(b)</code>.</li>
-</ul>
-<p>Il faut noter qu'en définissant seulement <code>partial_cmp</code>, la consistance
-interne est garantie par les implémentations par défaut de <code>lt</code>, <code>le</code>, <code>gt</code>,
-and <code>ge</code>.</p>
-</li>
-<li>
-<p><em>Antisymétrie</em> : <code>a.lt(b)</code> (respectivement <code>a.gt(b)</code>) implique <code>b.gt(a)</code>
-(respectivement <code>b.lt(b)</code>). Du point de vue du développeur, cela signifie
-que :</p>
-<ul>
-<li><code>A: PartialOrd&lt;B&gt;</code>.</li>
-<li><code>B: PartialOrd&lt;A&gt;</code>.</li>
-<li>Les deux implémentations sont cohérentes l'une avec l'autre.</li>
-</ul>
-</li>
-<li>
-<p><em>Transitivité</em> : <code>a.lt(b)</code> et <code>b.lt(c)</code> impliquent <code>a.lt(c)</code> (également avec
-<code>gt</code>, <code>le</code> et <code>ge</code>). Cela signifie que :</p>
-<ul>
-<li><code>A: PartialOrd&lt;B&gt;</code>.</li>
-<li><code>B: PartialOrd&lt;C&gt;</code>.</li>
-<li><code>A: PartialOrd&lt;C&gt;</code>.</li>
-<li>Les trois implémentations sont cohérentes les unes avec les autres (et
-avec leurs implémentations symétriques).</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>Pour <code>Ord</code> :</p>
-<ul>
-<li>
-<p><code>PartialOrd&lt;Self&gt;</code></p>
-</li>
-<li>
-<p><em>Totalité</em> : <code>a.partial_cmp(b) != None</code> est toujours vrai. En d'autres mots,
-exactement une assertion parmi <code>a.eq(b)</code>, <code>a.lt(b)</code> et <code>a.gt(b)</code> est vraie.</p>
-</li>
-<li>
-<p><em>Cohérence avec <code>PartialOrd&lt;Self&gt;</code></em>: <code>Some(a.cmp(b)) == a.partial_cmp(b)</code>.</p>
-</li>
-</ul>
-</li>
-</ul>
-<p>Le compilateur ne vérifie aucun de ces prérequis, à l'exception des
-vérifications sur les types. Toutefois, les comparaisons sont des éléments
-importants puisqu'elles jouent un rôle tant dans les propriétés de vivacité
-des systèmes critiques comme des ordonnanceurs ou des répartiteurs de charge
-que dans les algorithmes optimisés qui peuvent éventuellement utiliser des
-blocs <code>unsafe</code>. Dans le premier cas d'usage, une mauvaise relation d'ordre
-peut causer des problèmes de disponibilité comme des interblocages. Dans le
-second cas, cela peut mener à des problèmes classiques de sécurité liés à des
-violations de propriétés de sûreté mémoire. C'est là encore un atout que de
-limiter au possible l'utilisation des blocs <code>unsafe</code>.</p>
-<blockquote>
-<p><strong>Règle <a id="LANG-CMP-INV"></a>LANG-CMP-INV</strong></p>
-<p>Dans un développement sécurisé en Rust, l'implémentation des traits de
-comparaison standards doit respecter les invariants décrits dans la
-documentation.</p>
-</blockquote>
-<blockquote>
-<p><strong>Recommandation <a id="LANG-CMP-DEFAULTS"></a>LANG-CMP-DEFAULTS</strong></p>
-<p>Dans un développement sécurisé en Rust, l'implémentation des traits de
-comparaison standard ne doit être effectuée que par l'implémentation des
-méthodes ne fournissant pas d'implémentation par défaut, dans le but de
-réduire le risque de violation des invariants associés auxdits traits.</p>
-</blockquote>
-<p>Il existe un <em>lint</em> Clippy qui permet de vérifier que <code>PartialEq::ne</code> n'est pas
-défini lors d'une implémentation du trait <code>PartialEq</code>.</p>
-<p>Rust propose une façon de fournir automatiquement des implémentations par défaut
-pour les traits de comparaison, au travers de l'attribut <code>#[derive(...)]</code> :</p>
-<ul>
-<li>La dérivation de <code>PartialEq</code> implémente <code>PartialEq&lt;Self&gt;</code> avec une <strong>égalité
-structurelle</strong> à condition que chacun des types des données membres implémente
-<code>PartialEq&lt;Self&gt;</code>.</li>
-<li>La dérivation de <code>Eq</code> implémente le trait de marquage <code>Eq</code> à condition que
-chacun des types des données membres implémente <code>Eq</code>.</li>
-<li>La dérivation de <code>PartialOrd</code> implémente <code>PartialOrd&lt;Self&gt;</code> comme un <strong>ordre
-lexicographique</strong> à condition que chacun des types des données membres
-implémente <code>PartialOrd</code>.</li>
-<li>La dérivation de <code>Ord</code> implémente <code>Ord</code> comme un <strong>ordre lexicographique</strong> à
-condition que chacun des types des données membres implémente <code>Ord</code>.</li>
-</ul>
-<p>Par exemple, le court extrait de code suivant montre comment comparer deux
-valeurs de type <code>T1</code> facilement. Toutes les assertions sont vraies.</p>
-<pre><pre class="playground"><code class="language-rust">#[derive(PartialEq, Eq, PartialOrd, Ord)]
-struct T1 {
-    a: u8, b: u8
-}
-
-<span class="boring">fn main() {
-</span>assert!(&amp;T1 { a: 0, b: 0 } == Box::new(T1 { a: 0, b: 0 }).as_ref());
-assert!(T1 { a: 1, b: 0 } &gt; T1 { a: 0, b: 0 });
-assert!(T1 { a: 1, b: 1 } &gt; T1 { a: 1, b: 0 });
-<span class="boring">println!("tous les tests sont validés.");
-</span><span class="boring">}</span></code></pre></pre>
-<blockquote>
-<p><strong>Attention</strong></p>
-<p>La dérivation des traits de comparaison pour les types composites dépend de
-<strong>l'ordre de déclaration des champs</strong> et non de leur nom.</p>
-<p>D'abord, cela implique que changer l'ordre des champs modifie l'ordre des
-valeurs. Par exemple, en considérant le type suivant :</p>
-<pre><code class="language-rust noplaypen">#[derive(PartialEq, Eq, PartialOrd, Ord)]
-struct T2{
-   b: u8, a: u8
-};</code></pre>
-<p>on a <code>T1 {a: 1, b: 0} &gt; T1 {a: 0, b: 1}</code> mais
-<code>T2 {a: 1, b: 0} &lt; T2 {a: 0, b: 1}</code>.</p>
-<p>Ensuite, si une comparaison sous-jacente provoque un <code>panic</code>, l'ordre peut
-changer le résultat à cause de l'utilisation d'un opérateur logique court-
-circuitant dans l'implémentation automatique.</p>
-<p>Pour les énumérations, les comparaisons dérivées dépendent d'abord de
-<strong>l'ordre des variants</strong>, puis de l'ordre des champs.</p>
-</blockquote>
-<p>En dépit de ces avertissements sur les ordres dérivés, les comparaisons dérivées
-automatiquement sont bien moins sujettes à erreurs que des implémentations
-manuelles, et rendent le code plus court et plus simple à maintenir.</p>
-<blockquote>
-<p><strong>Recommandation <a id="LANG-CMP-DERIVE"></a>LANG-CMP-DERIVE</strong></p>
-<p>Dans un développement sécurisé en Rust, l'implémentation des traits de
-comparaison standard doit être automatiquement dérivée à l'aide de
-<code>#[derive(...)]</code> lorsque l'égalité structurelle et l'ordre lexicographique
-sont nécessaires. Toute implémentation manuelle d'un trait de comparaison
-standard doit être justifiée et documentée.</p>
-</blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="rust-unsafe"><a class="header" href="#rust-unsafe">Rust unsafe</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="généralités-sur-lutilisation-de-unsafe"><a class="header" href="#généralités-sur-lutilisation-de-unsafe">Généralités sur l'utilisation de <code>unsafe</code></a></h1>
 <h2 id="comportements-ajoutés-par-rust-unsafe"><a class="header" href="#comportements-ajoutés-par-rust-unsafe">Comportements ajoutés par Rust <em>unsafe</em></a></h2>
@@ -1042,7 +781,7 @@ standard doit être justifiée et documentée.</p>
 <li>Accéder aux champs d'une <code>union</code></li>
 <li>Déclarer un block <code>extern</code></li>
 </ul>
-<p>Si ces capacités sont nécessaires à la programmation système, elles font perdre au langage ses <a href="04_language.html#garanties-du-langage">propriétés de sûreté</a>.</p>
+<p>Si ces capacités sont nécessaires à la programmation système, elles font perdre au langage ses <a href="unsafe/04_language.html#garanties-du-langage">propriétés de sûreté</a>.</p>
 <h2 id="usages-du-mot-clé-unsafe"><a class="header" href="#usages-du-mot-clé-unsafe">Usages du mot-clé <code>unsafe</code></a></h2>
 <p>Le mot-clé <code>unsafe</code> a deux usages : dans une API et dans une implémentation.</p>
 <h3 id="unsafe-dans-une-api"><a class="header" href="#unsafe-dans-une-api"><code>unsafe</code> dans une API</a></h3>
@@ -1292,7 +1031,7 @@ versions plus anciennes du compilateur).
 -->
 <p>Dans la très grande majorité des cas, en Rust non-<em>unsafe</em>, le compilateur détermine <strong>automatiquement</strong>
 quand il peut libérer la mémoire occupée par une valeur du programme.
-Mais, comme rappelé dans les <a href="04_language.html#garantie-de-rust">généralités du langage</a>, ce n'est pas une garantie : un
+Mais, comme rappelé dans les <a href="unsafe/04_language.html#garantie-de-rust">généralités du langage</a>, ce n'est pas une garantie : un
 code non-<em>unsafe</em> peut mener à des fuites mémoires. Aussi certaines règles présentées dans
 ce chapitre ne sont pas strictement <em>unsafe</em>. Cependant,</p>
 <blockquote>
@@ -1676,7 +1415,7 @@ continu.</p>
 <p>Pour les <em>bindings</em> C/C++ vers Rust, <a href="https://crates.io/crates/bindgen">rust-bindgen</a> est capable de générer
 automatiquement des <em>bindings</em> de bas niveau. L'écriture d'un <em>binding</em> de
 plus haut niveau est fortement recommandée (voir Recommandation
-<a href="06_3_unsafe_ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>). Attention également à certaines
+<a href="unsafe/ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>). Attention également à certaines
 options dangereuses de <code>rust-bindgen</code>, en particulier <code>rustified_enum</code>.</p>
 </blockquote>
 <h3 id="types-dépendants-de-la-plateforme-dexécution"><a class="header" href="#types-dépendants-de-la-plateforme-dexécution">Types dépendants de la plateforme d'exécution</a></h3>
@@ -2425,6 +2164,262 @@ int main(int argc, const char** argv) {
     return 0;
 }
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="bibliothèque-standard"><a class="header" href="#bibliothèque-standard">Bibliothèque standard</a></h1>
+<h2 id="les-traits-send-et-sync"><a class="header" href="#les-traits-send-et-sync">Les traits <code>Send</code> et <code>Sync</code></a></h2>
+<p>Les traits <code>Send</code> et <code>Sync</code> (définis dans <code>std::marker</code> ou <code>core::marker</code>) sont
+des marqueurs utilisés pour assurer la sûreté des accès concurrents en Rust.
+Lorsqu'ils sont correctement implémentés, ils permettent au compilateur Rust de
+garantir l'absence de problèmes d'accès concurrents. Leurs sémantiques sont
+définies comme suit :</p>
+<ul>
+<li>Un type est <code>Send</code> s’il est sûr d'envoyer (<em>move</em>) des valeurs de ce type vers
+un autre fil d'exécution.</li>
+<li>Un type est <code>Sync</code> s’il est sûr de partager des valeurs de ce type par une
+référence immutable avec un autre fil d'exécution.</li>
+</ul>
+<p>Ces deux traits sont des traits <em>unsafe</em>, c'est-à-dire que le compilateur Rust
+ne vérifie d'aucune manière que leur implémentation est correcte. Le danger est
+réel : une implémentation incorrecte peut mener à un <strong>comportement indéfini</strong>.</p>
+<p>Heureusement, dans la plupart des cas, il n'est pas nécessaire de fournir une
+implémentation. En Rust, la quasi-totalité des types primitifs implémente
+<code>Send</code> et <code>Sync</code>, et dans la majorité des cas, Rust fournit de manière
+automatique une implémentation pour les types composés. Quelques exceptions
+notables sont :</p>
+<ul>
+<li>les pointeurs <code>raw</code>, qui n'implémentent ni <code>Send</code>, ni <code>Sync</code>, puisqu'ils
+n'offrent aucune garantie quant à la sûreté ;</li>
+<li>les références <code>UnsafeCell</code>, qui n'implémentent pas <code>Sync</code> (et par extensions,
+les références <code>Cell</code> et <code>RefCell</code> non plus), puisqu'elles autorisent la
+mutabilité des valeurs contenues (<em>interior mutability</em>) ;</li>
+<li>les références <code>Rc</code>, qui n'implémentent ni <code>Send</code>, ni <code>Sync</code>, puisque les
+compteurs de références seraient partagés de manière désynchronisée.</li>
+</ul>
+<p>L'implémentation automatique de <code>Send</code> (respectivement <code>Sync</code>) a lieu pour les
+types composés (structures ou énumérations) lorsque tous les champs contenus
+implémentent <code>Send</code> (respectivement <code>Sync</code>). Une fonctionnalité notable, mais
+<strong>instable</strong>, de Rust (depuis 1.37.0) permet d'empêcher cette implémentation
+automatique en annotant explicitement le type considéré avec une
+<em>négation d'implementation</em> :</p>
+<pre><code class="language-rust ignore noplaypen">#![feature(option_builtin_traits)]
+
+struct SpecialType(u8);
+impl !Send for SpecialType {}
+impl !Sync for SpecialType {}</code></pre>
+<p>L'implémentation négative de <code>Send</code> ou <code>Sync</code> est également utilisée dans la
+bibliothèque standard pour les exceptions, et est automatiquement implémentée
+lorsque cela est approprié. En résultat, la documentation générée est toujours
+explicite : un type implémente soit <code>Send</code> (respectivement <code>Sync</code>), soit
+<code>!Send</code> (respectivement <code>!Sync</code>).</p>
+<p>En guise d'alternative <em>stable</em> à l'implémentation négative, il est possible
+d'utiliser un champ typé par un type fantôme (<code>PhantomData</code>) :</p>
+<pre><code class="language-rust noplaypen"><span class="boring">use std::marker::PhantomData;
+</span><span class="boring">
+</span>struct SpecialType(u8, PhantomData&lt;*const ()&gt;);</code></pre>
+<blockquote>
+<p><strong>Recommandation <a id="LANG-SYNC-TRAITS"></a>LANG-SYNC-TRAITS</strong></p>
+<p>Dans un développement sécurisé en Rust, l'implémentation manuelle des traits
+<code>Send</code> et <code>Sync</code> doit être évitée, et, si nécessaire, doit être justifiée,
+documentée et révisée par des pairs.</p>
+</blockquote>
+<h2 id="les-traits-de-comparaison--partialeq-eq-partialord-ord"><a class="header" href="#les-traits-de-comparaison--partialeq-eq-partialord-ord">Les traits de comparaison : <code>PartialEq</code>, <code>Eq</code>, <code>PartialOrd</code>, <code>Ord</code></a></h2>
+<p>Les comparaisons (<code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>) en Rust reposent sur quatre
+traits de la bibliothèque standard disponibles dans <code>std::cmp</code> (ou <code>core::cmp</code>
+pour une compilation avec <code>no_std</code>) :</p>
+<ul>
+<li><code>PartialEq&lt;Rhs&gt;</code> qui définit la relation d'équivalence partielle entre objets
+de types <code>Self</code> et <code>Rhs</code> ;</li>
+<li><code>PartialOrd&lt;Rhs&gt;</code> qui définit la relation d'ordre partiel entre les objets de
+types <code>Self</code> et <code>Rhs</code> ;</li>
+<li><code>Eq</code> qui définit la relation d'équivalence totale entre les objets du même
+type. Il s'agit d'un trait de marquage qui requiert le trait
+<code>PartialEq&lt;Self&gt;</code> ;</li>
+<li><code>Ord</code> qui définit la relation d'ordre total entre les objets du même type.
+Le trait <code>PartialOrd&lt;Self&gt;</code> est alors requis.</li>
+</ul>
+<p>Comme stipulé dans la documentation de la bibliothèque standard, Rust présuppose
+<strong>de nombreux invariants</strong> lors de l'implémentation de ces traits :</p>
+<ul>
+<li>
+<p>Pour <code>PartialEq</code> :</p>
+<ul>
+<li>
+<p><em>Cohérence interne</em> : <code>a.ne(b)</code> est équivalent à <code>!a.eq(b)</code>, c.-à-d., <code>ne</code>
+est le strict inverse de <code>eq</code>. Cela correspond précisément à
+l'implémentation par défaut de <code>ne</code>.</p>
+</li>
+<li>
+<p><em>Symétrie</em> : <code>a.eq(b)</code> et <code>b.eq(a)</code> sont équivalents. Du point de vue du
+développeur, cela signifie que :</p>
+<ul>
+<li><code>PartialEq&lt;B&gt;</code> est implémenté pour le type <code>A</code> (noté <code>A: PartialEq&lt;B&gt;</code>).</li>
+<li><code>PartialEq&lt;A&gt;</code> est implémenté pour le type <code>B</code> (noté <code>B: PartialEq&lt;A&gt;</code>).</li>
+<li>Les deux implémentations sont cohérentes l'une avec l'autre.</li>
+</ul>
+</li>
+<li>
+<p><em>Transitivité</em> : <code>a.eq(b)</code> et <code>b.eq(c)</code> impliquent <code>a.eq(c)</code>. Cela signifie
+que :</p>
+<ul>
+<li><code>A: PartialEq&lt;B&gt;</code>.</li>
+<li><code>B: PartialEq&lt;C&gt;</code>.</li>
+<li><code>A: PartialEq&lt;C&gt;</code>.</li>
+<li>Les trois implémentations sont cohérentes les unes avec les autres (ainsi
+qu'avec leurs implémentations symétriques).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Pour <code>Eq</code> :</p>
+<ul>
+<li>
+<p><code>PartialEq&lt;Self&gt;</code> est implémenté.</p>
+</li>
+<li>
+<p><em>Réflexivité</em> : <code>a.eq(a)</code>. Cela signifie que <code>PartialEq&lt;Self&gt;</code> est
+implémenté (<code>Eq</code> ne fournit aucune méthode).</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Pour <code>PartialOrd</code> :</p>
+<ul>
+<li>
+<p><em>Consistance de la relation d'égalité</em> : <code>a.eq(b)</code> est équivalent à
+<code>a.partial_cmp(b) == Some(std::ordering::Eq)</code>.</p>
+</li>
+<li>
+<p><em>Consistence interne</em> :</p>
+<ul>
+<li><code>a.lt(b)</code> ssi <code>a.partial_cmp(b) == Some(std::ordering::Less)</code>.</li>
+<li><code>a.gt(b)</code> ssi <code>a.partial_cmp(b) == Some(std::ordering::Greater)</code>.</li>
+<li><code>a.le(b)</code> ssi <code>a.lt(b) || a.eq(b)</code>.</li>
+<li><code>a.ge(b)</code> ssi <code>a.gt(b) || a.eq(b)</code>.</li>
+</ul>
+<p>Il faut noter qu'en définissant seulement <code>partial_cmp</code>, la consistance
+interne est garantie par les implémentations par défaut de <code>lt</code>, <code>le</code>, <code>gt</code>,
+and <code>ge</code>.</p>
+</li>
+<li>
+<p><em>Antisymétrie</em> : <code>a.lt(b)</code> (respectivement <code>a.gt(b)</code>) implique <code>b.gt(a)</code>
+(respectivement <code>b.lt(b)</code>). Du point de vue du développeur, cela signifie
+que :</p>
+<ul>
+<li><code>A: PartialOrd&lt;B&gt;</code>.</li>
+<li><code>B: PartialOrd&lt;A&gt;</code>.</li>
+<li>Les deux implémentations sont cohérentes l'une avec l'autre.</li>
+</ul>
+</li>
+<li>
+<p><em>Transitivité</em> : <code>a.lt(b)</code> et <code>b.lt(c)</code> impliquent <code>a.lt(c)</code> (également avec
+<code>gt</code>, <code>le</code> et <code>ge</code>). Cela signifie que :</p>
+<ul>
+<li><code>A: PartialOrd&lt;B&gt;</code>.</li>
+<li><code>B: PartialOrd&lt;C&gt;</code>.</li>
+<li><code>A: PartialOrd&lt;C&gt;</code>.</li>
+<li>Les trois implémentations sont cohérentes les unes avec les autres (et
+avec leurs implémentations symétriques).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Pour <code>Ord</code> :</p>
+<ul>
+<li>
+<p><code>PartialOrd&lt;Self&gt;</code></p>
+</li>
+<li>
+<p><em>Totalité</em> : <code>a.partial_cmp(b) != None</code> est toujours vrai. En d'autres mots,
+exactement une assertion parmi <code>a.eq(b)</code>, <code>a.lt(b)</code> et <code>a.gt(b)</code> est vraie.</p>
+</li>
+<li>
+<p><em>Cohérence avec <code>PartialOrd&lt;Self&gt;</code></em>: <code>Some(a.cmp(b)) == a.partial_cmp(b)</code>.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>Le compilateur ne vérifie aucun de ces prérequis, à l'exception des
+vérifications sur les types. Toutefois, les comparaisons sont des éléments
+importants puisqu'elles jouent un rôle tant dans les propriétés de vivacité
+des systèmes critiques comme des ordonnanceurs ou des répartiteurs de charge
+que dans les algorithmes optimisés qui peuvent éventuellement utiliser des
+blocs <code>unsafe</code>. Dans le premier cas d'usage, une mauvaise relation d'ordre
+peut causer des problèmes de disponibilité comme des interblocages. Dans le
+second cas, cela peut mener à des problèmes classiques de sécurité liés à des
+violations de propriétés de sûreté mémoire. C'est là encore un atout que de
+limiter au possible l'utilisation des blocs <code>unsafe</code>.</p>
+<blockquote>
+<p><strong>Règle <a id="LANG-CMP-INV"></a>LANG-CMP-INV</strong></p>
+<p>Dans un développement sécurisé en Rust, l'implémentation des traits de
+comparaison standards doit respecter les invariants décrits dans la
+documentation.</p>
+</blockquote>
+<blockquote>
+<p><strong>Recommandation <a id="LANG-CMP-DEFAULTS"></a>LANG-CMP-DEFAULTS</strong></p>
+<p>Dans un développement sécurisé en Rust, l'implémentation des traits de
+comparaison standard ne doit être effectuée que par l'implémentation des
+méthodes ne fournissant pas d'implémentation par défaut, dans le but de
+réduire le risque de violation des invariants associés auxdits traits.</p>
+</blockquote>
+<p>Il existe un <em>lint</em> Clippy qui permet de vérifier que <code>PartialEq::ne</code> n'est pas
+défini lors d'une implémentation du trait <code>PartialEq</code>.</p>
+<p>Rust propose une façon de fournir automatiquement des implémentations par défaut
+pour les traits de comparaison, au travers de l'attribut <code>#[derive(...)]</code> :</p>
+<ul>
+<li>La dérivation de <code>PartialEq</code> implémente <code>PartialEq&lt;Self&gt;</code> avec une <strong>égalité
+structurelle</strong> à condition que chacun des types des données membres implémente
+<code>PartialEq&lt;Self&gt;</code>.</li>
+<li>La dérivation de <code>Eq</code> implémente le trait de marquage <code>Eq</code> à condition que
+chacun des types des données membres implémente <code>Eq</code>.</li>
+<li>La dérivation de <code>PartialOrd</code> implémente <code>PartialOrd&lt;Self&gt;</code> comme un <strong>ordre
+lexicographique</strong> à condition que chacun des types des données membres
+implémente <code>PartialOrd</code>.</li>
+<li>La dérivation de <code>Ord</code> implémente <code>Ord</code> comme un <strong>ordre lexicographique</strong> à
+condition que chacun des types des données membres implémente <code>Ord</code>.</li>
+</ul>
+<p>Par exemple, le court extrait de code suivant montre comment comparer deux
+valeurs de type <code>T1</code> facilement. Toutes les assertions sont vraies.</p>
+<pre><pre class="playground"><code class="language-rust">#[derive(PartialEq, Eq, PartialOrd, Ord)]
+struct T1 {
+    a: u8, b: u8
+}
+
+<span class="boring">fn main() {
+</span>assert!(&amp;T1 { a: 0, b: 0 } == Box::new(T1 { a: 0, b: 0 }).as_ref());
+assert!(T1 { a: 1, b: 0 } &gt; T1 { a: 0, b: 0 });
+assert!(T1 { a: 1, b: 1 } &gt; T1 { a: 1, b: 0 });
+<span class="boring">println!("tous les tests sont validés.");
+</span><span class="boring">}</span></code></pre></pre>
+<blockquote>
+<p><strong>Attention</strong></p>
+<p>La dérivation des traits de comparaison pour les types composites dépend de
+<strong>l'ordre de déclaration des champs</strong> et non de leur nom.</p>
+<p>D'abord, cela implique que changer l'ordre des champs modifie l'ordre des
+valeurs. Par exemple, en considérant le type suivant :</p>
+<pre><code class="language-rust noplaypen">#[derive(PartialEq, Eq, PartialOrd, Ord)]
+struct T2{
+   b: u8, a: u8
+};</code></pre>
+<p>on a <code>T1 {a: 1, b: 0} &gt; T1 {a: 0, b: 1}</code> mais
+<code>T2 {a: 1, b: 0} &lt; T2 {a: 0, b: 1}</code>.</p>
+<p>Ensuite, si une comparaison sous-jacente provoque un <code>panic</code>, l'ordre peut
+changer le résultat à cause de l'utilisation d'un opérateur logique court-
+circuitant dans l'implémentation automatique.</p>
+<p>Pour les énumérations, les comparaisons dérivées dépendent d'abord de
+<strong>l'ordre des variants</strong>, puis de l'ordre des champs.</p>
+</blockquote>
+<p>En dépit de ces avertissements sur les ordres dérivés, les comparaisons dérivées
+automatiquement sont bien moins sujettes à erreurs que des implémentations
+manuelles, et rendent le code plus court et plus simple à maintenir.</p>
+<blockquote>
+<p><strong>Recommandation <a id="LANG-CMP-DERIVE"></a>LANG-CMP-DERIVE</strong></p>
+<p>Dans un développement sécurisé en Rust, l'implémentation des traits de
+comparaison standard doit être automatiquement dérivée à l'aide de
+<code>#[derive(...)]</code> lorsque l'égalité structurelle et l'ordre lexicographique
+sont nécessaires. Toute implémentation manuelle d'un trait de comparaison
+standard doit être justifiée et documentée.</p>
+</blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="licence-ouverte--open-licence"><a class="header" href="#licence-ouverte--open-licence">LICENCE OUVERTE / OPEN LICENCE</a></h1>
 <ul>
 <li>Version 2.0</li>
@@ -2559,143 +2554,158 @@ informations qu’ils ont obtenues sous cette licence s’ils le souhaitent.</p>
 <p>Environnement de développement:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Utilisation de la chaîne d'outils <em>stable</em> (<a href="02_devenv.html#DENV-STABLE">DENV-STABLE</a>)</li>
+Utilisation de la chaîne d'outils <em>stable</em> (<a href="devenv.html#DENV-STABLE">DENV-STABLE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Conservation des valeurs par défaut des variables critiques dans les profils cargo (<a href="02_devenv.html#DENV-CARGO-OPTS">DENV-CARGO-OPTS</a>)</li>
+Conservation des valeurs par défaut des variables critiques dans les profils cargo (<a href="devenv.html#DENV-CARGO-OPTS">DENV-CARGO-OPTS</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Conservation des valeurs par défaut des variables d'environnement à l'exécution de cargo (<a href="02_devenv.html#DENV-CARGO-ENVVARS">DENV-CARGO-ENVVARS</a>)</li>
+Conservation des valeurs par défaut des variables d'environnement à l'exécution de cargo (<a href="devenv.html#DENV-CARGO-ENVVARS">DENV-CARGO-ENVVARS</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Utilisation régulière d'un <em>linter</em> (<a href="02_devenv.html#DENV-LINTER">DENV-LINTER</a>)</li>
+Utilisation régulière d'un <em>linter</em> (<a href="devenv.html#DENV-LINTER">DENV-LINTER</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Utilisation d'un outil de formatage (rustfmt) (<a href="02_devenv.html#DENV-FORMAT">DENV-FORMAT</a>)</li>
+Utilisation d'un outil de formatage (rustfmt) (<a href="devenv.html#DENV-FORMAT">DENV-FORMAT</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Vérification manuelle des réparations automatiques (<a href="02_devenv.html#DENV-AUTOFIX">DENV-AUTOFIX</a>)</li>
+Vérification manuelle des réparations automatiques (<a href="devenv.html#DENV-AUTOFIX">DENV-AUTOFIX</a>)</li>
 </ul>
 </li>
 <li>
 <p>Bibliothèques:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Vérification des dépendances obsolètes (cargo-outdated) (<a href="03_libraries.html#LIBS-OUTDATED">LIBS-OUTDATED</a>)</li>
+Vérification des dépendances obsolètes (cargo-outdated) (<a href="libraries.html#LIBS-OUTDATED">LIBS-OUTDATED</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Vérification des vulnérabilités connues pour les dépendances (cargo-audit) (<a href="03_libraries.html#LIBS-AUDIT">LIBS-AUDIT</a>)</li>
+Vérification des vulnérabilités connues pour les dépendances (cargo-audit) (<a href="libraries.html#LIBS-AUDIT">LIBS-AUDIT</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Vérification du code <em>unsafe</em> dans les dépendances (<a href="03_libraries.html#LIBS-UNSAFE">LIBS-UNSAFE</a>)</li>
+Vérification du code <em>unsafe</em> dans les dépendances (<a href="libraries.html#LIBS-UNSAFE">LIBS-UNSAFE</a>)</li>
 </ul>
 </li>
 <li>
-<p>Généralités sur le langage:</p>
+<p>Nommage:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Respect des conventions de nommage (<a href="04_language.html#LANG-NAMING">LANG-NAMING</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Utilisation des opérations arithmétiques appropriées au regard des potentiels dépassements (<a href="04_language.html#LANG-ARITH">LANG-ARITH</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Mise en place d'un type <code>Error</code> personnalisé, pouvant contenir toutes les erreurs possibles (<a href="04_language.html#LANG-ERRWRAP">LANG-ERRWRAP</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Utilisation de l'opérateur <code>?</code> et non-utilisation de la macro <code>try!</code> (<a href="04_language.html#LANG-ERRDO">LANG-ERRDO</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Non-utilisation de fonctions qui peuvent causer des <code>panic</code> (<a href="04_language.html#LANG-NOPANIC">LANG-NOPANIC</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Test des indices d'accès aux tableaux ou utilisation de la méthode <code>get</code> (<a href="04_language.html#LANG-ARRINDEXING">LANG-ARRINDEXING</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Gestion correcte des <code>panic!</code> dans les FFI (<a href="04_language.html#LANG-FFIPANIC">LANG-FFIPANIC</a>)</li>
+Respect des conventions de nommage (<a href="naming.html#LANG-NAMING">LANG-NAMING</a>)</li>
 </ul>
 </li>
 <li>
-<p>Système de types:</p>
+<p>Gestion des entiers:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Justification de l'implémentation du trait <code>Drop</code> (<a href="05_typesystem.html#LANG-DROP">LANG-DROP</a>)</li>
+Utilisation des opérations arithmétiques appropriées au regard des potentiels dépassements (<a href="integer.html#LANG-ARITH">LANG-ARITH</a>)</li>
+</ul>
+</li>
+<li>
+<p>Gestion des erreurs:</p>
+<ul>
 <li><input disabled="" type="checkbox"/>
-Absence de <code>panic</code> dans l'implémentation de <code>Drop</code> (<a href="05_typesystem.html#LANG-DROP-NO-PANIC">LANG-DROP-NO-PANIC</a>)</li>
+Mise en place d'un type <code>Error</code> personnalisé, pouvant contenir toutes les erreurs possibles (<a href="errors.html#LANG-ERRWRAP">LANG-ERRWRAP</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Absence de cycles de références avec valeurs <code>Drop</code>ables (<a href="05_typesystem.html#LANG-DROP-NO-CYCLE">LANG-DROP-NO-CYCLE</a>)</li>
+Utilisation de l'opérateur <code>?</code> et non-utilisation de la macro <code>try!</code> (<a href="errors.html#LANG-ERRDO">LANG-ERRDO</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Sécurité assurée par d'autres mécanismes en plus du trait <code>Drop</code> (<a href="05_typesystem.html#LANG-DROP-SEC">LANG-DROP-SEC</a>)</li>
+Non-utilisation de fonctions qui peuvent causer des <code>panic</code> (<a href="errors.html#LANG-NOPANIC">LANG-NOPANIC</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Justification de l'implémentation des traits <code>Send</code> et <code>Sync</code> (<a href="05_typesystem.html#LANG-SYNC-TRAITS">LANG-SYNC-TRAITS</a>)</li>
+Test des indices d'accès aux tableaux ou utilisation de la méthode <code>get</code> (<a href="errors.html#LANG-ARRINDEXING">LANG-ARRINDEXING</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Respect des invariants des traits de comparaison standards (<a href="05_typesystem.html#LANG-CMP-INV">LANG-CMP-INV</a>)</li>
+Gestion correcte des <code>panic!</code> dans les FFI (<a href="errors.html#LANG-FFIPANIC">LANG-FFIPANIC</a>)</li>
+</ul>
+</li>
+<li>
+<p>Traits centraux:</p>
+<ul>
 <li><input disabled="" type="checkbox"/>
-Utilisation des implémentations par défaut des traits de comparaison standards (<a href="05_typesystem.html#LANG-CMP-DEFAULTS">LANG-CMP-DEFAULTS</a>)</li>
+Justification de l'implémentation du trait <code>Drop</code> (<a href="central_traits.html#LANG-DROP">LANG-DROP</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Dérivation des traits de comparaison lorsque c'est possible (<a href="05_typesystem.html#LANG-CMP-DERIVE">LANG-CMP-DERIVE</a>)</li>
+Absence de <code>panic</code> dans l'implémentation de <code>Drop</code> (<a href="central_traits.html#LANG-DROP-NO-PANIC">LANG-DROP-NO-PANIC</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Absence de cycles de références avec valeurs <code>Drop</code>ables (<a href="central_traits.html#LANG-DROP-NO-CYCLE">LANG-DROP-NO-CYCLE</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Sécurité assurée par d'autres mécanismes en plus du trait <code>Drop</code> (<a href="central_traits.html#LANG-DROP-SEC">LANG-DROP-SEC</a>)</li>
 </ul>
 </li>
 <li>
 <p>Généralités:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Non-utilisation des blocs <em>unsafe</em> (<a href="06_1_unsafe_generalities.html#LANG-UNSAFE">LANG-UNSAFE</a>)</li>
+Non-utilisation des blocs <em>unsafe</em> (<a href="unsafe/generalities.html#LANG-UNSAFE">LANG-UNSAFE</a>)</li>
 </ul>
 </li>
 <li>
 <p>Gestion de la mémoire:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Non-utilisation de <code>forget</code> (<a href="06_2_unsafe_memory.html#MEM-FORGET">MEM-FORGET</a>)</li>
+Non-utilisation de <code>forget</code> (<a href="unsafe/memory.html#MEM-FORGET">MEM-FORGET</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Utilisation du <em>lint</em> clippy pour détecter l'utilisation de <code>forget</code> (<a href="06_2_unsafe_memory.html#MEM-FORGET-LINT">MEM-FORGET-LINT</a>)</li>
+Utilisation du <em>lint</em> clippy pour détecter l'utilisation de <code>forget</code> (<a href="unsafe/memory.html#MEM-FORGET-LINT">MEM-FORGET-LINT</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Non-utilisation de <code>Box::leak</code> (<a href="06_2_unsafe_memory.html#MEM-LEAK">MEM-LEAK</a>)</li>
+Non-utilisation de <code>Box::leak</code> (<a href="unsafe/memory.html#MEM-LEAK">MEM-LEAK</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Libération des valeurs <em>wrappées</em> dans <code>ManuallyDrop</code> (<a href="06_2_unsafe_memory.html#MEM-MANUALLYDROP">MEM-MANUALLYDROP</a>)</li>
+Libération des valeurs <em>wrappées</em> dans <code>ManuallyDrop</code> (<a href="unsafe/memory.html#MEM-MANUALLYDROP">MEM-MANUALLYDROP</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Pas de conversion en pointeur <em>raw</em> en Rust non-<em>usafe</em> (<a href="06_2_unsafe_memory.html#MEM-NORAWPOINTER">MEM-NORAWPOINTER</a>)</li>
+Pas de conversion en pointeur <em>raw</em> en Rust non-<em>usafe</em> (<a href="unsafe/memory.html#MEM-NORAWPOINTER">MEM-NORAWPOINTER</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Appel systématique à <code>from_raw</code> pour les valeurs créées avec <code>into_raw</code> (<a href="06_2_unsafe_memory.html#MEM-INTOFROMRAW">MEM-INTOFROMRAW</a>)</li>
+Appel systématique à <code>from_raw</code> pour les valeurs créées avec <code>into_raw</code> (<a href="unsafe/memory.html#MEM-INTOFROMRAW">MEM-INTOFROMRAW</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Appel de <code>from_raw</code> uniquement pour les valeurs issues de <code>into_raw</code> (<a href="06_2_unsafe_memory.html#MEM-INTOFROMRAW">MEM-INTOFROMRAW</a>)</li>
+Appel de <code>from_raw</code> uniquement pour les valeurs issues de <code>into_raw</code> (<a href="unsafe/memory.html#MEM-INTOFROMRAW">MEM-INTOFROMRAW</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Pas de mémoire non initialisée (<a href="06_2_unsafe_memory.html#MEM-UNINIT">MEM-UNINIT</a>)</li>
+Pas de mémoire non initialisée (<a href="unsafe/memory.html#MEM-UNINIT">MEM-UNINIT</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Éviter les références comptées récursives mutables (<a href="06_2_unsafe_memory.html#MEM-MUT-REC-RC">MEM-MUT-REC-RC</a>)</li>
+Éviter les références comptées récursives mutables (<a href="unsafe/memory.html#MEM-MUT-REC-RC">MEM-MUT-REC-RC</a>)</li>
 </ul>
 </li>
 <li>
 <p>FFI:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Utilisation exclusive de types compatibles avec le C dans les FFI (<a href="06_3_unsafe_ffi.html#FFI-CTYPE">FFI-CTYPE</a>)</li>
+Utilisation exclusive de types compatibles avec le C dans les FFI (<a href="unsafe/ffi.html#FFI-CTYPE">FFI-CTYPE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Utilisation de types cohérents pour les FFI (<a href="06_3_unsafe_ffi.html#FFI-TCONS">FFI-TCONS</a>)</li>
+Utilisation de types cohérents pour les FFI (<a href="unsafe/ffi.html#FFI-TCONS">FFI-TCONS</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Utilisation des outils de génération automatique de <em>bindings</em> (<a href="06_3_unsafe_ffi.html#FFI-AUTOMATE">FFI-AUTOMATE</a>)</li>
+Utilisation des outils de génération automatique de <em>bindings</em> (<a href="unsafe/ffi.html#FFI-AUTOMATE">FFI-AUTOMATE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Utilisation des alias portables <code>c_*</code> pour faire correspondre les types dépendants de la plateforme d'exécution (<a href="06_3_unsafe_ffi.html#FFI-PFTYPE">FFI-PFTYPE</a>)</li>
+Utilisation des alias portables <code>c_*</code> pour faire correspondre les types dépendants de la plateforme d'exécution (<a href="unsafe/ffi.html#FFI-PFTYPE">FFI-PFTYPE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Non-vérification des valeurs de types non-robustes (<a href="06_3_unsafe_ffi.html#FFI-CKNONROBUST">FFI-CKNONROBUST</a>)</li>
+Non-vérification des valeurs de types non-robustes (<a href="unsafe/ffi.html#FFI-CKNONROBUST">FFI-CKNONROBUST</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Vérification des valeurs externes en Rust (<a href="06_3_unsafe_ffi.html#FFI-CKINRUST">FFI-CKINRUST</a>)</li>
+Vérification des valeurs externes en Rust (<a href="unsafe/ffi.html#FFI-CKINRUST">FFI-CKINRUST</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Vérification des références provenant d'un langage externe (<a href="06_3_unsafe_ffi.html#FFI-CKREF">FFI-CKREF</a>)</li>
+Vérification des références provenant d'un langage externe (<a href="unsafe/ffi.html#FFI-CKREF">FFI-CKREF</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Non-utilisation des types références et utilisation des types pointeurs (<a href="06_3_unsafe_ffi.html#FFI-NOREF">FFI-NOREF</a>)</li>
+Non-utilisation des types références et utilisation des types pointeurs (<a href="unsafe/ffi.html#FFI-NOREF">FFI-NOREF</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Vérification des pointeurs externes (<a href="06_3_unsafe_ffi.html#FFI-CKPTR">FFI-CKPTR</a>)</li>
+Vérification des pointeurs externes (<a href="unsafe/ffi.html#FFI-CKPTR">FFI-CKPTR</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Marquage des types de pointeurs de fonction dans les FFI comme <code>extern</code> et <code>unsafe</code> (<a href="06_3_unsafe_ffi.html#FFI-MARKEDFUNPTR">FFI-MARKEDFUNPTR</a>)</li>
+Marquage des types de pointeurs de fonction dans les FFI comme <code>extern</code> et <code>unsafe</code> (<a href="unsafe/ffi.html#FFI-MARKEDFUNPTR">FFI-MARKEDFUNPTR</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Vérification des pointeurs de fonction provenant d'une FFI (<a href="06_3_unsafe_ffi.html#FFI-CKFUNPTR">FFI-CKFUNPTR</a>)</li>
+Vérification des pointeurs de fonction provenant d'une FFI (<a href="unsafe/ffi.html#FFI-CKFUNPTR">FFI-CKFUNPTR</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Non-utilisation d'<code>enum</code>s Rust provenant de l'extérieur par une FFI (<a href="06_3_unsafe_ffi.html#FFI-NOENUM">FFI-NOENUM</a>)</li>
+Non-utilisation d'<code>enum</code>s Rust provenant de l'extérieur par une FFI (<a href="unsafe/ffi.html#FFI-NOENUM">FFI-NOENUM</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Utilisation de types Rust dédiés pour les types opaques externes (<a href="06_3_unsafe_ffi.html#FFI-R-OPAQUE">FFI-R-OPAQUE</a>)</li>
+Utilisation de types Rust dédiés pour les types opaques externes (<a href="unsafe/ffi.html#FFI-R-OPAQUE">FFI-R-OPAQUE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Utilisation de pointeurs vers des <code>struct</code>s C/C++ pour rendre des types opaques (<a href="06_3_unsafe_ffi.html#FFI-C-OPAQUE">FFI-C-OPAQUE</a>)</li>
+Utilisation de pointeurs vers des <code>struct</code>s C/C++ pour rendre des types opaques (<a href="unsafe/ffi.html#FFI-C-OPAQUE">FFI-C-OPAQUE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Non-utilisation de types qui implémentent <code>Drop</code> dans des FFI (<a href="06_3_unsafe_ffi.html#FFI-MEM-NODROP">FFI-MEM-NODROP</a>)</li>
+Non-utilisation de types qui implémentent <code>Drop</code> dans des FFI (<a href="unsafe/ffi.html#FFI-MEM-NODROP">FFI-MEM-NODROP</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Identification du langage responsable de la libération des données dans les FFI (<a href="06_3_unsafe_ffi.html#FFI-MEM-OWNER">FFI-MEM-OWNER</a>)</li>
+Identification du langage responsable de la libération des données dans les FFI (<a href="unsafe/ffi.html#FFI-MEM-OWNER">FFI-MEM-OWNER</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Encapsulation des données externes dans un type <code>Drop</code> (<a href="06_3_unsafe_ffi.html#FFI-MEM-WRAPPING">FFI-MEM-WRAPPING</a>)</li>
+Encapsulation des données externes dans un type <code>Drop</code> (<a href="unsafe/ffi.html#FFI-MEM-WRAPPING">FFI-MEM-WRAPPING</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Gestion correcte des <code>panic</code>s dans les FFI (<a href="06_3_unsafe_ffi.html#FFI-NOPANIC">FFI-NOPANIC</a>)</li>
+Gestion correcte des <code>panic</code>s dans les FFI (<a href="unsafe/ffi.html#FFI-NOPANIC">FFI-NOPANIC</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Mise en place d'une encapsulation sûre pour les bibliothèques externes (<a href="06_3_unsafe_ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>)</li>
+Mise en place d'une encapsulation sûre pour les bibliothèques externes (<a href="unsafe/ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Exposition exclusive d'API dédiée et compatible avec le C (<a href="06_3_unsafe_ffi.html#FFI-CAPI">FFI-CAPI</a>)</li>
+Exposition exclusive d'API dédiée et compatible avec le C (<a href="unsafe/ffi.html#FFI-CAPI">FFI-CAPI</a>)</li>
+</ul>
+</li>
+<li>
+<p>Bibliothèque standard:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Justification de l'implémentation des traits <code>Send</code> et <code>Sync</code> (<a href="standard.html#LANG-SYNC-TRAITS">LANG-SYNC-TRAITS</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Respect des invariants des traits de comparaison standards (<a href="standard.html#LANG-CMP-INV">LANG-CMP-INV</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Utilisation des implémentations par défaut des traits de comparaison standards (<a href="standard.html#LANG-CMP-DEFAULTS">LANG-CMP-DEFAULTS</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Dérivation des traits de comparaison lorsque c'est possible (<a href="standard.html#LANG-CMP-DERIVE">LANG-CMP-DERIVE</a>)</li>
 </ul>
 </li>
 </ul>

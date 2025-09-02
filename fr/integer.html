@@ -1,14 +1,14 @@
 <!DOCTYPE HTML>
-<html lang="en" class="light sidebar-visible" dir="ltr">
+<html lang="fr" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Libraries - Secure Rust Guidelines</title>
+        <title>Gestion des entiers - Développement sécurisé en Rust</title>
 
 
         <!-- Custom HTML head -->
 
-        <meta name="description" content="Recommendations for secure applications development with Rust">
+        <meta name="description" content="Recommandations pour le développement d&#x27;applications sécurisées en Rust">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
@@ -138,7 +138,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">Secure Rust Guidelines</h1>
+                    <h1 class="menu-title">Développement sécurisé en Rust</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -175,58 +175,59 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="libraries"><a class="header" href="#libraries">Libraries</a></h1>
-<p>In addition to the standard library, Rust provides an easy way to import other
-libraries in a project, thanks to <code>cargo</code>. The libraries, known as <em>crates</em> in
-the Rust ecosystem, are imported from the open-source components central
-repository <a href="https://crates.io">crates.io</a>.</p>
-<p>It should be noticed that the quality (in terms of security, performances,
-readability, etc.) of the published crates is very variable. Moreover, their
-maintenance can be irregular or interrupted. The usage of each component from
-this repository should be justified, and the developer should validate the
-correct application of rules from the current guide in its code. Several tools
-can aid in that task.</p>
-<h2 id="cargo-outdated"><a class="header" href="#cargo-outdated">Cargo-outdated</a></h2>
-<p><a href="https://github.com/kbknapp/cargo-outdated">Cargo-outdated</a> tool allows one to easily manage dependencies versions.</p>
-<p>For a given crate, it lists current dependencies versions (using its
-<code>Cargo.toml</code>), and checks latest compatible version and also latest general
-version.</p>
+                        <h1 id="traitements-des-entiers"><a class="header" href="#traitements-des-entiers">Traitements des entiers</a></h1>
+<h2 id="dépassement-dentiers"><a class="header" href="#dépassement-dentiers">Dépassement d'entiers</a></h2>
+<p>Bien que des vérifications soient effectuées par Rust en ce qui concerne les
+potentiels dépassements d'entiers, des précautions doivent être prises lors de
+l'exécution d'opérations arithmétiques sur les entiers.</p>
+<p>En particulier, il doit être noté que les profils de compilation <em>debug</em> et
+<em>release</em> produisent des variations de comportements quant à la gestion des
+dépassements d'entiers. Dans la configuration <em>debug</em>, un dépassement provoque
+la terminaison du programme (<code>panic</code>), tandis que dans la configuration
+<em>release</em> la valeur calculée est silencieusement tronquée en fonction de la
+valeur maximum qui peut être stockée pour le type considéré.</p>
+<p>Ce comportement peut être rendu explicite en utilisant le type générique
+<code>Wrapping</code>, ou les opérations sur les entiers <code>overflowing_&lt;op&gt;</code> et
+<code>wrapping_&lt;op&gt;</code> (la partie <code>&lt;op&gt;</code> étant remplacée par le type de calcul :
+<code>add</code>, <code>mul</code>, <code>sub</code>, <code>shr</code>, etc.).</p>
+<pre><pre class="playground"><code class="language-rust">use std::num::Wrapping;
+<span class="boring">use std::panic;
+</span>
+<span class="boring">fn main() {
+</span>let x: u8 = 242;
+
+<span class="boring">let result = panic::catch_unwind(|| {
+</span>println!("{}", x + 50);                      // panique en mode debug, affiche 36 en mode release.
+<span class="boring">});
+</span><span class="boring">if result.is_err() { println!("panic"); }
+</span>println!("{}", x.overflowing_add(50).0);     // affiche toujours 36.
+println!("{}", x.wrapping_add(50));          // affiche toujours 36.
+println!("{}", Wrapping(x) + Wrapping(50));  // affiche toujours 36.
+
+// panique toujours :
+let (res, c) = x.overflowing_add(50);
+<span class="boring">let result = panic::catch_unwind(|| {
+</span>if c { panic!("custom error"); }
+else { println!("{}", res); }
+<span class="boring">});
+</span><span class="boring">if result.is_err() { println!("panic"); }
+</span><span class="boring">}</span></code></pre></pre>
 <blockquote>
-<p><strong>Rule <a id="LIBS-OUTDATED"></a>LIBS-OUTDATED</strong></p>
-<p>The <code>cargo-outdated</code> tool must be used to check dependencies status. Then,
-each outdated dependency must be updated or the choice of the version must be
-justified.</p>
+<p><strong>Règle <a id="LANG-ARITH"></a>LANG-ARITH</strong></p>
+<p>Lorsqu'une opération arithmétique peut produire un dépassement d'entier, les
+fonctions spécialisées <code>overflowing_&lt;op&gt;</code>, <code>wrapping_&lt;op&gt;</code> ou le type
+<code>Wrapping</code> doivent être utilisés.</p>
 </blockquote>
-<h2 id="cargo-audit"><a class="header" href="#cargo-audit">Cargo-audit</a></h2>
-<p><a href="https://github.com/RustSec/cargo-audit">Cargo-audit</a> tool allows one to easily check for security vulnerabilities
-reported to the RustSec Advisory Database.</p>
-<blockquote>
-<p><strong>Rule <a id="LIBS-AUDIT"></a>LIBS-AUDIT</strong></p>
-<p>The <code>cargo-audit</code> tool must be used to check for known vulnerabilities in
-dependencies.</p>
-</blockquote>
-<!-- ## Unsafe code in libraries -->
-<!--
-<mark>TODO</mark>: `unsafe` blocks are discussed in the following chapter.
-One needs to ensure that this kind of block is not misused in project
-dependencies.
--->
-<!--
-> **Recommendation <a id="LIBS-UNSAFE"></a>LIBS-UNSAFE**
->
-> <mark>TODO</mark>: check that no `unsafe` blocks appear in the imported
-> dependencies (with a tool?).
--->
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="02_devenv.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="naming.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="04_language.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="errors.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -236,11 +237,11 @@ dependencies.
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="02_devenv.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="naming.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="04_language.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="errors.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

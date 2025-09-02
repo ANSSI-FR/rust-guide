@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Licence - Secure Rust Guidelines</title>
+        <title>Error handling - Secure Rust Guidelines</title>
 
 
         <!-- Custom HTML head -->
@@ -175,71 +175,86 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="open-licence-20licence-ouverte-20"><a class="header" href="#open-licence-20licence-ouverte-20">OPEN LICENCE 2.0/LICENCE OUVERTE 2.0</a></h1>
-<h2 id="reuse-of-the-information-covered-by-this-licence"><a class="header" href="#reuse-of-the-information-covered-by-this-licence">“Reuse” of the “Information” covered by this licence</a></h2>
-<p>The “Grantor” grants the “Reuser” the free, non-exclusive right to “Reuse” the “Information” subject of this licence, for commercial or non-commercial purposes, worldwide and for an unlimited period, in accordance with the conditions stated below.</p>
-<p><strong>The “Reuser” is free to reuse the “Information”:</strong></p>
-<ul>
-<li>To reproduce it, copy it.</li>
-<li>To adapt, modify, retrieve and transform it in order to create “derived information”, products and services.</li>
-<li>To share, disseminate, redistribute, publish and transmit it.</li>
-<li>To exploit it for commercial purposes, e.g., by combining it with other information, or by including it in his/her own product or application.</li>
-</ul>
-<p><strong>Subject to:</strong></p>
-<ul>
-<li>An acknowledgement of the authorship of the “Information”: its source (at least, the name of the “Grantor”) and the date of the most recent update of the reused “Information”. Specifically, the “Reuser” may satisfy this condition by pointing, via a hypertext link, to the source of “the Information” and so supplying an actual acknowledgement of its authorship.</li>
-</ul>
-<p><strong>For example:</strong></p>
+                        <h1 id="error-handling"><a class="header" href="#error-handling">Error handling</a></h1>
+<!-- <mark>TODO</mark>: explicit good practices in error handling. -->
+<p>The <code>Result</code> type is the preferred way of handling functions that can fail.
+A <code>Result</code> object must be tested, and never ignored.</p>
 <blockquote>
-<p>“Ministry of xxx—Original data downloaded from <code>http://www.data.gouv.fr/fr/datasets/xxx/</code>, updated on 14 February 2017”.</p>
+<p><strong>Recommendation <a id="LANG-ERRWRAP"></a>LANG-ERRWRAP</strong></p>
+<p>A crate can implement its own <code>Error</code> type, wrapping all possible errors.
+It must be careful to make this type exception-safe (RFC 1236), and implement
+<code>Error + Send + Sync + 'static</code> as well as <code>Display</code>.</p>
 </blockquote>
-<p>This acknowledgement of authorship does not confer any official status on the “Reuse” of the “Information”, and must not suggest any sort of recognition or endorsement on the part of the “Grantor”, or any other public entity, of the “Reuser” or of their “Reuse”.</p>
-<h2 id="personal-data"><a class="header" href="#personal-data">Personal data</a></h2>
-<p>The “Information” made available may contain “Personal data” that may be subject to “Reuse”. If this is the case, the “Grantor” informs the “Reuser” about its existence. The “Information” may be freely reused, within the rights granted by this licence, subject to compliance with the legal framework relating to personal data protection.</p>
-<h2 id="intellectual-property-rights"><a class="header" href="#intellectual-property-rights">Intellectual property rights</a></h2>
-<p>It is guaranteed to The “Reuser” that potential “Intellectual property rights” held by third parties or by the “Grantor” on “Information” do not interfere with the rights granted by this licence.</p>
-<p>When the “Grantor” holds transferable “Intellectual property rights” on the “Information”, he/she assigns these to the “Reuser” on a non-exclusive basis, free of charge, worldwide, for the entire duration of the “Intellectual property rights”, and the “Reuser” is free to use the “Information” for any purpose that complies with the rights and conditions defined in this licence.</p>
-<h2 id="liability"><a class="header" href="#liability">Liability</a></h2>
-<p>The “Information” is made available as it is produced or received by the “Grantor”, without any other express or tacit guarantee than those set out in this licence. The “Grantor” does not guarantee the absence of errors or inaccuracies in the “Information”, nor a continuous supply of the “Information”. He/she cannot be held responsible for any loss, prejudice or damage of any kind caused to third parties as a result of the “Reuse”.</p>
-<p>The “Reuser” is solely responsible for the “Reuse” of the “Information”. This “Reuse” must not mislead third parties as to the contents of the “Information”, its source or its date of update.</p>
-<h2 id="applicable-legislation"><a class="header" href="#applicable-legislation">Applicable legislation</a></h2>
-<p>This licence is governed by French law.</p>
-<h3 id="compatibility-of-this-licence"><a class="header" href="#compatibility-of-this-licence">Compatibility of this licence</a></h3>
-<p>This licence has been designed to be compatible with any free licence that at least requires an acknowledgement of authorship, and specifically with the previous version of this licence as well as with the following licences: United Kingdom’s “Open Government Licence” (OGL), Creative Commons’ “Creative Commons Attribution” (CC-BY) and Open Knowledge Foundation’s “Open Data Commons Attribution” (ODC-BY).</p>
-<h2 id="definitions"><a class="header" href="#definitions">Definitions</a></h2>
-<p>Within the meaning of this licence, are to be considered as :</p>
+<blockquote>
+<p><strong>Recommendation <a id="LANG-ERRDO"></a>LANG-ERRDO</strong></p>
+<p>The <code>?</code> operator should be used to improve readability of code.
+The <code>try!</code> macro should not be used.</p>
+</blockquote>
+<p>Third-party crates may be used to facilitate error handling. Most of them
+(notably <a href="https://crates.io/crates/failure">failure</a>, <a href="https://crates.io/crates/snafu">snafu</a>, <a href="https://crates.io/crates/thiserror">thiserror</a>) address the creation of new custom
+error types that implement the necessary traits and allow wrapping other
+errors.</p>
+<p>Another approach (notably proposed in the <a href="https://crates.io/crates/anyhow">anyhow</a> crate) consists in an automatic
+wrapping of errors into a single universal error type. Such wrappers should not
+be used in libraries and complex systems because they do not allow developers to
+provide context to the wrapped error.</p>
+<h2 id="panics"><a class="header" href="#panics">Panics</a></h2>
+<p>Explicit error handling (<code>Result</code>) should always be preferred instead of calling
+<code>panic</code>.  The cause of the error should be available, and generic errors should
+be avoided.</p>
+<p>Crates providing libraries should never use functions or instructions that can
+fail and cause the code to panic.</p>
+<p>Common patterns that can cause panics are:</p>
 <ul>
-<li>The “Grantor”: any person granting the right to “Reuse” “Information” under the rights and conditions set out in this licence.</li>
-<li>The “Information”:
-<ul>
-<li>any public information contained in documents disclosed or published by any administration referred to in the first paragraph of Article L. 300-2 of the code des relations entre le public et l’administration (CRPA),</li>
-<li>any information made available by any person under the terms and conditions of this licence.</li>
+<li>using <code>unwrap</code> or <code>expect</code>,</li>
+<li>using <code>assert</code>,</li>
+<li>an unchecked access to an array,</li>
+<li>integer overflow (in debug mode),</li>
+<li>division by zero,</li>
+<li>large allocations,</li>
+<li>string formatting using <code>format!</code>.</li>
 </ul>
-</li>
-<li>The “Reuse”: the use of the “Information” for other purposes than those for which it was produced or received.</li>
-<li>The“Reuser”: any person reusing the “Information” in accordance with the conditions of this licence.</li>
-<li>“Personal data”: any information relating to an identified or identifiable natural person who may be identified directly or indirectly. Its “Reuse” is conditional on the respect of the existing legal framework.</li>
-<li>“Derived information”: any new data or information created directly from the “Information” or from a combination of the “Information” and other data or information not subject to this licence.</li>
-<li>“Intellectual property rights”: all rights identified as such under the code de la propriété intellectuelle (including copyright, rights related to copyright, sui generis rights of database producers, etc.).</li>
-</ul>
-<h2 id="about-this-licence"><a class="header" href="#about-this-licence">About this licence</a></h2>
-<p>This licence is intended to be used by administrations for the reuse of their public information. It can also be used by any individual wishing to supply “Information” under the conditions defined in this licence.</p>
-<p>France has a comprehensive legal framework aiming at the spontaneous dissemination by the administrations of their public information in order to ensure the widest possible reuse of this information.</p>
-<p>The right to “Reuse” the administrations’ “Information” is governed by the code des relations entre le public et l’administration  (CRPA).</p>
-<p>This licence facilitates the unrestricted and free of charge reuse of public information and is one of the licences which can be used by the administration pursuant to the decree issued under article L. 323-2 of the CRPA.</p>
-<p>Under the Prime Minister’s authority, the Etalab mission is mandated to open up the maximum amount of data held by State administrations and public institutions. Etalab has drawn up the Open Licence to facilitate the unrestricted and free of charge reuse of public information, as defined by article L. 321-1 of the CRPA.</p>
-<p>This licence is version 2.0 of the Open Licence.</p>
-<p>Etalab reserves the right to propose new versions of the Open Licence. Nevertheless, “Reusers” may continue to reuse information obtained under this licence should they so wish.</p>
+<blockquote>
+<p><strong>Rule <a id="LANG-NOPANIC"></a>LANG-NOPANIC</strong></p>
+<p>Functions or instructions that can cause the code to panic at runtime must not
+be used.</p>
+</blockquote>
+<blockquote>
+<p><strong>Rule <a id="LANG-ARRINDEXING"></a>LANG-ARRINDEXING</strong></p>
+<p>Array indexing must be properly tested, or the <code>get</code> method should be used to
+return an <code>Option</code>.</p>
+</blockquote>
+<!--
+<mark>TODO</mark> Check if the [no_panic](https://github.com/dtolnay/no-panic)
+crate can catch all cases. Drawback: all functions need to be marked as
+`#[no_panic]`.
+-->
+<!--
+<mark>TODO</mark> Another possibility:
+[rustig](https://github.com/Technolution/rustig) (doesn't build here)
+-->
+<h2 id="ffi-and-panics"><a class="header" href="#ffi-and-panics">FFI and panics</a></h2>
+<p>When calling Rust code from another language (for ex. C), the Rust code must
+be careful to never panic.
+Stack unwinding from Rust code into foreign code results in undefined behavior.</p>
+<blockquote>
+<p><strong>Rule <a id="LANG-FFIPANIC"></a>LANG-FFIPANIC</strong></p>
+<p>Rust code called from FFI must either ensure the function cannot panic, or use
+<code>catch_unwind</code> or the <code>std::panic</code> module to ensure the rust code will not
+abort or return in an unstable state.</p>
+</blockquote>
+<p>Note that <code>catch_unwind</code> will only catch unwinding panics, not those that abort
+the process.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="standard.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="integer.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="checklist.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="central_traits.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -249,11 +264,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="standard.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="integer.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="checklist.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="central_traits.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

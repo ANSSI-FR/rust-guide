@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Bibliothèques - Développement sécurisé en Rust</title>
+        <title>Nommage - Développement sécurisé en Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -175,61 +175,43 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="bibliothèques"><a class="header" href="#bibliothèques">Bibliothèques</a></h1>
-<p>En complément de la bibliothèque standard du langage, l'outil <code>cargo</code> fournit un
-moyen pratique d'intégrer des bibliothèques tierces dans un projet en Rust. Ces
-bibliothèques, appelées <em>crates</em> dans l'écosystème Rust, sont importées depuis
-le dépôt central de composants en sources ouvertes <a href="https://crates.io">crates.io</a>.</p>
-<p>Il doit être noté que la qualité (en termes de sécurité, de performances, de
-lisibilité, etc.) des <em>crates</em> publiées est très variable. De plus, leur
-maintenance peut être irrégulière ou interrompue. L'usage de chaque composant
-de ce dépôt doit donc être justifié, et le développeur doit également valider le
-bon respect des règles du présent guide sur le code correspondant. Plusieurs
-outils peuvent l'aider dans cette tâche.</p>
-<h2 id="cargo-outdated"><a class="header" href="#cargo-outdated">Cargo-outdated</a></h2>
-<p>L'outil <a href="https://github.com/kbknapp/cargo-outdated">Cargo-outdated</a> permet de faciliter la gestion des versions des
-dépendances.</p>
-<p>Pour une <em>crate</em> donnée, l'outil liste les versions utilisées des dépendances
-(dépendances listées dans le fichier <code>Cargo.toml</code>), et vérifie s'il s'agit de la
-dernière version compatible disponible ainsi que la dernière version en général.</p>
+                        <h1 id="nommage"><a class="header" href="#nommage">Nommage</a></h1>
+<p>La convention de nommage employée par la bibliothèque standard est <em>de facto</em> le
+standard pour le nommage des éléments des programmes écrits en Rust. Un effort a
+été fait pour formaliser ces conventions de nommage, d'abord dans la <a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">RFC 430</a>,
+puis dans le document des <em><a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a></em>.</p>
+<p>La règle de base consiste à utiliser :</p>
+<ul>
+<li><code>UpperCamelCase</code> pour les types, traits et valeurs d'énumérations ;</li>
+<li><code>snake_case</code> pour les fonctions, méthodes, macros, variables et modules ;</li>
+<li><code>SCREAMING_SNAKE_CASE</code> pour les variables statiques et les constantes ;</li>
+<li><code>'lowercase</code> pour les durées de vie (<em>lifetimes</em>).</li>
+</ul>
+<p>Les <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a> recommandent également des conventions de nommage
+plus précises pour certaines constructions particulières :</p>
+<ul>
+<li>(C-CONV) pour les méthodes de conversion (<code>as_</code>, <code>to_</code>, <code>into_</code>) ;</li>
+<li>(C-GETTER) pour les accesseurs ;</li>
+<li>(C-ITER) pour les méthodes produisant des itérateurs ;</li>
+<li>(C-ITER-TY) pour les types itérateur ;</li>
+<li>(C-FEATURE) pour les noms de <em>features</em> ;</li>
+<li>(C-WORD-ORDER) pour la cohérence sur l'ordre des mots.</li>
+</ul>
 <blockquote>
-<p><strong>Règle <a id="LIBS-OUTDATED"></a>LIBS-OUTDATED</strong></p>
-<p>L'outil <code>cargo-outdated</code> doit être utilisé pour vérifier le statut des
-dépendances. Ensuite, chaque dépendance importée en version obsolète doit
-être mise à jour ou bien, le cas échéant, le choix de la version doit être
-justifié.</p>
+<p><strong>Règle <a id="LANG-NAMING"></a>LANG-NAMING</strong></p>
+<p>Le développement d'une application sécurisée doit suivre les conventions de
+nommage décrites dans les <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a>.</p>
 </blockquote>
-<h2 id="cargo-audit"><a class="header" href="#cargo-audit">Cargo-audit</a></h2>
-<p><a href="https://github.com/RustSec/cargo-audit">Cargo-audit</a> est un outil permettant de vérifier s'il existe des vulnérabilités
-connues dans la <em>RustSec Advisory Database</em> pour les dépendances utilisées dans
-un projet.</p>
-<blockquote>
-<p><strong>Règle <a id="LIBS-AUDIT"></a>LIBS-AUDIT</strong></p>
-<p>L'outil <code>cargo-audit</code> doit être utilisé pour rechercher des vulnérabilités
-connues dans les dépendances d'un projet.</p>
-</blockquote>
-<!-- ## Code *unsafe* dans les bibliothèques -->
-<!--
-<mark>TODO</mark>: les blocs de code `unsafe` sont discutés dans le chapitre 
-suivant. Le développeur a besoin de s'assurer que ces types de blocs ne sont pas
-mal utilisés dans les dépendances de son projet.
--->
-<!--
-> **Recommandation <a id="LIBS-UNSAFE"></a>LIBS-UNSAFE**
->
-> <mark>TODO</mark>: vérifier qu'il n'y a pas de bloc `unsafe` dans les
-> dépendances (à l'aide d'un outil ?).
--->
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="02_devenv.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="guarantees.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="04_language.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="integer.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -239,11 +221,11 @@ mal utilisés dans les dépendances de son projet.
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="02_devenv.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="guarantees.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="04_language.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="integer.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

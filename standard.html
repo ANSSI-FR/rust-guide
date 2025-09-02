@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Type system - Secure Rust Guidelines</title>
+        <title>Standard library - Secure Rust Guidelines</title>
 
 
         <!-- Custom HTML head -->
@@ -175,66 +175,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="type-system"><a class="header" href="#type-system">Type system</a></h1>
-<!-- ## About Rust type system -->
-<!--
-<mark>TODO</mark>: identify pitfalls with the type system (for instance,
-misunderstanding of which code is actually executed when implementing complex
-patterns with traits).
--->
-<h2 id="standard-library-traits"><a class="header" href="#standard-library-traits">Standard library traits</a></h2>
-<h3 id="drop-trait-the-destructor"><a class="header" href="#drop-trait-the-destructor"><code>Drop</code> trait, the destructor</a></h3>
-<p>Types implement the trait <code>std::ops::Drop</code> to perform some operations when the
-memory associated with a value of this type is to be reclaimed. <code>Drop</code> is the
-Rust equivalent of a destructor in C++ or a finalizer in Java.</p>
-<p>Dropping is done recursively from the outer value to the inner values.
-When a value goes out of scope (or is explicitly dropped with <code>std::mem::drop</code>),
-the value is dropped in two steps. The first step happens only if the type of
-this value implements <code>Drop</code>. It consists in calling the <code>drop</code> method on it.
-The second step consists in repeating the dropping process recursively on any
-field the value contains. Note that a <code>Drop</code> implementation is
-<strong>only responsible for the outer value</strong>.</p>
-<p>First and foremost, implementing <code>Drop</code> should not be systematic.
-It is only needed if the type requires some destructor logic. In fact, <code>Drop</code> is
-typically used to release external resources (network connections, files, etc.)
-or to release memory (e.g. in smart pointers such as <code>Box</code> or <code>Rc</code>).
-As a result, <code>Drop</code> trait implementations are likely to contain <code>unsafe</code> code
-blocks as well as other security-critical operations.</p>
-<blockquote>
-<p><strong>Recommendation <a id="LANG-DROP"></a>LANG-DROP</strong></p>
-<p>In a Rust secure development, the implementation of the <code>std::ops::Drop</code> trait
-should be justified, documented and peer-reviewed.</p>
-</blockquote>
-<p>Second, Rust type system only ensures memory safety and, from the type system's
-standpoint, missing drops is allowed. In fact, several things may lead to
-missing drops, such as:</p>
-<ul>
-<li>a reference cycle (for instance, with <code>Rc</code> or <code>Arc</code>),</li>
-<li>an explicit call to <code>std::mem::forget</code> (or <code>core::mem::forget</code>) (see paragraph
-on <a href="05_memory.html#forget-and-memory-leaks">Forget and memory leaks</a>,</li>
-<li>a panic in drop,</li>
-<li>program aborts (and panics when abort-on-panic is on).</li>
-</ul>
-<p>And missing drops may lead to exposing sensitive data or to lock limited
-resources leading to unavailability issues.</p>
-<blockquote>
-<p><strong>Rule <a id="LANG-DROP-NO-PANIC"></a>LANG-DROP-NO-PANIC</strong></p>
-<p>In a Rust secure development, the implementation of the <code>std::ops::Drop</code> trait
-must not panic.</p>
-</blockquote>
-<p>Beside panics, secure-critical drop should be protected.</p>
-<blockquote>
-<p><strong>Rule <a id="LANG-DROP-NO-CYCLE"></a>LANG-DROP-NO-CYCLE</strong></p>
-<p>Value whose type implements <code>Drop</code> must not be embedded directly or indirectly
-in a cycle of reference-counted references.</p>
-</blockquote>
-<blockquote>
-<p><strong>Recommendation <a id="LANG-DROP-SEC"></a>LANG-DROP-SEC</strong></p>
-<p>Ensuring security operations at the end of some treatment (such as key erasure
-at the end of a cryptographic encryption) should not rely only on the <code>Drop</code>
-trait implementation.</p>
-</blockquote>
-<h3 id="send-and-sync-traits"><a class="header" href="#send-and-sync-traits"><code>Send</code> and <code>Sync</code> traits</a></h3>
+                        <h1 id="standard-library"><a class="header" href="#standard-library">Standard library</a></h1>
+<h2 id="send-and-sync-traits"><a class="header" href="#send-and-sync-traits"><code>Send</code> and <code>Sync</code> traits</a></h2>
 <p>The <code>Send</code> and <code>Sync</code> traits (defined in <code>std::marker</code> or <code>core::marker</code>) are
 marker traits used to ensure the safety of concurrency in Rust. When implemented
 correctly, they allow the Rust compiler to guarantee the absence of data races.
@@ -284,7 +226,7 @@ field:</p>
 <code>Sync</code> traits should be avoided and, if necessary, should be justified,
 documented and peer-reviewed.</p>
 </blockquote>
-<h3 id="comparison-traits-partialeq-eq-partialord-ord"><a class="header" href="#comparison-traits-partialeq-eq-partialord-ord">Comparison traits (<code>PartialEq</code>, <code>Eq</code>, <code>PartialOrd</code>, <code>Ord</code>)</a></h3>
+<h2 id="comparison-traits-partialeq-eq-partialord-ord"><a class="header" href="#comparison-traits-partialeq-eq-partialord-ord">Comparison traits (<code>PartialEq</code>, <code>Eq</code>, <code>PartialOrd</code>, <code>Ord</code>)</a></h2>
 <p>Comparisons (<code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>) in Rust relies on four standard
 traits available in <code>std::cmp</code> (or <code>core::cmp</code> for <code>no_std</code> compilation):</p>
 <ul>
@@ -475,11 +417,11 @@ standard comparison traits should be documented and justified.</p>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="04_language.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="unsafe/ffi.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="06_unsafe.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="LICENCE.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -489,11 +431,11 @@ standard comparison traits should be documented and justified.</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="04_language.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="unsafe/ffi.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="06_unsafe.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="LICENCE.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

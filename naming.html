@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Language generalities - Secure Rust Guidelines</title>
+        <title>Naming - Secure Rust Guidelines</title>
 
 
         <!-- Custom HTML head -->
@@ -175,42 +175,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="language-generalities"><a class="header" href="#language-generalities">Language generalities</a></h1>
-<h2 id="language-guarantees"><a class="header" href="#language-guarantees">Language guarantees</a></h2>
-<h3 id="undefined-behaviors-ub"><a class="header" href="#undefined-behaviors-ub">Undefined Behaviors (<em>UB</em>)</a></h3>
-<blockquote>
-<p>The behavior of a program is <em>undefined</em> when its semantics is not described in the Rust language.</p>
-</blockquote>
-<p>The existence of UB is considered an <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general">error</a>.</p>
-<p>For example, dereferencing the null pointer is a <em>UB</em>. On the other hand, <code>unwrap</code>ing the <code>None</code> object is well defined because it is the language that processes this error (by launching a panic).</p>
-<p>The current list of <em>UBs</em> is given in the language <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html">reference</a>. Notice the following guarantees:</p>
-<ul>
-<li>No dereference of pointer to an unallocated or unaligned memory address (dangling pointer), which implies
-<ul>
-<li>No buffer overflow</li>
-<li>No access to freed memory</li>
-<li>No non-aligned access</li>
-</ul>
-</li>
-<li>The pointed values are <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.invalid">consistent</a> with the pointer's type. For example, a value pointed at by a boolean pointer will be byte of value 1 or 0.</li>
-<li>Respect of <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias">aliasing rules</a> (see also <a href="https://doc.rust-lang.org/nomicon/aliasing.html">nomicon</a>): a mutable reference cannot be shared.</li>
-<li>No concurrent access (reading/writing is not possible while writing) to the same memory address (<a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race">data race</a>, see also <a href="https://doc.rust-lang.org/nomicon/races.html">nomicon</a>)</li>
-</ul>
-<h3 id="rust-guarantees"><a class="header" href="#rust-guarantees">Rust guarantees</a></h3>
-<blockquote>
-<p>The language paradigm is to ensure the absence of a UB in a program using only the non-<em>unsafe</em> part of Rust.</p>
-</blockquote>
-<p>However, the language does not prevent</p>
-<ul>
-<li>resource leaks (memory, IO, ...),</li>
-<li>numeric overflows.</li>
-</ul>
-<h3 id="references"><a class="header" href="#references">References</a></h3>
-<ul>
-<li>https://doc.rust-lang.org/reference/unsafety.html</li>
-<li>https://doc.rust-lang.org/nomicon/what-unsafe-does.html</li>
-</ul>
-<h2 id="naming"><a class="header" href="#naming">Naming</a></h2>
+                        <h1 id="naming"><a class="header" href="#naming">Naming</a></h1>
 <p>As of now, the standard library is the de facto standard for naming things in
 the Rust world. However, an effort has been made to formalize it, first in
 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">RFC 430</a>, then in the <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a>.</p>
@@ -236,131 +201,16 @@ some particular constructions:</p>
 <p>Development of a secure application must follow the naming conventions
 outlined in the <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a>.</p>
 </blockquote>
-<h2 id="integer-overflows"><a class="header" href="#integer-overflows">Integer overflows</a></h2>
-<p>Although some verification is performed by Rust regarding potential integer
-overflows, precautions should be taken when executing arithmetic operations on
-integers.</p>
-<p>In particular, it should be noted that using debug or release compilation
-profile changes integer overflow behavior. In debug configuration, overflow
-cause the termination of the program (<code>panic</code>), whereas in the release
-configuration the computed value silently wraps around the maximum value that
-can be stored.</p>
-<p>This last behavior can be made explicit by using the <code>Wrapping</code> generic type,
-or the <code>overflowing_&lt;op&gt;</code> and <code>wrapping_&lt;op&gt;</code> operations on integers
-(the <code>&lt;op&gt;</code> part being <code>add</code>, <code>mul</code>, <code>sub</code>, <code>shr</code>, etc.).</p>
-<pre><pre class="playground"><code class="language-rust">use std::num::Wrapping;
-<span class="boring">use std::panic;
-</span>
-<span class="boring">fn main() {
-</span>let x: u8 = 242;
-
-<span class="boring">let result = panic::catch_unwind(|| {
-</span>println!("{}", x + 50);                      // panics in debug, prints 36 in release.
-<span class="boring">});
-</span><span class="boring">if result.is_err() { println!("panic"); }
-</span>println!("{}", x.overflowing_add(50).0);     // always prints 36.
-println!("{}", x.wrapping_add(50));          // always prints 36.
-println!("{}", Wrapping(x) + Wrapping(50));  // always prints 36.
-
-// always panics:
-let (res, c) = x.overflowing_add(50);
-<span class="boring">let result = panic::catch_unwind(|| {
-</span>if c { panic!("custom error"); }
-else { println!("{}", res); }
-<span class="boring">});
-</span><span class="boring">if result.is_err() { println!("panic"); }
-</span><span class="boring">}</span></code></pre></pre>
-<blockquote>
-<p><strong>Rule <a id="LANG-ARITH"></a>LANG-ARITH</strong></p>
-<p>When assuming that an arithmetic operation can produce an overflow, the
-specialized functions <code>overflowing_&lt;op&gt;</code>, <code>wrapping_&lt;op&gt;</code>, or the
-<code>Wrapping</code> type must be used.</p>
-</blockquote>
-<h2 id="error-handling"><a class="header" href="#error-handling">Error handling</a></h2>
-<!-- <mark>TODO</mark>: explicit good practices in error handling. -->
-<p>The <code>Result</code> type is the preferred way of handling functions that can fail.
-A <code>Result</code> object must be tested, and never ignored.</p>
-<blockquote>
-<p><strong>Recommendation <a id="LANG-ERRWRAP"></a>LANG-ERRWRAP</strong></p>
-<p>A crate can implement its own <code>Error</code> type, wrapping all possible errors.
-It must be careful to make this type exception-safe (RFC 1236), and implement
-<code>Error + Send + Sync + 'static</code> as well as <code>Display</code>.</p>
-</blockquote>
-<blockquote>
-<p><strong>Recommendation <a id="LANG-ERRDO"></a>LANG-ERRDO</strong></p>
-<p>The <code>?</code> operator should be used to improve readability of code.
-The <code>try!</code> macro should not be used.</p>
-</blockquote>
-<p>Third-party crates may be used to facilitate error handling. Most of them
-(notably <a href="https://crates.io/crates/failure">failure</a>, <a href="https://crates.io/crates/snafu">snafu</a>, <a href="https://crates.io/crates/thiserror">thiserror</a>) address the creation of new custom
-error types that implement the necessary traits and allow wrapping other
-errors.</p>
-<p>Another approach (notably proposed in the <a href="https://crates.io/crates/anyhow">anyhow</a> crate) consists in an automatic
-wrapping of errors into a single universal error type. Such wrappers should not
-be used in libraries and complex systems because they do not allow developers to
-provide context to the wrapped error.</p>
-<h3 id="panics"><a class="header" href="#panics">Panics</a></h3>
-<p>Explicit error handling (<code>Result</code>) should always be preferred instead of calling
-<code>panic</code>.  The cause of the error should be available, and generic errors should
-be avoided.</p>
-<p>Crates providing libraries should never use functions or instructions that can
-fail and cause the code to panic.</p>
-<p>Common patterns that can cause panics are:</p>
-<ul>
-<li>using <code>unwrap</code> or <code>expect</code>,</li>
-<li>using <code>assert</code>,</li>
-<li>an unchecked access to an array,</li>
-<li>integer overflow (in debug mode),</li>
-<li>division by zero,</li>
-<li>large allocations,</li>
-<li>string formatting using <code>format!</code>.</li>
-</ul>
-<blockquote>
-<p><strong>Rule <a id="LANG-NOPANIC"></a>LANG-NOPANIC</strong></p>
-<p>Functions or instructions that can cause the code to panic at runtime must not
-be used.</p>
-</blockquote>
-<blockquote>
-<p><strong>Rule <a id="LANG-ARRINDEXING"></a>LANG-ARRINDEXING</strong></p>
-<p>Array indexing must be properly tested, or the <code>get</code> method should be used to
-return an <code>Option</code>.</p>
-</blockquote>
-<!--
-<mark>TODO</mark> Check if the [no_panic](https://github.com/dtolnay/no-panic)
-crate can catch all cases. Drawback: all functions need to be marked as
-`#[no_panic]`.
--->
-<!--
-<mark>TODO</mark> Another possibility:
-[rustig](https://github.com/Technolution/rustig) (doesn't build here)
--->
-<h3 id="ffi-and-panics"><a class="header" href="#ffi-and-panics">FFI and panics</a></h3>
-<p>When calling Rust code from another language (for ex. C), the Rust code must
-be careful to never panic.
-Stack unwinding from Rust code into foreign code results in undefined behavior.</p>
-<blockquote>
-<p><strong>Rule <a id="LANG-FFIPANIC"></a>LANG-FFIPANIC</strong></p>
-<p>Rust code called from FFI must either ensure the function cannot panic, or use
-<code>catch_unwind</code> or the <code>std::panic</code> module to ensure the rust code will not
-abort or return in an unstable state.</p>
-</blockquote>
-<p>Note that <code>catch_unwind</code> will only catch unwinding panics, not those that abort
-the process.</p>
-<!-- ## Macros -->
-<!--
-<mark>TODO</mark>: cyclomatic complexity of the macro expanded code, recursion
-limits, ...
--->
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="03_libraries.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="guarantees.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="05_typesystem.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="integer.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -370,11 +220,11 @@ limits, ...
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="03_libraries.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="guarantees.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="05_typesystem.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="integer.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

@@ -181,143 +181,158 @@
 <p>Environnement de développement:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Utilisation de la chaîne d'outils <em>stable</em> (<a href="02_devenv.html#DENV-STABLE">DENV-STABLE</a>)</li>
+Utilisation de la chaîne d'outils <em>stable</em> (<a href="devenv.html#DENV-STABLE">DENV-STABLE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Conservation des valeurs par défaut des variables critiques dans les profils cargo (<a href="02_devenv.html#DENV-CARGO-OPTS">DENV-CARGO-OPTS</a>)</li>
+Conservation des valeurs par défaut des variables critiques dans les profils cargo (<a href="devenv.html#DENV-CARGO-OPTS">DENV-CARGO-OPTS</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Conservation des valeurs par défaut des variables d'environnement à l'exécution de cargo (<a href="02_devenv.html#DENV-CARGO-ENVVARS">DENV-CARGO-ENVVARS</a>)</li>
+Conservation des valeurs par défaut des variables d'environnement à l'exécution de cargo (<a href="devenv.html#DENV-CARGO-ENVVARS">DENV-CARGO-ENVVARS</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Utilisation régulière d'un <em>linter</em> (<a href="02_devenv.html#DENV-LINTER">DENV-LINTER</a>)</li>
+Utilisation régulière d'un <em>linter</em> (<a href="devenv.html#DENV-LINTER">DENV-LINTER</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Utilisation d'un outil de formatage (rustfmt) (<a href="02_devenv.html#DENV-FORMAT">DENV-FORMAT</a>)</li>
+Utilisation d'un outil de formatage (rustfmt) (<a href="devenv.html#DENV-FORMAT">DENV-FORMAT</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Vérification manuelle des réparations automatiques (<a href="02_devenv.html#DENV-AUTOFIX">DENV-AUTOFIX</a>)</li>
+Vérification manuelle des réparations automatiques (<a href="devenv.html#DENV-AUTOFIX">DENV-AUTOFIX</a>)</li>
 </ul>
 </li>
 <li>
 <p>Bibliothèques:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Vérification des dépendances obsolètes (cargo-outdated) (<a href="03_libraries.html#LIBS-OUTDATED">LIBS-OUTDATED</a>)</li>
+Vérification des dépendances obsolètes (cargo-outdated) (<a href="libraries.html#LIBS-OUTDATED">LIBS-OUTDATED</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Vérification des vulnérabilités connues pour les dépendances (cargo-audit) (<a href="03_libraries.html#LIBS-AUDIT">LIBS-AUDIT</a>)</li>
+Vérification des vulnérabilités connues pour les dépendances (cargo-audit) (<a href="libraries.html#LIBS-AUDIT">LIBS-AUDIT</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Vérification du code <em>unsafe</em> dans les dépendances (<a href="03_libraries.html#LIBS-UNSAFE">LIBS-UNSAFE</a>)</li>
+Vérification du code <em>unsafe</em> dans les dépendances (<a href="libraries.html#LIBS-UNSAFE">LIBS-UNSAFE</a>)</li>
 </ul>
 </li>
 <li>
-<p>Généralités sur le langage:</p>
+<p>Nommage:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Respect des conventions de nommage (<a href="04_language.html#LANG-NAMING">LANG-NAMING</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Utilisation des opérations arithmétiques appropriées au regard des potentiels dépassements (<a href="04_language.html#LANG-ARITH">LANG-ARITH</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Mise en place d'un type <code>Error</code> personnalisé, pouvant contenir toutes les erreurs possibles (<a href="04_language.html#LANG-ERRWRAP">LANG-ERRWRAP</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Utilisation de l'opérateur <code>?</code> et non-utilisation de la macro <code>try!</code> (<a href="04_language.html#LANG-ERRDO">LANG-ERRDO</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Non-utilisation de fonctions qui peuvent causer des <code>panic</code> (<a href="04_language.html#LANG-NOPANIC">LANG-NOPANIC</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Test des indices d'accès aux tableaux ou utilisation de la méthode <code>get</code> (<a href="04_language.html#LANG-ARRINDEXING">LANG-ARRINDEXING</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Gestion correcte des <code>panic!</code> dans les FFI (<a href="04_language.html#LANG-FFIPANIC">LANG-FFIPANIC</a>)</li>
+Respect des conventions de nommage (<a href="naming.html#LANG-NAMING">LANG-NAMING</a>)</li>
 </ul>
 </li>
 <li>
-<p>Système de types:</p>
+<p>Gestion des entiers:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Justification de l'implémentation du trait <code>Drop</code> (<a href="05_typesystem.html#LANG-DROP">LANG-DROP</a>)</li>
+Utilisation des opérations arithmétiques appropriées au regard des potentiels dépassements (<a href="integer.html#LANG-ARITH">LANG-ARITH</a>)</li>
+</ul>
+</li>
+<li>
+<p>Gestion des erreurs:</p>
+<ul>
 <li><input disabled="" type="checkbox"/>
-Absence de <code>panic</code> dans l'implémentation de <code>Drop</code> (<a href="05_typesystem.html#LANG-DROP-NO-PANIC">LANG-DROP-NO-PANIC</a>)</li>
+Mise en place d'un type <code>Error</code> personnalisé, pouvant contenir toutes les erreurs possibles (<a href="errors.html#LANG-ERRWRAP">LANG-ERRWRAP</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Absence de cycles de références avec valeurs <code>Drop</code>ables (<a href="05_typesystem.html#LANG-DROP-NO-CYCLE">LANG-DROP-NO-CYCLE</a>)</li>
+Utilisation de l'opérateur <code>?</code> et non-utilisation de la macro <code>try!</code> (<a href="errors.html#LANG-ERRDO">LANG-ERRDO</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Sécurité assurée par d'autres mécanismes en plus du trait <code>Drop</code> (<a href="05_typesystem.html#LANG-DROP-SEC">LANG-DROP-SEC</a>)</li>
+Non-utilisation de fonctions qui peuvent causer des <code>panic</code> (<a href="errors.html#LANG-NOPANIC">LANG-NOPANIC</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Justification de l'implémentation des traits <code>Send</code> et <code>Sync</code> (<a href="05_typesystem.html#LANG-SYNC-TRAITS">LANG-SYNC-TRAITS</a>)</li>
+Test des indices d'accès aux tableaux ou utilisation de la méthode <code>get</code> (<a href="errors.html#LANG-ARRINDEXING">LANG-ARRINDEXING</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Respect des invariants des traits de comparaison standards (<a href="05_typesystem.html#LANG-CMP-INV">LANG-CMP-INV</a>)</li>
+Gestion correcte des <code>panic!</code> dans les FFI (<a href="errors.html#LANG-FFIPANIC">LANG-FFIPANIC</a>)</li>
+</ul>
+</li>
+<li>
+<p>Traits centraux:</p>
+<ul>
 <li><input disabled="" type="checkbox"/>
-Utilisation des implémentations par défaut des traits de comparaison standards (<a href="05_typesystem.html#LANG-CMP-DEFAULTS">LANG-CMP-DEFAULTS</a>)</li>
+Justification de l'implémentation du trait <code>Drop</code> (<a href="central_traits.html#LANG-DROP">LANG-DROP</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Dérivation des traits de comparaison lorsque c'est possible (<a href="05_typesystem.html#LANG-CMP-DERIVE">LANG-CMP-DERIVE</a>)</li>
+Absence de <code>panic</code> dans l'implémentation de <code>Drop</code> (<a href="central_traits.html#LANG-DROP-NO-PANIC">LANG-DROP-NO-PANIC</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Absence de cycles de références avec valeurs <code>Drop</code>ables (<a href="central_traits.html#LANG-DROP-NO-CYCLE">LANG-DROP-NO-CYCLE</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Sécurité assurée par d'autres mécanismes en plus du trait <code>Drop</code> (<a href="central_traits.html#LANG-DROP-SEC">LANG-DROP-SEC</a>)</li>
 </ul>
 </li>
 <li>
 <p>Généralités:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Non-utilisation des blocs <em>unsafe</em> (<a href="06_1_unsafe_generalities.html#LANG-UNSAFE">LANG-UNSAFE</a>)</li>
+Non-utilisation des blocs <em>unsafe</em> (<a href="unsafe/generalities.html#LANG-UNSAFE">LANG-UNSAFE</a>)</li>
 </ul>
 </li>
 <li>
 <p>Gestion de la mémoire:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Non-utilisation de <code>forget</code> (<a href="06_2_unsafe_memory.html#MEM-FORGET">MEM-FORGET</a>)</li>
+Non-utilisation de <code>forget</code> (<a href="unsafe/memory.html#MEM-FORGET">MEM-FORGET</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Utilisation du <em>lint</em> clippy pour détecter l'utilisation de <code>forget</code> (<a href="06_2_unsafe_memory.html#MEM-FORGET-LINT">MEM-FORGET-LINT</a>)</li>
+Utilisation du <em>lint</em> clippy pour détecter l'utilisation de <code>forget</code> (<a href="unsafe/memory.html#MEM-FORGET-LINT">MEM-FORGET-LINT</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Non-utilisation de <code>Box::leak</code> (<a href="06_2_unsafe_memory.html#MEM-LEAK">MEM-LEAK</a>)</li>
+Non-utilisation de <code>Box::leak</code> (<a href="unsafe/memory.html#MEM-LEAK">MEM-LEAK</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Libération des valeurs <em>wrappées</em> dans <code>ManuallyDrop</code> (<a href="06_2_unsafe_memory.html#MEM-MANUALLYDROP">MEM-MANUALLYDROP</a>)</li>
+Libération des valeurs <em>wrappées</em> dans <code>ManuallyDrop</code> (<a href="unsafe/memory.html#MEM-MANUALLYDROP">MEM-MANUALLYDROP</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Pas de conversion en pointeur <em>raw</em> en Rust non-<em>usafe</em> (<a href="06_2_unsafe_memory.html#MEM-NORAWPOINTER">MEM-NORAWPOINTER</a>)</li>
+Pas de conversion en pointeur <em>raw</em> en Rust non-<em>usafe</em> (<a href="unsafe/memory.html#MEM-NORAWPOINTER">MEM-NORAWPOINTER</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Appel systématique à <code>from_raw</code> pour les valeurs créées avec <code>into_raw</code> (<a href="06_2_unsafe_memory.html#MEM-INTOFROMRAW">MEM-INTOFROMRAW</a>)</li>
+Appel systématique à <code>from_raw</code> pour les valeurs créées avec <code>into_raw</code> (<a href="unsafe/memory.html#MEM-INTOFROMRAW">MEM-INTOFROMRAW</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Appel de <code>from_raw</code> uniquement pour les valeurs issues de <code>into_raw</code> (<a href="06_2_unsafe_memory.html#MEM-INTOFROMRAW">MEM-INTOFROMRAW</a>)</li>
+Appel de <code>from_raw</code> uniquement pour les valeurs issues de <code>into_raw</code> (<a href="unsafe/memory.html#MEM-INTOFROMRAW">MEM-INTOFROMRAW</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Pas de mémoire non initialisée (<a href="06_2_unsafe_memory.html#MEM-UNINIT">MEM-UNINIT</a>)</li>
+Pas de mémoire non initialisée (<a href="unsafe/memory.html#MEM-UNINIT">MEM-UNINIT</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Éviter les références comptées récursives mutables (<a href="06_2_unsafe_memory.html#MEM-MUT-REC-RC">MEM-MUT-REC-RC</a>)</li>
+Éviter les références comptées récursives mutables (<a href="unsafe/memory.html#MEM-MUT-REC-RC">MEM-MUT-REC-RC</a>)</li>
 </ul>
 </li>
 <li>
 <p>FFI:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Utilisation exclusive de types compatibles avec le C dans les FFI (<a href="06_3_unsafe_ffi.html#FFI-CTYPE">FFI-CTYPE</a>)</li>
+Utilisation exclusive de types compatibles avec le C dans les FFI (<a href="unsafe/ffi.html#FFI-CTYPE">FFI-CTYPE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Utilisation de types cohérents pour les FFI (<a href="06_3_unsafe_ffi.html#FFI-TCONS">FFI-TCONS</a>)</li>
+Utilisation de types cohérents pour les FFI (<a href="unsafe/ffi.html#FFI-TCONS">FFI-TCONS</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Utilisation des outils de génération automatique de <em>bindings</em> (<a href="06_3_unsafe_ffi.html#FFI-AUTOMATE">FFI-AUTOMATE</a>)</li>
+Utilisation des outils de génération automatique de <em>bindings</em> (<a href="unsafe/ffi.html#FFI-AUTOMATE">FFI-AUTOMATE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Utilisation des alias portables <code>c_*</code> pour faire correspondre les types dépendants de la plateforme d'exécution (<a href="06_3_unsafe_ffi.html#FFI-PFTYPE">FFI-PFTYPE</a>)</li>
+Utilisation des alias portables <code>c_*</code> pour faire correspondre les types dépendants de la plateforme d'exécution (<a href="unsafe/ffi.html#FFI-PFTYPE">FFI-PFTYPE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Non-vérification des valeurs de types non-robustes (<a href="06_3_unsafe_ffi.html#FFI-CKNONROBUST">FFI-CKNONROBUST</a>)</li>
+Non-vérification des valeurs de types non-robustes (<a href="unsafe/ffi.html#FFI-CKNONROBUST">FFI-CKNONROBUST</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Vérification des valeurs externes en Rust (<a href="06_3_unsafe_ffi.html#FFI-CKINRUST">FFI-CKINRUST</a>)</li>
+Vérification des valeurs externes en Rust (<a href="unsafe/ffi.html#FFI-CKINRUST">FFI-CKINRUST</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Vérification des références provenant d'un langage externe (<a href="06_3_unsafe_ffi.html#FFI-CKREF">FFI-CKREF</a>)</li>
+Vérification des références provenant d'un langage externe (<a href="unsafe/ffi.html#FFI-CKREF">FFI-CKREF</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Non-utilisation des types références et utilisation des types pointeurs (<a href="06_3_unsafe_ffi.html#FFI-NOREF">FFI-NOREF</a>)</li>
+Non-utilisation des types références et utilisation des types pointeurs (<a href="unsafe/ffi.html#FFI-NOREF">FFI-NOREF</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Vérification des pointeurs externes (<a href="06_3_unsafe_ffi.html#FFI-CKPTR">FFI-CKPTR</a>)</li>
+Vérification des pointeurs externes (<a href="unsafe/ffi.html#FFI-CKPTR">FFI-CKPTR</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Marquage des types de pointeurs de fonction dans les FFI comme <code>extern</code> et <code>unsafe</code> (<a href="06_3_unsafe_ffi.html#FFI-MARKEDFUNPTR">FFI-MARKEDFUNPTR</a>)</li>
+Marquage des types de pointeurs de fonction dans les FFI comme <code>extern</code> et <code>unsafe</code> (<a href="unsafe/ffi.html#FFI-MARKEDFUNPTR">FFI-MARKEDFUNPTR</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Vérification des pointeurs de fonction provenant d'une FFI (<a href="06_3_unsafe_ffi.html#FFI-CKFUNPTR">FFI-CKFUNPTR</a>)</li>
+Vérification des pointeurs de fonction provenant d'une FFI (<a href="unsafe/ffi.html#FFI-CKFUNPTR">FFI-CKFUNPTR</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Non-utilisation d'<code>enum</code>s Rust provenant de l'extérieur par une FFI (<a href="06_3_unsafe_ffi.html#FFI-NOENUM">FFI-NOENUM</a>)</li>
+Non-utilisation d'<code>enum</code>s Rust provenant de l'extérieur par une FFI (<a href="unsafe/ffi.html#FFI-NOENUM">FFI-NOENUM</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Utilisation de types Rust dédiés pour les types opaques externes (<a href="06_3_unsafe_ffi.html#FFI-R-OPAQUE">FFI-R-OPAQUE</a>)</li>
+Utilisation de types Rust dédiés pour les types opaques externes (<a href="unsafe/ffi.html#FFI-R-OPAQUE">FFI-R-OPAQUE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Utilisation de pointeurs vers des <code>struct</code>s C/C++ pour rendre des types opaques (<a href="06_3_unsafe_ffi.html#FFI-C-OPAQUE">FFI-C-OPAQUE</a>)</li>
+Utilisation de pointeurs vers des <code>struct</code>s C/C++ pour rendre des types opaques (<a href="unsafe/ffi.html#FFI-C-OPAQUE">FFI-C-OPAQUE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Non-utilisation de types qui implémentent <code>Drop</code> dans des FFI (<a href="06_3_unsafe_ffi.html#FFI-MEM-NODROP">FFI-MEM-NODROP</a>)</li>
+Non-utilisation de types qui implémentent <code>Drop</code> dans des FFI (<a href="unsafe/ffi.html#FFI-MEM-NODROP">FFI-MEM-NODROP</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Identification du langage responsable de la libération des données dans les FFI (<a href="06_3_unsafe_ffi.html#FFI-MEM-OWNER">FFI-MEM-OWNER</a>)</li>
+Identification du langage responsable de la libération des données dans les FFI (<a href="unsafe/ffi.html#FFI-MEM-OWNER">FFI-MEM-OWNER</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Encapsulation des données externes dans un type <code>Drop</code> (<a href="06_3_unsafe_ffi.html#FFI-MEM-WRAPPING">FFI-MEM-WRAPPING</a>)</li>
+Encapsulation des données externes dans un type <code>Drop</code> (<a href="unsafe/ffi.html#FFI-MEM-WRAPPING">FFI-MEM-WRAPPING</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Gestion correcte des <code>panic</code>s dans les FFI (<a href="06_3_unsafe_ffi.html#FFI-NOPANIC">FFI-NOPANIC</a>)</li>
+Gestion correcte des <code>panic</code>s dans les FFI (<a href="unsafe/ffi.html#FFI-NOPANIC">FFI-NOPANIC</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Mise en place d'une encapsulation sûre pour les bibliothèques externes (<a href="06_3_unsafe_ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>)</li>
+Mise en place d'une encapsulation sûre pour les bibliothèques externes (<a href="unsafe/ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Exposition exclusive d'API dédiée et compatible avec le C (<a href="06_3_unsafe_ffi.html#FFI-CAPI">FFI-CAPI</a>)</li>
+Exposition exclusive d'API dédiée et compatible avec le C (<a href="unsafe/ffi.html#FFI-CAPI">FFI-CAPI</a>)</li>
+</ul>
+</li>
+<li>
+<p>Bibliothèque standard:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Justification de l'implémentation des traits <code>Send</code> et <code>Sync</code> (<a href="standard.html#LANG-SYNC-TRAITS">LANG-SYNC-TRAITS</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Respect des invariants des traits de comparaison standards (<a href="standard.html#LANG-CMP-INV">LANG-CMP-INV</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Utilisation des implémentations par défaut des traits de comparaison standards (<a href="standard.html#LANG-CMP-DEFAULTS">LANG-CMP-DEFAULTS</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Dérivation des traits de comparaison lorsque c'est possible (<a href="standard.html#LANG-CMP-DERIVE">LANG-CMP-DERIVE</a>)</li>
 </ul>
 </li>
 </ul>
