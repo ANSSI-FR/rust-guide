@@ -114,15 +114,46 @@ permet notamment de :
 - lancer des outils complémentaires tels que ceux décrits ci-après, sous la
   forme de sous-commandes.
 
-> **Attention**
+Cargo permet la récupération automatique des dépendances avant compilation.
+L'utilitaire permet de vérifier l'intégrité des dépendances après téléchargement.
+Il utilise pour cela un fichier `Cargo.lock` qui, s'il est présent au moment de la compilation,
+contraint les sommes de contrôle des dépendances. En cas de différence entre
+les sources téléchargées et le fichier `Cargo.lock`, un erreur apparaît.
+
+```
+error: checksum for `sha256 v1.6.0` changed between lock files
+
+this could be indicative of a few possible errors:
+
+    * the lock file is corrupt
+    * a replacement source in use (e.g., a mirror) returned a different checksum
+    * the source itself may be corrupt in one way or another
+
+unable to verify that `sha256 v1.6.0` is the same as when the lockfile was generated
+```
+
+En cas d'absence du fichier `Cargo.lock`, il est créé automatiquement à la première compilation en suivant les
+sommes de contrôle des sources téléchargées (selon le principe TOFU : *Trust On First Use*).
+Ce fichier peut également être créé manuellement avec `cargo generate-lockfile`, et s'il
+est déjà présent, un nouveau fichier est créé avec les dernières versions compatibles de chaque crate.
+
+> **Règle {{#check DENV-CARGO-LOCK | Mise en dépôt du fichier Cargo.lock}}**
 >
-> Tout comme `rustup`, `cargo` effectue tous les téléchargements en HTTPS, mais
-> ne valide pas l'index du registre. Des discussions sont en cours pour
-> déterminer le meilleur moyen de protéger et de valider les *crates*. Pour le
-> moment, la sécurité de `cargo` repose sur la bonne sécurité du site web
-> [crates.io] ainsi que celle du dépôt, hébergé sur GitHub, contenant l'index du
-> registre de *crates*. Pour les cas les plus sensibles, il peut être préférable
-> d'opter pour une méthode d'installation alternative pour les dépendances.
+> Le fichier `Cargo.lock` doit être versionné avec le code source du programme Rust.
+
+<div class="warning">
+
+**Attention**
+
+Des discussions sont en cours pour
+déterminer le meilleur moyen de protéger et de valider les *crates* lors de leur ajout au projet
+(les téléchargements suivants sont vérifié par le fichier `Cargo.lock`). Pour le
+moment, la sécurité des premiers téléchargements de `cargo` repose sur la bonne sécurité du site web
+[crates.io] ainsi que celle du dépôt, hébergé sur GitHub, contenant l'index du
+registre de *crates*. Pour les cas les plus sensibles, il peut être préférable
+d'opter pour une méthode d'installation alternative pour les dépendances.
+
+</div>
 
 Cargo propose différentes commandes et options pour adapter le processus de
 compilation aux besoins de chaque projet, principalement au travers du fichier
