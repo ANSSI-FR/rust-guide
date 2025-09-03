@@ -76,7 +76,7 @@ traits available in `std::cmp` (or `core::cmp` for `no_std` compilation):
   It requires that `PartialOrd<Self>` is implemented.
 
 As documented in the standard library, Rust assumes **many invariants**
-about the implementation of those traits:
+about each implementation of those traits:
 
 - For `PartialEq`
 
