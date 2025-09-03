@@ -210,7 +210,7 @@ resource managed by the value unreachable and unclaimed.</p>
 forget(s); // Leak memory
 <span class="boring">}</span></code></pre></pre>
 <p>In particular, using <code>forget</code> may result in not releasing critical resources
-leading to deadlocks or not erasing sensitive data from the memory. That is why,
+leading to deadlocks or not erasing sensitive data from the memory. This is why
 <code>forget</code> is <strong>unsecure</strong>.</p>
 <blockquote>
 <p><strong>Rule <a id="MEM-FORGET"></a>MEM-FORGET</strong></p>
@@ -248,9 +248,9 @@ or manually released (unsafe <code>ManuallyDrop::drop</code>).</p>
 </blockquote>
 <!-- -->
 <h2 id="raw-pointers"><a class="header" href="#raw-pointers">Raw pointers</a></h2>
-<p>This pointers are mainly used to use C pointer. They do not have the same protections
-than <em>smart pointers</em> and often have to be used in <code>unsafe</code> context. For instance, freeing
-raw pointer must be done manually without Rust warranties.</p>
+<p>These pointers are mainly used for C pointers. They do not have the same protections
+as <em>smart pointers</em> and often have to be used in <code>unsafe</code> context. For instance, freeing
+raw pointers must be done manually without Rust guaranties.</p>
 <blockquote>
 <p><strong>Rule <a id="MEM-NORAWPOINTER"></a>MEM-NORAWPOINTER</strong></p>
 <p>In a secure Rust development without <code>unsafe</code>, references and <em>smart pointers</em>
@@ -279,12 +279,12 @@ let raw_ptr = unsafe { Box::into_raw(boxed) };
 let _ = unsafe { Box::from_raw(raw_ptr) }; // will be freed
 <span class="boring">}</span></code></pre></pre>
 </blockquote>
-<p>Converse is true! That is <code>from_raw</code> should be call <strong>only</strong> on <code>into_raw</code>ed value. For instance,
-<code>Rc</code> smart pointer <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html#method.from_raw">explicitly request for this condition</a>
-and, for <code>Box</code> smart pointer, conversion of C pointer into <code>Box</code> is <a href="https://doc.rust-lang.org/std/boxed/index.html#memory-layout">discouraged</a>.</p>
+<p>The converse is also true! That is, <code>from_raw</code> should be call <strong>only</strong> on <code>into_raw</code>ed value. For instance,
+<code>Rc</code> smart pointers <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html#method.from_raw">explicitly request for this condition</a>
+and, for <code>Box</code> smart pointers, conversion of C pointers into <code>Box</code> is <a href="https://doc.rust-lang.org/std/boxed/index.html#memory-layout">discouraged</a>.</p>
 <blockquote>
-<p><strong>Règle <a id="MEM-INTOFROMRAW"></a>MEM-INTOFROMRAW</strong>
-In a secure Rust development, <code>from_raw</code> should only be called on <code>into_raw</code>ed value</p>
+<p><strong>Rule <a id="MEM-INTOFROMRAW"></a>MEM-INTOFROMRAW</strong></p>
+<p>In a secure Rust development, <code>from_raw</code> should only be called on <code>into_raw</code>ed values.</p>
 </blockquote>
 <!-- -->
 <blockquote>
@@ -309,7 +309,7 @@ cleanup is not possible.</p>
 </blockquote>
 <h2 id="uninitialized-memory"><a class="header" href="#uninitialized-memory">Uninitialized memory</a></h2>
 <p>By default, Rust forces all values to be initialized, preventing the use of
-uninitialized memory (except if using <code>std::mem::uninitialized</code> or
+uninitialized memory (except when using <code>std::mem::uninitialized</code> or
 <code>std::mem::MaybeUninit</code>).</p>
 <blockquote>
 <p><strong>Rule <a id="MEM-UNINIT"></a>MEM-UNINIT</strong></p>
@@ -327,12 +327,12 @@ justified when necessary.</p>
 <p><code>std::mem::MaybeUninit</code> is an improvement over <code>std::mem::uninitialized</code>.
 Indeed, it makes dropping uninitialized values a lot more difficult.
 However, it does not change the second issue: the non-drop of an initialized
-memory is as much likely. It is problematic, in particular when considering
+memory remains. It is problematic, in particular when considering
 the use of <code>Drop</code> to erase sensitive memory.</p>
 </blockquote>
 <h2 id="cyclic-reference-counted-pointers-rc-and-arc"><a class="header" href="#cyclic-reference-counted-pointers-rc-and-arc">Cyclic reference counted pointers (<code>Rc</code> and <code>Arc</code>)</a></h2>
-<p>Combining <a href="https://doc.rust-lang.org/reference/interior-mutability.html">interior mutability</a>, recurcivity and reference counted pointer into type definitions is unsafe. It can produce memory leaks which can result in DDoS attack or secret leaks.</p>
-<p>The following example show such a memory leak in safe Rust:</p>
+<p>Combining <a href="https://doc.rust-lang.org/reference/interior-mutability.html">interior mutability</a>, recursivity and reference counted pointer into type definitions is unsafe. It can produce memory leaks which can result in DDoS attacks or leaking secrets.</p>
+<p>The following example shows such a memory leak in safe Rust:</p>
 <pre><pre class="playground"><code class="language-rust">use std::{cell::Cell, rc::Rc};
 
 struct LinkedStruct {
@@ -384,8 +384,8 @@ Hello, world!
 ==153637== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 </code></pre>
 <blockquote>
-<p><strong>Règle <a id="MEM-MUT-REC-RC"></a>MEM-MUT-REC-RC</strong></p>
-<p>Avoid recursive types whose recursivity use reference counted pointers together with interior mutability.</p>
+<p><strong>Rule <a id="MEM-MUT-REC-RC"></a>MEM-MUT-REC-RC</strong></p>
+<p>Avoid recursive types whose recursivity uses reference counted pointers together with interior mutability.</p>
 </blockquote>
 
                     </main>

@@ -236,7 +236,7 @@ fn main() {
 <h2 id="typing"><a class="header" href="#typing">Typing</a></h2>
 <p>Typing is the way Rust ensures memory safety. When interfacing with other
 languages, which may not offer the same guarantee, the choice of types in the
-binding is essential to maintain the memory safety.</p>
+binding is essential to maintain memory safety.</p>
 <h3 id="data-layout"><a class="header" href="#data-layout">Data layout</a></h3>
 <p>Rust provides no short or long term guarantees with respect to how the data is
 laid out in the memory. The only way to make data compatible with a foreign
@@ -290,7 +290,7 @@ fieldless variants (where <code>Int</code> is an integral primitive type),</li>
 <ul>
 <li><code>core::ptr::NonNull&lt;U&gt;</code> and <code>U</code> is a <code>Sized</code> C-compatible type, then it is
 compatible to a <code>*const T</code> and <code>*mut T</code> pointer;</li>
-<li><code>core::num::NonZero*</code>, then is compatible to the corresponding integral
+<li><code>core::num::NonZero*</code>, then is compatible with the corresponding integral
 primitive type;</li>
 </ul>
 </li>
@@ -304,9 +304,9 @@ field has a C-compatible type.</li>
 <li>Enums with fields,</li>
 <li>Tuples (but <code>repr(C)</code> tuple structures are OK).</li>
 </ul>
-<p>Some types are compatibles with some caveats:</p>
+<p>Some types are compatible with some caveats:</p>
 <ul>
-<li>Zero-sized types, which is really zero sized (which is let unspecified in C
+<li>Zero-sized types, which is really zero sized (which is left unspecified in C
 and contradicts the C++ specification),</li>
 <li><code>repr(C)</code>, <code>repr(C, Int)</code>, or <code>repr(Int)</code>-annotated enum with fields
 (see <a href="https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html">RFC 2195</a>).</li>
@@ -363,7 +363,7 @@ the C standard library.</p>
 <p><strong>Rule <a id="FFI-PFTYPE"></a>FFI-PFTYPE</strong></p>
 <p>In a secure Rust development, when interfacing with foreign code that
 uses platform-dependent types, such as C's <code>int</code> and <code>long</code>, Rust code must
-use portable type aliases, such as provided by the standard library or the
+use portable type aliases, such as the ones provided by the standard library or the
 <a href="https://crates.io/crates/libc">libc</a> crate, rather than platform-specific types, except if
 the binding is automatically generated for each platform (see Note below).</p>
 </blockquote>
@@ -393,20 +393,20 @@ the C-compatible types:</p>
 <li>references,</li>
 <li>function pointers,</li>
 <li>enums,</li>
-<li>floats (even if almost every language have the same understanding of what is
+<li>floats (even if almost all languages have the same understanding of what is
 a valid float),</li>
 <li>compound types that contain a field of a non-robust type.</li>
 </ul>
 <p>On the other hand, integer types (<code>u*</code>/<code>i*</code>), packed compound types that contain
-no non-robust fields, for instance are <em>robust types</em>.</p>
+no non-robust fields, are instances of <em>robust types</em>.</p>
 <p>Non-robust types are a difficulty when interfacing two languages. It revolves
-into deciding <strong>which language of the two is responsible in asserting the
+around deciding <strong>which language of the two is responsible for asserting the
 validity of boundary-crossing values</strong> and how to do it.</p>
 <blockquote>
 <p><strong>Rule <a id="FFI-CKNONROBUST"></a>FFI-CKNONROBUST</strong></p>
 <p>In a secure Rust development, there must not be any use of <em>unchecked</em> foreign
 values of non-robust types.</p>
-<p>In other words, either Rust translates robust types to non-robust types
+<p>In other words, either Rust translates robust types into non-robust types
 through explicit checking or the foreign side offers strong guarantees of the
 validity of the value.</p>
 </blockquote>
@@ -417,7 +417,7 @@ validity of the value.</p>
 be done in Rust when possible.</p>
 </blockquote>
 <p>Those generic rules are to be adapted to a specific foreign language or for the
-associated risks. Concerning languages, C is particularly unfit to offer
+associated risks. Concerning languages, C is particularly unfit for offering
 guarantees about validity. However, Rust is not the only language to offer
 strong guarantees. For instance, some C++ subset (without reinterpretation)
 allows developers to do lot of type checking. Because Rust natively separates
@@ -426,7 +426,7 @@ when possible. Concerning risks, the most dangerous types are references,
 function references, and enums, and are discussed below.</p>
 <blockquote>
 <p><strong>Warning</strong></p>
-<p>Rust's <code>bool</code> has been made equivalent to C99's <code>_Bool</code> (aliased as <code>bool</code>
+<p>Rust <code>bool</code> has been made equivalent to C99's <code>_Bool</code> (aliased as <code>bool</code>
 in <code>&lt;stdbool.h&gt;</code>) and C++'s <code>bool</code>. However, loading a value other than 0 and
 1 as a <code>_Bool</code>/<code>bool</code> is an undefined behavior <em>on both sides</em>.
 Safe Rust ensures that. Standard-compliant C and C++ compilers ensure that no
@@ -437,7 +437,7 @@ LLVM's <code>-fsanitize=bool</code> may be used.</p>
 </blockquote>
 <h4 id="references-and-pointers"><a class="header" href="#references-and-pointers">References and pointers</a></h4>
 <p>Although they are allowed by the Rust compiler, the use of Rust references in
-FFI may break Rust's memory safety. Because their “unsafety” is more explicit,
+FFI may break Rust memory safety. Because their “unsafety” is more explicit,
 pointers are preferred over Rust references when binding to another language.</p>
 <p>On the one hand, reference types are very non-robust: they allow only pointers
 to valid memory objects. Any deviation leads to undefined behavior.</p>
@@ -451,15 +451,15 @@ against pointer/reference confusion.</p>
 <p>Rust references may be used reasonably with other C-compatible languages
 including C variants allowing for non-null type checking, e.g. Microsoft SAL
 annotated code.</p>
-<p>On the other hand, Rust's <em>pointer types</em> may also lead to undefined behaviors
+<p>On the other hand, Rust <em>pointer types</em> may also lead to undefined behaviors
 but are more verifiable, mostly against <code>std/core::ptr::null()</code> (C's <code>(void*)0</code>)
-but also in some context against a known valid memory range (particularly in
+but also in some contexts against a known valid memory range (particularly in
 embedded systems or kernel-level programming). Another advantage of using Rust
 pointers in FFI is that any load of the pointed value is clearly marked inside
 an <code>unsafe</code> block or function.</p>
 <blockquote>
 <p><strong>Recommendation <a id="FFI-NOREF"></a>FFI-NOREF</strong></p>
-<p>In a secure Rust development, the Rust code should not use references types
+<p>In a secure Rust development, the Rust code should not use reference types
 but pointer types.</p>
 <p>Exceptions include:</p>
 <ul>
@@ -474,10 +474,10 @@ references are encoded as pointers.</li>
 <!-- -->
 <blockquote>
 <p><strong>Rule <a id="FFI-CKREF"></a>FFI-CKREF</strong></p>
-<p>In a secure Rust development, every foreign references that is transmitted to
+<p>In a secure Rust development, every foreign reference that is transmitted to
 Rust through FFI must be <strong>checked on the foreign side</strong> either automatically
 (for instance, by a compiler) or manually.</p>
-<p>Exceptions include Rust references in an opaque wrapping that is created
+<p>Exceptions include Rust references in an opaque wrapping that are created
 and manipulated only from the Rust side and <code>Option</code>-wrapped references
 (see Note below).</p>
 </blockquote>
@@ -487,7 +487,7 @@ and manipulated only from the Rust side and <code>Option</code>-wrapped referenc
 <p>In a secure Rust development, any Rust code that dereferences a foreign
 pointer must check their validity beforehand.
 In particular, pointers must be checked to be non-null before any use.</p>
-<p>Stronger approaches are advisable when possible. They includes checking
+<p>Stronger approaches are advisable when possible. They include checking
 pointers against known valid memory range or tagging (or signing) pointers
 (particularly applicable if the pointed value is only manipulated from Rust).</p>
 </blockquote>
@@ -529,7 +529,7 @@ not allow stronger validations such as memory range checking.</p>
 </blockquote>
 <h4 id="function-pointers"><a class="header" href="#function-pointers">Function pointers</a></h4>
 <p>Function pointers that cross FFI boundaries may ultimately lead to arbitrary code
-execution and represents a real security risks.</p>
+execution and represent a real security risks.</p>
 <blockquote>
 <p><strong>Rule <a id="FFI-MARKEDFUNPTR"></a>FFI-MARKEDFUNPTR</strong></p>
 <p>In a secure Rust development, any function pointer types at the FFI boundary
@@ -568,21 +568,21 @@ allowing more powerful checks at the cost of ergonomics.</p>
 <p>In a secure Rust development, any foreign function pointer must be checked at
 the FFI boundary.</p>
 </blockquote>
-<p>When binding with C or even C++, one cannot guarantee easily the validity of the
-function pointer. C++ functors are not C-compatible.</p>
+<p>When binding with C or even C++, one cannot guarantee easily the validity of
+function pointers. C++ functors are not C-compatible.</p>
 <h4 id="enums"><a class="header" href="#enums">Enums</a></h4>
 <p>Usually the possible bit patterns of valid <code>enum</code> values are really small with
 respect to the number of possible bit patterns of the same size. Mishandling an
 <code>enum</code> value provided by a foreign code may lead to type confusion and have
 severe consequences on software security. Unfortunately, checking an <code>enum</code>
 value at the FFI boundary is not simple on both sides.</p>
-<p>On the Rust side, it consists to actually use an integer type in the <code>extern</code>
-block declaration, a <em>robust</em> type, and then to perform a checked conversion
+<p>On the Rust side, it consists in actually using an integer type in the <code>extern</code>
+block declaration, a <em>robust</em> type, and then performing a checked conversion
 to the enum type.</p>
 <p>On the foreign side, it is possible only if the other language allows for
 stricter checks than plain C. <code>enum class</code> in C++ are for instance allowable.
-Note however that as for reference the actual <code>extern "C"</code> ABI of
-<code>enum class</code> is implementation defined and should be verified for each
+Note however that as for a reference, the actual <code>extern "C"</code> ABI of
+<code>enum class</code> is implementation-defined and should be verified for each
 environment.</p>
 <blockquote>
 <p><strong>Recommendation <a id="FFI-NOENUM"></a>FFI-NOENUM</strong></p>
@@ -595,8 +595,8 @@ Rust side,</li>
 <li>bound to safe enums in the foreign language, e.g. <code>enum class</code> types in C++.</li>
 </ul>
 </blockquote>
-<p>Concerning fieldless enums, crates like [<code>num_derive</code>] or [<code>num_enum</code>] allows
-developer to easily provide safe conversion from integer to enumeration and may
+<p>Concerning fieldless enums, crates like [<code>num_derive</code>] or [<code>num_enum</code>] allow
+developers to easily provide safe conversions from integer to enumeration and may
 be use to safely convert an integer (provided from a C <code>enum</code>) into a Rust enum.</p>
 <h3 id="opaque-types"><a class="header" href="#opaque-types">Opaque types</a></h3>
 <p>Opacifying types is a good way to increase modularity in software development.
@@ -612,13 +612,13 @@ pub struct Foo {_private: [u8; 0]}
 extern "C" {
     fn foo(arg: *mut Foo);
 }</code></pre>
-<p>The not yet implemented <a href="https://rust-lang.github.io/rfcs/1861-extern-types.html">RFC 1861</a> proposes to facilitate the coding by allowing
+<p>The not-yet-implemented <a href="https://rust-lang.github.io/rfcs/1861-extern-types.html">RFC 1861</a> proposes to facilitate this encoding by allowing
 to declare opaque types in <code>extern</code> blocks.</p>
 <blockquote>
 <p><strong>Recommendation <a id="FFI-C-OPAQUE"></a>FFI-C-OPAQUE</strong></p>
 <p>In a secure Rust development, when interfacing with C or C++, Rust types that
 are to be considered opaque in C/C++ should be translated as incomplete
-<code>struct</code> type (i,e., declared without definition) and be provided with
+<code>struct</code> types (i,e., declared without definition) and be provided with
 a dedicated constructor and destructor.</p>
 </blockquote>
 <p>Example of opaque Rust type:</p>
@@ -687,7 +687,7 @@ wrapper around the foreign type:</p>
 <p>In a secure Rust development, any non-sensitive foreign piece of data that are
 allocated and deallocated in the foreign language should be encapsulated in a
 <code>Drop</code> type in such a way as to provide automatic deallocation in Rust,
-through an automatic call to the foreing language deallocation routine.</p>
+through an automatic call to the foreign language deallocation routine.</p>
 </blockquote>
 <p>A simple example of Rust wrapping over an external opaque type:</p>
 <pre><code class="language-rust ignore noplaypen"><span class="boring">use std::ops::Drop;
@@ -742,16 +742,16 @@ pub struct Foo(*mut RawFoo);
 <p>Because panics may lead to not running the <code>Drop::drop</code> method this solution
 is not sufficient for sensitive deallocation (such as wiping sensitive data)
 except if the code is guaranteed to never panic.</p>
-<p>For wiping sensitive data case, one could address the issue with a dedicated
+<p>For wiping sensitive data, one could address the issue with a dedicated
 panic handler.</p>
 </blockquote>
 <p>When the foreign language is the one exploiting Rust allocated resources, it is
 a lot more difficult to offer any guarantee.</p>
-<p>In C for instance there is no easy way to check that the appropriate destructor
-is checked. A possible approach is to exploit callbacks to ensure that the
+<p>In C for instance, there is no easy way to check that the appropriate destructor
+is called. A possible approach is to exploit callbacks to ensure that the
 reclamation is done.</p>
 <p>The following Rust code is a <strong>thread-unsafe</strong> example of a C-compatible API
-that provide callback to ensure safe resource
+that provides a callback to ensure safe resource
 reclamation:</p>
 <pre><code class="language-rust noplaypen"><span class="boring">use std::ops::Drop;
 </span><span class="boring">

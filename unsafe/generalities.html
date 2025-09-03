@@ -177,7 +177,7 @@
                     <main>
                         <h1 id="general-information-on-unsafe"><a class="header" href="#general-information-on-unsafe">General information on <code>unsafe</code></a></h1>
 <h2 id="unsafe-capacities"><a class="header" href="#unsafe-capacities"><em>Unsafe</em> capacities</a></h2>
-<p>Language capabilities can be extended using unsafe code. The full list of these capacities is given in the <a href="https://doc.rust-lang.org/reference/unsafety.html">Rust reference</a>. Notice the following one's.</p>
+<p>Language capabilities can be extended using unsafe code. The full list of these capacities is given in the <a href="https://doc.rust-lang.org/reference/unsafety.html">Rust reference</a>. Notice the following ones.</p>
 <ul>
 <li>Dereference a raw pointer</li>
 <li>Modify a static mutable variable</li>
@@ -203,15 +203,15 @@ To perform risky actions such as system calls, type coercions, or direct
 manipulations of memory pointers, the language provides the <code>unsafe</code> keyword.</p>
 <blockquote>
 <p><strong>Rule <a id="LANG-UNSAFE"></a>LANG-UNSAFE</strong></p>
-<p>For a secured development, the <code>unsafe</code> blocks must be avoided. Afterward,
+<p>In a secure Rust development, the <code>unsafe</code> blocks must be avoided. In the following,
 we list the only cases where <code>unsafe</code> may be used, provided that they come
 with a proper justification:</p>
 <ul>
 <li>
-<p>The Foreign Function Interface (FFI) of Rust allows for describing
+<p>The Foreign Function Interface (FFI) of Rust allows describing
 functions whose implementations are written in C, using the <code>extern "C"</code>
 prefix. To use such a function, the <code>unsafe</code> keyword is required. “Safe”
-wrapper shall be defined to safely and seamlessly call C code.</p>
+wrappers shall be defined to safely and seamlessly call C code.</p>
 </li>
 <li>
 <p>For embedded device programming, registers and various other resources are
@@ -281,14 +281,14 @@ impl&lt;T&gt; Vec&lt;T&gt; {
 This property is lost when the developers use <em>unsafe</em> code, that is why they are responsible of not producing <em>UB</em> in any scenario.
 Consequently, even <em>safe</em> function must be handled carefully in <em>unsafe</em> context.</p>
 <h4 id="example"><a class="header" href="#example">Example</a></h4>
-<p>Suppose one wants to propose an API find object of a given type in the memory.
+<p>Suppose one wants to propose an API to find objects of a given type in the memory.
 This API could ask implementing the following trait</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Locatable {
-    /// Find object of type `Self` in the buffer `buf`.
-    /// Returns the index of the first byte representing
-    /// an object of type `Self`
+    /// Find objects of type `Self` in the buffer `buf`.
+    /// Return the index of the first byte representing
+    /// an object of type `Self`.
     fn locate_instance_into(buf: &amp;[u8]) -&gt; Option&lt;usize&gt;;
 }
 <span class="boring">}</span></code></pre></pre>
@@ -323,10 +323,10 @@ This API could ask implementing the following trait</p>
 <p>This implementation is harmful for two reasons:</p>
 <ul>
 <li>If the <code>Locatable</code> implementation gives the wrong index, the <code>as_ref</code> function produce an <em>UB</em>.</li>
-<li>If the <code>Locatable</code> implementation gives an outbound index, the subsequent buffer overflow is an <em>UB</em>.</li>
+<li>If the <code>Locatable</code> implementation gives an out-of-bounds index, the subsequent buffer overflow is an <em>UB</em>.</li>
 </ul>
 </div>
-<p>For instance, the following <code>Locatable</code> implementation is wrong <strong>but</strong> it is of the responsibility of the API maker to take it into account.</p>
+<p>For instance, the following <code>Locatable</code> implementation is wrong <strong>but</strong> it is the responsibility of the API maker to take it into account.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>impl Locatable for bool {
@@ -335,7 +335,7 @@ This API could ask implementing the following trait</p>
     }
 }
 <span class="boring">}</span></code></pre></pre>
-<p>The following program produces <em>UB</em>.</p>
+<p>The following program produces a <em>UB</em>.</p>
 <pre><pre class="playground"><code class="language-rust should_panic">fn main() {
     let buf = [4, 1, 99];
     let start = buf.as_ptr();
@@ -391,7 +391,7 @@ in case these <em>safe</em> functions have bad behavior.</p>
 <p>If they cannot protect their function against badly implemented <em>safe</em> functions/traits, they could either</p>
 <ul>
 <li>mark the function they <em>write</em> as <code>unsafe</code>: thus it is the user's responsibility to feed this function with correct arguments (by checking <em>unsafe</em> function documentation).</li>
-<li>mark the traits they <em>use</em> as <code>unsafe</code> : thus it is user's responsibility to simplement the trait properly (again reading the trait documentation).</li>
+<li>mark the traits they <em>use</em> as <code>unsafe</code> : thus it is user's responsibility to implement the trait properly (again reading the trait documentation).</li>
 </ul>
 <h4 id="références"><a class="header" href="#références">Références</a></h4>
 <ul>
