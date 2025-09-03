@@ -61,23 +61,30 @@ Each third-party dependency should be properly validated, and each validation sh
 
 ## Dependency validation tools
 
-### Cargo-outdated
+### Dependency Updates
 
-[Cargo-outdated] tool allows one to easily manage dependencies' versions.
+Updating third-party libraries is essential to ensure that any potential vulnerabilities are properly addressed.
 
-For a given crate, it lists current dependencies' versions (using its
-`Cargo.toml`), and checks the latest compatible version and also the latest general
-version.
+The dependency resolution mechanism relies on the `Cargo.toml` and `Cargo.lock` files.
 
-<div class="reco" id="LIBS-OUTDATED" type="Rule" title="Check for outdated dependencies versions (cargo-outdated)">
+* The `Cargo.toml` file lists the constraints defined by the developers.
+* The `Cargo.lock` file records the resolution of these constraints by Cargo *at a given point in time*.
 
-The `cargo-outdated` tool must be used to check dependencies' status. Then,
-each outdated dependency must be updated or the choice of the version must be
-justified.
+Therefore, updating dependencies occurs at several levels.
 
-</div>
+* The `Cargo.toml` file can be updated to use a new version of a dependency.
+  On the next build, the `Cargo.lock` file will be updated accordingly.
+* For a given `Cargo.toml` file, dependency resolution by Cargo can change between two points in time.
+  Indeed, new versions of dependencies may have been published in the meantime.
+  Thus, to update dependencies while keeping the constraints from `Cargo.toml`, you can update the `Cargo.lock` file using the `cargo update` command,
+  which is equivalent to deleting the `Cargo.lock` file and rebuilding it, or applying `cargo generate-lockfile`. <!-- verified by the test, but is this always the case? -->
 
-[cargo-outdated]: https://github.com/kbknapp/cargo-outdated
+  The `cargo update` command also allows you to update only a subset of dependencies. For example:
+
+  ```
+  cargo update serde clap
+  ```
+
 
 ### Cargo-audit
 
