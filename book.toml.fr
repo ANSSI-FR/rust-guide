@@ -7,5 +7,15 @@ language = "fr"
 [build]
 build-dir = "book/fr"
 
+[output.html]
+git-repository-url = "https://github.com/ANSSI-FR/rust-guide"
+edit-url-template = "https://github.com/ANSSI-FR/rust-guide/edit/master/{path}"
+additional-js = [
+	"pagetoc.js", # from https://github.com/rust-lang/rustc-dev-guide
+]
+additional-css = [
+	"pagetoc.css", # from https://github.com/rust-lang/rustc-dev-guide
+]
+
 [preprocessor.checklist]
 title = "Liste des recommandations"
