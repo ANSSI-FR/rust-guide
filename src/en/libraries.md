@@ -8,7 +8,7 @@ repository [crates.io](https://crates.io).
 It should be noticed that the quality (in terms of security, performance,
 readability, etc.) of the published crates is very variable. Moreover, their
 maintenance can be irregular or interrupted. The usage of each component from
-this repository should be justified, and the developer should validate the
+this repository should be justified, and developers should validate the
 correct application of rules from the current guide in their code. Several tools
 can aid in that task.
 
