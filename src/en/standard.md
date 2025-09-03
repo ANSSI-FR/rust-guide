@@ -1,6 +1,6 @@
 # Standard library
 
-## Standard library traits
+## `Send` and `Sync` traits
 
 The `Send` and `Sync` traits (defined in `std::marker` or `core::marker`) are
 marker traits used to ensure the safety of concurrency in Rust. When implemented
