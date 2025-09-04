@@ -32,13 +32,13 @@ missing drops, such as:
 
 - a reference cycle (for instance, with `Rc` or `Arc`),
 - an explicit call to `std::mem::forget` (or `core::mem::forget`) (see paragraph
-  on [Forget and memory leaks](05_memory.html#forget-and-memory-leaks),
-- a panic in drop,
+  on [Forget and memory leaks](05_memory.html#forget-and-memory-leaks)),
+- a panic during drop,
 - program aborts (and panics when abort-on-panic is on).
 
 
 And missing drops may lead to exposing sensitive data or to lock limited
-resources leading to unavailability issues.
+resources leading to availability issues.
 
 > **Rule {{#check LANG-DROP-NO-PANIC | Do not panic in `Drop` implementation}}**
 >
@@ -49,7 +49,7 @@ Beside panics, secure-critical drop should be protected.
 
 > **Rule {{#check LANG-DROP-NO-CYCLE | Do not allow cycles of reference-counted `Drop`}}**
 >
-> Value whose type implements `Drop` must not be embedded directly or indirectly
+> A value whose type implements `Drop` must not be embedded directly or indirectly
 > in a cycle of reference-counted references.
 
 > **Recommendation {{#check LANG-DROP-SEC | Do not rely only on `Drop` to ensure security}}**
@@ -57,3 +57,4 @@ Beside panics, secure-critical drop should be protected.
 > Ensuring security operations at the end of some treatment (such as key erasure
 > at the end of a cryptographic encryption) should not rely only on the `Drop`
 > trait implementation.
+
