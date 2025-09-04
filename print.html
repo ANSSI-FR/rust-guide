@@ -248,15 +248,14 @@ end of this guide.</p>
 <p><a href="https://github.com/rust-lang/rustup.rs">Rustup</a> is the Rust toolchain installer. Among other things, it enables
 switching between different flavors of the toolchain (stable, beta, nightly),
 managing additional components installation and keeping them up to date.</p>
-<blockquote>
-<p><strong>Warning</strong></p>
+<div class="warning">
 <p>From a security perspective, <code>rustup</code> does perform all downloads over HTTPS,
 but does not yet validate signatures of downloads. Protection against
 downgrade attacks, certificate pinning, validation of signatures are still
 works in progress.
 In some cases, it may be preferable to opt for an alternative installation
 method listed in the <em>Install</em> section of the official Rust website.</p>
-</blockquote>
+</div>
 <h3 id="rust-editions"><a class="header" href="#rust-editions">Rust Editions</a></h3>
 <p>Several flavors, called <em>editions</em>, of the Rust language coexist.</p>
 <p>The concept of editions has been introduced to clarify new features
@@ -352,7 +351,6 @@ the file is overwritten with the latest available version of every crate.</p>
 <p><code>Cargo.lock</code> files must be tracked by version control system.</p>
 </blockquote>
 <div class="warning">
-<p><strong>Warning</strong></p>
 <p>Ongoing discussions occur on how to best protect
 and verify crates <em>on their first download</em> (according TOFU rule).
 For now, the security of the first download relies on the good security of the
@@ -1319,14 +1317,13 @@ C++) are not obvious, cf. <a href="https://rust-lang.github.io/rfcs/2195-really-
 generate bindings when possible and to maintain them continually.</p>
 </blockquote>
 <!-- -->
-<blockquote>
-<p><strong>Warning</strong></p>
+<div class="warning">
 <p>For binding C/C++ to Rust, <a href="https://crates.io/crates/bindgen">rust-bindgen</a> is able to automatically generate
 the low-level binding. A high-level safe binding is highly recommended (see
 Recommendation <a href="unsafe/ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>).
 Also some options of rust-bindgen may result in dangerous translations, in
 particular <code>rustified_enum</code>.</p>
-</blockquote>
+</div>
 <h3 id="platform-dependent-types"><a class="header" href="#platform-dependent-types">Platform-dependent types</a></h3>
 <p>When interfacing with a foreign language, like C or C++, it is often required
 to use platform-dependent types such as C's <code>int</code>, <code>long</code>, etc.</p>
@@ -1414,8 +1411,7 @@ allows developers to do lot of type checking. Because Rust natively separates
 the safe and unsafe segments, the recommendation is to always use Rust to check
 when possible. Concerning risks, the most dangerous types are references,
 function references, and enums, and are discussed below.</p>
-<blockquote>
-<p><strong>Warning</strong></p>
+<div class="warning">
 <p>Rust <code>bool</code> has been made equivalent to C99's <code>_Bool</code> (aliased as <code>bool</code>
 in <code>&lt;stdbool.h&gt;</code>) and C++'s <code>bool</code>. However, loading a value other than 0 and
 1 as a <code>_Bool</code>/<code>bool</code> is an undefined behavior <em>on both sides</em>.
@@ -1424,7 +1420,7 @@ value but 0 and 1 can be <em>stored</em> in a <code>_Bool</code>/<code>bool</cod
 guarantee the absence of an <em>incorrect reinterpretation</em> (e.g., union types,
 pointer cast). To detect such a bad reinterpretation, sanitizers such as
 LLVM's <code>-fsanitize=bool</code> may be used.</p>
-</blockquote>
+</div>
 <h4 id="references-and-pointers"><a class="header" href="#references-and-pointers">References and pointers</a></h4>
 <p>Although they are allowed by the Rust compiler, the use of Rust references in
 FFI may break Rust memory safety. Because their “unsafety” is more explicit,
@@ -1727,14 +1723,13 @@ pub struct Foo(*mut RawFoo);
 </span><span class="boring">    let foo = Foo::new().expect("cannot create Foo");
 </span><span class="boring">    foo.do_something();
 </span><span class="boring">}</span></code></pre>
-<blockquote>
-<p><strong>Warning</strong></p>
+<div class="warning">
 <p>Because panics may lead to not running the <code>Drop::drop</code> method this solution
 is not sufficient for sensitive deallocation (such as wiping sensitive data)
 except if the code is guaranteed to never panic.</p>
 <p>For wiping sensitive data, one could address the issue with a dedicated
 panic handler.</p>
-</blockquote>
+</div>
 <p>When the foreign language is the one exploiting Rust allocated resources, it is
 a lot more difficult to offer any guarantee.</p>
 <p>In C for instance, there is no easy way to check that the appropriate destructor
@@ -2225,8 +2220,7 @@ assert!(T1 { a: 1, b: 0 } &gt; T1 { a: 0, b: 0 });
 assert!(T1 { a: 1, b: 1 } &gt; T1 { a: 1, b: 0 });
 <span class="boring">println!("all tests passed.");
 </span><span class="boring">}</span></code></pre></pre>
-<blockquote>
-<p><strong>Warning</strong></p>
+<div class="warning">
 <p>Derivation of comparison traits for compound types depends on the
 <strong>field order</strong>, and not on their names.</p>
 <p>First, it means that changing the order of declaration of two fields change
@@ -2242,7 +2236,7 @@ struct T2{
 result due to the use of short-circuit logic in the automatic implementation.</p>
 <p>For enums, the derived comparisons depends first on the <strong>variant order</strong> then
 on the field order.</p>
-</blockquote>
+</div>
 <p>Despite the ordering caveat, derived comparisons are a lot less error-prone
 than manual ones and makes code shorter and easier to maintain.</p>
 <blockquote>

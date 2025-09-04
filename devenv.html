@@ -181,15 +181,14 @@
 <p><a href="https://github.com/rust-lang/rustup.rs">Rustup</a> is the Rust toolchain installer. Among other things, it enables
 switching between different flavors of the toolchain (stable, beta, nightly),
 managing additional components installation and keeping them up to date.</p>
-<blockquote>
-<p><strong>Warning</strong></p>
+<div class="warning">
 <p>From a security perspective, <code>rustup</code> does perform all downloads over HTTPS,
 but does not yet validate signatures of downloads. Protection against
 downgrade attacks, certificate pinning, validation of signatures are still
 works in progress.
 In some cases, it may be preferable to opt for an alternative installation
 method listed in the <em>Install</em> section of the official Rust website.</p>
-</blockquote>
+</div>
 <h3 id="rust-editions"><a class="header" href="#rust-editions">Rust Editions</a></h3>
 <p>Several flavors, called <em>editions</em>, of the Rust language coexist.</p>
 <p>The concept of editions has been introduced to clarify new features
@@ -285,7 +284,6 @@ the file is overwritten with the latest available version of every crate.</p>
 <p><code>Cargo.lock</code> files must be tracked by version control system.</p>
 </blockquote>
 <div class="warning">
-<p><strong>Warning</strong></p>
 <p>Ongoing discussions occur on how to best protect
 and verify crates <em>on their first download</em> (according TOFU rule).
 For now, the security of the first download relies on the good security of the

@@ -386,8 +386,7 @@ assert!(T1 { a: 1, b: 0 } &gt; T1 { a: 0, b: 0 });
 assert!(T1 { a: 1, b: 1 } &gt; T1 { a: 1, b: 0 });
 <span class="boring">println!("all tests passed.");
 </span><span class="boring">}</span></code></pre></pre>
-<blockquote>
-<p><strong>Warning</strong></p>
+<div class="warning">
 <p>Derivation of comparison traits for compound types depends on the
 <strong>field order</strong>, and not on their names.</p>
 <p>First, it means that changing the order of declaration of two fields change
@@ -403,7 +402,7 @@ struct T2{
 result due to the use of short-circuit logic in the automatic implementation.</p>
 <p>For enums, the derived comparisons depends first on the <strong>variant order</strong> then
 on the field order.</p>
-</blockquote>
+</div>
 <p>Despite the ordering caveat, derived comparisons are a lot less error-prone
 than manual ones and makes code shorter and easier to maintain.</p>
 <blockquote>

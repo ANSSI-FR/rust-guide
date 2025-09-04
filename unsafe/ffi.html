@@ -330,14 +330,13 @@ C++) are not obvious, cf. <a href="https://rust-lang.github.io/rfcs/2195-really-
 generate bindings when possible and to maintain them continually.</p>
 </blockquote>
 <!-- -->
-<blockquote>
-<p><strong>Warning</strong></p>
+<div class="warning">
 <p>For binding C/C++ to Rust, <a href="https://crates.io/crates/bindgen">rust-bindgen</a> is able to automatically generate
 the low-level binding. A high-level safe binding is highly recommended (see
 Recommendation <a href="#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>).
 Also some options of rust-bindgen may result in dangerous translations, in
 particular <code>rustified_enum</code>.</p>
-</blockquote>
+</div>
 <h3 id="platform-dependent-types"><a class="header" href="#platform-dependent-types">Platform-dependent types</a></h3>
 <p>When interfacing with a foreign language, like C or C++, it is often required
 to use platform-dependent types such as C's <code>int</code>, <code>long</code>, etc.</p>
@@ -425,8 +424,7 @@ allows developers to do lot of type checking. Because Rust natively separates
 the safe and unsafe segments, the recommendation is to always use Rust to check
 when possible. Concerning risks, the most dangerous types are references,
 function references, and enums, and are discussed below.</p>
-<blockquote>
-<p><strong>Warning</strong></p>
+<div class="warning">
 <p>Rust <code>bool</code> has been made equivalent to C99's <code>_Bool</code> (aliased as <code>bool</code>
 in <code>&lt;stdbool.h&gt;</code>) and C++'s <code>bool</code>. However, loading a value other than 0 and
 1 as a <code>_Bool</code>/<code>bool</code> is an undefined behavior <em>on both sides</em>.
@@ -435,7 +433,7 @@ value but 0 and 1 can be <em>stored</em> in a <code>_Bool</code>/<code>bool</cod
 guarantee the absence of an <em>incorrect reinterpretation</em> (e.g., union types,
 pointer cast). To detect such a bad reinterpretation, sanitizers such as
 LLVM's <code>-fsanitize=bool</code> may be used.</p>
-</blockquote>
+</div>
 <h4 id="references-and-pointers"><a class="header" href="#references-and-pointers">References and pointers</a></h4>
 <p>Although they are allowed by the Rust compiler, the use of Rust references in
 FFI may break Rust memory safety. Because their “unsafety” is more explicit,
@@ -738,14 +736,13 @@ pub struct Foo(*mut RawFoo);
 </span><span class="boring">    let foo = Foo::new().expect("cannot create Foo");
 </span><span class="boring">    foo.do_something();
 </span><span class="boring">}</span></code></pre>
-<blockquote>
-<p><strong>Warning</strong></p>
+<div class="warning">
 <p>Because panics may lead to not running the <code>Drop::drop</code> method this solution
 is not sufficient for sensitive deallocation (such as wiping sensitive data)
 except if the code is guaranteed to never panic.</p>
 <p>For wiping sensitive data, one could address the issue with a dedicated
 panic handler.</p>
-</blockquote>
+</div>
 <p>When the foreign language is the one exploiting Rust allocated resources, it is
 a lot more difficult to offer any guarantee.</p>
 <p>In C for instance, there is no easy way to check that the appropriate destructor
