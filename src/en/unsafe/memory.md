@@ -38,7 +38,7 @@ let s = String::from("Hello");
 forget(s); // Leak memory
 ```
 
-In particular, using `forget` may result in not releasing critical resources
+In particular, using `forget` may result in not releasing critical resources,
 leading to deadlocks or not erasing sensitive data from the memory. This is why
 `forget` is **unsecure**.
 
