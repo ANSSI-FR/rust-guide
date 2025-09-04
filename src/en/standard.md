@@ -198,30 +198,32 @@ assert!(T1 { a: 1, b: 1 } > T1 { a: 1, b: 0 });
 # }
 ```
 
-> **Warning**
->
-> Derivation of comparison traits for compound types depends on the
-> **field order**, and not on their names.
->
-> First, it means that changing the order of declaration of two fields change
-> the resulting lexicographical order. For instance, provided this second
-> ordered type:
->
-> ```rust,noplaypen
-> #[derive(PartialEq, Eq, PartialOrd, Ord)]
-> struct T2{
->    b: u8, a: u8
-> };
-> ```
->
-> we have `T1 {a: 1, b: 0} > T1 {a: 0, b: 1}` but
-> `T2 {a: 1, b: 0} < T2 {a: 0, b: 1}`.
->
-> Second, if one of the underlying comparison panics, the order may change the
-> result due to the use of short-circuit logic in the automatic implementation.
->
-> For enums, the derived comparisons depends first on the **variant order** then
-> on the field order.
+<div class="warning">
+
+Derivation of comparison traits for compound types depends on the
+**field order**, and not on their names.
+
+First, it means that changing the order of declaration of two fields change
+the resulting lexicographical order. For instance, provided this second
+ordered type:
+
+```rust,noplaypen
+#[derive(PartialEq, Eq, PartialOrd, Ord)]
+struct T2{
+   b: u8, a: u8
+};
+```
+
+we have `T1 {a: 1, b: 0} > T1 {a: 0, b: 1}` but
+`T2 {a: 1, b: 0} < T2 {a: 0, b: 1}`.
+
+Second, if one of the underlying comparison panics, the order may change the
+result due to the use of short-circuit logic in the automatic implementation.
+
+For enums, the derived comparisons depends first on the **variant order** then
+on the field order.
+
+</div>
 
 Despite the ordering caveat, derived comparisons are a lot less error-prone
 than manual ones and makes code shorter and easier to maintain.
