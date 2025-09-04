@@ -6,14 +6,16 @@
 switching between different flavors of the toolchain (stable, beta, nightly),
 managing additional components installation and keeping them up to date.
 
-> **Warning**
->
-> From a security perspective, `rustup` does perform all downloads over HTTPS,
-> but does not yet validate signatures of downloads. Protection against
-> downgrade attacks, certificate pinning, validation of signatures are still
-> works in progress.
-> In some cases, it may be preferable to opt for an alternative installation
-> method listed in the *Install* section of the official Rust website.
+<div class="warning">
+
+From a security perspective, `rustup` does perform all downloads over HTTPS,
+but does not yet validate signatures of downloads. Protection against
+downgrade attacks, certificate pinning, validation of signatures are still
+works in progress.
+In some cases, it may be preferable to opt for an alternative installation
+method listed in the *Install* section of the official Rust website.
+
+</div>
 
 [rustup]: https://github.com/rust-lang/rustup.rs
 
@@ -131,8 +133,6 @@ the file is overwritten with the latest available version of every crate.
 > `Cargo.lock` files must be tracked by version control system.
 
 <div class="warning">
-
-**Warning**
 
 Ongoing discussions occur on how to best protect
 and verify crates *on their first download* (according TOFU rule).

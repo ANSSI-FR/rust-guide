@@ -179,13 +179,15 @@ Automated tools to generate bindings, such as [rust-bindgen] or
 
 <!-- -->
 
-> **Warning**
->
-> For binding C/C++ to Rust, [rust-bindgen] is able to automatically generate
-> the low-level binding. A high-level safe binding is highly recommended (see
-> Recommendation [FFI-SAFEWRAPPING](#FFI-SAFEWRAPPING)).
-> Also some options of rust-bindgen may result in dangerous translations, in
-> particular `rustified_enum`.
+<div class="warning">
+
+For binding C/C++ to Rust, [rust-bindgen] is able to automatically generate
+the low-level binding. A high-level safe binding is highly recommended (see
+Recommendation [FFI-SAFEWRAPPING](#FFI-SAFEWRAPPING)).
+Also some options of rust-bindgen may result in dangerous translations, in
+particular `rustified_enum`.
+
+</div>
 
 [rust-bindgen]: https://crates.io/crates/bindgen
 [cbindgen]: https://crates.io/crates/cbindgen
@@ -291,16 +293,18 @@ the safe and unsafe segments, the recommendation is to always use Rust to check
 when possible. Concerning risks, the most dangerous types are references,
 function references, and enums, and are discussed below.
 
-> **Warning**
->
-> Rust `bool` has been made equivalent to C99's `_Bool` (aliased as `bool`
-> in `<stdbool.h>`) and C++'s `bool`. However, loading a value other than 0 and
-> 1 as a `_Bool`/`bool` is an undefined behavior *on both sides*.
-> Safe Rust ensures that. Standard-compliant C and C++ compilers ensure that no
-> value but 0 and 1 can be *stored* in a `_Bool`/`bool` value but cannot
-> guarantee the absence of an *incorrect reinterpretation* (e.g., union types,
-> pointer cast). To detect such a bad reinterpretation, sanitizers such as
-> LLVM's `-fsanitize=bool` may be used.
+<div class="warning">
+
+Rust `bool` has been made equivalent to C99's `_Bool` (aliased as `bool`
+in `<stdbool.h>`) and C++'s `bool`. However, loading a value other than 0 and
+1 as a `_Bool`/`bool` is an undefined behavior *on both sides*.
+Safe Rust ensures that. Standard-compliant C and C++ compilers ensure that no
+value but 0 and 1 can be *stored* in a `_Bool`/`bool` value but cannot
+guarantee the absence of an *incorrect reinterpretation* (e.g., union types,
+pointer cast). To detect such a bad reinterpretation, sanitizers such as
+LLVM's `-fsanitize=bool` may be used.
+
+</div>
 
 #### References and pointers
 
@@ -657,15 +661,16 @@ impl Drop for Foo {
 #     foo.do_something();
 # }
 ```
+<div class="warning">
 
-> **Warning**
->
-> Because panics may lead to not running the `Drop::drop` method this solution
-> is not sufficient for sensitive deallocation (such as wiping sensitive data)
-> except if the code is guaranteed to never panic.
->
-> For wiping sensitive data, one could address the issue with a dedicated
-> panic handler.
+Because panics may lead to not running the `Drop::drop` method this solution
+is not sufficient for sensitive deallocation (such as wiping sensitive data)
+except if the code is guaranteed to never panic.
+
+For wiping sensitive data, one could address the issue with a dedicated
+panic handler.
+
+</div>
 
 When the foreign language is the one exploiting Rust allocated resources, it is
 a lot more difficult to offer any guarantee.
