@@ -344,16 +344,39 @@ permet notamment de :</p>
 <li>lancer des outils complémentaires tels que ceux décrits ci-après, sous la
 forme de sous-commandes.</li>
 </ul>
+<p>Cargo permet la récupération automatique des dépendances avant compilation.
+L'utilitaire permet de vérifier l'intégrité des dépendances après téléchargement.
+Il utilise pour cela un fichier <code>Cargo.lock</code> qui, s'il est présent au moment de la compilation,
+contraint les sommes de contrôle des dépendances. En cas de différence entre
+les sources téléchargées et le fichier <code>Cargo.lock</code>, un erreur apparaît.</p>
+<pre><code>error: checksum for `sha256 v1.6.0` changed between lock files
+
+this could be indicative of a few possible errors:
+
+    * the lock file is corrupt
+    * a replacement source in use (e.g., a mirror) returned a different checksum
+    * the source itself may be corrupt in one way or another
+
+unable to verify that `sha256 v1.6.0` is the same as when the lockfile was generated
+</code></pre>
+<p>En cas d'absence du fichier <code>Cargo.lock</code>, il est créé automatiquement à la première compilation en suivant les
+sommes de contrôle des sources téléchargées (selon le principe TOFU : <em>Trust On First Use</em>).
+Ce fichier peut également être créé manuellement avec <code>cargo generate-lockfile</code>, et s'il
+est déjà présent, un nouveau fichier est créé avec les dernières versions compatibles de chaque crate.</p>
 <blockquote>
+<p><strong>Règle <a id="DENV-CARGO-LOCK"></a>DENV-CARGO-LOCK</strong></p>
+<p>Le fichier <code>Cargo.lock</code> doit être versionné avec le code source du programme Rust.</p>
+</blockquote>
+<div class="warning">
 <p><strong>Attention</strong></p>
-<p>Tout comme <code>rustup</code>, <code>cargo</code> effectue tous les téléchargements en HTTPS, mais
-ne valide pas l'index du registre. Des discussions sont en cours pour
-déterminer le meilleur moyen de protéger et de valider les <em>crates</em>. Pour le
-moment, la sécurité de <code>cargo</code> repose sur la bonne sécurité du site web
+<p>Des discussions sont en cours pour
+déterminer le meilleur moyen de protéger et de valider les <em>crates</em> lors de leur ajout au projet
+(les téléchargements suivants sont vérifié par le fichier <code>Cargo.lock</code>). Pour le
+moment, la sécurité des premiers téléchargements de <code>cargo</code> repose sur la bonne sécurité du site web
 <a href="https://crates.io">crates.io</a> ainsi que celle du dépôt, hébergé sur GitHub, contenant l'index du
 registre de <em>crates</em>. Pour les cas les plus sensibles, il peut être préférable
 d'opter pour une méthode d'installation alternative pour les dépendances.</p>
-</blockquote>
+</div>
 <p>Cargo propose différentes commandes et options pour adapter le processus de
 compilation aux besoins de chaque projet, principalement au travers du fichier
 <code>Cargo.toml</code>. Pour une présentation complète, voir le <em><a href="https://doc.rust-lang.org/cargo/index.html">Cargo Book</a></em>.</p>
@@ -2555,6 +2578,8 @@ informations qu’ils ont obtenues sous cette licence s’ils le souhaitent.</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
 Utilisation de la chaîne d'outils <em>stable</em> (<a href="devenv.html#DENV-STABLE">DENV-STABLE</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Mise en dépôt du fichier Cargo.lock (<a href="devenv.html#DENV-CARGO-LOCK">DENV-CARGO-LOCK</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Conservation des valeurs par défaut des variables critiques dans les profils cargo (<a href="devenv.html#DENV-CARGO-OPTS">DENV-CARGO-OPTS</a>)</li>
 <li><input disabled="" type="checkbox"/>

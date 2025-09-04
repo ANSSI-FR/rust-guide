@@ -260,15 +260,38 @@ It has a fundamental role in most Rust development:</p>
 <li>It’s also a front-end to run complementary tools such as those that are
 described below, in the form of sub-commands.</li>
 </ul>
+<p>Cargo enables automatic dependencies resolution before compilation
+by checking their checksums.
+File <code>Cargo.lock</code> contains all dependencies checksums which are compared to
+the one downloaded.
+If a difference is detected, compilation fails:</p>
+<pre><code>error: checksum for `sha256 v1.6.0` changed between lock files
+
+this could be indicative of a few possible errors:
+
+    * the lock file is corrupt
+    * a replacement source in use (e.g., a mirror) returned a different checksum
+    * the source itself may be corrupt in one way or another
+
+unable to verify that `sha256 v1.6.0` is the same as when the lockfile was generated
+</code></pre>
+<p>When the <code>Cargo.lock</code> file is missing, it is generated on first build and records the
+dependencies' checksums, adhering to a TOFU (<em>Trust On First Use</em>) policy.
+This file can also be created manually with <code>cargo generate-lockfile</code>. If it already exists,
+the file is overwritten with the latest available version of every crate.</p>
 <blockquote>
+<p><strong>Rule <a id="DENV-CARGO-LOCK"></a>DENV-CARGO-LOCK</strong></p>
+<p><code>Cargo.lock</code> files must be tracked by version control system.</p>
+</blockquote>
+<div class="warning">
 <p><strong>Warning</strong></p>
-<p>Like <code>rustup</code>, <code>cargo</code> does perform all downloads over HTTPS, but does not
-validate the registry index. Ongoing discussions occur on how to best protect
-and verify crates. For now, the security relies on the good security of the
+<p>Ongoing discussions occur on how to best protect
+and verify crates <em>on their first download</em> (according TOFU rule).
+For now, the security of the first download relies on the good security of the
 website <a href="https://crates.io">crates.io</a> and the GitHub hosted repository containing the
 registry index. In some cases, it may be preferable to opt for an alternative
 installation method for dependencies.</p>
-</blockquote>
+</div>
 <p>Cargo proposes many different commands and options to adapt the build process to
 your project needs, mainly through the manifest file <code>Cargo.toml</code>. For a
 complete presentation, see <a href="https://doc.rust-lang.org/cargo/index.html">The Cargo Book</a>.</p>
