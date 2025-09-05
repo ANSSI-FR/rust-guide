@@ -493,7 +493,7 @@ alternatives possibles :
 > l'extérieur de l'écosystème Rust doit être vérifié à la frontière des FFI.
 
 Lors d'un *binding* avec le C ou encore le C++, il n'est pas simple de garantir
-la validité d'un pointeur de fonction. De plus, les foncteurs C++ ne sont pas compatibles
+la validité d'un pointeur de fonction. De plus, les objets fonction C++ (parfois appelés foncteurs) ne sont pas compatibles
 avec le C.
 
 #### Enumérations
