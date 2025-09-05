@@ -463,7 +463,7 @@ possibilities:
 > the FFI boundary.
 
 When binding with C or even C++, one cannot guarantee easily the validity of 
-function pointers. Moreover, C++ functors are not C-compatible.
+function pointers. Moreover, C++ function objects (also known as functors) are not C-compatible.
 
 #### Enums
 
