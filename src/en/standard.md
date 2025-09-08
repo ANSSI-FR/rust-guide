@@ -63,7 +63,7 @@ struct SpecialType(u8, PhantomData<*const ()>);
 
 ## Comparison traits (`PartialEq`, `Eq`, `PartialOrd`, `Ord`)
 
-Comparisons (`==`, `!=`, `<`, `<=`, `>`, `>=`) in Rust relies on four standard
+Comparisons (`==`, `!=`, `<`, `<=`, `>`, `>=`) in Rust rely on four standard
 traits available in `std::cmp` (or `core::cmp` for `no_std` compilation):
 
 - `PartialEq<Rhs>` that defines a partial equivalence between
@@ -72,11 +72,11 @@ traits available in `std::cmp` (or `core::cmp` for `no_std` compilation):
   `Self` and `Rhs`,
 - `Eq` that defines a total equivalence between objects of the same
   type. It is only a marker trait that requires `PartialEq<Self>`!
-- `Ord` that defines the total order between objects of the same type.
+- `Ord` that defines a total order between objects of the same type.
   It requires that `PartialOrd<Self>` is implemented.
 
-As documented in the standard library, Rust assumes **a lot of invariants**
-about the implementations of those traits:
+As documented in the standard library, Rust assumes **many invariants**
+about each implementation of those traits:
 
 - For `PartialEq`
 
@@ -145,7 +145,7 @@ about the implementations of those traits:
 
   - *Consistency with `PartialOrd<Self>`*: `Some(a.cmp(b)) == a.partial_cmp(b)`.
 
-The compiler do not check any of those requirements except for the type checking
+The compiler does not check any of those requirements except for the type checking
 itself. However, comparisons are critical because they intervene both in
 liveness critical systems such as schedulers and load balancers, and in
 optimized algorithms that may use `unsafe` blocks.
@@ -203,7 +203,7 @@ assert!(T1 { a: 1, b: 1 } > T1 { a: 1, b: 0 });
 Derivation of comparison traits for compound types depends on the
 **field order**, and not on their names.
 
-First, it means that changing the order of declaration of two fields change
+First, it means that changing the order of declaration of two fields changes
 the resulting lexicographical order. For instance, provided this second
 ordered type:
 
@@ -217,16 +217,16 @@ struct T2{
 we have `T1 {a: 1, b: 0} > T1 {a: 0, b: 1}` but
 `T2 {a: 1, b: 0} < T2 {a: 0, b: 1}`.
 
-Second, if one of the underlying comparison panics, the order may change the
+Second, if one of the underlying comparisons panics, the order may change the
 result due to the use of short-circuit logic in the automatic implementation.
 
-For enums, the derived comparisons depends first on the **variant order** then
+For enums, the derived comparisons depend first on the **variant order**, then
 on the field order.
 
 </div>
 
 Despite the ordering caveat, derived comparisons are a lot less error-prone
-than manual ones and makes code shorter and easier to maintain.
+than manual ones and make the code shorter and easier to maintain.
 
 > **Recommendation {{#check LANG-CMP-DERIVE | Derive comparison traits when possible}}**
 >
