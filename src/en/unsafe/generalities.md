@@ -2,7 +2,7 @@
 
 ## *Unsafe* operations
 
-Language capabilities can be extended using unsafe code. The full list of these features is given in the [Rust reference](https://doc.rust-lang.org/reference/unsafety.html). Notice the following one's.
+Language capabilities can be extended using unsafe code. The full list of these features is given in the [Rust reference](https://doc.rust-lang.org/reference/unsafety.html). Notice the following ones.
 
 * Dereference a raw pointer
 * Read or write a mutable or extern static variable
@@ -14,46 +14,46 @@ These capabilities may be necessary for system programming but they cause the la
 
 ## A keyword with two usages
 
-The `unsafe` keyword is used both as for marking unsafety in an API and unlocking unsafety in the implementation.
+The `unsafe` keyword is used both for marking unsafety in an API and unlocking unsafety in the implementation.
 
 ### `unsafe` marking
 
-Marking with `unsafe` is a delegation of responsibility w.r.t. to the memory safety from the API maker to the API user.
-The use of this keyword in an API *warns* the API user against the potential harmful effects of the use of the API.
+Marking with `unsafe` is a delegation of responsibility with respect to memory safety from the API author to the API user.
+The use of this keyword in an API *warns* the API user about the potential harmful effects of using the API.
 
-* In a function signature ([r-unsafe.fn]), `unsafe` means that the behavior of the function may lead to *UB*s if the use of the function does not comply with its interface contract (informally described in its documentation).
-* In a trait declaration ([r-unsafe.trait]), `unsafe` means that an erroneous implementation of this trait may lead to *UB*s if the implementation contract (preferrably documented) is not respected.
+* In a function signature ([r-unsafe.fn]), `unsafe` means that the behavior of the function may lead to UB if the use of the function does not comply with its interface contract (informally described in its documentation).
+* In a trait declaration ([r-unsafe.trait]), `unsafe` means that an erroneous implementation of this trait may lead to UB if the implementation contract (preferably documented) is not respected.
 
 [r-unsafe.fn]: <https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.fn>
 [r-unsafe.trait]: <https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.trait>
 
-### `unsafe` unlokcing
+### `unsafe` unlocking
 
-Unlocking with `unsafe` is taking responsibility for the memory safety from the compiler to the developer.
+Unlocking with `unsafe` means taking responsibility for memory safety from the compiler to the developer.
 
 Using an `unsafe` block in a function body or in a constant declaration is imposed by the compiler to prevent the *inadvertent use* of `unsafe` capabilities.
 The keyword `unsafe` *unlocks* the use of these capabilities.
 
-In a similar manner, the implementation of an `unsafe` trait requires `unsafe` for the developer to explictly take into account the memory safety contracts. The keyword `unsafe` *unlocks* the implementation of `unsafe` traits.
+Similarly, the implementation of an `unsafe` trait requires `unsafe` for the developer to explicitly take into account the memory safety contracts. The keyword `unsafe` *unlocks* the implementation of `unsafe` traits.
 
 Since the 2024 edition, `unsafe` is also required to unlock the following:
 
-* `extern` blocks, which contains declarations of foreign functions and variables, for [FFI](./ffi.md),
+* `extern` blocks, which contain declarations of foreign functions and variables, for [FFI](./ffi.md),
 * some attributes (for instance , no_mangle, cf. [r-attributes.safety]).
 
 [r-attributes.safety]: <https://doc.rust-lang.org/reference/attributes.html#r-attributes.safety>
 
 ## Limitations and precautions
 
-Paraphrasing the [Rustonomicon](https://doc.rust-lang.org/nomicon/), the fundamental principle of Rust can be sumed up as follows:
+Paraphrasing the [Rustonomicon](https://doc.rust-lang.org/nomicon/), the fundamental principle of Rust can be summed up as follows:
 
 > `unsafe`-free code cannot go wrong
 
 The combined use of the type system and the ownership system enforces a high-level memory safety in Rust programs. This way, the language helps prevent memory overflows, null or invalid pointer constructions, and data races.
 
-This promise is valid only if the code does not use `unsafe` features. When `unsafe` features are used, the compiler cannot guarantee memory safety anymore. The developer must then ensure that the code respects the invariants that guarantee memory safety.
+This promise is valid only if the code does not use `unsafe` features. When `unsafe` features are used, the compiler can no longer guarantee memory safety. The developer must then ensure that the code respects the invariants that guarantee memory safety.
 
-That's why, it is crucial to limit the use of `unsafe` features as much as possible:
+That is why it is crucial to limit the use of `unsafe` features as much as possible:
 
 > **Rule {{#check LANG-UNSAFE | Don't use unsafe blocks}}**
 >
@@ -70,7 +70,7 @@ That's why, it is crucial to limit the use of `unsafe` features as much as possi
 >
 > With the exception of these cases, `#![forbid(unsafe_code)]` must appear in the crate root (typically `main.rs` or `lib.rs`) to generate compilation errors if `unsafe` is used in the code base.
 
-In case the use of `unsafe` is necessary, it is of the responsability of the developer to:
+If the use of `unsafe` is necessary, it is the responsibility of the developer to:
 
 * ensure that the use of `unsafe` unlocking does not lead to *UB*s,
 * ensure that any `unsafe` markings are correctly and exhaustively documented so that no *UB* are possible if the usage conditions (invariants) are respected.
@@ -94,7 +94,7 @@ without an `unsafe` block must be marked as `unsafe` if it breaks these
 invariants. The choice and knowledge of these invariants are therefore crucial
 for secure development.
 
-### Example 1: Preservering a type invariant
+### Example 1: Preserving a type invariant
 
 The following code comes from the [Rustonomicon](https://doc.rust-lang.org/nomicon/working-with-unsafe.html).
 It could be used to implement a custom `Vec` type.
@@ -136,7 +136,7 @@ impl<T> Vec<T> {
 }
 ```
 
-This function my be necessary for internal use, but it should not be exposed in the API, or it should be marked with `unsafe` keyword, because its use can lead to *UB*.
+This function may be necessary for internal use, but it should not be exposed in the API, or it should be marked with the `unsafe` keyword, because its use can lead to UB.
 
 > **Rule {{#check LANG-UNSAFE-ENCP | Encapsulation of *unsafe* features}}**
 >
@@ -148,29 +148,24 @@ This function my be necessary for internal use, but it should not be exposed in 
 > * or it exposes features marked as unsafe whose usage conditions
 >   (preconditions, sequencing, etc.) are exhaustively documented.
 
-Thus, a function using `unsafe` operations can be *safe* if the `unsafe`
-operations do not present any *UB* (undefined behavior) given the component's
-invariants (typically the type invariant for a method). Conversely, a function
-without an `unsafe` block must be marked as `unsafe` if it breaks these
-invariants. The choice and knowledge of these invariants are therefore crucial
-for secure development.
+Thus, a function using `unsafe` operations can be *safe* if the `unsafe` operations do not present any *UB* (undefined behavior) given the component's invariants (typically the type invariant for a method). Conversely, a function without an `unsafe` block must be marked as `unsafe` if it breaks these invariants. The choice and knowledge of these invariants are therefore crucial for secure development.
 
-### Trust relation between *safe* and *unsafe*
+### Trust relationship between *safe* and *unsafe*
 
 #### Principle
 
-In Rust paradigm,
+In the Rust paradigm:
 
 > `unsafe`-free code cannot go wrong
 
-which means it cannot result in *UB*.
-This property is lost when the developers use *unsafe* code, that is why they are responsible of not producing *UB* in any scenario.
-Consequently, even *safe* function must be handled carefully in *unsafe* context.
+which means it cannot result in UB.
+This property is lost when developers use *unsafe* code, so they are responsible for not producing UB in any scenario.
+Consequently, even *safe* functions must be handled carefully in *unsafe* contexts.
 
 #### Example
 
-Suppose one wants to propose an API find object of a given type in the memory.
-This API could ask implementing the following trait
+Suppose one wants to propose an API to find an object of a given type in memory.
+This API could require implementing the following trait:
 
 ```rust
 trait Locatable {
@@ -181,15 +176,15 @@ trait Locatable {
 }
 ```
 
-This trait can be implemented **without** `unsafe`.
+This trait can be implemented **without** using `unsafe`.
 
-For instance, `bool` type can implement this trait as follows:
+For instance, the `bool` type can implement this trait as follows:
 
 ```rust,ignore
 {{#include ../../../examples/unsafe2/src/ok.rs:7:11}}
 ```
 
-Moreover the function searching a `Locatable` type in the memory could be the following:
+Moreover, the function searching for a `Locatable` type in memory could be the following:
 
 ```rust,ignore
 {{#include ../../../examples/unsafe2/src/ok.rs:13:19}}
@@ -199,24 +194,24 @@ Moreover the function searching a `Locatable` type in the memory could be the fo
 
 This implementation is harmful for two reasons:
 
-* If the `Locatable` implementation does not give the index of an object of type `T`, the `read_unaligned` may produce an *UB*.
-* If the `Locatable` implementation gives an out-of-bounds index or an index for which part of the object is out of bound, the subsequent buffer overflow is an *UB*.
+* If the `Locatable` implementation does not give the index of an object of type `T`, the `read_unaligned` may produce UB.
+* If the `Locatable` implementation gives an out-of-bounds index or an index for which part of the object is out of bounds, the subsequent buffer overflow is UB.
 
 </div>
 
-For instance, the following `Locatable` implementation is wrong **but** it is the responsibility of the API maker to take it into account.
+For instance, the following `Locatable` implementation is incorrect, **but** it is the responsibility of the API author to take it into account.
 
 ```rust
 {{#include ../../../examples/unsafe2/src/overflow.rs:7:11}}
 ```
 
-The following program produces a *UB*.
+The following program produces UB.
 
 ```rust,ignore
 {{#include ../../../examples/unsafe2/src/overflow.rs:21:25}}
 ```
 
-The UB detecting tool `miri` reports the following :
+The UB-detecting tool `miri` reports the following:
 
 ```default
 $ cargo +nightly miri r --bin overflow
@@ -249,14 +244,12 @@ error: aborting due to 1 previous error
 ```
 
 This example shows that developers using `unsafe` blocks
-cannot assume *safe* functions/traits they
-use are well implemented, and thus must prevent *UB*
-in case these *safe* functions have bad behavior.
+cannot assume that *safe* functions or traits they use are well implemented, and thus must prevent UB in case these *safe* functions have bad behavior.
 
-If they cannot protect their function against badly implemented *safe* functions/traits, they could either
+If they cannot protect their function against poorly implemented *safe* functions or traits, they have two options:
 
-* mark the function they *write* as `unsafe`: thus it is the user's responsibility to feed this function with correct arguments (by checking *unsafe* function documentation),
-* mark the traits they *use* as `unsafe` : thus it is user's responsibility to implement the trait properly (again reading the trait documentation).
+* Mark the function they *write* as `unsafe`: thus, it is the user's responsibility to provide correct arguments (by checking the `unsafe` function's documentation).
+* Mark the traits they *use* as `unsafe`: thus, it is the user's responsibility to implement the trait properly (again, by reading the trait documentation).
 
 #### References
 
