@@ -195,18 +195,18 @@ la manière standard en C d'appeler des fonctions.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// exportation d'une fonction compatible avec le C
-#[no_mangle]
-unsafe extern "C" fn mylib_f(param: u32) -&gt; i32 {
+#[unsafe(no_mangle)]
+extern "C" fn mylib_f(param: u32) -&gt; i32 {
     if param == 0xCAFEBABE { 0 } else { -1 }
 }
 <span class="boring">}</span></code></pre></pre>
 <p>Pour que la fonction <code>mylib_f</code> soit accessible avec le même nom, la fonction
-doit être annotée avec l'attribut <code>#[no_mangle]</code>).</p>
+doit être annotée avec l'attribut <code>#[unsafe(no_mangle)]</code>).</p>
 <p>À l'inverse, il est possible d'appeler des fonctions écrites en C depuis du code
 Rust si celles-ci sont déclarées dans un bloc <code>extern</code> :</p>
 <pre><pre class="playground"><code class="language-rust">use std::os::raw::c_int;
 // importation d'une fonction externe de la libc
-extern "C" {
+unsafe extern "C" {
     fn abs(args: c_int) -&gt; c_int;
 }
 
@@ -225,7 +225,7 @@ globales externes, préfixées alors par le mot-clé <code>static</code> :</p>
 <pre><pre class="playground"><code class="language-rust">//! Un accès direct aux variables d'environnement (sur Unix).
 //! Ne doit pas être utilisé ! Non *thread-safe*, voir `std::env` !
 
-extern {
+unsafe extern "C" {
     // Variable globale de la libc
     #[link_name = "environ"]
     static libc_environ: *const *const std::os::raw::c_char;
@@ -467,7 +467,7 @@ compilateurs C et C++ assurent qu'aucune autre valeur que 0 et 1 ne peut être
 une FFI peut casser la sûreté mémoire. Parce que leur côté non sûr est plus
 explicite, les pointeurs sont préférés aux références Rust pour un interfaçage
 avec un autre langage.</p>
-<p>D'un autre côté, les types des références ne sont pas robustes : ils permettent
+<p>De plus, les types des références ne sont pas robustes : ils permettent
 seulement de pointer vers des objets valides en mémoire. Toute déviation mène à
 des comportements indéfinis.</p>
 <blockquote>
@@ -529,8 +529,8 @@ est seulement manipulée depuis le code Rust.</p>
 <p>Le code suivant est un simple exemple d'utilisation de pointeur externe dans une
 fonction Rust exportée :</p>
 <pre><code class="language-rust noplaypen">/// Ajout en place
-#[no_mangle]
-pub unsafe extern fn add_in_place(a: *mut u32, b: u32) {
+#[unsafe(no_mangle)]
+pub extern fn add_in_place(a: *mut u32, b: u32) {
     // Vérification du caractère non nul de `a`
     // et manipulation comme une référence mutable
     if let Some(a) = a.as_mut() {
@@ -584,12 +584,12 @@ alternatives possibles :</p>
 <li>
 <p>l'utilisation de pointeurs de fonctions <em>wrappé</em> dans une valeur de type
 <code>Option</code>, accompagnée d'un test contre la valeur nulle :</p>
-<pre><code class="language-rust noplaypen">#[no_mangle]
+<pre><code class="language-rust noplaypen">#[unsafe(no_mangle)]
 pub unsafe extern "C" fn repeat(start: u32, n: u32, f: Option&lt;unsafe extern "C" fn(u32) -&gt; u32&gt;) -&gt; u32 {
     if let Some(f) = f {
         let mut value = start;
         for _ in 0..n {
-            value = f(value);
+            value = unsafe {f(value)};
         }
         value
     } else {
@@ -683,7 +683,7 @@ destructeur dédiés.</p>
     // (...) détails à cacher
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn new_opaque() -&gt; *mut Opaque {
     catch_unwind(|| // Catch panics, see below
         Box::into_raw(Box::new(Opaque {
@@ -692,7 +692,7 @@ pub unsafe extern "C" fn new_opaque() -&gt; *mut Opaque {
     ).unwrap_or(std::ptr::null_mut())
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn destroy_opaque(o: *mut Opaque) {
     catch_unwind(||
         if !o.is_null() {
@@ -850,7 +850,7 @@ pub mod c_api {
         inner: XtraResource,
     }
 
-    #[no_mangle]
+    #[unsafe(no_mangle)]
     pub unsafe extern "C" fn xtra_with(cb: extern "C" fn(*mut CXtraResource) -&gt; ()) {
         let inner = if let Ok(res) = catch_unwind(XtraResource::new) {
             res
@@ -881,7 +881,7 @@ pub mod c_api {
         }
     }
 
-    #[no_mangle]
+    #[unsafe(no_mangle)]
     pub unsafe extern "C" fn xtra_dosthg(cxtra: *mut CXtraResource) {
         let do_it = || {
             if let Some(cxtra) = cxtra.as_mut() {
@@ -940,7 +940,7 @@ fn may_panic() {
     }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn no_panic() -&gt; i32 {
     let result = catch_unwind(may_panic);
     match result {
@@ -1015,12 +1015,12 @@ impl Counter {
 
 // API compatible avec le C
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn counter_create() -&gt; *mut Counter {
     Box::into_raw(Box::new(Counter::new()))
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn counter_incr(counter: *mut Counter) -&gt; std::os::raw::c_int {
     if let Some(counter) = counter.as_mut() {
         if counter.incr() {
@@ -1033,7 +1033,7 @@ pub unsafe extern "C" fn counter_incr(counter: *mut Counter) -&gt; std::os::raw:
     }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn counter_get(counter: *const Counter) -&gt; u32 {
     if let Some(counter) = counter.as_ref() {
         return counter.get();
@@ -1041,7 +1041,7 @@ pub unsafe extern "C" fn counter_get(counter: *const Counter) -&gt; u32 {
     return 0;
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern fn counter_destroy(counter: *mut Counter) -&gt; std::os::raw::c_int {
     if !counter.is_null() {
         let _ = Box::from_raw(counter); // get box and drop
