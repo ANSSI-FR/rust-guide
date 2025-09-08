@@ -184,13 +184,15 @@ types du côté C et ceux du côté Rust.
 
 <!-- -->
 
-> **Attention**
->
-> Pour les *bindings* C/C++ vers Rust, [rust-bindgen] est capable de générer
-> automatiquement des *bindings* de bas niveau. L'écriture d'un *binding* de
-> plus haut niveau est fortement recommandée (voir Recommandation
-> [FFI-SAFEWRAPPING](#FFI-SAFEWRAPPING)). Attention également à certaines
-> options dangereuses de `rust-bindgen`, en particulier `rustified_enum`.
+<div class="warning">
+
+Pour les *bindings* C/C++ vers Rust, [rust-bindgen] est capable de générer
+automatiquement des *bindings* de bas niveau. L'écriture d'un *binding* de
+plus haut niveau est fortement recommandée (voir Recommandation
+[FFI-SAFEWRAPPING](#FFI-SAFEWRAPPING)). Attention également à certaines
+options dangereuses de `rust-bindgen`, en particulier `rustified_enum`.
+
+</div>
 
 [rust-bindgen]: https://crates.io/crates/bindgen
 [cbindgen]: https://crates.io/crates/cbindgen
@@ -310,17 +312,19 @@ concerne les risques, les types présentant le plus de dangers sont les
 références, les références de fonction et les énumérations, qui sont discutées
 ci-dessous.
 
-> **Attention**
->
-> Le type `bool` de Rust a été rendu équivalent au type `_Bool` (renommé `bool`
-> dans `<stdbool.h>`) de C99 et au type `bool` de C++. Toutefois, charger une
-> valeur différente de 0 ou 1 en tant que `_Bool`/`bool` est un comportement
-> indéfini *des deux côtés*. La partie sûre de Rust assure ce fait. Les
-> compilateurs C et C++ assurent qu'aucune autre valeur que 0 et 1 ne peut être
-> *stockée* dans un `_Bool`/`bool` mais ne peuvent garantir l'absence d'une
-> *réinterprétation incorrecte* (par exemple dans un type union ou *via* un
-> *cast* de pointeur). Pour détecter une telle réinterprétation, un
-> *sanitizer* tel que l'option `-fsanitize=bool` de LLVM peut être utilisé.
+<div class="warning">
+
+Le type `bool` de Rust a été rendu équivalent au type `_Bool` (renommé `bool`
+dans `<stdbool.h>`) de C99 et au type `bool` de C++. Toutefois, charger une
+valeur différente de 0 ou 1 en tant que `_Bool`/`bool` est un comportement
+indéfini *des deux côtés*. La partie sûre de Rust assure ce fait. Les
+compilateurs C et C++ assurent qu'aucune autre valeur que 0 et 1 ne peut être
+*stockée* dans un `_Bool`/`bool` mais ne peuvent garantir l'absence d'une
+*réinterprétation incorrecte* (par exemple dans un type union ou *via* un
+*cast* de pointeur). Pour détecter une telle réinterprétation, un
+*sanitizer* tel que l'option `-fsanitize=bool` de LLVM peut être utilisé.
+
+</div>
 
 #### Références et pointeurs
 
@@ -710,15 +714,17 @@ impl Drop for Foo {
 # }
 ```
 
-> **Attention**
->
-> Parce que des `panic`s peuvent mener à ne pas exécuter la méthode
-> `Drop::drop`, cette solution n'est pas satisfaisante pour le cas de la
-> libération de ressources sensibles (pour effacer les données sensibles par
-> exemple), à moins que le code soit garanti exempt de `panic` potentiel.
->
-> Pour le cas de l'effacement des données sensibles, le problème peut être géré
-> par l'utilisation d'un *handler* de `panic`.
+<div class="warning">
+
+Parce que des `panic`s peuvent mener à ne pas exécuter la méthode
+`Drop::drop`, cette solution n'est pas satisfaisante pour le cas de la
+libération de ressources sensibles (pour effacer les données sensibles par
+exemple), à moins que le code soit garanti exempt de `panic` potentiel.
+
+Pour le cas de l'effacement des données sensibles, le problème peut être géré
+par l'utilisation d'un *handler* de `panic`.
+
+</div>
 
 Lorsque le langage externe exploite des ressources allouées depuis le côté Rust,
 il est encore plus difficile d'offrir quelque garantie qui soit.
