@@ -1555,7 +1555,7 @@ allowing more powerful checks at the cost of ergonomics.</p>
 the FFI boundary.</p>
 </blockquote>
 <p>When binding with C or even C++, one cannot guarantee easily the validity of
-function pointers. C++ functors are not C-compatible.</p>
+function pointers. Moreover, C++ function objects (also known as functors) are not C-compatible.</p>
 <h4 id="enums"><a class="header" href="#enums">Enums</a></h4>
 <p>Usually the possible bit patterns of valid <code>enum</code> values are really small with
 respect to the number of possible bit patterns of the same size. Mishandling an
