@@ -16,7 +16,7 @@ la manière standard en C d'appeler des fonctions.
 ```rust
 // exportation d'une fonction compatible avec le C
 #[unsafe(no_mangle)]
-unsafe extern "C" fn mylib_f(param: u32) -> i32 {
+extern "C" fn mylib_f(param: u32) -> i32 {
     if param == 0xCAFEBABE { 0 } else { -1 }
 }
 ```
@@ -30,7 +30,7 @@ Rust si celles-ci sont déclarées dans un bloc `extern` :
 ```rust
 use std::os::raw::c_int;
 // importation d'une fonction externe de la libc
-extern "C" {
+unsafe extern "C" {
     fn abs(args: c_int) -> c_int;
 }
 
@@ -53,7 +53,7 @@ globales externes, préfixées alors par le mot-clé `static` :
 //! Un accès direct aux variables d'environnement (sur Unix).
 //! Ne doit pas être utilisé ! Non *thread-safe*, voir `std::env` !
 
-extern {
+unsafe extern "C" {
     // Variable globale de la libc
     #[link_name = "environ"]
     static libc_environ: *const *const std::os::raw::c_char;
@@ -405,7 +405,7 @@ fonction Rust exportée :
 ```rust,noplaypen
 /// Ajout en place
 #[unsafe(no_mangle)]
-pub unsafe extern fn add_in_place(a: *mut u32, b: u32) {
+pub extern fn add_in_place(a: *mut u32, b: u32) {
     // Vérification du caractère non nul de `a`
     // et manipulation comme une référence mutable
     if let Some(a) = a.as_mut() {

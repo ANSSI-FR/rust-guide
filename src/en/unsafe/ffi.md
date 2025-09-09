@@ -15,7 +15,7 @@ a standard C calling convention on the target platform.
 ```rust
 // export a C-compatible function
 #[unsafe(no_mangle)]
-unsafe extern "C" fn mylib_f(param: u32) -> i32 {
+extern "C" fn mylib_f(param: u32) -> i32 {
     if param == 0xCAFEBABE { 0 } else { -1 }
 }
 ```
@@ -28,8 +28,8 @@ Conversely, one can call C functions from Rust if they are declared in an
 
 ```rust
 use std::os::raw::c_int;
-// import an external function from libc
-extern "C" {
+// importation d'une fonction externe de la libc
+unsafe extern "C" {
     fn abs(args: c_int) -> c_int;
 }
 
@@ -52,8 +52,8 @@ with the `static` keyword:
 //! A direct way to access environment variables (on Unix).
 //! Should not be used! Not thread safe, have a look at `std::env`!
 
-extern {
-    // Libc global variable
+unsafe extern "C" {
+    // Variable globale de la libc
     #[link_name = "environ"]
     static libc_environ: *const *const std::os::raw::c_char;
 }
