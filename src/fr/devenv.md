@@ -7,8 +7,8 @@ Entre autres choses, il permet de basculer entre différentes variantes de la
 chaîne d'outils (_stable_, _beta_, _nightly_), de gérer l'installation des
 composants additionnels et de maintenir le tout à jour.
 
-> **Attention**
->
+<div class="warning">
+
 > Du point de vue de la sécurité, `rustup` effectue tous les téléchargements en
 > HTTPS, mais ne valide pas les signatures des fichiers téléchargés. Les
 > protections contre les attaques par déclassement, le _pinning_ de certificats
@@ -16,6 +16,8 @@ composants additionnels et de maintenir le tout à jour.
 > les cas les plus sensibles, il peut être préférable d'opter pour une méthode
 > d'installation alternative comme celles listées dans la section *Install* du
 > site officiel du langage Rust.
+
+</div>
 
 [rustup]: https://github.com/rust-lang/rustup.rs
 
@@ -142,8 +144,6 @@ est déjà présent, un nouveau fichier est créé avec les dernières versions 
 > Le fichier `Cargo.lock` doit être versionné avec le code source du programme Rust.
 
 <div class="warning">
-
-**Attention**
 
 Des discussions sont en cours pour
 déterminer le meilleur moyen de protéger et de valider les *crates* lors de leur ajout au projet

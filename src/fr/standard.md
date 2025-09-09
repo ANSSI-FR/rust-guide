@@ -214,30 +214,32 @@ assert!(T1 { a: 1, b: 1 } > T1 { a: 1, b: 0 });
 # }
 ```
 
-> **Attention**
->
-> La dérivation des traits de comparaison pour les types composites dépend de
-> **l'ordre de déclaration des champs** et non de leur nom.
->
-> D'abord, cela implique que changer l'ordre des champs modifie l'ordre des
-> valeurs. Par exemple, en considérant le type suivant :
->
-> ```rust,noplaypen
-> #[derive(PartialEq, Eq, PartialOrd, Ord)]
-> struct T2{
->    b: u8, a: u8
-> };
-> ```
->
-> on a `T1 {a: 1, b: 0} > T1 {a: 0, b: 1}` mais
-> `T2 {a: 1, b: 0} < T2 {a: 0, b: 1}`.
->
-> Ensuite, si une comparaison sous-jacente provoque un `panic`, l'ordre peut
-> changer le résultat à cause de l'utilisation d'un opérateur logique court-
-> circuitant dans l'implémentation automatique.
->
-> Pour les énumérations, les comparaisons dérivées dépendent d'abord de
-> **l'ordre des variants**, puis de l'ordre des champs.
+<div class="warning">
+
+La dérivation des traits de comparaison pour les types composites dépend de
+**l'ordre de déclaration des champs** et non de leur nom.
+
+D'abord, cela implique que changer l'ordre des champs modifie l'ordre des
+valeurs. Par exemple, en considérant le type suivant :
+
+```rust,noplaypen
+#[derive(PartialEq, Eq, PartialOrd, Ord)]
+struct T2{
+   b: u8, a: u8
+};
+```
+
+on a `T1 {a: 1, b: 0} > T1 {a: 0, b: 1}` mais
+`T2 {a: 1, b: 0} < T2 {a: 0, b: 1}`.
+
+Ensuite, si une comparaison sous-jacente provoque un `panic`, l'ordre peut
+changer le résultat à cause de l'utilisation d'un opérateur logique court-
+circuitant dans l'implémentation automatique.
+
+Pour les énumérations, les comparaisons dérivées dépendent d'abord de
+**l'ordre des variants**, puis de l'ordre des champs.
+
+</div>
 
 En dépit de ces avertissements sur les ordres dérivés, les comparaisons dérivées
 automatiquement sont bien moins sujettes à erreurs que des implémentations
