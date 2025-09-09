@@ -409,8 +409,7 @@ assert!(T1 { a: 1, b: 0 } &gt; T1 { a: 0, b: 0 });
 assert!(T1 { a: 1, b: 1 } &gt; T1 { a: 1, b: 0 });
 <span class="boring">println!("tous les tests sont validés.");
 </span><span class="boring">}</span></code></pre></pre>
-<blockquote>
-<p><strong>Attention</strong></p>
+<div class="warning">
 <p>La dérivation des traits de comparaison pour les types composites dépend de
 <strong>l'ordre de déclaration des champs</strong> et non de leur nom.</p>
 <p>D'abord, cela implique que changer l'ordre des champs modifie l'ordre des
@@ -426,7 +425,7 @@ changer le résultat à cause de l'utilisation d'un opérateur logique court-
 circuitant dans l'implémentation automatique.</p>
 <p>Pour les énumérations, les comparaisons dérivées dépendent d'abord de
 <strong>l'ordre des variants</strong>, puis de l'ordre des champs.</p>
-</blockquote>
+</div>
 <p>En dépit de ces avertissements sur les ordres dérivés, les comparaisons dérivées
 automatiquement sont bien moins sujettes à erreurs que des implémentations
 manuelles, et rendent le code plus court et plus simple à maintenir.</p>

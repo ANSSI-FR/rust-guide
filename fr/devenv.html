@@ -188,8 +188,8 @@
 Entre autres choses, il permet de basculer entre différentes variantes de la
 chaîne d'outils (<em>stable</em>, <em>beta</em>, <em>nightly</em>), de gérer l'installation des
 composants additionnels et de maintenir le tout à jour.</p>
+<div class="warning">
 <blockquote>
-<p><strong>Attention</strong></p>
 <p>Du point de vue de la sécurité, <code>rustup</code> effectue tous les téléchargements en
 HTTPS, mais ne valide pas les signatures des fichiers téléchargés. Les
 protections contre les attaques par déclassement, le <em>pinning</em> de certificats
@@ -198,6 +198,7 @@ les cas les plus sensibles, il peut être préférable d'opter pour une méthode
 d'installation alternative comme celles listées dans la section <em>Install</em> du
 site officiel du langage Rust.</p>
 </blockquote>
+</div>
 <h3 id="Éditions-rust"><a class="header" href="#Éditions-rust">Éditions Rust</a></h3>
 <p>Il existe plusieurs variantes du langage Rust, appelées <em>éditions</em>. Le concept
 d'éditions a été introduit afin de distinguer la mise en place de nouvelles
@@ -303,7 +304,6 @@ est déjà présent, un nouveau fichier est créé avec les dernières versions 
 <p>Le fichier <code>Cargo.lock</code> doit être versionné avec le code source du programme Rust.</p>
 </blockquote>
 <div class="warning">
-<p><strong>Attention</strong></p>
 <p>Des discussions sont en cours pour
 déterminer le meilleur moyen de protéger et de valider les <em>crates</em> lors de leur ajout au projet
 (les téléchargements suivants sont vérifié par le fichier <code>Cargo.lock</code>). Pour le
