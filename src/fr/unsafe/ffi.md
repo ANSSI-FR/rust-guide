@@ -472,7 +472,7 @@ alternatives possibles :
       if let Some(f) = f {
           let mut value = start;
           for _ in 0..n {
-              value = f(value);
+              value = unsafe {f(value)};
           }
           value
       } else {
