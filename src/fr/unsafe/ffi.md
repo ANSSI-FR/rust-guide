@@ -282,7 +282,7 @@ deux langages. Cela revient à décider **quel langage des deux est le plus
 responsable pour assurer la validité des valeurs hors bornes** et comment
 mettre cela en place.
 
-> **Règle {{#check FFI-CKNONROBUST | Non-vérification des valeurs de types non-robustes}}**
+> **Règle {{#check FFI-CKNONROBUST | Vérification des valeurs de types non-robustes}}**
 >
 > Dans un développement sécurisé en Rust, toute valeur externe de type non-
 > robuste doit être vérifiée.
@@ -333,7 +333,7 @@ une FFI peut casser la sûreté mémoire. Parce que leur côté non sûr est plu
 explicite, les pointeurs sont préférés aux références Rust pour un interfaçage
 avec un autre langage.
 
-D'un autre côté, les types des références ne sont pas robustes : ils permettent
+De plus, les types des références ne sont pas robustes : ils permettent
 seulement de pointer vers des objets valides en mémoire. Toute déviation mène à
 des comportements indéfinis.
 
