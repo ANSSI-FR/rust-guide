@@ -5,24 +5,24 @@ libraries in a project, thanks to `cargo`. The libraries, known as *crates* in
 the Rust ecosystem, are imported from the open-source components central
 repository [crates.io](https://crates.io).
 
-It should be noticed that the quality (in terms of security, performances,
+It should be noticed that the quality (in terms of security, performance,
 readability, etc.) of the published crates is very variable. Moreover, their
 maintenance can be irregular or interrupted. The usage of each component from
-this repository should be justified, and the developer should validate the
-correct application of rules from the current guide in its code. Several tools
+this repository should be justified, and developers should validate the
+correct application of rules from the current guide in their code. Several tools
 can aid in that task.
 
 ## Cargo-outdated
 
-[Cargo-outdated] tool allows one to easily manage dependencies versions.
+[Cargo-outdated] tool allows one to easily manage dependencies' versions.
 
-For a given crate, it lists current dependencies versions (using its
-`Cargo.toml`), and checks latest compatible version and also latest general
+For a given crate, it lists current dependencies' versions (using its
+`Cargo.toml`), and checks the latest compatible version and also the latest general
 version.
 
 > **Rule {{#check LIBS-OUTDATED | Check for outdated dependencies versions (cargo-outdated)}}**
 >
-> The `cargo-outdated` tool must be used to check dependencies status. Then,
+> The `cargo-outdated` tool must be used to check dependencies' status. Then,
 > each outdated dependency must be updated or the choice of the version must be
 > justified.
 
