@@ -1,0 +1,24 @@
+# Compilation
+
+## Durcissement et binaires mixtes
+
+Les _durcissements_ sont des mécanismes mis en place pendant la compilation
+permettant de réduire l'impact ou l'exploitabilité d'un certain nombre de défaut
+de sûreté mémoire. Dans le cas de Rust, ces durcissements n'ont pas beaucoup
+d'intérêt (hors code _unsafe_). Toutefois, la question se pose de nouveau dans
+le cas de logiciel mixte, c'est-à-dire contenant des composants écrits en Rust
+et des composants écrits dans un ou les langages n'assurant pas la sûreté
+mémoire. En effet, il a été montré que du code Rust peut être utilisé pour
+contourner des durcissements d'un code C vulnérable.
+
+> **Recommandation {{#check DENV-MIXED | Activer les durcissements pour tous les langages d'un logiciel mixte}}**
+>
+> Dans le cadre du développement d'une application sécurisée comportant des
+> composants dans plusieurs langages, les compilations des composants (y compris
+> Rust) devraient appliquer des durcissements de manière à limiter
+> l'exploitabilité des vulnérabilités présents dans les composants dont le
+> langage n'assure pas la sûreté mémoire.
+
+### Références
+
+- _Exploiting Mixed Binaries_, Michalis Papaevripides, Elias Athanasopoulos, <https://dl.acm.org/doi/10.1145/3418898>
