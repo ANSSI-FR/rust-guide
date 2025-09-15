@@ -23,8 +23,8 @@ method listed in the *Install* section of the official Rust website.
 
 Several flavors, called *editions*, of the Rust language coexist.
 
-The concept of editions has been introduced to clarify new features
-implementation and to make them incremental. A new edition will be produced
+The concept of editions has been introduced to clarify the
+implementation of new features and to make them incremental. A new edition will be produced
 every two or three years, as stated in the [Edition Guide], but this doesn’t
 mean that new features and improvements will only be shipped in a new edition.
 
@@ -45,7 +45,7 @@ and language features that are specific to a particular Rust edition.
 
 ### Stable, nightly and beta toolchains
 
-Orthogonally to editions that allow one to select a flavor (a set of features)
+Independently from the choice of edition that allows one to select a flavor (a set of features)
 of the Rust language, the Rust toolchain is provided in three different
 versions, called *release channels*:
 
@@ -94,13 +94,13 @@ $
 
 Once Rustup has set up the appropriate Rust toolchain, [Cargo] is available
 through the command line program `cargo`. Cargo is the Rust package manager.
-It has a fundamental role in most Rust development:
+It has a fundamental role in most Rust developments:
 
-- It structures project by providing the project skeleton (`cargo new`),
+- It structures the project by providing the project's skeleton (`cargo new`),
 - It compiles the project (`cargo build`),
 - It generates the project's documentation (`cargo doc`),
 - It runs tests (`cargo test`) and benchmarks (`cargo bench`),
-- It manages and download dependencies,
+- It manages and downloads dependencies,
 - It makes packages distributable and publishes them on [crates.io],
 - It’s also a front-end to run complementary tools such as those that are
   described below, in the form of sub-commands.
@@ -156,13 +156,13 @@ invoked. For example:
   integer arithmetic.
 
 Overriding the default options may cause bugs not being detected, even when
-using the debug profile that normally enables runtime checks (for example
+using the debug profile that normally enables runtime checks (for example it does not enable
 [integer overflow checks](./04_language.html#integer-overflows)).
 
 > **Rule {{#check DENV-CARGO-OPTS | Keep default values for critical variables in cargo profiles}}**
 >
 > The variables `debug-assertions` and `overflow-checks` must not be overridden
-> in development profiles sections (`[profile.dev]` and `[profile.test]`).
+> in development profiles' sections (`[profile.dev]` and `[profile.test]`).
 
 Cargo proposes other ways to setup its configuration and change its behavior on
 a given system. This can be very useful, but it may also be difficult to know
@@ -171,7 +171,7 @@ in particular passed to the compiler. At the end, this can affect the confidence
 and robustness of the build process. It is preferable to centralize compiler
 options and flags in the configuration file `Cargo.toml`. For the case of
 environment variable `RUSTC_WRAPPER`, for example, that may be used to generate
-part of code or to run external tools before Rust compilation, it is preferable
+part of the code or to run external tools before Rust compilation, it is preferable
 to use the Cargo build scripts feature.
 
 > **Rule {{#check DENV-CARGO-ENVVARS | Keep default values for compiler environment variables when running cargo}}**
@@ -269,9 +269,9 @@ $ cargo fix --edition-idioms
 ```
 
 Be advised that this tool provides few guarantees on the soundness of the
-proposed fixes. In particular mode, some corrections (such as some of those
+proposed fixes. In particular, some corrections (such as some of those
 provided with the `--edition-idioms`) are known to break the compilation
-or change the program semantics in some case.
+or change the program semantics in some cases.
 
 > **Rule {{#check DENV-AUTOFIX | Manually check automatic fixes}}**
 >

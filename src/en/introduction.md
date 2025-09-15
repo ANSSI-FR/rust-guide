@@ -41,7 +41,7 @@ of the range of possibilities the Rust language can offer.
 
 ## Target Audience
 
-The guide intents to group recommendations that should be applied for
+The guide intends to group recommendations that should be applied for
 application development with strong security level requirements. Anyway, it can
 be followed by everyone who wants to ensure that guarantees offered by the Rust
 platform are not invalidated due to unsafe, misleading or unclear feature usage.
@@ -50,10 +50,10 @@ It is not intended to be a course on how to write Rust programs, there are
 already plenty of good learning resources for this purpose
 (see for instance the
 [Rust documentation main page](https://doc.rust-lang.org)).
-The purpose is rather to guide the programmer and inform them about some pitfalls
+The purpose is rather to guide programmers and inform them about some pitfalls
 they may encounter.
 These recommendations form a complement to the good level of trust
-the Rust language already provides. That said, recalls are sometimes necessary
+the Rust language already provides. That being said, recalls are sometimes necessary
 for clarity, and the experienced Rust programmer may rely solely on
 highlighted inserts (*Rule*, *Recommendation*, *Warning*, etc.).
 
@@ -70,11 +70,11 @@ propositions (*pull requests*) or in the form of suggestions and discussions
 
 This document considers separately different phases of a typical (and simplified)
 development process.
-Firstly, we provide some advices on how to take advantage of using tools of the
+Firstly, we provide some advice on how to take advantage of using tools of the
 Rust ecosystem for secure development.
 A following chapter focuses on precautions to take when choosing and using
 external libraries.
-Then, recommendations about the Rust language constructs are exposed.
+Then, recommendations about the Rust language constructs are presented.
 <!-- TODO: Finally, we introduce advices for writing
 tests for a project in Rust, and for using Rust fuzzing tools.-->
 A summary of recommendations presented throughout the document is listed at the
