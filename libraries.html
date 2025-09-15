@@ -181,20 +181,20 @@
 libraries in a project, thanks to <code>cargo</code>. The libraries, known as <em>crates</em> in
 the Rust ecosystem, are imported from the open-source components central
 repository <a href="https://crates.io">crates.io</a>.</p>
-<p>It should be noticed that the quality (in terms of security, performances,
+<p>It should be noticed that the quality (in terms of security, performance,
 readability, etc.) of the published crates is very variable. Moreover, their
 maintenance can be irregular or interrupted. The usage of each component from
-this repository should be justified, and the developer should validate the
-correct application of rules from the current guide in its code. Several tools
+this repository should be justified, and developers should validate the
+correct application of rules from the current guide in their code. Several tools
 can aid in that task.</p>
 <h2 id="cargo-outdated"><a class="header" href="#cargo-outdated">Cargo-outdated</a></h2>
-<p><a href="https://github.com/kbknapp/cargo-outdated">Cargo-outdated</a> tool allows one to easily manage dependencies versions.</p>
-<p>For a given crate, it lists current dependencies versions (using its
-<code>Cargo.toml</code>), and checks latest compatible version and also latest general
+<p><a href="https://github.com/kbknapp/cargo-outdated">Cargo-outdated</a> tool allows one to easily manage dependencies' versions.</p>
+<p>For a given crate, it lists current dependencies' versions (using its
+<code>Cargo.toml</code>), and checks the latest compatible version and also the latest general
 version.</p>
 <blockquote>
 <p><strong>Rule <a id="LIBS-OUTDATED"></a>LIBS-OUTDATED</strong></p>
-<p>The <code>cargo-outdated</code> tool must be used to check dependencies status. Then,
+<p>The <code>cargo-outdated</code> tool must be used to check dependencies' status. Then,
 each outdated dependency must be updated or the choice of the version must be
 justified.</p>
 </blockquote>

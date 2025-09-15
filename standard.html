@@ -228,7 +228,7 @@ field:</p>
 documented and peer-reviewed.</p>
 </blockquote>
 <h2 id="comparison-traits-partialeq-eq-partialord-ord"><a class="header" href="#comparison-traits-partialeq-eq-partialord-ord">Comparison traits (<code>PartialEq</code>, <code>Eq</code>, <code>PartialOrd</code>, <code>Ord</code>)</a></h2>
-<p>Comparisons (<code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>) in Rust relies on four standard
+<p>Comparisons (<code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>) in Rust rely on four standard
 traits available in <code>std::cmp</code> (or <code>core::cmp</code> for <code>no_std</code> compilation):</p>
 <ul>
 <li><code>PartialEq&lt;Rhs&gt;</code> that defines a partial equivalence between
@@ -237,11 +237,11 @@ objects of types <code>Self</code> and <code>Rhs</code>,</li>
 <code>Self</code> and <code>Rhs</code>,</li>
 <li><code>Eq</code> that defines a total equivalence between objects of the same
 type. It is only a marker trait that requires <code>PartialEq&lt;Self&gt;</code>!</li>
-<li><code>Ord</code> that defines the total order between objects of the same type.
+<li><code>Ord</code> that defines a total order between objects of the same type.
 It requires that <code>PartialOrd&lt;Self&gt;</code> is implemented.</li>
 </ul>
-<p>As documented in the standard library, Rust assumes <strong>a lot of invariants</strong>
-about the implementations of those traits:</p>
+<p>As documented in the standard library, Rust assumes <strong>many invariants</strong>
+about each implementation of those traits:</p>
 <ul>
 <li>
 <p>For <code>PartialEq</code></p>
@@ -339,7 +339,7 @@ exactly one of <code>a.eq(b)</code>, <code>a.lt(b)</code>, <code>a.gt(b)</code> 
 </ul>
 </li>
 </ul>
-<p>The compiler do not check any of those requirements except for the type checking
+<p>The compiler does not check any of those requirements except for the type checking
 itself. However, comparisons are critical because they intervene both in
 liveness critical systems such as schedulers and load balancers, and in
 optimized algorithms that may use <code>unsafe</code> blocks.
@@ -389,7 +389,7 @@ assert!(T1 { a: 1, b: 1 } &gt; T1 { a: 1, b: 0 });
 <div class="warning">
 <p>Derivation of comparison traits for compound types depends on the
 <strong>field order</strong>, and not on their names.</p>
-<p>First, it means that changing the order of declaration of two fields change
+<p>First, it means that changing the order of declaration of two fields changes
 the resulting lexicographical order. For instance, provided this second
 ordered type:</p>
 <pre><code class="language-rust noplaypen">#[derive(PartialEq, Eq, PartialOrd, Ord)]
@@ -398,13 +398,13 @@ struct T2{
 };</code></pre>
 <p>we have <code>T1 {a: 1, b: 0} &gt; T1 {a: 0, b: 1}</code> but
 <code>T2 {a: 1, b: 0} &lt; T2 {a: 0, b: 1}</code>.</p>
-<p>Second, if one of the underlying comparison panics, the order may change the
+<p>Second, if one of the underlying comparisons panics, the order may change the
 result due to the use of short-circuit logic in the automatic implementation.</p>
-<p>For enums, the derived comparisons depends first on the <strong>variant order</strong> then
+<p>For enums, the derived comparisons depend first on the <strong>variant order</strong>, then
 on the field order.</p>
 </div>
 <p>Despite the ordering caveat, derived comparisons are a lot less error-prone
-than manual ones and makes code shorter and easier to maintain.</p>
+than manual ones and make the code shorter and easier to maintain.</p>
 <blockquote>
 <p><strong>Recommendation <a id="LANG-CMP-DERIVE"></a>LANG-CMP-DERIVE</strong></p>
 <p>In a secure Rust development, the implementation of standard comparison traits

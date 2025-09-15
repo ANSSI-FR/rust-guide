@@ -191,8 +191,8 @@ method listed in the <em>Install</em> section of the official Rust website.</p>
 </div>
 <h3 id="rust-editions"><a class="header" href="#rust-editions">Rust Editions</a></h3>
 <p>Several flavors, called <em>editions</em>, of the Rust language coexist.</p>
-<p>The concept of editions has been introduced to clarify new features
-implementation and to make them incremental. A new edition will be produced
+<p>The concept of editions has been introduced to clarify the
+implementation of new features and to make them incremental. A new edition will be produced
 every two or three years, as stated in the <a href="https://doc.rust-lang.org/edition-guide/">Edition Guide</a>, but this doesn’t
 mean that new features and improvements will only be shipped in a new edition.</p>
 <p>Some editions bring new keywords and language constructs. Recommendations for
@@ -207,7 +207,7 @@ recommendations related to the features offered by the edition that has been
 chosen.</p>
 </blockquote>
 <h3 id="stable-nightly-and-beta-toolchains"><a class="header" href="#stable-nightly-and-beta-toolchains">Stable, nightly and beta toolchains</a></h3>
-<p>Orthogonally to editions that allow one to select a flavor (a set of features)
+<p>Independently from the choice of edition that allows one to select a flavor (a set of features)
 of the Rust language, the Rust toolchain is provided in three different
 versions, called <em>release channels</em>:</p>
 <ul>
@@ -249,13 +249,13 @@ $
 <h2 id="cargo"><a class="header" href="#cargo">Cargo</a></h2>
 <p>Once Rustup has set up the appropriate Rust toolchain, <a href="https://doc.rust-lang.org/stable/cargo/">Cargo</a> is available
 through the command line program <code>cargo</code>. Cargo is the Rust package manager.
-It has a fundamental role in most Rust development:</p>
+It has a fundamental role in most Rust developments:</p>
 <ul>
-<li>It structures project by providing the project skeleton (<code>cargo new</code>),</li>
+<li>It structures the project by providing the project's skeleton (<code>cargo new</code>),</li>
 <li>It compiles the project (<code>cargo build</code>),</li>
 <li>It generates the project's documentation (<code>cargo doc</code>),</li>
 <li>It runs tests (<code>cargo test</code>) and benchmarks (<code>cargo bench</code>),</li>
-<li>It manages and download dependencies,</li>
+<li>It manages and downloads dependencies,</li>
 <li>It makes packages distributable and publishes them on <a href="https://crates.io">crates.io</a>,</li>
 <li>It’s also a front-end to run complementary tools such as those that are
 described below, in the form of sub-commands.</li>
@@ -303,12 +303,12 @@ invoked. For example:</p>
 integer arithmetic.</li>
 </ul>
 <p>Overriding the default options may cause bugs not being detected, even when
-using the debug profile that normally enables runtime checks (for example
+using the debug profile that normally enables runtime checks (for example it does not enable
 <a href="./04_language.html#integer-overflows">integer overflow checks</a>).</p>
 <blockquote>
 <p><strong>Rule <a id="DENV-CARGO-OPTS"></a>DENV-CARGO-OPTS</strong></p>
 <p>The variables <code>debug-assertions</code> and <code>overflow-checks</code> must not be overridden
-in development profiles sections (<code>[profile.dev]</code> and <code>[profile.test]</code>).</p>
+in development profiles' sections (<code>[profile.dev]</code> and <code>[profile.test]</code>).</p>
 </blockquote>
 <p>Cargo proposes other ways to setup its configuration and change its behavior on
 a given system. This can be very useful, but it may also be difficult to know
@@ -317,7 +317,7 @@ in particular passed to the compiler. At the end, this can affect the confidence
 and robustness of the build process. It is preferable to centralize compiler
 options and flags in the configuration file <code>Cargo.toml</code>. For the case of
 environment variable <code>RUSTC_WRAPPER</code>, for example, that may be used to generate
-part of code or to run external tools before Rust compilation, it is preferable
+part of the code or to run external tools before Rust compilation, it is preferable
 to use the Cargo build scripts feature.</p>
 <blockquote>
 <p><strong>Rule <a id="DENV-CARGO-ENVVARS"></a>DENV-CARGO-ENVVARS</strong></p>
@@ -383,9 +383,9 @@ Rust 2018.</p>
 <pre><code class="language-shell">$ cargo fix --edition-idioms
 </code></pre>
 <p>Be advised that this tool provides few guarantees on the soundness of the
-proposed fixes. In particular mode, some corrections (such as some of those
+proposed fixes. In particular, some corrections (such as some of those
 provided with the <code>--edition-idioms</code>) are known to break the compilation
-or change the program semantics in some case.</p>
+or change the program semantics in some cases.</p>
 <blockquote>
 <p><strong>Rule <a id="DENV-AUTOFIX"></a>DENV-AUTOFIX</strong></p>
 <p>In a secure Rust development, any automatic fix (for instance, provided by

@@ -205,12 +205,12 @@ missing drops, such as:</p>
 <ul>
 <li>a reference cycle (for instance, with <code>Rc</code> or <code>Arc</code>),</li>
 <li>an explicit call to <code>std::mem::forget</code> (or <code>core::mem::forget</code>) (see paragraph
-on <a href="05_memory.html#forget-and-memory-leaks">Forget and memory leaks</a>,</li>
-<li>a panic in drop,</li>
+on <a href="05_memory.html#forget-and-memory-leaks">Forget and memory leaks</a>),</li>
+<li>a panic during drop,</li>
 <li>program aborts (and panics when abort-on-panic is on).</li>
 </ul>
 <p>And missing drops may lead to exposing sensitive data or to lock limited
-resources leading to unavailability issues.</p>
+resources leading to availability issues.</p>
 <blockquote>
 <p><strong>Rule <a id="LANG-DROP-NO-PANIC"></a>LANG-DROP-NO-PANIC</strong></p>
 <p>In a Rust secure development, the implementation of the <code>std::ops::Drop</code> trait
@@ -219,7 +219,7 @@ must not panic.</p>
 <p>Beside panics, secure-critical drop should be protected.</p>
 <blockquote>
 <p><strong>Rule <a id="LANG-DROP-NO-CYCLE"></a>LANG-DROP-NO-CYCLE</strong></p>
-<p>Value whose type implements <code>Drop</code> must not be embedded directly or indirectly
+<p>A value whose type implements <code>Drop</code> must not be embedded directly or indirectly
 in a cycle of reference-counted references.</p>
 </blockquote>
 <blockquote>

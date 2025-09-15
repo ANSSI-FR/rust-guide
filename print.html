@@ -210,7 +210,7 @@ configurations that, if misused, may lead to vulnerabilities.</p>
 stay in a safe zone for secure applications development while taking advantage
 of the range of possibilities the Rust language can offer.</p>
 <h2 id="target-audience"><a class="header" href="#target-audience">Target Audience</a></h2>
-<p>The guide intents to group recommendations that should be applied for
+<p>The guide intends to group recommendations that should be applied for
 application development with strong security level requirements. Anyway, it can
 be followed by everyone who wants to ensure that guarantees offered by the Rust
 platform are not invalidated due to unsafe, misleading or unclear feature usage.</p>
@@ -218,10 +218,10 @@ platform are not invalidated due to unsafe, misleading or unclear feature usage.
 already plenty of good learning resources for this purpose
 (see for instance the
 <a href="https://doc.rust-lang.org">Rust documentation main page</a>).
-The purpose is rather to guide the programmer and inform them about some pitfalls
+The purpose is rather to guide programmers and inform them about some pitfalls
 they may encounter.
 These recommendations form a complement to the good level of trust
-the Rust language already provides. That said, recalls are sometimes necessary
+the Rust language already provides. That being said, recalls are sometimes necessary
 for clarity, and the experienced Rust programmer may rely solely on
 highlighted inserts (<em>Rule</em>, <em>Recommendation</em>, <em>Warning</em>, etc.).</p>
 <h2 id="contributions"><a class="header" href="#contributions">Contributions</a></h2>
@@ -234,11 +234,11 @@ propositions (<em>pull requests</em>) or in the form of suggestions and discussi
 <h2 id="structure-of-the-document"><a class="header" href="#structure-of-the-document">Structure of the Document</a></h2>
 <p>This document considers separately different phases of a typical (and simplified)
 development process.
-Firstly, we provide some advices on how to take advantage of using tools of the
+Firstly, we provide some advice on how to take advantage of using tools of the
 Rust ecosystem for secure development.
 A following chapter focuses on precautions to take when choosing and using
 external libraries.
-Then, recommendations about the Rust language constructs are exposed.</p>
+Then, recommendations about the Rust language constructs are presented.</p>
 <!-- TODO: Finally, we introduce advices for writing
 tests for a project in Rust, and for using Rust fuzzing tools.-->
 <p>A summary of recommendations presented throughout the document is listed at the
@@ -258,8 +258,8 @@ method listed in the <em>Install</em> section of the official Rust website.</p>
 </div>
 <h3 id="rust-editions"><a class="header" href="#rust-editions">Rust Editions</a></h3>
 <p>Several flavors, called <em>editions</em>, of the Rust language coexist.</p>
-<p>The concept of editions has been introduced to clarify new features
-implementation and to make them incremental. A new edition will be produced
+<p>The concept of editions has been introduced to clarify the
+implementation of new features and to make them incremental. A new edition will be produced
 every two or three years, as stated in the <a href="https://doc.rust-lang.org/edition-guide/">Edition Guide</a>, but this doesn’t
 mean that new features and improvements will only be shipped in a new edition.</p>
 <p>Some editions bring new keywords and language constructs. Recommendations for
@@ -274,7 +274,7 @@ recommendations related to the features offered by the edition that has been
 chosen.</p>
 </blockquote>
 <h3 id="stable-nightly-and-beta-toolchains"><a class="header" href="#stable-nightly-and-beta-toolchains">Stable, nightly and beta toolchains</a></h3>
-<p>Orthogonally to editions that allow one to select a flavor (a set of features)
+<p>Independently from the choice of edition that allows one to select a flavor (a set of features)
 of the Rust language, the Rust toolchain is provided in three different
 versions, called <em>release channels</em>:</p>
 <ul>
@@ -316,13 +316,13 @@ $
 <h2 id="cargo"><a class="header" href="#cargo">Cargo</a></h2>
 <p>Once Rustup has set up the appropriate Rust toolchain, <a href="https://doc.rust-lang.org/stable/cargo/">Cargo</a> is available
 through the command line program <code>cargo</code>. Cargo is the Rust package manager.
-It has a fundamental role in most Rust development:</p>
+It has a fundamental role in most Rust developments:</p>
 <ul>
-<li>It structures project by providing the project skeleton (<code>cargo new</code>),</li>
+<li>It structures the project by providing the project's skeleton (<code>cargo new</code>),</li>
 <li>It compiles the project (<code>cargo build</code>),</li>
 <li>It generates the project's documentation (<code>cargo doc</code>),</li>
 <li>It runs tests (<code>cargo test</code>) and benchmarks (<code>cargo bench</code>),</li>
-<li>It manages and download dependencies,</li>
+<li>It manages and downloads dependencies,</li>
 <li>It makes packages distributable and publishes them on <a href="https://crates.io">crates.io</a>,</li>
 <li>It’s also a front-end to run complementary tools such as those that are
 described below, in the form of sub-commands.</li>
@@ -370,12 +370,12 @@ invoked. For example:</p>
 integer arithmetic.</li>
 </ul>
 <p>Overriding the default options may cause bugs not being detected, even when
-using the debug profile that normally enables runtime checks (for example
+using the debug profile that normally enables runtime checks (for example it does not enable
 <a href="./04_language.html#integer-overflows">integer overflow checks</a>).</p>
 <blockquote>
 <p><strong>Rule <a id="DENV-CARGO-OPTS"></a>DENV-CARGO-OPTS</strong></p>
 <p>The variables <code>debug-assertions</code> and <code>overflow-checks</code> must not be overridden
-in development profiles sections (<code>[profile.dev]</code> and <code>[profile.test]</code>).</p>
+in development profiles' sections (<code>[profile.dev]</code> and <code>[profile.test]</code>).</p>
 </blockquote>
 <p>Cargo proposes other ways to setup its configuration and change its behavior on
 a given system. This can be very useful, but it may also be difficult to know
@@ -384,7 +384,7 @@ in particular passed to the compiler. At the end, this can affect the confidence
 and robustness of the build process. It is preferable to centralize compiler
 options and flags in the configuration file <code>Cargo.toml</code>. For the case of
 environment variable <code>RUSTC_WRAPPER</code>, for example, that may be used to generate
-part of code or to run external tools before Rust compilation, it is preferable
+part of the code or to run external tools before Rust compilation, it is preferable
 to use the Cargo build scripts feature.</p>
 <blockquote>
 <p><strong>Rule <a id="DENV-CARGO-ENVVARS"></a>DENV-CARGO-ENVVARS</strong></p>
@@ -450,9 +450,9 @@ Rust 2018.</p>
 <pre><code class="language-shell">$ cargo fix --edition-idioms
 </code></pre>
 <p>Be advised that this tool provides few guarantees on the soundness of the
-proposed fixes. In particular mode, some corrections (such as some of those
+proposed fixes. In particular, some corrections (such as some of those
 provided with the <code>--edition-idioms</code>) are known to break the compilation
-or change the program semantics in some case.</p>
+or change the program semantics in some cases.</p>
 <blockquote>
 <p><strong>Rule <a id="DENV-AUTOFIX"></a>DENV-AUTOFIX</strong></p>
 <p>In a secure Rust development, any automatic fix (for instance, provided by
@@ -468,20 +468,20 @@ chapters, according to their goals.</p>
 libraries in a project, thanks to <code>cargo</code>. The libraries, known as <em>crates</em> in
 the Rust ecosystem, are imported from the open-source components central
 repository <a href="https://crates.io">crates.io</a>.</p>
-<p>It should be noticed that the quality (in terms of security, performances,
+<p>It should be noticed that the quality (in terms of security, performance,
 readability, etc.) of the published crates is very variable. Moreover, their
 maintenance can be irregular or interrupted. The usage of each component from
-this repository should be justified, and the developer should validate the
-correct application of rules from the current guide in its code. Several tools
+this repository should be justified, and developers should validate the
+correct application of rules from the current guide in their code. Several tools
 can aid in that task.</p>
 <h2 id="cargo-outdated"><a class="header" href="#cargo-outdated">Cargo-outdated</a></h2>
-<p><a href="https://github.com/kbknapp/cargo-outdated">Cargo-outdated</a> tool allows one to easily manage dependencies versions.</p>
-<p>For a given crate, it lists current dependencies versions (using its
-<code>Cargo.toml</code>), and checks latest compatible version and also latest general
+<p><a href="https://github.com/kbknapp/cargo-outdated">Cargo-outdated</a> tool allows one to easily manage dependencies' versions.</p>
+<p>For a given crate, it lists current dependencies' versions (using its
+<code>Cargo.toml</code>), and checks the latest compatible version and also the latest general
 version.</p>
 <blockquote>
 <p><strong>Rule <a id="LIBS-OUTDATED"></a>LIBS-OUTDATED</strong></p>
-<p>The <code>cargo-outdated</code> tool must be used to check dependencies status. Then,
+<p>The <code>cargo-outdated</code> tool must be used to check dependencies' status. Then,
 each outdated dependency must be updated or the choice of the version must be
 justified.</p>
 </blockquote>
@@ -705,12 +705,12 @@ missing drops, such as:</p>
 <ul>
 <li>a reference cycle (for instance, with <code>Rc</code> or <code>Arc</code>),</li>
 <li>an explicit call to <code>std::mem::forget</code> (or <code>core::mem::forget</code>) (see paragraph
-on <a href="05_memory.html#forget-and-memory-leaks">Forget and memory leaks</a>,</li>
-<li>a panic in drop,</li>
+on <a href="05_memory.html#forget-and-memory-leaks">Forget and memory leaks</a>),</li>
+<li>a panic during drop,</li>
 <li>program aborts (and panics when abort-on-panic is on).</li>
 </ul>
 <p>And missing drops may lead to exposing sensitive data or to lock limited
-resources leading to unavailability issues.</p>
+resources leading to availability issues.</p>
 <blockquote>
 <p><strong>Rule <a id="LANG-DROP-NO-PANIC"></a>LANG-DROP-NO-PANIC</strong></p>
 <p>In a Rust secure development, the implementation of the <code>std::ops::Drop</code> trait
@@ -719,7 +719,7 @@ must not panic.</p>
 <p>Beside panics, secure-critical drop should be protected.</p>
 <blockquote>
 <p><strong>Rule <a id="LANG-DROP-NO-CYCLE"></a>LANG-DROP-NO-CYCLE</strong></p>
-<p>Value whose type implements <code>Drop</code> must not be embedded directly or indirectly
+<p>A value whose type implements <code>Drop</code> must not be embedded directly or indirectly
 in a cycle of reference-counted references.</p>
 </blockquote>
 <blockquote>
@@ -2062,7 +2062,7 @@ field:</p>
 documented and peer-reviewed.</p>
 </blockquote>
 <h2 id="comparison-traits-partialeq-eq-partialord-ord"><a class="header" href="#comparison-traits-partialeq-eq-partialord-ord">Comparison traits (<code>PartialEq</code>, <code>Eq</code>, <code>PartialOrd</code>, <code>Ord</code>)</a></h2>
-<p>Comparisons (<code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>) in Rust relies on four standard
+<p>Comparisons (<code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>) in Rust rely on four standard
 traits available in <code>std::cmp</code> (or <code>core::cmp</code> for <code>no_std</code> compilation):</p>
 <ul>
 <li><code>PartialEq&lt;Rhs&gt;</code> that defines a partial equivalence between
@@ -2071,11 +2071,11 @@ objects of types <code>Self</code> and <code>Rhs</code>,</li>
 <code>Self</code> and <code>Rhs</code>,</li>
 <li><code>Eq</code> that defines a total equivalence between objects of the same
 type. It is only a marker trait that requires <code>PartialEq&lt;Self&gt;</code>!</li>
-<li><code>Ord</code> that defines the total order between objects of the same type.
+<li><code>Ord</code> that defines a total order between objects of the same type.
 It requires that <code>PartialOrd&lt;Self&gt;</code> is implemented.</li>
 </ul>
-<p>As documented in the standard library, Rust assumes <strong>a lot of invariants</strong>
-about the implementations of those traits:</p>
+<p>As documented in the standard library, Rust assumes <strong>many invariants</strong>
+about each implementation of those traits:</p>
 <ul>
 <li>
 <p>For <code>PartialEq</code></p>
@@ -2173,7 +2173,7 @@ exactly one of <code>a.eq(b)</code>, <code>a.lt(b)</code>, <code>a.gt(b)</code> 
 </ul>
 </li>
 </ul>
-<p>The compiler do not check any of those requirements except for the type checking
+<p>The compiler does not check any of those requirements except for the type checking
 itself. However, comparisons are critical because they intervene both in
 liveness critical systems such as schedulers and load balancers, and in
 optimized algorithms that may use <code>unsafe</code> blocks.
@@ -2223,7 +2223,7 @@ assert!(T1 { a: 1, b: 1 } &gt; T1 { a: 1, b: 0 });
 <div class="warning">
 <p>Derivation of comparison traits for compound types depends on the
 <strong>field order</strong>, and not on their names.</p>
-<p>First, it means that changing the order of declaration of two fields change
+<p>First, it means that changing the order of declaration of two fields changes
 the resulting lexicographical order. For instance, provided this second
 ordered type:</p>
 <pre><code class="language-rust noplaypen">#[derive(PartialEq, Eq, PartialOrd, Ord)]
@@ -2232,13 +2232,13 @@ struct T2{
 };</code></pre>
 <p>we have <code>T1 {a: 1, b: 0} &gt; T1 {a: 0, b: 1}</code> but
 <code>T2 {a: 1, b: 0} &lt; T2 {a: 0, b: 1}</code>.</p>
-<p>Second, if one of the underlying comparison panics, the order may change the
+<p>Second, if one of the underlying comparisons panics, the order may change the
 result due to the use of short-circuit logic in the automatic implementation.</p>
-<p>For enums, the derived comparisons depends first on the <strong>variant order</strong> then
+<p>For enums, the derived comparisons depend first on the <strong>variant order</strong>, then
 on the field order.</p>
 </div>
 <p>Despite the ordering caveat, derived comparisons are a lot less error-prone
-than manual ones and makes code shorter and easier to maintain.</p>
+than manual ones and make the code shorter and easier to maintain.</p>
 <blockquote>
 <p><strong>Recommendation <a id="LANG-CMP-DERIVE"></a>LANG-CMP-DERIVE</strong></p>
 <p>In a secure Rust development, the implementation of standard comparison traits
