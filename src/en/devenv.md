@@ -193,31 +193,9 @@ be overriden when using Cargo to build the project.
 [cargo]: https://doc.rust-lang.org/stable/cargo/
 [the cargo book]: https://doc.rust-lang.org/cargo/index.html
 
-### Clippy
-
-[Clippy] is a tool that provides and checks many lints (bugs, styling, performance
-issues, etc.). Since version 1.29, `clippy` can be used within the stable
-`rustup` environment. It is recommended to install `clippy` as a component
-(`rustup component add clippy`) in the stable toolchain instead of installing it
-as a project dependency.
-
-The tool comes with some lint categories regarding the kind of issues it aims to
-detect. The warnings should be re-checked by the programmer before committing
-the fix that is suggested by `clippy`, especially in the case of lints of the
-category `clippy::nursery` since those hints are still under development.
-
-<div class="reco" id="DENV-LINTER" type="Rule" title="Use linter regularly">
-
-A linter, such as `clippy`, must be used regularly during the development of
-a secure application.
-
-</div>
-
-[clippy]: https://github.com/rust-lang/rust-clippy
-
 ### Rustfmt
 
-[Rustfmt] is a tool that formats your code according to style guidelines. The
+Included with Rust, [Rustfmt] is a tool that formats your code according to style guidelines. The
 documentation of the tool states some limitations, among others partial support
 of macro declarations and uses. One should use the `--check` option that prints
 proposed changes, review these changes, and finally apply them if the code
@@ -287,14 +265,38 @@ proposed fixes. In particular, some corrections (such as some of those
 provided with the `--edition-idioms`) are known to break the compilation
 or change the program semantics in some cases.
 
-<div class="reco" id="DENV-AUTOFIX" type="Rule" title="Manually check automatic fixes">
+[rustfix]: https://github.com/rust-lang-nursery/rustfix
 
-In a secure Rust development, any automatic fix (for instance, provided by
-`rustfix`) must be verified by the developer.
+### Clippy
+
+[Clippy] is a tool that provides and checks many lints (bugs, styling, performance
+issues, etc.). Since version 1.29, `clippy` can be used within the stable
+`rustup` environment. It is recommended to install `clippy` as a component
+(`rustup component add clippy`) in the stable toolchain instead of installing it
+as a project dependency.
+
+The tool comes with some lint categories regarding the kind of issues it aims to
+detect. The warnings should be re-checked by the programmer before committing
+the fix that is suggested by `clippy`, especially in the case of lints of the
+category `clippy::nursery` since those hints are still under development.
+
+`clippy` now has similar `fix` tool as `rustfix`
+
+[clippy]: https://github.com/rust-lang/rust-clippy
+
+<div class="reco" id="DENV-LINTER" type="Rule" title="Use linter regularly">
+
+A linter, such as `clippy`, must be used regularly during the development of
+a secure application.
 
 </div>
 
-[rustfix]: https://github.com/rust-lang-nursery/rustfix
+<div class="reco" id="DENV-AUTOFIX" type="Rule" title="Manually check automatic fixes">
+
+In a secure Rust development, any automatic fix (for instance, provided by
+`rustfix` or `clippy`) must be verified by the developer.
+
+</div>
 
 ### Others
 
