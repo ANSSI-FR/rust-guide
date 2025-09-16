@@ -226,30 +226,6 @@ doivent pas être modifiées lorsque Cargo est appelé pour compiler un projet.
 [crates.io]: https://crates.io
 [cargo]: https://doc.rust-lang.org/stable/cargo/
 
-### Clippy
-
-[Clippy] est un outil permettant la vérification de nombreux *lints* (*bugs*,
-style et lisibilité du code, problèmes de performances, etc.). Depuis la chaîne
-d'outils stable en version 1.29, `clippy` peut être installé dans
-l'environnement `rustup` stable. Il est aussi recommandé d'installer `clippy` en
-tant que composant (`rustup component add clippy`) dans la chaîne d'outils
-stable plutôt que de l'installer comme une dépendance de chaque projet.
-
-L'outil fournit plusieurs catégories de *lints*, selon le type de problème qu'il
-vise à détecter dans le code. Les avertissements doivent être revérifiés par le
-développeur avant d'appliquer la réparation suggérée par `clippy`, en
-particulier dans le cas des *lints* de la catégorie `clippy::nursery` puisque
-ceux-ci sont encore en cours de développement et de mise au point.
-
-<div class="reco" id="DENV-LINTER" type="Règle" title="Utilisation régulière d'un *linter*">
-
-Un *linter* comme `clippy` doit être utilisé régulièrement tout au long du
-développement d'une application sécurisée.
-
-</div>
-
-[clippy]: https://github.com/rust-lang/rust-clippy
-
 ### Rustfmt
 
 [Rustfmt] est un outil offrant la possibilité de formater du code en fonction
@@ -279,9 +255,9 @@ règles de convention de style (comme décrites dans le fichier `rustfmt.toml`)
 
 [rustfmt]: https://github.com/rust-lang/rustfmt
 
-### Rustfix
+### Cargo fix
 
-Inclus dans la distribution Rust depuis la fin de l'année 2018, Rustfix est un
+La commande `cargo fix` est un
 outil dédié à la réparation des avertissements de compilation et facilitant la
 transition entre éditions.
 
@@ -289,21 +265,21 @@ transition entre éditions.
 $ cargo fix
 ```
 
-Pour préparer la transition d'un projet de l'édition Rust 2015 à Rust 2018, il
+Pour préparer la transition d'un projet de l'édition Rust 2021 à Rust 2024, il
 est possible de lancer la commande suivante :
 
 ```shell
 $ cargo fix --edition
 ```
 
-Rustfix va soit réparer le code afin de le rendre compatible avec Rust 2018,
+Rustfix va soit réparer le code afin de le rendre compatible avec Rust 2024,
 ou bien afficher un avertissement décrivant le problème. Le problème devra alors
 être réparé manuellement. En exécutant la commande (et en réparant
 potentiellement les problèmes manuellement) jusqu'à ce qu'elle n'affiche plus
 aucun avertissement, il est possible de s'assurer que le code est compatible
-tant avec Rust 2015 qu'avec Rust 2018.
+tant avec Rust 2021 qu'avec Rust 2024.
 
-Pour basculer définitivement le projet sous Rust 2018 :
+Pour basculer définitivement le projet sous Rust 2024 :
 
 ```shell
 $ cargo fix --edition-idioms
@@ -315,10 +291,38 @@ configuration, certaines réparations (comme celles proposées avec l'option
 `--edition-idioms`) sont connues pour casser la compilation ou pour modifier
 la sémantique d'un programme dans certains cas.
 
+[rustfix]: https://github.com/rust-lang-nursery/rustfix
+
+### Clippy
+
+[Clippy] est un outil permettant la vérification de nombreux *lints* (*bugs*,
+style et lisibilité du code, problèmes de performances, etc.). Depuis la chaîne
+d'outils stable en version 1.29, `clippy` peut être installé dans
+l'environnement `rustup` stable. Il est aussi recommandé d'installer `clippy` en
+tant que composant (`rustup component add clippy`) dans la chaîne d'outils
+stable plutôt que de l'installer comme une dépendance de chaque projet.
+
+L'outil fournit plusieurs catégories de *lints*, selon le type de problème qu'il
+vise à détecter dans le code. Les avertissements doivent être revérifiés par le
+développeur avant d'appliquer la réparation suggérée par `clippy`, en
+particulier dans le cas des *lints* de la catégorie `clippy::nursery` puisque
+ceux-ci sont encore en cours de développement et de mise au point.
+
+`clippy` dispose maintenant d'un outils `fix` similaire à celui de `rustfix`.
+
+[clippy]: https://github.com/rust-lang/rust-clippy
+
+<div class="reco" id="DENV-LINTER" type="Règle" title="Utilisation régulière d'un *linter*">
+
+Un *linter* comme `clippy` doit être utilisé régulièrement tout au long du
+développement d'une application sécurisée.
+
+</div>
+
 <div class="reco" id="DENV-AUTOFIX" type="Règle" title="Vérification manuelle des réparations automatiques">
 
 Dans le cadre du développement d'une application sécurisée, toute réparation
-automatique (comme celles appliquées par `rustfix` par exemple) doit être
+automatique (comme celles appliquées par `rustfix` ou `clippy` par exemple) doit être
 vérifiée par le développeur.
 
 </div>

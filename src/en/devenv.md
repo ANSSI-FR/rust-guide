@@ -207,31 +207,9 @@ be overriden when using Cargo to build the project.
 [crates.io]: https://crates.io
 [cargo]: https://doc.rust-lang.org/stable/cargo/
 
-### Clippy
-
-[Clippy] is a tool that provides and checks many lints (bugs, styling, performance
-issues, etc.). Since version 1.29, `clippy` can be used within the stable
-`rustup` environment. It is recommended to install `clippy` as a component
-(`rustup component add clippy`) in the stable toolchain instead of installing it
-as a project dependency.
-
-The tool comes with some lint categories regarding the kind of issues it aims to
-detect. The warnings should be re-checked by the programmer before committing
-the fix that is suggested by `clippy`, especially in the case of lints of the
-category `clippy::nursery` since those hints are still under development.
-
-<div class="reco" id="DENV-LINTER" type="Rule" title="Use linter regularly">
-
-A linter, such as `clippy`, must be used regularly during the development of
-a secure application.
-
-</div>
-
-[clippy]: https://github.com/rust-lang/rust-clippy
-
 ### Rustfmt
 
-[Rustfmt] is a tool that formats your code according to style guidelines.
+Included with Rust, [Rustfmt] is a tool that formats your code according to style guidelines.
 
 These guidelines can be customized to your needs by creating a `rustfmt.toml` or
 `.rustfmt.toml` file at the root of your project. It will be used to override
@@ -256,28 +234,28 @@ guidelines (as described in `rustfmt.toml` file).
 
 [rustfmt]: https://github.com/rust-lang/rustfmt
 
-### Rustfix
+### Cargo fix
 
-Included with Rust, since the end of 2018, Rustfix is a tool dedicated in
+The `cargo fix` command is a tool dedicated in
 fixing compiler warnings as well as easing transitions between editions.
 
 ```shell
 $ cargo fix
 ```
 
-To prepare a Rust 2015 project to transition to Rust 2018, one can run:
+To prepare a Rust 2021 project to transition to Rust 2024, one can run:
 
 ```shell
 $ cargo fix --edition
 ```
 
-Rustfix will either fix the code to be compatible with Rust 2018 or print a
+Rustfix will either fix the code to be compatible with Rust 2024 or print a
 warning that explains the problem. This problem will have to be fixed manually.
 By running the command (and possibly fixing manually some issues) until there
-is no warning, one can ensure the code is compatible with both Rust 2015 and
-Rust 2018.
+is no warning, one can ensure the code is compatible with both Rust 2021 and
+Rust 2024.
 
-To switch definitely to Rust 2018, one may run:
+To switch definitely to Rust 2024, one may run:
 
 ```shell
 $ cargo fix --edition-idioms
@@ -288,10 +266,36 @@ proposed fixes. In particular, some corrections (such as some of those
 provided with the `--edition-idioms`) are known to break the compilation
 or change the program semantics in some cases.
 
+[rustfix]: https://github.com/rust-lang-nursery/rustfix
+
+### Clippy
+
+[Clippy] is a tool that provides and checks many lints (bugs, styling, performance
+issues, etc.). Since version 1.29, `clippy` can be used within the stable
+`rustup` environment. It is recommended to install `clippy` as a component
+(`rustup component add clippy`) in the stable toolchain instead of installing it
+as a project dependency.
+
+The tool comes with some lint categories regarding the kind of issues it aims to
+detect. The warnings should be re-checked by the programmer before committing
+the fix that is suggested by `clippy`, especially in the case of lints of the
+category `clippy::nursery` since those hints are still under development.
+
+`clippy` now has similar `fix` tool as `rustfix`
+
+[clippy]: https://github.com/rust-lang/rust-clippy
+
+<div class="reco" id="DENV-LINTER" type="Rule" title="Use linter regularly">
+
+A linter, such as `clippy`, must be used regularly during the development of
+a secure application.
+
+</div>
+
 <div class="reco" id="DENV-AUTOFIX" type="Rule" title="Manually check automatic fixes">
 
 In a secure Rust development, any automatic fix (for instance, provided by
-`rustfix`) must be verified by the developer.
+`rustfix` or `clippy`) must be verified by the developer.
 
 </div>
 
