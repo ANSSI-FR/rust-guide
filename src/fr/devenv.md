@@ -253,21 +253,7 @@ développement d'une application sécurisée.
 ### Rustfmt
 
 [Rustfmt] est un outil offrant la possibilité de formater du code en fonction
-de consignes de style (*style guidelines*). La documentation de l'outil
-mentionne certaines limitations parmi lesquelles un support partiel des macros
-(déclaration et utilisation). L'option `--check`, qui affiche les différences
-de formatage entre le code actuel et le code proposé, doit être utilisé. À la
-suite de cette première utilisation, l'utilisateur doit vérifier les
-changements, puis éventuellement les valider en réinvoquant l'outil sans
-option.
-
-En résumé :
-
-```shell
-$ cargo fmt -- --check
-$ # review of the changes
-$ cargo fmt
-```
+de consignes de style (*style guidelines*).
 
 Les règles de convention de style peuvent être personnalisées au besoin dans
 le fichier `rustfmt.toml` ou `.rustfmt.toml` à la racine du projet. Il sera
@@ -287,8 +273,7 @@ Pour plus d'informations à propos des règles de convention de style que
 
 L'outil de formatage `rustfmt` peut être utilisé pour assurer le respect de
 règles de convention de style (comme décrites dans le fichier `rustfmt.toml`)
-sur une base de code, avec l'option `--check` ainsi qu'une revue de code
-manuelle.
+> sur une base de code.
 
 </div>
 

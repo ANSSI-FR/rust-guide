@@ -231,19 +231,7 @@ a secure application.
 
 ### Rustfmt
 
-[Rustfmt] is a tool that formats your code according to style guidelines. The
-documentation of the tool states some limitations, among others partial support
-of macro declarations and uses. One should use the `--check` option that prints
-proposed changes, review these changes, and finally apply them if the code
-readability is not affected.
-
-So, to launch it:
-
-```shell
-$ cargo fmt -- --check
-$ # review of the changes
-$ cargo fmt
-```
+[Rustfmt] is a tool that formats your code according to style guidelines.
 
 These guidelines can be customized to your needs by creating a `rustfmt.toml` or
 `.rustfmt.toml` file at the root of your project. It will be used to override
@@ -262,8 +250,7 @@ at the [@rust-style].
 <div class="reco" id="DENV-FORMAT" type="Rule" title="Use Rust formatter (rustfmt)">
 
 The tool `rustfmt` can be used to ensure that the codebase respects style
-guidelines (as described in `rustfmt.toml` file), with `--check` option and
-manual review.
+guidelines (as described in `rustfmt.toml` file).
 
 </div>
 
