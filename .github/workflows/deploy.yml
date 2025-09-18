@@ -16,6 +16,8 @@ jobs:
       uses: actions/checkout@v3
     - name: Prepare
       run: cargo install mdbook mdbook-checklist
+    - name: Install mdbook-code-align
+      run: cargo install --path ./mdbook-code-align
     - name: Build EN version
       run: |
         ./lang.sh en

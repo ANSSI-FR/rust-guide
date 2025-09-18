@@ -19,3 +19,6 @@ additional-css = [
 
 [preprocessor.checklist]
 title = "Liste des recommandations"
+
+[preprocessor.code-align]
+after = ["links"]

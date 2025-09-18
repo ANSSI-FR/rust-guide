@@ -47,6 +47,18 @@
 
         });
 
+        mdbook-code-align = pkgs.rustPlatform.buildRustPackage (finalAttrs: rec {
+          pname = "mdbook-code-align";
+          version = "0.1.0";
+
+          src = ./mdbook-code-align;
+
+          cargoLock = {
+            lockFile = "${src}/Cargo.lock";
+          };
+
+        });
+
         mdbook-shiftinclude = pkgs.rustPlatform.buildRustPackage (finalAttrs: rec {
           pname = "mdbook-shiftinclude";
           version = "0.1.0";
@@ -72,6 +84,7 @@
             bash
             mdbook-checklist
             mdbook-shiftinclude
+            mdbook-code-align
           ];
         };
       }
