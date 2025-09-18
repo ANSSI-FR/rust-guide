@@ -84,27 +84,7 @@ L'exemple qui suit est extrait du [Rustonomicon](https://doc.rust-lang.org/nomic
 Si l'on souhait réimplémenter le type `Vec`, on pourrait utiliser le code suivant :
 
 ```rust
-use std::ptr;
-
-pub struct Vec<T> {
-    ptr: *mut T,
-    len: usize,
-    cap: usize,
-}
-
-// Note this implementation does not correctly handle zero-sized types.
-impl<T> Vec<T> {
-    pub fn push(&mut self, elem: T) {
-        if self.len == self.cap {
-            // not important for this example
-            self.reallocate();
-        }
-        unsafe {
-            ptr::write(self.ptr.add(self.len), elem);
-            self.len += 1;
-        }
-    }
-}
+{{#include ../../../examples/src/generalities.rs:naive_vec}}
 ```
 
 La sûreté de ce code repose sur plusieurs invariants, dont l'un stipule que
@@ -114,10 +94,7 @@ Or, il est possible de casser cet invariant avec du code *safe*. Par exemple
 
 
 ```rust
-fn make_room(&mut self) {
-    // grow the capacity
-    self.cap += 1;
-}
+{{#include ../../../examples/src/generalities.rs:make_room}}
 ```
 
 Si elle peut être tout à fait légitime pour du code *interne* à l'API,
@@ -150,47 +127,20 @@ On souhaite proposer une API permettant de parcourir la mémoire pour y trouver 
 On demande donc à l'utilisateur de l'API de fournir une implémentation à ce trait
 
 ```rust
-trait Locatable {
-    /// Find object of type `Self` in the buffer `buf`.
-    /// Returns the index of the first byte representing
-    /// an object of type `Self`
-    fn locate_instance_into(buf: &[u8]) -> Option<usize>;
-}
+{{#include ../../../examples/src/generalities.rs:Locatable}}
 ```
 
 L'implémentation d'un tel trait peut être réalisée en utilisant du code **sans** `unsafe`.
 
 Par exemple, on peut implémenter ce trait pour le type `bool` comme suit.
 
-```rust
-impl Locatable for bool {
-    fn locate_instance_into(buf: &[u8]) -> Option<usize> {
-        buf.iter().position(|u| *u == 0 || *u == 1)
-    }
-}
-```
-
-D'autre part, la fonction permettant de reconstruire un type `Locatable` pourrait être la suivante.
-
-```rust
-fn locate<T: Locatable + Clone>(start: *const u8, len: usize) -> Option<T> {
-    let buf = unsafe { from_raw_parts(start, len) };
-    match T::locate_instance_into(buf) {
-        Some(begin) => unsafe {
-            let start_T: *const T = start.byte_add(begin).cast();
-            match start_T.as_ref() {
-                None => None, // if start_T is null
-                Some(r) => Some(r.clone()),
-            }
-        },
-        None => None,
-    }
-}
+```rust,ignore align
+{{#include ../../../examples/src/generalities.rs:Locatable_bool_OK}}
 ```
 
 <div class="warning">
 
-Cette implémentation est mauvaise pour deux raisons :
+Cette API est mauvaise pour deux raisons :
 
 * dans le cas où l'implémentation de `Locatable` ne donne pas le bon index de 
   départ de l'objet, alors la fonction `as_ref` peut produire un *UB*.
@@ -199,25 +149,16 @@ Cette implémentation est mauvaise pour deux raisons :
 
 </div>
 
-Par exemple, si l'implémentation de `Locatable` est
+Par exemple, cette implémentation de `Locatable` est fautive mais n'est pas `unsafe` :
 
-```rust
-impl Locatable for bool {
-    fn locate_instance_into(buf: &[u8]) -> Option<usize> {
-        buf.iter().position(|u| *u == 0 || *u == 1).map(|n| n - 2)
-    }
-}
+```rust,ignore align
+{{#include ../../../examples/src/generalities.rs:Locatable_bool_KO}}
 ```
 
-l'exécution du programme suivant produit un *UB*
+L'exécution du programme suivant produit un *UB* :
 
-```rust,should_panic
-fn main() {
-    let buf = [4, 1, 99];
-    let start = buf.as_ptr();
-    let located_bool: Option<bool> = locate(start, buf.len()); // UB here!
-    println!("{:?}", located_bool)
-}
+```rust,ignore align
+{{#include ../../../examples/src/generalities.rs:Locatable_UB}}
 ```
 
 Voici le retour obtenu avec `valgrind`

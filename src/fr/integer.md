@@ -19,28 +19,7 @@ Ce comportement peut être rendu explicite en utilisant le type générique
 `add`, `mul`, `sub`, `shr`, etc.).
 
 ```rust
-use std::num::Wrapping;
-# use std::panic;
-
-# fn main() {
-let x: u8 = 242;
-
-# let result = panic::catch_unwind(|| {
-println!("{}", x + 50);                      // panique en mode debug, affiche 36 en mode release.
-# });
-# if result.is_err() { println!("panic"); }
-println!("{}", x.overflowing_add(50).0);     // affiche toujours 36.
-println!("{}", x.wrapping_add(50));          // affiche toujours 36.
-println!("{}", Wrapping(x) + Wrapping(50));  // affiche toujours 36.
-
-// panique toujours :
-let (res, c) = x.overflowing_add(50);
-# let result = panic::catch_unwind(|| {
-if c { panic!("custom error"); }
-else { println!("{}", res); }
-# });
-# if result.is_err() { println!("panic"); }
-# }
+{{#include ../../examples/src/integer.rs}}
 ```
 
 > **Règle {{#check LANG-ARITH | Utilisation des opérations arithmétiques appropriées au regard des potentiels dépassements}}**

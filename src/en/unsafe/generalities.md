@@ -71,27 +71,7 @@ The following code comes from the [Rustonomicon](https://doc.rust-lang.org/nomic
 It could be used to implement a custom `Vec` type.
 
 ```rust
-use std::ptr;
-
-pub struct Vec<T> {
-    ptr: *mut T,
-    len: usize,
-    cap: usize,
-}
-
-// Note this implementation does not correctly handle zero-sized types.
-impl<T> Vec<T> {
-    pub fn push(&mut self, elem: T) {
-        if self.len == self.cap {
-            // not important for this example
-            self.reallocate();
-        }
-        unsafe {
-            ptr::write(self.ptr.add(self.len), elem);
-            self.len += 1;
-        }
-    }
-}
+{{#include ../../../examples/src/generalities.rs:naive_vec}}
 ```
 
 Soundness and safety of this code rely on the fact that bytes from address `self.ptr` to `self.ptr + self.cap * size_of<T>()` are allocated.
@@ -99,10 +79,7 @@ Soundness and safety of this code rely on the fact that bytes from address `self
 This invariant can be broken with *safe* code. For instance
 
 ```rust
-fn make_room(&mut self) {
-    // grow the capacity
-    self.cap += 1;
-}
+{{#include ../../../examples/src/generalities.rs:make_room}}
 ```
 
 This function my be necessary for internal use, but it should not be exposed in the API, or it should be marked with `unsafe` keyword, because its use can lead to *UB*.
@@ -125,46 +102,20 @@ Suppose one wants to propose an API to find objects of a given type in the memor
 This API could ask implementing the following trait
 
 ```rust
-trait Locatable {
-    /// Find objects of type `Self` in the buffer `buf`.
-    /// Return the index of the first byte representing
-    /// an object of type `Self`.
-    fn locate_instance_into(buf: &[u8]) -> Option<usize>;
-}
+{{#include ../../../examples/src/generalities.rs:Locatable}}
 ```
+
 This trait can be implemented **without** `unsafe`.
 
 For instance, `bool` type can implement this trait as follows:
 
-```rust
-impl Locatable for bool {
-    fn locate_instance_into(buf: &[u8]) -> Option<usize> {
-        buf.iter().position(|u| *u == 0 || *u == 1)
-    }
-}
-```
-
-Moreover the function searching a `Locatable` type in the memory could be the following.
-
-```rust
-fn locate<T: Locatable + Clone>(start: *const u8, len: usize) -> Option<T> {
-    let buf = unsafe { from_raw_parts(start, len) };
-    match T::locate_instance_into(buf) {
-        Some(begin) => unsafe {
-            let start_T: *const T = start.byte_add(begin).cast();
-            match start_T.as_ref() {
-                None => None, // if start_T is null
-                Some(r) => Some(r.clone()),
-            }
-        },
-        None => None,
-    }
-}
+```rust,ignore align
+{{#include ../../../examples/src/generalities.rs:Locatable_bool_OK}}
 ```
 
 <div class="warning">
 
-This implementation is harmful for two reasons:
+This API is harmful for two reasons:
 
 * If the `Locatable` implementation gives the wrong index, the `as_ref` function produce an *UB*.
 * If the `Locatable` implementation gives an out-of-bounds index, the subsequent buffer overflow is an *UB*.
@@ -173,23 +124,14 @@ This implementation is harmful for two reasons:
 
 For instance, the following `Locatable` implementation is wrong **but** it is the responsibility of the API maker to take it into account.
 
-```rust
-impl Locatable for bool {
-    fn locate_instance_into(buf: &[u8]) -> Option<usize> {
-        buf.iter().position(|u| *u == 0 || *u == 1).map(|n| n + 2)
-    }
-}
+```rust align
+{{#include ../../../examples/src/generalities.rs:Locatable_bool_KO}}
 ```
 
 The following program produces a *UB*.
 
-```rust,should_panic
-fn main() {
-    let buf = [4, 1, 99];
-    let start = buf.as_ptr();
-    let located_bool: Option<bool> = locate(start, buf.len()); // UB here!
-    println!("{:?}", located_bool)
-}
+```rust,ignore align
+{{#include ../../../examples/src/generalities.rs:Locatable_UB}}
 ```
 
 The error can be shown with `valgrind`

@@ -28,8 +28,7 @@ destructeurs associés lorsque nécessaire, `forget` quant à elle n'appelle pas
 ces destructeurs.
 
 ```rust
-let pair = ('↑', 0xBADD_CAFEu32);
-drop(pair); // ici, `forget` serait équivalent (pas de destructeur à appeler)
+{{#include ../../../examples/src/memory.rs:drop_example}}
 ```
 
 Les deux fonctions sont considérées comme **sûres du point de vue mémoire** par
@@ -37,9 +36,7 @@ Rust. Toutefois, `forget` rendra toute ressource gérée par la valeur libérée
 inaccessible, mais non libérée.
 
 ```rust
-# use std::mem::forget;
-let s = String::from("Hello");
-forget(s); // fuite mémoire
+{{#include ../../../examples/src/memory.rs:forget_example}}
 ```
 
 En particulier, l'utilisation de `forget` peut causer la rétention en mémoire de
@@ -121,10 +118,8 @@ pointeurs *intelligents* (*smart pointer*) de Rust. En particulier, leur libéra
 > - `std::ffi::CString` ;
 > - `std::ffi::OsString`.
 >
-> ```rust
-> let boxed = Box::new(String::from("Crab"));
-> let raw_ptr = unsafe { Box::into_raw(boxed) };
-> let _ = unsafe { Box::from_raw(raw_ptr) }; // sera libéré
+> ```rust align
+> {{#include ../../../examples/src/memory.rs:raw_pointer}}
 > ```
 
 La réciproque est aussi vrai, c'est à dire que les fonctions `from_raw` ne
@@ -146,17 +141,8 @@ devraient pas être utilisées sur des *raw pointers* qui ne sont pas issus de l
 > est bien plus compliqué que de *re-boxer* le pointeur brut et doit être
 > évité :
 >
-> ```rust
-> // extrait de la documentation de la bibliothèque standard
-> use std::alloc::{dealloc, Layout};
-> use std::ptr;
->
-> let x = Box::new(String::from("Hello"));
-> let p = Box::into_raw(x);
-> unsafe {
->     ptr::drop_in_place(p);
->     dealloc(p as *mut u8, Layout::new::<String>());
-> }
+> ```rust align
+> {{#include ../../../examples/src/memory.rs:into_raw}}
 > ```
 >
 > Puisque les autres types (`Rc` et `Arc`) sont opaques et plus complexes, la
@@ -196,26 +182,8 @@ La **combinaison** de la mutabilité *[intérieure](https://doc.rust-lang.org/re
 
 L'exemple non-`unsafe` suivant montre, la création d'une fuite mémoire en utilisant la mutabilité intérieure et les références comptées.
 
-```rust
-use std::{cell::Cell, rc::Rc};
-
-struct LinkedStruct {
-    other: Cell<Option<Rc<LinkedStruct>>>,
-}
-
-fn main() {
-    println!("Hello, world!");
-    let a = Rc::new(LinkedStruct {
-        other: Cell::new(None),
-    });
-    let b = Rc::new(LinkedStruct {
-        other: Cell::new(None),
-    });
-    let aa = a.clone();
-    let bb = b.clone();
-    a.other.set(Some(bb));
-    b.other.set(Some(aa));
-}
+```rust align
+{{#include ../../../examples/src/memory.rs:cyclic}}
 ```
 
 La fuite peut-être mise en évidence grâce à `valgrind` :

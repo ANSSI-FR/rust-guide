@@ -13,30 +13,17 @@ depends on the target platform. The default one is `C` which corresponds to
 a standard C calling convention on the target platform.
 
 ```rust
-// export a C-compatible function
-#[no_mangle]
-unsafe extern "C" fn mylib_f(param: u32) -> i32 {
-    if param == 0xCAFEBABE { 0 } else { -1 }
-}
+{{#include ../../../examples/src/ffi.rs:mylib_f}}
 ```
 
 For the function `mylib_f` to be accessible with the same name, the function
-must also be annotated with the `#[no_mangle]` attribute.
+must also be annotated with the `#[unsafe(no_mangle)]` attribute.
 
 Conversely, one can call C functions from Rust if they are declared in an
 `extern` block:
 
 ```rust
-use std::os::raw::c_int;
-// import an external function from libc
-extern "C" {
-    fn abs(args: c_int) -> c_int;
-}
-
-fn main() {
-    let x = -1;
-    println!("{} {}\n", x, unsafe { abs(x) });
-}
+{{#include ../../../examples/src/ffi.rs:import_c}}
 ```
 
 > **Note**
@@ -49,25 +36,7 @@ fn main() {
 with the `static` keyword:
 
 ```rust
-//! A direct way to access environment variables (on Unix).
-//! Should not be used! Not thread safe, have a look at `std::env`!
-
-extern {
-    // Libc global variable
-    #[link_name = "environ"]
-    static libc_environ: *const *const std::os::raw::c_char;
-}
-
-fn main() {
-    let mut next = unsafe { libc_environ };
-    while !next.is_null() && !unsafe { *next }.is_null() {
-        let env = unsafe { std::ffi::CStr::from_ptr(*next) }
-            .to_str()
-            .unwrap_or("<invalid>");
-        println!("{}", env);
-        next = unsafe { next.offset(1) };
-    }
-}
+{{#include ../../../examples/src/ffi.rs:extern_static}}
 ```
 
 ## Typing
@@ -85,34 +54,13 @@ attribute (see [Rust Reference: Type Layout]). For instance, the following Rust
 types:
 
 ```rust
-#[repr(C)]
-struct Data {
-    a: u32,
-    b: u16,
-    c: u64,
-}
-#[repr(C, packed)]
-struct PackedData {
-    a: u32,
-    b: u16,
-    c: u64,
-}
+{{#include ../../../examples/src/ffi.rs:extern_struct}}
 ```
 
 are compatible with the following C types:
 
 ```c
-struct Data {
-    uint32_t a;
-    uint16_t b;
-    uint64_t c;
-};
-__attribute__((packed))
-struct PackedData {
-    uint32_t a;
-    uint16_t b;
-    uint64_t c;
-}
+{{#include ../../../examples/src/ffi.c:extern_struct}}
 ```
 
 > **Rule {{#check FFI-CTYPE | Use only C-compatible types in FFI}}**
@@ -377,15 +325,7 @@ The following code a simple example of foreign pointer use in an exported Rust
 function:
 
 ```rust,noplaypen
-/// Add in place
-#[no_mangle]
-pub unsafe extern fn add_in_place(a: *mut u32, b: u32) {
-    // checks for nullity of `a`
-    // and takes a mutable reference on it if it's non-null
-    if let Some(a) = a.as_mut() {
-        *a += b
-    }
-}
+{{#include ../../../examples/src/ffi.rs:pointers}}
 ```
 
 Note that the methods `as_ref` and `as_mut` (for mutable pointers) allows easy
@@ -393,18 +333,7 @@ access to a reference while ensuring a null check in a very *Rusty* way.
 On the other side in C, it can be used as follows:
 
 ```c
-#include <stdint.h>
-#include <inttypes.h>
-
-//! Add in place
-void add_in_place(uint32_t *a, uint32_t b);
-
-int main() {
-    uint32_t x = 25;
-    add_in_place(&x, 17);
-    printf("%" PRIu32 " == 42", x);
-    return 0;
-}
+{{#include ../../../examples/src/ffi.c:pointers}}
 ```
 
 > **Note**
@@ -434,24 +363,13 @@ possibilities:
 - use `Option`-wrapped function pointer and check against `null`:
 
   ```rust,noplaypen
-  #[no_mangle]
-  pub unsafe extern "C" fn repeat(start: u32, n: u32, f: Option<unsafe extern "C" fn(u32) -> u32>) -> u32 {
-      if let Some(f) = f {
-          let mut value = start;
-          for _ in 0..n {
-              value = f(value);
-          }
-          value
-      } else {
-          start
-      }
-  }
+  {{#include ../../../examples/src/ffi.rs:function_pointers}}
   ```
 
   On the C side:
 
   ```c
-  uint32_t repeat(uint32_t start, uint32_t n, uint32_t (*f)(uint32_t));
+  {{#include ../../../examples/src/ffi.c:function_pointers}}
   ```
 
 - use raw pointers with an `unsafe` transmutation to the function pointer type,
@@ -514,11 +432,7 @@ When doing multilingual development, it is something very common.
 Currently the recommended way to make a foreign opaque type is like so:
 
 ```rust,unsafe,noplaypen
-#[repr(C)]
-pub struct Foo {_private: [u8; 0]}
-extern "C" {
-    fn foo(arg: *mut Foo);
-}
+{{#include ../../../examples/src/ffi.rs:opaque_external}}
 ```
 
 The not-yet-implemented [RFC 1861] proposes to facilitate this encoding by allowing
@@ -536,29 +450,7 @@ to declare opaque types in `extern` blocks.
 Example of opaque Rust type:
 
 ```rust,unsafe,noplaypen
-# use std::panic::catch_unwind;
-#
-struct Opaque {
-    // (...) details to be hidden
-}
-
-#[no_mangle]
-pub unsafe extern "C" fn new_opaque() -> *mut Opaque {
-    catch_unwind(|| // Catch panics, see below
-        Box::into_raw(Box::new(Opaque {
-            // (...) actual construction
-        }))
-    ).unwrap_or(std::ptr::null_mut())
-}
-
-#[no_mangle]
-pub unsafe extern "C" fn destroy_opaque(o: *mut Opaque) {
-    catch_unwind(||
-        if !o.is_null() {
-            drop(Box::from_raw(o))
-        }
-    ); // Only needed if Opaque or one of its subfield is Drop
-}
+{{#include ../../../examples/src/ffi.rs:opaque_internal}}
 ```
 
 ## Memory and resource management
@@ -613,53 +505,7 @@ wrapper around the foreign type:
 A simple example of Rust wrapping over an external opaque type:
 
 ```rust,ignore,noplaypen
-# use std::ops::Drop;
-#
-/// Private “raw” opaque foreign type Foo
-#[repr(C)]
-struct RawFoo {
-    _private: [u8; 0],
-}
-
-/// Private “raw” C API
-extern "C" {
-    fn foo_create() -> *mut RawFoo;
-    fn foo_do_something(this: *const RawFoo);
-    fn foo_destroy(this: *mut RawFoo);
-}
-
-/// Foo
-pub struct Foo(*mut RawFoo);
-#
-impl Foo {
-    /// Create a Foo
-    pub fn new() -> Option<Foo> {
-        let raw_ptr = unsafe { foo_create() };
-        if raw_ptr.is_null() {
-            None
-        } else {
-            Some(Foo(raw_ptr))
-        }
-    }
-#
-    /// Do something on a Foo
-    pub fn do_something(&self) {
-        unsafe { foo_do_something(self.0) }
-    }
-}
-#
-impl Drop for Foo {
-    fn drop(&mut self) {
-        if !self.0.is_null() {
-            unsafe { foo_destroy(self.0) }
-        }
-    }
-}
-
-# fn main() {
-#     let foo = Foo::new().expect("cannot create Foo");
-#     foo.do_something();
-# }
+{{#include ../../../examples/src/ffi.rs:drop_extern}}
 ```
 <div class="warning">
 
@@ -684,117 +530,20 @@ that provides a callback to ensure safe resource
 reclamation:
 
 ```rust,noplaypen
-# use std::ops::Drop;
-#
-pub struct XtraResource {/*fields */}
-
-impl XtraResource {
-    pub fn new() -> Self {
-        XtraResource { /* ... */}
-    }
-    pub fn dosthg(&mut self) {
-        /*...*/
-    }
-}
-
-impl Drop for XtraResource {
-    fn drop(&mut self) {
-        println!("xtra drop");
-    }
-}
-
-pub mod c_api {
-    use super::XtraResource;
-    use std::panic::catch_unwind;
-
-    const INVALID_TAG: u32 = 0;
-    const VALID_TAG: u32 = 0xDEAD_BEEF;
-    const ERR_TAG: u32 = 0xDEAF_CAFE;
-
-    static mut COUNTER: u32 = 0;
-
-    pub struct CXtraResource {
-        tag: u32, // to detect accidental reuse
-        id: u32,
-        inner: XtraResource,
-    }
-
-    #[no_mangle]
-    pub unsafe extern "C" fn xtra_with(cb: extern "C" fn(*mut CXtraResource) -> ()) {
-        let inner = if let Ok(res) = catch_unwind(XtraResource::new) {
-            res
-        } else {
-#             println!("cannot allocate resource");
-            return;
-        };
-        let id = COUNTER;
-        let tag = VALID_TAG;
-
-        COUNTER = COUNTER.wrapping_add(1);
-        // Use heap memory and do not provide pointer to stack to C code!
-        let mut boxed = Box::new(CXtraResource { tag, id, inner });
-
-#         println!("running the callback on {:p}", boxed.as_ref());
-        cb(boxed.as_mut() as *mut CXtraResource);
-
-        if boxed.id == id && (boxed.tag == VALID_TAG || boxed.tag == ERR_TAG) {
-#             println!("freeing {:p}", boxed.as_ref());
-            boxed.tag = INVALID_TAG; // prevent accidental reuse
-                                 // implicit boxed drop
-        } else {
-#             println!("forgetting {:p}", boxed.as_ref());
-            // (...) error handling (should be fatal)
-            boxed.tag = INVALID_TAG; // prevent reuse
-            std::mem::forget(boxed); // boxed is corrupted it should not be
-        }
-    }
-
-    #[no_mangle]
-    pub unsafe extern "C" fn xtra_dosthg(cxtra: *mut CXtraResource) {
-        let do_it = || {
-            if let Some(cxtra) = cxtra.as_mut() {
-                if cxtra.tag == VALID_TAG {
-#                     println!("doing something with {:p}", cxtra);
-                    cxtra.inner.dosthg();
-                    return;
-                }
-            }
-            println!("doing nothing with {:p}", cxtra);
-        };
-        if catch_unwind(do_it).is_err() {
-            if let Some(cxtra) = cxtra.as_mut() {
-#                 println!("panicking with {:p}", cxtra);
-                cxtra.tag = ERR_TAG;
-            }
-        };
-    }
-}
-#
-# fn main() {}
+{{#include ../../../examples/src/ffi.rs:free_intern}}
 ```
 
 A compatible C call:
 
 ```c
-struct XtraResource;
-void xtra_with(void (*cb)(XtraResource* xtra));
-void xtra_sthg(XtraResource* xtra);
-
-void cb(XtraResource* xtra) {
-    // ()...) do anything with the proposed C API for XtraResource
-    xtra_sthg(xtra);
-}
-
-int main() {
-    xtra_with(cb);
-}
+{{#include ../../../examples/src/ffi.c:free_intern}}
 ```
 
 ## Panics with foreign code
 
 When calling Rust code from another language (e.g. C), the Rust code must
-be careful to never panic.
-Stack unwinding from Rust code into foreign code results in **undefined behavior**.
+be careful to never panic:
+stack unwinding from Rust code into foreign code results in **undefined behavior**.
 
 > **Rule {{#check FFI-NOPANIC | Handle `panic!` correctly in FFI}}**
 >
@@ -807,23 +556,7 @@ Note that `catch_unwind` will only catch unwinding panics, not those that abort
 the process.
 
 ```rust,unsafe,noplaypen,ignore
-use std::panic::catch_unwind;
-# use rand;
-
-fn may_panic() {
-    if rand::random() {
-        panic!("panic happens");
-    }
-}
-
-#[no_mangle]
-pub unsafe extern "C" fn no_panic() -> i32 {
-    let result = catch_unwind(may_panic);
-    match result {
-        Ok(_) => 0,
-        Err(_) => -1,
-    }
-}
+{{#include ../../../examples/src/ffi.rs:panic}}
 ```
 
 ### `no_std`
@@ -876,115 +609,18 @@ the Rust C-compatible API of a Rust library.
 `src/lib.rs`:
 
 ```rust,noplaypen
-/// Opaque counter
-pub struct Counter(u32);
-
-impl Counter {
-    /// Create a counter (initially at 0)
-    fn new() -> Self {
-        Self(0)
-    }
-    /// Get the current value of the counter
-    fn get(&self) -> u32 {
-        self.0
-    }
-    /// Increment the value of the counter if there's no overflow
-    fn incr(&mut self) -> bool {
-        if let Some(n) = self.0.checked_add(1) {
-            self.0 = n;
-            true
-        } else {
-            false
-        }
-    }
-}
-
-// C-compatible API
-
-#[no_mangle]
-pub unsafe extern "C" fn counter_create() -> *mut Counter {
-    Box::into_raw(Box::new(Counter::new()))
-}
-
-#[no_mangle]
-pub unsafe extern "C" fn counter_incr(counter: *mut Counter) -> std::os::raw::c_int {
-    if let Some(counter) = counter.as_mut() {
-        if counter.incr() {
-            0
-        } else {
-            -1
-        }
-    } else {
-        -2
-    }
-}
-
-#[no_mangle]
-pub unsafe extern "C" fn counter_get(counter: *const Counter) -> u32 {
-    if let Some(counter) = counter.as_ref() {
-        return counter.get();
-    }
-    return 0;
-}
-
-#[no_mangle]
-pub unsafe extern fn counter_destroy(counter: *mut Counter) -> std::os::raw::c_int {
-    if !counter.is_null() {
-        let _ = Box::from_raw(counter); // get box and drop
-        return 0;
-    }
-    return -1;
-}
+{{#include ../../../examples/src/counter.rs}}
 ```
 
 Using [cbindgen] (`[cbindgen] -l c > counter.h`), one can generate a consistent
 C header, `counter.h`:
 
 ```c
-#include <stdarg.h>
-#include <stdbool.h>
-#include <stdint.h>
-#include <stdlib.h>
-
-typedef struct Counter Counter;
-
-Counter *counter_create(void);
-
-int counter_destroy(Counter *counter);
-
-uint32_t counter_get(const Counter *counter);
-
-int counter_incr(Counter *counter);
+{{#include ../../../examples/src/counter.h}}
 ```
 
 `counter_main.c`:
 
 ```c
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <inttypes.h>
-
-#include "counter.h"
-
-int main(int argc, const char** argv) {
-    if (argc < 2) {
-        return -1;
-    }
-    size_t n = (size_t)strtoull(argv[1], NULL, 10);
-
-    Counter* c = counter_create();
-    for (size_t i=0; i < n; i++) {
-        if (counter_incr(c) != 0) {
-            printf("overflow\n");
-            counter_destroy(c);
-            return -1;
-        }
-    }
-
-    printf("%" PRIu32 "\n", counter_get(c));
-    counter_destroy(c);
-
-    return 0;
-}
+{{#include ../../../examples/src/counter.c}}
 ```

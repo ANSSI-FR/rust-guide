@@ -14,30 +14,17 @@ plateforme d'exécution visée. Par défaut, elle vaut `"C"`, ce qui correspond 
 la manière standard en C d'appeler des fonctions.
 
 ```rust
-// exportation d'une fonction compatible avec le C
-#[no_mangle]
-unsafe extern "C" fn mylib_f(param: u32) -> i32 {
-    if param == 0xCAFEBABE { 0 } else { -1 }
-}
+{{#include ../../../examples/src/ffi.rs:mylib_f}}
 ```
 
 Pour que la fonction `mylib_f` soit accessible avec le même nom, la fonction
-doit être annotée avec l'attribut `#[no_mangle]`).
+doit être annotée avec l'attribut `#[unsafe(no_mangle)]`).
 
 À l'inverse, il est possible d'appeler des fonctions écrites en C depuis du code
 Rust si celles-ci sont déclarées dans un bloc `extern` :
 
 ```rust
-use std::os::raw::c_int;
-// importation d'une fonction externe de la libc
-extern "C" {
-    fn abs(args: c_int) -> c_int;
-}
-
-fn main() {
-    let x = -1;
-    println!("{} {}\n", x, unsafe { abs(x) });
-}
+{{#include ../../../examples/src/ffi.rs:import_c}}
 ```
 
 > **Note**
@@ -50,25 +37,7 @@ Les blocs `extern` peuvent également contenir des déclarations de variables
 globales externes, préfixées alors par le mot-clé `static` :
 
 ```rust
-//! Un accès direct aux variables d'environnement (sur Unix).
-//! Ne doit pas être utilisé ! Non *thread-safe*, voir `std::env` !
-
-extern {
-    // Variable globale de la libc
-    #[link_name = "environ"]
-    static libc_environ: *const *const std::os::raw::c_char;
-}
-
-fn main() {
-    let mut next = unsafe { libc_environ };
-    while !next.is_null() && !unsafe { *next }.is_null() {
-        let env = unsafe { std::ffi::CStr::from_ptr(*next) }
-            .to_str()
-            .unwrap_or("<invalid>");
-        println!("{}", env);
-        next = unsafe { next.offset(1) };
-    }
-}
+{{#include ../../../examples/src/ffi.rs:extern_static}}
 ```
 
 ## Typage
@@ -87,34 +56,13 @@ la déclaration explicite de la compatibilité avec le C, avec l'attribut `repr`
 (voir [Rust Reference: Type Layout]). Par exemple, les types Rust suivants :
 
 ```rust
-#[repr(C)]
-struct Data {
-    a: u32,
-    b: u16,
-    c: u64,
-}
-#[repr(C, packed)]
-struct PackedData {
-    a: u32,
-    b: u16,
-    c: u64,
-}
+{{#include ../../../examples/src/ffi.rs:extern_struct}}
 ```
 
 sont compatibles avec les types C suivants :
 
 ```c
-struct Data {
-    uint32_t a;
-    uint16_t b;
-    uint64_t c;
-};
-__attribute__((packed))
-struct PackedData {
-    uint32_t a;
-    uint16_t b;
-    uint64_t c;
-}
+{{#include ../../../examples/src/ffi.c:extern_struct}}
 ```
 
 > **Règle {{#check FFI-CTYPE | Utilisation exclusive de types compatibles avec le C dans les FFI}}**
@@ -282,7 +230,7 @@ deux langages. Cela revient à décider **quel langage des deux est le plus
 responsable pour assurer la validité des valeurs hors bornes** et comment
 mettre cela en place.
 
-> **Règle {{#check FFI-CKNONROBUST | Non-vérification des valeurs de types non-robustes}}**
+> **Règle {{#check FFI-CKNONROBUST | Vérification des valeurs de types non-robustes}}**
 >
 > Dans un développement sécurisé en Rust, toute valeur externe de type non-
 > robuste doit être vérifiée.
@@ -333,7 +281,7 @@ une FFI peut casser la sûreté mémoire. Parce que leur côté non sûr est plu
 explicite, les pointeurs sont préférés aux références Rust pour un interfaçage
 avec un autre langage.
 
-D'un autre côté, les types des références ne sont pas robustes : ils permettent
+De plus, les types des références ne sont pas robustes : ils permettent
 seulement de pointer vers des objets valides en mémoire. Toute déviation mène à
 des comportements indéfinis.
 
@@ -403,15 +351,7 @@ Le code suivant est un simple exemple d'utilisation de pointeur externe dans une
 fonction Rust exportée :
 
 ```rust,noplaypen
-/// Ajout en place
-#[no_mangle]
-pub unsafe extern fn add_in_place(a: *mut u32, b: u32) {
-    // Vérification du caractère non nul de `a`
-    // et manipulation comme une référence mutable
-    if let Some(a) = a.as_mut() {
-        *a += b
-    }
-}
+{{#include ../../../examples/src/ffi.rs:pointers}}
 ```
 
 Il faut noter que les méthodes `as_ref` et `as_mut` (pour les pointeurs
@@ -420,18 +360,7 @@ vérification du caractère non nul de manière très idiomatique en Rust. Du c�
 du C, la fonction peut alors être utilisée comme suit :
 
 ```c
-#include <stdint.h>
-#include <inttypes.h>
-
-//! Ajout en place
-void add_in_place(uint32_t *a, uint32_t b);
-
-int main() {
-    uint32_t x = 25;
-    add_in_place(&x, 17);
-    printf("%" PRIu32 " == 42", x);
-    return 0;
-}
+{{#include ../../../examples/src/ffi.c:pointers}}
 ```
 
 > **Note**
@@ -466,25 +395,15 @@ alternatives possibles :
 - l'utilisation de pointeurs de fonctions *wrappé* dans une valeur de type
   `Option`, accompagnée d'un test contre la valeur nulle :
 
+  
   ```rust,noplaypen
-  #[no_mangle]
-  pub unsafe extern "C" fn repeat(start: u32, n: u32, f: Option<unsafe extern "C" fn(u32) -> u32>) -> u32 {
-      if let Some(f) = f {
-          let mut value = start;
-          for _ in 0..n {
-              value = f(value);
-          }
-          value
-      } else {
-          start
-      }
-  }
+  {{#include ../../../examples/src/ffi.rs:function_pointers}}
   ```
 
   Du côté C :
 
   ```c
-  uint32_t repeat(uint32_t start, uint32_t n, uint32_t (*f)(uint32_t));
+  {{#include ../../../examples/src/ffi.c:function_pointers}}
   ```
 
 - l'utilisation de pointeurs *bruts* avec une transformation `unsafe` vers un
@@ -534,13 +453,10 @@ l'ABI `extern "C"` d'une `enum class` est définie par l'implémentation et doit
 >   comme les `enum class` de C++ par exemple.
 
 Concernant les énumérations ne contenant aucun champ, des *crates* comme
-[`num_derive`] ou [`num_enum`] permettent au développeur de fournir facilement
+[`num_derive`](https://crates.io/crates/num_derive) ou [`num_enum`](https://crates.io/crates/num_enum) permettent au développeur de fournir facilement
 des opérations de conversions sûres depuis une valeur entière vers une
 énumération et peuvent être utilisées pour convertir de manière contrôlée un
 entier (fourni par une énumération C) vers une énumération C.
-
-[num_derive]: https://crates.io/crates/num_derive
-[num_enum]: https://crates.io/crates/num_enum
 
 ### Types opaques
 
@@ -558,11 +474,7 @@ La pratique recommandée pour récupérer des valeurs externes de type opaque es
 illustrée comme suit :
 
 ```rust,unsafe,noplaypen
-#[repr(C)]
-pub struct Foo {_private: [u8; 0]}
-extern "C" {
-    fn foo(arg: *mut Foo);
-}
+{{#include ../../../examples/src/ffi.rs:opaque_external}}
 ```
 La proposition [RFC 1861], non implémentée à la rédaction de ce guide, propose
 de faciliter cette situation en permettant de déclarer des types opaques dans
@@ -581,29 +493,7 @@ des blocs `extern`.
 Un exemple d'utilisation de type opaque Rust :
 
 ```rust,unsafe,noplaypen
-# use std::panic::catch_unwind;
-#
-struct Opaque {
-    // (...) détails à cacher
-}
-
-#[no_mangle]
-pub unsafe extern "C" fn new_opaque() -> *mut Opaque {
-    catch_unwind(|| // Catch panics, see below
-        Box::into_raw(Box::new(Opaque {
-            // (...) construction
-        }))
-    ).unwrap_or(std::ptr::null_mut())
-}
-
-#[no_mangle]
-pub unsafe extern "C" fn destroy_opaque(o: *mut Opaque) {
-    catch_unwind(||
-        if !o.is_null() {
-            drop(Box::from_raw(o))
-        }
-    ); // nécessaire seulement si `Opaque` ou un de ses champs est `Drop`
-}
+{{#include ../../../examples/src/ffi.rs:opaque_internal}}
 ```
 
 ## Mémoire et gestion des ressources
@@ -616,7 +506,7 @@ les descripteurs de fichiers ou les *sockets*.
 
 Rust piste le responsable ainsi que la durée de vie des variables pour
 déterminer à la compilation si et quand la mémoire associée doit être libérée.
-Grâce au trait `Drop`, il est possible d'exploiter ce système pour récupérer
+Grâce au trait `Drop`, il est possible d'exploiter ce système pour libérer
 toutes sortes de ressources comme des fichiers ou des accès au réseau.
 *Déplacer* une donnée depuis Rust vers un langage signifie également abandonner
 de possibles réclamations de la mémoire qui lui est associée.
@@ -665,53 +555,7 @@ Voici un simple exemple d'encapsulation autour d'un type opaque externe :
 
 
 ```rust,ignore,noplaypen
-# use std::ops::Drop;
-#
-/// Type Foo privé, "raw", opaque, externe
-#[repr(C)]
-struct RawFoo {
-    _private: [u8; 0],
-}
-
-/// API C privée "raw"
-extern "C" {
-    fn foo_create() -> *mut RawFoo;
-    fn foo_do_something(this: *const RawFoo);
-    fn foo_destroy(this: *mut RawFoo);
-}
-
-/// Foo
-pub struct Foo(*mut RawFoo);
-#
-impl Foo {
-    /// Création d'une valeur Foo
-    pub fn new() -> Option<Foo> {
-        let raw_ptr = unsafe { foo_create() };
-        if raw_ptr.is_null() {
-            None
-        } else {
-            Some(Foo(raw_ptr))
-        }
-    }
-#
-    /// Utilisation de Foo
-    pub fn do_something(&self) {
-        unsafe { foo_do_something(self.0) }
-    }
-}
-#
-impl Drop for Foo {
-    fn drop(&mut self) {
-        if !self.0.is_null() {
-            unsafe { foo_destroy(self.0) }
-        }
-    }
-}
-
-# fn main() {
-#     let foo = Foo::new().expect("cannot create Foo");
-#     foo.do_something();
-# }
+{{#include ../../../examples/src/ffi.rs:drop_extern}}
 ```
 
 <div class="warning">
@@ -738,117 +582,19 @@ d'une API compatible avec le C qui fournit une *callback* pour assurer la
 libération d'une ressource :
 
 ```rust,noplaypen
-# use std::ops::Drop;
-#
-pub struct XtraResource { /* champs */ }
-
-impl XtraResource {
-    pub fn new() -> Self {
-        XtraResource { /* ... */ }
-    }
-    pub fn dosthg(&mut self) {
-        /* ... */
-    }
-}
-
-impl Drop for XtraResource {
-    fn drop(&mut self) {
-        println!("xtra drop");
-    }
-}
-
-pub mod c_api {
-    use super::XtraResource;
-    use std::panic::catch_unwind;
-
-    const INVALID_TAG: u32 = 0;
-    const VALID_TAG: u32 = 0xDEAD_BEEF;
-    const ERR_TAG: u32 = 0xDEAF_CAFE;
-
-    static mut COUNTER: u32 = 0;
-
-    pub struct CXtraResource {
-        tag: u32, // pour prévenir d'une réutilisation accidentelle
-        id: u32,
-        inner: XtraResource,
-    }
-
-    #[no_mangle]
-    pub unsafe extern "C" fn xtra_with(cb: extern "C" fn(*mut CXtraResource) -> ()) {
-        let inner = if let Ok(res) = catch_unwind(XtraResource::new) {
-            res
-        } else {
-#             println!("impossible d'allouer la ressource");
-            return;
-        };
-        let id = COUNTER;
-        let tag = VALID_TAG;
-
-        COUNTER = COUNTER.wrapping_add(1);
-        // Utilisation de la mémoire du tas pour ne pas fournir de pointeur de
-        // pile au code C!
-        let mut boxed = Box::new(CXtraResource { tag, id, inner });
-
-#         println!("running the callback on {:p}", boxed.as_ref());
-        cb(boxed.as_mut() as *mut CXtraResource);
-
-        if boxed.id == id && (boxed.tag == VALID_TAG || boxed.tag == ERR_TAG) {
-#             println!("freeing {:p}", boxed.as_ref());
-            boxed.tag = INVALID_TAG; // prévention d'une réutilisation accidentelle
-                                 // drop implicite de la `box`
-        } else {
-#             println!("oubli de {:p}", boxed.as_ref());
-            // (...) gestion des erreurs (partie critique)
-            boxed.tag = INVALID_TAG; // prévention d'une réutilisation
-            std::mem::forget(boxed); // boxed is corrupted it should not be
-        }
-    }
-
-    #[no_mangle]
-    pub unsafe extern "C" fn xtra_dosthg(cxtra: *mut CXtraResource) {
-        let do_it = || {
-            if let Some(cxtra) = cxtra.as_mut() {
-                if cxtra.tag == VALID_TAG {
-#                     println!("doing something with {:p}", cxtra);
-                    cxtra.inner.dosthg();
-                    return;
-                }
-            }
-            println!("ne fait rien avec {:p}", cxtra);
-        };
-        if catch_unwind(do_it).is_err() {
-            if let Some(cxtra) = cxtra.as_mut() {
-#                 println!("panic avec {:p}", cxtra);
-                cxtra.tag = ERR_TAG;
-            }
-        };
-    }
-}
-#
-# fn main() {}
+{{#include ../../../examples/src/ffi.rs:free_intern}}
 ```
 
 Un appel C compatible :
 
 ```c
-struct XtraResource;
-void xtra_with(void (*cb)(XtraResource* xtra));
-void xtra_sthg(XtraResource* xtra);
-
-void cb(XtraResource* xtra) {
-    // ()...) do anything with the proposed C API for XtraResource
-    xtra_sthg(xtra);
-}
-
-int main() {
-    xtra_with(cb);
-}
+{{#include ../../../examples/src/ffi.c:free_intern}}
 ```
 
 ## `Panic`s et code externe
 
 Lors de l'appel à du code Rust depuis un autre langage (par exemple, du C), le
-code Rust ne doit pas provoquer de `panic`. Dérouler (*unwinding*) depuis le
+code Rust ne doit pas provoquer de `panic` : dérouler (*unwinding*) depuis le
 code Rust dans du code externe résulte en un **comportement indéfini**.
 
 > **Règle {{#check FFI-NOPANIC | Gestion correcte des `panic`s dans les FFI}}**
@@ -863,23 +609,7 @@ Il faut noter que `catch_unwind` rattrapera seulement les *unwinding `panic`s*
 mais pas ceux provoquant un arrêt du processus.
 
 ```rust,unsafe,noplaypen,ignore
-use std::panic::catch_unwind;
-# use rand;
-
-fn may_panic() {
-    if rand::random() {
-        panic!("panic happens");
-    }
-}
-
-#[no_mangle]
-pub unsafe extern "C" fn no_panic() -> i32 {
-    let result = catch_unwind(may_panic);
-    match result {
-        Ok(_) => 0,
-        Err(_) => -1,
-    }
-}
+{{#include ../../../examples/src/ffi.rs:panic}}
 ```
 
 ### `no_std`
@@ -938,115 +668,18 @@ Rust.
 `src/lib.rs`:
 
 ```rust,noplaypen
-/// Compteur opaque
-pub struct Counter(u32);
-
-impl Counter {
-    /// Crée un compteur (initialisé à 0)
-    fn new() -> Self {
-        Self(0)
-    }
-    /// Récupère la valeur courante du compteur
-    fn get(&self) -> u32 {
-        self.0
-    }
-    /// Incrémente la valeur du compteur s'il n'y a pas de dépassement
-    fn incr(&mut self) -> bool {
-        if let Some(n) = self.0.checked_add(1) {
-            self.0 = n;
-            true
-        } else {
-            false
-        }
-    }
-}
-
-// API compatible avec le C
-
-#[no_mangle]
-pub unsafe extern "C" fn counter_create() -> *mut Counter {
-    Box::into_raw(Box::new(Counter::new()))
-}
-
-#[no_mangle]
-pub unsafe extern "C" fn counter_incr(counter: *mut Counter) -> std::os::raw::c_int {
-    if let Some(counter) = counter.as_mut() {
-        if counter.incr() {
-            0
-        } else {
-            -1
-        }
-    } else {
-        -2
-    }
-}
-
-#[no_mangle]
-pub unsafe extern "C" fn counter_get(counter: *const Counter) -> u32 {
-    if let Some(counter) = counter.as_ref() {
-        return counter.get();
-    }
-    return 0;
-}
-
-#[no_mangle]
-pub unsafe extern fn counter_destroy(counter: *mut Counter) -> std::os::raw::c_int {
-    if !counter.is_null() {
-        let _ = Box::from_raw(counter); // get box and drop
-        return 0;
-    }
-    return -1;
-}
+{{#include ../../../examples/src/counter.rs}}
 ```
 
 En utilisant [cbindgen] (`[cbindgen] -l c > counter.h`), il est possible de
 générer un *header* C cohérent, `counter.h` :
 
 ```c
-#include <stdarg.h>
-#include <stdbool.h>
-#include <stdint.h>
-#include <stdlib.h>
-
-typedef struct Counter Counter;
-
-Counter *counter_create(void);
-
-int counter_destroy(Counter *counter);
-
-uint32_t counter_get(const Counter *counter);
-
-int counter_incr(Counter *counter);
+{{#include ../../../examples/src/counter.h}}
 ```
 
 `counter_main.c`:
 
 ```c
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <inttypes.h>
-
-#include "counter.h"
-
-int main(int argc, const char** argv) {
-    if (argc < 2) {
-        return -1;
-    }
-    size_t n = (size_t)strtoull(argv[1], NULL, 10);
-
-    Counter* c = counter_create();
-    for (size_t i=0; i < n; i++) {
-        if (counter_incr(c) != 0) {
-            printf("overflow\n");
-            counter_destroy(c);
-            return -1;
-        }
-    }
-
-    printf("%" PRIu32 "\n", counter_get(c));
-    counter_destroy(c);
-
-    return 0;
-}
+{{#include ../../../examples/src/counter.c}}
 ```

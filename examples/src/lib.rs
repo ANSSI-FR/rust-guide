@@ -1,3 +1,9 @@
+mod counter;
+mod ffi;
+mod generalities;
+mod integer;
+mod memory;
+
 pub fn add(left: u64, right: u64) -> u64 {
     left + right
 }
