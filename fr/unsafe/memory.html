@@ -208,17 +208,16 @@ destructeurs associés lorsque nécessaire, <code>forget</code> quant à elle n'
 ces destructeurs.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let pair = ('↑', 0xBADD_CAFEu32);
-drop(pair); // ici, `forget` serait équivalent (pas de destructeur à appeler)
+</span>    let pair = ('↑', 0xBADD_CAFEu32);
+    drop(pair);
 <span class="boring">}</span></code></pre></pre>
 <p>Les deux fonctions sont considérées comme <strong>sûres du point de vue mémoire</strong> par
 Rust. Toutefois, <code>forget</code> rendra toute ressource gérée par la valeur libérée
 inaccessible, mais non libérée.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">use std::mem::forget;
-</span>let s = String::from("Hello");
-forget(s); // fuite mémoire
+</span>    let s = String::from("Hello");
+    forget(s); // Leak memory
 <span class="boring">}</span></code></pre></pre>
 <p>En particulier, l'utilisation de <code>forget</code> peut causer la rétention en mémoire de
 ressources critiques, menant à des interblocages et à la persistance de données
@@ -289,12 +288,16 @@ correspondant, pour permettre sa libération :</p>
 <li><code>std::ffi::CString</code> ;</li>
 <li><code>std::ffi::OsString</code>.</li>
 </ul>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust align"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let boxed = Box::new(String::from("Crab"));
-let raw_ptr = unsafe { Box::into_raw(boxed) };
-let _ = unsafe { Box::from_raw(raw_ptr) }; // sera libéré
 <span class="boring">}</span></code></pre></pre>
+</blockquote>
+<pre><code>let raw_ptr = unsafe { Box::into_raw(boxed) };
+let _ = unsafe { Box::from_raw(raw_ptr) }; // will be freed
+</code></pre>
+<blockquote>
+<pre><code></code></pre>
 </blockquote>
 <p>La réciproque est aussi vrai, c'est à dire que les fonctions <code>from_raw</code> ne
 devraient pas être utilisées sur des <em>raw pointers</em> qui ne sont pas issus de la fonction
@@ -313,10 +316,12 @@ valeurs issues de la fonction <code>into_raw</code></p>
 <p>Dans le cas de <code>Box::into_raw</code>, le nettoyage automatique est possible, mais
 est bien plus compliqué que de <em>re-boxer</em> le pointeur brut et doit être
 évité :</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust align"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>// extrait de la documentation de la bibliothèque standard
-use std::alloc::{dealloc, Layout};
+</span>// Excerpt from the standard library documentation
+<span class="boring">}</span></code></pre></pre>
+</blockquote>
+<pre><code>use std::alloc::{Layout, dealloc};
 use std::ptr;
 
 let x = Box::new(String::from("Hello"));
@@ -325,9 +330,12 @@ unsafe {
     ptr::drop_in_place(p);
     dealloc(p as *mut u8, Layout::new::&lt;String&gt;());
 }
-<span class="boring">}</span></code></pre></pre>
-<p>Puisque les autres types (<code>Rc</code> et <code>Arc</code>) sont opaques et plus complexes, la
-libération manuelle n'est pas possible.</p>
+</code></pre>
+<blockquote>
+<pre><code>
+Puisque les autres types (`Rc` et `Arc`) sont opaques et plus complexes, la
+libération manuelle n'est pas possible.
+</code></pre>
 </blockquote>
 <h2 id="mémoire-non-initialisée"><a class="header" href="#mémoire-non-initialisée">Mémoire non initialisée</a></h2>
 <p>Par défaut, le langage Rust impose que toutes les valeurs soient initialisées, pour
@@ -358,24 +366,24 @@ pour effacer des valeurs sensibles.</p>
 <h2 id="cycle-dans-les-références-comptées-rc-et-arc"><a class="header" href="#cycle-dans-les-références-comptées-rc-et-arc">Cycle dans les références comptées (<code>Rc</code> et <code>Arc</code>)</a></h2>
 <p>La <strong>combinaison</strong> de la mutabilité <em><a href="https://doc.rust-lang.org/reference/interior-mutability.html">intérieure</a></em>, des références comptées et des types récursifs n'est pas sûre. En effet, elle peut conduire à fuites mémoire, et donc éventuellement à des attaques par déni de service et en des fuites de secrets.</p>
 <p>L'exemple non-<code>unsafe</code> suivant montre, la création d'une fuite mémoire en utilisant la mutabilité intérieure et les références comptées.</p>
-<pre><pre class="playground"><code class="language-rust">use std::{cell::Cell, rc::Rc};
+<pre><pre class="playground"><code class="language-rust align">use std::{cell::Cell, rc::Rc};
 
 struct LinkedStruct {
-    other: Cell&lt;Option&lt;Rc&lt;LinkedStruct&gt;&gt;&gt;,
+   other: Cell&lt;Option&lt;Rc&lt;LinkedStruct&gt;&gt;&gt;,
 }
 
 fn main() {
-    println!("Hello, world!");
-    let a = Rc::new(LinkedStruct {
-        other: Cell::new(None),
-    });
-    let b = Rc::new(LinkedStruct {
-        other: Cell::new(None),
-    });
-    let aa = a.clone();
-    let bb = b.clone();
-    a.other.set(Some(bb));
-    b.other.set(Some(aa));
+   println!("Hello, world!");
+   let a = Rc::new(LinkedStruct {
+      other: Cell::new(None),
+   });
+   let b = Rc::new(LinkedStruct {
+      other: Cell::new(None),
+   });
+   let aa = a.clone();
+   let bb = b.clone();
+   a.other.set(Some(bb));
+   b.other.set(Some(aa));
 }</code></pre></pre>
 <p>La fuite peut-être mise en évidence grâce à <code>valgrind</code> :</p>
 <pre><code>$ valgrind --leak-check=full target/release/safe-rust-leak 

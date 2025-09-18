@@ -187,26 +187,29 @@ depends on the target platform. The default one is <code>C</code> which correspo
 a standard C calling convention on the target platform.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>// export a C-compatible function
-#[no_mangle]
-unsafe extern "C" fn mylib_f(param: u32) -&gt; i32 {
+</span>/// Export C-compatible function
+#[unsafe(no_mangle)]
+extern "C" fn mylib_f(param: u32) -&gt; i32 {
     if param == 0xCAFEBABE { 0 } else { -1 }
 }
 <span class="boring">}</span></code></pre></pre>
 <p>For the function <code>mylib_f</code> to be accessible with the same name, the function
-must also be annotated with the <code>#[no_mangle]</code> attribute.</p>
+must also be annotated with the <code>#[unsafe(no_mangle)]</code> attribute.</p>
 <p>Conversely, one can call C functions from Rust if they are declared in an
 <code>extern</code> block:</p>
-<pre><pre class="playground"><code class="language-rust">use std::os::raw::c_int;
-// import an external function from libc
-extern "C" {
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::os::raw::c_int;
+// import C function
+unsafe extern "C" {
     fn abs(args: c_int) -&gt; c_int;
 }
 
-fn main() {
+fn use_abs() {
     let x = -1;
     println!("{} {}\n", x, unsafe { abs(x) });
-}</code></pre></pre>
+}
+<span class="boring">}</span></code></pre></pre>
 <blockquote>
 <p><strong>Note</strong></p>
 <p>Any foreign function imported in Rust through an <code>extern</code> block is
@@ -215,16 +218,18 @@ must be done from an <code>unsafe</code> context.</p>
 </blockquote>
 <p><code>extern</code> blocks may also contain foreign global variable declarations prefixed
 with the <code>static</code> keyword:</p>
-<pre><pre class="playground"><code class="language-rust">//! A direct way to access environment variables (on Unix).
-//! Should not be used! Not thread safe, have a look at `std::env`!
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// A direct way to access environment variables (on Unix)
+// should not be used! Not thread safe, have a look at `std::env`!
 
-extern {
-    // Libc global variable
+unsafe extern "C" {
+    // Global variable
     #[link_name = "environ"]
     static libc_environ: *const *const std::os::raw::c_char;
 }
 
-fn main() {
+fn use_static_extern() {
     let mut next = unsafe { libc_environ };
     while !next.is_null() &amp;&amp; !unsafe { *next }.is_null() {
         let env = unsafe { std::ffi::CStr::from_ptr(*next) }
@@ -233,7 +238,8 @@ fn main() {
         println!("{}", env);
         next = unsafe { next.offset(1) };
     }
-}</code></pre></pre>
+}
+<span class="boring">}</span></code></pre></pre>
 <h2 id="typing"><a class="header" href="#typing">Typing</a></h2>
 <p>Typing is the way Rust ensures memory safety. When interfacing with other
 languages, which may not offer the same guarantee, the choice of types in the
@@ -260,17 +266,18 @@ struct PackedData {
 }
 <span class="boring">}</span></code></pre></pre>
 <p>are compatible with the following C types:</p>
-<pre><code class="language-c">struct Data {
-    uint32_t a;
-    uint16_t b;
-    uint64_t c;
+<pre><code class="language-c">struct Data
+{
+	uint32_t a;
+	uint16_t b;
+	uint64_t c;
 };
-__attribute__((packed))
-struct PackedData {
-    uint32_t a;
-    uint16_t b;
-    uint64_t c;
-}
+__attribute__((packed)) struct PackedData
+{
+	uint32_t a;
+	uint16_t b;
+	uint64_t c;
+};
 </code></pre>
 <blockquote>
 <p><strong>Rule <a id="FFI-CTYPE"></a>FFI-CTYPE</strong></p>
@@ -493,11 +500,11 @@ pointers against known valid memory range or tagging (or signing) pointers
 <p>The following code a simple example of foreign pointer use in an exported Rust
 function:</p>
 <pre><code class="language-rust noplaypen">/// Add in place
-#[no_mangle]
-pub unsafe extern fn add_in_place(a: *mut u32, b: u32) {
+#[unsafe(no_mangle)]
+unsafe extern "C" fn add_in_place(a: *mut u32, b: u32) {
     // checks for nullity of `a`
     // and takes a mutable reference on it if it's non-null
-    if let Some(a) = a.as_mut() {
+    if let Some(a) = unsafe { a.as_mut() } {
         *a += b
     }
 }</code></pre>
@@ -510,11 +517,12 @@ On the other side in C, it can be used as follows:</p>
 //! Add in place
 void add_in_place(uint32_t *a, uint32_t b);
 
-int main() {
-    uint32_t x = 25;
-    add_in_place(&amp;x, 17);
-    printf("%" PRIu32 " == 42", x);
-    return 0;
+int use_add_in_place()
+{
+	uint32_t x = 25;
+	add_in_place(&amp;x, 17);
+	printf("%" PRIu32 " == 42", x);
+	return 0;
 }
 </code></pre>
 <blockquote>
@@ -541,26 +549,33 @@ possibilities:</p>
 <ul>
 <li>
 <p>use <code>Option</code>-wrapped function pointer and check against <code>null</code>:</p>
-<pre><code class="language-rust noplaypen">#[no_mangle]
-pub unsafe extern "C" fn repeat(start: u32, n: u32, f: Option&lt;unsafe extern "C" fn(u32) -&gt; u32&gt;) -&gt; u32 {
-    if let Some(f) = f {
-        let mut value = start;
-        for _ in 0..n {
-            value = f(value);
-        }
-        value
-    } else {
-        start
-    }
-}</code></pre>
-<p>On the C side:</p>
-<pre><code class="language-c">uint32_t repeat(uint32_t start, uint32_t n, uint32_t (*f)(uint32_t));
+<pre><code class="language-rust noplaypen">#[unsafe(no_mangle)]</code></pre>
+</li>
+</ul>
+<p>pub unsafe extern "C" fn repeat(
+start: u32,
+n: u32,
+f: Option&lt;unsafe extern "C" fn(u32) -&gt; u32&gt;,
+) -&gt; u32 {
+if let Some(f) = f {
+let mut value = start;
+for _ in 0..n {
+value = unsafe { f(value) };
+}
+value
+} else {
+start
+}
+}</p>
+<pre><code>
+On the C side:
+
+```c
+uint32_t repeat(uint32_t start, uint32_t n, uint32_t (*f)(uint32_t));
 </code></pre>
-</li>
-<li>
-<p>use raw pointers with an <code>unsafe</code> transmutation to the function pointer type,
-allowing more powerful checks at the cost of ergonomics.</p>
-</li>
+<ul>
+<li>use raw pointers with an <code>unsafe</code> transmutation to the function pointer type,
+allowing more powerful checks at the cost of ergonomics.</li>
 </ul>
 <blockquote>
 <p><strong>Rule <a id="FFI-CKFUNPTR"></a>FFI-CKFUNPTR</strong></p>
@@ -607,9 +622,11 @@ use pointers to dedicated opaque types rather than <code>c_void</code> pointers.
 </blockquote>
 <p>Currently the recommended way to make a foreign opaque type is like so:</p>
 <pre><code class="language-rust unsafe noplaypen">#[repr(C)]
-pub struct Foo {_private: [u8; 0]}
-extern "C" {
-    fn foo(arg: *mut Foo);
+pub struct OpaqueFoo {
+    _private: [u8; 0],
+}
+unsafe extern "C" {
+    fn handle_opaque_foo(arg: *mut OpaqueFoo);
 }</code></pre>
 <p>The not-yet-implemented <a href="https://rust-lang.github.io/rfcs/1861-extern-types.html">RFC 1861</a> proposes to facilitate this encoding by allowing
 to declare opaque types in <code>extern</code> blocks.</p>
@@ -621,28 +638,28 @@ are to be considered opaque in C/C++ should be translated as incomplete
 a dedicated constructor and destructor.</p>
 </blockquote>
 <p>Example of opaque Rust type:</p>
-<pre><code class="language-rust unsafe noplaypen"><span class="boring">use std::panic::catch_unwind;
-</span><span class="boring">
-</span>struct Opaque {
-    // (...) details to be hidden
+<pre><code class="language-rust unsafe noplaypen">pub struct Opaque {
+    // (...) hide details
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn new_opaque() -&gt; *mut Opaque {
     catch_unwind(|| // Catch panics, see below
         Box::into_raw(Box::new(Opaque {
-            // (...) actual construction
-        }))
-    ).unwrap_or(std::ptr::null_mut())
+            // (...) construction
+        })))
+    .unwrap_or(std::ptr::null_mut())
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn destroy_opaque(o: *mut Opaque) {
-    catch_unwind(||
+    catch_unwind(|| {
         if !o.is_null() {
-            drop(Box::from_raw(o))
+            // only necessary when `Opaque` or any of its fields is `Drop`
+            drop(unsafe { Box::from_raw(o) })
         }
-    ); // Only needed if Opaque or one of its subfield is Drop
+    })
+    .unwrap_or_default();
 }</code></pre>
 <h2 id="memory-and-resource-management"><a class="header" href="#memory-and-resource-management">Memory and resource management</a></h2>
 <p>Programming languages handle memory in various ways. As a result, it is
@@ -689,16 +706,14 @@ allocated and deallocated in the foreign language should be encapsulated in a
 through an automatic call to the foreign language deallocation routine.</p>
 </blockquote>
 <p>A simple example of Rust wrapping over an external opaque type:</p>
-<pre><code class="language-rust ignore noplaypen"><span class="boring">use std::ops::Drop;
-</span><span class="boring">
-</span>/// Private “raw” opaque foreign type Foo
+<pre><code class="language-rust ignore noplaypen">/// Private “raw” opaque foreign type Foo
 #[repr(C)]
 struct RawFoo {
     _private: [u8; 0],
 }
 
-/// Private “raw” C API
-extern "C" {
+// Private “raw” C API
+unsafe extern "C" {
     fn foo_create() -&gt; *mut RawFoo;
     fn foo_do_something(this: *const RawFoo);
     fn foo_destroy(this: *mut RawFoo);
@@ -706,8 +721,8 @@ extern "C" {
 
 /// Foo
 pub struct Foo(*mut RawFoo);
-<span class="boring">
-</span>impl Foo {
+
+impl Foo {
     /// Create a Foo
     pub fn new() -&gt; Option&lt;Foo&gt; {
         let raw_ptr = unsafe { foo_create() };
@@ -717,25 +732,20 @@ pub struct Foo(*mut RawFoo);
             Some(Foo(raw_ptr))
         }
     }
-<span class="boring">
-</span>    /// Do something on a Foo
+
+    /// Do something on a Foo
     pub fn do_something(&amp;self) {
         unsafe { foo_do_something(self.0) }
     }
 }
-<span class="boring">
-</span>impl Drop for Foo {
+
+impl Drop for Foo {
     fn drop(&amp;mut self) {
         if !self.0.is_null() {
             unsafe { foo_destroy(self.0) }
         }
     }
-}
-
-<span class="boring">fn main() {
-</span><span class="boring">    let foo = Foo::new().expect("cannot create Foo");
-</span><span class="boring">    foo.do_something();
-</span><span class="boring">}</span></code></pre>
+}</code></pre>
 <div class="warning">
 <p>Because panics may lead to not running the <code>Drop::drop</code> method this solution
 is not sufficient for sensitive deallocation (such as wiping sensitive data)
@@ -751,16 +761,14 @@ reclamation is done.</p>
 <p>The following Rust code is a <strong>thread-unsafe</strong> example of a C-compatible API
 that provides a callback to ensure safe resource
 reclamation:</p>
-<pre><code class="language-rust noplaypen"><span class="boring">use std::ops::Drop;
-</span><span class="boring">
-</span>pub struct XtraResource {/*fields */}
+<pre><code class="language-rust noplaypen">pub struct XtraResource {/* fields */}
 
 impl XtraResource {
     pub fn new() -&gt; Self {
-        XtraResource { /* ... */}
+        XtraResource { /* ... */ }
     }
     pub fn dosthg(&amp;mut self) {
-        /*...*/
+        /* ... */
     }
 }
 
@@ -786,76 +794,72 @@ pub mod c_api {
         inner: XtraResource,
     }
 
-    #[no_mangle]
-    pub unsafe extern "C" fn xtra_with(cb: extern "C" fn(*mut CXtraResource) -&gt; ()) {
+    #[unsafe(no_mangle)]
+    pub unsafe extern "C" fn xtra_with(cb: Option&lt;unsafe extern "C" fn(*mut CXtraResource) -&gt; ()&gt;) {
         let inner = if let Ok(res) = catch_unwind(XtraResource::new) {
             res
         } else {
-<span class="boring">            println!("cannot allocate resource");
-</span>            return;
+            return;
         };
-        let id = COUNTER;
+        let id = unsafe { COUNTER };
         let tag = VALID_TAG;
 
-        COUNTER = COUNTER.wrapping_add(1);
+        unsafe { COUNTER = COUNTER.wrapping_add(1) };
         // Use heap memory and do not provide pointer to stack to C code!
         let mut boxed = Box::new(CXtraResource { tag, id, inner });
 
-<span class="boring">        println!("running the callback on {:p}", boxed.as_ref());
-</span>        cb(boxed.as_mut() as *mut CXtraResource);
+        if let Some(cb) = cb {
+            unsafe { cb(boxed.as_mut() as *mut CXtraResource) };
+        }
 
         if boxed.id == id &amp;&amp; (boxed.tag == VALID_TAG || boxed.tag == ERR_TAG) {
-<span class="boring">            println!("freeing {:p}", boxed.as_ref());
-</span>            boxed.tag = INVALID_TAG; // prevent accidental reuse
-                                 // implicit boxed drop
+            boxed.tag = INVALID_TAG; // prevent accidental reuse
+        // implicit boxed drop
         } else {
-<span class="boring">            println!("forgetting {:p}", boxed.as_ref());
-</span>            // (...) error handling (should be fatal)
+            // (...) error handling (should be fatal)
             boxed.tag = INVALID_TAG; // prevent reuse
             std::mem::forget(boxed); // boxed is corrupted it should not be
         }
     }
 
-    #[no_mangle]
+    #[unsafe(no_mangle)]
     pub unsafe extern "C" fn xtra_dosthg(cxtra: *mut CXtraResource) {
         let do_it = || {
-            if let Some(cxtra) = cxtra.as_mut() {
-                if cxtra.tag == VALID_TAG {
-<span class="boring">                    println!("doing something with {:p}", cxtra);
-</span>                    cxtra.inner.dosthg();
-                    return;
-                }
+            if let Some(cxtra) = unsafe { cxtra.as_mut() }
+                &amp;&amp; cxtra.tag == VALID_TAG
+            {
+                cxtra.inner.dosthg();
+                return;
             }
-            println!("doing nothing with {:p}", cxtra);
+            println!("do noting with {:p}", cxtra);
         };
-        if catch_unwind(do_it).is_err() {
-            if let Some(cxtra) = cxtra.as_mut() {
-<span class="boring">                println!("panicking with {:p}", cxtra);
-</span>                cxtra.tag = ERR_TAG;
-            }
+        if catch_unwind(do_it).is_err()
+            &amp;&amp; let Some(cxtra) = unsafe { cxtra.as_mut() }
+        {
+            cxtra.tag = ERR_TAG;
         };
     }
-}
-<span class="boring">
-</span><span class="boring">fn main() {}</span></code></pre>
+}</code></pre>
 <p>A compatible C call:</p>
 <pre><code class="language-c">struct XtraResource;
-void xtra_with(void (*cb)(XtraResource* xtra));
-void xtra_sthg(XtraResource* xtra);
+void xtra_with(void (*cb)(struct XtraResource *xtra));
+void xtra_sthg(struct XtraResource *xtra);
 
-void cb(XtraResource* xtra) {
-    // ()...) do anything with the proposed C API for XtraResource
-    xtra_sthg(xtra);
+void cb(struct XtraResource *xtra)
+{
+	// ()...) do anything with the proposed C API for XtraResource
+	xtra_sthg(xtra);
 }
 
-int main() {
-    xtra_with(cb);
+int use_xtra()
+{
+	xtra_with(cb);
 }
 </code></pre>
 <h2 id="panics-with-foreign-code"><a class="header" href="#panics-with-foreign-code">Panics with foreign code</a></h2>
 <p>When calling Rust code from another language (e.g. C), the Rust code must
-be careful to never panic.
-Stack unwinding from Rust code into foreign code results in <strong>undefined behavior</strong>.</p>
+be careful to never panic:
+stack unwinding from Rust code into foreign code results in <strong>undefined behavior</strong>.</p>
 <blockquote>
 <p><strong>Rule <a id="FFI-NOPANIC"></a>FFI-NOPANIC</strong></p>
 <p>Rust code called from FFI must either ensure the function cannot panic, or use
@@ -865,16 +869,11 @@ abort or return in an unstable state.</p>
 </blockquote>
 <p>Note that <code>catch_unwind</code> will only catch unwinding panics, not those that abort
 the process.</p>
-<pre><code class="language-rust unsafe noplaypen ignore">use std::panic::catch_unwind;
-<span class="boring">use rand;
-</span>
-fn may_panic() {
-    if rand::random() {
-        panic!("panic happens");
-    }
+<pre><code class="language-rust unsafe noplaypen ignore">fn may_panic() {
+    /* Something may panic... */
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn no_panic() -&gt; i32 {
     let result = catch_unwind(may_panic);
     match result {
@@ -943,39 +942,37 @@ impl Counter {
 
 // C-compatible API
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn counter_create() -&gt; *mut Counter {
     Box::into_raw(Box::new(Counter::new()))
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn counter_incr(counter: *mut Counter) -&gt; std::os::raw::c_int {
-    if let Some(counter) = counter.as_mut() {
-        if counter.incr() {
-            0
-        } else {
-            -1
-        }
+    if let Some(counter) = unsafe { counter.as_mut() } {
+        if counter.incr() { 0 } else { -1 }
     } else {
         -2
     }
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub unsafe extern "C" fn counter_get(counter: *const Counter) -&gt; u32 {
-    if let Some(counter) = counter.as_ref() {
-        return counter.get();
+    if let Some(counter) = unsafe { counter.as_ref() } {
+        counter.get()
+    } else {
+        0
     }
-    return 0;
 }
 
-#[no_mangle]
-pub unsafe extern fn counter_destroy(counter: *mut Counter) -&gt; std::os::raw::c_int {
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn counter_destroy(counter: *mut Counter) -&gt; std::os::raw::c_int {
     if !counter.is_null() {
-        let _ = Box::from_raw(counter); // get box and drop
-        return 0;
+        let _ = unsafe { Box::from_raw(counter) }; // get box and drop
+        0
+    } else {
+        -1
     }
-    return -1;
 }</code></pre>
 <p>Using <a href="https://crates.io/crates/cbindgen">cbindgen</a> (<code>[cbindgen] -l c &gt; counter.h</code>), one can generate a consistent
 C header, <code>counter.h</code>:</p>
@@ -1002,25 +999,29 @@ int counter_incr(Counter *counter);
 
 #include "counter.h"
 
-int main(int argc, const char** argv) {
-    if (argc &lt; 2) {
-        return -1;
-    }
-    size_t n = (size_t)strtoull(argv[1], NULL, 10);
+int main(int argc, const char **argv)
+{
+	if (argc &lt; 2)
+	{
+		return -1;
+	}
+	size_t n = (size_t)strtoull(argv[1], NULL, 10);
 
-    Counter* c = counter_create();
-    for (size_t i=0; i &lt; n; i++) {
-        if (counter_incr(c) != 0) {
-            printf("overflow\n");
-            counter_destroy(c);
-            return -1;
-        }
-    }
+	Counter *c = counter_create();
+	for (size_t i = 0; i &lt; n; i++)
+	{
+		if (counter_incr(c) != 0)
+		{
+			printf("overflow\n");
+			counter_destroy(c);
+			return -1;
+		}
+	}
 
-    printf("%" PRIu32 "\n", counter_get(c));
-    counter_destroy(c);
+	printf("%" PRIu32 "\n", counter_get(c));
+	counter_destroy(c);
 
-    return 0;
+	return 0;
 }
 </code></pre>
 

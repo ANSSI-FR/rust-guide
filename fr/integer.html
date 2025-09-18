@@ -197,28 +197,42 @@ valeur maximum qui peut être stockée pour le type considéré.</p>
 <code>Wrapping</code>, ou les opérations sur les entiers <code>overflowing_&lt;op&gt;</code> et
 <code>wrapping_&lt;op&gt;</code> (la partie <code>&lt;op&gt;</code> étant remplacée par le type de calcul :
 <code>add</code>, <code>mul</code>, <code>sub</code>, <code>shr</code>, etc.).</p>
-<pre><pre class="playground"><code class="language-rust">use std::num::Wrapping;
-<span class="boring">use std::panic;
-</span>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span>#![allow(dead_code)]
 <span class="boring">fn main() {
-</span>let x: u8 = 242;
+</span>use std::num::Wrapping;
+use std::panic;
 
-<span class="boring">let result = panic::catch_unwind(|| {
-</span>println!("{}", x + 50);                      // panique en mode debug, affiche 36 en mode release.
-<span class="boring">});
-</span><span class="boring">if result.is_err() { println!("panic"); }
-</span>println!("{}", x.overflowing_add(50).0);     // affiche toujours 36.
-println!("{}", x.wrapping_add(50));          // affiche toujours 36.
-println!("{}", Wrapping(x) + Wrapping(50));  // affiche toujours 36.
+fn use_integer() {
+    let x: u8 = 242;
 
-// panique toujours :
-let (res, c) = x.overflowing_add(50);
-<span class="boring">let result = panic::catch_unwind(|| {
-</span>if c { panic!("custom error"); }
-else { println!("{}", res); }
-<span class="boring">});
-</span><span class="boring">if result.is_err() { println!("panic"); }
-</span><span class="boring">}</span></code></pre></pre>
+    let result = panic::catch_unwind(|| {
+        println!("{}", x + 50); // panics in debug, prints 36 in release.
+    });
+    if result.is_err() {
+        println!("panic");
+    }
+    // always prints 36.
+    println!("{}", x.overflowing_add(50).0);
+    // always prints 36.
+    println!("{}", x.wrapping_add(50));
+    // always prints 36.
+    println!("{}", Wrapping(x) + Wrapping(50));
+
+    // always panics:
+    let (res, c) = x.overflowing_add(50);
+    let result = panic::catch_unwind(|| {
+        if c {
+            panic!("custom error");
+        } else {
+            println!("{}", res);
+        }
+    });
+    if result.is_err() {
+        println!("panic");
+    }
+}
+<span class="boring">}</span></code></pre></pre>
 <blockquote>
 <p><strong>Règle <a id="LANG-ARITH"></a>LANG-ARITH</strong></p>
 <p>Lorsqu'une opération arithmétique peut produire un dépassement d'entier, les
