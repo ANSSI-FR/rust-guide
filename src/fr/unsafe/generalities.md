@@ -34,12 +34,15 @@ L'usage de ce mot-clé dans une API *met en garde* l'utilisateur de l'API contre
 
 Le déverrouillage `unsafe` est une **prise de responsabilité** sur la sûreté mémoire du programme en développement.
 
-L'usage d'un bloc `unsafe` dans le corps d'une fonction ou la définition d'une constante est imposée par le compilateur ([r-unsafe.block]) pour empêcher l'usage *par inadvertance* de fonctions marquées `unsafe`.
-Il permet donc de *déverrouiller* les opérations `unsafe`.
+L'usage d'un bloc `unsafe` dans le corps d'une fonction ou dans la définition d'une constante est imposé par le compilateur ([r-unsafe.block]) pour empêcher l'usage *par inadvertance* d'opérations `unsafe`. Parmi ces opérations, on trouve :
+
+* l'utilisation de fonctions marquées unsafe
+* la modification de variable mutables statiques
+* l'utilisation de fonctions externes
 
 De manière similaire, l'implémentation d'un trait marqué `unsafe` nécessite `unsafe` ([r-unsafe.impl]) pour indiquer la prise en compte *explicite* par le développeur des contrats de sûreté du trait. Il permet donc de *déverrouiller* l'implémentation de traits `unsafe`.
 
-Depuis l'édition 2024 de Rust, il est nécessaire également de déverouiller à l'aide du mot-clé `unsafe` :
+Enfin, depuis l'édition 2024 de Rust, il est nécessaire également de déverrouiller à l'aide du mot-clé `unsafe` :
 
 * les blocs `extern` ([r-unsafe.extern]) contenant les déclarations externes pour le [FFI](./ffi.md) ;
 * certains attributs (par exemple, `no_mangle`, cf. [r-attributes.safety]).
@@ -78,7 +81,7 @@ Aussi, il est important de limiter l'usage de `unsafe` au strict nécessaire :
 >   finalement appelé de façon souple et sûre.
 >
 > * Pour la programmation des systèmes embarqués, on accède souvent aux
->   registres et à d'autres ressources au travers d'adresses mémoire fixées Dans
+>   registres et à d'autres ressources au travers d'adresses mémoire fixées. Dans
 >   ce cas, des blocs `unsafe` sont nécessaires afin de pouvoir initialiser et
 >   déréférencer des pointeurs en Rust pour ces adresses. Afin de minimiser le
 >   nombre de déclarations `unsafe` pour permettre au développeur de facilement
@@ -97,7 +100,7 @@ Aussi, il est important de limiter l'usage de `unsafe` au strict nécessaire :
 
 En cas d'usage d'`unsafe`, il est donc de la responsabilité du développeur du programme:
 
-* de s'assurer qu'aucun *UB* n'est possible en cas de déverouillage ;
+* de s'assurer qu'aucun *UB* n'est possible en cas de déverrouillage ;
 * de s'assurer que les conditions d'usage (invariants) soient exhaustives et correctes en cas de marquage.
 
 Au delà du code `unsafe` lui-même, il est important d'encapsuler correctement les opérations `unsafe` dans un composant (*crate* ou module) de manière à rétablir les garanties usuelles de sûreté mémoire de Rust:
@@ -141,7 +144,7 @@ par `unsafe` car elle peut conduire à des *UB* (même si elle ne comporte pas d
 ### Exemple 2 : relation de confiance *safe*/*unsafe*
 
 La relation de confiance entre le code *safe* et le code `unsafe` est délicate.
-Dans un composant logiciel comportant, le code `unsafe` doit être écrit de manière à ce qu'aucun usage *safe* du composant ne puisse conduire à des *UB*.
+Dans un composant logiciel, le code `unsafe` doit être écrit de manière à ce qu'aucun usage *safe* du composant ne puisse conduire à des *UB*.
 
 Le cas suivant illustre ce principe.
 On souhaite ici proposer une API générique permettant de localiser un objet dans une zone mémoire.
