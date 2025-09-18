@@ -744,47 +744,31 @@ trait implementation.</p>
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="rust-unsafe"><a class="header" href="#rust-unsafe">Rust unsafe</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="general-information-on-unsafe"><a class="header" href="#general-information-on-unsafe">General information on <code>unsafe</code></a></h1>
-<h2 id="unsafe-operations"><a class="header" href="#unsafe-operations"><em>Unsafe</em> operations</a></h2>
-<p>Language capabilities can be extended using unsafe code. The full list of these features is given in the <a href="https://doc.rust-lang.org/reference/unsafety.html">Rust reference</a>. Notice the following ones.</p>
+<h2 id="unsafe-capacities"><a class="header" href="#unsafe-capacities"><em>Unsafe</em> capacities</a></h2>
+<p>Language capabilities can be extended using unsafe code. The full list of these capacities is given in the <a href="https://doc.rust-lang.org/reference/unsafety.html">Rust reference</a>. Notice the following ones.</p>
 <ul>
 <li>Dereference a raw pointer</li>
-<li>Read or write a mutable or extern static variable</li>
-<li>Read a field of an <code>union</code></li>
-<li>Implement an <code>unsafe</code> trait</li>
-<li>Declare an <code>extern</code> block</li>
+<li>Modify a static mutable variable</li>
+<li>Access to the fields of a <code>union</code></li>
+<li>Declaring an <code>extern</code> block</li>
 </ul>
-<p>These capabilities may be necessary for system programming but they cause the language to lose its <a href="unsafe/../guarantees.html">security properties</a>.</p>
-<h2 id="a-keyword-with-two-usages"><a class="header" href="#a-keyword-with-two-usages">A keyword with two usages</a></h2>
-<p>The <code>unsafe</code> keyword is used both for marking unsafety in an API and unlocking unsafety in the implementation.</p>
-<h3 id="unsafe-marking"><a class="header" href="#unsafe-marking"><code>unsafe</code> marking</a></h3>
-<p>Marking with <code>unsafe</code> is a delegation of responsibility with respect to memory safety from the API author to the API user.
-The use of this keyword in an API <em>warns</em> the API user about the potential harmful effects of using the API.</p>
+<p>These capabilities may be necessary for system programming but they cause the language to lose its <a href="unsafe/04_language.html#language-guarantees">security properties</a>.</p>
+<h2 id="unsafe-keyword"><a class="header" href="#unsafe-keyword"><code>unsafe</code> keyword</a></h2>
+<p>The <code>unsafe</code> keyword is used both for API and implementation.</p>
+<h3 id="unsafe-in-api"><a class="header" href="#unsafe-in-api"><code>unsafe</code> in API</a></h3>
+<p>The use of this keyword in an API <em>warns</em> the API user against the potential harmful effects of the use of the API.</p>
 <ul>
-<li>In a function signature (<a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.fn">r-unsafe.fn</a>), <code>unsafe</code> means that the behavior of the function may lead to UB if the use of the function does not comply with its interface contract (informally described in its documentation).</li>
-<li>In a trait declaration (<a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.trait">r-unsafe.trait</a>), <code>unsafe</code> means that an erroneous implementation of this trait may lead to UB if the implementation contract (preferably documented) is not respected.</li>
+<li>In a function signature, <code>unsafe</code> means that the behavior of the function may lead to <em>UB</em>s if the use of the function does not comply with its interface contract (informally described in its documentation).</li>
+<li>In a trait definition, <code>unsafe</code> means that an erroneous implementation of this trait may lead to <em>UB</em>s.</li>
 </ul>
-<h3 id="unsafe-unlocking"><a class="header" href="#unsafe-unlocking"><code>unsafe</code> unlocking</a></h3>
-<p>Unlocking with <code>unsafe</code> means taking responsibility for memory safety from the compiler to the developer.</p>
-<p>Using an <code>unsafe</code> block in a function body or in a constant declaration is imposed by the compiler to prevent the <em>inadvertent use</em> of <code>unsafe</code> capabilities like</p>
-<ul>
-<li>using <code>unsafe</code> tagged functions</li>
-<li>modifying static variables</li>
-<li>using extern functions</li>
-</ul>
-<p>Similarly, the implementation of an <code>unsafe</code> trait requires <code>unsafe</code> for the developer to explicitly take into account the memory safety contracts. The keyword <code>unsafe</code> <em>unlocks</em> the implementation of <code>unsafe</code> traits.</p>
-<p>Lastly, Since the 2024 edition, <code>unsafe</code> is also required to unlock the following:</p>
-<ul>
-<li><code>extern</code> blocks, which contain declarations of foreign functions and variables, for <a href="unsafe/./ffi.html">FFI</a>,</li>
-<li>some attributes (for instance , no_mangle, cf. <a href="https://doc.rust-lang.org/reference/attributes.html#r-attributes.safety">r-attributes.safety</a>).</li>
-</ul>
-<h2 id="limitations-and-precautions"><a class="header" href="#limitations-and-precautions">Limitations and precautions</a></h2>
-<p>Paraphrasing the <a href="https://doc.rust-lang.org/nomicon/">Rustonomicon</a>, the fundamental principle of Rust can be summed up as follows:</p>
-<blockquote>
-<p><code>unsafe</code>-free code cannot go wrong</p>
-</blockquote>
-<p>The combined use of the type system and the ownership system enforces a high-level memory safety in Rust programs. This way, the language helps prevent memory overflows, null or invalid pointer constructions, and data races.</p>
-<p>This promise is valid only if the code does not use <code>unsafe</code> features. When <code>unsafe</code> features are used, the compiler can no longer guarantee memory safety. The developer must then ensure that the code respects the invariants that guarantee memory safety.</p>
-<p>That is why it is crucial to limit the use of <code>unsafe</code> features as much as possible:</p>
+<h3 id="unsafe-in-implementation"><a class="header" href="#unsafe-in-implementation"><code>unsafe</code> in implementation</a></h3>
+<p>Using this keyword in an implementation (a code block) is imposed by the compiler to prevent the inadvertent use of <code>unsafe</code> functions.</p>
+<h2 id="unsafe-code"><a class="header" href="#unsafe-code">Unsafe code</a></h2>
+<p>The combined use of the type system and the ownership system
+enforces a high-level memory safety in Rust programs. This way, the language helps prevent memory overflows, null or invalid pointer constructions, and data
+races.
+To perform risky actions such as system calls, type coercions, or direct
+manipulations of memory pointers, the language provides the <code>unsafe</code> keyword.</p>
 <blockquote>
 <p><strong>Rule <a id="LANG-UNSAFE"></a>LANG-UNSAFE</strong></p>
 <p>In a secure Rust development, the <code>unsafe</code> blocks must be avoided. In the following,
@@ -792,42 +776,33 @@ we list the only cases where <code>unsafe</code> may be used, provided that they
 with a proper justification:</p>
 <ul>
 <li>
-<p>The Foreign Function Interface (FFI) of Rust allows for describing functions whose implementations are written in C, using the <code>extern "C"</code> prefix. To use such a function, the <code>unsafe</code> keyword is required. “Safe” wrapper shall be defined to safely and seamlessly call C code.</p>
+<p>The Foreign Function Interface (FFI) of Rust allows describing
+functions whose implementations are written in C, using the <code>extern "C"</code>
+prefix. To use such a function, the <code>unsafe</code> keyword is required. “Safe”
+wrappers shall be defined to safely and seamlessly call C code.</p>
 </li>
 <li>
-<p>For embedded device programming, registers and various other resources are often accessed through a fixed memory address. In this case, <code>unsafe</code> blocks are required to initialize and dereference those particular pointers in Rust. In order to minimize the number of unsafe accesses in the code and to allow easier identification of them by a programmer, a proper abstraction (data
+<p>For embedded device programming, registers and various other resources are
+often accessed through a fixed memory address. In this case, <code>unsafe</code> blocks
+are required to initialize and dereference those particular pointers in Rust.
+In order to minimize the number of unsafe accesses in the code and to allow
+easier identification of them by a programmer, a proper abstraction (data
 structure or module) shall be provided.</p>
 </li>
 <li>
-<p>A function can be marked unsafe globally (by prefixing its declaration with the <code>unsafe</code> keyword) when it may exhibit unsafe behaviors based on its arguments, that are unavoidable. For instance, this happens when a function tries to dereference a pointer passed as an argument.</p>
+<p>A function can be marked unsafe globally (by prefixing its declaration with
+the <code>unsafe</code> keyword) when it may exhibit unsafe behaviors based on its
+arguments, that are unavoidable. For instance, this happens when a function
+tries to dereference a pointer passed as an argument.</p>
 </li>
 </ul>
-<p>With the exception of these cases, <code>#![forbid(unsafe_code)]</code> must appear in the crate root (typically <code>main.rs</code> or <code>lib.rs</code>) to generate compilation errors if <code>unsafe</code> is used in the code base.</p>
+<p>With the exception of these cases, <code>#![forbid(unsafe_code)]</code> must appear in
+the crate root (typically <code>main.rs</code> or <code>lib.rs</code>) to generate compilation
+errors if <code>unsafe</code> is used in the code base.</p>
 </blockquote>
-<p>If the use of <code>unsafe</code> is necessary, it is the responsibility of the developer to:</p>
-<ul>
-<li>ensure that the use of <code>unsafe</code> unlocking does not lead to <em>UB</em>s,</li>
-<li>ensure that any <code>unsafe</code> markings are correctly and exhaustively documented so that no <em>UB</em> are possible if the usage conditions (invariants) are respected.</li>
-</ul>
-<p>Aside from the <code>unsafe</code> code itself, it is also crucial to properly encapsulate the use of <code>unsafe</code> features in a component (crate or module) so as to restore the usual Rust memory safety guarantees:</p>
-<blockquote>
-<p><strong>Rule <a id="LANG-UNSAFE-ENCP"></a>LANG-UNSAFE-ENCP</strong></p>
-<p>In secure development of a Rust software component (crate or module), all
-<em>unsafe</em> code must be encapsulated in such a way that:</p>
-<ul>
-<li>either it exposes a safe behavior to the user, in which no safe interaction
-can result in UB (undefined behavior);</li>
-<li>or it exposes features marked as unsafe whose usage conditions
-(preconditions, sequencing, etc.) are exhaustively documented.</li>
-</ul>
-</blockquote>
-<p>Thus, a function using <code>unsafe</code> operations can be <em>safe</em> if the <code>unsafe</code>
-operations do not present any <em>UB</em> (undefined behavior) given the component's
-invariants (typically the type invariant for a method). Conversely, a function
-without an <code>unsafe</code> block must be marked as <code>unsafe</code> if it breaks these
-invariants. The choice and knowledge of these invariants are therefore crucial
-for secure development.</p>
-<h3 id="example-1-preserving-a-type-invariant"><a class="header" href="#example-1-preserving-a-type-invariant">Example 1: Preserving a type invariant</a></h3>
+<h2 id="general-warnings"><a class="header" href="#general-warnings">General warnings</a></h2>
+<h3 id="invariants-and-wrapping-unsafe"><a class="header" href="#invariants-and-wrapping-unsafe">Invariants and wrapping <em>unsafe</em></a></h3>
+<p>Exposed APIs are responsible for preserving invariants to avoid bugs in general and, when handling <code>unsafe</code> code, <em>UB</em>s in particular.</p>
 <p>The following code comes from the <a href="https://doc.rust-lang.org/nomicon/working-with-unsafe.html">Rustonomicon</a>.
 It could be used to implement a custom <code>Vec</code> type.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
@@ -863,17 +838,19 @@ impl&lt;T&gt; Vec&lt;T&gt; {
     }
 }
 <span class="boring">}</span></code></pre></pre>
-<p>This function may be necessary for internal use, but it should not be exposed in the API, or it should be marked with the <code>unsafe</code> keyword, because its use can lead to UB.</p>
-<h3 id="example-2-trust-relationship-between-safe-and-unsafe"><a class="header" href="#example-2-trust-relationship-between-safe-and-unsafe">Example 2: Trust relationship between <em>safe</em> and <em>unsafe</em></a></h3>
-<p>In the Rust paradigm:</p>
+<p>This function my be necessary for internal use, but it should not be exposed in the API, or it should be marked with <code>unsafe</code> keyword, because its use can lead to <em>UB</em>.</p>
+<h3 id="trust-relation-between-safe-and-unsafe"><a class="header" href="#trust-relation-between-safe-and-unsafe">Trust relation between <em>safe</em> and <em>unsafe</em></a></h3>
+<h4 id="principle"><a class="header" href="#principle">Principle</a></h4>
+<p>In Rust paradigm,</p>
 <blockquote>
 <p><code>unsafe</code>-free code cannot go wrong</p>
 </blockquote>
-<p>which means it cannot result in UB.
-This property is lost when developers use <em>unsafe</em> code, so they are responsible for not producing UB in any scenario.
-Consequently, even <em>safe</em> functions must be handled carefully in <em>unsafe</em> contexts.</p>
-<p>Suppose one wants to propose an API to find an object of a given type in memory.
-This API could require implementing the following trait:</p>
+<p>which means it cannot result in <em>UB</em>.
+This property is lost when the developers use <em>unsafe</em> code, that is why they are responsible of not producing <em>UB</em> in any scenario.
+Consequently, even <em>safe</em> function must be handled carefully in <em>unsafe</em> context.</p>
+<h4 id="example"><a class="header" href="#example">Example</a></h4>
+<p>Suppose one wants to propose an API to find objects of a given type in the memory.
+This API could ask implementing the following trait</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Locatable {
@@ -891,8 +868,8 @@ fn find&lt;T: Locatable&gt;(buf: &amp;[u8]) -&gt; Option&lt;T&gt; {
     }
 }
 <span class="boring">}</span></code></pre></pre>
-<p>This trait can be implemented <strong>without</strong> using <code>unsafe</code>.</p>
-<p>For instance, the <code>bool</code> type can implement this trait as follows:</p>
+<p>This trait can be implemented <strong>without</strong> <code>unsafe</code>.</p>
+<p>For instance, <code>bool</code> type can implement this trait as follows:</p>
 <pre><code class="language-rust ignore align">impl Locatable for bool {
    fn locate_instance_into(buf: &amp;[u8]) -&gt; Option&lt;usize&gt; {
       buf.iter().position(|u| *u == 0 || *u == 1)
@@ -901,11 +878,11 @@ fn find&lt;T: Locatable&gt;(buf: &amp;[u8]) -&gt; Option&lt;T&gt; {
 <div class="warning">
 <p>This API is harmful for two reasons:</p>
 <ul>
-<li>If the <code>Locatable</code> implementation does not give the index of an object of type <code>T</code>, the <code>read_unaligned</code> may produce UB.</li>
-<li>If the <code>Locatable</code> implementation gives an out-of-bounds index or an index for which part of the object is out of bounds, the subsequent buffer overflow is UB.</li>
+<li>If the <code>Locatable</code> implementation gives the wrong index, the <code>as_ref</code> function produce an <em>UB</em>.</li>
+<li>If the <code>Locatable</code> implementation gives an out-of-bounds index, the subsequent buffer overflow is an <em>UB</em>.</li>
 </ul>
 </div>
-<p>For instance, the following <code>Locatable</code> implementation is incorrect, <strong>but</strong> it is the responsibility of the API author to take it into account.</p>
+<p>For instance, the following <code>Locatable</code> implementation is wrong <strong>but</strong> it is the responsibility of the API maker to take it into account.</p>
 <pre><pre class="playground"><code class="language-rust align"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>impl Locatable for bool {
@@ -914,51 +891,66 @@ fn find&lt;T: Locatable&gt;(buf: &amp;[u8]) -&gt; Option&lt;T&gt; {
    }
 }
 <span class="boring">}</span></code></pre></pre>
-<p>The following program produces UB.</p>
+<p>The following program produces a <em>UB</em>.</p>
 <pre><code class="language-rust ignore align">fn use_locatable() {
    let buf = [4, 1, 99];
    let located_bool: Option&lt;bool&gt; = find(&amp;buf); // UB here!
    println!("{:?}", located_bool)
 }</code></pre>
-<p>The UB-detecting tool <code>miri</code> reports the following:</p>
-<pre><code class="language-default">$ cargo +nightly miri r --bin overflow
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.01s
-     Running `/home/user/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/cargo-miri runner target/miri/x86_64-unknown-linux-gnu/debug/overflow`
-error: Undefined Behavior: in-bounds pointer arithmetic failed: attempting to offset pointer by 101 bytes, but got alloc249 which is only 3 bytes from the end of the allocation
-  --&gt; src/overflow.rs:16:29
-   |
-16 |         let ptr: *const T = buf.as_ptr().add(start).cast();
-   |                             ^^^^^^^^^^^^^^^^^^^^^^^ Undefined Behavior occurred here
-   |
-   = help: this indicates a bug in the program: it performed an invalid operation, and caused Undefined Behavior
-   = help: see https://doc.rust-lang.org/nightly/reference/behavior-considered-undefined.html for further information
-help: alloc249 was allocated here:
-  --&gt; src/overflow.rs:22:9
-   |
-22 |     let buf = [4, 1, 99];
-   |         ^^^
-   = note: BACKTRACE (of the first span):
-   = note: inside `find::&lt;bool&gt;` at src/overflow.rs:16:29: 16:52
-note: inside `main`
-  --&gt; src/overflow.rs:23:38
-   |
-23 |     let located_bool: Option&lt;bool&gt; = find(&amp;buf); // UB here!
-   |                                      ^^^^^^^^^^
-
-note: some details are omitted, run with `MIRIFLAGS=-Zmiri-backtrace=full` for a verbose backtrace
-
-error: aborting due to 1 previous error
+<p>The error can be shown with <code>valgrind</code></p>
+<pre><code>$ valgrind ./target/release/rust-unsafe
+==123651== Memcheck, a memory error detector
+==123651== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==123651== Using Valgrind-3.19.0 and LibVEX; rerun with -h for copyright info
+==123651== Command: ./target/release/rust-unsafe
+==123651== 
+==123651== valgrind: Unrecognised instruction at address 0x10f860.
+==123651==    at 0x10F860: rust_unsafe::main (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651==    by 0x10F842: std::sys::backtrace::__rust_begin_short_backtrace (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651==    by 0x10F838: std::rt::lang_start::{{closure}} (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651==    by 0x129F0F: std::rt::lang_start_internal (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651==    by 0x10F894: main (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651== Your program just tried to execute an instruction that Valgrind
+==123651== did not recognise.  There are two possible reasons for this.
+==123651== 1. Your program has a bug and erroneously jumped to a non-code
+==123651==    location.  If you are running Memcheck and you just saw a
+==123651==    warning about a bad jump, it's probably your program's fault.
+==123651== 2. The instruction is legitimate but Valgrind doesn't handle it,
+==123651==    i.e. it's Valgrind's fault.  If you think this is the case or
+==123651==    you are not sure, please let us know and we'll try to fix it.
+==123651== Either way, Valgrind will now raise a SIGILL signal which will
+==123651== probably kill your program.
+==123651== 
+==123651== Process terminating with default action of signal 4 (SIGILL)
+==123651==  Illegal opcode at address 0x10F860
+==123651==    at 0x10F860: rust_unsafe::main (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651==    by 0x10F842: std::sys::backtrace::__rust_begin_short_backtrace (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651==    by 0x10F838: std::rt::lang_start::{{closure}} (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651==    by 0x129F0F: std::rt::lang_start_internal (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651==    by 0x10F894: main (in /home/toto/src/rust-unsafe/target/release/rust-unsafe)
+==123651== 
+==123651== HEAP SUMMARY:
+==123651==     in use at exit: 0 bytes in 0 blocks
+==123651==   total heap usage: 7 allocs, 7 frees, 2,072 bytes allocated
+==123651== 
+==123651== All heap blocks were freed -- no leaks are possible
+==123651== 
+==123651== For lists of detected and suppressed errors, rerun with: -s
+==123651== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 </code></pre>
+<h4 id="conclusion"><a class="header" href="#conclusion">Conclusion</a></h4>
 <p>This example shows that developers using <code>unsafe</code> blocks
-cannot assume that <em>safe</em> functions or traits they use are well implemented, and thus must prevent UB in case these <em>safe</em> functions have bad behavior.</p>
-<p>If they cannot protect their function against poorly implemented <em>safe</em> functions or traits, they have two options:</p>
+cannot assume <em>safe</em> functions/traits they
+use are well implemented, and thus must prevent <em>UB</em>
+in case these <em>safe</em> functions have bad behavior.</p>
+<p>If they cannot protect their function against badly implemented <em>safe</em> functions/traits, they could either</p>
 <ul>
-<li>Mark the function they <em>write</em> as <code>unsafe</code>: thus, it is the user's responsibility to provide correct arguments (by checking the <code>unsafe</code> function's documentation).</li>
-<li>Mark the traits they <em>use</em> as <code>unsafe</code>: thus, it is the user's responsibility to implement the trait properly (again, by reading the trait documentation).</li>
+<li>mark the function they <em>write</em> as <code>unsafe</code>: thus it is the user's responsibility to feed this function with correct arguments (by checking <em>unsafe</em> function documentation).</li>
+<li>mark the traits they <em>use</em> as <code>unsafe</code> : thus it is user's responsibility to implement the trait properly (again reading the trait documentation).</li>
 </ul>
-<h4 id="references-1"><a class="header" href="#references-1">References</a></h4>
+<h4 id="références"><a class="header" href="#références">Références</a></h4>
 <ul>
-<li><a href="https://doc.rust-lang.org/nomicon/safe-unsafe-meaning.html">https://doc.rust-lang.org/nomicon/safe-unsafe-meaning.html</a></li>
+<li>https://doc.rust-lang.org/nomicon/safe-unsafe-meaning.html</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="memory-management"><a class="header" href="#memory-management">Memory management</a></h1>
 <!-- ## About Rust memory safety -->
@@ -2398,8 +2390,6 @@ Do not rely only on <code>Drop</code> to ensure security (<a href="central_trait
 <ul>
 <li><input disabled="" type="checkbox"/>
 Don't use unsafe blocks (<a href="unsafe/generalities.html#LANG-UNSAFE">LANG-UNSAFE</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Encapsulation of <em>unsafe</em> features (<a href="unsafe/generalities.html#LANG-UNSAFE-ENCP">LANG-UNSAFE-ENCP</a>)</li>
 </ul>
 </li>
 <li>
