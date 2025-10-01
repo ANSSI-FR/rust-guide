@@ -1,0 +1,42 @@
+.note {
+	margin: 20px;
+	padding: 0 20px;
+	border-inline-start: 2px solid var(--note-border);
+}
+
+.note:before {
+	position: absolute;
+	width: 3rem;
+	height: 3rem;
+	margin-inline-start: calc(-1.5rem - 21px);
+	content: "ⓘ";
+	text-align: center;
+	background-color: var(--bg);
+	color: var(--note-border);
+	font-weight: bold;
+	font-size: 2rem;
+}
+
+blockquote .note:before {
+	background-color: var(--quote-bg);
+}
+
+.reco {
+	margin: 20px;
+	padding: 0 20px;
+	border-inline-start: 2px solid var(--reco-border);
+}
+
+blockquote .reco:before {
+	background-color: var(--quote-bg);
+}
+
+.reco:before {
+	content: attr(type) " - " attr(title);
+	font-weight: bold;
+}
+
+* {
+	--note-border: #0096cf;
+	--reco-border: #ff0000;
+}

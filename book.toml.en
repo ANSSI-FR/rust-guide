@@ -14,11 +14,13 @@ additional-js = [
 	"pagetoc.js", # from https://github.com/rust-lang/rustc-dev-guide
 ]
 additional-css = [
-	"pagetoc.css", # from https://github.com/rust-lang/rustc-dev-guide
+	"pagetoc.css",     # from https://github.com/rust-lang/rustc-dev-guide
+	"custom-envs.css",
 ]
 
 [preprocessor.checklist]
 title = "Recommendations checklist"
+renderers = ["html"]
 
 [preprocessor.code-align]
 after = ["links"]
