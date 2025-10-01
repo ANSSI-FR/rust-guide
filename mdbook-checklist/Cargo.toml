@@ -1,0 +1,22 @@
+[package]
+name = "mdbook-checklist"
+version = "0.2.0"
+authors = ["Aurélien Deharbe <aurelien.deharbe@ssi.gouv.fr>"]
+edition = "2021"
+description = "An mdBook preprocessor for generating checklists and indexes."
+keywords = ["mdbook", "markdown", "preprocessor"]
+readme = "README.md"
+license-file = "LICENCE.md"
+
+[dependencies]
+clap = "3.2"
+mdbook = { version = "0.4.52" }
+pulldown-cmark = "0.13.0"
+quick-xml = "0.38.3"
+regex = "1.7"
+serde_json = "1.0"
+toml = "0.5"
+
+[[bin]]
+doc = false
+name = "mdbook-checklist"

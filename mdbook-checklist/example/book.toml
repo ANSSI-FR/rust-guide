@@ -1,0 +1,8 @@
+[book]
+authors = ["Aurélien Deharbe <aurelien.deharbe@ssi.gouv.fr>"]
+multilingual = false
+src = "src"
+title = "Checklist Demo"
+
+[preprocessor.checklist]
+title = "Recommendations checklist"

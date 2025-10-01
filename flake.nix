@@ -32,14 +32,9 @@
         });
         mdbook-checklist = pkgs.rustPlatform.buildRustPackage (finalAttrs: rec {
           pname = "mdbook-checklist";
-          version = "0.1.1";
+          version = "0.2.0";
 
-          src = pkgs.fetchFromGitHub {
-            owner = "ANSSI-FR";
-            repo = pname;
-            tag = "v${version}";
-            hash = "sha256-7/IRNylcf2sziJQsANc3z5/Pz8Vc3Fe0fB7rp8RL9Y0=";
-          };
+          src = ./mdbook-checklist;
 
           cargoLock = {
             lockFile = "${src}/Cargo.lock";
