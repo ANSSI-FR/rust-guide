@@ -6,6 +6,7 @@
 
 - [Environnement de développement](devenv.md)
 - [Bibliothèques](libraries.md)
+- [Compilation](compilation.md)
 
 # Langage
 
