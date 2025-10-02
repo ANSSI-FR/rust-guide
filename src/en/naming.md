@@ -21,10 +21,12 @@ some particular constructions:
 - (C-FEATURE) for feature naming,
 - (C-WORD-ORDER) for word order consistency.
 
-> **Rule {{#check LANG-NAMING | Respect naming conventions}}**
->
-> Development of a secure application must follow the naming conventions
-> outlined in the [Rust API Guidelines].
+<div class="reco" id="LANG-NAMING" type="Rule" title="Respect naming conventions">
+
+Development of a secure application must follow the naming conventions
+outlined in the [Rust API Guidelines].
+
+</div>
 
 [rfc 430]: https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md
 [rust api guidelines]: https://rust-lang.github.io/api-guidelines/

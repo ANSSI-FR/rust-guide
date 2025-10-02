@@ -22,8 +22,10 @@ Ce comportement peut être rendu explicite en utilisant le type générique
 {{#include ../../examples/src/integer.rs}}
 ```
 
-> **Règle {{#check LANG-ARITH | Utilisation des opérations arithmétiques appropriées au regard des potentiels dépassements}}**
->
-> Lorsqu'une opération arithmétique peut produire un dépassement d'entier, les
-> fonctions spécialisées `overflowing_<op>`, `wrapping_<op>` ou le type
-> `Wrapping` doivent être utilisés.
+<div class="reco" id="LANG-ARITH" type="Règle" title="Utilisation des opérations arithmétiques appropriées au regard des potentiels dépassements">
+
+Lorsqu'une opération arithmétique peut produire un dépassement d'entier, les
+fonctions spécialisées `overflowing_<op>`, `wrapping_<op>` ou le type
+`Wrapping` doivent être utilisés.
+
+</div>

@@ -39,22 +39,26 @@ In particular, using `forget` may result in not releasing critical resources,
 leading to deadlocks or not erasing sensitive data from the memory. This is why
 `forget` is **unsecure**.
 
-> **Rule {{#check MEM-FORGET | Do not use `forget`}}**
->
-> In a secure Rust development, the `forget` function of `std::mem`
-> (`core::mem`) must not be used.
+<div class="reco" id="MEM-FORGET" type="Rule" title="Do not use `forget`">
+
+In a secure Rust development, the `forget` function of `std::mem`
+(`core::mem`) must not be used.
+
+</div>
 
 <!-- -->
 
-> **Recommendation {{#check MEM-FORGET-LINT | Use clippy lint to detect use of `forget`}}**
->
-> The lint `mem_forget` of Clippy may be used to automatically detect any use of
-> `forget`. To enforce the absence of `forget` in a crate, add the following
-> line at the top of the root file (usually `src/lib.rs` or `src/main.rs`):
->
-> ```rust,noplaypen,ignore
-> #![deny(clippy::mem_forget)]
-> ```
+<div class="reco" id="MEM-FORGET-LINT" type="Recommendation" title="Use clippy lint to detect use of `forget`">
+
+The lint `mem_forget` of Clippy may be used to automatically detect any use of
+`forget`. To enforce the absence of `forget` in a crate, add the following
+line at the top of the root file (usually `src/lib.rs` or `src/main.rs`):
+
+```rust,noplaypen,ignore
+#![deny(clippy::mem_forget)]
+```
+
+</div>
 
 The standard library includes other way to *forget* dropping values:
 
@@ -65,19 +69,23 @@ The standard library includes other way to *forget* dropping values:
 Those alternatives may lead to the same security issue but they have the
 additional benefit of making their goal obvious.
 
-> **Rule {{#check MEM-LEAK | Do not use `leak` function}}**
->
-> In a secure Rust development, the code must not leak memory or resource in
-> particular via `Box::leak`.
+<div class="reco" id="MEM-LEAK" type="Rule" title="Do not use `leak` function">
+
+In a secure Rust development, the code must not leak memory or resource in
+particular via `Box::leak`.
+
+</div>
 
 `ManuallyDrop` and `Box::into_raw` shift the release responsibility from the
 compiler to the developer.
 
-> **Rule {{#check MEM-MANUALLYDROP | Do release value wrapped in `ManuallyDrop`}}**
->
-> In a secure Rust development, any value wrapped in `ManuallyDrop` must be
-> unwrapped to allow for automatic release (`ManuallyDrop::into_inner`)
-> or manually released (unsafe `ManuallyDrop::drop`).
+<div class="reco" id="MEM-MANUALLYDROP" type="Rule" title="Do release value wrapped in `ManuallyDrop`">
+
+In a secure Rust development, any value wrapped in `ManuallyDrop` must be
+unwrapped to allow for automatic release (`ManuallyDrop::into_inner`)
+or manually released (unsafe `ManuallyDrop::drop`).
+
+</div>
 
 <!-- -->
 
@@ -87,53 +95,61 @@ These pointers are mainly used for C pointers. They do not have the same protect
 as *smart pointers* and often have to be used in `unsafe` context. For instance, freeing 
 raw pointers must be done manually without Rust guaranties.
 
-> **Rule {{#check MEM-NORAWPOINTER | Do no convert smart pointer into raw pointer in Rust without `unsafe`}}**
->
-> In a secure Rust development without `unsafe`, references and *smart pointers*
-> should not be converted into *raw pointers*. For instance, functions `into_raw` ou `into_non_null`
-> of smart pointers `Box`, `Rc`, `Arc` or `Weak` should not be used.
+<div class="reco" id="MEM-NORAWPOINTER" type="Rule" title="Do no convert smart pointer into raw pointer in Rust without `unsafe`">
 
-> **Rule {{#check MEM-INTOFROMRAW | Always call `from_raw` on `into_raw`ed value}}**
->
-> In a secure Rust development, any pointer created with a call to `into_raw`
-> (or `into_non_null`) from one of the following types:
->
-> - `std::boxed::Box` (or `alloc::boxed::Box`),
-> - `std::rc::Rc` (or `alloc::rc::Rc`),
-> - `std::rc::Weak` (or `alloc::rc::Weak`),
-> - `std::sync::Arc` (or `alloc::sync::Arc`),
-> - `std::sync::Weak` (or `alloc::sync::Weak`),
-> - `std::ffi::CString`,
-> - `std::ffi::OsString`,
->
-> must eventually be transformed into a value with a call to the respective
-> `from_raw` to allow for their reclamation.
->
-> ```rust align
-> {{#include ../../../examples/src/memory.rs:raw_pointer}}
-> ```
+In a secure Rust development without `unsafe`, references and *smart pointers*
+should not be converted into *raw pointers*. For instance, functions `into_raw` ou `into_non_null`
+of smart pointers `Box`, `Rc`, `Arc` or `Weak` should not be used.
+
+</div>
+
+<div class="reco" id="MEM-INTOFROMRAW" type="Rule" title="Always call `from_raw` on `into_raw`ed value">
+
+In a secure Rust development, any pointer created with a call to `into_raw`
+(or `into_non_null`) from one of the following types:
+
+- `std::boxed::Box` (or `alloc::boxed::Box`),
+- `std::rc::Rc` (or `alloc::rc::Rc`),
+- `std::rc::Weak` (or `alloc::rc::Weak`),
+- `std::sync::Arc` (or `alloc::sync::Arc`),
+- `std::sync::Weak` (or `alloc::sync::Weak`),
+- `std::ffi::CString`,
+- `std::ffi::OsString`,
+
+must eventually be transformed into a value with a call to the respective
+`from_raw` to allow for their reclamation.
+
+```rust align
+{{#include ../../../examples/src/memory.rs:raw_pointer}}
+```
+
+</div>
 
 The converse is also true! That is, `from_raw` should be call **only** on `into_raw`ed value. For instance,
 `Rc` smart pointers [explicitly request for this condition](https://doc.rust-lang.org/std/rc/struct.Rc.html#method.from_raw)
 and, for `Box` smart pointers, conversion of C pointers into `Box` is [discouraged](https://doc.rust-lang.org/std/boxed/index.html#memory-layout).
 
-> **Rule {{#check MEM-INTOFROMRAW | Call `from_raw` *only* on `into_raw`ed value}}**
->
-> In a secure Rust development, `from_raw` should only be called on `into_raw`ed values.
+<div class="reco" id="MEM-INTOFROMRAW" type="Rule" title="Call `from_raw` *only* on `into_raw`ed value">
+
+In a secure Rust development, `from_raw` should only be called on `into_raw`ed values.
+
+</div>
 
 <!-- -->
 
-> **Note**
->
-> In the case of `Box::into_raw`, manual cleanup is possible but a lot more
-> complicated than re-boxing the raw pointer and should be avoided:
->
-> ```rust align
-> {{#include ../../../examples/src/memory.rs:into_raw}}
-> ```
->
-> Because the other types (`Rc` and `Arc`) are opaque and more complex, manual
-> cleanup is not possible.
+<div class="note">
+
+In the case of `Box::into_raw`, manual cleanup is possible but a lot more
+complicated than re-boxing the raw pointer and should be avoided:
+
+```rust align
+{{#include ../../../examples/src/memory.rs:into_raw}}
+```
+
+Because the other types (`Rc` and `Arc`) are opaque and more complex, manual
+cleanup is not possible.
+
+</div>
 
 ## Uninitialized memory
 
@@ -141,24 +157,28 @@ By default, Rust forces all values to be initialized, preventing the use of
 uninitialized memory (except when using `std::mem::uninitialized` or
 `std::mem::MaybeUninit`).
 
-> **Rule {{#check MEM-UNINIT | Do not use uninitialized memory}}**
->
-> The `std::mem::uninitialized` function (deprecated 1.38) must never be used.
-> Each usage of the `std::mem::MaybeUninit` type (stabilized 1.36) must be explicitly
-> justified when necessary.
+<div class="reco" id="MEM-UNINIT" type="Rule" title="Do not use uninitialized memory">
+
+The `std::mem::uninitialized` function (deprecated 1.38) must never be used.
+Each usage of the `std::mem::MaybeUninit` type (stabilized 1.36) must be explicitly
+justified when necessary.
+
+</div>
 
 The use of uninitialized memory may result in two distinct security issues:
 
 - drop of uninitialized memory (also a memory safety issue),
 - non-drop of initialized memory.
 
-> **Note**
->
-> `std::mem::MaybeUninit` is an improvement over `std::mem::uninitialized`.
-> Indeed, it makes dropping uninitialized values a lot more difficult.
-> However, it does not change the second issue: the non-drop of an initialized
-> memory remains. It is problematic, in particular when considering
-> the use of `Drop` to erase sensitive memory.
+<div class="note">
+
+`std::mem::MaybeUninit` is an improvement over `std::mem::uninitialized`.
+Indeed, it makes dropping uninitialized values a lot more difficult.
+However, it does not change the second issue: the non-drop of an initialized
+memory remains. It is problematic, in particular when considering
+the use of `Drop` to erase sensitive memory.
+
+</div>
 
 ## Cyclic reference counted pointers (`Rc` and `Arc`)
 
@@ -204,6 +224,8 @@ Hello, world!
 ==153637== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 ```
 
-> **Rule {{#check MEM-MUT-REC-RC | Avoid cyclic reference counted pointers}}**
->
-> Avoid recursive types whose recursivity uses reference counted pointers together with interior mutability.
+<div class="reco" id="MEM-MUT-REC-RC" type="Rule" title="Avoid cyclic reference counted pointers">
+
+Avoid recursive types whose recursivity uses reference counted pointers together with interior mutability.
+
+</div>

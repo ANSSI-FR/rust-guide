@@ -8,17 +8,21 @@ Le type `Result` est la façon privilégiée en Rust pour décrire le type de re
 des fonctions dont le traitement peut échouer. Un objet `Result` doit être
 testé et jamais ignoré.
 
-> **Recommandation {{#check LANG-ERRWRAP | Mise en place d'un type `Error` personnalisé, pouvant contenir toutes les erreurs possibles}}**
->
-> Une *crate* peut implanter son propre type `Error` qui peut contenir toutes
-> les erreurs possibles. Des précautions supplémentaires doivent être prises :
-> ce type doit être *exception-safe* (RFC 1236) et implémenter les traits
-> `Error + Send + Sync + 'static` ainsi que `Display`.
+<div class="reco" id="LANG-ERRWRAP" type="Recommandation" title="Mise en place d'un type `Error` personnalisé pouvant contenir toutes les erreurs possibles">
 
-> **Recommandation {{#check LANG-ERRDO | Utilisation de l'opérateur `?` et non-utilisation de la macro `try!`}}**
->
-> L'opérateur `?` doit être utilisé pour améliorer la lisibilité du code.
-> La macro `try!` ne doit pas être utilisée.
+Une *crate* peut implanter son propre type `Error` qui peut contenir toutes
+les erreurs possibles. Des précautions supplémentaires doivent être prises :
+ce type doit être *exception-safe* (RFC 1236) et implémenter les traits
+`Error + Send + Sync + 'static` ainsi que `Display`.
+
+</div>
+
+<div class="reco" id="LANG-ERRDO" type="Recommandation" title="Utilisation de l'opérateur `?` et non-utilisation de la macro `try!`">
+
+L'opérateur `?` doit être utilisé pour améliorer la lisibilité du code.
+La macro `try!` ne doit pas être utilisée.
+
+</div>
 
 Des *crates* tierces peuvent être utilisées pour faciliter la gestion d'erreurs.
 La plupart ([failure], [snafu], [thiserror]) proposent la création de types
@@ -54,15 +58,19 @@ Des motifs courants de code qui provoquent des `panic` sont :
 - une division par zéro ;
 - l'utilisation de `format!` pour le formatage d'une chaîne de caractères.
 
-> **Règle {{#check LANG-NOPANIC | Non-utilisation de fonctions qui peuvent causer des `panic`}}**
->
-> Les fonctions et instructions qui peuvent causer des `panic` à l'exécution
-> ne doivent pas être utilisées.
+<div class="reco" id="LANG-NOPANIC" type="Règle" title="Non-utilisation de fonctions qui peuvent causer des `panic`">
 
-> **Règle {{#check LANG-ARRINDEXING | Test des indices d'accès aux tableaux ou utilisation de la méthode `get`}}**
->
-> L'indice d'accès à un tableau doit être testé, ou la méthode `get` doit être
-> utilisée pour récupérer une `Option`.
+Les fonctions et instructions qui peuvent causer des `panic` à l'exécution
+ne doivent pas être utilisées.
+
+</div>
+
+<div class="reco" id="LANG-ARRINDEXING" type="Règle" title="Test des indices d'accès aux tableaux ou utilisation de la méthode `get`">
+
+L'indice d'accès à un tableau doit être testé, ou la méthode `get` doit être
+utilisée pour récupérer une `Option`.
+
+</div>
 
 <!--
 <mark>TODO</mark> Vérifier si la crate *[no_panic](https://github.com/dtolnay/no-panic)*
@@ -82,12 +90,14 @@ jamais pouvoir paniquer.
 Dérouler (*unwinding*) depuis le code Rust vers le code étranger résulte en un
 comportement indéfini.
 
-> **Règle {{#check LANG-FFIPANIC | Gestion correcte des `panic!` dans les FFI}}**
->
-> Le code Rust appelé depuis une FFI doit soit être assuré de ne pas paniquer,
-> soit utiliser `catch_unwind` ou le module `std::panic` pour s'assurer qu'il
-> ne va pas abandonner un traitement puis que l'exécution retourne dans le
-> langage appelant dans un état instable.
+<div class="reco" id="LANG-FFIPANIC" type="Règle" title="Gestion correcte des `panic!` dans les FFI">
+
+Le code Rust appelé depuis une FFI doit soit être assuré de ne pas paniquer,
+soit utiliser `catch_unwind` ou le module `std::panic` pour s'assurer qu'il
+ne va pas abandonner un traitement puis que l'exécution retourne dans le
+langage appelant dans un état instable.
+
+</div>
 
 Il est porté à l'attention du développeur que `catch_unwind` ne va traiter que
 les cas de `panic`, et va préserver les abandons de processus causés par

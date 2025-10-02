@@ -20,8 +20,10 @@ or the `overflowing_<op>` and `wrapping_<op>` operations on integers
 {{#include ../../examples/src/integer.rs}}
 ```
 
-> **Rule {{#check LANG-ARITH | Use appropriate arithmetic operations regarding potential overflows}}**
->
-> When assuming that an arithmetic operation can produce an overflow, the
-> specialized functions `overflowing_<op>`, `wrapping_<op>`, or the
-> `Wrapping` type must be used.
+<div class="reco" id="LANG-ARITH" type="Rule" title="Use appropriate arithmetic operations regarding potential overflows">
+
+When assuming that an arithmetic operation can produce an overflow, the
+specialized functions `overflowing_<op>`, `wrapping_<op>`, or the
+`Wrapping` type must be used.
+
+</div>

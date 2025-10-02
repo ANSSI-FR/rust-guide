@@ -60,11 +60,13 @@ d'utiliser un champ typé par un type fantôme (`PhantomData`) :
 struct SpecialType(u8, PhantomData<*const ()>);
 ```
 
-> **Recommandation {{#check LANG-SYNC-TRAITS | Justification de l'implémentation des traits `Send` et `Sync`}}**
->
-> Dans un développement sécurisé en Rust, l'implémentation manuelle des traits
-> `Send` et `Sync` doit être évitée, et, si nécessaire, doit être justifiée,
-> documentée et révisée par des pairs.
+<div class="reco" id="LANG-SYNC-TRAITS" type="Recommandation" title="Justification de l'implémentation des traits `Send` et `Sync`">
+
+Dans un développement sécurisé en Rust, l'implémentation manuelle des traits
+`Send` et `Sync` doit être évitée, et, si nécessaire, doit être justifiée,
+documentée et révisée par des pairs.
+
+</div>
 
 ## Les traits de comparaison : `PartialEq`, `Eq`, `PartialOrd`, `Ord`
 
@@ -167,18 +169,22 @@ second cas, cela peut mener à des problèmes classiques de sécurité liés à 
 violations de propriétés de sûreté mémoire. C'est là encore un atout que de
 limiter au possible l'utilisation des blocs `unsafe`.
 
-> **Règle {{#check LANG-CMP-INV | Respect des invariants des traits de comparaison standards}}**
->
-> Dans un développement sécurisé en Rust, l'implémentation des traits de
-> comparaison standards doit respecter les invariants décrits dans la
-> documentation.
+<div class="reco" id="LANG-CMP-INV" type="Règle" title="Respect des invariants des traits de comparaison standards">
 
-> **Recommandation {{#check LANG-CMP-DEFAULTS | Utilisation des implémentations par défaut des traits de comparaison standards}}**
->
-> Dans un développement sécurisé en Rust, l'implémentation des traits de
-> comparaison standard ne doit être effectuée que par l'implémentation des
-> méthodes ne fournissant pas d'implémentation par défaut, dans le but de
-> réduire le risque de violation des invariants associés auxdits traits.
+Dans un développement sécurisé en Rust, l'implémentation des traits de
+comparaison standards doit respecter les invariants décrits dans la
+documentation.
+
+</div>
+
+<div class="reco" id="LANG-CMP-DEFAULTS" type="Recommandation" title="Utilisation des implémentations par défaut des traits de comparaison standards">
+
+Dans un développement sécurisé en Rust, l'implémentation des traits de
+comparaison standard ne doit être effectuée que par l'implémentation des
+méthodes ne fournissant pas d'implémentation par défaut, dans le but de
+réduire le risque de violation des invariants associés auxdits traits.
+
+</div>
 
 Il existe un *lint* Clippy qui permet de vérifier que `PartialEq::ne` n'est pas
 défini lors d'une implémentation du trait `PartialEq`.
@@ -245,10 +251,12 @@ En dépit de ces avertissements sur les ordres dérivés, les comparaisons déri
 automatiquement sont bien moins sujettes à erreurs que des implémentations
 manuelles, et rendent le code plus court et plus simple à maintenir.
 
-> **Recommandation {{#check LANG-CMP-DERIVE | Dérivation des traits de comparaison lorsque c'est possible}}**
->
-> Dans un développement sécurisé en Rust, l'implémentation des traits de
-> comparaison standard doit être automatiquement dérivée à l'aide de
-> `#[derive(...)]` lorsque l'égalité structurelle et l'ordre lexicographique
-> sont nécessaires. Toute implémentation manuelle d'un trait de comparaison
-> standard doit être justifiée et documentée.
+<div class="reco" id="LANG-CMP-DERIVE" type="Recommandation" title="Dérivation des traits de comparaison lorsque c'est possible">
+
+Dans un développement sécurisé en Rust, l'implémentation des traits de
+comparaison standard doit être automatiquement dérivée à l'aide de
+`#[derive(...)]` lorsque l'égalité structurelle et l'ordre lexicographique
+sont nécessaires. Toute implémentation manuelle d'un trait de comparaison
+standard doit être justifiée et documentée.
+
+</div>

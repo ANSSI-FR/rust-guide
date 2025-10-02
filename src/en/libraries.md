@@ -20,11 +20,13 @@ For a given crate, it lists current dependencies' versions (using its
 `Cargo.toml`), and checks the latest compatible version and also the latest general
 version.
 
-> **Rule {{#check LIBS-OUTDATED | Check for outdated dependencies versions (cargo-outdated)}}**
->
-> The `cargo-outdated` tool must be used to check dependencies' status. Then,
-> each outdated dependency must be updated or the choice of the version must be
-> justified.
+<div class="reco" id="LIBS-OUTDATED" type="Rule" title="Check for outdated dependencies versions (cargo-outdated)">
+
+The `cargo-outdated` tool must be used to check dependencies' status. Then,
+each outdated dependency must be updated or the choice of the version must be
+justified.
+
+</div>
 
 [cargo-outdated]: https://github.com/kbknapp/cargo-outdated
 
@@ -33,10 +35,12 @@ version.
 [Cargo-audit] tool allows one to easily check for security vulnerabilities
 reported to the RustSec Advisory Database.
 
-> **Rule {{#check LIBS-AUDIT | Check for security vulnerabilities report on dependencies (cargo-audit)}}**
->
-> The `cargo-audit` tool must be used to check for known vulnerabilities in
-> dependencies.
+<div class="reco" id="LIBS-AUDIT" type="Rule" title="Check for security vulnerabilities report on dependencies (cargo-audit)">
+
+The `cargo-audit` tool must be used to check for known vulnerabilities in
+dependencies.
+
+</div>
 
 [cargo-audit]: https://github.com/RustSec/cargo-audit
 
@@ -49,8 +53,11 @@ dependencies.
 -->
 
 <!--
-> **Recommendation {{#check LIBS-UNSAFE | Check for unsafe code in dependencies}}**
->
-> <mark>TODO</mark>: check that no `unsafe` blocks appear in the imported
-> dependencies (with a tool?).
+<div class="reco" id="LIBS-UNSAFE" type="Recommendation" title="Check for unsafe code in dependencies">
+
+<mark>TODO</mark>: check that no `unsafe` blocks appear in the imported
+dependencies (with a tool?).
+
+</div>
+
 -->

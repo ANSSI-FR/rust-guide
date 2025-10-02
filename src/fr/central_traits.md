@@ -25,10 +25,12 @@ complexes (*smart pointers* comme les `Box` ou les `Rc` par exemple). Au
 final, il est probable que l'implémentation du trait `Drop` contienne des blocs
 `unsafe` ainsi que d'autres opérations critiques du point de vue de la sécurité.
 
-> **Recommandation {{#check LANG-DROP | Justification de l'implémentation du trait `Drop`}}**
->
-> Dans un développement sécurisé en Rust, l'implémentation du trait
-> `std::ops::Drop` doit être justifiée, documentée et examinée par des pairs.
+<div class="reco" id="LANG-DROP" type="Recommandation" title="Justification de l'implémentation du trait `Drop`">
+
+Dans un développement sécurisé en Rust, l'implémentation du trait
+`std::ops::Drop` doit être justifiée, documentée et examinée par des pairs.
+
+</div>
 
 Ensuite, le système de types de Rust assure seulement la sûreté mémoire et,
 du point de vue du typage, des `drop`s peuvent tout à fait être manqués.
@@ -44,23 +46,29 @@ Les `drop`s manqués peuvent mener à l'exposition de données sensibles ou bien
 encore à l'épuisement de ressources limitées et par là même à des problèmes
 d'indisponibilité.
 
-> **Règle {{#check LANG-DROP-NO-PANIC | Absence de `panic` dans l'implémentation de `Drop`}}**
->
-> Dans un développement sécurisé en Rust, l'implémentation du trait
-> `std::ops::Drop` ne doit pas causer de `panic`.
+<div class="reco" id="LANG-DROP-NO-PANIC" type="Règle" title="Absence de `panic` dans l'implémentation de `Drop`">
+
+Dans un développement sécurisé en Rust, l'implémentation du trait
+`std::ops::Drop` ne doit pas causer de `panic`.
+
+</div>
 
 En plus des `panic`s, les `drop`s contenant du code critique doivent être
 protégés.
 
-> **Règle {{#check LANG-DROP-NO-CYCLE | Absence de cycles de références avec valeurs `Drop`ables}}**
->
-> Les valeurs dont le type implémente `Drop` ne doivent pas être incluses,
-> directement ou indirectement, dans un cycle de références à compteurs.
+<div class="reco" id="LANG-DROP-NO-CYCLE" type="Règle" title="Absence de cycles de références avec valeurs `Drop`ables">
+
+Les valeurs dont le type implémente `Drop` ne doivent pas être incluses,
+directement ou indirectement, dans un cycle de références à compteurs.
+
+</div>
 
 <!-- -->
 
-> **Recommandation {{#check LANG-DROP-SEC | Sécurité assurée par d'autres mécanismes en plus du trait `Drop`}}**
->
-> Certaines opérations liées à la sécurité d'une application à la fin d'un
-> traitement (comme l'effacement de secrets cryptographiques par exemple) ne
-> doivent pas reposer uniquement sur l'implémentation du trait `Drop`.
+<div class="reco" id="LANG-DROP-SEC" type="Recommandation" title="Sécurité assurée par d'autres mécanismes en plus du trait `Drop`">
+
+Certaines opérations liées à la sécurité d'une application à la fin d'un
+traitement (comme l'effacement de secrets cryptographiques par exemple) ne
+doivent pas reposer uniquement sur l'implémentation du trait `Drop`.
+
+</div>

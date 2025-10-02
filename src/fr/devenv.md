@@ -36,11 +36,13 @@ deviennent alors fortement liées à une édition en particulier. Dans le reste 
 ce guide, un effort sera réalisé pour mettre en évidence les règles qui ne
 s'appliqueraient qu'à certaines éditions de Rust en particulier.
 
-> **Note**
->
-> Aucune édition spécifique n'est recommandée, tant que le développement se
-> conforme aux recommandations exprimées à propos des fonctionnalités que
-> l'édition utilisée propose.
+<div class="note">
+
+Aucune édition spécifique n'est recommandée, tant que le développement se
+conforme aux recommandations exprimées à propos des fonctionnalités que
+l'édition utilisée propose.
+
+</div>
 
 [edition guide]: https://doc.rust-lang.org/edition-guide/
 
@@ -73,12 +75,14 @@ $
 
 <!-- -->
 
-> **Règle {{#check DENV-STABLE | Utilisation de la chaîne d'outils *stable*}}**
->
-> Le développement d'applications sécurisées doit être mené en utilisant la
-> chaîne d'outils dans sa version *stable*, afin de limiter les potentiels
-> *bugs* à la compilation, à l'exécution et lors de l'utilisation d'outils
-> complémentaires.
+<div class="reco" id="DENV-STABLE" type="Règle" title="Utilisation de la chaîne d'outils *stable*">
+
+Le développement d'applications sécurisées doit être mené en utilisant la
+chaîne d'outils dans sa version *stable*, afin de limiter les potentiels
+*bugs* à la compilation, à l'exécution et lors de l'utilisation d'outils
+complémentaires.
+
+</div>
 
 Enfin, lorsque l'utilisation d'un outil (par exemple, une sous-commande `cargo`)
 requiert l'installation d'un composant dans une chaîne d'outils non *stable*,
@@ -139,9 +143,11 @@ sommes de contrôle des sources téléchargées (selon le principe TOFU : *Trust
 Ce fichier peut également être créé manuellement avec `cargo generate-lockfile`, et s'il
 est déjà présent, un nouveau fichier est créé avec les dernières versions compatibles de chaque crate.
 
-> **Règle {{#check DENV-CARGO-LOCK | Mise en dépôt du fichier Cargo.lock}}**
->
-> Le fichier `Cargo.lock` doit être versionné avec le code source du programme Rust.
+<div class="reco" id="DENV-CARGO-LOCK" type="Règle" title="Mise en dépôt du fichier Cargo.lock">
+
+Le fichier `Cargo.lock` doit être versionné avec le code source du programme Rust.
+
+</div>
 
 <div class="warning">
 
@@ -175,11 +181,13 @@ vérifications (par exemple, les
 [vérifications de dépassements d'entiers](./04_language.html#integer-overflows))
 est utilisé.
 
-> **Règle {{#check DENV-CARGO-OPTS | Conservation des valeurs par défaut des variables critiques dans les profils cargo}}**
->
-> Les variables `debug-assertions` et `overflow-checks` ne doivent pas être
-> modifiées dans les sections de profils de développement (`[profile.dev]` and
-> `[profile.test]`).
+<div class="reco" id="DENV-CARGO-OPTS" type="Règle" title="Conservation des valeurs par défaut des variables critiques dans les profils cargo">
+
+Les variables `debug-assertions` et `overflow-checks` ne doivent pas être
+modifiées dans les sections de profils de développement (`[profile.dev]` and
+`[profile.test]`).
+
+</div>
 
 Cargo propose d'autres moyens de configuration afin de modifier son comportement
 sur un système donné. Cela peut être très pratique, mais il peut alors aussi
@@ -193,10 +201,12 @@ exemple pour générer une partie du code ou pour invoquer un outil externe avan
 la compilation, il est préférable d'utiliser la fonctionnalité de *scripts de
 compilation* de Cargo.
 
-> **Règle {{#check DENV-CARGO-ENVVARS | Conservation des valeurs par défaut des variables d'environnement à l'exécution de cargo}}**
->
-> Les variables d'environnement `RUSTC`, `RUSTC_WRAPPER` et `RUSTFLAGS` ne
-> doivent pas être modifiées lorsque Cargo est appelé pour compiler un projet.
+<div class="reco" id="DENV-CARGO-ENVVARS" type="Règle" title="Conservation des valeurs par défaut des variables d'environnement à l'exécution de cargo">
+
+Les variables d'environnement `RUSTC`, `RUSTC_WRAPPER` et `RUSTFLAGS` ne
+doivent pas être modifiées lorsque Cargo est appelé pour compiler un projet.
+
+</div>
 
 [crates.io]: https://crates.io
 [cargo]: https://doc.rust-lang.org/stable/cargo/
@@ -217,10 +227,12 @@ développeur avant d'appliquer la réparation suggérée par `clippy`, en
 particulier dans le cas des *lints* de la catégorie `clippy::nursery` puisque
 ceux-ci sont encore en cours de développement et de mise au point.
 
-> **Règle {{#check DENV-LINTER | Utilisation régulière d'un *linter*}}**
->
-> Un *linter* comme `clippy` doit être utilisé régulièrement tout au long du
-> développement d'une application sécurisée.
+<div class="reco" id="DENV-LINTER" type="Règle" title="Utilisation régulière d'un *linter*">
+
+Un *linter* comme `clippy` doit être utilisé régulièrement tout au long du
+développement d'une application sécurisée.
+
+</div>
 
 [clippy]: https://github.com/rust-lang/rust-clippy
 
@@ -257,12 +269,14 @@ single_line_if_else_max_width = 40
 Pour plus d'informations à propos des règles de convention de style que
 `rustfmt` propose, voir le [*Rust Style Guide*](https://doc.rust-lang.org/style-guide/index.html).
 
-> **Règle {{#check DENV-FORMAT | Utilisation d'un outil de formatage (rustfmt)}}**
->
-> L'outil de formatage `rustfmt` peut être utilisé pour assurer le respect de
-> règles de convention de style (comme décrites dans le fichier `rustfmt.toml`)
-> sur une base de code, avec l'option `--check` ainsi qu'une revue de code
-> manuelle.
+<div class="reco" id="DENV-FORMAT" type="Règle" title="Utilisation d'un outil de formatage (rustfmt)">
+
+L'outil de formatage `rustfmt` peut être utilisé pour assurer le respect de
+règles de convention de style (comme décrites dans le fichier `rustfmt.toml`)
+sur une base de code, avec l'option `--check` ainsi qu'une revue de code
+manuelle.
+
+</div>
 
 [rustfmt]: https://github.com/rust-lang/rustfmt
 
@@ -302,11 +316,13 @@ configuration, certaines réparations (comme celles proposées avec l'option
 `--edition-idioms`) sont connues pour casser la compilation ou pour modifier
 la sémantique d'un programme dans certains cas.
 
-> **Règle {{#check DENV-AUTOFIX | Vérification manuelle des réparations automatiques}}**
->
-> Dans le cadre du développement d'une application sécurisée, toute réparation
-> automatique (comme celles appliquées par `rustfix` par exemple) doit être
-> vérifiée par le développeur.
+<div class="reco" id="DENV-AUTOFIX" type="Règle" title="Vérification manuelle des réparations automatiques">
+
+Dans le cadre du développement d'une application sécurisée, toute réparation
+automatique (comme celles appliquées par `rustfix` par exemple) doit être
+vérifiée par le développeur.
+
+</div>
 
 [rustfix]: https://github.com/rust-lang-nursery/rustfix
 

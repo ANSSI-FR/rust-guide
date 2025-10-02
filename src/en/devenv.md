@@ -34,11 +34,13 @@ language, that are used in such applications, rather than to Rust editions.
 In the rest of this guide, best effort will be made to highlight constructions
 and language features that are specific to a particular Rust edition.
 
-> **Note**
->
-> No specific edition is recommended, as long as users follow the
-> recommendations related to the features offered by the edition that has been
-> chosen.
+<div class="note">
+
+No specific edition is recommended, as long as users follow the
+recommendations related to the features offered by the edition that has been
+chosen.
+
+</div>
 
 [edition guide]: https://doc.rust-lang.org/edition-guide/
 
@@ -69,10 +71,12 @@ $ rustup override list
 $
 ```
 
-> **Rule {{#check DENV-STABLE | Use a stable compilation toolchain}}**
->
-> Development of a secure application must be done using a fully stable
-> toolchain, for limiting potential compiler, runtime or tool bugs.
+<div class="reco" id="DENV-STABLE" type="Rule" title="Use a stable compilation toolchain">
+
+Development of a secure application must be done using a fully stable
+toolchain, for limiting potential compiler, runtime or tool bugs.
+
+</div>
 
 When using a specific `cargo` subcommand that requires a nightly component,
 it is preferable to run it by switching the toolchain only locally, instead
@@ -128,9 +132,11 @@ dependencies' checksums, adhering to a TOFU (*Trust On First Use*) policy.
 This file can also be created manually with `cargo generate-lockfile`. If it already exists,
 the file is overwritten with the latest available version of every crate.
 
-> **Rule {{#check DENV-CARGO-LOCK | Track Cargo.lock in version control system}}**
->
-> `Cargo.lock` files must be tracked by version control system.
+<div class="reco" id="DENV-CARGO-LOCK" type="Rule" title="Track Cargo.lock in version control system">
+
+`Cargo.lock` files must be tracked by version control system.
+
+</div>
 
 <div class="warning">
 
@@ -159,10 +165,12 @@ Overriding the default options may cause bugs not being detected, even when
 using the debug profile that normally enables runtime checks (for example it does not enable
 [integer overflow checks](./04_language.html#integer-overflows)).
 
-> **Rule {{#check DENV-CARGO-OPTS | Keep default values for critical variables in cargo profiles}}**
->
-> The variables `debug-assertions` and `overflow-checks` must not be overridden
-> in development profiles' sections (`[profile.dev]` and `[profile.test]`).
+<div class="reco" id="DENV-CARGO-OPTS" type="Rule" title="Keep default values for critical variables in cargo profiles">
+
+The variables `debug-assertions` and `overflow-checks` must not be overridden
+in development profiles' sections (`[profile.dev]` and `[profile.test]`).
+
+</div>
 
 Cargo proposes other ways to setup its configuration and change its behavior on
 a given system. This can be very useful, but it may also be difficult to know
@@ -174,10 +182,12 @@ environment variable `RUSTC_WRAPPER`, for example, that may be used to generate
 part of the code or to run external tools before Rust compilation, it is preferable
 to use the Cargo build scripts feature.
 
-> **Rule {{#check DENV-CARGO-ENVVARS | Keep default values for compiler environment variables when running cargo}}**
->
-> The environment variables `RUSTC`, `RUSTC_WRAPPER` and `RUSTFLAGS` must not
-> be overriden when using Cargo to build the project.
+<div class="reco" id="DENV-CARGO-ENVVARS" type="Rule" title="Keep default values for compiler environment variables when running cargo">
+
+The environment variables `RUSTC`, `RUSTC_WRAPPER` and `RUSTFLAGS` must not
+be overriden when using Cargo to build the project.
+
+</div>
 
 [crates.io]: https://crates.io
 [cargo]: https://doc.rust-lang.org/stable/cargo/
@@ -196,10 +206,12 @@ detect. The warnings should be re-checked by the programmer before committing
 the fix that is suggested by `clippy`, especially in the case of lints of the
 category `clippy::nursery` since those hints are still under development.
 
-> **Rule {{#check DENV-LINTER | Use linter regularly}}**
->
-> A linter, such as `clippy`, must be used regularly during the development of
-> a secure application.
+<div class="reco" id="DENV-LINTER" type="Rule" title="Use linter regularly">
+
+A linter, such as `clippy`, must be used regularly during the development of
+a secure application.
+
+</div>
 
 [clippy]: https://github.com/rust-lang/rust-clippy
 
@@ -233,11 +245,13 @@ single_line_if_else_max_width = 40
 For more information about the guidelines that `rustfmt` will check, have a look
 at the [Rust Style Guide](https://doc.rust-lang.org/style-guide/index.html).
 
-> **Rule {{#check DENV-FORMAT | Use Rust formatter (rustfmt)}}**
->
-> The tool `rustfmt` can be used to ensure that the codebase respects style
-> guidelines (as described in `rustfmt.toml` file), with `--check` option and
-> manual review.
+<div class="reco" id="DENV-FORMAT" type="Rule" title="Use Rust formatter (rustfmt)">
+
+The tool `rustfmt` can be used to ensure that the codebase respects style
+guidelines (as described in `rustfmt.toml` file), with `--check` option and
+manual review.
+
+</div>
 
 [rustfmt]: https://github.com/rust-lang/rustfmt
 
@@ -273,10 +287,12 @@ proposed fixes. In particular, some corrections (such as some of those
 provided with the `--edition-idioms`) are known to break the compilation
 or change the program semantics in some cases.
 
-> **Rule {{#check DENV-AUTOFIX | Manually check automatic fixes}}**
->
-> In a secure Rust development, any automatic fix (for instance, provided by
-> `rustfix`) must be verified by the developer.
+<div class="reco" id="DENV-AUTOFIX" type="Rule" title="Manually check automatic fixes">
+
+In a secure Rust development, any automatic fix (for instance, provided by
+`rustfix`) must be verified by the developer.
+
+</div>
 
 [rustfix]: https://github.com/rust-lang-nursery/rustfix
 

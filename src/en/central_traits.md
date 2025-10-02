@@ -21,10 +21,12 @@ or to release memory (e.g. in smart pointers such as `Box` or `Rc`).
 As a result, `Drop` trait implementations are likely to contain `unsafe` code
 blocks as well as other security-critical operations.
 
-> **Recommendation {{#check LANG-DROP | Justify `Drop` implementation}}**
->
-> In a Rust secure development, the implementation of the `std::ops::Drop` trait
-> should be justified, documented and peer-reviewed.
+<div class="reco" id="LANG-DROP" type="Recommendation" title="Justify `Drop` implementation">
+
+In a Rust secure development, the implementation of the `std::ops::Drop` trait
+should be justified, documented and peer-reviewed.
+
+</div>
 
 Second, Rust type system only ensures memory safety and, from the type system's
 standpoint, missing drops is allowed. In fact, several things may lead to
@@ -40,21 +42,27 @@ missing drops, such as:
 And missing drops may lead to exposing sensitive data or to lock limited
 resources leading to availability issues.
 
-> **Rule {{#check LANG-DROP-NO-PANIC | Do not panic in `Drop` implementation}}**
->
-> In a Rust secure development, the implementation of the `std::ops::Drop` trait
-> must not panic.
+<div class="reco" id="LANG-DROP-NO-PANIC" type="Rule" title="Do not panic in `Drop` implementation">
+
+In a Rust secure development, the implementation of the `std::ops::Drop` trait
+must not panic.
+
+</div>
 
 Beside panics, secure-critical drop should be protected.
 
-> **Rule {{#check LANG-DROP-NO-CYCLE | Do not allow cycles of reference-counted `Drop`}}**
->
-> A value whose type implements `Drop` must not be embedded directly or indirectly
-> in a cycle of reference-counted references.
+<div class="reco" id="LANG-DROP-NO-CYCLE" type="Rule" title="Do not allow cycles of reference-counted `Drop`">
 
-> **Recommendation {{#check LANG-DROP-SEC | Do not rely only on `Drop` to ensure security}}**
->
-> Ensuring security operations at the end of some treatment (such as key erasure
-> at the end of a cryptographic encryption) should not rely only on the `Drop`
-> trait implementation.
+A value whose type implements `Drop` must not be embedded directly or indirectly
+in a cycle of reference-counted references.
+
+</div>
+
+<div class="reco" id="LANG-DROP-SEC" type="Recommendation" title="Do not rely only on `Drop` to ensure security">
+
+Ensuring security operations at the end of some treatment (such as key erasure
+at the end of a cryptographic encryption) should not rely only on the `Drop`
+trait implementation.
+
+</div>
 

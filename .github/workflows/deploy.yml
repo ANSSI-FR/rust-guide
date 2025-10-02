@@ -14,9 +14,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Prepare
-        run: cargo install mdbook mdbook-checklist
+        run: cargo install mdbook --version 0.4.52 --locked
+      - name: Install mdbook-checklist
+        run: cargo install --path ./mdbook-checklist --locked
       - name: Install mdbook-code-align
-        run: cargo install --path ./mdbook-code-align
+        run: cargo install --path ./mdbook-code-align --locked
       - name: Build EN version
         run: |
           ./lang.sh en
