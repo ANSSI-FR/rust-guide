@@ -9,7 +9,7 @@ readme = "README.md"
 license-file = "LICENCE.md"
 
 [dependencies]
-clap = "3.2"
+clap = { version = "4", features = ["derive"] }
 mdbook = { version = "0.4.52" }
 pulldown-cmark = "0.13.0"
 quick-xml = "0.38.3"

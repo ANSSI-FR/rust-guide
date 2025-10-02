@@ -5,39 +5,51 @@ mod checklist_pre;
 
 use checklist_pre::ChecklistPre;
 
-use clap::{Arg, ArgMatches, Command};
 use mdbook::errors::Error;
 use mdbook::preprocess::{CmdPreprocessor, Preprocessor};
 
 use std::io;
 use std::process;
 
-fn make_command() -> Command<'static> {
-    Command::new("checklist-preprocessor")
-        .about("A mdbook preprocessor to generate checklists")
-        .subcommand(
-            Command::new("supports")
-                .arg(Arg::new("renderer").required(true))
-                .about("Check whether a renderer is supported by this preprocessor"),
-        )
+use clap::{Parser, Subcommand};
+/// A mdbook preprocessor to generate checklists
+#[derive(Parser)]
+#[command(version, about, long_about = None)]
+struct Cli {
+    #[command(subcommand)]
+    command: Option<Commands>,
 }
 
-fn main() -> Result<(), Error> {
-    let matches = make_command().get_matches();
+#[derive(Subcommand)]
+enum Commands {
+    /// Check whether a renderer is supported by this preprocessor
+    Supports {
+        /// Renderer name
+        renderer: String,
+    },
+}
+
+fn main() {
+    let cli = Cli::parse();
     let preprocessor = ChecklistPre;
 
-    if let Some(sub_args) = matches.subcommand_matches("supports") {
-        handle_supports(&preprocessor, sub_args)
-    } else {
-        handle_preprocessing(&preprocessor)
+    if let Some(Commands::Supports { renderer }) = &cli.command {
+        handle_supports(&preprocessor, renderer);
+    } else if let Err(e) = handle_preprocessing(&preprocessor) {
+        eprintln!("{e:?}");
+        process::exit(1);
     }
 }
 
-fn handle_supports(pre: &dyn Preprocessor, sub_args: &ArgMatches) -> Result<(), Error> {
-    let renderer = sub_args.value_of("renderer").expect("Required argument");
+fn handle_supports(pre: &dyn Preprocessor, renderer: &str) -> ! {
     let supported = pre.supports_renderer(renderer);
 
-    process::exit(if supported { 0 } else { 1 });
+    // Signal whether the renderer is supported by exiting with 1 or 0.
+    if supported {
+        process::exit(0);
+    } else {
+        process::exit(1);
+    }
 }
 
 fn handle_preprocessing(pre: &dyn Preprocessor) -> Result<(), Error> {
