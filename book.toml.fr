@@ -18,6 +18,11 @@ additional-css = [
 	"custom-envs.css",
 ]
 
+[output.typesetter]
+format = "latex"
+compile = true
+optional = true
+
 [preprocessor.checklist]
 title = "Liste des recommandations"
 renderers = ["html"]
