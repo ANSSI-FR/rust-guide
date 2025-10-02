@@ -6,6 +6,7 @@
 
 - [Development environment](devenv.md)
 - [Libraries](libraries.md)
+- [Compilation](compilation.md)
 
 # Language
 
