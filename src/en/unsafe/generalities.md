@@ -39,12 +39,15 @@ The use of this keyword in an API *warns* the API user about the potential harmf
 
 Unlocking with `unsafe` means taking responsibility for memory safety from the compiler to the developer.
 
-Using an `unsafe` block in a function body or in a constant declaration is imposed by the compiler to prevent the *inadvertent use* of `unsafe` capabilities.
-The keyword `unsafe` *unlocks* the use of these capabilities.
+Using an `unsafe` block in a function body or in a constant declaration is imposed by the compiler to prevent the *inadvertent use* of `unsafe` capabilities like
+
+* using `unsafe` tagged functions
+* modifying static variables
+* using extern functions
 
 Similarly, the implementation of an `unsafe` trait requires `unsafe` for the developer to explicitly take into account the memory safety contracts. The keyword `unsafe` *unlocks* the implementation of `unsafe` traits.
 
-Since the 2024 edition, `unsafe` is also required to unlock the following:
+Lastly, Since the 2024 edition, `unsafe` is also required to unlock the following:
 
 * `extern` blocks, which contain declarations of foreign functions and variables, for [FFI](./ffi.md),
 * some attributes (for instance , no_mangle, cf. [r-attributes.safety]).
