@@ -1,0 +1,22 @@
+[package]
+name = "unsafe2"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "overflow"
+path = "src/overflow.rs"
+
+[[bin]]
+name = "invalid"
+path = "src/invalid.rs"
+
+[[bin]]
+name = "fix"
+path = "src/fix.rs"
+
+[[bin]]
+name = "ok"
+path = "src/ok.rs"
+
+[dependencies]
