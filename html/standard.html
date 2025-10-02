@@ -1,0 +1,465 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Standard library - Secure Rust Guidelines</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Recommendations for secure applications development with Rust">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="pagetoc.css">
+        <link rel="stylesheet" href="custom-envs.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Secure Rust Guidelines</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="standard-library"><a class="header" href="#standard-library">Standard library</a></h1>
+<h2 id="send-and-sync-traits"><a class="header" href="#send-and-sync-traits"><code>Send</code> and <code>Sync</code> traits</a></h2>
+<p>The <code>Send</code> and <code>Sync</code> traits (defined in <code>std::marker</code> or <code>core::marker</code>) are
+marker traits used to ensure the safety of concurrency in Rust. When implemented
+correctly, they allow the Rust compiler to guarantee the absence of data races.
+Their semantics is as follows:</p>
+<ul>
+<li>A type is <code>Send</code> if it is safe to send (move) it to another thread.</li>
+<li>A type is <code>Sync</code> if it is safe to share a immutable reference to it with
+another thread.</li>
+</ul>
+<p>Both traits are <em>unsafe traits</em>, i.e., the Rust compiler does not verify in any
+way that they are implemented correctly. The danger is real: an incorrect
+implementation may lead to <strong>undefined behavior</strong>.</p>
+<p>Fortunately, in most cases, one does not need to implement it. In Rust,
+almost all primitive types are <code>Send</code> and <code>Sync</code>, and for most compound types
+the implementation is automatically provided by the Rust compiler.
+Notable exceptions are:</p>
+<ul>
+<li>Raw pointers are neither <code>Send</code> nor <code>Sync</code> because they offer no safety
+guards.</li>
+<li><code>UnsafeCell</code> is not <code>Sync</code> (and as a result <code>Cell</code> and <code>RefCell</code> aren't
+either) because they offer interior mutability (mutably shared value).</li>
+<li><code>Rc</code> is neither <code>Send</code> nor <code>Sync</code> because the reference counter is shared and
+unsynchronized.</li>
+</ul>
+<p>Automatic implementation of <code>Send</code> (resp. <code>Sync</code>) occurs for a compound type
+(structure or enumeration) when all fields have <code>Send</code> types (resp. <code>Sync</code>
+types). Using an unstable feature (as of Rust 1.37.0), one can block the
+automatic implementation of those traits with a manual
+<em>negative implementation</em>:</p>
+<pre><code class="language-rust ignore noplaypen">#![feature(option_builtin_traits)]
+
+struct SpecialType(u8);
+impl !Send for SpecialType {}
+impl !Sync for SpecialType {}</code></pre>
+<p>The negative implementation of <code>Send</code> or <code>Sync</code> are also used in the standard
+library for the exceptions, and are automatically implemented when appropriate.
+As a result, the generated documentation is always explicit: a type implements
+either <code>Send</code> or <code>!Send</code> (resp. <code>Sync</code> or <code>!Sync</code>).</p>
+<p>As a stable alternative to negative implementation, one can use a <code>PhantomData</code>
+field:</p>
+<pre><code class="language-rust noplaypen"><span class="boring">use std::marker::PhantomData;
+</span><span class="boring">
+</span>struct SpecialType(u8, PhantomData&lt;*const ()&gt;);</code></pre>
+<div class="reco" id="LANG-SYNC-TRAITS" type="Recommendation" title="Justify `Send` and `Sync` implementation">
+<p>In a Rust secure development, the manual implementation of the <code>Send</code> and
+<code>Sync</code> traits should be avoided and, if necessary, should be justified,
+documented and peer-reviewed.</p>
+</div>
+<h2 id="comparison-traits-partialeq-eq-partialord-ord"><a class="header" href="#comparison-traits-partialeq-eq-partialord-ord">Comparison traits (<code>PartialEq</code>, <code>Eq</code>, <code>PartialOrd</code>, <code>Ord</code>)</a></h2>
+<p>Comparisons (<code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>) in Rust rely on four standard
+traits available in <code>std::cmp</code> (or <code>core::cmp</code> for <code>no_std</code> compilation):</p>
+<ul>
+<li><code>PartialEq&lt;Rhs&gt;</code> that defines a partial equivalence between
+objects of types <code>Self</code> and <code>Rhs</code>,</li>
+<li><code>PartialOrd&lt;Rhs&gt;</code> that defines a partial order between objects of types
+<code>Self</code> and <code>Rhs</code>,</li>
+<li><code>Eq</code> that defines a total equivalence between objects of the same
+type. It is only a marker trait that requires <code>PartialEq&lt;Self&gt;</code>!</li>
+<li><code>Ord</code> that defines a total order between objects of the same type.
+It requires that <code>PartialOrd&lt;Self&gt;</code> is implemented.</li>
+</ul>
+<p>As documented in the standard library, Rust assumes <strong>many invariants</strong>
+about each implementation of those traits:</p>
+<ul>
+<li>
+<p>For <code>PartialEq</code></p>
+<ul>
+<li>
+<p><em>Internal consistency</em>: <code>a.ne(b)</code> is equivalent to <code>!a.eq(b)</code>, i.e., <code>ne</code> is
+the strict inverse of <code>eq</code>. The default implementation of <code>ne</code> is precisely
+that.</p>
+</li>
+<li>
+<p><em>Symmetry</em>: <code>a.eq(b)</code> and <code>b.eq(a)</code>, are equivalent. From the developer's
+point of view, it means:</p>
+<ul>
+<li><code>PartialEq&lt;B&gt;</code> is implemented for type <code>A</code> (noted <code>A: PartialEq&lt;B&gt;</code>),</li>
+<li><code>PartialEq&lt;A&gt;</code> is implemented for type <code>B</code> (noted <code>B: PartialEq&lt;A&gt;</code>),</li>
+<li>both implementations are consistent with each other.</li>
+</ul>
+</li>
+<li>
+<p><em>Transitivity</em>: <code>a.eq(b)</code> and <code>b.eq(c)</code> implies <code>a.eq(c)</code>. It means that:</p>
+<ul>
+<li><code>A: PartialEq&lt;B&gt;</code>,</li>
+<li><code>B: PartialEq&lt;C&gt;</code>,</li>
+<li><code>A: PartialEq&lt;C&gt;</code>,</li>
+<li>the three implementations are consistent with each other (and their
+symmetric implementations).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>For <code>Eq</code></p>
+<ul>
+<li>
+<p><code>PartialEq&lt;Self&gt;</code> is implemented.</p>
+</li>
+<li>
+<p><em>Reflexivity</em>: <code>a.eq(a)</code>. This stands for <code>PartialEq&lt;Self&gt;</code> (<code>Eq</code> does not
+provide any method).</p>
+</li>
+</ul>
+</li>
+<li>
+<p>For <code>PartialOrd</code></p>
+<ul>
+<li>
+<p><em>Equality consistency</em>:
+<code>a.eq(b)</code> is equivalent to <code>a.partial_cmp(b) == Some(std::ordering::Eq)</code>.</p>
+</li>
+<li>
+<p><em>Internal consistency</em>:</p>
+<ul>
+<li><code>a.lt(b)</code> iff <code>a.partial_cmp(b) == Some(std::ordering::Less)</code>,</li>
+<li><code>a.gt(b)</code> iff <code>a.partial_cmp(b) == Some(std::ordering::Greater)</code>,</li>
+<li><code>a.le(b)</code> iff <code>a.lt(b) || a.eq(b)</code>,</li>
+<li><code>a.ge(b)</code> iff <code>a.gt(b) || a.eq(b)</code>.</li>
+</ul>
+<p>Note that by only defining <code>partial_cmp</code>, the internal consistency is
+guaranteed by the default implementation of <code>lt</code>, <code>le</code>, <code>gt</code>, and <code>ge</code>.</p>
+</li>
+<li>
+<p><em>Antisymmetry</em>: <code>a.lt(b)</code> (respectively <code>a.gt(b)</code>) implies <code>b.gt(a)</code>
+(respectively, <code>b.lt(b)</code>). From the developer's standpoint, it also means:</p>
+<ul>
+<li><code>A: PartialOrd&lt;B&gt;</code>,</li>
+<li><code>B: PartialOrd&lt;A&gt;</code>,</li>
+<li>both implementations are consistent with each other.</li>
+</ul>
+</li>
+<li>
+<p><em>Transitivity</em>: <code>a.lt(b)</code> and <code>b.lt(c)</code> implies <code>a.lt(c)</code> (also with <code>gt</code>,
+<code>le</code> and <code>ge</code>). It also means:</p>
+<ul>
+<li><code>A: PartialOrd&lt;B&gt;</code>,</li>
+<li><code>B: PartialOrd&lt;C&gt;</code>,</li>
+<li><code>A: PartialOrd&lt;C&gt;</code>,</li>
+<li>the implementations are consistent with each other (and their symmetric).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>For <code>Ord</code></p>
+<ul>
+<li>
+<p><code>PartialOrd&lt;Self&gt;</code></p>
+</li>
+<li>
+<p><em>Totality</em>: <code>a.partial_cmp(b) != None</code> always. In other words,
+exactly one of <code>a.eq(b)</code>, <code>a.lt(b)</code>, <code>a.gt(b)</code> is true.</p>
+</li>
+<li>
+<p><em>Consistency with <code>PartialOrd&lt;Self&gt;</code></em>: <code>Some(a.cmp(b)) == a.partial_cmp(b)</code>.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>The compiler does not check any of those requirements except for the type checking
+itself. However, comparisons are critical because they intervene both in
+liveness critical systems such as schedulers and load balancers, and in
+optimized algorithms that may use <code>unsafe</code> blocks.
+In the first use, a bad ordering may lead to availability issues such as
+deadlocks.
+In the second use, it may lead to classical security issues linked to memory
+safety violations. That is again a factor in the practice of limiting the use
+of <code>unsafe</code> blocks.</p>
+<div class="reco" id="LANG-CMP-INV" type="Rule" title="Respect the invariants of standard comparison traits">
+<p>In a Rust secure development, the implementation of standard comparison traits
+must respect the invariants described in the documentation.</p>
+</div>
+<div class="reco" id="LANG-CMP-DEFAULTS" type="Recommendation" title="Use the default method implementation of standard comparison traits">
+<p>In a Rust secure development, the implementation of standard comparison traits
+should only define methods with no default implementation, so as to reduce
+the risk of violating the invariants associated with the traits.</p>
+</div>
+<p>There is a Clippy lint to check that <code>PartialEq::ne</code> is not defined in
+<code>PartialEq</code> implementations.</p>
+<p>Rust comes with a standard way to automatically construct implementations of the
+comparison traits through the <code>#[derive(...)]</code> attribute:</p>
+<ul>
+<li>Derivation <code>PartialEq</code> implements <code>PartialEq&lt;Self&gt;</code> with a
+<strong>structural equality</strong> providing that each subtype is <code>PartialEq&lt;Self&gt;</code>.</li>
+<li>Derivation <code>Eq</code> implements the <code>Eq</code> marker trait providing that each subtype
+is <code>Eq</code>.</li>
+<li>Derivation <code>PartialOrd</code> implements <code>PartialOrd&lt;Self&gt;</code> as a
+<strong>lexicographical order</strong> providing that each subtype is <code>PartialOrd</code>.</li>
+<li>Derivation <code>Ord</code> implements <code>Ord</code> as a <strong>lexicographical order</strong>
+providing that each subtype is <code>Ord</code>.</li>
+</ul>
+<p>For instance, the short following code shows how to compare two <code>T1</code>s easily.
+All the assertions hold.</p>
+<pre><pre class="playground"><code class="language-rust">#[derive(PartialEq, Eq, PartialOrd, Ord)]
+struct T1 {
+    a: u8, b: u8
+}
+
+<span class="boring">fn main() {
+</span>assert!(&amp;T1 { a: 0, b: 0 } == Box::new(T1 { a: 0, b: 0 }).as_ref());
+assert!(T1 { a: 1, b: 0 } &gt; T1 { a: 0, b: 0 });
+assert!(T1 { a: 1, b: 1 } &gt; T1 { a: 1, b: 0 });
+<span class="boring">println!("all tests passed.");
+</span><span class="boring">}</span></code></pre></pre>
+<div class="warning">
+<p>Derivation of comparison traits for compound types depends on the
+<strong>field order</strong>, and not on their names.</p>
+<p>First, it means that changing the order of declaration of two fields changes
+the resulting lexicographical order. For instance, provided this second
+ordered type:</p>
+<pre><code class="language-rust noplaypen">#[derive(PartialEq, Eq, PartialOrd, Ord)]
+struct T2{
+   b: u8, a: u8
+};</code></pre>
+<p>we have <code>T1 {a: 1, b: 0} &gt; T1 {a: 0, b: 1}</code> but
+<code>T2 {a: 1, b: 0} &lt; T2 {a: 0, b: 1}</code>.</p>
+<p>Second, if one of the underlying comparisons panics, the order may change the
+result due to the use of short-circuit logic in the automatic implementation.</p>
+<p>For enums, the derived comparisons depend first on the <strong>variant order</strong>, then
+on the field order.</p>
+</div>
+<p>Despite the ordering caveat, derived comparisons are a lot less error-prone
+than manual ones and make the code shorter and easier to maintain.</p>
+<div class="reco" id="LANG-CMP-DERIVE" type="Recommendation" title="Derive comparison traits when possible">
+<p>In a secure Rust development, the implementation of standard comparison traits
+should be automatically derived with <code>#[derive(...)]</code> when structural equality
+and lexicographical comparison is needed. Any manual implementation of
+standard comparison traits should be documented and justified.</p>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="unsafe/ffi.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="LICENCE.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="unsafe/ffi.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="LICENCE.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="pagetoc.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

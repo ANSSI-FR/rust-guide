@@ -1,0 +1,1058 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Foreign Function Interface - Secure Rust Guidelines</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Recommendations for secure applications development with Rust">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../pagetoc.css">
+        <link rel="stylesheet" href="../custom-envs.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Secure Rust Guidelines</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="foreign-function-interface-ffi"><a class="header" href="#foreign-function-interface-ffi">Foreign Function Interface (FFI)</a></h1>
+<p>The Rust approach to interfacing with other languages relies on a strong
+compatibility with C. However, this boundary is by its very nature <strong>unsafe</strong>
+(see <a href="https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html">Rust Book: Unsafe Rust</a>).</p>
+<p>Functions that are marked <code>extern</code> are made compatible with C code during
+compilation. They may be called from C code with any parameter values.
+The exact syntax is <code>extern "&lt;ABI&gt;"</code> where ABI is a calling convention and
+depends on the target platform. The default one is <code>C</code> which corresponds to
+a standard C calling convention on the target platform.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// Export C-compatible function
+#[unsafe(no_mangle)]
+extern "C" fn mylib_f(param: u32) -&gt; i32 {
+    if param == 0xCAFEBABE { 0 } else { -1 }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>For the function <code>mylib_f</code> to be accessible with the same name, the function
+must also be annotated with the <code>#[unsafe(no_mangle)]</code> attribute.</p>
+<p>Conversely, one can call C functions from Rust if they are declared in an
+<code>extern</code> block:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::os::raw::c_int;
+// import C function
+unsafe extern "C" {
+    fn abs(args: c_int) -&gt; c_int;
+}
+
+fn use_abs() {
+    let x = -1;
+    println!("{} {}\n", x, unsafe { abs(x) });
+}
+<span class="boring">}</span></code></pre></pre>
+<div class="note">
+<p>Any foreign function imported in Rust through an <code>extern</code> block is
+<strong>automatically <code>unsafe</code></strong>. That is why, any call to a foreign function
+must be done from an <code>unsafe</code> context.</p>
+</div>
+<p><code>extern</code> blocks may also contain foreign global variable declarations prefixed
+with the <code>static</code> keyword:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// A direct way to access environment variables (on Unix)
+// should not be used! Not thread safe, have a look at `std::env`!
+
+unsafe extern "C" {
+    // Global variable
+    #[link_name = "environ"]
+    static libc_environ: *const *const std::os::raw::c_char;
+}
+
+fn use_static_extern() {
+    let mut next = unsafe { libc_environ };
+    while !next.is_null() &amp;&amp; !unsafe { *next }.is_null() {
+        let env = unsafe { std::ffi::CStr::from_ptr(*next) }
+            .to_str()
+            .unwrap_or("&lt;invalid&gt;");
+        println!("{}", env);
+        next = unsafe { next.offset(1) };
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="typing"><a class="header" href="#typing">Typing</a></h2>
+<p>Typing is the way Rust ensures memory safety. When interfacing with other
+languages, which may not offer the same guarantee, the choice of types in the
+binding is essential to maintain memory safety.</p>
+<h3 id="data-layout"><a class="header" href="#data-layout">Data layout</a></h3>
+<p>Rust provides no short or long term guarantees with respect to how the data is
+laid out in the memory. The only way to make data compatible with a foreign
+language is through explicit use of a C-compatible data layout with the <code>repr</code>
+attribute (see <a href="https://doc.rust-lang.org/reference/type-layout.html">Rust Reference: Type Layout</a>). For instance, the following Rust
+types:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[repr(C)]
+struct Data {
+    a: u32,
+    b: u16,
+    c: u64,
+}
+#[repr(C, packed)]
+struct PackedData {
+    a: u32,
+    b: u16,
+    c: u64,
+}
+<span class="boring">}</span></code></pre></pre>
+<p>are compatible with the following C types:</p>
+<pre><code class="language-c">struct Data
+{
+	uint32_t a;
+	uint16_t b;
+	uint64_t c;
+};
+__attribute__((packed)) struct PackedData
+{
+	uint32_t a;
+	uint16_t b;
+	uint64_t c;
+};
+</code></pre>
+<div class="reco" id="FFI-CTYPE" type="Rule" title="Use only C-compatible types in FFI">
+<p>In a secure Rust development, only C-compatible types must be used as
+parameter or return type of imported or exported functions and as types of
+imported or exported global variables.</p>
+<p>The lone exception is types that are considered <strong>opaque</strong> on the foreign
+side.</p>
+</div>
+<p>The following types are considered C-compatible:</p>
+<ul>
+<li>integral or floating point primitive types,</li>
+<li><code>repr(C)</code>-annotated <code>struct</code>,</li>
+<li><code>repr(C)</code> or <code>repr(Int)</code>-annotated <code>enum</code> with at least one variant and only
+fieldless variants (where <code>Int</code> is an integral primitive type),</li>
+<li>pointers,</li>
+<li>an <code>Option&lt;T&gt;</code> where <code>T</code> is either
+<ul>
+<li><code>core::ptr::NonNull&lt;U&gt;</code> and <code>U</code> is a <code>Sized</code> C-compatible type, then it is
+compatible to a <code>*const T</code> and <code>*mut T</code> pointer;</li>
+<li><code>core::num::NonZero*</code>, then is compatible with the corresponding integral
+primitive type;</li>
+</ul>
+</li>
+<li>a <code>repr(transparent)</code>-annotated <code>struct</code> with only one field, where that
+field has a C-compatible type.</li>
+</ul>
+<p>The following types are not C-compatible:</p>
+<ul>
+<li>Dynamically sized types,</li>
+<li>Trait objects,</li>
+<li>Enums with fields,</li>
+<li>Tuples (but <code>repr(C)</code> tuple structures are OK).</li>
+</ul>
+<p>Some types are compatible with some caveats:</p>
+<ul>
+<li>Zero-sized types, which is really zero sized (which is left unspecified in C
+and contradicts the C++ specification),</li>
+<li><code>repr(C)</code>, <code>repr(C, Int)</code>, or <code>repr(Int)</code>-annotated enum with fields
+(see <a href="https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html">RFC 2195</a>).</li>
+</ul>
+<h3 id="type-consistency"><a class="header" href="#type-consistency">Type consistency</a></h3>
+<div class="reco" id="FFI-TCONS" type="Rule" title="Use consistent types at FFI boundaries">
+<p>Types must be consistent on each side of the FFI boundary.</p>
+<p>Although some details may be hidden on one side with respect to the other
+(typically to make a type opaque), types on both sides must have the same size
+and the same alignment requirement.</p>
+</div>
+<p>Concerning enums with fields in particular, the corresponding types in C (or
+C++) are not obvious, cf. <a href="https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html">RFC 2195</a>.</p>
+<p>Automated tools to generate bindings, such as <a href="https://crates.io/crates/bindgen">rust-bindgen</a> or
+<a href="https://crates.io/crates/cbindgen">cbindgen</a>, may be of help in making types consistent between C and Rust.</p>
+<div class="reco" id="FFI-AUTOMATE" type="Recommendation" title="Use automatic binding generator tools">
+<p>In a secure Rust development, automated generation tools should be used to
+generate bindings when possible and to maintain them continually.</p>
+</div>
+<!-- -->
+<div class="warning">
+<p>For binding C/C++ to Rust, <a href="https://crates.io/crates/bindgen">rust-bindgen</a> is able to automatically generate
+the low-level binding. A high-level safe binding is highly recommended (see
+Recommendation <a href="ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>).
+Also some options of rust-bindgen may result in dangerous translations, in
+particular <code>rustified_enum</code>.</p>
+</div>
+<h3 id="platform-dependent-types"><a class="header" href="#platform-dependent-types">Platform-dependent types</a></h3>
+<p>When interfacing with a foreign language, like C or C++, it is often required
+to use platform-dependent types such as C's <code>int</code>, <code>long</code>, etc.</p>
+<p>In addition to <code>c_void</code> in <code>std::ffi</code> (or <code>core::ffi</code>) for <code>void</code>, the standard
+library offers portable type aliases in <code>std:os::raw</code> (or <code>core::os::raw</code>):</p>
+<ul>
+<li><code>c_char</code> for <code>char</code> (either <code>i8</code> or <code>u8</code>),</li>
+<li><code>c_schar</code> for <code>signed char</code> (always <code>i8</code>),</li>
+<li><code>c_uchar</code> for <code>unsigned char</code> (always <code>u8</code>),</li>
+<li><code>c_short</code> for <code>short</code>,</li>
+<li><code>c_ushort</code> for <code>unsigned short</code>,</li>
+<li><code>c_int</code> for <code>int</code>,</li>
+<li><code>c_uint</code> for <code>unsigned int</code>,</li>
+<li><code>c_long</code> for <code>long</code>,</li>
+<li><code>c_ulong</code> for <code>unsigned long</code>,</li>
+<li><code>c_longlong</code> for <code>long long</code>,</li>
+<li><code>c_ulonglong</code> for <code>unsigned long long</code>,</li>
+<li><code>c_float</code> for <code>float</code> (always <code>f32</code>),</li>
+<li><code>c_double</code> for <code>double</code> (always <code>f64</code>).</li>
+</ul>
+<p>The <a href="https://crates.io/crates/libc">libc</a> crate offers more C compatible types that cover almost exhaustively
+the C standard library.</p>
+<div class="reco" id="FFI-PFTYPE" type="Rule" title="Use portable aliases `c_*` when binding to platform-dependent types">
+<p>In a secure Rust development, when interfacing with foreign code that
+uses platform-dependent types, such as C's <code>int</code> and <code>long</code>, Rust code must
+use portable type aliases, such as the ones provided by the standard library or the
+<a href="https://crates.io/crates/libc">libc</a> crate, rather than platform-specific types, except if
+the binding is automatically generated for each platform (see Note below).</p>
+</div>
+<!-- -->
+<div class="note">
+<p>Automatic binding generation tools (e.g. <a href="https://crates.io/crates/cbindgen">cbindgen</a>, <a href="https://crates.io/crates/bindgen">rust-bindgen</a>) are able
+to ensure type consistency on a specific platform. They should be used during
+the build process for each target to ensure that the generation is sound for
+the specific target platform.</p>
+</div>
+<h3 id="non-robust-types-references-function-pointers-enums"><a class="header" href="#non-robust-types-references-function-pointers-enums">Non-robust types: references, function pointers, enums</a></h3>
+<p>A <em>trap representation</em> of a particular type is a representation (pattern of
+bits) that respects the type's representation constraints (such as size and
+alignment) but does not represent a valid value of this type and leads to
+undefined behavior.</p>
+<p>In simple terms, if a Rust variable is set to such an invalid value,
+anything can happen from a simple program crash to arbitrary code execution.
+When writing safe Rust, this cannot happen (except through a bug in the Rust
+compiler). However, when writing unsafe Rust and in particular in FFI, it is
+really easy.</p>
+<p>In the following, <strong>non-robust types</strong> are types that have such trap
+representations (at least one). A lot of Rust types are non-robust, even among
+the C-compatible types:</p>
+<ul>
+<li><code>bool</code> (1 byte, 256 representations, only 2 valid ones),</li>
+<li>references,</li>
+<li>function pointers,</li>
+<li>enums,</li>
+<li>floats (even if almost all languages have the same understanding of what is
+a valid float),</li>
+<li>compound types that contain a field of a non-robust type.</li>
+</ul>
+<p>On the other hand, integer types (<code>u*</code>/<code>i*</code>), packed compound types that contain
+no non-robust fields, are instances of <em>robust types</em>.</p>
+<p>Non-robust types are a difficulty when interfacing two languages. It revolves
+around deciding <strong>which language of the two is responsible for asserting the
+validity of boundary-crossing values</strong> and how to do it.</p>
+<div class="reco" id="FFI-CKNONROBUST" type="Rule" title="Do not use unchecked non-robust foreign values">
+<p>In a secure Rust development, there must not be any use of <em>unchecked</em> foreign
+values of non-robust types.</p>
+<p>In other words, either Rust translates robust types into non-robust types
+through explicit checking or the foreign side offers strong guarantees of the
+validity of the value.</p>
+</div>
+<!-- -->
+<div class="reco" id="FFI-CKINRUST" type="Recommendation" title="Check foreign values in Rust">
+<p>In a secure Rust development, the validity checks of foreign values should
+be done in Rust when possible.</p>
+</div>
+<p>Those generic rules are to be adapted to a specific foreign language or for the
+associated risks. Concerning languages, C is particularly unfit for offering
+guarantees about validity. However, Rust is not the only language to offer
+strong guarantees. For instance, some C++ subset (without reinterpretation)
+allows developers to do lot of type checking. Because Rust natively separates
+the safe and unsafe segments, the recommendation is to always use Rust to check
+when possible. Concerning risks, the most dangerous types are references,
+function references, and enums, and are discussed below.</p>
+<div class="warning">
+<p>Rust <code>bool</code> has been made equivalent to C99's <code>_Bool</code> (aliased as <code>bool</code>
+in <code>&lt;stdbool.h&gt;</code>) and C++'s <code>bool</code>. However, loading a value other than 0 and
+1 as a <code>_Bool</code>/<code>bool</code> is an undefined behavior <em>on both sides</em>.
+Safe Rust ensures that. Standard-compliant C and C++ compilers ensure that no
+value but 0 and 1 can be <em>stored</em> in a <code>_Bool</code>/<code>bool</code> value but cannot
+guarantee the absence of an <em>incorrect reinterpretation</em> (e.g., union types,
+pointer cast). To detect such a bad reinterpretation, sanitizers such as
+LLVM's <code>-fsanitize=bool</code> may be used.</p>
+</div>
+<h4 id="references-and-pointers"><a class="header" href="#references-and-pointers">References and pointers</a></h4>
+<p>Although they are allowed by the Rust compiler, the use of Rust references in
+FFI may break Rust memory safety. Because their “unsafety” is more explicit,
+pointers are preferred over Rust references when binding to another language.</p>
+<p>On the one hand, reference types are very non-robust: they allow only pointers
+to valid memory objects. Any deviation leads to undefined behavior.</p>
+<p>When binding to and from C, the problem is particularly severe because C has
+no references (in the sense of valid pointers) and the compiler does not offer
+any safety guarantee.</p>
+<p>When binding with C++, Rust references may be bound to C++ references in
+practice even though the actual ABI of an <code>extern "C"</code> function in C++ with
+references is “implementation-defined”. Also, the C++ code should be checked
+against pointer/reference confusion.</p>
+<p>Rust references may be used reasonably with other C-compatible languages
+including C variants allowing for non-null type checking, e.g. Microsoft SAL
+annotated code.</p>
+<p>On the other hand, Rust <em>pointer types</em> may also lead to undefined behaviors
+but are more verifiable, mostly against <code>std/core::ptr::null()</code> (C's <code>(void*)0</code>)
+but also in some contexts against a known valid memory range (particularly in
+embedded systems or kernel-level programming). Another advantage of using Rust
+pointers in FFI is that any load of the pointed value is clearly marked inside
+an <code>unsafe</code> block or function.</p>
+<div class="reco" id="FFI-NOREF" type="Recommendation" title="Do not use reference types but pointer types">
+<p>In a secure Rust development, the Rust code should not use reference types
+but pointer types.</p>
+<p>Exceptions include:</p>
+<ul>
+<li>Rust references that are opaque in the foreign language and only manipulated
+from the Rust side,</li>
+<li><code>Option</code>-wrapped references (see Note below),</li>
+<li>references bound to foreign safe references, e.g. from some augmented C
+variants or from C++ compiled in an environment where <code>extern "C"</code>
+references are encoded as pointers.</li>
+</ul>
+</div>
+<!-- -->
+<div class="reco" id="FFI-CKREF" type="Rule" title="Do not use unchecked foreign references">
+<p>In a secure Rust development, every foreign reference that is transmitted to
+Rust through FFI must be <strong>checked on the foreign side</strong> either automatically
+(for instance, by a compiler) or manually.</p>
+<p>Exceptions include Rust references in an opaque wrapping that are created
+and manipulated only from the Rust side and <code>Option</code>-wrapped references
+(see Note below).</p>
+</div>
+<!-- -->
+<div class="reco" id="FFI-CKPTR" type="Rule" title="Check foreign pointers">
+<p>In a secure Rust development, any Rust code that dereferences a foreign
+pointer must check their validity beforehand.
+In particular, pointers must be checked to be non-null before any use.</p>
+<p>Stronger approaches are advisable when possible. They include checking
+pointers against known valid memory range or tagging (or signing) pointers
+(particularly applicable if the pointed value is only manipulated from Rust).</p>
+</div>
+<p>The following code a simple example of foreign pointer use in an exported Rust
+function:</p>
+<pre><code class="language-rust noplaypen">/// Add in place
+#[unsafe(no_mangle)]
+unsafe extern "C" fn add_in_place(a: *mut u32, b: u32) {
+    // checks for nullity of `a`
+    // and takes a mutable reference on it if it's non-null
+    if let Some(a) = unsafe { a.as_mut() } {
+        *a += b
+    }
+}</code></pre>
+<p>Note that the methods <code>as_ref</code> and <code>as_mut</code> (for mutable pointers) allows easy
+access to a reference while ensuring a null check in a very <em>Rusty</em> way.
+On the other side in C, it can be used as follows:</p>
+<pre><code class="language-c">#include &lt;stdint.h&gt;
+#include &lt;inttypes.h&gt;
+
+//! Add in place
+void add_in_place(uint32_t *a, uint32_t b);
+
+int use_add_in_place()
+{
+	uint32_t x = 25;
+	add_in_place(&amp;x, 17);
+	printf("%" PRIu32 " == 42", x);
+	return 0;
+}
+</code></pre>
+<div class="note">
+<p><code>Option&lt;&amp;T&gt;</code> and <code>Option&lt;&amp;mut T&gt;</code> for any <code>T: Sized</code> are allowable in FFI
+instead of pointers with explicit nullity checks. Due to the Rust guaranteed
+“nullable pointer optimization”, a nullable pointer is acceptable on the C
+side. The C <code>NULL</code> is understood as <code>None</code> in Rust while a non-null
+pointer is encapsulated in <code>Some</code>. While quite ergonomic, this feature does
+not allow stronger validations such as memory range checking.</p>
+</div>
+<h4 id="function-pointers"><a class="header" href="#function-pointers">Function pointers</a></h4>
+<p>Function pointers that cross FFI boundaries may ultimately lead to arbitrary code
+execution and represent a real security risks.</p>
+<div class="reco" id="FFI-MARKEDFUNPTR" type="Rule" title="Mark function pointer types in FFI as `extern` and `unsafe`">
+<p>In a secure Rust development, any function pointer types at the FFI boundary
+must be marked <code>extern</code> (possibly with the specific ABI) and <code>unsafe</code>.</p>
+</div>
+<p>Function pointers in Rust are a lot more similar to references than they are
+to normal pointers. In particular, the validity of function pointers cannot be
+checked directly on the Rust side. However, Rust offers two alternative
+possibilities:</p>
+<ul>
+<li>
+<p>use <code>Option</code>-wrapped function pointer and check against <code>null</code>:</p>
+<pre><code class="language-rust noplaypen">#[unsafe(no_mangle)]</code></pre>
+</li>
+</ul>
+<p>pub unsafe extern "C" fn repeat(
+start: u32,
+n: u32,
+f: Option&lt;unsafe extern "C" fn(u32) -&gt; u32&gt;,
+) -&gt; u32 {
+if let Some(f) = f {
+let mut value = start;
+for _ in 0..n {
+value = unsafe { f(value) };
+}
+value
+} else {
+start
+}
+}</p>
+<pre><code>
+On the C side:
+
+```c
+uint32_t repeat(uint32_t start, uint32_t n, uint32_t (*f)(uint32_t));
+</code></pre>
+<ul>
+<li>use raw pointers with an <code>unsafe</code> transmutation to the function pointer type,
+allowing more powerful checks at the cost of ergonomics.</li>
+</ul>
+<div class="reco" id="FFI-CKFUNPTR" type="Rule" title="Check foreign function pointers">
+<p>In a secure Rust development, any foreign function pointer must be checked at
+the FFI boundary.</p>
+</div>
+<p>When binding with C or even C++, one cannot guarantee easily the validity of
+function pointers. Moreover, C++ function objects (also known as functors) are not C-compatible.</p>
+<h4 id="enums"><a class="header" href="#enums">Enums</a></h4>
+<p>Usually the possible bit patterns of valid <code>enum</code> values are really small with
+respect to the number of possible bit patterns of the same size. Mishandling an
+<code>enum</code> value provided by a foreign code may lead to type confusion and have
+severe consequences on software security. Unfortunately, checking an <code>enum</code>
+value at the FFI boundary is not simple on both sides.</p>
+<p>On the Rust side, it consists in actually using an integer type in the <code>extern</code>
+block declaration, a <em>robust</em> type, and then performing a checked conversion
+to the enum type.</p>
+<p>On the foreign side, it is possible only if the other language allows for
+stricter checks than plain C. <code>enum class</code> in C++ are for instance allowable.
+Note however that as for a reference, the actual <code>extern "C"</code> ABI of
+<code>enum class</code> is implementation-defined and should be verified for each
+environment.</p>
+<div class="reco" id="FFI-NOENUM" type="Recommendation" title="Do not use incoming Rust `enum` at FFI boundary">
+<p>In a secure Rust development, when interfacing with a foreign language,
+the Rust code should not accept incoming values of any Rust <code>enum</code> type.</p>
+<p>Exceptions include Rust <code>enum</code> types that are:</p>
+<ul>
+<li>opaque in the foreign language and only manipulated from the
+Rust side,</li>
+<li>bound to safe enums in the foreign language, e.g. <code>enum class</code> types in C++.</li>
+</ul>
+</div>
+<p>Concerning fieldless enums, crates like [<code>num_derive</code>] or [<code>num_enum</code>] allow
+developers to easily provide safe conversions from integer to enumeration and may
+be use to safely convert an integer (provided from a C <code>enum</code>) into a Rust enum.</p>
+<h3 id="opaque-types"><a class="header" href="#opaque-types">Opaque types</a></h3>
+<p>Opacifying types is a good way to increase modularity in software development.
+When doing multilingual development, it is something very common.</p>
+<div class="reco" id="FFI-R-OPAQUE" type="Recommendation" title="Use dedicated Rust types for foreign opaque types">
+<p>In a secure Rust development, when binding foreign opaque types, one should
+use pointers to dedicated opaque types rather than <code>c_void</code> pointers.</p>
+</div>
+<p>Currently the recommended way to make a foreign opaque type is like so:</p>
+<pre><code class="language-rust unsafe noplaypen">#[repr(C)]
+pub struct OpaqueFoo {
+    _private: [u8; 0],
+}
+unsafe extern "C" {
+    fn handle_opaque_foo(arg: *mut OpaqueFoo);
+}</code></pre>
+<p>The not-yet-implemented <a href="https://rust-lang.github.io/rfcs/1861-extern-types.html">RFC 1861</a> proposes to facilitate this encoding by allowing
+to declare opaque types in <code>extern</code> blocks.</p>
+<div class="reco" id="FFI-C-OPAQUE" type="Recommendation" title="Use incomplete C/C++ `struct` pointers to make type opaque">
+<p>In a secure Rust development, when interfacing with C or C++, Rust types that
+are to be considered opaque in C/C++ should be translated as incomplete
+<code>struct</code> types (i,e., declared without definition) and be provided with
+a dedicated constructor and destructor.</p>
+</div>
+<p>Example of opaque Rust type:</p>
+<pre><code class="language-rust unsafe noplaypen">pub struct Opaque {
+    // (...) hide details
+}
+
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn new_opaque() -&gt; *mut Opaque {
+    catch_unwind(|| // Catch panics, see below
+        Box::into_raw(Box::new(Opaque {
+            // (...) construction
+        })))
+    .unwrap_or(std::ptr::null_mut())
+}
+
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn destroy_opaque(o: *mut Opaque) {
+    catch_unwind(|| {
+        if !o.is_null() {
+            // only necessary when `Opaque` or any of its fields is `Drop`
+            drop(unsafe { Box::from_raw(o) })
+        }
+    })
+    .unwrap_or_default();
+}</code></pre>
+<h2 id="memory-and-resource-management"><a class="header" href="#memory-and-resource-management">Memory and resource management</a></h2>
+<p>Programming languages handle memory in various ways. As a result, it is
+important to known when transmitting data between Rust and another language
+which language is responsible for reclaiming the memory space for this data.
+The same is true for other kind of resources such as sockets or files.</p>
+<p>Rust tracks variable ownership and lifetime to determine at compilation time if
+and when memory should be deallocated. Thanks to the <code>Drop</code> trait, one can
+exploit this system to reclaim other kind of resources such as file or network
+access. <em>Moving</em> some piece of data from Rust to a foreign language means also
+abandoning the possible reclamations associated with it.</p>
+<div class="reco" id="FFI-MEM-NODROP" type="Rule" title="Do not use types that implement `Drop` at FFI boundary">
+<p>In a secure Rust development, Rust code must not implement <code>Drop</code> for any
+types that are directly transmitted to foreign code  (i.e. not through a
+pointer or reference).</p>
+</div>
+<p>In fact, it is advisable to only use <code>Copy</code> types. Note that <code>*const T</code> is
+<code>Copy</code> even if T is not.</p>
+<p>However if not reclaiming memory and resources is bad, using reclaimed memory or
+reclaiming twice some resources is worst from a security point of view. In order
+to correctly release a resource only once, one must known which language is
+responsible for allocating and deallocating memory.</p>
+<div class="reco" id="FFI-MEM-OWNER" type="Rule" title="Ensure clear data ownership in FFI">
+<p>In a secure Rust development, when data of some type passes without copy
+through a FFI boundary, one must ensure that:</p>
+<ul>
+<li>A single language is responsible for both allocation and deallocation of
+data.</li>
+<li>The other language must not allocate or free the data directly but use
+dedicated foreign functions provided by the chosen language.</li>
+</ul>
+</div>
+<p>Ownership is not enough. It remains to ensure the correct lifetime, mostly that
+no use occurs after reclamation. It is a lot more challenging. When the other
+language is responsible for the memory, the best way is to provide a safe
+wrapper around the foreign type:</p>
+<div class="reco" id="FFI-MEM-WRAPPING" type="Recommendation" title="Wrap foreign data in memory releasing wrapper">
+<p>In a secure Rust development, any non-sensitive foreign piece of data that are
+allocated and deallocated in the foreign language should be encapsulated in a
+<code>Drop</code> type in such a way as to provide automatic deallocation in Rust,
+through an automatic call to the foreign language deallocation routine.</p>
+</div>
+<p>A simple example of Rust wrapping over an external opaque type:</p>
+<pre><code class="language-rust ignore noplaypen">/// Private “raw” opaque foreign type Foo
+#[repr(C)]
+struct RawFoo {
+    _private: [u8; 0],
+}
+
+// Private “raw” C API
+unsafe extern "C" {
+    fn foo_create() -&gt; *mut RawFoo;
+    fn foo_do_something(this: *const RawFoo);
+    fn foo_destroy(this: *mut RawFoo);
+}
+
+/// Foo
+pub struct Foo(*mut RawFoo);
+
+impl Foo {
+    /// Create a Foo
+    pub fn new() -&gt; Option&lt;Foo&gt; {
+        let raw_ptr = unsafe { foo_create() };
+        if raw_ptr.is_null() {
+            None
+        } else {
+            Some(Foo(raw_ptr))
+        }
+    }
+
+    /// Do something on a Foo
+    pub fn do_something(&amp;self) {
+        unsafe { foo_do_something(self.0) }
+    }
+}
+
+impl Drop for Foo {
+    fn drop(&amp;mut self) {
+        if !self.0.is_null() {
+            unsafe { foo_destroy(self.0) }
+        }
+    }
+}</code></pre>
+<div class="warning">
+<p>Because panics may lead to not running the <code>Drop::drop</code> method this solution
+is not sufficient for sensitive deallocation (such as wiping sensitive data)
+except if the code is guaranteed to never panic.</p>
+<p>For wiping sensitive data, one could address the issue with a dedicated
+panic handler.</p>
+</div>
+<p>When the foreign language is the one exploiting Rust allocated resources, it is
+a lot more difficult to offer any guarantee.</p>
+<p>In C for instance, there is no easy way to check that the appropriate destructor
+is called. A possible approach is to exploit callbacks to ensure that the
+reclamation is done.</p>
+<p>The following Rust code is a <strong>thread-unsafe</strong> example of a C-compatible API
+that provides a callback to ensure safe resource
+reclamation:</p>
+<pre><code class="language-rust noplaypen">pub struct XtraResource {/* fields */}
+
+impl XtraResource {
+    pub fn new() -&gt; Self {
+        XtraResource { /* ... */ }
+    }
+    pub fn dosthg(&amp;mut self) {
+        /* ... */
+    }
+}
+
+impl Drop for XtraResource {
+    fn drop(&amp;mut self) {
+        println!("xtra drop");
+    }
+}
+
+pub mod c_api {
+    use super::XtraResource;
+    use std::panic::catch_unwind;
+
+    const INVALID_TAG: u32 = 0;
+    const VALID_TAG: u32 = 0xDEAD_BEEF;
+    const ERR_TAG: u32 = 0xDEAF_CAFE;
+
+    static mut COUNTER: u32 = 0;
+
+    pub struct CXtraResource {
+        tag: u32, // to detect accidental reuse
+        id: u32,
+        inner: XtraResource,
+    }
+
+    #[unsafe(no_mangle)]
+    pub unsafe extern "C" fn xtra_with(cb: Option&lt;unsafe extern "C" fn(*mut CXtraResource) -&gt; ()&gt;) {
+        let inner = if let Ok(res) = catch_unwind(XtraResource::new) {
+            res
+        } else {
+            return;
+        };
+        let id = unsafe { COUNTER };
+        let tag = VALID_TAG;
+
+        unsafe { COUNTER = COUNTER.wrapping_add(1) };
+        // Use heap memory and do not provide pointer to stack to C code!
+        let mut boxed = Box::new(CXtraResource { tag, id, inner });
+
+        if let Some(cb) = cb {
+            unsafe { cb(boxed.as_mut() as *mut CXtraResource) };
+        }
+
+        if boxed.id == id &amp;&amp; (boxed.tag == VALID_TAG || boxed.tag == ERR_TAG) {
+            boxed.tag = INVALID_TAG; // prevent accidental reuse
+        // implicit boxed drop
+        } else {
+            // (...) error handling (should be fatal)
+            boxed.tag = INVALID_TAG; // prevent reuse
+            std::mem::forget(boxed); // boxed is corrupted it should not be
+        }
+    }
+
+    #[unsafe(no_mangle)]
+    pub unsafe extern "C" fn xtra_dosthg(cxtra: *mut CXtraResource) {
+        let do_it = || {
+            if let Some(cxtra) = unsafe { cxtra.as_mut() }
+                &amp;&amp; cxtra.tag == VALID_TAG
+            {
+                cxtra.inner.dosthg();
+                return;
+            }
+            println!("do noting with {:p}", cxtra);
+        };
+        if catch_unwind(do_it).is_err()
+            &amp;&amp; let Some(cxtra) = unsafe { cxtra.as_mut() }
+        {
+            cxtra.tag = ERR_TAG;
+        };
+    }
+}</code></pre>
+<p>A compatible C call:</p>
+<pre><code class="language-c">struct XtraResource;
+void xtra_with(void (*cb)(struct XtraResource *xtra));
+void xtra_sthg(struct XtraResource *xtra);
+
+void cb(struct XtraResource *xtra)
+{
+	// ()...) do anything with the proposed C API for XtraResource
+	xtra_sthg(xtra);
+}
+
+int use_xtra()
+{
+	xtra_with(cb);
+}
+</code></pre>
+<h2 id="panics-with-foreign-code"><a class="header" href="#panics-with-foreign-code">Panics with foreign code</a></h2>
+<p>When calling Rust code from another language (e.g. C), the Rust code must
+be careful to never panic:
+stack unwinding from Rust code into foreign code results in <strong>undefined behavior</strong>.</p>
+<div class="reco" id="FFI-NOPANIC" type="Rule" title="Handle `panic!` correctly in FFI">
+<p>Rust code called from FFI must either ensure the function cannot panic, or use
+a panic handling mechanism (such as <code>std::panic::catch_unwind</code>,
+<code>std::panic::set_hook</code>, <code>#[panic_handler]</code>) to ensure the rust code will not
+abort or return in an unstable state.</p>
+</div>
+<p>Note that <code>catch_unwind</code> will only catch unwinding panics, not those that abort
+the process.</p>
+<pre><code class="language-rust unsafe noplaypen ignore">fn may_panic() {
+    /* Something may panic... */
+}
+
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn no_panic() -&gt; i32 {
+    let result = catch_unwind(may_panic);
+    match result {
+        Ok(_) =&gt; 0,
+        Err(_) =&gt; -1,
+    }
+}</code></pre>
+<h3 id="no_std"><a class="header" href="#no_std"><code>no_std</code></a></h3>
+<p>In the case of <code>#![no_std]</code> program, a panic handler (<code>#[panic_handler]</code>) must
+be defined to ensure security. The panic handler should be written with great
+care in order to ensure both the safety and security of the program.</p>
+<p>Another approach is to simply ensure that there is no use of <code>panic!</code> with the
+<a href="https://crates.io/crates/panic-never"><code>panic-never</code></a> crate. Like <a href="https://crates.io/crates/no-panic"><code>no-panic</code></a>, <a href="https://crates.io/crates/panic-never"><code>panic-never</code></a> relies on a linking
+trick: the linker fails if a non-trivially-dead branch leads to <code>panic!</code>.</p>
+<h2 id="binding-a-foreign-library-in-rust"><a class="header" href="#binding-a-foreign-library-in-rust">Binding a foreign library in Rust</a></h2>
+<div class="reco" id="FFI-SAFEWRAPPING" type="Recommendation" title="Provide safe wrapping to foreign library">
+<p>Interfacing a library written in another language in Rust should be done in
+two parts:</p>
+<ul>
+<li>a low-level, possibly <em>hidden</em>, module that closely translates the original
+C API into <code>extern</code> blocks,</li>
+<li>a safe wrapping module that ensures memory safety and security invariants at
+the Rust level.</li>
+</ul>
+<p>If the low-level API is exposed to the world, it should be done in a dedicated
+crate with a name of the form <code>*-sys</code>.</p>
+</div>
+<p>The crate <a href="https://crates.io/crates/bindgen">rust-bindgen</a> may be used to automatically generate the low-level
+part of the binding from C header files.</p>
+<!--
+<mark>TODO</mark> example
+-->
+<h2 id="binding-a-rust-library-in-another-language"><a class="header" href="#binding-a-rust-library-in-another-language">Binding a Rust library in another language</a></h2>
+<div class="reco" id="FFI-CAPI" type="Recommendation" title="Expose dedicated C-compatible API only">
+<p>In a secure Rust development, exposing a Rust library to a foreign language
+should only be done through a <strong>dedicated C-compatible API</strong>.</p>
+</div>
+<p>The crate <a href="https://crates.io/crates/cbindgen">cbindgen</a> may be used to automatically generate C or C++ bindings to
+the Rust C-compatible API of a Rust library.</p>
+<h3 id="minimal-example-of-a-c-exported-rust-library"><a class="header" href="#minimal-example-of-a-c-exported-rust-library">Minimal example of a C-exported Rust library</a></h3>
+<p><code>src/lib.rs</code>:</p>
+<pre><code class="language-rust noplaypen">/// Opaque counter
+pub struct Counter(u32);
+
+impl Counter {
+    /// Create a counter (initially at 0)
+    fn new() -&gt; Self {
+        Self(0)
+    }
+    /// Get the current value of the counter
+    fn get(&amp;self) -&gt; u32 {
+        self.0
+    }
+    /// Increment the value of the counter if there's no overflow
+    fn incr(&amp;mut self) -&gt; bool {
+        if let Some(n) = self.0.checked_add(1) {
+            self.0 = n;
+            true
+        } else {
+            false
+        }
+    }
+}
+
+// C-compatible API
+
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn counter_create() -&gt; *mut Counter {
+    Box::into_raw(Box::new(Counter::new()))
+}
+
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn counter_incr(counter: *mut Counter) -&gt; std::os::raw::c_int {
+    if let Some(counter) = unsafe { counter.as_mut() } {
+        if counter.incr() { 0 } else { -1 }
+    } else {
+        -2
+    }
+}
+
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn counter_get(counter: *const Counter) -&gt; u32 {
+    if let Some(counter) = unsafe { counter.as_ref() } {
+        counter.get()
+    } else {
+        0
+    }
+}
+
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn counter_destroy(counter: *mut Counter) -&gt; std::os::raw::c_int {
+    if !counter.is_null() {
+        let _ = unsafe { Box::from_raw(counter) }; // get box and drop
+        0
+    } else {
+        -1
+    }
+}</code></pre>
+<p>Using <a href="https://crates.io/crates/cbindgen">cbindgen</a> (<code>[cbindgen] -l c &gt; counter.h</code>), one can generate a consistent
+C header, <code>counter.h</code>:</p>
+<pre><code class="language-c">#include &lt;stdarg.h&gt;
+#include &lt;stdbool.h&gt;
+#include &lt;stdint.h&gt;
+#include &lt;stdlib.h&gt;
+
+typedef struct Counter Counter;
+
+Counter *counter_create(void);
+
+int counter_destroy(Counter *counter);
+
+uint32_t counter_get(const Counter *counter);
+
+int counter_incr(Counter *counter);
+</code></pre>
+<p><code>counter_main.c</code>:</p>
+<pre><code class="language-c">#include &lt;stdint.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;inttypes.h&gt;
+
+#include "counter.h"
+
+int main(int argc, const char **argv)
+{
+	if (argc &lt; 2)
+	{
+		return -1;
+	}
+	size_t n = (size_t)strtoull(argv[1], NULL, 10);
+
+	Counter *c = counter_create();
+	for (size_t i = 0; i &lt; n; i++)
+	{
+		if (counter_incr(c) != 0)
+		{
+			printf("overflow\n");
+			counter_destroy(c);
+			return -1;
+		}
+	}
+
+	printf("%" PRIu32 "\n", counter_get(c));
+	counter_destroy(c);
+
+	return 0;
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../unsafe/memory.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../standard.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../unsafe/memory.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../standard.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../pagetoc.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

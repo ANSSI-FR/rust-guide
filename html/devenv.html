@@ -1,0 +1,445 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Development environment - Secure Rust Guidelines</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Recommendations for secure applications development with Rust">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="pagetoc.css">
+        <link rel="stylesheet" href="custom-envs.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Secure Rust Guidelines</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="development-environment"><a class="header" href="#development-environment">Development environment</a></h1>
+<h2 id="rustup"><a class="header" href="#rustup">Rustup</a></h2>
+<p><a href="https://github.com/rust-lang/rustup.rs">Rustup</a> is the Rust toolchain installer. Among other things, it enables
+switching between different flavors of the toolchain (stable, beta, nightly),
+managing additional components installation and keeping them up to date.</p>
+<div class="warning">
+<p>From a security perspective, <code>rustup</code> does perform all downloads over HTTPS,
+but does not yet validate signatures of downloads. Protection against
+downgrade attacks, certificate pinning, validation of signatures are still
+works in progress.
+In some cases, it may be preferable to opt for an alternative installation
+method listed in the <em>Install</em> section of the official Rust website.</p>
+</div>
+<h3 id="rust-editions"><a class="header" href="#rust-editions">Rust Editions</a></h3>
+<p>Several flavors, called <em>editions</em>, of the Rust language coexist.</p>
+<p>The concept of editions has been introduced to clarify the
+implementation of new features and to make them incremental. A new edition will be produced
+every two or three years, as stated in the <a href="https://doc.rust-lang.org/edition-guide/">Edition Guide</a>, but this doesn’t
+mean that new features and improvements will only be shipped in a new edition.</p>
+<p>Some editions bring new keywords and language constructs. Recommendations for
+secure applications development then remain closely linked to features of the
+language, that are used in such applications, rather than to Rust editions.
+In the rest of this guide, best effort will be made to highlight constructions
+and language features that are specific to a particular Rust edition.</p>
+<div class="note">
+<p>No specific edition is recommended, as long as users follow the
+recommendations related to the features offered by the edition that has been
+chosen.</p>
+</div>
+<h3 id="stable-nightly-and-beta-toolchains"><a class="header" href="#stable-nightly-and-beta-toolchains">Stable, nightly and beta toolchains</a></h3>
+<p>Independently from the choice of edition that allows one to select a flavor (a set of features)
+of the Rust language, the Rust toolchain is provided in three different
+versions, called <em>release channels</em>:</p>
+<ul>
+<li><em>nightly</em> releases are created once a day,</li>
+<li><em>beta</em> releases are created every six weeks, from promoted <em>nightly</em> releases,</li>
+<li><em>stable</em> releases are created every six weeks, from promoted <em>beta</em> releases.</li>
+</ul>
+<p>When playing with different toolchains, it is important to check not only what
+the default toolchain is, but also if overrides are currently set for some
+directories.</p>
+<pre><code class="language-shell">$ pwd
+/tmp/foo
+$ rustup toolchain list
+stable-x86_64-unknown-linux-gnu (default)
+beta-x86_64-unknown-linux-gnu
+nightly-x86_64-unknown-linux-gnu
+$ rustup override list
+/tmp/foo                                    nightly-x86_64-unknown-linux-gnu
+$
+</code></pre>
+<div class="reco" id="DENV-STABLE" type="Rule" title="Use a stable compilation toolchain">
+<p>Development of a secure application must be done using a fully stable
+toolchain, for limiting potential compiler, runtime or tool bugs.</p>
+</div>
+<p>When using a specific <code>cargo</code> subcommand that requires a nightly component,
+it is preferable to run it by switching the toolchain only locally, instead
+of explicitly switching the complete toolchain. For example, to run the
+(nightly) latest <code>rustfmt</code>:</p>
+<pre><code class="language-shell">$ rustup toolchain list
+stable-x86_64-unknown-linux-gnu (default)
+beta-x86_64-unknown-linux-gnu
+nightly-x86_64-unknown-linux-gnu
+$ rustup run nightly cargo fmt
+$ # or
+$ cargo +nightly fmt
+$
+</code></pre>
+<h2 id="cargo"><a class="header" href="#cargo">Cargo</a></h2>
+<p>Once Rustup has set up the appropriate Rust toolchain, <a href="https://doc.rust-lang.org/stable/cargo/">Cargo</a> is available
+through the command line program <code>cargo</code>. Cargo is the Rust package manager.
+It has a fundamental role in most Rust developments:</p>
+<ul>
+<li>It structures the project by providing the project's skeleton (<code>cargo new</code>),</li>
+<li>It compiles the project (<code>cargo build</code>),</li>
+<li>It generates the project's documentation (<code>cargo doc</code>),</li>
+<li>It runs tests (<code>cargo test</code>) and benchmarks (<code>cargo bench</code>),</li>
+<li>It manages and downloads dependencies,</li>
+<li>It makes packages distributable and publishes them on <a href="https://crates.io">crates.io</a>,</li>
+<li>It’s also a front-end to run complementary tools such as those that are
+described below, in the form of sub-commands.</li>
+</ul>
+<p>Cargo enables automatic dependencies resolution before compilation
+by checking their checksums.
+File <code>Cargo.lock</code> contains all dependencies checksums which are compared to
+the one downloaded.
+If a difference is detected, compilation fails:</p>
+<pre><code>error: checksum for `sha256 v1.6.0` changed between lock files
+
+this could be indicative of a few possible errors:
+
+    * the lock file is corrupt
+    * a replacement source in use (e.g., a mirror) returned a different checksum
+    * the source itself may be corrupt in one way or another
+
+unable to verify that `sha256 v1.6.0` is the same as when the lockfile was generated
+</code></pre>
+<p>When the <code>Cargo.lock</code> file is missing, it is generated on first build and records the
+dependencies' checksums, adhering to a TOFU (<em>Trust On First Use</em>) policy.
+This file can also be created manually with <code>cargo generate-lockfile</code>. If it already exists,
+the file is overwritten with the latest available version of every crate.</p>
+<div class="reco" id="DENV-CARGO-LOCK" type="Rule" title="Track Cargo.lock in version control system">
+<p><code>Cargo.lock</code> files must be tracked by version control system.</p>
+</div>
+<div class="warning">
+<p>Ongoing discussions occur on how to best protect
+and verify crates <em>on their first download</em> (according TOFU rule).
+For now, the security of the first download relies on the good security of the
+website <a href="https://crates.io">crates.io</a> and the GitHub hosted repository containing the
+registry index. In some cases, it may be preferable to opt for an alternative
+installation method for dependencies.</p>
+</div>
+<p>Cargo proposes many different commands and options to adapt the build process to
+your project needs, mainly through the manifest file <code>Cargo.toml</code>. For a
+complete presentation, see <a href="https://doc.rust-lang.org/cargo/index.html">The Cargo Book</a>.</p>
+<p>During the development of a secure application, some of the options may require
+some attention. The <code>[profile.*]</code> sections allow configuring how the compiler is
+invoked. For example:</p>
+<ul>
+<li>the <code>debug-assertions</code> variable controls whether debug assertions are enabled,</li>
+<li>the <code>overflow-checks</code> variable controls whether overflows are checked for
+integer arithmetic.</li>
+</ul>
+<p>Overriding the default options may cause bugs not being detected, even when
+using the debug profile that normally enables runtime checks (for example it does not enable
+<a href="./04_language.html#integer-overflows">integer overflow checks</a>).</p>
+<div class="reco" id="DENV-CARGO-OPTS" type="Rule" title="Keep default values for critical variables in cargo profiles">
+<p>The variables <code>debug-assertions</code> and <code>overflow-checks</code> must not be overridden
+in development profiles' sections (<code>[profile.dev]</code> and <code>[profile.test]</code>).</p>
+</div>
+<p>Cargo proposes other ways to setup its configuration and change its behavior on
+a given system. This can be very useful, but it may also be difficult to know
+and remember at a given time all the options that are effectively used, and
+in particular passed to the compiler. At the end, this can affect the confidence
+and robustness of the build process. It is preferable to centralize compiler
+options and flags in the configuration file <code>Cargo.toml</code>. For the case of
+environment variable <code>RUSTC_WRAPPER</code>, for example, that may be used to generate
+part of the code or to run external tools before Rust compilation, it is preferable
+to use the Cargo build scripts feature.</p>
+<div class="reco" id="DENV-CARGO-ENVVARS" type="Rule" title="Keep default values for compiler environment variables when running cargo">
+<p>The environment variables <code>RUSTC</code>, <code>RUSTC_WRAPPER</code> and <code>RUSTFLAGS</code> must not
+be overriden when using Cargo to build the project.</p>
+</div>
+<h3 id="clippy"><a class="header" href="#clippy">Clippy</a></h3>
+<p><a href="https://github.com/rust-lang/rust-clippy">Clippy</a> is a tool that provides and checks many lints (bugs, styling, performance
+issues, etc.). Since version 1.29, <code>clippy</code> can be used within the stable
+<code>rustup</code> environment. It is recommended to install <code>clippy</code> as a component
+(<code>rustup component add clippy</code>) in the stable toolchain instead of installing it
+as a project dependency.</p>
+<p>The tool comes with some lint categories regarding the kind of issues it aims to
+detect. The warnings should be re-checked by the programmer before committing
+the fix that is suggested by <code>clippy</code>, especially in the case of lints of the
+category <code>clippy::nursery</code> since those hints are still under development.</p>
+<div class="reco" id="DENV-LINTER" type="Rule" title="Use linter regularly">
+<p>A linter, such as <code>clippy</code>, must be used regularly during the development of
+a secure application.</p>
+</div>
+<h3 id="rustfmt"><a class="header" href="#rustfmt">Rustfmt</a></h3>
+<p><a href="https://github.com/rust-lang/rustfmt">Rustfmt</a> is a tool that formats your code according to style guidelines. The
+documentation of the tool states some limitations, among others partial support
+of macro declarations and uses. One should use the <code>--check</code> option that prints
+proposed changes, review these changes, and finally apply them if the code
+readability is not affected.</p>
+<p>So, to launch it:</p>
+<pre><code class="language-shell">$ cargo fmt -- --check
+$ # review of the changes
+$ cargo fmt
+</code></pre>
+<p>These guidelines can be customized to your needs by creating a <code>rustfmt.toml</code> or
+<code>.rustfmt.toml</code> file at the root of your project. It will be used to override
+the default settings, for instance:</p>
+<pre><code class="language-toml"># Set the maximum line width to 120
+max_width = 120
+# Maximum line length for single line if-else expressions
+single_line_if_else_max_width = 40
+</code></pre>
+<p>For more information about the guidelines that <code>rustfmt</code> will check, have a look
+at the <a href="https://doc.rust-lang.org/style-guide/index.html">Rust Style Guide</a>.</p>
+<div class="reco" id="DENV-FORMAT" type="Rule" title="Use Rust formatter (rustfmt)">
+<p>The tool <code>rustfmt</code> can be used to ensure that the codebase respects style
+guidelines (as described in <code>rustfmt.toml</code> file), with <code>--check</code> option and
+manual review.</p>
+</div>
+<h3 id="rustfix"><a class="header" href="#rustfix">Rustfix</a></h3>
+<p>Included with Rust, since the end of 2018, <a href="https://github.com/rust-lang-nursery/rustfix">Rustfix</a> is a tool dedicated in
+fixing compiler warnings as well as easing transitions between editions.</p>
+<pre><code class="language-shell">$ cargo fix
+</code></pre>
+<p>To prepare a Rust 2015 project to transition to Rust 2018, one can run:</p>
+<pre><code class="language-shell">$ cargo fix --edition
+</code></pre>
+<p>Rustfix will either fix the code to be compatible with Rust 2018 or print a
+warning that explains the problem. This problem will have to be fixed manually.
+By running the command (and possibly fixing manually some issues) until there
+is no warning, one can ensure the code is compatible with both Rust 2015 and
+Rust 2018.</p>
+<p>To switch definitely to Rust 2018, one may run:</p>
+<pre><code class="language-shell">$ cargo fix --edition-idioms
+</code></pre>
+<p>Be advised that this tool provides few guarantees on the soundness of the
+proposed fixes. In particular, some corrections (such as some of those
+provided with the <code>--edition-idioms</code>) are known to break the compilation
+or change the program semantics in some cases.</p>
+<div class="reco" id="DENV-AUTOFIX" type="Rule" title="Manually check automatic fixes">
+<p>In a secure Rust development, any automatic fix (for instance, provided by
+<code>rustfix</code>) must be verified by the developer.</p>
+</div>
+<h3 id="others"><a class="header" href="#others">Others</a></h3>
+<p>There exist other useful tools or <code>cargo</code> subcommands for enforcing program
+security whether by searching for specific code patterns or by providing
+convenient commands for testing or fuzzing. They are discussed in the following
+chapters, according to their goals.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="libraries.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="libraries.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="pagetoc.js"></script>
+
+
+
+    </div>
+    </body>
+</html>
