@@ -5,7 +5,7 @@ src = "src/en"
 language = "en"
 
 [build]
-build-dir = "book"
+build-dir = "book/en"
 
 [output.html]
 # git-repository-url = "https://github.com/ANSSI-FR/rust-guide"

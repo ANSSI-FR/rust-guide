@@ -27,9 +27,11 @@ jobs:
         run: |
           ./lang.sh fr
           mdbook build
+      - name: Move FR version
+        run: mv book/fr/html book/en/html/fr
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
           branch: gh-pages
-          folder: book
+          folder: book/en/html
           clean: true
