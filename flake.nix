@@ -80,6 +80,16 @@
             mdbook-checklist
             mdbook-shiftinclude
             mdbook-code-align
+            pandoc
+            (texlive.combine {
+              inherit (texlive)
+                scheme-small
+                svg
+                transparent
+                biblatex
+                framed
+                ;
+            })
           ];
         };
       }
