@@ -615,7 +615,7 @@ mais pas ceux provoquant un arrêt du processus.
 ### `no_std`
 
 Dans le cas des programmes n'utilisant pas la bibliothèque standard
-Rust (`#[no_std]`), un gestionnaire de `panic` (̀`#[panic_handler]`) doit être
+Rust (`#[no_std]`), un gestionnaire de `panic` (`#[panic_handler]`) doit être
 défini pour la sécurité du programme. Le gestionnaire de `panic` doit être écrit
 avec la plus grande précaution pour garantir non seulement la sécurité, mais
 aussi la sûreté du programme.

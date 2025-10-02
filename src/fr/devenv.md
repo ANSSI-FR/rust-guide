@@ -9,13 +9,13 @@ composants additionnels et de maintenir le tout à jour.
 
 <div class="warning">
 
-> Du point de vue de la sécurité, `rustup` effectue tous les téléchargements en
-> HTTPS, mais ne valide pas les signatures des fichiers téléchargés. Les
-> protections contre les attaques par déclassement, le _pinning_ de certificats
-> et la validation des signatures sont des travaux actuellement en cours. Pour
-> les cas les plus sensibles, il peut être préférable d'opter pour une méthode
-> d'installation alternative comme celles listées dans la section *Install* du
-> site officiel du langage Rust.
+Du point de vue de la sécurité, `rustup` effectue tous les téléchargements en
+HTTPS, mais ne valide pas les signatures des fichiers téléchargés. Les
+protections contre les attaques par déclassement, le _pinning_ de certificats
+et la validation des signatures sont des travaux actuellement en cours. Pour
+les cas les plus sensibles, il peut être préférable d'opter pour une méthode
+d'installation alternative comme celles listées dans la section *Install* du
+site officiel du langage Rust.
 
 </div>
 
