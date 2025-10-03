@@ -258,7 +258,6 @@ impl&lt;T&gt; Vec&lt;T&gt; {
         }
     }
 }
-
 <span class="boring">}</span></code></pre></pre>
 <p>Soundness and safety of this code rely on the fact that bytes from address <code>self.ptr</code> to <code>self.ptr + self.cap * size_of&lt;T&gt;()</code> are allocated.</p>
 <p>This invariant can be broken with <em>safe</em> code. For instance</p>

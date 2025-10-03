@@ -276,7 +276,6 @@ impl&lt;T&gt; Vec&lt;T&gt; {
         }
     }
 }
-
 <span class="boring">}</span></code></pre></pre>
 <p>La sûreté de ce code repose sur plusieurs invariants, dont l'un stipule que
 la plage d'octets allant de <code>self.ptr</code> à <code>self.ptr + self.cap * size_of&lt;T&gt;()</code> est allouée.</p>

@@ -886,7 +886,6 @@ impl&lt;T&gt; Vec&lt;T&gt; {
         }
     }
 }
-
 <span class="boring">}</span></code></pre></pre>
 <p>La sûreté de ce code repose sur plusieurs invariants, dont l'un stipule que
 la plage d'octets allant de <code>self.ptr</code> à <code>self.ptr + self.cap * size_of&lt;T&gt;()</code> est allouée.</p>
@@ -1638,34 +1637,31 @@ alternatives possibles :</p>
 <li>
 <p>l'utilisation de pointeurs de fonctions <em>wrappé</em> dans une valeur de type
 <code>Option</code>, accompagnée d'un test contre la valeur nulle :</p>
-<pre><code class="language-rust noplaypen">#[unsafe(no_mangle)]</code></pre>
-</li>
-</ul>
-<p>pub unsafe extern "C" fn repeat(
-start: u32,
-n: u32,
-f: Option&lt;unsafe extern "C" fn(u32) -&gt; u32&gt;,
+<pre><code class="language-rust noplaypen">#[unsafe(no_mangle)]
+pub unsafe extern "C" fn repeat(
+    start: u32,
+    n: u32,
+    f: Option&lt;unsafe extern "C" fn(u32) -&gt; u32&gt;,
 ) -&gt; u32 {
-if let Some(f) = f {
-let mut value = start;
-for _ in 0..n {
-value = unsafe { f(value) };
-}
-value
-} else {
-start
-}
-}</p>
-<pre><code>
-Du côté C :
-
-```c
-uint32_t repeat(uint32_t start, uint32_t n, uint32_t (*f)(uint32_t));
+    if let Some(f) = f {
+        let mut value = start;
+        for _ in 0..n {
+            value = unsafe { f(value) };
+        }
+        value
+    } else {
+        start
+    }
+}</code></pre>
+<p>Du côté C :</p>
+<pre><code class="language-c">uint32_t repeat(uint32_t start, uint32_t n, uint32_t (*f)(uint32_t));
 </code></pre>
-<ul>
-<li>l'utilisation de pointeurs <em>bruts</em> avec une transformation <code>unsafe</code> vers un
+</li>
+<li>
+<p>l'utilisation de pointeurs <em>bruts</em> avec une transformation <code>unsafe</code> vers un
 type pointeur de fonction, permettant des tests plus poussés au prix de
-l'ergonomie.</li>
+l'ergonomie.</p>
+</li>
 </ul>
 <div class="reco" id="FFI-CKFUNPTR" type="Règle" title="Vérification des pointeurs de fonction provenant d'une FFI">
 <p>Dans un développement sécurisé en Rust, tout pointeur de fonction provenant de

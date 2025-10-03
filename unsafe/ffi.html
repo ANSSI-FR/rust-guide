@@ -537,33 +537,30 @@ possibilities:</p>
 <ul>
 <li>
 <p>use <code>Option</code>-wrapped function pointer and check against <code>null</code>:</p>
-<pre><code class="language-rust noplaypen">#[unsafe(no_mangle)]</code></pre>
-</li>
-</ul>
-<p>pub unsafe extern "C" fn repeat(
-start: u32,
-n: u32,
-f: Option&lt;unsafe extern "C" fn(u32) -&gt; u32&gt;,
+<pre><code class="language-rust noplaypen">#[unsafe(no_mangle)]
+pub unsafe extern "C" fn repeat(
+    start: u32,
+    n: u32,
+    f: Option&lt;unsafe extern "C" fn(u32) -&gt; u32&gt;,
 ) -&gt; u32 {
-if let Some(f) = f {
-let mut value = start;
-for _ in 0..n {
-value = unsafe { f(value) };
-}
-value
-} else {
-start
-}
-}</p>
-<pre><code>
-On the C side:
-
-```c
-uint32_t repeat(uint32_t start, uint32_t n, uint32_t (*f)(uint32_t));
+    if let Some(f) = f {
+        let mut value = start;
+        for _ in 0..n {
+            value = unsafe { f(value) };
+        }
+        value
+    } else {
+        start
+    }
+}</code></pre>
+<p>On the C side:</p>
+<pre><code class="language-c">uint32_t repeat(uint32_t start, uint32_t n, uint32_t (*f)(uint32_t));
 </code></pre>
-<ul>
-<li>use raw pointers with an <code>unsafe</code> transmutation to the function pointer type,
-allowing more powerful checks at the cost of ergonomics.</li>
+</li>
+<li>
+<p>use raw pointers with an <code>unsafe</code> transmutation to the function pointer type,
+allowing more powerful checks at the cost of ergonomics.</p>
+</li>
 </ul>
 <div class="reco" id="FFI-CKFUNPTR" type="Rule" title="Check foreign function pointers">
 <p>In a secure Rust development, any foreign function pointer must be checked at
