@@ -19,6 +19,8 @@ jobs:
         run: cargo install --path ./mdbook-checklist --locked
       - name: Install mdbook-code-align
         run: cargo install --path ./mdbook-code-align --locked
+      - name: Install mdbook-extensions
+        run: cargo install --path ./mdbook-extensions --locked
       - name: Build EN version
         run: |
           ./lang.sh en
