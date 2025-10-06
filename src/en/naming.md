@@ -1,8 +1,20 @@
+---
+references:
+  - type: article
+    title: General naming conventions
+    url: https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md
+    id: RFC-430
+  - type: article
+    title: Rust API Guidelines
+    url: https://rust-lang.github.io/api-guidelines/
+    id: rust-guidelines
+---
+
 # Naming
 
 As of now, the standard library is the de facto standard for naming things in
 the Rust world. However, an effort has been made to formalize it, first in
-[RFC 430], then in the [Rust API Guidelines].
+[@RFC-430], then in the [@rust-guidelines].
 
 The basic rule consists in using :
 
@@ -11,7 +23,7 @@ The basic rule consists in using :
 - `SCREAMING_SNAKE_CASE` for statics and constants,
 - `'lowercase` for lifetimes.
 
-The [Rust API Guidelines] also prescribes more precise naming conventions for
+The [@rust-guidelines] also prescribes more precise naming conventions for
 some particular constructions:
 
 - (C-CONV) for conversion methods (`as_`, `to_`, `into_`),
@@ -24,9 +36,6 @@ some particular constructions:
 <div class="reco" id="LANG-NAMING" type="Rule" title="Respect naming conventions">
 
 Development of a secure application must follow the naming conventions
-outlined in the [Rust API Guidelines].
+outlined in the [@rust-guidelines].
 
 </div>
-
-[rfc 430]: https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md
-[rust api guidelines]: https://rust-lang.github.io/api-guidelines/

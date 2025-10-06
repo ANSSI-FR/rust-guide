@@ -38,7 +38,7 @@ Plusieurs situations peuvent mener à manquer des `drop`s, comme :
 
 - un cycle dans la référence (par exemple avec `Rc` ou `Arc`) ;
 - un appel explicite à `std::mem::forget` (ou `core::mem::forget`) (voir
-  paragraphe à propos de [`forget` et des fuites de mémoire](05_memory.html#forget-et-fuites-de-mémoire) ;
+  paragraphe à propos de [`forget` et des fuites de mémoire](unsafe/memory.md#forget-and-memory-leaks)) ;
 - un `panic` dans un `drop` ;
 - un arrêt du programme (et un `panic` lorsque `abort-on-panic` est activé).
 

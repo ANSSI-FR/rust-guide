@@ -1,3 +1,11 @@
+---
+references:
+  - type: web
+    title: Really tagged unions
+    url: https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md
+    id: RFC-2195
+---
+
 # Interfaçage avec des fonctions externes (FFI)
 
 L'approche de Rust en ce qui concerne l'interfaçage avec des fonctions d'autres
@@ -105,9 +113,8 @@ Certains types sont compatibles, mais avec certaines limitations :
 - les types à taille nulle, qui ne sont pas spécifiés pour le C et mènent à des
   contradictions dans les spécifications du C++ ;
 - les `enum`s avec champs annotés avec `repr(C)`, `repr(C, Int)` ou `repr(Int)`
-  (voir [RFC 2195]).
+  (voir [@RFC-2195]).
 
-[RFC 2195]: https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html
 [Rust Reference: Type Layout]: https://doc.rust-lang.org/reference/type-layout.html
 
 ### Cohérence du typage
@@ -123,7 +130,7 @@ doivent avoir la même taille et respecter le même alignement.
 </div>
 
 En ce qui concerne les `enum`s avec des champs en particulier, les types
-correspondant en C (ou en C++) ne sont pas évidents ([RFC 2195]).
+correspondant en C (ou en C++) ne sont pas évidents ([@RFC-2195]).
 
 Les outils permettant de générer automatiquement des *bindings*, comme
 [rust-bindgen] ou [cbindgen], peuvent aider à assurer la cohérence entre les

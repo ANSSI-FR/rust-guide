@@ -1,3 +1,18 @@
+---
+references:
+  - type: web
+    title: The Rust Edition Guide
+    url: https://doc.rust-lang.org/edition-guide/
+    id: rust-edition-guide
+  - type: web
+    title: The Cargo Book
+    url: https://doc.rust-lang.org/cargo/index.html
+    id: cargo-book
+  - type: web
+    title: Rust Style Guide
+    url: https://doc.rust-lang.org/style-guide/index.html
+    id: cargo-style
+---
 # Environnement de développement
 
 ## Rustup
@@ -26,7 +41,7 @@ site officiel du langage Rust.
 Il existe plusieurs variantes du langage Rust, appelées *éditions*. Le concept
 d'éditions a été introduit afin de distinguer la mise en place de nouvelles
 fonctionnalités dans le langage, et de rendre ce processus incrémental.
-Toutefois, comme mentionné dans le *[Edition Guide]*, cela ne signifie pas que
+Toutefois, comme mentionné dans le [@rust-edition-guide], cela ne signifie pas que
 de nouvelles fonctionnalités et améliorations ne seront incluses que dans la
 dernière édition.
 
@@ -163,7 +178,7 @@ d'opter pour une méthode d'installation alternative pour les dépendances.
 
 Cargo propose différentes commandes et options pour adapter le processus de
 compilation aux besoins de chaque projet, principalement au travers du fichier
-`Cargo.toml`. Pour une présentation complète, voir le *[Cargo Book]*.
+`Cargo.toml`. Pour une présentation complète, voir le [@cargo-book].
 
 Certaines de ces options requièrent une attention particulière.
 
@@ -210,7 +225,6 @@ doivent pas être modifiées lorsque Cargo est appelé pour compiler un projet.
 
 [crates.io]: https://crates.io
 [cargo]: https://doc.rust-lang.org/stable/cargo/
-[cargo book]: https://doc.rust-lang.org/cargo/index.html
 
 ### Clippy
 
@@ -267,7 +281,7 @@ single_line_if_else_max_width = 40
 ```
 
 Pour plus d'informations à propos des règles de convention de style que
-`rustfmt` propose, voir le [*Rust Style Guide*](https://doc.rust-lang.org/style-guide/index.html).
+`rustfmt` propose, voir [@rust-style].
 
 <div class="reco" id="DENV-FORMAT" type="Règle" title="Utilisation d'un outil de formatage (rustfmt)">
 
@@ -282,7 +296,7 @@ manuelle.
 
 ### Rustfix
 
-Inclus dans la distribution Rust depuis la fin de l'année 2018, [Rustfix] est un
+Inclus dans la distribution Rust depuis la fin de l'année 2018, Rustfix est un
 outil dédié à la réparation des avertissements de compilation et facilitant la
 transition entre éditions.
 
@@ -323,8 +337,6 @@ automatique (comme celles appliquées par `rustfix` par exemple) doit être
 vérifiée par le développeur.
 
 </div>
-
-[rustfix]: https://github.com/rust-lang-nursery/rustfix
 
 ### Autres
 

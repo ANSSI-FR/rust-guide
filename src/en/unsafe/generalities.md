@@ -1,3 +1,11 @@
+---
+references:
+  - type: web
+    title: The Rust Programming Language
+    url: https://doc.rust-lang.org/stable/book/
+    id: rust-book
+---
+
 # General information on `unsafe`
 
 ## *Unsafe* capacities
@@ -9,7 +17,7 @@ Language capabilities can be extended using unsafe code. The full list of these 
 * Access to the fields of a `union`
 * Declaring an `extern` block
 
-These capabilities may be necessary for system programming but they cause the language to lose its [security properties](04_language.md#language-guarantees).
+These capabilities may be necessary for system programming but they cause the language to lose its [safety properties](../guarantees.md#language-guarantees). More examples can be found in [nomicon](https://doc.rust-lang.org/nomicon/what-unsafe-does.html).
 
 ## `unsafe` keyword
 
@@ -192,6 +200,4 @@ If they cannot protect their function against badly implemented *safe* functions
 * mark the function they *write* as `unsafe`: thus it is the user's responsibility to feed this function with correct arguments (by checking *unsafe* function documentation).
 * mark the traits they *use* as `unsafe` : thus it is user's responsibility to implement the trait properly (again reading the trait documentation).
 
-#### Références
-
-* https://doc.rust-lang.org/nomicon/safe-unsafe-meaning.html
+More examples can be found in [@rust-book] (in the [Unsafe Rust](https://doc.rust-lang.org/book/ch20-01-unsafe-rust.html) chapter) or the [nomicon](https://doc.rust-lang.org/nomicon/safe-unsafe-meaning.html).

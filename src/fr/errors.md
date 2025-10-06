@@ -25,7 +25,7 @@ La macro `try!` ne doit pas être utilisée.
 </div>
 
 Des *crates* tierces peuvent être utilisées pour faciliter la gestion d'erreurs.
-La plupart ([failure], [snafu], [thiserror]) proposent la création de types
+La plupart ([snafu], [thiserror]) proposent la création de types
 d'erreurs personnalisées qui implémentent les traits nécessaires et permettent
 l'encapsulation d'autres erreurs.
 
@@ -35,7 +35,6 @@ approche ne devrait pas être utilisée dans des bibliothèques ou des systèmes
 complexes parce qu'elle ne permet pas de fournir de contexte sur les erreurs
 ainsi initialement enveloppées, contrairement à la première approche.
 
-[failure]: https://crates.io/crates/failure
 [snafu]: https://crates.io/crates/snafu
 [thiserror]: https://crates.io/crates/thiserror
 [anyhow]: https://crates.io/crates/anyhow

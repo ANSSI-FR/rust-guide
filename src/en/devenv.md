@@ -1,3 +1,18 @@
+---
+references:
+  - type: web
+    title: The Rust Edition Guide
+    url: https://doc.rust-lang.org/edition-guide/
+    id: rust-edition-guide
+  - type: web
+    title: The Cargo Book
+    url: https://doc.rust-lang.org/cargo/index.html
+    id: cargo-book
+  - type: web
+    title: Rust Style Guide
+    url: https://doc.rust-lang.org/style-guide/index.html
+    id: cargo-style
+---
 # Development environment
 
 ## Rustup
@@ -25,7 +40,7 @@ Several flavors, called *editions*, of the Rust language coexist.
 
 The concept of editions has been introduced to clarify the
 implementation of new features and to make them incremental. A new edition will be produced
-every two or three years, as stated in the [Edition Guide], but this doesn’t
+every two or three years, as stated in [@rust-edition-guide], but this doesn’t
 mean that new features and improvements will only be shipped in a new edition.
 
 Some editions bring new keywords and language constructs. Recommendations for
@@ -151,7 +166,7 @@ installation method for dependencies.
 
 Cargo proposes many different commands and options to adapt the build process to
 your project needs, mainly through the manifest file `Cargo.toml`. For a
-complete presentation, see [The Cargo Book].
+complete presentation, see [@cargo-book].
 
 During the development of a secure application, some of the options may require
 some attention. The `[profile.*]` sections allow configuring how the compiler is
@@ -191,7 +206,6 @@ be overriden when using Cargo to build the project.
 
 [crates.io]: https://crates.io
 [cargo]: https://doc.rust-lang.org/stable/cargo/
-[the cargo book]: https://doc.rust-lang.org/cargo/index.html
 
 ### Clippy
 
@@ -243,7 +257,7 @@ single_line_if_else_max_width = 40
 ```
 
 For more information about the guidelines that `rustfmt` will check, have a look
-at the [Rust Style Guide](https://doc.rust-lang.org/style-guide/index.html).
+at the [@rust-style].
 
 <div class="reco" id="DENV-FORMAT" type="Rule" title="Use Rust formatter (rustfmt)">
 
@@ -257,7 +271,7 @@ manual review.
 
 ### Rustfix
 
-Included with Rust, since the end of 2018, [Rustfix] is a tool dedicated in
+Included with Rust, since the end of 2018, Rustfix is a tool dedicated in
 fixing compiler warnings as well as easing transitions between editions.
 
 ```shell
@@ -293,8 +307,6 @@ In a secure Rust development, any automatic fix (for instance, provided by
 `rustfix`) must be verified by the developer.
 
 </div>
-
-[rustfix]: https://github.com/rust-lang-nursery/rustfix
 
 ### Others
 

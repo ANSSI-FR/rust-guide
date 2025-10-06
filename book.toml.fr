@@ -22,10 +22,16 @@ additional-css = [
 format = "latex"
 compile = true
 optional = true
+display_logs = false
 
 [preprocessor.checklist]
 title = "Liste des recommandations"
 renderers = ["html"]
+after = ["links", "extensions"]
+
+[preprocessor.extensions]
+title = "Références"
+renderers = ["html"]
 
 [preprocessor.code-align]
-after = ["links"]
+after = ["links", "extensions"]

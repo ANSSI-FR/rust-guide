@@ -21,7 +21,7 @@ The `try!` macro should not be used.
 </div>
 
 Third-party crates may be used to facilitate error handling. Most of them
-(notably [failure], [snafu], [thiserror]) address the creation of new custom
+(notably [snafu] or [thiserror]) address the creation of new custom
 error types that implement the necessary traits and allow wrapping other
 errors.
 
@@ -30,7 +30,6 @@ wrapping of errors into a single universal error type. Such wrappers should not
 be used in libraries and complex systems because they do not allow developers to
 provide context to the wrapped error.
 
-[failure]: https://crates.io/crates/failure
 [snafu]: https://crates.io/crates/snafu
 [thiserror]: https://crates.io/crates/thiserror
 [anyhow]: https://crates.io/crates/anyhow

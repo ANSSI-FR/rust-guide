@@ -34,7 +34,7 @@ missing drops, such as:
 
 - a reference cycle (for instance, with `Rc` or `Arc`),
 - an explicit call to `std::mem::forget` (or `core::mem::forget`) (see paragraph
-  on [Forget and memory leaks](05_memory.html#forget-and-memory-leaks)),
+  on [`forget` and memory leaks](unsafe/memory.md#forget-and-memory-leaks)),
 - a panic during drop,
 - program aborts (and panics when abort-on-panic is on).
 

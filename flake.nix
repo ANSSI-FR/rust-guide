@@ -54,6 +54,18 @@
 
         });
 
+        mdbook-extensions = pkgs.rustPlatform.buildRustPackage (finalAttrs: rec {
+          pname = "mdbook-extensions";
+          version = "0.1.0";
+
+          src = ./mdbook-extensions;
+
+          cargoLock = {
+            lockFile = "${src}/Cargo.lock";
+          };
+
+        });
+
         mdbook-shiftinclude = pkgs.rustPlatform.buildRustPackage (finalAttrs: rec {
           pname = "mdbook-shiftinclude";
           version = "0.1.0";
@@ -80,6 +92,7 @@
             mdbook-checklist
             mdbook-shiftinclude
             mdbook-code-align
+            mdbook-extensions
             pandoc
             (texlive.combine {
               inherit (texlive)

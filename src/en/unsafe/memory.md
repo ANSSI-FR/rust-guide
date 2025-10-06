@@ -9,7 +9,7 @@ unsound behaviors in older versions of the compiler).
 -->
 
 In the vast majority of cases, in non-`unsafe` Rust (i.e., code that does not use `unsafe`), the compiler **automatically** determines when it can release the memory occupied by a value in the program.
-But, as [noted earlier](04_language.md#rust-guarantees), this is not
+But, as [noted earlier](../guarantees.md#rust-guarantees), this is not
 a guarantee: code without `unsafe` can still lead to memory leaks. Therefore, some of the
 rules presented in this chapter are not strictly related to the `unsafe` keyword. However,
 

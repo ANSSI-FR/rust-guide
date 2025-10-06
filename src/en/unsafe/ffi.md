@@ -1,3 +1,11 @@
+---
+references:
+  - type: web
+    title: Really tagged unions
+    url: https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md
+    id: RFC-2195
+---
+
 # Foreign Function Interface (FFI)
 
 The Rust approach to interfacing with other languages relies on a strong
@@ -103,9 +111,8 @@ Some types are compatible with some caveats:
 - Zero-sized types, which is really zero sized (which is left unspecified in C
   and contradicts the C++ specification),
 - `repr(C)`, `repr(C, Int)`, or `repr(Int)`-annotated enum with fields
-  (see [RFC 2195]).
+  (see [@RFC-2195]).
 
-[RFC 2195]: https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html
 [Rust Reference: Type Layout]: https://doc.rust-lang.org/reference/type-layout.html
 
 ### Type consistency
@@ -121,7 +128,7 @@ and the same alignment requirement.
 </div>
 
 Concerning enums with fields in particular, the corresponding types in C (or
-C++) are not obvious, cf. [RFC 2195].
+C++) are not obvious, cf. [@RFC-2195].
 
 Automated tools to generate bindings, such as [rust-bindgen] or
 [cbindgen], may be of help in making types consistent between C and Rust.

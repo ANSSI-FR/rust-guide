@@ -1,3 +1,11 @@
+---
+references:
+  - type: web
+    title: The Rust Programming Language
+    url: https://doc.rust-lang.org/stable/book/
+    id: rust-book
+---
+
 # Généralités sur l'utilisation de `unsafe`
 
 ## Comportements ajoutés par Rust *unsafe*
@@ -9,7 +17,7 @@ Les capacités du langages peuvent être étendues en utilisant du code *unsafe*
 * Accéder aux champs d'une `union`
 * Déclarer un block `extern`
 
-Si ces capacités sont nécessaires à la programmation système, elles font perdre au langage ses [propriétés de sûreté](04_language.md#garanties-du-langage).
+Si ces capacités sont nécessaires à la programmation système, elles font perdre au langage ses [propriétés de sûreté](../guarantees.md#garanties-du-langage). D'autres exemples peuvent être trouvé dans le [nomicon](https://doc.rust-lang.org/nomicon/what-unsafe-does.html)
 
 ## Usages du mot-clé `unsafe`
 
@@ -224,7 +232,5 @@ deux solutions sont possibles :
   de la bonne exécution du programme revient à l'implémenteur du trait en s'assurant que
   l'implémentation répond bien aux spécifications du trait (présente dans sa documentation).
 
-#### Références
-
-* https://doc.rust-lang.org/nomicon/safe-unsafe-meaning.html
+On pourra se référer à [@rust-book] (au chapitre [Unsafe Rust](https://doc.rust-lang.org/book/ch20-01-unsafe-rust.html)) où au [nomicon](https://doc.rust-lang.org/nomicon/safe-unsafe-meaning.html) pour d'autres exemples.
 
