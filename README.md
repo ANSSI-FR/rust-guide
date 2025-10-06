@@ -26,7 +26,10 @@ It is currently an ongoing version and all contributions are welcome.
 Install `mdbook` and required preprocessor:
 
 ```
-cargo install mdbook mdbook-checklist
+cargo install mdbook --git https://github.com/hg-anssi/mdBook.git --rev c5a35b9296c6d5e48570e30022bd69403050a9f4 --locked
+cargo install --path ./mdbook-checklist --locked
+cargo install --path ./mdbook-code-align --locked
+cargo install --path ./mdbook-extensions --locked
 ```
 
 Then build and open the book:
