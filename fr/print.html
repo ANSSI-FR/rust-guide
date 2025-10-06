@@ -271,7 +271,7 @@ site officiel du langage Rust.</p>
 <p>Il existe plusieurs variantes du langage Rust, appelées <em>éditions</em>. Le concept
 d'éditions a été introduit afin de distinguer la mise en place de nouvelles
 fonctionnalités dans le langage, et de rendre ce processus incrémental.
-Toutefois, comme mentionné dans le <em><a href="https://doc.rust-lang.org/edition-guide/">Edition Guide</a></em>, cela ne signifie pas que
+Toutefois, comme mentionné dans le <a href="devenv.html#rust-edition-guide">rust-edition-guide</a>, cela ne signifie pas que
 de nouvelles fonctionnalités et améliorations ne seront incluses que dans la
 dernière édition.</p>
 <p>Certaines éditions peuvent introduire de nouvelles constructions dans le langage
@@ -379,7 +379,7 @@ d'opter pour une méthode d'installation alternative pour les dépendances.</p>
 </div>
 <p>Cargo propose différentes commandes et options pour adapter le processus de
 compilation aux besoins de chaque projet, principalement au travers du fichier
-<code>Cargo.toml</code>. Pour une présentation complète, voir le <em><a href="https://doc.rust-lang.org/cargo/index.html">Cargo Book</a></em>.</p>
+<code>Cargo.toml</code>. Pour une présentation complète, voir le <a href="devenv.html#cargo-book">cargo-book</a>.</p>
 <p>Certaines de ces options requièrent une attention particulière.</p>
 <p>La section <code>[profile.*]</code> permet de configurer la façon dont le compilateur est
 invoqué. Par exemple :</p>
@@ -453,7 +453,7 @@ max_width = 120
 single_line_if_else_max_width = 40
 </code></pre>
 <p>Pour plus d'informations à propos des règles de convention de style que
-<code>rustfmt</code> propose, voir le <a href="https://doc.rust-lang.org/style-guide/index.html"><em>Rust Style Guide</em></a>.</p>
+<code>rustfmt</code> propose, voir <a href="devenv.html#rust-style">rust-style</a>.</p>
 <div class="reco" id="DENV-FORMAT" type="Règle" title="Utilisation d'un outil de formatage (rustfmt)">
 <p>L'outil de formatage <code>rustfmt</code> peut être utilisé pour assurer le respect de
 règles de convention de style (comme décrites dans le fichier <code>rustfmt.toml</code>)
@@ -461,7 +461,7 @@ sur une base de code, avec l'option <code>--check</code> ainsi qu'une revue de c
 manuelle.</p>
 </div>
 <h3 id="rustfix"><a class="header" href="#rustfix">Rustfix</a></h3>
-<p>Inclus dans la distribution Rust depuis la fin de l'année 2018, <a href="https://github.com/rust-lang-nursery/rustfix">Rustfix</a> est un
+<p>Inclus dans la distribution Rust depuis la fin de l'année 2018, Rustfix est un
 outil dédié à la réparation des avertissements de compilation et facilitant la
 transition entre éditions.</p>
 <pre><code class="language-shell">$ cargo fix
@@ -494,6 +494,11 @@ vérifiée par le développeur.</p>
 d'un programme existent, par exemple, en recherchant des motifs de code
 particuliers. Nous en discutons dans les chapitres suivants en fonction de leurs
 portées et de leurs objectifs.</p>
+<h2 id="références"><a class="header" href="#références">Références</a></h2>
+<ul>
+<li><a id="rust-edition-guide"></a> <em><a href="https://doc.rust-lang.org/edition-guide/">The Rust Edition Guide</a></em> (rust-edition-guide)</li>
+<li><a id="cargo-book"></a> <em><a href="https://doc.rust-lang.org/cargo/index.html">The Cargo Book</a></em> (cargo-book)</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="bibliothèques"><a class="header" href="#bibliothèques">Bibliothèques</a></h1>
 <p>En complément de la bibliothèque standard du langage, l'outil <code>cargo</code> fournit un
 moyen pratique d'intégrer des bibliothèques tierces dans un projet en Rust. Ces
@@ -545,7 +550,7 @@ dépendances (à l'aide d'un outil ?).
 <p>Le comportement d'un programme est <em>indéfini</em> (<em>UB</em> pour <em>Undefined Behavior</em>) lorsque sa sémantique n'est
 pas décrite dans le langage Rust.</p>
 </blockquote>
-<p>L'existence d'<em>UB</em> est considéré comme une <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general">erreur</a>.</p>
+<p>Selon <a href="guarantees.html#rust-reference">rust-reference</a>, l'existence d'<em>UB</em> est considéré comme une <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general">erreur</a>.</p>
 <p>Par exemple le déréférencement d'un pointeur null est un <em>UB</em>.
 <em>A contrario</em>, un <code>unwrap</code> sur l'objet <code>None</code> est bien <em>défini</em> car c'est le langage qui traite cette erreur
 (en lançant un <code>panic</code>).</p>
@@ -560,8 +565,8 @@ On notera les garanties suivantes :</p>
 </ul>
 </li>
 <li>Les valeurs pointées sont <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.invalid">cohérentes</a> avec le type du pointeur. Par exemple, une valeur pointée par un pointeur booléen sera l'octet 1 ou 0.</li>
-<li>Respect des règles d'<a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias"><em>aliasing</em></a> (voir aussi le <a href="https://doc.rust-lang.org/nomicon/aliasing.html">nomicon</a>): une référence mutable ne peux être partagée.</li>
-<li>Pas d'accès concurrent (un accès en lecture et un autre en écriture ou en lecture) à la même adresse mémoire (<a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race"><em>data race</em></a>, voir aussi le <a href="https://doc.rust-lang.org/nomicon/races.html">nomicon</a>)</li>
+<li>Respect des règles d'<a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias"><em>aliasing</em></a> (voir aussi le <a href="guarantees.html#nomicon">nomicon</a> pour des <a href="https://doc.rust-lang.org/nomicon/aliasing.html">exemples</a>): une référence mutable ne peux être partagée.</li>
+<li>Pas d'<a href="(https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race)">accès concurrent</a> (un accès en lecture et un autre en écriture ou en lecture) à la même adresse mémoire (voir aussi le <a href="guarantees.html#nomicon">nomicon</a> pour des <a href="https://doc.rust-lang.org/nomicon/races.html">exemples</a>)</li>
 </ul>
 <h2 id="garantie-de-rust"><a class="header" href="#garantie-de-rust">Garantie de Rust</a></h2>
 <blockquote>
@@ -572,17 +577,19 @@ On notera les garanties suivantes :</p>
 <li>fuites de resources (mémoire, IO, ...) ;</li>
 <li>dépassements numériques.</li>
 </ul>
-<h2 id="références"><a class="header" href="#références">Références</a></h2>
+<div class="reco" id="UB-NOUB" type="Rule" title="No Undefined Behavior">
+<p>No Undefined Behavior is allowed.</p>
+</div>
+<h2 id="références-1"><a class="header" href="#références-1">Références</a></h2>
 <ul>
-<li>https://doc.rust-lang.org/reference/unsafety.html</li>
-<li>https://doc.rust-lang.org/nomicon/what-unsafe-does.html</li>
+<li><a id="rust-reference"></a> <em><a href="https://doc.rust-lang.org/stable/reference/">The Rust Reference</a></em> (rust-reference)</li>
+<li><a id="nomicon"></a> <em><a href="https://doc.rust-lang.org/stable/nomicon/">The Rustonomicon</a></em> (nomicon)</li>
 </ul>
-<!-- * https://github.com/ANSSI-FR/rust-guide/pull/3 -->
 <div style="break-before: page; page-break-before: always;"></div><h1 id="nommage"><a class="header" href="#nommage">Nommage</a></h1>
 <p>La convention de nommage employée par la bibliothèque standard est <em>de facto</em> le
 standard pour le nommage des éléments des programmes écrits en Rust. Un effort a
-été fait pour formaliser ces conventions de nommage, d'abord dans la <a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">RFC 430</a>,
-puis dans le document des <em><a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a></em>.</p>
+été fait pour formaliser ces conventions de nommage, d'abord dans la <a href="naming.html#RFC-430">RFC-430</a>,
+puis dans le document des <em><a href="naming.html#rust-guidelines">rust-guidelines</a></em>.</p>
 <p>La règle de base consiste à utiliser :</p>
 <ul>
 <li><code>UpperCamelCase</code> pour les types, traits et valeurs d'énumérations ;</li>
@@ -590,7 +597,7 @@ puis dans le document des <em><a href="https://rust-lang.github.io/api-guideline
 <li><code>SCREAMING_SNAKE_CASE</code> pour les variables statiques et les constantes ;</li>
 <li><code>'lowercase</code> pour les durées de vie (<em>lifetimes</em>).</li>
 </ul>
-<p>Les <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a> recommandent également des conventions de nommage
+<p>Les <a href="naming.html#rust-guidelines">rust-guidelines</a> recommandent également des conventions de nommage
 plus précises pour certaines constructions particulières :</p>
 <ul>
 <li>(C-CONV) pour les méthodes de conversion (<code>as_</code>, <code>to_</code>, <code>into_</code>) ;</li>
@@ -602,8 +609,13 @@ plus précises pour certaines constructions particulières :</p>
 </ul>
 <div class="reco" id="LANG-NAMING" type="Règle" title="Respect des conventions de nommage">
 <p>Le développement d'une application sécurisée doit suivre les conventions de
-nommage décrites dans les <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a>.</p>
+nommage décrites dans les <a href="naming.html#rust-guidelines">rust-guidelines</a>.</p>
 </div>
+<h2 id="références-2"><a class="header" href="#références-2">Références</a></h2>
+<ul>
+<li><a id="RFC-430"></a> <em><a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">General naming conventions</a></em> (RFC-430)</li>
+<li><a id="rust-guidelines"></a> <em><a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a></em> (rust-guidelines)</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="traitements-des-entiers"><a class="header" href="#traitements-des-entiers">Traitements des entiers</a></h1>
 <h2 id="dépassement-dentiers"><a class="header" href="#dépassement-dentiers">Dépassement d'entiers</a></h2>
 <p>Bien que des vérifications soient effectuées par Rust en ce qui concerne les
@@ -678,7 +690,7 @@ ce type doit être <em>exception-safe</em> (RFC 1236) et implémenter les traits
 La macro <code>try!</code> ne doit pas être utilisée.</p>
 </div>
 <p>Des <em>crates</em> tierces peuvent être utilisées pour faciliter la gestion d'erreurs.
-La plupart (<a href="https://crates.io/crates/failure">failure</a>, <a href="https://crates.io/crates/snafu">snafu</a>, <a href="https://crates.io/crates/thiserror">thiserror</a>) proposent la création de types
+La plupart (<a href="https://crates.io/crates/snafu">snafu</a>, <a href="https://crates.io/crates/thiserror">thiserror</a>) proposent la création de types
 d'erreurs personnalisées qui implémentent les traits nécessaires et permettent
 l'encapsulation d'autres erreurs.</p>
 <p>Une autre approche (notamment proposée dans <a href="https://crates.io/crates/anyhow">anyhow</a>) consiste à envelopper
@@ -769,7 +781,7 @@ Plusieurs situations peuvent mener à manquer des <code>drop</code>s, comme :</p
 <ul>
 <li>un cycle dans la référence (par exemple avec <code>Rc</code> ou <code>Arc</code>) ;</li>
 <li>un appel explicite à <code>std::mem::forget</code> (ou <code>core::mem::forget</code>) (voir
-paragraphe à propos de <a href="05_memory.html#forget-et-fuites-de-m%C3%A9moire"><code>forget</code> et des fuites de mémoire</a> ;</li>
+paragraphe à propos de <a href="unsafe/memory.html#forget-and-memory-leaks"><code>forget</code> et des fuites de mémoire</a>) ;</li>
 <li>un <code>panic</code> dans un <code>drop</code> ;</li>
 <li>un arrêt du programme (et un <code>panic</code> lorsque <code>abort-on-panic</code> est activé).</li>
 </ul>
@@ -802,7 +814,7 @@ doivent pas reposer uniquement sur l'implémentation du trait <code>Drop</code>.
 <li>Accéder aux champs d'une <code>union</code></li>
 <li>Déclarer un block <code>extern</code></li>
 </ul>
-<p>Si ces capacités sont nécessaires à la programmation système, elles font perdre au langage ses <a href="unsafe/04_language.html#garanties-du-langage">propriétés de sûreté</a>.</p>
+<p>Si ces capacités sont nécessaires à la programmation système, elles font perdre au langage ses <a href="unsafe/../guarantees.html#garanties-du-langage">propriétés de sûreté</a>. D'autres exemples peuvent être trouvé dans le <a href="https://doc.rust-lang.org/nomicon/what-unsafe-does.html">nomicon</a></p>
 <h2 id="usages-du-mot-clé-unsafe"><a class="header" href="#usages-du-mot-clé-unsafe">Usages du mot-clé <code>unsafe</code></a></h2>
 <p>Le mot-clé <code>unsafe</code> a deux usages : dans une API et dans une implémentation.</p>
 <h3 id="unsafe-dans-une-api"><a class="header" href="#unsafe-dans-une-api"><code>unsafe</code> dans une API</a></h3>
@@ -1020,9 +1032,10 @@ spécification de la fonction<!-- à voir car ce n'est pas ce que dit la doc rus
 de la bonne exécution du programme revient à l'implémenteur du trait en s'assurant que
 l'implémentation répond bien aux spécifications du trait (présente dans sa documentation).</li>
 </ul>
-<h4 id="références-1"><a class="header" href="#références-1">Références</a></h4>
+<p>On pourra se référer à <a href="unsafe/generalities.html#rust-book">rust-book</a> (au chapitre <a href="https://doc.rust-lang.org/book/ch20-01-unsafe-rust.html">Unsafe Rust</a>) où au <a href="https://doc.rust-lang.org/nomicon/safe-unsafe-meaning.html">nomicon</a> pour d'autres exemples.</p>
+<h2 id="références-3"><a class="header" href="#références-3">Références</a></h2>
 <ul>
-<li>https://doc.rust-lang.org/nomicon/safe-unsafe-meaning.html</li>
+<li><a id="rust-book"></a> <em><a href="https://doc.rust-lang.org/stable/book/">The Rust Programming Language</a></em> (rust-book)</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="gestion-de-la-mémoire"><a class="header" href="#gestion-de-la-mémoire">Gestion de la mémoire</a></h1>
 <!-- ## À propos de la sûreté mémoire en Rust -->
@@ -1034,7 +1047,7 @@ versions plus anciennes du compilateur).
 -->
 <p>Dans la très grande majorité des cas, en Rust non-<em>unsafe</em>, le compilateur détermine <strong>automatiquement</strong>
 quand il peut libérer la mémoire occupée par une valeur du programme.
-Mais, comme rappelé dans les <a href="unsafe/04_language.html#garantie-de-rust">généralités du langage</a>, ce n'est pas une garantie : un
+Mais, comme rappelé dans les <a href="unsafe/../guarantees.html#garantie-de-rust">généralités du langage</a>, ce n'est pas une garantie : un
 code non-<em>unsafe</em> peut mener à des fuites mémoires. Aussi certaines règles présentées dans
 ce chapitre ne sont pas strictement <em>unsafe</em>. Cependant,</p>
 <blockquote>
@@ -1384,7 +1397,7 @@ est d'un type C-compatible.</li>
 <li>les types à taille nulle, qui ne sont pas spécifiés pour le C et mènent à des
 contradictions dans les spécifications du C++ ;</li>
 <li>les <code>enum</code>s avec champs annotés avec <code>repr(C)</code>, <code>repr(C, Int)</code> ou <code>repr(Int)</code>
-(voir <a href="https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html">RFC 2195</a>).</li>
+(voir <a href="unsafe/ffi.html#RFC-2195">RFC-2195</a>).</li>
 </ul>
 <h3 id="cohérence-du-typage"><a class="header" href="#cohérence-du-typage">Cohérence du typage</a></h3>
 <div class="reco" id="FFI-TCONS" type="Règle" title="Utilisation de types cohérents pour les FFI">
@@ -1394,7 +1407,7 @@ l'autre (typiquement, pour rendre un type opaque), les types des deux parties
 doivent avoir la même taille et respecter le même alignement.</p>
 </div>
 <p>En ce qui concerne les <code>enum</code>s avec des champs en particulier, les types
-correspondant en C (ou en C++) ne sont pas évidents (<a href="https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html">RFC 2195</a>).</p>
+correspondant en C (ou en C++) ne sont pas évidents (<a href="unsafe/ffi.html#RFC-2195">RFC-2195</a>).</p>
 <p>Les outils permettant de générer automatiquement des <em>bindings</em>, comme
 <a href="https://crates.io/crates/bindgen">rust-bindgen</a> ou <a href="https://crates.io/crates/cbindgen">cbindgen</a>, peuvent aider à assurer la cohérence entre les
 types du côté C et ceux du côté Rust.</p>
@@ -2126,6 +2139,10 @@ int main(int argc, const char **argv)
 	return 0;
 }
 </code></pre>
+<h2 id="références-4"><a class="header" href="#références-4">Références</a></h2>
+<ul>
+<li><a id="RFC-2195"></a> <em><a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">Really tagged unions</a></em> (RFC-2195)</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="bibliothèque-standard"><a class="header" href="#bibliothèque-standard">Bibliothèque standard</a></h1>
 <h2 id="les-traits-send-et-sync"><a class="header" href="#les-traits-send-et-sync">Les traits <code>Send</code> et <code>Sync</code></a></h2>
 <p>Les traits <code>Send</code> et <code>Sync</code> (définis dans <code>std::marker</code> ou <code>core::marker</code>) sont
@@ -2533,6 +2550,13 @@ Règle - Vérification manuelle des réparations automatiques (<a href="devenv.h
 Règle - Vérification des dépendances obsolètes (cargo-outdated) (<a href="libraries.html#LIBS-OUTDATED">LIBS-OUTDATED</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Vérification des vulnérabilités connues pour les dépendances (cargo-audit) (<a href="libraries.html#LIBS-AUDIT">LIBS-AUDIT</a>)</li>
+</ul>
+</li>
+<li>
+<p>Garanties du langage:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Rule - No Undefined Behavior (<a href="guarantees.html#UB-NOUB">UB-NOUB</a>)</li>
 </ul>
 </li>
 <li>

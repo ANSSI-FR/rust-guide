@@ -194,7 +194,7 @@ method listed in the <em>Install</em> section of the official Rust website.</p>
 <p>Several flavors, called <em>editions</em>, of the Rust language coexist.</p>
 <p>The concept of editions has been introduced to clarify the
 implementation of new features and to make them incremental. A new edition will be produced
-every two or three years, as stated in the <a href="https://doc.rust-lang.org/edition-guide/">Edition Guide</a>, but this doesn’t
+every two or three years, as stated in <a href="#rust-edition-guide">rust-edition-guide</a>, but this doesn’t
 mean that new features and improvements will only be shipped in a new edition.</p>
 <p>Some editions bring new keywords and language constructs. Recommendations for
 secure applications development then remain closely linked to features of the
@@ -291,7 +291,7 @@ installation method for dependencies.</p>
 </div>
 <p>Cargo proposes many different commands and options to adapt the build process to
 your project needs, mainly through the manifest file <code>Cargo.toml</code>. For a
-complete presentation, see <a href="https://doc.rust-lang.org/cargo/index.html">The Cargo Book</a>.</p>
+complete presentation, see <a href="#cargo-book">cargo-book</a>.</p>
 <p>During the development of a secure application, some of the options may require
 some attention. The <code>[profile.*]</code> sections allow configuring how the compiler is
 invoked. For example:</p>
@@ -354,14 +354,14 @@ max_width = 120
 single_line_if_else_max_width = 40
 </code></pre>
 <p>For more information about the guidelines that <code>rustfmt</code> will check, have a look
-at the <a href="https://doc.rust-lang.org/style-guide/index.html">Rust Style Guide</a>.</p>
+at the <a href="#rust-style">rust-style</a>.</p>
 <div class="reco" id="DENV-FORMAT" type="Rule" title="Use Rust formatter (rustfmt)">
 <p>The tool <code>rustfmt</code> can be used to ensure that the codebase respects style
 guidelines (as described in <code>rustfmt.toml</code> file), with <code>--check</code> option and
 manual review.</p>
 </div>
 <h3 id="rustfix"><a class="header" href="#rustfix">Rustfix</a></h3>
-<p>Included with Rust, since the end of 2018, <a href="https://github.com/rust-lang-nursery/rustfix">Rustfix</a> is a tool dedicated in
+<p>Included with Rust, since the end of 2018, Rustfix is a tool dedicated in
 fixing compiler warnings as well as easing transitions between editions.</p>
 <pre><code class="language-shell">$ cargo fix
 </code></pre>
@@ -389,6 +389,11 @@ or change the program semantics in some cases.</p>
 security whether by searching for specific code patterns or by providing
 convenient commands for testing or fuzzing. They are discussed in the following
 chapters, according to their goals.</p>
+<h2 id="references"><a class="header" href="#references">References</a></h2>
+<ul>
+<li><a id="rust-edition-guide"></a> <em><a href="https://doc.rust-lang.org/edition-guide/">The Rust Edition Guide</a></em> (rust-edition-guide)</li>
+<li><a id="cargo-book"></a> <em><a href="https://doc.rust-lang.org/cargo/index.html">The Cargo Book</a></em> (cargo-book)</li>
+</ul>
 
                     </main>
 

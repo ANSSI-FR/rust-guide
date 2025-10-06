@@ -186,7 +186,7 @@
 <li>Access to the fields of a <code>union</code></li>
 <li>Declaring an <code>extern</code> block</li>
 </ul>
-<p>These capabilities may be necessary for system programming but they cause the language to lose its <a href="04_language.html#language-guarantees">security properties</a>.</p>
+<p>These capabilities may be necessary for system programming but they cause the language to lose its <a href="../guarantees.html#language-guarantees">safety properties</a>. More examples can be found in <a href="https://doc.rust-lang.org/nomicon/what-unsafe-does.html">nomicon</a>.</p>
 <h2 id="unsafe-keyword"><a class="header" href="#unsafe-keyword"><code>unsafe</code> keyword</a></h2>
 <p>The <code>unsafe</code> keyword is used both for API and implementation.</p>
 <h3 id="unsafe-in-api"><a class="header" href="#unsafe-in-api"><code>unsafe</code> in API</a></h3>
@@ -380,9 +380,10 @@ in case these <em>safe</em> functions have bad behavior.</p>
 <li>mark the function they <em>write</em> as <code>unsafe</code>: thus it is the user's responsibility to feed this function with correct arguments (by checking <em>unsafe</em> function documentation).</li>
 <li>mark the traits they <em>use</em> as <code>unsafe</code> : thus it is user's responsibility to implement the trait properly (again reading the trait documentation).</li>
 </ul>
-<h4 id="références"><a class="header" href="#références">Références</a></h4>
+<p>More examples can be found in <a href="#rust-book">rust-book</a> (in the <a href="https://doc.rust-lang.org/book/ch20-01-unsafe-rust.html">Unsafe Rust</a> chapter) or the <a href="https://doc.rust-lang.org/nomicon/safe-unsafe-meaning.html">nomicon</a>.</p>
+<h2 id="references"><a class="header" href="#references">References</a></h2>
 <ul>
-<li>https://doc.rust-lang.org/nomicon/safe-unsafe-meaning.html</li>
+<li><a id="rust-book"></a> <em><a href="https://doc.rust-lang.org/stable/book/">The Rust Programming Language</a></em> (rust-book)</li>
 </ul>
 
                     </main>

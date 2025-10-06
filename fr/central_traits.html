@@ -214,7 +214,7 @@ Plusieurs situations peuvent mener à manquer des <code>drop</code>s, comme :</p
 <ul>
 <li>un cycle dans la référence (par exemple avec <code>Rc</code> ou <code>Arc</code>) ;</li>
 <li>un appel explicite à <code>std::mem::forget</code> (ou <code>core::mem::forget</code>) (voir
-paragraphe à propos de <a href="05_memory.html#forget-et-fuites-de-m%C3%A9moire"><code>forget</code> et des fuites de mémoire</a> ;</li>
+paragraphe à propos de <a href="unsafe/memory.html#forget-and-memory-leaks"><code>forget</code> et des fuites de mémoire</a>) ;</li>
 <li>un <code>panic</code> dans un <code>drop</code> ;</li>
 <li>un arrêt du programme (et un <code>panic</code> lorsque <code>abort-on-panic</code> est activé).</li>
 </ul>

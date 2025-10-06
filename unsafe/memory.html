@@ -185,7 +185,7 @@ and identify language constructs that may break memory safety (for instance,
 unsound behaviors in older versions of the compiler).
 -->
 <p>In the vast majority of cases, in non-<code>unsafe</code> Rust (i.e., code that does not use <code>unsafe</code>), the compiler <strong>automatically</strong> determines when it can release the memory occupied by a value in the program.
-But, as <a href="04_language.html#rust-guarantees">noted earlier</a>, this is not
+But, as <a href="../guarantees.html#rust-guarantees">noted earlier</a>, this is not
 a guarantee: code without <code>unsafe</code> can still lead to memory leaks. Therefore, some of the
 rules presented in this chapter are not strictly related to the <code>unsafe</code> keyword. However,</p>
 <blockquote>

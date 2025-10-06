@@ -186,8 +186,8 @@
                         <h1 id="nommage"><a class="header" href="#nommage">Nommage</a></h1>
 <p>La convention de nommage employée par la bibliothèque standard est <em>de facto</em> le
 standard pour le nommage des éléments des programmes écrits en Rust. Un effort a
-été fait pour formaliser ces conventions de nommage, d'abord dans la <a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">RFC 430</a>,
-puis dans le document des <em><a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a></em>.</p>
+été fait pour formaliser ces conventions de nommage, d'abord dans la <a href="#RFC-430">RFC-430</a>,
+puis dans le document des <em><a href="#rust-guidelines">rust-guidelines</a></em>.</p>
 <p>La règle de base consiste à utiliser :</p>
 <ul>
 <li><code>UpperCamelCase</code> pour les types, traits et valeurs d'énumérations ;</li>
@@ -195,7 +195,7 @@ puis dans le document des <em><a href="https://rust-lang.github.io/api-guideline
 <li><code>SCREAMING_SNAKE_CASE</code> pour les variables statiques et les constantes ;</li>
 <li><code>'lowercase</code> pour les durées de vie (<em>lifetimes</em>).</li>
 </ul>
-<p>Les <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a> recommandent également des conventions de nommage
+<p>Les <a href="#rust-guidelines">rust-guidelines</a> recommandent également des conventions de nommage
 plus précises pour certaines constructions particulières :</p>
 <ul>
 <li>(C-CONV) pour les méthodes de conversion (<code>as_</code>, <code>to_</code>, <code>into_</code>) ;</li>
@@ -207,8 +207,13 @@ plus précises pour certaines constructions particulières :</p>
 </ul>
 <div class="reco" id="LANG-NAMING" type="Règle" title="Respect des conventions de nommage">
 <p>Le développement d'une application sécurisée doit suivre les conventions de
-nommage décrites dans les <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a>.</p>
+nommage décrites dans les <a href="#rust-guidelines">rust-guidelines</a>.</p>
 </div>
+<h2 id="références"><a class="header" href="#références">Références</a></h2>
+<ul>
+<li><a id="RFC-430"></a> <em><a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">General naming conventions</a></em> (RFC-430)</li>
+<li><a id="rust-guidelines"></a> <em><a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a></em> (rust-guidelines)</li>
+</ul>
 
                     </main>
 

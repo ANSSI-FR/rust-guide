@@ -325,7 +325,7 @@ est d'un type C-compatible.</li>
 <li>les types à taille nulle, qui ne sont pas spécifiés pour le C et mènent à des
 contradictions dans les spécifications du C++ ;</li>
 <li>les <code>enum</code>s avec champs annotés avec <code>repr(C)</code>, <code>repr(C, Int)</code> ou <code>repr(Int)</code>
-(voir <a href="https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html">RFC 2195</a>).</li>
+(voir <a href="#RFC-2195">RFC-2195</a>).</li>
 </ul>
 <h3 id="cohérence-du-typage"><a class="header" href="#cohérence-du-typage">Cohérence du typage</a></h3>
 <div class="reco" id="FFI-TCONS" type="Règle" title="Utilisation de types cohérents pour les FFI">
@@ -335,7 +335,7 @@ l'autre (typiquement, pour rendre un type opaque), les types des deux parties
 doivent avoir la même taille et respecter le même alignement.</p>
 </div>
 <p>En ce qui concerne les <code>enum</code>s avec des champs en particulier, les types
-correspondant en C (ou en C++) ne sont pas évidents (<a href="https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html">RFC 2195</a>).</p>
+correspondant en C (ou en C++) ne sont pas évidents (<a href="#RFC-2195">RFC-2195</a>).</p>
 <p>Les outils permettant de générer automatiquement des <em>bindings</em>, comme
 <a href="https://crates.io/crates/bindgen">rust-bindgen</a> ou <a href="https://crates.io/crates/cbindgen">cbindgen</a>, peuvent aider à assurer la cohérence entre les
 types du côté C et ceux du côté Rust.</p>
@@ -1067,6 +1067,10 @@ int main(int argc, const char **argv)
 	return 0;
 }
 </code></pre>
+<h2 id="références"><a class="header" href="#références">Références</a></h2>
+<ul>
+<li><a id="RFC-2195"></a> <em><a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">Really tagged unions</a></em> (RFC-2195)</li>
+</ul>
 
                     </main>
 

@@ -182,7 +182,7 @@
 <blockquote>
 <p>The behavior of a program is <em>undefined</em> when its semantics is not described in the Rust language.</p>
 </blockquote>
-<p>The existence of UB is considered an <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general">error</a>.</p>
+<p>Considering <a href="#rust-reference">rust-reference</a>, the existence of UB is considered an <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general">error</a>.</p>
 <p>For example, dereferencing the null pointer is a <em>UB</em>. On the other hand, <code>unwrap</code>ing the <code>None</code> object is well defined because it is the language that processes this error (by launching a panic).</p>
 <p>The current list of <em>UBs</em> is given in the language <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html">reference</a>. Notice the following guarantees:</p>
 <ul>
@@ -194,8 +194,8 @@
 </ul>
 </li>
 <li>The pointed values are <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.invalid">consistent</a> with the pointer's type. For example, a value pointed at by a boolean pointer will be byte of value 1 or 0.</li>
-<li>Respect of <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias">aliasing rules</a> (see also <a href="https://doc.rust-lang.org/nomicon/aliasing.html">nomicon</a>): a mutable reference cannot be shared.</li>
-<li>No concurrent access (reading/writing is not possible while writing) to the same memory address (<a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race">data race</a>, see also <a href="https://doc.rust-lang.org/nomicon/races.html">nomicon</a>)</li>
+<li>Respect of <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias">aliasing rules</a> (see also <a href="#nomicon">nomicon</a> for <a href="https://doc.rust-lang.org/nomicon/aliasing.html">examples</a>): a mutable reference cannot be shared.</li>
+<li>No <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race">concurrent access</a> (reading/writing is not possible while writing), to the same memory address (see also <a href="#nomicon">nomicon</a> for <a href="https://doc.rust-lang.org/nomicon/races.html">examples</a>)</li>
 </ul>
 <h2 id="rust-guarantees"><a class="header" href="#rust-guarantees">Rust guarantees</a></h2>
 <blockquote>
@@ -206,10 +206,13 @@
 <li>resource leaks (memory, IO, ...),</li>
 <li>numeric overflows.</li>
 </ul>
+<div class="reco" id="UB-NOUB" type="Rule" title="No Undefined Behavior">
+<p>No Undefined Behavior is allowed.</p>
+</div>
 <h2 id="references"><a class="header" href="#references">References</a></h2>
 <ul>
-<li>https://doc.rust-lang.org/reference/unsafety.html</li>
-<li>https://doc.rust-lang.org/nomicon/what-unsafe-does.html</li>
+<li><a id="rust-reference"></a> <em><a href="https://doc.rust-lang.org/stable/reference/">The Rust Reference</a></em> (rust-reference)</li>
+<li><a id="nomicon"></a> <em><a href="https://doc.rust-lang.org/stable/nomicon/">The Rustonomicon</a></em> (nomicon)</li>
 </ul>
 
                     </main>

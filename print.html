@@ -261,7 +261,7 @@ method listed in the <em>Install</em> section of the official Rust website.</p>
 <p>Several flavors, called <em>editions</em>, of the Rust language coexist.</p>
 <p>The concept of editions has been introduced to clarify the
 implementation of new features and to make them incremental. A new edition will be produced
-every two or three years, as stated in the <a href="https://doc.rust-lang.org/edition-guide/">Edition Guide</a>, but this doesn’t
+every two or three years, as stated in <a href="devenv.html#rust-edition-guide">rust-edition-guide</a>, but this doesn’t
 mean that new features and improvements will only be shipped in a new edition.</p>
 <p>Some editions bring new keywords and language constructs. Recommendations for
 secure applications development then remain closely linked to features of the
@@ -358,7 +358,7 @@ installation method for dependencies.</p>
 </div>
 <p>Cargo proposes many different commands and options to adapt the build process to
 your project needs, mainly through the manifest file <code>Cargo.toml</code>. For a
-complete presentation, see <a href="https://doc.rust-lang.org/cargo/index.html">The Cargo Book</a>.</p>
+complete presentation, see <a href="devenv.html#cargo-book">cargo-book</a>.</p>
 <p>During the development of a secure application, some of the options may require
 some attention. The <code>[profile.*]</code> sections allow configuring how the compiler is
 invoked. For example:</p>
@@ -421,14 +421,14 @@ max_width = 120
 single_line_if_else_max_width = 40
 </code></pre>
 <p>For more information about the guidelines that <code>rustfmt</code> will check, have a look
-at the <a href="https://doc.rust-lang.org/style-guide/index.html">Rust Style Guide</a>.</p>
+at the <a href="devenv.html#rust-style">rust-style</a>.</p>
 <div class="reco" id="DENV-FORMAT" type="Rule" title="Use Rust formatter (rustfmt)">
 <p>The tool <code>rustfmt</code> can be used to ensure that the codebase respects style
 guidelines (as described in <code>rustfmt.toml</code> file), with <code>--check</code> option and
 manual review.</p>
 </div>
 <h3 id="rustfix"><a class="header" href="#rustfix">Rustfix</a></h3>
-<p>Included with Rust, since the end of 2018, <a href="https://github.com/rust-lang-nursery/rustfix">Rustfix</a> is a tool dedicated in
+<p>Included with Rust, since the end of 2018, Rustfix is a tool dedicated in
 fixing compiler warnings as well as easing transitions between editions.</p>
 <pre><code class="language-shell">$ cargo fix
 </code></pre>
@@ -456,6 +456,11 @@ or change the program semantics in some cases.</p>
 security whether by searching for specific code patterns or by providing
 convenient commands for testing or fuzzing. They are discussed in the following
 chapters, according to their goals.</p>
+<h2 id="references"><a class="header" href="#references">References</a></h2>
+<ul>
+<li><a id="rust-edition-guide"></a> <em><a href="https://doc.rust-lang.org/edition-guide/">The Rust Edition Guide</a></em> (rust-edition-guide)</li>
+<li><a id="cargo-book"></a> <em><a href="https://doc.rust-lang.org/cargo/index.html">The Cargo Book</a></em> (cargo-book)</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="libraries"><a class="header" href="#libraries">Libraries</a></h1>
 <p>In addition to the standard library, Rust provides an easy way to import other
 libraries in a project, thanks to <code>cargo</code>. The libraries, known as <em>crates</em> in
@@ -504,7 +509,7 @@ dependencies (with a tool?).
 <blockquote>
 <p>The behavior of a program is <em>undefined</em> when its semantics is not described in the Rust language.</p>
 </blockquote>
-<p>The existence of UB is considered an <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general">error</a>.</p>
+<p>Considering <a href="guarantees.html#rust-reference">rust-reference</a>, the existence of UB is considered an <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general">error</a>.</p>
 <p>For example, dereferencing the null pointer is a <em>UB</em>. On the other hand, <code>unwrap</code>ing the <code>None</code> object is well defined because it is the language that processes this error (by launching a panic).</p>
 <p>The current list of <em>UBs</em> is given in the language <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html">reference</a>. Notice the following guarantees:</p>
 <ul>
@@ -516,8 +521,8 @@ dependencies (with a tool?).
 </ul>
 </li>
 <li>The pointed values are <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.invalid">consistent</a> with the pointer's type. For example, a value pointed at by a boolean pointer will be byte of value 1 or 0.</li>
-<li>Respect of <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias">aliasing rules</a> (see also <a href="https://doc.rust-lang.org/nomicon/aliasing.html">nomicon</a>): a mutable reference cannot be shared.</li>
-<li>No concurrent access (reading/writing is not possible while writing) to the same memory address (<a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race">data race</a>, see also <a href="https://doc.rust-lang.org/nomicon/races.html">nomicon</a>)</li>
+<li>Respect of <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias">aliasing rules</a> (see also <a href="guarantees.html#nomicon">nomicon</a> for <a href="https://doc.rust-lang.org/nomicon/aliasing.html">examples</a>): a mutable reference cannot be shared.</li>
+<li>No <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race">concurrent access</a> (reading/writing is not possible while writing), to the same memory address (see also <a href="guarantees.html#nomicon">nomicon</a> for <a href="https://doc.rust-lang.org/nomicon/races.html">examples</a>)</li>
 </ul>
 <h2 id="rust-guarantees"><a class="header" href="#rust-guarantees">Rust guarantees</a></h2>
 <blockquote>
@@ -528,15 +533,18 @@ dependencies (with a tool?).
 <li>resource leaks (memory, IO, ...),</li>
 <li>numeric overflows.</li>
 </ul>
-<h2 id="references"><a class="header" href="#references">References</a></h2>
+<div class="reco" id="UB-NOUB" type="Rule" title="No Undefined Behavior">
+<p>No Undefined Behavior is allowed.</p>
+</div>
+<h2 id="references-1"><a class="header" href="#references-1">References</a></h2>
 <ul>
-<li>https://doc.rust-lang.org/reference/unsafety.html</li>
-<li>https://doc.rust-lang.org/nomicon/what-unsafe-does.html</li>
+<li><a id="rust-reference"></a> <em><a href="https://doc.rust-lang.org/stable/reference/">The Rust Reference</a></em> (rust-reference)</li>
+<li><a id="nomicon"></a> <em><a href="https://doc.rust-lang.org/stable/nomicon/">The Rustonomicon</a></em> (nomicon)</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="naming"><a class="header" href="#naming">Naming</a></h1>
 <p>As of now, the standard library is the de facto standard for naming things in
 the Rust world. However, an effort has been made to formalize it, first in
-<a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">RFC 430</a>, then in the <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a>.</p>
+<a href="naming.html#RFC-430">RFC-430</a>, then in the <a href="naming.html#rust-guidelines">rust-guidelines</a>.</p>
 <p>The basic rule consists in using :</p>
 <ul>
 <li><code>UpperCamelCase</code> for types, traits, enum variants,</li>
@@ -544,7 +552,7 @@ the Rust world. However, an effort has been made to formalize it, first in
 <li><code>SCREAMING_SNAKE_CASE</code> for statics and constants,</li>
 <li><code>'lowercase</code> for lifetimes.</li>
 </ul>
-<p>The <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a> also prescribes more precise naming conventions for
+<p>The <a href="naming.html#rust-guidelines">rust-guidelines</a> also prescribes more precise naming conventions for
 some particular constructions:</p>
 <ul>
 <li>(C-CONV) for conversion methods (<code>as_</code>, <code>to_</code>, <code>into_</code>),</li>
@@ -556,8 +564,13 @@ some particular constructions:</p>
 </ul>
 <div class="reco" id="LANG-NAMING" type="Rule" title="Respect naming conventions">
 <p>Development of a secure application must follow the naming conventions
-outlined in the <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a>.</p>
+outlined in the <a href="naming.html#rust-guidelines">rust-guidelines</a>.</p>
 </div>
+<h2 id="references-2"><a class="header" href="#references-2">References</a></h2>
+<ul>
+<li><a id="RFC-430"></a> <em><a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">General naming conventions</a></em> (RFC-430)</li>
+<li><a id="rust-guidelines"></a> <em><a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a></em> (rust-guidelines)</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="integer-operations"><a class="header" href="#integer-operations">Integer operations</a></h1>
 <h2 id="integer-overflows"><a class="header" href="#integer-overflows">Integer overflows</a></h2>
 <p>Although some verification is performed by Rust regarding potential integer
@@ -626,7 +639,7 @@ It must be careful to make this type exception-safe (RFC 1236), and implement
 The <code>try!</code> macro should not be used.</p>
 </div>
 <p>Third-party crates may be used to facilitate error handling. Most of them
-(notably <a href="https://crates.io/crates/failure">failure</a>, <a href="https://crates.io/crates/snafu">snafu</a>, <a href="https://crates.io/crates/thiserror">thiserror</a>) address the creation of new custom
+(notably <a href="https://crates.io/crates/snafu">snafu</a> or <a href="https://crates.io/crates/thiserror">thiserror</a>) address the creation of new custom
 error types that implement the necessary traits and allow wrapping other
 errors.</p>
 <p>Another approach (notably proposed in the <a href="https://crates.io/crates/anyhow">anyhow</a> crate) consists in an automatic
@@ -705,7 +718,7 @@ missing drops, such as:</p>
 <ul>
 <li>a reference cycle (for instance, with <code>Rc</code> or <code>Arc</code>),</li>
 <li>an explicit call to <code>std::mem::forget</code> (or <code>core::mem::forget</code>) (see paragraph
-on <a href="05_memory.html#forget-and-memory-leaks">Forget and memory leaks</a>),</li>
+on <a href="unsafe/memory.html#forget-and-memory-leaks"><code>forget</code> and memory leaks</a>),</li>
 <li>a panic during drop,</li>
 <li>program aborts (and panics when abort-on-panic is on).</li>
 </ul>
@@ -735,7 +748,7 @@ trait implementation.</p>
 <li>Access to the fields of a <code>union</code></li>
 <li>Declaring an <code>extern</code> block</li>
 </ul>
-<p>These capabilities may be necessary for system programming but they cause the language to lose its <a href="unsafe/04_language.html#language-guarantees">security properties</a>.</p>
+<p>These capabilities may be necessary for system programming but they cause the language to lose its <a href="unsafe/../guarantees.html#language-guarantees">safety properties</a>. More examples can be found in <a href="https://doc.rust-lang.org/nomicon/what-unsafe-does.html">nomicon</a>.</p>
 <h2 id="unsafe-keyword"><a class="header" href="#unsafe-keyword"><code>unsafe</code> keyword</a></h2>
 <p>The <code>unsafe</code> keyword is used both for API and implementation.</p>
 <h3 id="unsafe-in-api"><a class="header" href="#unsafe-in-api"><code>unsafe</code> in API</a></h3>
@@ -929,9 +942,10 @@ in case these <em>safe</em> functions have bad behavior.</p>
 <li>mark the function they <em>write</em> as <code>unsafe</code>: thus it is the user's responsibility to feed this function with correct arguments (by checking <em>unsafe</em> function documentation).</li>
 <li>mark the traits they <em>use</em> as <code>unsafe</code> : thus it is user's responsibility to implement the trait properly (again reading the trait documentation).</li>
 </ul>
-<h4 id="références"><a class="header" href="#références">Références</a></h4>
+<p>More examples can be found in <a href="unsafe/generalities.html#rust-book">rust-book</a> (in the <a href="https://doc.rust-lang.org/book/ch20-01-unsafe-rust.html">Unsafe Rust</a> chapter) or the <a href="https://doc.rust-lang.org/nomicon/safe-unsafe-meaning.html">nomicon</a>.</p>
+<h2 id="references-3"><a class="header" href="#references-3">References</a></h2>
 <ul>
-<li>https://doc.rust-lang.org/nomicon/safe-unsafe-meaning.html</li>
+<li><a id="rust-book"></a> <em><a href="https://doc.rust-lang.org/stable/book/">The Rust Programming Language</a></em> (rust-book)</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="memory-management"><a class="header" href="#memory-management">Memory management</a></h1>
 <!-- ## About Rust memory safety -->
@@ -941,7 +955,7 @@ and identify language constructs that may break memory safety (for instance,
 unsound behaviors in older versions of the compiler).
 -->
 <p>In the vast majority of cases, in non-<code>unsafe</code> Rust (i.e., code that does not use <code>unsafe</code>), the compiler <strong>automatically</strong> determines when it can release the memory occupied by a value in the program.
-But, as <a href="unsafe/04_language.html#rust-guarantees">noted earlier</a>, this is not
+But, as <a href="unsafe/../guarantees.html#rust-guarantees">noted earlier</a>, this is not
 a guarantee: code without <code>unsafe</code> can still lead to memory leaks. Therefore, some of the
 rules presented in this chapter are not strictly related to the <code>unsafe</code> keyword. However,</p>
 <blockquote>
@@ -1271,7 +1285,7 @@ field has a C-compatible type.</li>
 <li>Zero-sized types, which is really zero sized (which is left unspecified in C
 and contradicts the C++ specification),</li>
 <li><code>repr(C)</code>, <code>repr(C, Int)</code>, or <code>repr(Int)</code>-annotated enum with fields
-(see <a href="https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html">RFC 2195</a>).</li>
+(see <a href="unsafe/ffi.html#RFC-2195">RFC-2195</a>).</li>
 </ul>
 <h3 id="type-consistency"><a class="header" href="#type-consistency">Type consistency</a></h3>
 <div class="reco" id="FFI-TCONS" type="Rule" title="Use consistent types at FFI boundaries">
@@ -1281,7 +1295,7 @@ and contradicts the C++ specification),</li>
 and the same alignment requirement.</p>
 </div>
 <p>Concerning enums with fields in particular, the corresponding types in C (or
-C++) are not obvious, cf. <a href="https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html">RFC 2195</a>.</p>
+C++) are not obvious, cf. <a href="unsafe/ffi.html#RFC-2195">RFC-2195</a>.</p>
 <p>Automated tools to generate bindings, such as <a href="https://crates.io/crates/bindgen">rust-bindgen</a> or
 <a href="https://crates.io/crates/cbindgen">cbindgen</a>, may be of help in making types consistent between C and Rust.</p>
 <div class="reco" id="FFI-AUTOMATE" type="Recommendation" title="Use automatic binding generator tools">
@@ -1954,6 +1968,10 @@ int main(int argc, const char **argv)
 	return 0;
 }
 </code></pre>
+<h2 id="references-4"><a class="header" href="#references-4">References</a></h2>
+<ul>
+<li><a id="RFC-2195"></a> <em><a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">Really tagged unions</a></em> (RFC-2195)</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="standard-library"><a class="header" href="#standard-library">Standard library</a></h1>
 <h2 id="send-and-sync-traits"><a class="header" href="#send-and-sync-traits"><code>Send</code> and <code>Sync</code> traits</a></h2>
 <p>The <code>Send</code> and <code>Sync</code> traits (defined in <code>std::marker</code> or <code>core::marker</code>) are
@@ -2269,6 +2287,13 @@ Rule - Manually check automatic fixes (<a href="devenv.html#DENV-AUTOFIX">DENV-A
 Rule - Check for outdated dependencies versions (cargo-outdated) (<a href="libraries.html#LIBS-OUTDATED">LIBS-OUTDATED</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Rule - Check for security vulnerabilities report on dependencies (cargo-audit) (<a href="libraries.html#LIBS-AUDIT">LIBS-AUDIT</a>)</li>
+</ul>
+</li>
+<li>
+<p>Language guarantees:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Rule - No Undefined Behavior (<a href="guarantees.html#UB-NOUB">UB-NOUB</a>)</li>
 </ul>
 </li>
 <li>

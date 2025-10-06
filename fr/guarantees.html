@@ -189,7 +189,7 @@
 <p>Le comportement d'un programme est <em>indéfini</em> (<em>UB</em> pour <em>Undefined Behavior</em>) lorsque sa sémantique n'est
 pas décrite dans le langage Rust.</p>
 </blockquote>
-<p>L'existence d'<em>UB</em> est considéré comme une <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general">erreur</a>.</p>
+<p>Selon <a href="#rust-reference">rust-reference</a>, l'existence d'<em>UB</em> est considéré comme une <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general">erreur</a>.</p>
 <p>Par exemple le déréférencement d'un pointeur null est un <em>UB</em>.
 <em>A contrario</em>, un <code>unwrap</code> sur l'objet <code>None</code> est bien <em>défini</em> car c'est le langage qui traite cette erreur
 (en lançant un <code>panic</code>).</p>
@@ -204,8 +204,8 @@ On notera les garanties suivantes :</p>
 </ul>
 </li>
 <li>Les valeurs pointées sont <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.invalid">cohérentes</a> avec le type du pointeur. Par exemple, une valeur pointée par un pointeur booléen sera l'octet 1 ou 0.</li>
-<li>Respect des règles d'<a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias"><em>aliasing</em></a> (voir aussi le <a href="https://doc.rust-lang.org/nomicon/aliasing.html">nomicon</a>): une référence mutable ne peux être partagée.</li>
-<li>Pas d'accès concurrent (un accès en lecture et un autre en écriture ou en lecture) à la même adresse mémoire (<a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race"><em>data race</em></a>, voir aussi le <a href="https://doc.rust-lang.org/nomicon/races.html">nomicon</a>)</li>
+<li>Respect des règles d'<a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias"><em>aliasing</em></a> (voir aussi le <a href="#nomicon">nomicon</a> pour des <a href="https://doc.rust-lang.org/nomicon/aliasing.html">exemples</a>): une référence mutable ne peux être partagée.</li>
+<li>Pas d'<a href="(https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race)">accès concurrent</a> (un accès en lecture et un autre en écriture ou en lecture) à la même adresse mémoire (voir aussi le <a href="#nomicon">nomicon</a> pour des <a href="https://doc.rust-lang.org/nomicon/races.html">exemples</a>)</li>
 </ul>
 <h2 id="garantie-de-rust"><a class="header" href="#garantie-de-rust">Garantie de Rust</a></h2>
 <blockquote>
@@ -216,12 +216,14 @@ On notera les garanties suivantes :</p>
 <li>fuites de resources (mémoire, IO, ...) ;</li>
 <li>dépassements numériques.</li>
 </ul>
+<div class="reco" id="UB-NOUB" type="Rule" title="No Undefined Behavior">
+<p>No Undefined Behavior is allowed.</p>
+</div>
 <h2 id="références"><a class="header" href="#références">Références</a></h2>
 <ul>
-<li>https://doc.rust-lang.org/reference/unsafety.html</li>
-<li>https://doc.rust-lang.org/nomicon/what-unsafe-does.html</li>
+<li><a id="rust-reference"></a> <em><a href="https://doc.rust-lang.org/stable/reference/">The Rust Reference</a></em> (rust-reference)</li>
+<li><a id="nomicon"></a> <em><a href="https://doc.rust-lang.org/stable/nomicon/">The Rustonomicon</a></em> (nomicon)</li>
 </ul>
-<!-- * https://github.com/ANSSI-FR/rust-guide/pull/3 -->
 
                     </main>
 

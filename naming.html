@@ -180,7 +180,7 @@
                         <h1 id="naming"><a class="header" href="#naming">Naming</a></h1>
 <p>As of now, the standard library is the de facto standard for naming things in
 the Rust world. However, an effort has been made to formalize it, first in
-<a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">RFC 430</a>, then in the <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a>.</p>
+<a href="#RFC-430">RFC-430</a>, then in the <a href="#rust-guidelines">rust-guidelines</a>.</p>
 <p>The basic rule consists in using :</p>
 <ul>
 <li><code>UpperCamelCase</code> for types, traits, enum variants,</li>
@@ -188,7 +188,7 @@ the Rust world. However, an effort has been made to formalize it, first in
 <li><code>SCREAMING_SNAKE_CASE</code> for statics and constants,</li>
 <li><code>'lowercase</code> for lifetimes.</li>
 </ul>
-<p>The <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a> also prescribes more precise naming conventions for
+<p>The <a href="#rust-guidelines">rust-guidelines</a> also prescribes more precise naming conventions for
 some particular constructions:</p>
 <ul>
 <li>(C-CONV) for conversion methods (<code>as_</code>, <code>to_</code>, <code>into_</code>),</li>
@@ -200,8 +200,13 @@ some particular constructions:</p>
 </ul>
 <div class="reco" id="LANG-NAMING" type="Rule" title="Respect naming conventions">
 <p>Development of a secure application must follow the naming conventions
-outlined in the <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a>.</p>
+outlined in the <a href="#rust-guidelines">rust-guidelines</a>.</p>
 </div>
+<h2 id="references"><a class="header" href="#references">References</a></h2>
+<ul>
+<li><a id="RFC-430"></a> <em><a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">General naming conventions</a></em> (RFC-430)</li>
+<li><a id="rust-guidelines"></a> <em><a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a></em> (rust-guidelines)</li>
+</ul>
 
                     </main>
 

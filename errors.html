@@ -191,7 +191,7 @@ It must be careful to make this type exception-safe (RFC 1236), and implement
 The <code>try!</code> macro should not be used.</p>
 </div>
 <p>Third-party crates may be used to facilitate error handling. Most of them
-(notably <a href="https://crates.io/crates/failure">failure</a>, <a href="https://crates.io/crates/snafu">snafu</a>, <a href="https://crates.io/crates/thiserror">thiserror</a>) address the creation of new custom
+(notably <a href="https://crates.io/crates/snafu">snafu</a> or <a href="https://crates.io/crates/thiserror">thiserror</a>) address the creation of new custom
 error types that implement the necessary traits and allow wrapping other
 errors.</p>
 <p>Another approach (notably proposed in the <a href="https://crates.io/crates/anyhow">anyhow</a> crate) consists in an automatic
