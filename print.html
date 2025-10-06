@@ -1023,7 +1023,7 @@ raw pointers must be done manually without Rust guaranties.</p>
 should not be converted into <em>raw pointers</em>. For instance, functions <code>into_raw</code> ou <code>into_non_null</code>
 of smart pointers <code>Box</code>, <code>Rc</code>, <code>Arc</code> or <code>Weak</code> should not be used.</p>
 </div>
-<div class="reco" id="MEM-INTOFROMRAW" type="Rule" title="Always call `from_raw` on `into_raw`ed value">
+<div class="reco" id="MEM-INTOFROMRAWALWAYS" type="Rule" title="Always call `from_raw` on `into_raw`ed value">
 <p>In a secure Rust development, any pointer created with a call to <code>into_raw</code>
 (or <code>into_non_null</code>) from one of the following types:</p>
 <ul>
@@ -1047,7 +1047,7 @@ let _ = unsafe { Box::from_raw(raw_ptr) }; // will be freed
 <p>The converse is also true! That is, <code>from_raw</code> should be call <strong>only</strong> on <code>into_raw</code>ed value. For instance,
 <code>Rc</code> smart pointers <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html#method.from_raw">explicitly request for this condition</a>
 and, for <code>Box</code> smart pointers, conversion of C pointers into <code>Box</code> is <a href="https://doc.rust-lang.org/std/boxed/index.html#memory-layout">discouraged</a>.</p>
-<div class="reco" id="MEM-INTOFROMRAW" type="Rule" title="Call `from_raw` *only* on `into_raw`ed value">
+<div class="reco" id="MEM-INTOFROMRAWONLY" type="Rule" title="Call `from_raw` *only* on `into_raw`ed value">
 <p>In a secure Rust development, <code>from_raw</code> should only be called on <code>into_raw</code>ed values.</p>
 </div>
 <!-- -->
@@ -2359,9 +2359,9 @@ Rule - Do release value wrapped in <code>ManuallyDrop</code> (<a href="unsafe/me
 <li><input disabled="" type="checkbox"/>
 Rule - Do no convert smart pointer into raw pointer in Rust without <code>unsafe</code> (<a href="unsafe/memory.html#MEM-NORAWPOINTER">MEM-NORAWPOINTER</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Rule - Always call <code>from_raw</code> on <code>into_raw</code>ed value (<a href="unsafe/memory.html#MEM-INTOFROMRAW">MEM-INTOFROMRAW</a>)</li>
+Rule - Always call <code>from_raw</code> on <code>into_raw</code>ed value (<a href="unsafe/memory.html#MEM-INTOFROMRAWALWAYS">MEM-INTOFROMRAWALWAYS</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Rule - Call <code>from_raw</code> <em>only</em> on <code>into_raw</code>ed value (<a href="unsafe/memory.html#MEM-INTOFROMRAW">MEM-INTOFROMRAW</a>)</li>
+Rule - Call <code>from_raw</code> <em>only</em> on <code>into_raw</code>ed value (<a href="unsafe/memory.html#MEM-INTOFROMRAWONLY">MEM-INTOFROMRAWONLY</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Rule - Do not use uninitialized memory (<a href="unsafe/memory.html#MEM-UNINIT">MEM-UNINIT</a>)</li>
 <li><input disabled="" type="checkbox"/>

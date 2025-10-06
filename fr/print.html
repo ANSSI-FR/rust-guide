@@ -1123,7 +1123,7 @@ pointeurs <em>intelligents</em> (<em>smart pointer</em>) de Rust. En particulier
 ne doivent pas être convertis en <em>raw pointers</em>. En particulier, les fonctions <code>into_raw</code> ou <code>into_non_null</code>
 des <em>smart pointers</em> <code>Box</code>, <code>Rc</code>, <code>Arc</code> ou <code>Weak</code> ne doivent pas être utilisées dans un code Rust non-<em>unsafe</em>.</p>
 </div>
-<div class="reco" id="MEM-INTOFROMRAW" type="Règle" title="Appel systématique à `from_raw` pour les valeurs créées avec `into_raw`">
+<div class="reco" id="MEM-INTOFROMRAWALWAYS" type="Règle" title="Appel systématique à `from_raw` pour les valeurs créées avec `into_raw`">
 <p>Dans un développement sécurisé en Rust, tout pointeur créé par un appel à
 <code>into_raw</code> (ou <code>into_non_null</code>) depuis un des types suivants doit
 finalement être transformé en valeur avec l'appel à la fonction <code>from_raw</code>
@@ -1150,7 +1150,7 @@ devraient pas être utilisées sur des <em>raw pointers</em> qui ne sont pas iss
 <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html#method.from_raw">limite</a> explicitement ces fonctions
 à ce cas d'usage, et, dans le cas de <code>Box</code>, la conversion de pointeurs C en Box
 <a href="https://doc.rust-lang.org/std/boxed/index.html#memory-layout">n'est pas sûre</a>,</p>
-<div class="reco" id="MEM-INTOFROMRAW" type="Règle" title="Appel de `from_raw` uniquement pour les valeurs issues de `into_raw`">
+<div class="reco" id="MEM-INTOFROMRAWONLY" type="Règle" title="Appel de `from_raw` uniquement pour les valeurs issues de `into_raw`">
 <p>Dans un développement de sécurité en Rust, les fonctions <code>from_raw</code> ne doivent être appelées que sur des
 valeurs issues de la fonction <code>into_raw</code></p>
 </div>
@@ -2622,9 +2622,9 @@ Règle - Libération des valeurs <em>wrappées</em> dans <code>ManuallyDrop</cod
 <li><input disabled="" type="checkbox"/>
 Règle - Pas de conversion en pointeur <em>raw</em> en Rust non-<em>usafe</em> (<a href="unsafe/memory.html#MEM-NORAWPOINTER">MEM-NORAWPOINTER</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Règle - Appel systématique à <code>from_raw</code> pour les valeurs créées avec <code>into_raw</code> (<a href="unsafe/memory.html#MEM-INTOFROMRAW">MEM-INTOFROMRAW</a>)</li>
+Règle - Appel systématique à <code>from_raw</code> pour les valeurs créées avec <code>into_raw</code> (<a href="unsafe/memory.html#MEM-INTOFROMRAWALWAYS">MEM-INTOFROMRAWALWAYS</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Règle - Appel de <code>from_raw</code> uniquement pour les valeurs issues de <code>into_raw</code> (<a href="unsafe/memory.html#MEM-INTOFROMRAW">MEM-INTOFROMRAW</a>)</li>
+Règle - Appel de <code>from_raw</code> uniquement pour les valeurs issues de <code>into_raw</code> (<a href="unsafe/memory.html#MEM-INTOFROMRAWONLY">MEM-INTOFROMRAWONLY</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Pas de mémoire non initialisée (<a href="unsafe/memory.html#MEM-UNINIT">MEM-UNINIT</a>)</li>
 <li><input disabled="" type="checkbox"/>
