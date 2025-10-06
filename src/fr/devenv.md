@@ -11,7 +11,7 @@ references:
   - type: web
     title: Rust Style Guide
     url: https://doc.rust-lang.org/style-guide/index.html
-    id: cargo-style
+    id: rust-style
 ---
 # Environnement de développement
 
