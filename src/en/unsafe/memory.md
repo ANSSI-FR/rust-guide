@@ -103,7 +103,7 @@ of smart pointers `Box`, `Rc`, `Arc` or `Weak` should not be used.
 
 </div>
 
-<div class="reco" id="MEM-INTOFROMRAW" type="Rule" title="Always call `from_raw` on `into_raw`ed value">
+<div class="reco" id="MEM-INTOFROMRAWALWAYS" type="Rule" title="Always call `from_raw` on `into_raw`ed value">
 
 In a secure Rust development, any pointer created with a call to `into_raw`
 (or `into_non_null`) from one of the following types:
@@ -129,7 +129,7 @@ The converse is also true! That is, `from_raw` should be call **only** on `into_
 `Rc` smart pointers [explicitly request for this condition](https://doc.rust-lang.org/std/rc/struct.Rc.html#method.from_raw)
 and, for `Box` smart pointers, conversion of C pointers into `Box` is [discouraged](https://doc.rust-lang.org/std/boxed/index.html#memory-layout).
 
-<div class="reco" id="MEM-INTOFROMRAW" type="Rule" title="Call `from_raw` *only* on `into_raw`ed value">
+<div class="reco" id="MEM-INTOFROMRAWONLY" type="Rule" title="Call `from_raw` *only* on `into_raw`ed value">
 
 In a secure Rust development, `from_raw` should only be called on `into_raw`ed values.
 

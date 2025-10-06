@@ -113,7 +113,7 @@ des *smart pointers* `Box`, `Rc`, `Arc` ou `Weak` ne doivent pas être utilisée
 
 </div>
 
-<div class="reco" id="MEM-INTOFROMRAW" type="Règle" title="Appel systématique à `from_raw` pour les valeurs créées avec `into_raw`">
+<div class="reco" id="MEM-INTOFROMRAWALWAYS" type="Règle" title="Appel systématique à `from_raw` pour les valeurs créées avec `into_raw`">
 
 Dans un développement sécurisé en Rust, tout pointeur créé par un appel à
 `into_raw` (ou `into_non_null`) depuis un des types suivants doit
@@ -141,7 +141,7 @@ devraient pas être utilisées sur des *raw pointers* qui ne sont pas issus de l
 à ce cas d'usage, et, dans le cas de `Box`, la conversion de pointeurs C en Box 
 [n'est pas sûre](https://doc.rust-lang.org/std/boxed/index.html#memory-layout), 
 
-<div class="reco" id="MEM-INTOFROMRAW" type="Règle" title="Appel de `from_raw` uniquement pour les valeurs issues de `into_raw`">
+<div class="reco" id="MEM-INTOFROMRAWONLY" type="Règle" title="Appel de `from_raw` uniquement pour les valeurs issues de `into_raw`">
 
 Dans un développement de sécurité en Rust, les fonctions `from_raw` ne doivent être appelées que sur des
 valeurs issues de la fonction `into_raw`
