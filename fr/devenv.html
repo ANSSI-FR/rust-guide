@@ -363,18 +363,7 @@ développement d'une application sécurisée.</p>
 </div>
 <h3 id="rustfmt"><a class="header" href="#rustfmt">Rustfmt</a></h3>
 <p><a href="https://github.com/rust-lang/rustfmt">Rustfmt</a> est un outil offrant la possibilité de formater du code en fonction
-de consignes de style (<em>style guidelines</em>). La documentation de l'outil
-mentionne certaines limitations parmi lesquelles un support partiel des macros
-(déclaration et utilisation). L'option <code>--check</code>, qui affiche les différences
-de formatage entre le code actuel et le code proposé, doit être utilisé. À la
-suite de cette première utilisation, l'utilisateur doit vérifier les
-changements, puis éventuellement les valider en réinvoquant l'outil sans
-option.</p>
-<p>En résumé :</p>
-<pre><code class="language-shell">$ cargo fmt -- --check
-$ # review of the changes
-$ cargo fmt
-</code></pre>
+de consignes de style (<em>style guidelines</em>).</p>
 <p>Les règles de convention de style peuvent être personnalisées au besoin dans
 le fichier <code>rustfmt.toml</code> ou <code>.rustfmt.toml</code> à la racine du projet. Il sera
 utilisé par l'outil en écrasant les préférences par défaut. Par exemple :</p>
@@ -387,9 +376,10 @@ single_line_if_else_max_width = 40
 <code>rustfmt</code> propose, voir <a href="#rust-style">rust-style</a>.</p>
 <div class="reco" id="DENV-FORMAT" type="Règle" title="Utilisation d'un outil de formatage (rustfmt)">
 <p>L'outil de formatage <code>rustfmt</code> peut être utilisé pour assurer le respect de
-règles de convention de style (comme décrites dans le fichier <code>rustfmt.toml</code>)
-sur une base de code, avec l'option <code>--check</code> ainsi qu'une revue de code
-manuelle.</p>
+règles de convention de style (comme décrites dans le fichier <code>rustfmt.toml</code>)</p>
+<blockquote>
+<p>sur une base de code.</p>
+</blockquote>
 </div>
 <h3 id="rustfix"><a class="header" href="#rustfix">Rustfix</a></h3>
 <p>Inclus dans la distribution Rust depuis la fin de l'année 2018, Rustfix est un

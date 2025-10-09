@@ -402,16 +402,7 @@ category <code>clippy::nursery</code> since those hints are still under developm
 a secure application.</p>
 </div>
 <h3 id="rustfmt"><a class="header" href="#rustfmt">Rustfmt</a></h3>
-<p><a href="https://github.com/rust-lang/rustfmt">Rustfmt</a> is a tool that formats your code according to style guidelines. The
-documentation of the tool states some limitations, among others partial support
-of macro declarations and uses. One should use the <code>--check</code> option that prints
-proposed changes, review these changes, and finally apply them if the code
-readability is not affected.</p>
-<p>So, to launch it:</p>
-<pre><code class="language-shell">$ cargo fmt -- --check
-$ # review of the changes
-$ cargo fmt
-</code></pre>
+<p><a href="https://github.com/rust-lang/rustfmt">Rustfmt</a> is a tool that formats your code according to style guidelines.</p>
 <p>These guidelines can be customized to your needs by creating a <code>rustfmt.toml</code> or
 <code>.rustfmt.toml</code> file at the root of your project. It will be used to override
 the default settings, for instance:</p>
@@ -424,8 +415,7 @@ single_line_if_else_max_width = 40
 at the <a href="devenv.html#rust-style">rust-style</a>.</p>
 <div class="reco" id="DENV-FORMAT" type="Rule" title="Use Rust formatter (rustfmt)">
 <p>The tool <code>rustfmt</code> can be used to ensure that the codebase respects style
-guidelines (as described in <code>rustfmt.toml</code> file), with <code>--check</code> option and
-manual review.</p>
+guidelines (as described in <code>rustfmt.toml</code> file).</p>
 </div>
 <h3 id="rustfix"><a class="header" href="#rustfix">Rustfix</a></h3>
 <p>Included with Rust, since the end of 2018, Rustfix is a tool dedicated in
