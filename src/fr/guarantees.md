@@ -42,9 +42,3 @@ Cependant, le langage ***ne protège pas*** contre les erreurs suivantes :
 
 * fuites de resources (mémoire, IO, ...) ;
 * dépassements numériques.
-
-<div class="reco" id="UB-NOUB" type="Rule" title="No Undefined Behavior">
-
-No Undefined Behavior is allowed.
-
-</div>

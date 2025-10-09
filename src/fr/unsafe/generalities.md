@@ -18,7 +18,15 @@ Les capacités du langages peuvent être étendues en utilisant du code `unsafe`
 * Implémenter un trait `unsafe`
 * Déclarer un bloc `extern`
 
-Si ces capacités sont nécessaires à la programmation système, elles font perdre au langage ses [propriétés de sûreté](../guarantees.md#garanties-du-langage). D'autres exemples peuvent être trouvé dans le [nomicon](https://doc.rust-lang.org/nomicon/what-unsafe-does.html)
+D'autres exemples peuvent être trouvé dans le [nomicon](https://doc.rust-lang.org/nomicon/what-unsafe-does.html)
+
+Si ces capacités sont nécessaires à la programmation système, elles font perdre au langage ses [propriétés de sûreté](../guarantees.md#garanties-du-langage), et permettent l'apparition de comportements indéfinis.
+
+<div class="reco" id="UNSAFE-NOUB" type="Règle" title="Interdiction des comportements non définis">
+
+Aucun comportement indéfini ne doit se produire.
+
+</div>
 
 ## Un mot-clé, deux usages
 

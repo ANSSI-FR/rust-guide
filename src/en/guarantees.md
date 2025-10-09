@@ -38,9 +38,3 @@ However, the language does not prevent
 
 * resource leaks (memory, IO, ...),
 * numeric overflows.
-
-<div class="reco" id="UB-NOUB" type="Rule" title="No Undefined Behavior">
-
-No Undefined Behavior is allowed.
-
-</div>

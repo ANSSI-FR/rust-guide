@@ -18,7 +18,15 @@ Language capabilities can be extended using unsafe code. The full list of these 
 * Implement an `unsafe` trait
 * Declare an `extern` block
 
-These capabilities may be necessary for system programming but they cause the language to lose its [safety properties](../guarantees.md#language-guarantees). More examples can be found in [nomicon](https://doc.rust-lang.org/nomicon/what-unsafe-does.html).
+More examples can be found in [nomicon](https://doc.rust-lang.org/nomicon/what-unsafe-does.html).
+
+These capabilities may be necessary for system programming but they cause the language to lose its [safety properties](../guarantees.md#language-guarantees) and Undefined Behaviors may happen.
+
+<div class="reco" id="UNSAFE-NOUB" type="Rule" title="No Undefined Behavior">
+
+No Undefined Behavior is allowed.
+
+</div>
 
 ## A keyword with two usages
 
