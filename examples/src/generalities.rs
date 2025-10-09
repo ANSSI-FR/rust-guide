@@ -10,7 +10,9 @@ pub struct Vec<T> {
 // Note this implementation does not correctly handle zero-sized types.
 impl<T> Vec<T> {
     pub fn push(&mut self, elem: T) {
-        if self.len == self.cap { /* reallocate new array with bigger capacity */ }
+        if self.len == self.cap {
+            // reallocate new array with bigger capacity
+        }
         unsafe {
             ptr::write(self.ptr.add(self.len), elem);
             self.len += 1;
