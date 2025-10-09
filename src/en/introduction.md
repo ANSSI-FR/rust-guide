@@ -1,3 +1,19 @@
+---
+references:
+  - genre: Guide
+    id: anssi-risque-numerique
+    issued:
+      date-parts:
+        - - 2019
+          - 11
+    note: https://cyber.gouv.fr/en/publications/controlling-digital-risk-trust-advantage
+    url: https://cyber.gouv.fr/en/publications/controlling-digital-risk-trust-advantage
+    number: ANSSI-PA-070-EN v1.0
+    publisher: ANSSI
+    title: Controlling the digital risk - The trust advantage
+    type: report
+---
+
 # Introduction
 
 [Rust](https://www.rust-lang.org) is a multi-paradigm language with a focus on
@@ -79,3 +95,35 @@ Then, recommendations about the Rust language constructs are presented.
 tests for a project in Rust, and for using Rust fuzzing tools.-->
 A summary of recommendations presented throughout the document is listed at the
 end of this guide.
+
+## Notations
+
+For each of the recommendations in this guide, the use of the verb *must* is deliberately
+more prescriptive than the wording *it is recommended*.
+
+Considering the threats identified during the drafting of
+this guide, for some recommendations several solutions are proposed, which differ in the level of security they provide. This allows readers to choose the solution that offers the best protection
+based on their context and security objectives.
+
+The recommendations are therefore presented as follows:
+
+<div class="examplereco" id="EXAMPLE-RULE" type="Rule" title="General recommandation">
+
+This recommendation is formulated in conceptual terms, without taking into account
+the context of application or its implementation.
+
+</div>
+
+<div class="examplereco" id="EXAMPLE-RECO" type="Recommandation" title="Recommandation for high security requirement">
+
+This recommandation is required for high level security softwares.
+
+</div>
+
+As part of an ongoing process of digital risk management and continuous improvement of
+information system security [^1], the relevance of implementing the recommendations
+described in this document must be periodically reassessed.
+
+The checklist can be found <span class="gotochecklist"></span>.
+
+[^1]: For further information, please refer to the ANSSI's digital risk management guide [@anssi-risque-numerique]

@@ -11,7 +11,9 @@ build-dir = "book/en"
 # git-repository-url = "https://github.com/ANSSI-FR/rust-guide"
 # edit-url-template = "https://github.com/ANSSI-FR/rust-guide/edit/master/{path}"
 additional-js = [
-	"pagetoc.js", # from https://github.com/rust-lang/rustc-dev-guide
+	"pagetoc.js",     # from https://github.com/rust-lang/rustc-dev-guide
+	"vars-en.js",
+	"custom-envs.js",
 ]
 additional-css = [
 	"pagetoc.css",     # from https://github.com/rust-lang/rustc-dev-guide

@@ -1,3 +1,19 @@
+---
+references:
+  - genre: Guide
+    id: anssi-risque-numerique
+    issued:
+      date-parts:
+        - - 2019
+          - 11
+    note: https://cyber.gouv.fr/publications/maitrise-du-risque-numerique-latout-confiance
+    url: https://cyber.gouv.fr/publications/maitrise-du-risque-numerique-latout-confiance
+    number: ANSSI-PA-070 v1.0
+    publisher: ANSSI
+    title: Maîtrise du risque numérique - l’atout confiance
+    type: report
+---
+
 # Introduction
 
 [Rust](https://www.rust-lang.org) est un langage multiparadigmes orienté vers
@@ -73,7 +89,7 @@ Toutes les contributions pour de futures versions sont les bienvenues, que ce
 soit directement sous la forme de propositions (*pull requests*) ou bien de
 suggestions et discussions (*issues*).
 
-## Structure du document
+## Organisation du guide
 
 La structure de ce document vise à discuter successivement des différentes
 phases typiques (et simplifiées) d'un processus de développement. Tout d'abord,
@@ -84,3 +100,37 @@ externes. Ensuite, les recommandations à propos des constructions du langage
 sont présentées. <!-- TODO: Enfin, nous discutons de la bonne utilisation des outils de
 test et de *fuzzing* pour un projet réalisé en Rust.--> Un résumé des règles et
 recommandations est disponible à la fin de ce guide.
+
+## Convention de lecture
+
+Pour chacune des recommandations de ce guide, l’utilisation du verbe *devoir* est volontairement
+plus prescriptive que la formulation *il est recommandé*.
+
+Pour certaines recommandations, il est proposé, au vu des menaces constatées lors de la rédaction
+de ce guide, plusieurs solutions qui se distinguent par le niveau de sécurité qu’elles permettent
+d’atteindre. Le lecteur a ainsi la possibilité de choisir une solution offrant la meilleure protection
+en fonction du contexte et de ses objectifs de sécurité.
+
+Ainsi, les recommandations sont présentées de la manière suivante :
+
+<div class="examplereco" id="EXAMPLE-RULE" type="Règle" title="Recommandation générale">
+
+Cette recommandation est formulée de manière conceptuelle, sans prise en compte
+du contexte d’application ni des modalités de sa mise en œuvre.
+
+</div>
+
+<div class="examplereco" id="EXAMPLE-RECO" type="Recommandation" title="Recommandation adaptée à un besoin de sécurité élevé">
+
+L'implémentation technique de cette recommandation offre un niveau de sécurité
+adapté à un besoin de sécurité élevé
+
+</div>
+
+Dans une démarche permanente de gestion du risque numérique et d’amélioration continue de
+la sécurité des systèmes d’information [^1], la pertinence de mise en œuvre des recommandations
+décrites dans ce document doit être périodiquement réévaluée.
+
+La liste récapitulative des recommandations est disponible en <span class="gotochecklist"></span>.
+
+[^1]: Se reporter au guide ANSSI relatif à la maîtrise du risque numérique [@anssi-risque-numerique]
