@@ -178,17 +178,43 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="libraries"><a class="header" href="#libraries">Libraries</a></h1>
+<h2 id="dependency-repositories"><a class="header" href="#dependency-repositories">Dependency Repositories</a></h2>
+<p>The management of external libraries is integrated into the <code>Cargo</code> tool. There are several ways to specify the source of these libraries, some of which are presented below.</p>
+<p>It is important to note that accurately tracking the versions of these libraries is a critical condition for the security of software written in Rust. This requirement is embodied in the rule <a href="devenv.html#DENV-CARGO-LOCK">DENV-CARGO-LOCK</a>.</p>
+<h3 id="crates"><a class="header" href="#crates">Crates</a></h3>
 <p>In addition to the standard library, Rust provides an easy way to import other
 libraries in a project, thanks to <code>cargo</code>. The libraries, known as <em>crates</em> in
-the Rust ecosystem, are imported from the open-source components central
-repository <a href="https://crates.io">crates.io</a>.</p>
-<p>It should be noticed that the quality (in terms of security, performance,
-readability, etc.) of the published crates is very variable. Moreover, their
-maintenance can be irregular or interrupted. The usage of each component from
-this repository should be justified, and developers should validate the
-correct application of rules from the current guide in their code. Several tools
-can aid in that task.</p>
-<h2 id="cargo-outdated"><a class="header" href="#cargo-outdated">Cargo-outdated</a></h2>
+the Rust ecosystem, are imported from an open-source components central
+repository.</p>
+<p>An example of dependency declaration in the <code>Cargo.toml</code> file:</p>
+<pre><code class="language-toml">[dependencies]
+mdbook = { version = "0.4.52" }
+anyhow = "1.0.99"
+clap = { version = "4.5.47", features = ["derive"] }
+markdown = { version = "1.0.0", features = ["serde"] }
+semver = "1.0.26"
+serde_json = "1.0.143"
+serde = "1.0.219"
+</code></pre>
+<p>The default repository is <a href="https://crates.io">crates.io</a>. It is also possible to use <a href="https://doc.rust-lang.org/cargo/reference/registries.html">your own registry</a>.</p>
+<h3 id="git-dependencies"><a class="header" href="#git-dependencies">Git Dependencies</a></h3>
+<p>Each dependency in the <code>Cargo.toml</code> file can also refer to <a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies-from-git-repositories">a GIT repository</a>. For example:</p>
+<pre><code class="language-toml">[dependencies]
+regex = { git = "https://github.com/rust-lang/regex.git" }
+</code></pre>
+<p>It is possible to specify the desired version in more detail by providing either a branch, a tag, or a commit hash.</p>
+<p>The <a href="devenv.html#cargo">dependency lock system</a> operates even in the case of a GIT repository: if the dependency does not specify a particular commit, the most recent commit matching the criteria in the <code>Cargo.toml</code> file is fetched during the first compilation and is recorded in the <code>Cargo.lock</code> file. All subsequent compilations will use the same commit (unless the <code>Cargo.lock</code> file is updated).</p>
+<h2 id="dependency-security"><a class="header" href="#dependency-security">Dependency Security</a></h2>
+<p>Regardless of the method used to retrieve dependencies (<em>crate</em> or GIT commit), if they come from external organizations, the dependencies must be validated.</p>
+<div class="reco" id="LIBS-VETTING-DIRECT" type="Rule" title="Validation of Direct Third-Party Dependencies">
+<p>Each direct third-party dependency must be properly validated, and each validation must be tracked.</p>
+</div>
+<p>With regard to transitive dependencies, it is also recommended to validate them individually.</p>
+<div class="reco" id="LIBS-VETTING-TRANSITIVE" type="Recommendation" title="Validation of Transitive Third-Party Dependencies">
+<p>Each third-party dependency should be properly validated, and each validation should be tracked.</p>
+</div>
+<h2 id="dependency-validation-tools"><a class="header" href="#dependency-validation-tools">Dependency validation tools</a></h2>
+<h3 id="cargo-outdated"><a class="header" href="#cargo-outdated">Cargo-outdated</a></h3>
 <p><a href="https://github.com/kbknapp/cargo-outdated">Cargo-outdated</a> tool allows one to easily manage dependencies' versions.</p>
 <p>For a given crate, it lists current dependencies' versions (using its
 <code>Cargo.toml</code>), and checks the latest compatible version and also the latest general
@@ -198,7 +224,7 @@ version.</p>
 each outdated dependency must be updated or the choice of the version must be
 justified.</p>
 </div>
-<h2 id="cargo-audit"><a class="header" href="#cargo-audit">Cargo-audit</a></h2>
+<h3 id="cargo-audit"><a class="header" href="#cargo-audit">Cargo-audit</a></h3>
 <p><a href="https://github.com/RustSec/cargo-audit">Cargo-audit</a> tool allows one to easily check for security vulnerabilities
 reported to the RustSec Advisory Database.</p>
 <div class="reco" id="LIBS-AUDIT" type="Rule" title="Check for security vulnerabilities report on dependencies (cargo-audit)">

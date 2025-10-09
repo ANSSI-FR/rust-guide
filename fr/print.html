@@ -491,17 +491,43 @@ portées et de leurs objectifs.</p>
 <li><a id="rust-style"></a> <em><a href="https://doc.rust-lang.org/style-guide/index.html">Rust Style Guide</a></em> (rust-style)</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="bibliothèques"><a class="header" href="#bibliothèques">Bibliothèques</a></h1>
+<h2 id="dépôts-de-dépendances"><a class="header" href="#dépôts-de-dépendances">Dépôts de dépendances</a></h2>
+<p>La gestion de bibliothèques externes est intégrée dans l'outils <code>Cargo</code>. Plusieurs moyens existent pour définir la provenance de ces bibliothèques, certains sont donnés dans la suite.</p>
+<p>On rappelle que le traçage exact des versions de ces bibliothèques est une condition important de la bonne sécurité des logiciels écrits en Rust. Ce besoin est matérialisé par la règle <a href="devenv.html#DENV-CARGO-LOCK">DENV-CARGO-LOCK</a>.</p>
+<h3 id="crates"><a class="header" href="#crates">Crates</a></h3>
 <p>En complément de la bibliothèque standard du langage, l'outil <code>cargo</code> fournit un
 moyen pratique d'intégrer des bibliothèques tierces dans un projet en Rust. Ces
 bibliothèques, appelées <em>crates</em> dans l'écosystème Rust, sont importées depuis
-le dépôt central de composants en sources ouvertes <a href="https://crates.io">crates.io</a>.</p>
-<p>Il doit être noté que la qualité (en termes de sécurité, de performances, de
-lisibilité, etc.) des <em>crates</em> publiées est très variable. De plus, leur
-maintenance peut être irrégulière ou interrompue. L'usage de chaque composant
-de ce dépôt doit donc être justifié, et le développeur doit également valider le
-bon respect des règles du présent guide sur le code correspondant. Plusieurs
-outils peuvent l'aider dans cette tâche.</p>
-<h2 id="cargo-outdated"><a class="header" href="#cargo-outdated">Cargo-outdated</a></h2>
+un dépôt central de composants en sources ouvertes.</p>
+<p>Un exemple de déclaration de dépendances dans le fichier <code>Cargo.toml</code>.</p>
+<pre><code class="language-toml">[dependencies]
+mdbook = { version = "0.4.52" }
+anyhow = "1.0.99"
+clap = { version = "4.5.47", features = ["derive"] }
+markdown = { version = "1.0.0", features = ["serde"] }
+semver = "1.0.26"
+serde_json = "1.0.143"
+serde = "1.0.219"
+</code></pre>
+<p>Le dépôt par défaut est <a href="https://crates.io">crates.io</a>. Il est aussi possible d'utiliser <a href="https://doc.rust-lang.org/cargo/reference/registries.html">son propre dépôt</a>.</p>
+<h3 id="dépendances-git"><a class="header" href="#dépendances-git">Dépendances Git</a></h3>
+<p>Chaque dépendance du fichier <code>Cargo.toml</code> peut également faire référence à <a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies-from-git-repositories">un dépôt GIT</a>. Par exemple :</p>
+<pre><code class="language-toml">[dependencies]
+regex = { git = "https://github.com/rust-lang/regex.git" }
+</code></pre>
+<p>Il est possible de spécifier plus en détails la version souhaitée en donnant soit une branche, soit un tag, soit un hash de commit.</p>
+<p>Le système de <a href="devenv.html#cargo">verrou des dépendances</a> est opérant même dans le cas d'un dépôt GIT : dans le cas où la dépendance ne spécifie pas un commit en particulier, le commit le plus récent répondant aux critères du fichier <code>Cargo.toml</code> est récupéré au moment de la première compilation et est pérennisé dans le fichier <code>Cargo.lock</code>. Toutes les compilations suivantes utiliseront le même commit (sauf si le ficher <code>Cargo.lock</code> est mis à jour).</p>
+<h2 id="sécurité-des-dépendances"><a class="header" href="#sécurité-des-dépendances">Sécurité des dépendances</a></h2>
+<p>Quelque soit la méthode de récupération des dépendances (<em>crate</em> ou commit GIT), si elles proviennent d'organisation extérieures, les dépendances doivent faire l'objet d'une validation.</p>
+<div class="reco" id="LIBS-VETTING-DIRECT" type="Règle" title="Validation des dépendances tierces directes">
+<p>Chaque dépendance tierce directe doit être dûment validée, et chaque validation doit être tracée.</p>
+</div>
+<p>Concernant les dépendances transitives, il est également recommandé de les valider individuellement.</p>
+<div class="reco" id="LIBS-VETTING-TRANSITIVE" type="Recommandation" title="Validation des dépendances tierces transitives">
+<p>Chaque dépendance tierce devrait être dûment validée, et chaque validation devrait être tracée.</p>
+</div>
+<h2 id="outils-de-vérification-des-dépendances"><a class="header" href="#outils-de-vérification-des-dépendances">Outils de vérification des dépendances</a></h2>
+<h3 id="cargo-outdated"><a class="header" href="#cargo-outdated">Cargo-outdated</a></h3>
 <p>L'outil <a href="https://github.com/kbknapp/cargo-outdated">Cargo-outdated</a> permet de faciliter la gestion des versions des
 dépendances.</p>
 <p>Pour une <em>crate</em> donnée, l'outil liste les versions utilisées des dépendances
@@ -513,7 +539,7 @@ dépendances. Ensuite, chaque dépendance importée en version obsolète doit
 être mise à jour ou bien, le cas échéant, le choix de la version doit être
 justifié.</p>
 </div>
-<h2 id="cargo-audit"><a class="header" href="#cargo-audit">Cargo-audit</a></h2>
+<h3 id="cargo-audit"><a class="header" href="#cargo-audit">Cargo-audit</a></h3>
 <p><a href="https://github.com/RustSec/cargo-audit">Cargo-audit</a> est un outil permettant de vérifier s'il existe des vulnérabilités
 connues dans la <em>RustSec Advisory Database</em> pour les dépendances utilisées dans
 un projet.</p>
@@ -2537,6 +2563,10 @@ Règle - Vérification manuelle des réparations automatiques (<a href="devenv.h
 <li>
 <p>Bibliothèques:</p>
 <ul>
+<li><input disabled="" type="checkbox"/>
+Règle - Validation des dépendances tierces directes (<a href="libraries.html#LIBS-VETTING-DIRECT">LIBS-VETTING-DIRECT</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Recommandation - Validation des dépendances tierces transitives (<a href="libraries.html#LIBS-VETTING-TRANSITIVE">LIBS-VETTING-TRANSITIVE</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Vérification des dépendances obsolètes (cargo-outdated) (<a href="libraries.html#LIBS-OUTDATED">LIBS-OUTDATED</a>)</li>
 <li><input disabled="" type="checkbox"/>
