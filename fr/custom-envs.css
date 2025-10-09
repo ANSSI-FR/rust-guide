@@ -36,6 +36,21 @@ blockquote .reco:before {
 	font-weight: bold;
 }
 
+.examplereco {
+	margin: 20px;
+	padding: 0 20px;
+	border-inline-start: 2px solid var(--reco-border);
+}
+
+blockquote .examplereco:before {
+	background-color: var(--quote-bg);
+}
+
+.examplereco:before {
+	content: attr(type) " - " attr(title);
+	font-weight: bold;
+}
+
 * {
 	--note-border: #0096cf;
 	--reco-border: #ff0000;

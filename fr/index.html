@@ -244,7 +244,7 @@ GitHub
 Toutes les contributions pour de futures versions sont les bienvenues, que ce
 soit directement sous la forme de propositions (<em>pull requests</em>) ou bien de
 suggestions et discussions (<em>issues</em>).</p>
-<h2 id="structure-du-document"><a class="header" href="#structure-du-document">Structure du document</a></h2>
+<h2 id="organisation-du-guide"><a class="header" href="#organisation-du-guide">Organisation du guide</a></h2>
 <p>La structure de ce document vise à discuter successivement des différentes
 phases typiques (et simplifiées) d'un processus de développement. Tout d'abord,
 nous proposons des recommandations concernant l'utilisation des outils de
@@ -254,7 +254,35 @@ externes. Ensuite, les recommandations à propos des constructions du langage
 sont présentées. <!-- TODO: Enfin, nous discutons de la bonne utilisation des outils de
 test et de *fuzzing* pour un projet réalisé en Rust.--> Un résumé des règles et
 recommandations est disponible à la fin de ce guide.</p>
-
+<h2 id="convention-de-lecture"><a class="header" href="#convention-de-lecture">Convention de lecture</a></h2>
+<p>Pour chacune des recommandations de ce guide, l’utilisation du verbe <em>devoir</em> est volontairement
+plus prescriptive que la formulation <em>il est recommandé</em>.</p>
+<p>Pour certaines recommandations, il est proposé, au vu des menaces constatées lors de la rédaction
+de ce guide, plusieurs solutions qui se distinguent par le niveau de sécurité qu’elles permettent
+d’atteindre. Le lecteur a ainsi la possibilité de choisir une solution offrant la meilleure protection
+en fonction du contexte et de ses objectifs de sécurité.</p>
+<p>Ainsi, les recommandations sont présentées de la manière suivante :</p>
+<div class="examplereco" id="EXAMPLE-RULE" type="Règle" title="Recommandation générale">
+<p>Cette recommandation est formulée de manière conceptuelle, sans prise en compte
+du contexte d’application ni des modalités de sa mise en œuvre.</p>
+</div>
+<div class="examplereco" id="EXAMPLE-RECO" type="Recommandation" title="Recommandation adaptée à un besoin de sécurité élevé">
+<p>L'implémentation technique de cette recommandation offre un niveau de sécurité
+adapté à un besoin de sécurité élevé</p>
+</div>
+<p>Dans une démarche permanente de gestion du risque numérique et d’amélioration continue de
+la sécurité des systèmes d’information <sup class="footnote-reference" id="fr-1-1"><a href="#footnote-1">1</a></sup>, la pertinence de mise en œuvre des recommandations
+décrites dans ce document doit être périodiquement réévaluée.</p>
+<p>La liste récapitulative des recommandations est disponible en <span class="gotochecklist"></span>.</p>
+<h2 id="références"><a class="header" href="#références">Références</a></h2>
+<ul>
+<li><a id="anssi-risque-numerique"></a> <em><a href="https://cyber.gouv.fr/publications/maitrise-du-risque-numerique-latout-confiance">Maîtrise du risque numérique - l’atout confiance</a></em> (anssi-risque-numerique)</li>
+</ul>
+<hr>
+<ol class="footnote-definition"><li id="footnote-1">
+<p>Se reporter au guide ANSSI relatif à la maîtrise du risque numérique <a href="#anssi-risque-numerique">anssi-risque-numerique</a> <a href="#fr-1-1">↩</a></p>
+</li>
+</ol>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
@@ -296,6 +324,8 @@ recommandations est disponible à la fin de ce guide.</p>
 
         <!-- Custom JS scripts -->
         <script src="pagetoc.js"></script>
+        <script src="vars-fr.js"></script>
+        <script src="custom-envs.js"></script>
 
 
 

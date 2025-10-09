@@ -193,7 +193,11 @@
 <li>Implémenter un trait <code>unsafe</code></li>
 <li>Déclarer un bloc <code>extern</code></li>
 </ul>
-<p>Si ces capacités sont nécessaires à la programmation système, elles font perdre au langage ses <a href="../guarantees.html#garanties-du-langage">propriétés de sûreté</a>. D'autres exemples peuvent être trouvé dans le <a href="https://doc.rust-lang.org/nomicon/what-unsafe-does.html">nomicon</a></p>
+<p>D'autres exemples peuvent être trouvé dans le <a href="https://doc.rust-lang.org/nomicon/what-unsafe-does.html">nomicon</a></p>
+<p>Si ces capacités sont nécessaires à la programmation système, elles font perdre au langage ses <a href="../guarantees.html#garanties-du-langage">propriétés de sûreté</a>, et permettent l'apparition de comportements indéfinis.</p>
+<div class="reco" id="UNSAFE-NOUB" type="Règle" title="Interdiction des comportements non définis">
+<p>Aucun comportement indéfini ne doit se produire.</p>
+</div>
 <h2 id="un-mot-clé-deux-usages"><a class="header" href="#un-mot-clé-deux-usages">Un mot-clé, deux usages</a></h2>
 <p>Le mot-clé <code>unsafe</code> a deux usages : le marquage dans une API et le déverrouillage dans une implémentation.</p>
 <h3 id="marquage-unsafe"><a class="header" href="#marquage-unsafe">Marquage <code>unsafe</code></a></h3>
@@ -296,7 +300,9 @@ pub struct Vec&lt;T&gt; {
 // Note this implementation does not correctly handle zero-sized types.
 impl&lt;T&gt; Vec&lt;T&gt; {
     pub fn push(&amp;mut self, elem: T) {
-        if self.len == self.cap { /* reallocate new array with bigger capacity */ }
+        if self.len == self.cap {
+            // reallocate new array with bigger capacity
+        }
         unsafe {
             ptr::write(self.ptr.add(self.len), elem);
             self.len += 1;
@@ -477,6 +483,8 @@ Une alternative serait de l'ajouter aux conditions de sûreté du trait.
 
         <!-- Custom JS scripts -->
         <script src="../pagetoc.js"></script>
+        <script src="../vars-fr.js"></script>
+        <script src="../custom-envs.js"></script>
 
 
 

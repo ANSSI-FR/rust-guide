@@ -242,7 +242,7 @@ GitHub
 Toutes les contributions pour de futures versions sont les bienvenues, que ce
 soit directement sous la forme de propositions (<em>pull requests</em>) ou bien de
 suggestions et discussions (<em>issues</em>).</p>
-<h2 id="structure-du-document"><a class="header" href="#structure-du-document">Structure du document</a></h2>
+<h2 id="organisation-du-guide"><a class="header" href="#organisation-du-guide">Organisation du guide</a></h2>
 <p>La structure de ce document vise à discuter successivement des différentes
 phases typiques (et simplifiées) d'un processus de développement. Tout d'abord,
 nous proposons des recommandations concernant l'utilisation des outils de
@@ -252,7 +252,35 @@ externes. Ensuite, les recommandations à propos des constructions du langage
 sont présentées. <!-- TODO: Enfin, nous discutons de la bonne utilisation des outils de
 test et de *fuzzing* pour un projet réalisé en Rust.--> Un résumé des règles et
 recommandations est disponible à la fin de ce guide.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="environnement-de-développement"><a class="header" href="#environnement-de-développement">Environnement de développement</a></h1>
+<h2 id="convention-de-lecture"><a class="header" href="#convention-de-lecture">Convention de lecture</a></h2>
+<p>Pour chacune des recommandations de ce guide, l’utilisation du verbe <em>devoir</em> est volontairement
+plus prescriptive que la formulation <em>il est recommandé</em>.</p>
+<p>Pour certaines recommandations, il est proposé, au vu des menaces constatées lors de la rédaction
+de ce guide, plusieurs solutions qui se distinguent par le niveau de sécurité qu’elles permettent
+d’atteindre. Le lecteur a ainsi la possibilité de choisir une solution offrant la meilleure protection
+en fonction du contexte et de ses objectifs de sécurité.</p>
+<p>Ainsi, les recommandations sont présentées de la manière suivante :</p>
+<div class="examplereco" id="EXAMPLE-RULE" type="Règle" title="Recommandation générale">
+<p>Cette recommandation est formulée de manière conceptuelle, sans prise en compte
+du contexte d’application ni des modalités de sa mise en œuvre.</p>
+</div>
+<div class="examplereco" id="EXAMPLE-RECO" type="Recommandation" title="Recommandation adaptée à un besoin de sécurité élevé">
+<p>L'implémentation technique de cette recommandation offre un niveau de sécurité
+adapté à un besoin de sécurité élevé</p>
+</div>
+<p>Dans une démarche permanente de gestion du risque numérique et d’amélioration continue de
+la sécurité des systèmes d’information <sup class="footnote-reference" id="fr-1-1"><a href="#footnote-1">1</a></sup>, la pertinence de mise en œuvre des recommandations
+décrites dans ce document doit être périodiquement réévaluée.</p>
+<p>La liste récapitulative des recommandations est disponible en <span class="gotochecklist"></span>.</p>
+<h2 id="références"><a class="header" href="#références">Références</a></h2>
+<ul>
+<li><a id="anssi-risque-numerique"></a> <em><a href="https://cyber.gouv.fr/publications/maitrise-du-risque-numerique-latout-confiance">Maîtrise du risque numérique - l’atout confiance</a></em> (anssi-risque-numerique)</li>
+</ul>
+<hr>
+<ol class="footnote-definition"><li id="footnote-1">
+<p>Se reporter au guide ANSSI relatif à la maîtrise du risque numérique <a href="introduction.html#anssi-risque-numerique">anssi-risque-numerique</a> <a href="#fr-1-1">↩</a></p>
+</li>
+</ol><div style="break-before: page; page-break-before: always;"></div><h1 id="environnement-de-développement"><a class="header" href="#environnement-de-développement">Environnement de développement</a></h1>
 <h2 id="rustup"><a class="header" href="#rustup">Rustup</a></h2>
 <p><a href="https://github.com/rust-lang/rustup.rs">Rustup</a> est l'installateur des outils de la chaîne de compilation pour Rust.
 Entre autres choses, il permet de basculer entre différentes variantes de la
@@ -485,7 +513,7 @@ vérifiée par le développeur.</p>
 d'un programme existent, par exemple, en recherchant des motifs de code
 particuliers. Nous en discutons dans les chapitres suivants en fonction de leurs
 portées et de leurs objectifs.</p>
-<h2 id="références"><a class="header" href="#références">Références</a></h2>
+<h2 id="références-1"><a class="header" href="#références-1">Références</a></h2>
 <ul>
 <li><a id="rust-edition-guide"></a> <em><a href="https://doc.rust-lang.org/edition-guide/">The Rust Edition Guide</a></em> (rust-edition-guide)</li>
 <li><a id="cargo-book"></a> <em><a href="https://doc.rust-lang.org/cargo/index.html">The Cargo Book</a></em> (cargo-book)</li>
@@ -595,10 +623,7 @@ On notera les garanties suivantes :</p>
 <li>fuites de resources (mémoire, IO, ...) ;</li>
 <li>dépassements numériques.</li>
 </ul>
-<div class="reco" id="UB-NOUB" type="Rule" title="No Undefined Behavior">
-<p>No Undefined Behavior is allowed.</p>
-</div>
-<h2 id="références-1"><a class="header" href="#références-1">Références</a></h2>
+<h2 id="références-2"><a class="header" href="#références-2">Références</a></h2>
 <ul>
 <li><a id="rust-reference"></a> <em><a href="https://doc.rust-lang.org/stable/reference/">The Rust Reference</a></em> (rust-reference)</li>
 <li><a id="nomicon"></a> <em><a href="https://doc.rust-lang.org/stable/nomicon/">The Rustonomicon</a></em> (nomicon)</li>
@@ -629,7 +654,7 @@ plus précises pour certaines constructions particulières :</p>
 <p>Le développement d'une application sécurisée doit suivre les conventions de
 nommage décrites dans les <a href="naming.html#rust-guidelines">rust-guidelines</a>.</p>
 </div>
-<h2 id="références-2"><a class="header" href="#références-2">Références</a></h2>
+<h2 id="références-3"><a class="header" href="#références-3">Références</a></h2>
 <ul>
 <li><a id="RFC-430"></a> <em><a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">General naming conventions</a></em> (RFC-430)</li>
 <li><a id="rust-guidelines"></a> <em><a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a></em> (rust-guidelines)</li>
@@ -833,7 +858,11 @@ doivent pas reposer uniquement sur l'implémentation du trait <code>Drop</code>.
 <li>Implémenter un trait <code>unsafe</code></li>
 <li>Déclarer un bloc <code>extern</code></li>
 </ul>
-<p>Si ces capacités sont nécessaires à la programmation système, elles font perdre au langage ses <a href="unsafe/../guarantees.html#garanties-du-langage">propriétés de sûreté</a>. D'autres exemples peuvent être trouvé dans le <a href="https://doc.rust-lang.org/nomicon/what-unsafe-does.html">nomicon</a></p>
+<p>D'autres exemples peuvent être trouvé dans le <a href="https://doc.rust-lang.org/nomicon/what-unsafe-does.html">nomicon</a></p>
+<p>Si ces capacités sont nécessaires à la programmation système, elles font perdre au langage ses <a href="unsafe/../guarantees.html#garanties-du-langage">propriétés de sûreté</a>, et permettent l'apparition de comportements indéfinis.</p>
+<div class="reco" id="UNSAFE-NOUB" type="Règle" title="Interdiction des comportements non définis">
+<p>Aucun comportement indéfini ne doit se produire.</p>
+</div>
 <h2 id="un-mot-clé-deux-usages"><a class="header" href="#un-mot-clé-deux-usages">Un mot-clé, deux usages</a></h2>
 <p>Le mot-clé <code>unsafe</code> a deux usages : le marquage dans une API et le déverrouillage dans une implémentation.</p>
 <h3 id="marquage-unsafe"><a class="header" href="#marquage-unsafe">Marquage <code>unsafe</code></a></h3>
@@ -936,7 +965,9 @@ pub struct Vec&lt;T&gt; {
 // Note this implementation does not correctly handle zero-sized types.
 impl&lt;T&gt; Vec&lt;T&gt; {
     pub fn push(&amp;mut self, elem: T) {
-        if self.len == self.cap { /* reallocate new array with bigger capacity */ }
+        if self.len == self.cap {
+            // reallocate new array with bigger capacity
+        }
         unsafe {
             ptr::write(self.ptr.add(self.len), elem);
             self.len += 1;
@@ -1065,7 +1096,7 @@ unsafe trait Locatable: Copy {
 Le supertrait `Copy` permet de s'assurer que le type peut être copié par une simple lecture mémoire.
 Une alternative serait de l'ajouter aux conditions de sûreté du trait.
 -->
-<h2 id="références-3"><a class="header" href="#références-3">Références</a></h2>
+<h2 id="références-4"><a class="header" href="#références-4">Références</a></h2>
 <ul>
 <li><a id="rust-book"></a> <em><a href="https://doc.rust-lang.org/stable/book/">The Rust Programming Language</a></em> (rust-book)</li>
 </ul>
@@ -1266,13 +1297,19 @@ Hello, world!
 ==153637==     in use at exit: 48 bytes in 2 blocks
 ==153637==   total heap usage: 10 allocs, 8 frees, 3,144 bytes allocated
 ==153637== 
-==153637== 48 (24 direct, 24 indirect) bytes in 1 blocks are definitely lost in loss record 2 of 2
+==153637== 48 (24 direct, 24 indirect) bytes in 1 blocks are definitely lost
+                in loss record 2 of 2
 ==153637==    at 0x48417B4: malloc (vg_replace_malloc.c:381)
-==153637==    by 0x10F8D4: safe_rust_leak::main (in /home/toto/src/safe-rust-leak/target/release/safe-rust-leak)
-==153637==    by 0x10F7E2: std::sys::backtrace::__rust_begin_short_backtrace (in /home/toto/src/safe-rust-leak/target/release/safe-rust-leak)
-==153637==    by 0x10F7D8: std::rt::lang_start::{{closure}} (in /home/toto/src/safe-rust-leak/target/release/safe-rust-leak)
-==153637==    by 0x12A90F: std::rt::lang_start_internal (in /home/toto/src/safe-rust-leak/target/release/safe-rust-leak)
-==153637==    by 0x10FA54: main (in /home/toto/src/safe-rust-leak/target/release/safe-rust-leak)
+==153637==    by 0x10F8D4: safe_rust_leak::main
+                (in /home/toto/src/safe-rust-leak/target/release/safe-rust-leak)
+==153637==    by 0x10F7E2: std::sys::backtrace::__rust_begin_short_backtrace
+                (in /home/toto/src/safe-rust-leak/target/release/safe-rust-leak)
+==153637==    by 0x10F7D8: std::rt::lang_start::{{closure}}
+                (in /home/toto/src/safe-rust-leak/target/release/safe-rust-leak)
+==153637==    by 0x12A90F: std::rt::lang_start_internal
+                (in /home/toto/src/safe-rust-leak/target/release/safe-rust-leak)
+==153637==    by 0x10FA54: main
+                (in /home/toto/src/safe-rust-leak/target/release/safe-rust-leak)
 ==153637== 
 ==153637== LEAK SUMMARY:
 ==153637==    definitely lost: 24 bytes in 1 blocks
@@ -2171,7 +2208,7 @@ int main(int argc, const char **argv)
 	return 0;
 }
 </code></pre>
-<h2 id="références-4"><a class="header" href="#références-4">Références</a></h2>
+<h2 id="références-5"><a class="header" href="#références-5">Références</a></h2>
 <ul>
 <li><a id="RFC-2195"></a> <em><a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">Really tagged unions</a></em> (RFC-2195)</li>
 </ul>
@@ -2589,13 +2626,6 @@ Règle - Vérification des vulnérabilités connues pour les dépendances (cargo
 </ul>
 </li>
 <li>
-<p>Garanties du langage:</p>
-<ul>
-<li><input disabled="" type="checkbox"/>
-Rule - No Undefined Behavior (<a href="guarantees.html#UB-NOUB">UB-NOUB</a>)</li>
-</ul>
-</li>
-<li>
 <p>Nommage:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
@@ -2640,6 +2670,8 @@ Recommandation - Sécurité assurée par d'autres mécanismes en plus du trait <
 <li>
 <p>Généralités:</p>
 <ul>
+<li><input disabled="" type="checkbox"/>
+Règle - Interdiction des comportements non définis (<a href="unsafe/generalities.html#UNSAFE-NOUB">UNSAFE-NOUB</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Non-utilisation des blocs <em>unsafe</em> (<a href="unsafe/generalities.html#LANG-UNSAFE">LANG-UNSAFE</a>)</li>
 <li><input disabled="" type="checkbox"/>
@@ -2764,6 +2796,8 @@ Recommandation - Dérivation des traits de comparaison lorsque c'est possible (<
 
         <!-- Custom JS scripts -->
         <script src="pagetoc.js"></script>
+        <script src="vars-fr.js"></script>
+        <script src="custom-envs.js"></script>
 
         <script>
         window.addEventListener('load', function() {

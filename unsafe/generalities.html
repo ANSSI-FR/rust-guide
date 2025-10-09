@@ -187,7 +187,11 @@
 <li>Implement an <code>unsafe</code> trait</li>
 <li>Declare an <code>extern</code> block</li>
 </ul>
-<p>These capabilities may be necessary for system programming but they cause the language to lose its <a href="../guarantees.html#language-guarantees">safety properties</a>. More examples can be found in <a href="https://doc.rust-lang.org/nomicon/what-unsafe-does.html">nomicon</a>.</p>
+<p>More examples can be found in <a href="https://doc.rust-lang.org/nomicon/what-unsafe-does.html">nomicon</a>.</p>
+<p>These capabilities may be necessary for system programming but they cause the language to lose its <a href="../guarantees.html#language-guarantees">safety properties</a> and Undefined Behaviors may happen.</p>
+<div class="reco" id="UNSAFE-NOUB" type="Rule" title="No Undefined Behavior">
+<p>No Undefined Behavior is allowed.</p>
+</div>
 <h2 id="a-keyword-with-two-usages"><a class="header" href="#a-keyword-with-two-usages">A keyword with two usages</a></h2>
 <p>The <code>unsafe</code> keyword is used both for marking unsafety in an API and unlocking unsafety in the implementation.</p>
 <h3 id="unsafe-marking"><a class="header" href="#unsafe-marking"><code>unsafe</code> marking</a></h3>
@@ -275,7 +279,9 @@ pub struct Vec&lt;T&gt; {
 // Note this implementation does not correctly handle zero-sized types.
 impl&lt;T&gt; Vec&lt;T&gt; {
     pub fn push(&amp;mut self, elem: T) {
-        if self.len == self.cap { /* reallocate new array with bigger capacity */ }
+        if self.len == self.cap {
+            // reallocate new array with bigger capacity
+        }
         unsafe {
             ptr::write(self.ptr.add(self.len), elem);
             self.len += 1;
@@ -440,6 +446,8 @@ cannot assume that <em>safe</em> functions or traits they use are well implement
 
         <!-- Custom JS scripts -->
         <script src="../pagetoc.js"></script>
+        <script src="../vars-en.js"></script>
+        <script src="../custom-envs.js"></script>
 
 
 
