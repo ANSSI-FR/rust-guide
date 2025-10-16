@@ -107,6 +107,8 @@ peuvent être utilisés, à la condition que leur usage soit justifié :
   comportements non sûrs en fonction de ses arguments. Par exemple, cela
   arrive lorsqu'une fonction doit déréférencer un pointeur passé en argument.
 
+* Lorsque les performances sont impactées sur une petite partie de code (Buffer zero-copy modifié directement en mémoire, gestion des allocations, etc.)
+
 À l'exception de l'un ou plusieurs de ces cas `#![forbid(unsafe_code)]` doit
 apparaître dans à la racine de la *crate* (typiquement `main.rs` ou `lib.rs`)
 afin de générer des erreurs de compilation dans le cas ou le mot-clé `unsafe`
