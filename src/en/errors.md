@@ -53,6 +53,17 @@ Common patterns that can cause panics are:
 - large allocations,
 - string formatting using `format!`.
 
+<div class="warning">
+
+In certain safety‑critical domains, it is mandatory to transition to a safe‑mode state whenever an error occurs that could otherwise lead to undefined behavior.
+In these situations, deliberately triggering a panic (or aborting execution) makes sense because it stops the system before corrupted data or safety or security‑related faults can propagate.
+
+For a plane or other vehicles, this “fail‑fast” behavior can be crucial: the primary control unit must halt immediately on a serious fault, then hand over control to a redundant or backup subsystem that can bring the vehicule to a safe stop or continue operation in a reduced‑capability mode. Restarting on a trusted secondary system ensures that the plane remains controllable, protects occupants, and prevents hazardous outcomes that could arise from continuing execution in an unpredictable state.
+
+</div>
+
+In other cases where the development is not subject to this type of standard:
+
 <div class="reco" id="LANG-NOPANIC" type="Rule" title="Don't use functions that can cause `panic!`">
 
 Functions or instructions that can cause the code to panic at runtime must not
