@@ -238,6 +238,9 @@ structure or module) shall be provided.</p>
 <li>
 <p>A function can be marked unsafe globally (by prefixing its declaration with the <code>unsafe</code> keyword) when it may exhibit unsafe behaviors based on its arguments, that are unavoidable. For instance, this happens when a function tries to dereference a pointer passed as an argument.</p>
 </li>
+<li>
+<p>When hitting a performance wall on a small portion of code (E.G: Zero-copy buffer modified in-place, Allocation overhead, etc.).</p>
+</li>
 </ul>
 <p>With the exception of these cases, <code>#![forbid(unsafe_code)]</code> must appear in the crate root (typically <code>main.rs</code> or <code>lib.rs</code>) to generate compilation errors if <code>unsafe</code> is used in the code base.</p>
 </div>

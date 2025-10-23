@@ -932,6 +932,9 @@ déclaration par le mot-clé <code>unsafe</code>) lorsqu'elle exhibe inévitable
 comportements non sûrs en fonction de ses arguments. Par exemple, cela
 arrive lorsqu'une fonction doit déréférencer un pointeur passé en argument.</p>
 </li>
+<li>
+<p>Lorsque les performances sont impactées sur une petite partie de code (Buffer zero-copy modifié directement en mémoire, gestion des allocations, etc.).</p>
+</li>
 </ul>
 <p>À l'exception de l'un ou plusieurs de ces cas <code>#![forbid(unsafe_code)]</code> doit
 apparaître dans à la racine de la <em>crate</em> (typiquement <code>main.rs</code> ou <code>lib.rs</code>)
