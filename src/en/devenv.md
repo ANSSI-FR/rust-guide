@@ -109,6 +109,36 @@ $ cargo +nightly fmt
 $
 ```
 
+### Rustc Tier guarantees
+
+As Rustc's backend is based on LLVM, it inherits and classifies its supported targets into tiers to communicate how much stability and testing each backend receives.
+
+#### Tier 1 - guaranteed to work
+
+The target is fully vetted by the community. It passes the entire test suite, receives regular regression testing, and is kept up‑to‑date with new releases. In practice, you can rely on consistent code generation, stable ABI, and predictable performance. Tier 1 targets can be thought of as "guaranteed to work".
+
+#### Tier 2 - guaranteed to build
+
+The target’s source code compiles cleanly, but it does not receive the same level of testing or maintenance as Tier 1. It may lack full coverage in the test suite, and certain optimizations or newer LLVM features could be missing or unstable. Users can still generate code for these backends, but they should expect occasional breakage or the need for manual patches. Tier 1 targets can be thought of as "guaranteed to build" but not as "guaranteed to work".
+
+#### Tier 3
+
+Tier 3 targets are simply not officially supported.
+
+
+
+The tier distinction helps developers choose a target that matches their risk tolerance: Tier 1 for production‑grade workloads, Tier 2 for experimental or niche architectures where full support isn’t yet met.
+
+<div class="reco" id="TIERS_TOOLCHAINS" type="Rule" title="Exclusive use of tier 1 of `rustc` for safety-critical software">
+Rustc tier 1 targets and certified toolchains must be used for safety-critical systems.
+</div>
+
+
+A comprehensive list of supported targets is available in the official documentation:
+
+[Plateform support]: https://doc.rust-lang.org/stable/rustc/platform-support.html
+
+
 ## Cargo
 
 Once Rustup has set up the appropriate Rust toolchain, [Cargo] is available

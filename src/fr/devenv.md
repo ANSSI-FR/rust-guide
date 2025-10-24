@@ -116,6 +116,35 @@ $ # or
 $ cargo +nightly fmt
 $
 ```
+### Garantie de niveau pour Rustc
+
+Rustc utilise LLVM comme backend, il hérite donc du support de ce dernier et classe ses cibles prises en charge en différents niveaux afin d’indiquer le degré de stabilité et de tests effectué.
+
+#### Tier 1 - Fonctionnement garanti
+
+La cible est entièrement examinée par la communauté. Elle réussit l’ensemble complet de la batterie de tests, fait l’objet de tests de régression réguliers et est maintenue à jour avec les nouvelles versions. En pratique, vous pouvez compter sur une génération de code cohérente, une ABI stable et des performances prévisibles d’une version à l’autre. Les cibles de tier 1 offrent une garantie de **fonctionnement**.
+
+#### Tier 2 - Compilation garantie
+
+La cible se compile correctement, mais elle ne bénéficie pas du même niveau de tests ni de la même maintenance que les cibles de niveau 1. Elle peut ne pas être entièrement couverte par les tests, et certaines optimisations ou fonctionnalités récentes peuvent être absentes ou instables. Les utilisateurs peuvent tout de même générer du code pour ces cibles, mais ils doivent s’attendre à d’éventuels problèmes occasionnels ou à devoir appliquer des correctifs manuels. Les cibles de tier 2 offrent une garantie de **compilation** mais pas de **fonctionnement**.
+
+#### Tier 3
+
+Les cibles de niveau 3 ne sont tout simplement pas prises en charge officiellement.
+
+
+La distinction entre les différents niveaux aide les développeurs à choisir une cible adaptée à leur tolérance au risque : le niveau 1 pour des applications de production, le niveau 2 pour des architectures plus expérimentales ou de niche dont le support complet n’est pas encore assuré.
+
+
+<div class="reco" id="TIERS_TOOLCHAINS" type="Rule" title="Utilisation exclusive du tier 1 de `rustc` pour les logiciels de sureté critiques">
+Les cibles Rustc de niveau 1 et les chaînes de compilation certifiées doivent être utilisées pour les systèmes de sureté critiques.
+</div>
+
+
+Une liste complète des cibles prises en charge est disponible dans la documentation officielle:
+
+[Plateform support]: https://doc.rust-lang.org/stable/rustc/platform-support.html
+
 
 ## Cargo
 
