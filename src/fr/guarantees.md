@@ -74,7 +74,7 @@ Cibler une architecture de niveau 2 fonctionne, mais il est garanti qu’elle 
 Par conséquent:
 
 <div class="reco" id="LANG-ERRWRAP" type="Rule" title="Les cibles de niveau 2 ne doivent jamais être utilisées dans des systèmes critiques">
-Les cibles de niveau 2 ne doivent jamais être utilisées dans des systèmes critiques pour la sureté.
+Les cibles de niveau 1 et les chaînes de compilation certifiées doivent être privilégiées.
 </div>
 
 Une liste complète des cibles prises en charge est disponible dans la documentation officielle:
