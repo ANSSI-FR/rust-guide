@@ -66,8 +66,8 @@ The Rust compiler (rustc) uses LLVM as its primary code‑generation backend. Af
 Because rustc delegates to LLVM, the quality of the generated binaries depends heavily on the tier status of the chosen target. When you compile for a Tier 1 target (e.g., x86‑64, ARMv8), you benefit from LLVM’s extensive testing and optimization pipelines. Targeting a Tier 2 architecture works, but it is *guaranteed* to *build* not to *work*.
 As a consequence: 
 
-<div class="reco" id="LANG-ERRWRAP" type="Rule" title="Tier 2 targets must not be used on safety critical systems">
-Tier 2 targets must not be used on safety critical systems.
+<div class="reco" id="LANG-ERRWRAP" type="Rule" title="Tier 1 targets and certified toolchains should be prioritized">
+Tier 1 targets and certified toolchains should be prioritized.
 </div>
 
 A comprehensive list of supported targets is available in the official documentation:
