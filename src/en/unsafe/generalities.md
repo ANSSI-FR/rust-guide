@@ -132,7 +132,7 @@ Soundness and safety of this code rely on the fact that bytes from address `self
 
 This invariant can be broken with *safe* code. For instance
 
-```rust
+```rust bad
 {{#include ../../../examples/src/generalities.rs:make_room}}
 ```
 
@@ -151,7 +151,7 @@ Consequently, even *safe* functions must be handled carefully in *unsafe* contex
 Suppose one wants to propose an API to find an object of a given type in memory.
 This API could require implementing the following trait:
 
-```rust
+```rust bad
 {{#include ../../../examples/src/generalities.rs:Locatable}}
 ```
 
@@ -165,7 +165,7 @@ For instance, the `bool` type can implement this trait as follows:
 
 <div class="warning">
 
-This API is harmful for two reasons:
+The `Locatable`'s API is harmful for two reasons:
 
 * If the `Locatable` implementation does not give the index of an object of type `T`, the `read_unaligned` may produce UB.
 * If the `Locatable` implementation gives an out-of-bounds index or an index for which part of the object is out of bounds, the subsequent buffer overflow is UB.
@@ -174,13 +174,13 @@ This API is harmful for two reasons:
 
 For instance, the following `Locatable` implementation is incorrect, **but** it is the responsibility of the API author to take it into account.
 
-```rust align
+```rust align bad
 {{#include ../../../examples/src/generalities.rs:Locatable_bool_KO}}
 ```
 
 The following program produces UB.
 
-```rust,ignore align
+```rust,ignore align ub
 {{#include ../../../examples/src/generalities.rs:Locatable_UB}}
 ```
 

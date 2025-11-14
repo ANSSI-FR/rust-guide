@@ -51,6 +51,22 @@ blockquote .examplereco:before {
 	font-weight: bold;
 }
 
+code.should_panic {
+	background-color: rgba(255, 0, 0, 0.3);
+}
+
+code.bad {
+	background-color: rgba(255, 153, 0, 0.3);
+}
+
+code.good {
+	background-color: rgba(43, 255, 0, 0.3);
+}
+
+code.ub {
+	background-color: rgba(255, 0, 0, 1);
+}
+
 * {
 	--note-border: #0096cf;
 	--reco-border: #ff0000;

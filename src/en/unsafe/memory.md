@@ -31,7 +31,7 @@ an early memory reclamation that calls associated destructors when needed,
 Both functions are **memory safe** in Rust. However, `forget` will make any
 resource managed by the value unreachable and unclaimed.
 
-```rust align
+```rust align bad
 {{#include ../../../examples/src/memory.rs:forget_example}}
 ```
 
@@ -142,7 +142,7 @@ In a secure Rust development, `from_raw` should only be called on `into_raw`ed v
 In the case of `Box::into_raw`, manual cleanup is possible but a lot more
 complicated than re-boxing the raw pointer and should be avoided:
 
-```rust align
+```rust align bad
 {{#include ../../../examples/src/memory.rs:into_raw}}
 ```
 
@@ -186,7 +186,7 @@ Combining [interior mutability](https://doc.rust-lang.org/reference/interior-mut
 
 The following example shows such a memory leak in safe Rust:
 
-```rust align
+```rust align bad
 {{#include ../../../examples/src/memory.rs:cyclic}}
 ```
 

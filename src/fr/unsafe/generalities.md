@@ -153,7 +153,7 @@ la plage d'octets allant de `self.ptr` à `self.ptr + self.cap * size_of<T>()` e
 
 Or, il est possible de casser cet invariant avec du code *safe*. Par exemple, considérons la méthode suivante :
 
-```rust
+```rust bad
 {{#include ../../../examples/src/generalities.rs:make_room}}
 ```
 
@@ -170,7 +170,7 @@ Le cas suivant illustre ce principe.
 On souhaite ici proposer une API générique permettant de localiser un objet dans une zone mémoire.
 On demande donc à l'utilisateur de l'API de fournir une implémentation à ce trait :
 
-```rust,ignore
+```rust,ignore bad
 {{#include ../../../examples/src/generalities.rs:Locatable}}
 ```
 
@@ -184,22 +184,22 @@ Par exemple, on peut implémenter ce trait pour le type `bool` comme suit :
 
 <div class="warning">
 
-Cette API est mauvaise pour deux raisons :
+L'API du trait `Locatable` est mauvaise pour deux raisons :
 
 * si l'implémentation de `Locatable` ne donne pas l'index d'un objet de type `T`, alors la fonction `read_unaligned` peut produire un *UB*.
 * si l'implémentation de `Locatable` renvoie un index en dehors du tableau ou un index tel que l'objet de type `T` ne soit pas entièrement contenu dans le tableau, alors un dépassement de tableau se produit.
 
 </div>
 
-Par exemple, cette implémentation de `Locatable` est fautive mais n'est pas `unsafe` :
+Par exemple, cette implémentation de `Locatable` est fautive alors qu'elle n'est pas `unsafe` :
 
-```rust,ignore align
+```rust,ignore align bad
 {{#include ../../../examples/src/generalities.rs:Locatable_bool_KO}}
 ```
 
 L'exécution du programme suivant produit un *UB* :
 
-```rust,ignore align
+```rust,ignore align ub
 {{#include ../../../examples/src/generalities.rs:Locatable_UB}}
 ```
 

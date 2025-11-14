@@ -27,7 +27,7 @@ simplement une récupération prématurée de la mémoire tout en appelant les
 destructeurs associés lorsque nécessaire, `forget` quant à elle n'appelle pas
 ces destructeurs.
 
-```rust
+```rust align
 {{#include ../../../examples/src/memory.rs:drop_example}}
 ```
 
@@ -35,7 +35,7 @@ Les deux fonctions sont considérées comme **sûres du point de vue mémoire** 
 Rust. Toutefois, `forget` rendra toute ressource gérée par la valeur libérée
 inaccessible, mais non libérée.
 
-```rust
+```rust align bad
 {{#include ../../../examples/src/memory.rs:forget_example}}
 ```
 
@@ -156,7 +156,7 @@ Dans le cas de `Box::into_raw`, le nettoyage automatique est possible, mais
 est bien plus compliqué que de *re-boxer* le pointeur brut et doit être
 évité :
 
-```rust align
+```rust align bad
 {{#include ../../../examples/src/memory.rs:into_raw}}
 ```
 
@@ -203,7 +203,7 @@ La **combinaison** de la mutabilité *[intérieure](https://doc.rust-lang.org/re
 
 L'exemple non-`unsafe` suivant montre, la création d'une fuite mémoire en utilisant la mutabilité intérieure et les références comptées.
 
-```rust align
+```rust align bad
 {{#include ../../../examples/src/memory.rs:cyclic}}
 ```
 

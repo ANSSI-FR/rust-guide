@@ -24,7 +24,7 @@ impl<T> Vec<T> {
 
 // ANCHOR: make_room
 impl<T> Vec<T> {
-    fn make_room(&mut self) {
+    pub fn make_room(&mut self) {
         // grow the capacity
         self.cap += 1;
     }
@@ -37,13 +37,16 @@ trait Locatable {
     /// Returns the index of the first byte representing
     /// an object of type `Self`
     fn locate_instance_into(buf: &[u8]) -> Option<usize>;
-}
 
-fn find<T: Locatable>(buf: &[u8]) -> Option<T> {
-    let start = T::locate_instance_into(buf)?;
-    unsafe {
-        let ptr: *const T = buf.as_ptr().add(start).cast();
-        Some(ptr.read_unaligned())
+    fn find(buf: &[u8]) -> Option<Self>
+    where
+        Self: Sized,
+    {
+        let start = Self::locate_instance_into(buf)?;
+        unsafe {
+            let ptr: *const Self = buf.as_ptr().add(start).cast();
+            Some(ptr.read_unaligned())
+        }
     }
 }
 // ANCHOR_END: Locatable
