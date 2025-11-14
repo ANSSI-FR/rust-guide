@@ -34,7 +34,7 @@ On notera les garanties suivantes :
 * Respect des règles d'[*aliasing*](https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias) (voir aussi le [@nomicon] pour des [exemples](https://doc.rust-lang.org/nomicon/aliasing.html)): une référence mutable ne peux être partagée.
 * Pas d'[accès concurrent]((https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race)) (un accès en lecture et un autre en écriture ou en lecture) à la même adresse mémoire (voir aussi le [@nomicon] pour des [exemples](https://doc.rust-lang.org/nomicon/races.html))
 
-## Garantie de Rust
+## Garantie du Rustc
 
 > La volonté du langage est d'assurer l'absence d'*UB* dans un programme utilisant uniquement la partie non *unsafe* de Rust.
 
@@ -42,3 +42,33 @@ Cependant, le langage ***ne protège pas*** contre les erreurs suivantes :
 
 * fuites de resources (mémoire, IO, ...) ;
 * dépassements numériques.
+
+## Garantie de niveau pour Rustc
+
+Rustc utilise LLVM comme backend, il hérite donc du support de ce dernier et classe ses cibles prises en charge en différents niveaux afin d’indiquer le degré de stabilité et de tests effectué.
+
+### Tier 1 - Fonctionnement garanti
+
+La cible est entièrement examinée par la communauté. Elle réussit l’ensemble complet de la batterie de tests, fait l’objet de tests de régression réguliers et est maintenue à jour avec les nouvelles versions. En pratique, vous pouvez compter sur une génération de code cohérente, une ABI stable et des performances prévisibles d’une version à l’autre. Les cibles de tier 1 offrent une garantie de **fonctionnement**.
+
+### Tier 2 - Compilation garantie
+
+La cible se compile correctement, mais elle ne bénéficie pas du même niveau de tests ni de la même maintenance que les cibles de niveau 1. Elle peut ne pas être entièrement couverte par les tests, et certaines optimisations ou fonctionnalités récentes peuvent être absentes ou instables. Les utilisateurs peuvent tout de même générer du code pour ces cibles, mais ils doivent s’attendre à d’éventuels problèmes occasionnels ou à devoir appliquer des correctifs manuels. Les cibles de tier 2 offrent une garantie de **compilation** mais pas de **fonctionnement**.
+
+### Tier 3
+
+Les cibles de niveau 3 ne sont tout simplement pas prises en charge officiellement.
+
+
+
+La distinction entre les niveaux aide les développeurs à choisir une cible adaptée à leur tolérance au risque : le niveau 1 pour des applications de production, le niveau 2 pour des architectures plus expérimentales ou de niche dont le support complet n’est pas encore assuré.
+
+
+<div class="reco" id="TEST_TOOLCHAINS" type="Rule" title="Les cibles de niveau 2 ne doivent jamais être utilisées dans des systèmes critiques">
+Les cibles de niveau 1 et les chaînes de compilation certifiées doivent être privilégiées.
+</div>
+
+Une liste complète des cibles prises en charge est disponible dans la documentation officielle:
+
+[Plateform support]: https://doc.rust-lang.org/stable/rustc/platform-support.html
+
