@@ -205,7 +205,7 @@ drop(pair);
 <span class="boring">}</span></code></pre></pre>
 <p>Both functions are <strong>memory safe</strong> in Rust. However, <code>forget</code> will make any
 resource managed by the value unreachable and unclaimed.</p>
-<pre><pre class="playground"><code class="language-rust align"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust align bad"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = String::from("Hello");
 forget(s); // Leak memory
@@ -284,7 +284,7 @@ and, for <code>Box</code> smart pointers, conversion of C pointers into <code>Bo
 <div class="note">
 <p>In the case of <code>Box::into_raw</code>, manual cleanup is possible but a lot more
 complicated than re-boxing the raw pointer and should be avoided:</p>
-<pre><pre class="playground"><code class="language-rust align"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust align bad"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// Excerpt from the standard library documentation
 use std::alloc::{Layout, dealloc};
@@ -324,7 +324,7 @@ the use of <code>Drop</code> to erase sensitive memory.</p>
 <h2 id="cyclic-reference-counted-pointers-rc-and-arc"><a class="header" href="#cyclic-reference-counted-pointers-rc-and-arc">Cyclic reference counted pointers (<code>Rc</code> and <code>Arc</code>)</a></h2>
 <p>Combining <a href="https://doc.rust-lang.org/reference/interior-mutability.html">interior mutability</a>, recursivity and reference counted pointer into type definitions is unsafe. It can produce memory leaks which can result in DDoS attacks or leaking secrets.</p>
 <p>The following example shows such a memory leak in safe Rust:</p>
-<pre><pre class="playground"><code class="language-rust align">use std::{cell::Cell, rc::Rc};
+<pre><pre class="playground"><code class="language-rust align bad">use std::{cell::Cell, rc::Rc};
 
 struct LinkedStruct {
    other: Cell&lt;Option&lt;Rc&lt;LinkedStruct&gt;&gt;&gt;,

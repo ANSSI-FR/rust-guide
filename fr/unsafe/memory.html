@@ -207,18 +207,18 @@ des fonctions spéciales pour réclamer manuellement la mémoire : les fonctions
 simplement une récupération prématurée de la mémoire tout en appelant les
 destructeurs associés lorsque nécessaire, <code>forget</code> quant à elle n'appelle pas
 ces destructeurs.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust align"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    let pair = ('↑', 0xBADD_CAFEu32);
-    drop(pair);
+</span>let pair = ('↑', 0xBADD_CAFEu32);
+drop(pair);
 <span class="boring">}</span></code></pre></pre>
 <p>Les deux fonctions sont considérées comme <strong>sûres du point de vue mémoire</strong> par
 Rust. Toutefois, <code>forget</code> rendra toute ressource gérée par la valeur libérée
 inaccessible, mais non libérée.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust align bad"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    let s = String::from("Hello");
-    forget(s); // Leak memory
+</span>let s = String::from("Hello");
+forget(s); // Leak memory
 <span class="boring">}</span></code></pre></pre>
 <p>En particulier, l'utilisation de <code>forget</code> peut causer la rétention en mémoire de
 ressources critiques, menant à des interblocages et à la persistance de données
@@ -305,7 +305,7 @@ valeurs issues de la fonction <code>into_raw</code></p>
 <p>Dans le cas de <code>Box::into_raw</code>, le nettoyage automatique est possible, mais
 est bien plus compliqué que de <em>re-boxer</em> le pointeur brut et doit être
 évité :</p>
-<pre><pre class="playground"><code class="language-rust align"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust align bad"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// Excerpt from the standard library documentation
 use std::alloc::{Layout, dealloc};
@@ -348,7 +348,7 @@ pour effacer des valeurs sensibles.</p>
 <h2 id="cycle-dans-les-références-comptées-rc-et-arc"><a class="header" href="#cycle-dans-les-références-comptées-rc-et-arc">Cycle dans les références comptées (<code>Rc</code> et <code>Arc</code>)</a></h2>
 <p>La <strong>combinaison</strong> de la mutabilité <em><a href="https://doc.rust-lang.org/reference/interior-mutability.html">intérieure</a></em>, des références comptées et des types récursifs n'est pas sûre. En effet, elle peut conduire à fuites mémoire, et donc éventuellement à des attaques par déni de service et en des fuites de secrets.</p>
 <p>L'exemple non-<code>unsafe</code> suivant montre, la création d'une fuite mémoire en utilisant la mutabilité intérieure et les références comptées.</p>
-<pre><pre class="playground"><code class="language-rust align">use std::{cell::Cell, rc::Rc};
+<pre><pre class="playground"><code class="language-rust align bad">use std::{cell::Cell, rc::Rc};
 
 struct LinkedStruct {
    other: Cell&lt;Option&lt;Rc&lt;LinkedStruct&gt;&gt;&gt;,

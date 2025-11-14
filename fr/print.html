@@ -987,10 +987,10 @@ impl&lt;T&gt; Vec&lt;T&gt; {
 <p>La sûreté de ce code repose sur plusieurs invariants, dont l'un stipule que
 la plage d'octets allant de <code>self.ptr</code> à <code>self.ptr + self.cap * size_of&lt;T&gt;()</code> est allouée.</p>
 <p>Or, il est possible de casser cet invariant avec du code <em>safe</em>. Par exemple, considérons la méthode suivante :</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust bad"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>impl&lt;T&gt; Vec&lt;T&gt; {
-    fn make_room(&amp;mut self) {
+    pub fn make_room(&amp;mut self) {
         // grow the capacity
         self.cap += 1;
     }
@@ -1005,18 +1005,21 @@ Dans un composant logiciel, le code <code>unsafe</code> doit être écrit de man
 <p>Le cas suivant illustre ce principe.
 On souhaite ici proposer une API générique permettant de localiser un objet dans une zone mémoire.
 On demande donc à l'utilisateur de l'API de fournir une implémentation à ce trait :</p>
-<pre><code class="language-rust ignore">trait Locatable {
+<pre><code class="language-rust ignore bad">trait Locatable {
     /// Find object of type `Self` in the buffer `buf`.
     /// Returns the index of the first byte representing
     /// an object of type `Self`
     fn locate_instance_into(buf: &amp;[u8]) -&gt; Option&lt;usize&gt;;
-}
 
-fn find&lt;T: Locatable&gt;(buf: &amp;[u8]) -&gt; Option&lt;T&gt; {
-    let start = T::locate_instance_into(buf)?;
-    unsafe {
-        let ptr: *const T = buf.as_ptr().add(start).cast();
-        Some(ptr.read_unaligned())
+    fn find(buf: &amp;[u8]) -&gt; Option&lt;Self&gt;
+    where
+        Self: Sized,
+    {
+        let start = Self::locate_instance_into(buf)?;
+        unsafe {
+            let ptr: *const Self = buf.as_ptr().add(start).cast();
+            Some(ptr.read_unaligned())
+        }
     }
 }</code></pre>
 <p>L'implémentation d'un tel trait peut être réalisée en utilisant du code <strong>sans</strong> <code>unsafe</code>.</p>
@@ -1027,20 +1030,20 @@ fn find&lt;T: Locatable&gt;(buf: &amp;[u8]) -&gt; Option&lt;T&gt; {
    }
 }</code></pre>
 <div class="warning">
-<p>Cette API est mauvaise pour deux raisons :</p>
+<p>L'API du trait <code>Locatable</code> est mauvaise pour deux raisons :</p>
 <ul>
 <li>si l'implémentation de <code>Locatable</code> ne donne pas l'index d'un objet de type <code>T</code>, alors la fonction <code>read_unaligned</code> peut produire un <em>UB</em>.</li>
 <li>si l'implémentation de <code>Locatable</code> renvoie un index en dehors du tableau ou un index tel que l'objet de type <code>T</code> ne soit pas entièrement contenu dans le tableau, alors un dépassement de tableau se produit.</li>
 </ul>
 </div>
-<p>Par exemple, cette implémentation de <code>Locatable</code> est fautive mais n'est pas <code>unsafe</code> :</p>
-<pre><code class="language-rust ignore align">impl Locatable for bool {
+<p>Par exemple, cette implémentation de <code>Locatable</code> est fautive alors qu'elle n'est pas <code>unsafe</code> :</p>
+<pre><code class="language-rust ignore align bad">impl Locatable for bool {
    fn locate_instance_into(buf: &amp;[u8]) -&gt; Option&lt;usize&gt; {
       buf.iter().position(|u| *u == 0 || *u == 1).map(|n| n + 100)
    }
 }</code></pre>
 <p>L'exécution du programme suivant produit un <em>UB</em> :</p>
-<pre><code class="language-rust ignore align">fn use_locatable() {
+<pre><code class="language-rust ignore align ub">fn use_locatable() {
    let buf = [4, 1, 99];
    let located_bool: Option&lt;bool&gt; = find(&amp;buf); // UB here!
    println!("{:?}", located_bool)
@@ -1133,18 +1136,18 @@ des fonctions spéciales pour réclamer manuellement la mémoire : les fonctions
 simplement une récupération prématurée de la mémoire tout en appelant les
 destructeurs associés lorsque nécessaire, <code>forget</code> quant à elle n'appelle pas
 ces destructeurs.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust align"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    let pair = ('↑', 0xBADD_CAFEu32);
-    drop(pair);
+</span>let pair = ('↑', 0xBADD_CAFEu32);
+drop(pair);
 <span class="boring">}</span></code></pre></pre>
 <p>Les deux fonctions sont considérées comme <strong>sûres du point de vue mémoire</strong> par
 Rust. Toutefois, <code>forget</code> rendra toute ressource gérée par la valeur libérée
 inaccessible, mais non libérée.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust align bad"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    let s = String::from("Hello");
-    forget(s); // Leak memory
+</span>let s = String::from("Hello");
+forget(s); // Leak memory
 <span class="boring">}</span></code></pre></pre>
 <p>En particulier, l'utilisation de <code>forget</code> peut causer la rétention en mémoire de
 ressources critiques, menant à des interblocages et à la persistance de données
@@ -1231,7 +1234,7 @@ valeurs issues de la fonction <code>into_raw</code></p>
 <p>Dans le cas de <code>Box::into_raw</code>, le nettoyage automatique est possible, mais
 est bien plus compliqué que de <em>re-boxer</em> le pointeur brut et doit être
 évité :</p>
-<pre><pre class="playground"><code class="language-rust align"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust align bad"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// Excerpt from the standard library documentation
 use std::alloc::{Layout, dealloc};
@@ -1274,7 +1277,7 @@ pour effacer des valeurs sensibles.</p>
 <h2 id="cycle-dans-les-références-comptées-rc-et-arc"><a class="header" href="#cycle-dans-les-références-comptées-rc-et-arc">Cycle dans les références comptées (<code>Rc</code> et <code>Arc</code>)</a></h2>
 <p>La <strong>combinaison</strong> de la mutabilité <em><a href="https://doc.rust-lang.org/reference/interior-mutability.html">intérieure</a></em>, des références comptées et des types récursifs n'est pas sûre. En effet, elle peut conduire à fuites mémoire, et donc éventuellement à des attaques par déni de service et en des fuites de secrets.</p>
 <p>L'exemple non-<code>unsafe</code> suivant montre, la création d'une fuite mémoire en utilisant la mutabilité intérieure et les références comptées.</p>
-<pre><pre class="playground"><code class="language-rust align">use std::{cell::Cell, rc::Rc};
+<pre><pre class="playground"><code class="language-rust align bad">use std::{cell::Cell, rc::Rc};
 
 struct LinkedStruct {
    other: Cell&lt;Option&lt;Rc&lt;LinkedStruct&gt;&gt;&gt;,

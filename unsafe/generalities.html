@@ -294,10 +294,10 @@ impl&lt;T&gt; Vec&lt;T&gt; {
 <span class="boring">}</span></code></pre></pre>
 <p>Soundness and safety of this code rely on the fact that bytes from address <code>self.ptr</code> to <code>self.ptr + self.cap * size_of&lt;T&gt;()</code> are allocated.</p>
 <p>This invariant can be broken with <em>safe</em> code. For instance</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust bad"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>impl&lt;T&gt; Vec&lt;T&gt; {
-    fn make_room(&amp;mut self) {
+    pub fn make_room(&amp;mut self) {
         // grow the capacity
         self.cap += 1;
     }
@@ -314,20 +314,23 @@ This property is lost when developers use <em>unsafe</em> code, so they are resp
 Consequently, even <em>safe</em> functions must be handled carefully in <em>unsafe</em> contexts.</p>
 <p>Suppose one wants to propose an API to find an object of a given type in memory.
 This API could require implementing the following trait:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust bad"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Locatable {
     /// Find object of type `Self` in the buffer `buf`.
     /// Returns the index of the first byte representing
     /// an object of type `Self`
     fn locate_instance_into(buf: &amp;[u8]) -&gt; Option&lt;usize&gt;;
-}
 
-fn find&lt;T: Locatable&gt;(buf: &amp;[u8]) -&gt; Option&lt;T&gt; {
-    let start = T::locate_instance_into(buf)?;
-    unsafe {
-        let ptr: *const T = buf.as_ptr().add(start).cast();
-        Some(ptr.read_unaligned())
+    fn find(buf: &amp;[u8]) -&gt; Option&lt;Self&gt;
+    where
+        Self: Sized,
+    {
+        let start = Self::locate_instance_into(buf)?;
+        unsafe {
+            let ptr: *const Self = buf.as_ptr().add(start).cast();
+            Some(ptr.read_unaligned())
+        }
     }
 }
 <span class="boring">}</span></code></pre></pre>
@@ -339,14 +342,14 @@ fn find&lt;T: Locatable&gt;(buf: &amp;[u8]) -&gt; Option&lt;T&gt; {
    }
 }</code></pre>
 <div class="warning">
-<p>This API is harmful for two reasons:</p>
+<p>The <code>Locatable</code>'s API is harmful for two reasons:</p>
 <ul>
 <li>If the <code>Locatable</code> implementation does not give the index of an object of type <code>T</code>, the <code>read_unaligned</code> may produce UB.</li>
 <li>If the <code>Locatable</code> implementation gives an out-of-bounds index or an index for which part of the object is out of bounds, the subsequent buffer overflow is UB.</li>
 </ul>
 </div>
 <p>For instance, the following <code>Locatable</code> implementation is incorrect, <strong>but</strong> it is the responsibility of the API author to take it into account.</p>
-<pre><pre class="playground"><code class="language-rust align"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust align bad"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>impl Locatable for bool {
    fn locate_instance_into(buf: &amp;[u8]) -&gt; Option&lt;usize&gt; {
@@ -355,7 +358,7 @@ fn find&lt;T: Locatable&gt;(buf: &amp;[u8]) -&gt; Option&lt;T&gt; {
 }
 <span class="boring">}</span></code></pre></pre>
 <p>The following program produces UB.</p>
-<pre><code class="language-rust ignore align">fn use_locatable() {
+<pre><code class="language-rust ignore align ub">fn use_locatable() {
    let buf = [4, 1, 99];
    let located_bool: Option&lt;bool&gt; = find(&amp;buf); // UB here!
    println!("{:?}", located_bool)
