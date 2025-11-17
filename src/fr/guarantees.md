@@ -34,7 +34,7 @@ On notera les garanties suivantes :
 * Respect des règles d'[*aliasing*](https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias) (voir aussi le [@nomicon] pour des [exemples](https://doc.rust-lang.org/nomicon/aliasing.html)): une référence mutable ne peux être partagée.
 * Pas d'[accès concurrent]((https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race)) (un accès en lecture et un autre en écriture ou en lecture) à la même adresse mémoire (voir aussi le [@nomicon] pour des [exemples](https://doc.rust-lang.org/nomicon/races.html))
 
-## Garantie du Rustc
+## Garantie de Rust
 
 > La volonté du langage est d'assurer l'absence d'*UB* dans un programme utilisant uniquement la partie non *unsafe* de Rust.
 
