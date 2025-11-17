@@ -60,7 +60,7 @@ Tier 3 targets are simply not officially supported.
 The tier distinction helps developers choose a target that matches their risk tolerance: Tier 1 for production‑grade workloads, Tier 2 for experimental or niche architectures where full support isn’t yet met.
 
 <div class="reco" id="TEST_TOOLCHAINS" type="Rule" title="Tier 1 targets and certified toolchains should be prioritized">
-Tier 1 targets and certified toolchains should be prioritized.
+Rustc tier 1 targets and certified toolchains must be used for critical systems.
 </div>
 
 A comprehensive list of supported targets is available in the official documentation:

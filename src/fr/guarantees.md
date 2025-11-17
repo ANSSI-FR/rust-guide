@@ -65,7 +65,7 @@ La distinction entre les niveaux aide les développeurs à choisir une cible ada
 
 
 <div class="reco" id="TEST_TOOLCHAINS" type="Rule" title="Les cibles de niveau 2 ne doivent jamais être utilisées dans des systèmes critiques">
-Les cibles de niveau 1 et les chaînes de compilation certifiées doivent être privilégiées.
+Les cibles Rustc de niveau 1 et les chaînes de compilation certifiées doivent être utilisées pour les systèmes critiques.
 </div>
 
 Une liste complète des cibles prises en charge est disponible dans la documentation officielle:
