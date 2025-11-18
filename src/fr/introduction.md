@@ -113,17 +113,16 @@ en fonction du contexte et de ses objectifs de sécurité.
 
 Ainsi, les recommandations sont présentées de la manière suivante :
 
-<div class="examplereco" id="EXAMPLE-RULE" type="Règle" title="Recommandation générale">
+<div class="examplereco" id="EXAMPLE-RULE" type="Règle" title="Recommandation à l'état de l'art">
 
-Cette recommandation est formulée de manière conceptuelle, sans prise en compte
-du contexte d’application ni des modalités de sa mise en œuvre.
+Cette recommandation permet de mettre en oeuvre un niveau de sécurité à l'état de l'art.
 
 </div>
 
-<div class="examplereco" id="EXAMPLE-RECO" type="Recommandation" title="Recommandation adaptée à un besoin de sécurité élevé">
+<div class="examplereco" id="EXAMPLE-RECO" type="Recommandation" title="Recommandation renforcée">
 
-L'implémentation technique de cette recommandation offre un niveau de sécurité
-adapté à un besoin de sécurité élevé
+Cette recommandation permet de mettre en oeuvre un niveau de sécurité renforcée. 
+Elle est destinée aux entités qui sont matures en sécurité des systèmes d'information.
 
 </div>
 
