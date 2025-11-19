@@ -276,11 +276,11 @@ single_line_if_else_max_width = 40
 Pour plus d'informations à propos des règles de convention de style que
 `rustfmt` propose, voir [@rust-style].
 
-<div class="reco" id="DENV-FORMAT" type="Règle" title="Utilisation d'un outil de formatage (rustfmt)">
+<div class="reco" id="DENV-FORMAT" type="Recommandation" title="Utilisation d'un outil de formatage (rustfmt)">
 
 L'outil de formatage `rustfmt` peut être utilisé pour assurer le respect de
 règles de convention de style (comme décrites dans le fichier `rustfmt.toml`)
-> sur une base de code.
+sur une base de code.
 
 </div>
 

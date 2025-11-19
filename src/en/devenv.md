@@ -255,9 +255,9 @@ single_line_if_else_max_width = 40
 For more information about the guidelines that `rustfmt` will check, have a look
 at the [@rust-style].
 
-<div class="reco" id="DENV-FORMAT" type="Rule" title="Use Rust formatter (rustfmt)">
+<div class="reco" id="DENV-FORMAT" type="Recommendation" title="Use Rust formatter (rustfmt)">
 
-The tool `rustfmt` can be used to ensure that the codebase respects style
+The tool `rustfmt` may be used to ensure that the codebase respects style
 guidelines (as described in `rustfmt.toml` file).
 
 </div>

@@ -7,16 +7,16 @@ A `Result` object must be tested, and never ignored.
 
 <div class="reco" id="LANG-ERRWRAP" type="Recommendation" title="Implement custom `Error` type wrapping all possible errors">
 
-A crate can implement its own `Error` type, wrapping all possible errors.
+A crate may implement its own `Error` type, wrapping all possible errors.
 It must be careful to make this type exception-safe (RFC 1236), and implement
 `Error + Send + Sync + 'static` as well as `Display`.
 
 </div>
 
-<div class="reco" id="LANG-ERRDO" type="Recommendation" title="Use the `?` operator and do not use the `try!` macro">
+<div class="reco" id="LANG-ERRDO" type="Rule" title="Use the `?` operator and do not use the `try!` macro">
 
-The `?` operator should be used to improve readability of code.
-The `try!` macro should not be used.
+The `?` operator must be used to improve readability of code.
+The `try!` macro must not be used.
 
 </div>
 

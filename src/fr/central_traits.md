@@ -25,7 +25,7 @@ complexes (*smart pointers* comme les `Box` ou les `Rc` par exemple). Au
 final, il est probable que l'implémentation du trait `Drop` contienne des blocs
 `unsafe` ainsi que d'autres opérations critiques du point de vue de la sécurité.
 
-<div class="reco" id="LANG-DROP" type="Recommandation" title="Justification de l'implémentation du trait `Drop`">
+<div class="reco" id="LANG-DROP" type="Règle" title="Justification de l'implémentation du trait `Drop`">
 
 Dans un développement sécurisé en Rust, l'implémentation du trait
 `std::ops::Drop` doit être justifiée, documentée et examinée par des pairs.
@@ -65,7 +65,7 @@ directement ou indirectement, dans un cycle de références à compteurs.
 
 <!-- -->
 
-<div class="reco" id="LANG-DROP-SEC" type="Recommandation" title="Sécurité assurée par d'autres mécanismes en plus du trait `Drop`">
+<div class="reco" id="LANG-DROP-SEC" type="Règle" title="Sécurité assurée par d'autres mécanismes en plus du trait `Drop`">
 
 Certaines opérations liées à la sécurité d'une application à la fin d'un
 traitement (comme l'effacement de secrets cryptographiques par exemple) ne

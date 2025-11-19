@@ -306,9 +306,9 @@ embedded systems or kernel-level programming). Another advantage of using Rust
 pointers in FFI is that any load of the pointed value is clearly marked inside
 an `unsafe` block or function.
 
-<div class="reco" id="FFI-NOREF" type="Recommendation" title="Do not use reference types but pointer types">
+<div class="reco" id="FFI-NOREF" type="Rule" title="Do not use reference types in a FFI but pointer types">
 
-In a secure Rust development, the Rust code should not use reference types
+In a secure Rust development, the Rust code in a FFI must not use reference types
 but pointer types.
 
 Exceptions include:
@@ -435,10 +435,10 @@ Note however that as for a reference, the actual `extern "C"` ABI of
 `enum class` is implementation-defined and should be verified for each
 environment.
 
-<div class="reco" id="FFI-NOENUM" type="Recommendation" title="Do not use incoming Rust `enum` at FFI boundary">
+<div class="reco" id="FFI-NOENUM" type="Rule" title="Do not use incoming Rust `enum` at FFI boundary">
 
 In a secure Rust development, when interfacing with a foreign language,
-the Rust code should not accept incoming values of any Rust `enum` type.
+the Rust code must not accept incoming values of any Rust `enum` type.
 
 Exceptions include Rust `enum` types that are:
 
@@ -646,7 +646,7 @@ part of the binding from C header files.
 
 ## Binding a Rust library in another language
 
-<div class="reco" id="FFI-CAPI" type="Recommendation" title="Expose dedicated C-compatible API only">
+<div class="reco" id="FFI-CAPI" type="Rule" title="Expose dedicated C-compatible API only">
 
 In a secure Rust development, exposing a Rust library to a foreign language
 should only be done through a **dedicated C-compatible API**.

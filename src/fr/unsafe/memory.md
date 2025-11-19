@@ -55,7 +55,7 @@ Dans un développement sécurisé en Rust (*unsafe* ou non), la fonction `forget
 
 <div class="reco" id="MEM-FORGET-LINT" type="Recommandation" title="Utilisation du *lint* clippy pour détecter l'utilisation de `forget`">
 
-Le *lint* `mem_forget` de Clippy peut être utilisé pour automatiquement
+Le *lint* `mem_forget` de Clippy devrait être utilisé pour automatiquement
 détecter toute utilisation de la fonction `forget`. Pour s'assurer de l'absence
 d'appel à `forget`, ajouter la directive suivante en début de fichier racine
 (en général `src/lib.rs` ou `src/main.rs`) :
@@ -249,6 +249,6 @@ Hello, world!
 
 <div class="reco" id="MEM-MUT-REC-RC" type="Règle" title="Éviter les références comptées récursives mutables">
 
-Éviter de définir des types à la fois récursifs, mutables *intérieurement*, et dont la récursion se base sur l'utilisation des références comptées `Rc` ou `Arc`.
+ Les types récursifs dont la récursion se base sur l'utilisation des références comptées `Rc` ou `Arc` ne doivent pas être mutables *intérieurement*.
 
 </div>

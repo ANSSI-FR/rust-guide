@@ -21,10 +21,10 @@ or to release memory (e.g. in smart pointers such as `Box` or `Rc`).
 As a result, `Drop` trait implementations are likely to contain `unsafe` code
 blocks as well as other security-critical operations.
 
-<div class="reco" id="LANG-DROP" type="Recommendation" title="Justify `Drop` implementation">
+<div class="reco" id="LANG-DROP" type="Rule" title="Justify `Drop` implementation">
 
 In a Rust secure development, the implementation of the `std::ops::Drop` trait
-should be justified, documented and peer-reviewed.
+must be justified, documented and peer-reviewed.
 
 </div>
 
@@ -58,10 +58,10 @@ in a cycle of reference-counted references.
 
 </div>
 
-<div class="reco" id="LANG-DROP-SEC" type="Recommendation" title="Do not rely only on `Drop` to ensure security">
+<div class="reco" id="LANG-DROP-SEC" type="Rule" title="Do not rely only on `Drop` to ensure security">
 
 Ensuring security operations at the end of some treatment (such as key erasure
-at the end of a cryptographic encryption) should not rely only on the `Drop`
+at the end of a cryptographic encryption) must not rely only on the `Drop`
 trait implementation.
 
 </div>

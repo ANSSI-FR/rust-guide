@@ -17,7 +17,7 @@ ce type doit être *exception-safe* (RFC 1236) et implémenter les traits
 
 </div>
 
-<div class="reco" id="LANG-ERRDO" type="Recommandation" title="Utilisation de l'opérateur `?` et non-utilisation de la macro `try!`">
+<div class="reco" id="LANG-ERRDO" type="Règle" title="Utilisation de l'opérateur `?` et non-utilisation de la macro `try!`">
 
 L'opérateur `?` doit être utilisé pour améliorer la lisibilité du code.
 La macro `try!` ne doit pas être utilisée.

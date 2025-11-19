@@ -60,7 +60,7 @@ d'utiliser un champ typé par un type fantôme (`PhantomData`) :
 struct SpecialType(u8, PhantomData<*const ()>);
 ```
 
-<div class="reco" id="LANG-SYNC-TRAITS" type="Recommandation" title="Justification de l'implémentation des traits `Send` et `Sync`">
+<div class="reco" id="LANG-SYNC-TRAITS" type="Règle" title="Justification de l'implémentation des traits `Send` et `Sync`">
 
 Dans un développement sécurisé en Rust, l'implémentation manuelle des traits
 `Send` et `Sync` doit être évitée, et, si nécessaire, doit être justifiée,
@@ -180,7 +180,7 @@ documentation.
 <div class="reco" id="LANG-CMP-DEFAULTS" type="Recommandation" title="Utilisation des implémentations par défaut des traits de comparaison standards">
 
 Dans un développement sécurisé en Rust, l'implémentation des traits de
-comparaison standard ne doit être effectuée que par l'implémentation des
+comparaison standard ne devrait être effectuée que par l'implémentation des
 méthodes ne fournissant pas d'implémentation par défaut, dans le but de
 réduire le risque de violation des invariants associés auxdits traits.
 
@@ -254,9 +254,9 @@ manuelles, et rendent le code plus court et plus simple à maintenir.
 <div class="reco" id="LANG-CMP-DERIVE" type="Recommandation" title="Dérivation des traits de comparaison lorsque c'est possible">
 
 Dans un développement sécurisé en Rust, l'implémentation des traits de
-comparaison standard doit être automatiquement dérivée à l'aide de
+comparaison standard devrait être automatiquement dérivée à l'aide de
 `#[derive(...)]` lorsque l'égalité structurelle et l'ordre lexicographique
 sont nécessaires. Toute implémentation manuelle d'un trait de comparaison
-standard doit être justifiée et documentée.
+standard devrait être justifiée et documentée.
 
 </div>

@@ -55,10 +55,10 @@ field:
 struct SpecialType(u8, PhantomData<*const ()>);
 ```
 
-<div class="reco" id="LANG-SYNC-TRAITS" type="Recommendation" title="Justify `Send` and `Sync` implementation">
+<div class="reco" id="LANG-SYNC-TRAITS" type="Rule" title="Justify `Send` and `Sync` implementation">
 
 In a Rust secure development, the manual implementation of the `Send` and
-`Sync` traits should be avoided and, if necessary, should be justified,
+`Sync` traits must be avoided and, if necessary, must be justified,
 documented and peer-reviewed.
 
 </div>

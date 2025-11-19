@@ -98,8 +98,8 @@ raw pointers must be done manually without Rust guaranties.
 <div class="reco" id="MEM-NORAWPOINTER" type="Rule" title="Do no convert smart pointer into raw pointer in Rust without `unsafe`">
 
 In a secure Rust development without `unsafe`, references and *smart pointers*
-should not be converted into *raw pointers*. For instance, functions `into_raw` ou `into_non_null`
-of smart pointers `Box`, `Rc`, `Arc` or `Weak` should not be used.
+must not be converted into *raw pointers*. For instance, functions `into_raw` ou `into_non_null`
+of smart pointers `Box`, `Rc`, `Arc` or `Weak` must not be used.
 
 </div>
 
@@ -131,7 +131,7 @@ and, for `Box` smart pointers, conversion of C pointers into `Box` is [discourag
 
 <div class="reco" id="MEM-INTOFROMRAWONLY" type="Rule" title="Call `from_raw` *only* on `into_raw`ed value">
 
-In a secure Rust development, `from_raw` should only be called on `into_raw`ed values.
+In a secure Rust development, `from_raw` must only be called on `into_raw`ed values.
 
 </div>
 
@@ -232,6 +232,6 @@ Hello, world!
 
 <div class="reco" id="MEM-MUT-REC-RC" type="Rule" title="Avoid cyclic reference counted pointers">
 
-Avoid recursive types whose recursivity uses reference counted pointers together with interior mutability.
+Recursive types whose recursivity uses reference counted pointers must not be used together with interior mutability.
 
 </div>
