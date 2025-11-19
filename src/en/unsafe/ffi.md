@@ -473,7 +473,7 @@ Currently the recommended way to make a foreign opaque type is like so:
 {{#include ../../../examples/src/ffi.rs:opaque_external}}
 ```
 
-The not-yet-implemented [RFC 1861] proposes to facilitate this encoding by allowing
+The not-yet-stabilized [RFC 1861] proposes to facilitate this encoding by allowing
 to declare opaque types in `extern` blocks.
 
 [RFC 1861]: https://rust-lang.github.io/rfcs/1861-extern-types.html

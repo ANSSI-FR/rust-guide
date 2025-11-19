@@ -513,7 +513,7 @@ illustrée comme suit :
 ```rust,unsafe,noplaypen
 {{#include ../../../examples/src/ffi.rs:opaque_external}}
 ```
-La proposition [RFC 1861], non implémentée à la rédaction de ce guide, propose
+La proposition [RFC 1861], non stabilisée à la rédaction de ce guide, propose
 de faciliter cette situation en permettant de déclarer des types opaques dans
 des blocs `extern`.
 
