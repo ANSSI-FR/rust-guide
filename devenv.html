@@ -245,6 +245,19 @@ $ # or
 $ cargo +nightly fmt
 $
 </code></pre>
+<h3 id="rustc-tier-guarantees"><a class="header" href="#rustc-tier-guarantees">Rustc Tier guarantees</a></h3>
+<p>As Rustc's backend is based on LLVM, it inherits and classifies its supported targets into tiers to communicate how much stability and testing each backend receives.</p>
+<h4 id="tier-1---guaranteed-to-work"><a class="header" href="#tier-1---guaranteed-to-work">Tier 1 - guaranteed to work</a></h4>
+<p>The target is fully vetted by the community. It passes the entire test suite, receives regular regression testing, and is kept up‑to‑date with new releases. In practice, you can rely on consistent code generation, stable ABI, and predictable performance. Tier 1 targets can be thought of as "guaranteed to work".</p>
+<h4 id="tier-2---guaranteed-to-build"><a class="header" href="#tier-2---guaranteed-to-build">Tier 2 - guaranteed to build</a></h4>
+<p>The target’s source code compiles cleanly, but it does not receive the same level of testing or maintenance as Tier 1. It may lack full coverage in the test suite, and certain optimizations or newer LLVM features could be missing or unstable. Users can still generate code for these backends, but they should expect occasional breakage or the need for manual patches. Tier 1 targets can be thought of as "guaranteed to build" but not as "guaranteed to work".</p>
+<h4 id="tier-3"><a class="header" href="#tier-3">Tier 3</a></h4>
+<p>Tier 3 targets are simply not officially supported.</p>
+<p>The tier distinction helps developers choose a target that matches their risk tolerance: Tier 1 for production‑grade workloads, Tier 2 for experimental or niche architectures where full support isn’t yet met.</p>
+<div class="reco" id="TIERS_TOOLCHAINS" type="Rule" title="Exclusive use of tier 1 of `rustc` for safety-critical software">
+Rustc tier 1 targets and certified toolchains must be used for safety-critical systems.
+</div>
+<p>A comprehensive list of supported targets is available in the official documentation:</p>
 <h2 id="cargo"><a class="header" href="#cargo">Cargo</a></h2>
 <p>Once Rustup has set up the appropriate Rust toolchain, <a href="https://doc.rust-lang.org/stable/cargo/">Cargo</a> is available
 through the command line program <code>cargo</code>. Cargo is the Rust package manager.
