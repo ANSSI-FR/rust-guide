@@ -1,5 +1,5 @@
 [book]
-title = "Développement sécurisé en Rust"
+title = "Développement sécurisé en Rust (non stable)"
 description = "Recommandations pour le développement d'applications sécurisées en Rust"
 src = "src/fr"
 language = "fr"

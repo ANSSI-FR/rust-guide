@@ -1,5 +1,5 @@
 [book]
-title = "Secure Rust Guidelines"
+title = "Secure Rust Guidelines (unstable)"
 description = "Recommendations for secure applications development with Rust"
 src = "src/en"
 language = "en"
