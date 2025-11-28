@@ -12,6 +12,10 @@ references:
     title: Rust Style Guide
     url: https://doc.rust-lang.org/style-guide/index.html
     id: rust-style
+  - type: web
+    title: The rustc book
+    url: https://doc.rust-lang.org/stable/rustc/index.html
+    id: rustc-book
 ---
 # Development environment
 
@@ -133,11 +137,7 @@ The tier distinction helps developers choose a target that matches their risk to
 Rustc tier 1 targets and certified toolchains must be used for safety-critical systems.
 </div>
 
-
-A comprehensive list of supported targets is available in the official documentation:
-
-[Plateform support]: https://doc.rust-lang.org/stable/rustc/platform-support.html
-
+A comprehensive list of supported targets is available in [@rustc-book].
 
 ## Cargo
 

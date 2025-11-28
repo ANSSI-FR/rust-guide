@@ -12,6 +12,10 @@ references:
     title: Rust Style Guide
     url: https://doc.rust-lang.org/style-guide/index.html
     id: rust-style
+  - type: web
+    title: The rustc book
+    url: https://doc.rust-lang.org/stable/rustc/index.html
+    id: rustc-book
 ---
 # Environnement de développement
 
@@ -141,9 +145,7 @@ Les cibles Rustc de niveau 1 et les chaînes de compilation certifiées doivent 
 </div>
 
 
-Une liste complète des cibles prises en charge est disponible dans la documentation officielle:
-
-[Plateform support]: https://doc.rust-lang.org/stable/rustc/platform-support.html
+Une liste complète des cibles prises en charge est disponible dans [@rustc-book].
 
 
 ## Cargo
