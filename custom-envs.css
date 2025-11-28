@@ -32,7 +32,7 @@ blockquote .reco:before {
 }
 
 .reco:before {
-	content: attr(type) " - " attr(title);
+	content: attr(type) " " attr(id) " - " attr(title);
 	font-weight: bold;
 }
 
@@ -47,7 +47,7 @@ blockquote .examplereco:before {
 }
 
 .examplereco:before {
-	content: attr(type) " - " attr(title);
+	content: attr(type) " " attr(id) " - " attr(title);
 	font-weight: bold;
 }
 
