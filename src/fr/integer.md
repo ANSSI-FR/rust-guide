@@ -26,6 +26,6 @@ Ce comportement peut être rendu explicite en utilisant le type générique
 
 Lorsqu'une opération arithmétique peut produire un dépassement d'entier, les
 fonctions spécialisées `overflowing_<op>`, `wrapping_<op>` ou le type
-`Wrapping` doivent être utilisés.
+`Wrapping` DOIVENT être utilisés.
 
 </div>

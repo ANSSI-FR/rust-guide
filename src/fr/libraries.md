@@ -47,7 +47,7 @@ Quelque soit la méthode de récupération des dépendances (*crate* ou commit G
 
 <div class="reco" id="LIBS-VETTING-DIRECT" type="Règle" title="Validation des dépendances tierces directes">
 
-Chaque dépendance tierce directe doit être dûment validée, et chaque validation doit être tracée.
+Chaque dépendance tierce directe DOIT être dûment validée, et chaque validation doit être tracée.
 
 </div>
 
@@ -55,7 +55,7 @@ Concernant les dépendances transitives, il est également recommandé de les va
 
 <div class="reco" id="LIBS-VETTING-TRANSITIVE" type="Recommandation" title="Validation des dépendances tierces transitives">
 
-Chaque dépendance tierce devrait être dûment validée, et chaque validation devrait être tracée.
+Chaque dépendance tierce DEVRAIT être dûment validée, et chaque validation devrait être tracée.
 
 </div>
 
@@ -72,9 +72,9 @@ dernière version compatible disponible ainsi que la dernière version en géné
 
 <div class="reco" id="LIBS-OUTDATED" type="Règle" title="Vérification des dépendances obsolètes (cargo-outdated)">
 
-L'outil `cargo-outdated` doit être utilisé pour vérifier le statut des
-dépendances. Ensuite, chaque dépendance importée en version obsolète devrait
-être mise à jour ou bien, le cas échéant, le choix de la version doit être
+L'outil `cargo-outdated` DOIT être utilisé pour vérifier le statut des
+dépendances. Ensuite, chaque dépendance importée en version obsolète DEVRAIT
+être mise à jour ou bien, le cas échéant, le choix de la version DOIT être
 justifié.
 
 </div>
@@ -89,7 +89,7 @@ un projet.
 
 <div class="reco" id="LIBS-AUDIT" type="Règle" title="Vérification des vulnérabilités connues pour les dépendances (cargo-audit)">
 
-L'outil `cargo-audit` doit être utilisé pour rechercher des vulnérabilités
+L'outil `cargo-audit` DOIT être utilisé pour rechercher des vulnérabilités
 connues dans les dépendances d'un projet.
 
 </div>

@@ -76,7 +76,7 @@ sont compatibles avec les types C suivants :
 
 <div class="reco" id="FFI-CTYPE" type="Règle" title="Utilisation exclusive de types compatibles avec le C dans les FFI">
 
-Dans un développement sécurisé, seuls les types compatibles avec le C peuvent
+Dans un développement sécurisé, les types non compatibles avec le C NE DOIVENT PAS
 être utilisés comme argument ou type de retour des fonctions importées ou
 exportées et comme type de variables globales importées ou exportées.
 
@@ -121,11 +121,11 @@ Certains types sont compatibles, mais avec certaines limitations :
 
 <div class="reco" id="FFI-TCONS" type="Règle" title="Utilisation de types cohérents pour les FFI">
 
-Les types doivent être cohérents entre les deux côtés des frontières des FFI.
+Les types DOIVENT être cohérents entre les deux côtés des frontières des FFI.
 
 Bien que certains détails peuvent être masqués de la part d'un côté envers
 l'autre (typiquement, pour rendre un type opaque), les types des deux parties
-doivent avoir la même taille et respecter le même alignement.
+DOIVENT avoir la même taille et respecter le même alignement.
 
 </div>
 
@@ -139,7 +139,7 @@ types du côté C et ceux du côté Rust.
 <div class="reco" id="FFI-AUTOMATE" type="Recommandation" title="Utilisation des outils de génération automatique de *bindings*">
 
 Dans un développement sécurisé en Rust, les outils de génération automatique
-de *bindings* devraient être utilisés lorsque cela est possible, et ce en
+de *bindings* DEVRAIENT être utilisés lorsque cela est possible, et ce en
 continu.
 
 </div>
@@ -190,7 +190,7 @@ couvrent la quasi-entièreté de la bibliothèque standard du C.
 
 Dans un développement sécurisé en Rust, lors de l'interfaçage avec du code
 faisant usage de types dépendants de la plateforme d'exécution, comme les
-`int`s et les `long`s du C, le code Rust doit utiliser les alias portables de
+`int`s et les `long`s du C, le code Rust DOIT utiliser les alias portables de
 types, comme ceux fournis dans la bibliothèque standard ou dans la crate
 [libc], au lieu des types spécifiques à la plateforme, à l'exception du cas
 où les *bindings* sont générés automatiquement pour chaque plateforme (voir
@@ -251,7 +251,7 @@ mettre cela en place.
 <div class="reco" id="FFI-CKNONROBUST" type="Règle" title="Vérification des valeurs de types non-robustes">
 
 Dans un développement sécurisé en Rust, toute valeur externe de type non-
-robuste doit être vérifiée.
+robuste DOIT être vérifiée.
 
 Plus précisément, soit une conversion (en Rust) est effectuée depuis des types
 robustes vers des types non-robustes à l'aide de vérifications explicites,
@@ -265,7 +265,7 @@ valeurs en question.
 <div class="reco" id="FFI-CKINRUST" type="Recommandation" title="Vérification des valeurs externes en Rust">
 
 Dans un développement Rust sécurisé, la vérification des valeurs provenant
-d'un langage externe devrait être effectuée du côté Rust lorsque cela est
+d'un langage externe DEVRAIT être effectuée du côté Rust lorsque cela est
 possible.
 
 </div>
@@ -310,7 +310,7 @@ des comportements indéfinis.
 <div class="reco" id="FFI-CKREF" type="Règle" title="Vérification des références provenant d'un langage externe">
 
 Dans un développement sécurisé en Rust, les références externes transmises au
-côté Rust par le biais d'une FFI doivent être **vérifiées du côté du langage
+côté Rust par le biais d'une FFI DOIVENT être **vérifiées du côté du langage
 externe**, que ce soit de manière automatique (par exemple, par un
 compilateur) ou de manière manuelle.
 
@@ -336,7 +336,7 @@ l'aide Microsoft SAL par exemple.
 
 <div class="reco" id="FFI-NOREF" type="Règle" title="Non-utilisation des types références au profit des types pointeurs aux frontières avec un langage externe">
 
-Dans un développement sécurisé en Rust, le code Rust ne doit pas utiliser de
+Dans un développement sécurisé en Rust, le code Rust NE DOIT PAS utiliser de
 types références aux frontières avec le langage externe, mais des types pointeurs.
 
 Les exceptions sont :
@@ -363,8 +363,8 @@ comme appartenant à un bloc ou à une fonction `unsafe`.
 <div class="reco" id="FFI-CKPTR" type="Règle" title="Vérification des pointeurs externes">
 
 Dans un développement sécurisé en Rust, tout code Rust qui déréférence un
-pointeur externe doit vérifier sa validité au préalable.
-En particulier, les pointeurs doivent être vérifiés comme étant non nuls avant
+pointeur externe DOIT vérifier sa validité au préalable.
+En particulier, les pointeurs DOIVENT être vérifiés comme étant non nuls avant
 toute utilisation.
 
 Des approches plus strictes sont recommandées lorsque cela est possible. Elles
@@ -413,7 +413,7 @@ sécurité.
 <div class="reco" id="FFI-MARKEDFUNPTR" type="Règle" title="Marquage des types de pointeurs de fonction dans les FFI comme `extern` et `unsafe`">
 
 Dans un développement sécurisé en Rust, tout type de pointeur de fonction dont
-les valeurs sont amenées à traverser les frontières d'une FFI doit être
+les valeurs sont amenées à traverser les frontières d'une FFI DOIT être
 marqué comme `extern` (si possible avec l'ABI spécifiée) et comme `unsafe`.
 
 </div>
@@ -444,7 +444,7 @@ alternatives possibles :
 <div class="reco" id="FFI-CKFUNPTR" type="Règle" title="Vérification des pointeurs de fonction provenant d'une FFI">
 
 Dans un développement sécurisé en Rust, tout pointeur de fonction provenant de
-l'extérieur de l'écosystème Rust doit être vérifié à la frontière des FFI.
+l'extérieur de l'écosystème Rust DOIT être vérifié à la frontière des FFI.
 
 </div>
 
@@ -475,7 +475,7 @@ l'ABI `extern "C"` d'une `enum class` est définie par l'implémentation et doit
 <div class="reco" id="FFI-NOENUM" type="Règle" title="Non-utilisation d'`enum`s Rust provenant de l'extérieur par une FFI">
 
 Dans un développement sécurisé en Rust, lors de l'interfaçage avec un
-langage externe, le code Rust ne doit pas accepter de valeurs provenant de
+langage externe, le code Rust NE DOIT PAS accepter de valeurs provenant de
 l'extérieur en tant que valeur d'un type `enum`.
 
 Les exceptions incluant des types `enum` Rust sont :
@@ -502,7 +502,7 @@ développement impliquant plusieurs langages de programmation.
 <div class="reco" id="FFI-R-OPAQUE" type="Recommandation" title="Utilisation de types Rust dédiés pour les types opaques externes">
 
 Dans un développement sécurisé en Rust, lors d'un *binding* avec des types
-opaques externes, des pointeurs vers des types opaques dédiés devraient être
+opaques externes, des pointeurs vers des types opaques dédiés DEVRAIENT être
 utilisés au lieu de pointeurs `c_void`.
 
 </div>
@@ -523,7 +523,7 @@ des blocs `extern`.
 
 Dans un développement sécurisé en Rust, lors de l'interfaçage avec du C ou du
 C++, les valeurs de types Rust considérés comme opaques dans la partie C/C++
-devraient être transformées en valeurs de type `struct` incomplet (c'est-à-dire
+DEVRAIENT être transformées en valeurs de type `struct` incomplet (c'est-à-dire
 déclaré sans définition) et être fournies avec un constructeur et un
 destructeur dédiés.
 
@@ -552,7 +552,7 @@ de possibles réclamations de la mémoire qui lui est associée.
 
 <div class="reco" id="FFI-MEM-NODROP" type="Règle" title="Non-utilisation de types qui implémentent `Drop` dans des FFI">
 
-Dans un développement sécurisé en Rust, le code Rust ne doit pas implémenter
+Dans un développement sécurisé en Rust, le code Rust NE DOIT PAS implémenter
 `Drop` pour les valeurs de types qui sont directement transmis à du code
 externe (c'est-à-dire ni par pointeur, ni par référence).
 
@@ -572,9 +572,9 @@ de la gestion de son allocation et de sa libération.
 Dans un développement sécurisé en Rust, lorsqu'une donnée, quel que soit son
 type, est échangée par une FFI, il est nécessaire de s'assurer que :
 
-- un seul langage est responsable de l'allocation et de la libération d'une
+- un seul langage DOIT gérer l'allocation et de la libération d'une
   donnée ;
-- l'autre langage ne doit ni allouer, ni libérer la donnée directement, mais
+- l'autre langage NE DOIT NI allouer, NI libérer la donnée directement, mais
   peut utiliser une fonction externe dédiée fournie par le langage responsable
   choisie.
 
@@ -590,7 +590,7 @@ externe.
 <div class="reco" id="FFI-MEM-WRAPPING" type="Recommandation" title="Encapsulation des données externes dans un type `Drop`">
 
 Dans un développement sécurisé en Rust, toute donnée à caractère non sensible
-allouée et libérée du côté du langage externe devrait être encapsulée dans un
+allouée et libérée du côté du langage externe DEVRAIT être encapsulée dans un
 type implémentant `Drop`, de telle sorte que Rust fournisse l'appel
 automatique au destructeur Rust.
 
@@ -644,8 +644,10 @@ code Rust dans du code externe résulte en un **comportement indéfini**.
 
 <div class="reco" id="FFI-NOPANIC" type="Règle" title="Gestion correcte des `panic`s dans les FFI">
 
-Le code Rust appelé depuis un langage externe doit soit s'assurer que la
-fonction ne peut pas provoquer de `panic`, soit utiliser un mécanisme de
+Le code Rust appelé depuis un langage externe DOIT :
+
+* soit s'assurer que la fonction ne peut pas provoquer de `panic`, 
+* soit utiliser un mécanisme de
 récupération de `panic` (comme `std::panic::catch_unwind`,
 `std::panic::set_hook`, `#[panic_handler]`), afin d'assurer que la fonction
 Rust ne peut pas quitter ou retourner dans un état instable.
@@ -681,14 +683,14 @@ inaccessible mène à un appel à `panic!`.
 <div class="reco" id="FFI-SAFEWRAPPING" type="Recommandation" title="Mise en place d'une encapsulation sûre pour les bibliothèques externes">
 
 L'interfaçage entre une bibliothèque écrite dans un autre langage et
-du code Rust devrait être réalisé en deux parties :
+du code Rust DEVRAIT être réalisé en deux parties :
 
 - un module bas-niveau, potentiellement *caché*, qui traduit de façon très
   proche l'API originale en des blocs `extern` ;
 - un module qui assure la sûreté mémoire et les invariants de sécurité au
   niveau de Rust.
 
-Si l'API bas-niveau est exposée, cela devrait être fait dans un *crate* dédiée
+Si l'API bas-niveau est exposée, cela DEVRAIT être fait dans un *crate* dédiée
 ayant un nom de la forme `*-sys`.
 
 </div>
@@ -705,7 +707,7 @@ partie bas-niveau du *binding* depuis les fichiers *header* C.
 <div class="reco" id="FFI-CAPI" type="Règle" title="Exposition exclusive d'API dédiée et compatible avec le C">
 
 Dans un développement sécurisé en Rust, exposer un bibliothèque Rust à un
-langage externe doit être uniquement fait par le biais d'une **API dédiée et
+langage externe DOIT être uniquement fait par le biais d'une **API dédiée et
 compatible avec le C**.
 
 </div>

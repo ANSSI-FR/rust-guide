@@ -96,7 +96,7 @@ $
 
 <div class="reco" id="DENV-STABLE" type="Règle" title="Utilisation de la chaîne d'outils *stable*">
 
-Le développement d'applications sécurisées doit être mené en utilisant la
+Le développement d'applications sécurisées DOIT être mené en utilisant la
 chaîne d'outils dans sa version *stable*, afin de limiter les potentiels
 *bugs* à la compilation, à l'exécution et lors de l'utilisation d'outils
 complémentaires.
@@ -141,7 +141,7 @@ La distinction entre les différents niveaux aide les développeurs à choisir u
 
 
 <div class="reco" id="TIERS_TOOLCHAINS" type="Rule" title="Utilisation exclusive du tier 1 de `rustc` pour les logiciels de sureté critiques">
-Les cibles Rustc de niveau 1 et les chaînes de compilation certifiées doivent être utilisées pour les systèmes de sureté critiques.
+Les cibles Rustc de niveau 1 et les chaînes de compilation certifiées DOIVENT être utilisées pour les systèmes de sureté critiques.
 </div>
 
 
@@ -191,7 +191,7 @@ est déjà présent, un nouveau fichier est créé avec les dernières versions 
 
 <div class="reco" id="DENV-CARGO-LOCK" type="Règle" title="Mise en dépôt du fichier Cargo.lock">
 
-Le fichier `Cargo.lock` doit être versionné avec le code source du programme Rust.
+Le fichier `Cargo.lock` DOIT être versionné avec le code source du programme Rust.
 
 </div>
 
@@ -229,7 +229,7 @@ est utilisé.
 
 <div class="reco" id="DENV-CARGO-OPTS" type="Règle" title="Conservation des valeurs par défaut des variables critiques dans les profils cargo">
 
-Les variables `debug-assertions` et `overflow-checks` ne doivent pas être
+Les variables `debug-assertions` et `overflow-checks` NE DOIVENT PAS être
 modifiées dans les sections de profils de développement (`[profile.dev]` and
 `[profile.test]`).
 
@@ -249,8 +249,8 @@ compilation* de Cargo.
 
 <div class="reco" id="DENV-CARGO-ENVVARS" type="Règle" title="Conservation des valeurs par défaut des variables d'environnement à l'exécution de cargo">
 
-Les variables d'environnement `RUSTC`, `RUSTC_WRAPPER` et `RUSTFLAGS` ne
-doivent pas être modifiées lorsque Cargo est appelé pour compiler un projet.
+Les variables d'environnement `RUSTC`, `RUSTC_WRAPPER` et `RUSTFLAGS` NE
+DOIVENT PAS être modifiées lorsque Cargo est appelé pour compiler un projet.
 
 </div>
 
@@ -278,7 +278,7 @@ Pour plus d'informations à propos des règles de convention de style que
 
 <div class="reco" id="DENV-FORMAT" type="Recommandation" title="Utilisation d'un outil de formatage (rustfmt)">
 
-L'outil de formatage `rustfmt` devrait être utilisé pour assurer le respect de
+L'outil de formatage `rustfmt` DEVRAIT être utilisé pour assurer le respect de
 règles de convention de style (comme décrites dans le fichier `rustfmt.toml`)
 sur une base de code.
 
@@ -345,7 +345,7 @@ ceux-ci sont encore en cours de développement et de mise au point.
 
 <div class="reco" id="DENV-LINTER" type="Règle" title="Utilisation régulière d'un *linter*">
 
-Un *linter* comme `clippy` doit être utilisé régulièrement tout au long du
+Un *linter* comme `clippy` DOIT être utilisé régulièrement tout au long du
 développement d'une application sécurisée.
 
 </div>
@@ -353,7 +353,7 @@ développement d'une application sécurisée.
 <div class="reco" id="DENV-AUTOFIX" type="Règle" title="Vérification manuelle des réparations automatiques">
 
 Dans le cadre du développement d'une application sécurisée, toute réparation
-automatique (comme celles appliquées par `rustfix` ou `clippy` par exemple) doit être
+automatique (comme celles appliquées par `rustfix` ou `clippy` par exemple) DOIT être
 vérifiée par le développeur.
 
 </div>

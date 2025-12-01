@@ -28,7 +28,7 @@ final, il est probable que l'implémentation du trait `Drop` contienne des blocs
 <div class="reco" id="LANG-DROP" type="Règle" title="Justification de l'implémentation du trait `Drop`">
 
 Dans un développement sécurisé en Rust, l'implémentation du trait
-`std::ops::Drop` doit être justifiée et documentée.
+`std::ops::Drop` DOIT être justifiée et documentée.
 
 </div>
 
@@ -49,7 +49,7 @@ d'indisponibilité.
 <div class="reco" id="LANG-DROP-NO-PANIC" type="Règle" title="Absence de `panic` dans l'implémentation de `Drop`">
 
 Dans un développement sécurisé en Rust, l'implémentation du trait
-`std::ops::Drop` ne doit pas causer de `panic`.
+`std::ops::Drop` NE DOIT PAS causer de `panic`.
 
 </div>
 
@@ -58,7 +58,7 @@ protégés.
 
 <div class="reco" id="LANG-DROP-NO-CYCLE" type="Règle" title="Absence de cycles de références avec valeurs `Drop`ables">
 
-Les valeurs dont le type implémente `Drop` ne doivent pas être incluses,
+Les valeurs dont le type implémente `Drop` NE DOIVENT PAS être incluses,
 directement ou indirectement, dans un cycle de références à compteurs.
 
 </div>
@@ -68,7 +68,7 @@ directement ou indirectement, dans un cycle de références à compteurs.
 <div class="reco" id="LANG-DROP-SEC" type="Règle" title="Sécurité assurée par d'autres mécanismes en plus du trait `Drop`">
 
 Certaines opérations liées à la sécurité d'une application à la fin d'un
-traitement (comme l'effacement de secrets cryptographiques par exemple) ne
-doivent pas reposer uniquement sur l'implémentation du trait `Drop`.
+traitement (comme l'effacement de secrets cryptographiques par exemple) NE DOIVENT PAS
+reposer uniquement sur l'implémentation du trait `Drop`.
 
 </div>

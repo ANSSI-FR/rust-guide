@@ -24,7 +24,7 @@ Si ces capacités sont nécessaires à la programmation système, elles font per
 
 <div class="reco" id="UNSAFE-NOUB" type="Règle" title="Interdiction des comportements non définis">
 
-Aucun comportement indéfini ne doit se produire.
+AUCUN comportement indéfini NE DOIT se produire.
 
 </div>
 
@@ -84,8 +84,8 @@ Aussi, il est important de limiter l'usage de `unsafe` au strict nécessaire :
 
 <div class="reco" id="LANG-UNSAFE" type="Règle" title="Non-utilisation des blocs *unsafe*">
 
-Pour un développement sécurisé, les blocs `unsafe` devraient être évités,
-ou doivent être justifiés par au moins l'une des raisons suivantes :
+Pour un développement sécurisé, les blocs `unsafe` DEVRAIENT être évités,
+ou DOIVENT être justifiés par au moins l'une des raisons suivantes :
 
 * L'interfaçage entre Rust et d'autres langages (FFI) permet la déclaration de
   fonctions dont l'implantation est faite en C, en utilisant le préfixe
@@ -108,7 +108,7 @@ ou doivent être justifiés par au moins l'une des raisons suivantes :
 
 * Lorsque les performances sont impactées sur une petite partie de code (Buffer zero-copy modifié directement en mémoire, gestion des allocations, etc.).
 
-À l'exception de l'un ou plusieurs de ces cas `#![forbid(unsafe_code)]` doit
+À l'exception de l'un ou plusieurs de ces cas `#![forbid(unsafe_code)]` DOIT
 apparaître dans à la racine de la *crate* (typiquement `main.rs` ou `lib.rs`)
 afin de générer des erreurs de compilation dans le cas ou le mot-clé `unsafe`
 est utilisé dans le projet.
@@ -125,7 +125,7 @@ Au delà du code `unsafe` lui-même, il est important d'encapsuler correctement 
 <div class="reco" id="LANG-UNSAFE-ENCP" type="Règle" title="Encapsulation des fonctionnalités *unsafe*">
 
 Dans un développement sécurisé d'un composant logiciel Rust (*crate* ou module),
-tout code `unsafe` doit être encapsulé de manière :
+tout code `unsafe` DOIT être encapsulé de manière :
 
 * soit à exposer un comportement *safe* à l'utilisateur dans lequel aucune interaction *safe* ne peut aboutir à un *UB* (comportement indéfini) ;
 * soit à exposer des fonctionnalités marquées `unsafe` et dont les conditions d'usages (préconditions, séquencements, etc.) sont commentées exhaustivement et correctement (c'est-à-dire qu'elles impliquent la sûreté mémoire).

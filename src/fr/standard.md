@@ -63,7 +63,7 @@ struct SpecialType(u8, PhantomData<*const ()>);
 <div class="reco" id="LANG-SYNC-TRAITS" type="Règle" title="Justification de l'implémentation des traits `Send` et `Sync`">
 
 Dans un développement sécurisé en Rust, l'implémentation manuelle des traits
-`Send` et `Sync` devrait être évitée, et, si nécessaire, doit être justifiée
+`Send` et `Sync` DEVRAIT être évitée, et, si nécessaire, DOIT être justifiée
 et documentée.
 
 </div>
@@ -172,7 +172,7 @@ limiter au possible l'utilisation des blocs `unsafe`.
 <div class="reco" id="LANG-CMP-INV" type="Règle" title="Respect des invariants des traits de comparaison standards">
 
 Dans un développement sécurisé en Rust, l'implémentation des traits de
-comparaison standards doit respecter les invariants décrits dans la
+comparaison standards DOIT respecter les invariants décrits dans la
 documentation.
 
 </div>
@@ -180,7 +180,7 @@ documentation.
 <div class="reco" id="LANG-CMP-DEFAULTS" type="Recommandation" title="Utilisation des implémentations par défaut des traits de comparaison standards">
 
 Dans un développement sécurisé en Rust, l'implémentation des traits de
-comparaison standard ne devrait être effectuée que par l'implémentation des
+comparaison standard NE DEVRAIT PAS effectuée que par l'implémentation des
 méthodes ne fournissant pas d'implémentation par défaut, dans le but de
 réduire le risque de violation des invariants associés auxdits traits.
 
@@ -254,9 +254,9 @@ manuelles, et rendent le code plus court et plus simple à maintenir.
 <div class="reco" id="LANG-CMP-DERIVE" type="Recommandation" title="Dérivation des traits de comparaison lorsque c'est possible">
 
 Dans un développement sécurisé en Rust, l'implémentation des traits de
-comparaison standard devrait être automatiquement dérivée à l'aide de
+comparaison standard DEVRAIT être automatiquement dérivée à l'aide de
 `#[derive(...)]` lorsque l'égalité structurelle et l'ordre lexicographique
 sont nécessaires. Toute implémentation manuelle d'un trait de comparaison
-standard devrait être justifiée et documentée.
+standard DEVRAIT être justifiée et documentée.
 
 </div>

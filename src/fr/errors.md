@@ -10,17 +10,17 @@ testé et jamais ignoré.
 
 <div class="reco" id="LANG-ERRWRAP" type="Recommandation" title="Mise en place d'un type `Error` personnalisé pouvant contenir toutes les erreurs possibles">
 
-Une *crate* peut implanter son propre type `Error` qui peut contenir toutes
-les erreurs possibles. Des précautions supplémentaires doivent être prises :
-ce type doit être *exception-safe* (RFC 1236) et implémenter les traits
+Une *crate* PEUT implanter son propre type `Error` qui peut contenir toutes
+les erreurs possibles. Des précautions supplémentaires DOIVENT être prises :
+ce type DOIT être *exception-safe* (RFC 1236) et implémenter les traits
 `Error + Send + Sync + 'static` ainsi que `Display`.
 
 </div>
 
 <div class="reco" id="LANG-ERRDO" type="Règle" title="Utilisation de l'opérateur `?` et non-utilisation de la macro `try!`">
 
-L'opérateur `?` doit être utilisé pour améliorer la lisibilité du code.
-La macro `try!` ne doit pas être utilisée.
+L'opérateur `?` DOIT être utilisé pour améliorer la lisibilité du code.
+La macro `try!` NE DOIT PAS être utilisée.
 
 </div>
 
@@ -71,13 +71,13 @@ Dans le cas ou le développement n'est pas soumis à ce type de normes:
 <div class="reco" id="LANG-NOPANIC" type="Règle" title="Non-utilisation de fonctions qui peuvent causer des `panic`">
 
 Les fonctions et instructions qui peuvent causer des `panic` à l'exécution
-ne doivent pas être utilisées.
+NE DOIVENT PAS être utilisées.
 
 </div>
 
 <div class="reco" id="LANG-ARRINDEXING" type="Règle" title="Test des indices d'accès aux tableaux ou utilisation de la méthode `get`">
 
-L'indice d'accès à un tableau doit être testé, ou la méthode `get` doit être
+L'indice d'accès à un tableau DOIT être testé, ou la méthode `get` DOIT être
 utilisée pour récupérer une `Option`.
 
 </div>
@@ -102,8 +102,10 @@ comportement indéfini.
 
 <div class="reco" id="LANG-FFIPANIC" type="Règle" title="Gestion correcte des `panic!` dans les FFI">
 
-Le code Rust appelé depuis une FFI doit soit être assuré de ne pas paniquer,
-soit utiliser `catch_unwind` ou le module `std::panic` pour s'assurer qu'il
+Le code Rust appelé depuis une FFI DOIT :
+
+* soit être assuré de ne pas paniquer,
+* soit utiliser `catch_unwind` ou le module `std::panic` pour s'assurer qu'il
 ne va pas abandonner un traitement puis que l'exécution retourne dans le
 langage appelant dans un état instable.
 

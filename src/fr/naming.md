@@ -38,7 +38,7 @@ plus précises pour certaines constructions particulières :
 
 <div class="reco" id="LANG-NAMING" type="Règle" title="Respect des conventions de nommage">
 
-Le développement d'une application sécurisée doit suivre les conventions de
+Le développement d'une application sécurisée DOIT suivre les conventions de
 nommage décrites dans les [@rust-guidelines].
 
 </div>

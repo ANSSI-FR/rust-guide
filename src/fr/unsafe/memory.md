@@ -47,7 +47,7 @@ sensibles en mémoire. C'est pourquoi `forget` doit être considérée comme
 <div class="reco" id="MEM-FORGET" type="Règle" title="Non-utilisation de `forget`">
 
 Dans un développement sécurisé en Rust (*unsafe* ou non), la fonction `forget` de `std::mem`
-(`core::mem`) ne doit pas être utilisée.
+(`core::mem`) NE DOIT PAS être utilisée.
 
 </div>
 
@@ -55,7 +55,7 @@ Dans un développement sécurisé en Rust (*unsafe* ou non), la fonction `forget
 
 <div class="reco" id="MEM-FORGET-LINT" type="Recommandation" title="Utilisation du *lint* clippy pour détecter l'utilisation de `forget`">
 
-Le *lint* `mem_forget` de Clippy devrait être utilisé pour automatiquement
+Le *lint* `mem_forget` de Clippy DEVRAIT être utilisé pour automatiquement
 détecter toute utilisation de la fonction `forget`. Pour s'assurer de l'absence
 d'appel à `forget`, ajouter la directive suivante en début de fichier racine
 (en général `src/lib.rs` ou `src/main.rs`) :
@@ -79,7 +79,7 @@ l'avantage de faire apparaître explicitement leur but.
 
 <div class="reco" id="MEM-LEAK" type="Règle" title="Non-utilisation de `Box::leak`">
 
-Dans un développement sécurisé (*unsafe* ou non) en Rust, le code ne doit pas faire fuiter de la
+Dans un développement sécurisé (*unsafe* ou non) en Rust, le code NE DOIT PAS faire fuiter de la
 mémoire ou des ressources *via* `Box::leak`.
 
 </div>
@@ -90,8 +90,8 @@ la ressource concernée du compilateur au développeur.
 <div class="reco" id="MEM-MANUALLYDROP" type="Règle" title="Libération des valeurs *wrappées* dans `ManuallyDrop`">
 
 Dans un développement sécurisé en Rust, toute valeur *wrappée* dans le type
-`ManuallyDrop` doit être *unwrapped* pour permettre sa libération automatique
-(`ManuallyDrop::into_inner`) ou bien doit être manuellement libérée (*unsafe*
+`ManuallyDrop` DOIT être *unwrapped* pour permettre sa libération automatique
+(`ManuallyDrop::into_inner`) ou bien DOIT être manuellement libérée (*unsafe*
 `ManuallyDrop::drop`).
 
 </div>
@@ -108,15 +108,15 @@ pointeurs *intelligents* (*smart pointer*) de Rust. En particulier, leur libéra
 <div class="reco" id="MEM-NORAWPOINTER" type="Règle" title="Pas de conversion en pointeur *raw* en Rust non-*usafe*">
 
 Dans un développement sécurisé en Rust non-*unsafe*, les références et les *smart pointers*
-ne doivent pas être convertis en *raw pointers*. En particulier, les fonctions `into_raw` ou `into_non_null`
-des *smart pointers* `Box`, `Rc`, `Arc` ou `Weak` ne doivent pas être utilisées dans un code Rust non-*unsafe*.
+NE DOIVENT PAS être convertis en *raw pointers*. En particulier, les fonctions `into_raw` ou `into_non_null`
+des *smart pointers* `Box`, `Rc`, `Arc` ou `Weak` NE DOIVENT PAS être utilisées dans un code Rust non-*unsafe*.
 
 </div>
 
 <div class="reco" id="MEM-INTOFROMRAWALWAYS" type="Règle" title="Appel systématique à `from_raw` pour les valeurs créées avec `into_raw`">
 
 Dans un développement sécurisé en Rust, tout pointeur créé par un appel à
-`into_raw` (ou `into_non_null`) depuis un des types suivants doit
+`into_raw` (ou `into_non_null`) depuis un des types suivants DOIT
 finalement être transformé en valeur avec l'appel à la fonction `from_raw`
 correspondant, pour permettre sa libération :
 
@@ -143,7 +143,7 @@ devraient pas être utilisées sur des *raw pointers* qui ne sont pas issus de l
 
 <div class="reco" id="MEM-INTOFROMRAWONLY" type="Règle" title="Appel de `from_raw` uniquement pour les valeurs issues de `into_raw`">
 
-Dans un développement de sécurité en Rust, les fonctions `from_raw` ne doivent être appelées que sur des
+Dans un développement de sécurité en Rust, les fonctions `from_raw` NE DOIVENT être appelées QUE sur des
 valeurs issues de la fonction `into_raw`
 
 </div>
@@ -173,9 +173,9 @@ l'utilisation de `std::mem::uninitialized` ou de `std::mem::MaybeUninit`).
 
 <div class="reco" id="MEM-UNINIT" type="Règle" title="Pas de mémoire non initialisée">
 
-La fonction `std::mem::uninitialized` (dépréciée depuis la version 1.38) ne doit jamais être utilisée.
-Le type `std::mem::MaybeUninit` (stabilisé dans la version 1.36) ne doit être
-utilisé qu'en fournissant une justification pour chaque cas d'usage.
+La fonction `std::mem::uninitialized` (dépréciée depuis la version 1.38) NE DOIT PAS être utilisée.
+Le type `std::mem::MaybeUninit` (stabilisé dans la version 1.36) NE DOIT être
+utilisé QU'en fournissant une justification pour chaque cas d'usage.
 
 </div>
 
@@ -249,6 +249,6 @@ Hello, world!
 
 <div class="reco" id="MEM-MUT-REC-RC" type="Règle" title="Éviter les références comptées récursives mutables">
 
- Les types récursifs dont la récursion se base sur l'utilisation des références comptées `Rc` ou `Arc` ne doivent pas être mutables *intérieurement*.
+ Les types récursifs dont la récursion se base sur l'utilisation des références comptées `Rc` ou `Arc` NE DOIVENT PAS être mutables *intérieurement*.
 
 </div>
