@@ -96,7 +96,7 @@ tests for a project in Rust, and for using Rust fuzzing tools.-->
 A summary of recommendations presented throughout the document is listed at the
 end of this guide.
 
-## Reading guidelines
+## Notations
 
 For each of the recommendations in this guide, the use of the verb *must* is deliberately
 more prescriptive than the wording *it is recommended*.
@@ -107,16 +107,16 @@ based on their context and security objectives.
 
 The recommendations are therefore presented as follows:
 
-<div class="examplereco" id="EXAMPLE-RULE" type="Rule" title="State-of-the-art recommandation">
+<div class="examplereco" id="EXAMPLE-RULE" type="Rule" title="General recommandation">
 
-This recommendation enables the implementation of state-of-the-art security.
+This recommendation is formulated in conceptual terms, without taking into account
+the context of application or its implementation.
 
 </div>
 
-<div class="examplereco" id="EXAMPLE-RECO" type="Recommandation" title="Enforced recommandation">
+<div class="examplereco" id="EXAMPLE-RECO" type="Recommandation" title="Recommandation for higher security requirement">
 
-This recommendation supports the deployment of advanced security.
-It targets entities with mature information security capabilities.
+This recommandation is required for higher level security softwares.
 
 </div>
 
