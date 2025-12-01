@@ -58,7 +58,7 @@ struct SpecialType(u8, PhantomData<*const ()>);
 <div class="reco" id="LANG-SYNC-TRAITS" type="Rule" title="Justify `Send` and `Sync` implementation">
 
 In a Rust secure development, the manual implementation of the `Send` and
-`Sync` traits should be avoided and, if necessary, must be justified
+`Sync` traits SHOULD be avoided and, if necessary, MUST be justified
 and documented.
 
 </div>
@@ -160,14 +160,14 @@ of `unsafe` blocks.
 <div class="reco" id="LANG-CMP-INV" type="Rule" title="Respect the invariants of standard comparison traits">
 
 In a Rust secure development, the implementation of standard comparison traits
-must respect the invariants described in the documentation.
+MUST respect the invariants described in the documentation.
 
 </div>
 
 <div class="reco" id="LANG-CMP-DEFAULTS" type="Recommendation" title="Use the default method implementation of standard comparison traits">
 
 In a Rust secure development, the implementation of standard comparison traits
-should only define methods with no default implementation, so as to reduce
+SHOULD only define methods with no default implementation, so as to reduce
 the risk of violating the invariants associated with the traits.
 
 </div>
@@ -237,8 +237,8 @@ than manual ones and make the code shorter and easier to maintain.
 <div class="reco" id="LANG-CMP-DERIVE" type="Recommendation" title="Derive comparison traits when possible">
 
 In a secure Rust development, the implementation of standard comparison traits
-should be automatically derived with `#[derive(...)]` when structural equality
+SHOULD be automatically derived with `#[derive(...)]` when structural equality
 and lexicographical comparison is needed. Any manual implementation of
-standard comparison traits should be documented and justified.
+standard comparison traits SHOULD be documented and justified.
 
 </div>

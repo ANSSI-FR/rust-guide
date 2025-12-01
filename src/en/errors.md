@@ -8,15 +8,15 @@ A `Result` object must be tested, and never ignored.
 <div class="reco" id="LANG-ERRWRAP" type="Recommendation" title="Implement custom `Error` type wrapping all possible errors">
 
 A crate may implement its own `Error` type, wrapping all possible errors.
-It must be careful to make this type exception-safe (RFC 1236), and implement
+It MUST be careful to make this type exception-safe (RFC 1236), and implement
 `Error + Send + Sync + 'static` as well as `Display`.
 
 </div>
 
 <div class="reco" id="LANG-ERRDO" type="Rule" title="Use the `?` operator and do not use the `try!` macro">
 
-The `?` operator must be used to improve readability of code.
-The `try!` macro must not be used.
+The `?` operator MUST be used to improve readability of code.
+The `try!` macro MUST NOT be used.
 
 </div>
 
@@ -66,14 +66,14 @@ In other cases where the development is not subject to this type of standard:
 
 <div class="reco" id="LANG-NOPANIC" type="Rule" title="Don't use functions that can cause `panic!`">
 
-Functions or instructions that can cause the code to panic at runtime must not
+Functions or instructions that can cause the code to panic at runtime MUST NOT
 be used.
 
 </div>
 
 <div class="reco" id="LANG-ARRINDEXING" type="Rule" title="Test properly array indexing or use the `get` method">
 
-Array indexing must be properly tested, or the `get` method should be used to
+Array indexing must be properly tested, or the `get` method SHOULD be used to
 return an `Option`.
 
 </div>
@@ -96,8 +96,10 @@ Stack unwinding from Rust code into foreign code results in undefined behavior.
 
 <div class="reco" id="LANG-FFIPANIC" type="Rule" title="Handle correctly `panic!` in FFI">
 
-Rust code called from FFI must either ensure the function cannot panic, or use
-`catch_unwind` or the `std::panic` module to ensure the rust code will not
+Rust code called from FFI MUST either:
+
+* ensure the function cannot panic,
+* use `catch_unwind` or the `std::panic` module to ensure the rust code will not
 abort or return in an unstable state.
 
 </div>

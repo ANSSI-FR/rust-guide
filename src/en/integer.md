@@ -24,6 +24,6 @@ or the `overflowing_<op>` and `wrapping_<op>` operations on integers
 
 When assuming that an arithmetic operation can produce an overflow, the
 specialized functions `overflowing_<op>`, `wrapping_<op>`, or the
-`Wrapping` type must be used.
+`Wrapping` type MUST be used.
 
 </div>

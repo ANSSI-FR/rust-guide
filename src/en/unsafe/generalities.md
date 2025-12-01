@@ -24,7 +24,7 @@ These capabilities may be necessary for system programming but they cause the la
 
 <div class="reco" id="UNSAFE-NOUB" type="Rule" title="No Undefined Behavior">
 
-No Undefined Behavior is allowed.
+NO Undefined Behavior is allowed.
 
 </div>
 
@@ -76,7 +76,7 @@ That is why it is crucial to limit the use of `unsafe` features as much as possi
 
 <div class="reco" id="LANG-UNSAFE" type="Rule" title="Don't use unsafe blocks">
 
-In a secure Rust development, the `unsafe` blocks should be avoided, or must be justified by at least one of the following points:
+In a secure Rust development, the `unsafe` blocks SHOULD be avoided, or MUST be justified by at least one of the following points:
 
 * The Foreign Function Interface (FFI) of Rust allows for describing functions whose implementations are written in C, using the `extern "C"` prefix. To use such a function, the `unsafe` keyword is required. “Safe” wrapper shall be defined to safely and seamlessly call C code.
 
@@ -101,7 +101,7 @@ Aside from the `unsafe` code itself, it is also crucial to properly encapsulate 
 <div class="reco" id="LANG-UNSAFE-ENCP" type="Rule" title="Encapsulation of *unsafe* features">
 
 In secure development of a Rust software component (crate or module), all
-*unsafe* code must be encapsulated in such a way that:
+*unsafe* code MUST be encapsulated in such a way that:
 
 * either it exposes a safe behavior to the user, in which no safe interaction
   can result in UB (undefined behavior);

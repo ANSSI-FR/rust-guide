@@ -35,7 +35,7 @@ some particular constructions:
 
 <div class="reco" id="LANG-NAMING" type="Rule" title="Respect naming conventions">
 
-Development of a secure application must follow the naming conventions
+Development of a secure application MUST follow the naming conventions
 outlined in the [@rust-guidelines].
 
 </div>

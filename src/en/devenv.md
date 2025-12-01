@@ -92,7 +92,7 @@ $
 
 <div class="reco" id="DENV-STABLE" type="Rule" title="Use a stable compilation toolchain">
 
-Development of a secure application must be done using a fully stable
+Development of a secure application MUST be done using a fully stable
 toolchain, for limiting potential compiler, runtime or tool bugs.
 
 </div>
@@ -134,7 +134,7 @@ Tier 3 targets are simply not officially supported.
 The tier distinction helps developers choose a target that matches their risk tolerance: Tier 1 for production‑grade workloads, Tier 2 for experimental or niche architectures where full support isn’t yet met.
 
 <div class="reco" id="TIERS_TOOLCHAINS" type="Rule" title="Exclusive use of tier 1 of `rustc` for safety-critical software">
-Rustc tier 1 targets and certified toolchains must be used for safety-critical systems.
+Rustc tier 1 targets and certified toolchains MUST be used for safety-critical systems.
 </div>
 
 A comprehensive list of supported targets is available in [@rustc-book].
@@ -179,7 +179,7 @@ the file is overwritten with the latest available version of every crate.
 
 <div class="reco" id="DENV-CARGO-LOCK" type="Rule" title="Track Cargo.lock in version control system">
 
-`Cargo.lock` files must be tracked by version control system.
+`Cargo.lock` files MUST be tracked by version control system.
 
 </div>
 
@@ -212,7 +212,7 @@ using the debug profile that normally enables runtime checks (for example it doe
 
 <div class="reco" id="DENV-CARGO-OPTS" type="Rule" title="Keep default values for critical variables in cargo profiles">
 
-The variables `debug-assertions` and `overflow-checks` must not be overridden
+The variables `debug-assertions` and `overflow-checks` MUST NOT be overridden
 in development profiles' sections (`[profile.dev]` and `[profile.test]`).
 
 </div>
@@ -229,7 +229,7 @@ to use the Cargo build scripts feature.
 
 <div class="reco" id="DENV-CARGO-ENVVARS" type="Rule" title="Keep default values for compiler environment variables when running cargo">
 
-The environment variables `RUSTC`, `RUSTC_WRAPPER` and `RUSTFLAGS` must not
+The environment variables `RUSTC`, `RUSTC_WRAPPER` and `RUSTFLAGS` MUST NOT
 be overriden when using Cargo to build the project.
 
 </div>
@@ -257,7 +257,7 @@ at the [@rust-style].
 
 <div class="reco" id="DENV-FORMAT" type="Recommendation" title="Use Rust formatter (rustfmt)">
 
-The tool `rustfmt` should be used to ensure that the codebase respects style
+The tool `rustfmt` SHOULD be used to ensure that the codebase respects style
 guidelines (as described in `rustfmt.toml` file).
 
 </div>
@@ -317,7 +317,7 @@ category `clippy::nursery` since those hints are still under development.
 
 <div class="reco" id="DENV-LINTER" type="Rule" title="Use linter regularly">
 
-A linter, such as `clippy`, must be used regularly during the development of
+A linter, such as `clippy`, MUST be used regularly during the development of
 a secure application.
 
 </div>
@@ -325,7 +325,7 @@ a secure application.
 <div class="reco" id="DENV-AUTOFIX" type="Rule" title="Manually check automatic fixes">
 
 In a secure Rust development, any automatic fix (for instance, provided by
-`rustfix` or `clippy`) must be verified by the developer.
+`rustfix` or `clippy`) MUST be verified by the developer.
 
 </div>
 

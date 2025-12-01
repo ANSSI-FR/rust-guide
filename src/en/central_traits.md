@@ -24,7 +24,7 @@ blocks as well as other security-critical operations.
 <div class="reco" id="LANG-DROP" type="Rule" title="Justify `Drop` implementation">
 
 In a Rust secure development, the implementation of the `std::ops::Drop` trait
-must be justified and documented.
+MUST be justified and documented.
 
 </div>
 
@@ -45,7 +45,7 @@ resources leading to availability issues.
 <div class="reco" id="LANG-DROP-NO-PANIC" type="Rule" title="Do not panic in `Drop` implementation">
 
 In a Rust secure development, the implementation of the `std::ops::Drop` trait
-must not panic.
+MUST not panic.
 
 </div>
 
@@ -53,7 +53,7 @@ Beside panics, secure-critical drop should be protected.
 
 <div class="reco" id="LANG-DROP-NO-CYCLE" type="Rule" title="Do not allow cycles of reference-counted `Drop`">
 
-A value whose type implements `Drop` must not be embedded directly or indirectly
+A value whose type implements `Drop` MUST NOT be embedded directly or indirectly
 in a cycle of reference-counted references.
 
 </div>
@@ -61,7 +61,7 @@ in a cycle of reference-counted references.
 <div class="reco" id="LANG-DROP-SEC" type="Rule" title="Do not rely only on `Drop` to ensure security">
 
 Ensuring security operations at the end of some treatment (such as key erasure
-at the end of a cryptographic encryption) must not rely only on the `Drop`
+at the end of a cryptographic encryption) MUST NOT rely only on the `Drop`
 trait implementation.
 
 </div>

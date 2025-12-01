@@ -75,7 +75,7 @@ are compatible with the following C types:
 
 <div class="reco" id="FFI-CTYPE" type="Rule" title="Use only C-compatible types in FFI">
 
-In a secure Rust development, only C-compatible types must be used as
+In a secure Rust development, non C-compatible types MUST NOT be used as
 parameter or return type of imported or exported functions and as types of
 imported or exported global variables.
 
@@ -119,10 +119,10 @@ Some types are compatible with some caveats:
 
 <div class="reco" id="FFI-TCONS" type="Rule" title="Use consistent types at FFI boundaries">
 
-Types must be consistent on each side of the FFI boundary.
+Types MUST be consistent on each side of the FFI boundary.
 
 Although some details may be hidden on one side with respect to the other
-(typically to make a type opaque), types on both sides must have the same size
+(typically to make a type opaque), types on both sides MUST have the same size
 and the same alignment requirement.
 
 </div>
@@ -135,7 +135,7 @@ Automated tools to generate bindings, such as [rust-bindgen] or
 
 <div class="reco" id="FFI-AUTOMATE" type="Recommendation" title="Use automatic binding generator tools">
 
-In a secure Rust development, automated generation tools should be used to
+In a secure Rust development, automated generation tools SHOULD be used to
 generate bindings when possible and to maintain them continually.
 
 </div>
@@ -183,7 +183,7 @@ the C standard library.
 <div class="reco" id="FFI-PFTYPE" type="Rule" title="Use portable aliases `c_*` when binding to platform-dependent types">
 
 In a secure Rust development, when interfacing with foreign code that
-uses platform-dependent types, such as C's `int` and `long`, Rust code must
+uses platform-dependent types, such as C's `int` and `long`, Rust code MUST
 use portable type aliases, such as the ones provided by the standard library or the
 [libc] crate, rather than platform-specific types, except if
 the binding is automatically generated for each platform (see Note below).
@@ -237,7 +237,7 @@ validity of boundary-crossing values** and how to do it.
 
 <div class="reco" id="FFI-CKNONROBUST" type="Rule" title="Do not use unchecked non-robust foreign values">
 
-In a secure Rust development, there must not be any use of *unchecked* foreign
+In a secure Rust development, there MUST NOT be any use of *unchecked* foreign
 values of non-robust types.
 
 In other words, either Rust translates robust types into non-robust types
@@ -250,7 +250,7 @@ validity of the value.
 
 <div class="reco" id="FFI-CKINRUST" type="Recommendation" title="Check foreign values in Rust">
 
-In a secure Rust development, the validity checks of foreign values should
+In a secure Rust development, the validity checks of foreign values SHOULD
 be done in Rust when possible.
 
 </div>
@@ -308,7 +308,7 @@ an `unsafe` block or function.
 
 <div class="reco" id="FFI-NOREF" type="Rule" title="Do not use reference types in a FFI but pointer types">
 
-In a secure Rust development, the Rust code in a FFI must not use reference types
+In a secure Rust development, the Rust code in a FFI MUST NOT use reference types
 but pointer types.
 
 Exceptions include:
@@ -327,7 +327,7 @@ Exceptions include:
 <div class="reco" id="FFI-CKREF" type="Rule" title="Do not use unchecked foreign references">
 
 In a secure Rust development, every foreign reference that is transmitted to
-Rust through FFI must be **checked on the foreign side** either automatically
+Rust through FFI MUST be **checked on the foreign side** either automatically
 (for instance, by a compiler) or manually.
 
 Exceptions include Rust references in an opaque wrapping that are created
@@ -341,8 +341,8 @@ and manipulated only from the Rust side and `Option`-wrapped references
 <div class="reco" id="FFI-CKPTR" type="Rule" title="Check foreign pointers">
 
 In a secure Rust development, any Rust code that dereferences a foreign
-pointer must check their validity beforehand.
-In particular, pointers must be checked to be non-null before any use.
+pointer MUST check their validity beforehand.
+In particular, pointers MUST be checked to be non-null before any use.
 
 Stronger approaches are advisable when possible. They include checking
 pointers against known valid memory range or tagging (or signing) pointers
@@ -383,7 +383,7 @@ execution and represent a real security risks.
 <div class="reco" id="FFI-MARKEDFUNPTR" type="Rule" title="Mark function pointer types in FFI as `extern` and `unsafe`">
 
 In a secure Rust development, any function pointer types at the FFI boundary
-must be marked `extern` (possibly with the specific ABI) and `unsafe`.
+MUST be marked `extern` (possibly with the specific ABI) and `unsafe`.
 
 </div>
 
@@ -409,7 +409,7 @@ possibilities:
 
 <div class="reco" id="FFI-CKFUNPTR" type="Rule" title="Check foreign function pointers">
 
-In a secure Rust development, any foreign function pointer must be checked at
+In a secure Rust development, any foreign function pointer MUST be checked at
 the FFI boundary.
 
 </div>
@@ -438,7 +438,7 @@ environment.
 <div class="reco" id="FFI-NOENUM" type="Rule" title="Do not use incoming Rust `enum` at FFI boundary">
 
 In a secure Rust development, when interfacing with a foreign language,
-the Rust code must not accept incoming values of any Rust `enum` type.
+the Rust code MUST NOT accept incoming values of any Rust `enum` type.
 
 Exceptions include Rust `enum` types that are:
 
@@ -462,7 +462,7 @@ When doing multilingual development, it is something very common.
 
 <div class="reco" id="FFI-R-OPAQUE" type="Recommendation" title="Use dedicated Rust types for foreign opaque types">
 
-In a secure Rust development, when binding foreign opaque types, one should
+In a secure Rust development, when binding foreign opaque types, one SHOULD
 use pointers to dedicated opaque types rather than `c_void` pointers.
 
 </div>
@@ -481,7 +481,7 @@ to declare opaque types in `extern` blocks.
 <div class="reco" id="FFI-C-OPAQUE" type="Recommendation" title="Use incomplete C/C++ `struct` pointers to make type opaque">
 
 In a secure Rust development, when interfacing with C or C++, Rust types that
-are to be considered opaque in C/C++ should be translated as incomplete
+are to be considered opaque in C/C++ SHOULD be translated as incomplete
 `struct` types (i,e., declared without definition) and be provided with
 a dedicated constructor and destructor.
 
@@ -508,7 +508,7 @@ abandoning the possible reclamations associated with it.
 
 <div class="reco" id="FFI-MEM-NODROP" type="Rule" title="Do not use types that implement `Drop` at FFI boundary">
 
-In a secure Rust development, Rust code must not implement `Drop` for any
+In a secure Rust development, Rust code MUST NOT implement `Drop` for any
 types that are directly transmitted to foreign code  (i.e. not through a
 pointer or reference).
 
@@ -525,11 +525,11 @@ responsible for allocating and deallocating memory.
 <div class="reco" id="FFI-MEM-OWNER" type="Rule" title="Ensure clear data ownership in FFI">
 
 In a secure Rust development, when data of some type passes without copy
-through a FFI boundary, one must ensure that:
+through a FFI boundary, one MUST ensure that:
 
 - A single language is responsible for both allocation and deallocation of
   data.
-- The other language must not allocate or free the data directly but use
+- The other language MUST NOT allocate or free the data directly but use
   dedicated foreign functions provided by the chosen language.
 
 </div>
@@ -542,7 +542,7 @@ wrapper around the foreign type:
 <div class="reco" id="FFI-MEM-WRAPPING" type="Recommendation" title="Wrap foreign data in memory releasing wrapper">
 
 In a secure Rust development, any non-sensitive foreign piece of data that are
-allocated and deallocated in the foreign language should be encapsulated in a
+allocated and deallocated in the foreign language SHOULD be encapsulated in a
 `Drop` type in such a way as to provide automatic deallocation in Rust,
 through an automatic call to the foreign language deallocation routine.
 
@@ -593,7 +593,7 @@ stack unwinding from Rust code into foreign code results in **undefined behavior
 
 <div class="reco" id="FFI-NOPANIC" type="Rule" title="Handle `panic!` correctly in FFI">
 
-Rust code called from FFI must either ensure the function cannot panic, or use
+Rust code called from FFI MUST either ensure the function cannot panic, or use
 a panic handling mechanism (such as `std::panic::catch_unwind`,
 `std::panic::set_hook`, `#[panic_handler]`) to ensure the rust code will not
 abort or return in an unstable state.
@@ -624,7 +624,7 @@ trick: the linker fails if a non-trivially-dead branch leads to `panic!`.
 
 <div class="reco" id="FFI-SAFEWRAPPING" type="Recommendation" title="Provide safe wrapping to foreign library">
 
-Interfacing a library written in another language in Rust should be done in
+Interfacing a library written in another language in Rust SHOULD be done in
 two parts:
 
 - a low-level, possibly *hidden*, module that closely translates the original
@@ -632,7 +632,7 @@ two parts:
 - a safe wrapping module that ensures memory safety and security invariants at
   the Rust level.
 
-If the low-level API is exposed to the world, it should be done in a dedicated
+If the low-level API is exposed to the world, it SHOULD be done in a dedicated
 crate with a name of the form `*-sys`.
 
 </div>
@@ -649,7 +649,7 @@ part of the binding from C header files.
 <div class="reco" id="FFI-CAPI" type="Rule" title="Expose dedicated C-compatible API only">
 
 In a secure Rust development, exposing a Rust library to a foreign language
-should only be done through a **dedicated C-compatible API**.
+SHOULD only be done through a **dedicated C-compatible API**.
 
 </div>
 

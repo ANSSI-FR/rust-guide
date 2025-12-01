@@ -47,7 +47,7 @@ Regardless of the method used to retrieve dependencies (*crate* or GIT commit), 
 
 <div class="reco" id="LIBS-VETTING-DIRECT" type="Rule" title="Validation of Direct Third-Party Dependencies">
 
-Each direct third-party dependency must be properly validated, and each validation must be tracked.
+Each direct third-party dependency MUST be properly validated, and each validation MUST be tracked.
 
 </div>
 
@@ -55,7 +55,7 @@ With regard to transitive dependencies, it is also recommended to validate them 
 
 <div class="reco" id="LIBS-VETTING-TRANSITIVE" type="Recommendation" title="Validation of Transitive Third-Party Dependencies">
 
-Each third-party dependency should be properly validated, and each validation should be tracked.
+Each third-party dependency SHOULD be properly validated, and each validation SHOULD be tracked.
 
 </div>
 
@@ -71,8 +71,8 @@ version.
 
 <div class="reco" id="LIBS-OUTDATED" type="Rule" title="Check for outdated dependencies versions (cargo-outdated)">
 
-The `cargo-outdated` tool must be used to check dependencies' status. Then,
-each outdated dependency should be updated or the choice of the version must be
+The `cargo-outdated` tool MUST be used to check dependencies' status. Then,
+each outdated dependency SHOULD be updated or the choice of the version MUST be
 justified.
 
 </div>
@@ -86,7 +86,7 @@ reported to the RustSec Advisory Database.
 
 <div class="reco" id="LIBS-AUDIT" type="Rule" title="Check for security vulnerabilities report on dependencies (cargo-audit)">
 
-The `cargo-audit` tool must be used to check for known vulnerabilities in
+The `cargo-audit` tool MUST be used to check for known vulnerabilities in
 dependencies.
 
 </div>
