@@ -24,7 +24,7 @@ blocks as well as other security-critical operations.
 <div class="reco" id="LANG-DROP" type="Rule" title="Justify `Drop` implementation">
 
 In a Rust secure development, the implementation of the `std::ops::Drop` trait
-must be justified, documented and peer-reviewed.
+must be justified and documented.
 
 </div>
 

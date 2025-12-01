@@ -84,9 +84,8 @@ Aussi, il est important de limiter l'usage de `unsafe` au strict nécessaire :
 
 <div class="reco" id="LANG-UNSAFE" type="Règle" title="Non-utilisation des blocs *unsafe*">
 
-Pour un développement sécurisé, les blocs `unsafe` doivent être évités.
-Ci-dessous, nous listons les seuls cas pour lesquels des blocs `unsafe`
-peuvent être utilisés, à la condition que leur usage soit justifié :
+Pour un développement sécurisé, les blocs `unsafe` devraient être évités,
+ou doivent être justifiés par au moins l'une des raisons suivantes :
 
 * L'interfaçage entre Rust et d'autres langages (FFI) permet la déclaration de
   fonctions dont l'implantation est faite en C, en utilisant le préfixe

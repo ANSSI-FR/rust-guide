@@ -72,7 +72,7 @@ version.
 <div class="reco" id="LIBS-OUTDATED" type="Rule" title="Check for outdated dependencies versions (cargo-outdated)">
 
 The `cargo-outdated` tool must be used to check dependencies' status. Then,
-each outdated dependency must be updated or the choice of the version must be
+each outdated dependency should be updated or the choice of the version must be
 justified.
 
 </div>

@@ -73,7 +73,7 @@ dernière version compatible disponible ainsi que la dernière version en géné
 <div class="reco" id="LIBS-OUTDATED" type="Règle" title="Vérification des dépendances obsolètes (cargo-outdated)">
 
 L'outil `cargo-outdated` doit être utilisé pour vérifier le statut des
-dépendances. Ensuite, chaque dépendance importée en version obsolète doit
+dépendances. Ensuite, chaque dépendance importée en version obsolète devrait
 être mise à jour ou bien, le cas échéant, le choix de la version doit être
 justifié.
 

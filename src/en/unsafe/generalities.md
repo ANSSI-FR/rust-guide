@@ -76,9 +76,7 @@ That is why it is crucial to limit the use of `unsafe` features as much as possi
 
 <div class="reco" id="LANG-UNSAFE" type="Rule" title="Don't use unsafe blocks">
 
-In a secure Rust development, the `unsafe` blocks must be avoided. In the following,
-we list the only cases where `unsafe` may be used, provided that they come
-with a proper justification:
+In a secure Rust development, the `unsafe` blocks should be avoided, or must be justified by at least one of the following points:
 
 * The Foreign Function Interface (FFI) of Rust allows for describing functions whose implementations are written in C, using the `extern "C"` prefix. To use such a function, the `unsafe` keyword is required. “Safe” wrapper shall be defined to safely and seamlessly call C code.
 

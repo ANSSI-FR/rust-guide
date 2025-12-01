@@ -28,7 +28,7 @@ final, il est probable que l'implémentation du trait `Drop` contienne des blocs
 <div class="reco" id="LANG-DROP" type="Règle" title="Justification de l'implémentation du trait `Drop`">
 
 Dans un développement sécurisé en Rust, l'implémentation du trait
-`std::ops::Drop` doit être justifiée, documentée et examinée par des pairs.
+`std::ops::Drop` doit être justifiée et documentée.
 
 </div>
 

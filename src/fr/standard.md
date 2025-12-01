@@ -63,8 +63,8 @@ struct SpecialType(u8, PhantomData<*const ()>);
 <div class="reco" id="LANG-SYNC-TRAITS" type="Règle" title="Justification de l'implémentation des traits `Send` et `Sync`">
 
 Dans un développement sécurisé en Rust, l'implémentation manuelle des traits
-`Send` et `Sync` doit être évitée, et, si nécessaire, doit être justifiée,
-documentée et révisée par des pairs.
+`Send` et `Sync` devrait être évitée, et, si nécessaire, doit être justifiée
+et documentée.
 
 </div>
 
