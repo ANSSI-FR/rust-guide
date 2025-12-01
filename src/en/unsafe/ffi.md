@@ -49,6 +49,30 @@ with the `static` keyword:
 {{#include ../../../examples/src/ffi.rs:extern_static}}
 ```
 
+## Code structure
+
+<div class="reco" id="FFI-SAFEWRAPPING" type="Recommendation" title="Provide safe wrapping to foreign library">
+
+Interfacing a library written in another language in Rust SHOULD be done in
+two parts:
+
+- a low-level, possibly *hidden*, module that closely translates the original
+  C API into `extern` blocks,
+- a safe wrapping module that ensures memory safety and security invariants at
+  the Rust level.
+
+If the low-level API is exposed to the world, it SHOULD be done in a dedicated
+crate with a name of the form `*-sys`.
+
+</div>
+
+The crate [rust-bindgen] may be used to automatically generate the low-level
+part of the binding from C header files.
+
+<!--
+<mark>TODO</mark> example
+-->
+
 ## Typing
 
 Typing is the way Rust ensures memory safety. When interfacing with other
@@ -308,7 +332,7 @@ an `unsafe` block or function.
 
 <div class="reco" id="FFI-NOREF" type="Rule" title="Do not use reference types in a FFI but pointer types">
 
-In a secure Rust development, the Rust code in a FFI MUST NOT use reference types
+In a secure Rust development, the Rust *low-level* code (the `*-sys` crate) in a FFI MUST NOT use reference types
 but pointer types.
 
 Exceptions include:
@@ -620,29 +644,6 @@ trick: the linker fails if a non-trivially-dead branch leads to `panic!`.
 [`panic-never`]: https://crates.io/crates/panic-never
 [`no-panic`]: https://crates.io/crates/no-panic
 
-## Binding a foreign library in Rust
-
-<div class="reco" id="FFI-SAFEWRAPPING" type="Recommendation" title="Provide safe wrapping to foreign library">
-
-Interfacing a library written in another language in Rust SHOULD be done in
-two parts:
-
-- a low-level, possibly *hidden*, module that closely translates the original
-  C API into `extern` blocks,
-- a safe wrapping module that ensures memory safety and security invariants at
-  the Rust level.
-
-If the low-level API is exposed to the world, it SHOULD be done in a dedicated
-crate with a name of the form `*-sys`.
-
-</div>
-
-The crate [rust-bindgen] may be used to automatically generate the low-level
-part of the binding from C header files.
-
-<!--
-<mark>TODO</mark> example
--->
 
 ## Binding a Rust library in another language
 

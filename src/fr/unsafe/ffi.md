@@ -49,6 +49,30 @@ globales externes, préfixées alors par le mot-clé `static` :
 {{#include ../../../examples/src/ffi.rs:extern_static}}
 ```
 
+## Organisation du code
+
+<div class="reco" id="FFI-SAFEWRAPPING" type="Recommandation" title="Mise en place d'une encapsulation sûre pour les bibliothèques externes">
+
+L'interfaçage entre une bibliothèque écrite dans un autre langage et
+du code Rust DEVRAIT être réalisé en deux parties :
+
+- un module bas-niveau, potentiellement *caché*, qui traduit de façon très
+  proche l'API originale en des blocs `extern` ;
+- un module qui assure la sûreté mémoire et les invariants de sécurité au
+  niveau de Rust.
+
+Si l'API bas-niveau est exposée, cela DEVRAIT être fait dans un *crate* dédiée
+ayant un nom de la forme `*-sys`.
+
+</div>
+
+La *crate* [rust-bindgen] peut être utilisée pour générer automatiquement la
+partie bas-niveau du *binding* depuis les fichiers *header* C.
+
+<!--
+<mark>TODO</mark> example
+-->
+
 ## Typage
 
 Le typage est le moyen qu'utilise Rust pour assurer la sûreté mémoire. Lors de
@@ -334,10 +358,12 @@ langages compatibles avec le C, incluants les variantes de C qui mettent en
 oeuvre la vérification que les pointeurs sont non nuls, comme du code annoté à
 l'aide Microsoft SAL par exemple.
 
-<div class="reco" id="FFI-NOREF" type="Règle" title="Non-utilisation des types références au profit des types pointeurs aux frontières avec un langage externe">
+<div class="reco" id="FFI-NOREF" type="Règle" title="Non-utilisation des types références au profit des types pointeurs à la frontière avec un langage externe">
 
-Dans un développement sécurisé en Rust, le code Rust NE DOIT PAS utiliser de
-types références aux frontières avec le langage externe, mais des types pointeurs.
+Dans un développement sécurisé en Rust, le code Rust de la partie
+*bas-niveau* de la liaison à une bibliothèque écrite dans un langage externe
+(la crate `*-sys`)
+NE DOIT PAS utiliser de types références aux frontières avec le langage externe, mais des types pointeurs.
 
 Les exceptions sont :
 
@@ -678,29 +704,6 @@ inaccessible mène à un appel à `panic!`.
 [`panic-never`]: https://crates.io/crates/panic-never
 [`no-panic`]: https://crates.io/crates/no-panic
 
-## Liaison d'une bibliothèque externe à du code Rust
-
-<div class="reco" id="FFI-SAFEWRAPPING" type="Recommandation" title="Mise en place d'une encapsulation sûre pour les bibliothèques externes">
-
-L'interfaçage entre une bibliothèque écrite dans un autre langage et
-du code Rust DEVRAIT être réalisé en deux parties :
-
-- un module bas-niveau, potentiellement *caché*, qui traduit de façon très
-  proche l'API originale en des blocs `extern` ;
-- un module qui assure la sûreté mémoire et les invariants de sécurité au
-  niveau de Rust.
-
-Si l'API bas-niveau est exposée, cela DEVRAIT être fait dans un *crate* dédiée
-ayant un nom de la forme `*-sys`.
-
-</div>
-
-La *crate* [rust-bindgen] peut être utilisée pour générer automatiquement la
-partie bas-niveau du *binding* depuis les fichiers *header* C.
-
-<!--
-<mark>TODO</mark> example
--->
 
 ## Liaison entre une bibliothèque Rust et du code d'un autre langage
 
