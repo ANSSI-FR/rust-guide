@@ -92,14 +92,20 @@ suggestions et discussions (*issues*).
 ## Organisation du guide
 
 La structure de ce document vise à discuter successivement des différentes
-phases typiques (et simplifiées) d'un processus de développement. Tout d'abord,
-nous proposons des recommandations concernant l'utilisation des outils de
-l'écosystème Rust dans un cadre sécurisé. Ensuite, nous détaillons les
+phases typiques (et simplifiées) d'un processus de développement.
+Tout d'abord, nous proposons des recommandations concernant l'utilisation des outils de
+l'écosystème Rust dans un cadre sécurisé, ainsi que les
 précautions à prendre durant le choix et l'utilisation de bibliothèques
-externes. Ensuite, les recommandations à propos des constructions du langage
-sont présentées. <!-- TODO: Enfin, nous discutons de la bonne utilisation des outils de
-test et de *fuzzing* pour un projet réalisé en Rust.--> Un résumé des règles et
-recommandations est disponible à la fin de ce guide.
+externes.
+Ensuite, les recommandations à propos des constructions du langage
+sont présentées.
+<!-- TODO: Enfin, nous discutons de la bonne utilisation des outils de
+test et de *fuzzing* pour un projet réalisé en Rust.--> 
+Enfin, nous discutons du bon usage de certaines librairies.
+
+Il est à noter que la version actuelle du guide ne propose pas de recommandation concernant Rust *async*.
+
+Un résumé des règles et recommandations est disponible à la fin de ce guide.
 
 ## Convention de lecture
 

@@ -87,12 +87,15 @@ propositions (*pull requests*) or in the form of suggestions and discussions
 This document considers separately different phases of a typical (and simplified)
 development process.
 Firstly, we provide some advice on how to take advantage of using tools of the
-Rust ecosystem for secure development.
-A following chapter focuses on precautions to take when choosing and using
+Rust ecosystem for secure development, and other advices on precautions to take when choosing and using
 external libraries.
 Then, recommendations about the Rust language constructs are presented.
 <!-- TODO: Finally, we introduce advices for writing
 tests for a project in Rust, and for using Rust fuzzing tools.-->
+We finally introduce some recommendation for established Rust libraries.
+
+Note that *async* Rust is currently eluded from recommendations list.
+
 A summary of recommendations presented throughout the document is listed at the
 end of this guide.
 
@@ -107,16 +110,16 @@ based on their context and security objectives.
 
 The recommendations are therefore presented as follows:
 
-<div class="examplereco" id="EXAMPLE-RULE" type="Rule" title="General recommandation">
+<div class="examplereco" id="EXAMPLE-RULE" type="Rule" title="General recommendation">
 
 This recommendation is formulated in conceptual terms, without taking into account
 the context of application or its implementation.
 
 </div>
 
-<div class="examplereco" id="EXAMPLE-RECO" type="Recommandation" title="Recommandation for higher security requirement">
+<div class="examplereco" id="EXAMPLE-RECO" type="Recommandation" title="Recommendation for higher security requirement">
 
-This recommandation is required for higher level security softwares.
+This recommendation is required for higher level security softwares.
 
 </div>
 
