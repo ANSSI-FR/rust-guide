@@ -46,7 +46,7 @@ impl !Send for SpecialType {}
 impl !Sync for SpecialType {}
 ```
 L'implémentation négative de `Send` ou `Sync` est également utilisée dans la
-bibliothèque standard pour les exceptions, et est automatiquement implémentée
+bibliothèque Rust pour les exceptions, et est automatiquement implémentée
 lorsque cela est approprié. En résultat, la documentation générée est toujours
 explicite : un type implémente soit `Send` (respectivement `Sync`), soit
 `!Send` (respectivement `!Sync`).

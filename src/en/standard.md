@@ -41,7 +41,7 @@ impl !Send for SpecialType {}
 impl !Sync for SpecialType {}
 ```
 
-The negative implementation of `Send` or `Sync` are also used in the standard
+The negative implementation of `Send` or `Sync` are also used in the Rust
 library for the exceptions, and are automatically implemented when appropriate.
 As a result, the generated documentation is always explicit: a type implements
 either `Send` or `!Send` (resp. `Sync` or `!Sync`).
