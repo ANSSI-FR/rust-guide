@@ -257,7 +257,7 @@ at the [@rust-style].
 
 <div class="reco" id="DENV-FORMAT" type="Recommendation" title="Use Rust formatter (rustfmt)">
 
-The tool `rustfmt` may be used to ensure that the codebase respects style
+The tool `rustfmt` should be used to ensure that the codebase respects style
 guidelines (as described in `rustfmt.toml` file).
 
 </div>
