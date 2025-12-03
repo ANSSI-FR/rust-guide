@@ -8,6 +8,18 @@ l'exécution d'opérations arithmétiques sur les entiers.
 
 En particulier, il faut noter que le profil de compilation (généralement *dev*, la compilation de débogage par défaut, ou *release*, la compilation optimisée standard) modifie le comportement en cas de dépassement d'entier. En configuration *dev*, un dépassement provoque l'arrêt du programme (`panic`), tandis qu'en configuration *release*, la valeur calculée est silencieusement tronquée au nombre de bits du type numérique, ce qui donne une sémantique d'arithmétique circulaire (*wrap-around*).
 
+<div class="note">
+
+Le comportement en cas de dépassement d'entier peut être défini explicitement par l'option de compilation `-C overflow-checks=true` (ou `false`).
+Il peut également être modifié dans la définition du profil dans `Cargo.toml` :
+
+```toml
+[profile.release]
+overflow-checks = true  # enable overflow checks in release builds
+```
+
+</div>
+
 Lorsqu'un dépassement est possible, le comportement peut être rendu explicite soit en utilisant des méthodes spécifiques, soit en utilisant des types enveloppants spécifiques.
 
 Les méthodes sont de la forme `<mode>_<op>`, où `<mode>` est `checked`, `overflowing`, `wrapping` ou `saturating`, et `<op>` est `add`, `mul`, `sub`, `shr`, etc. Les sémantiques sont les suivantes :
@@ -25,6 +37,7 @@ Les types enveloppants sont `Wrapping<T>` et `Saturating<T>` (de `std::num`), o�
 
 <div class="reco" id="LANG-ARITH" type="Règle" title="Utilisation des opérations arithmétiques appropriées au regard des potentiels dépassements">
 
-Lorsqu'une opération arithmétique peut produire un dépassement, les opérateurs classiques sur les entiers ne doivent pas être utilisés. Les méthodes spécialisées comme `checked_<op>`, `overflowing_<op>`, `wrapping_<op>`, ou `saturating_<op>`, ou des types enveloppants spécialisés comme `Wrapping` ou `Saturating`, doivent être utilisés pour rendre le comportement explicite et homogène, quel que soit le profil de compilation.
+Lorsqu'une opération arithmétique peut produire un dépassement, les opérateurs classiques sur les entiers NE DOIVENT PAS être utilisés.
+Les méthodes spécialisées comme `checked_<op>`, `overflowing_<op>`, `wrapping_<op>`, ou `saturating_<op>`, ou des types enveloppants spécialisés comme `Wrapping` ou `Saturating`, DOIVENT être utilisés pour rendre le comportement explicite et homogène, quel que soit le profil de compilation.
 
 </div>

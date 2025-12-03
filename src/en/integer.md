@@ -6,6 +6,18 @@ Although Rust performs some checks for potential integer overflows, precautions 
 
 In particular, note that the compilation profile (typically *dev*, the default debug build, or *release*, the standard optimized build) changes integer overflow behavior. In the *dev* configuration, overflow causes the termination of the program (`panic`), whereas in the *release* configuration, the computed value is silently truncated to the number of bits of the numeric type, giving it wrap-around semantics.
 
+<div class="note">
+
+The integer overflow behavior can be explicitly defined by the compilation option `-C overflow-checks=true` (or `false`).
+It can also be modified in the profile definition in `Cargo.toml`:
+
+```toml
+[profile.release]
+overflow-checks = true  # enable overflow checks in release builds
+```
+
+</div>
+
 When an overflow is possible, the behavior can be made explicit either by using specific methods or by using specific wrapper types.
 
 The methods are of the form `<mode>_<op>`, where `<mode>` is `checked`, `overflowing`, `wrapping`, or `saturating`, and `<op>` is `add`, `mul`, `sub`, `shr`, etc. The semantics are as follows:
