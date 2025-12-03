@@ -101,11 +101,6 @@ ou DOIVENT être justifiés par au moins l'une des raisons suivantes :
   identifier les accès critiques, une abstraction adaptée (structure de
   données ou module) doit être mise en place.
 
-* Une fonction peut être marquée globalement comme non sûre (en préfixant sa
-  déclaration par le mot-clé `unsafe`) lorsqu'elle exhibe inévitablement des
-  comportements non sûrs en fonction de ses arguments. Par exemple, cela
-  arrive lorsqu'une fonction doit déréférencer un pointeur passé en argument.
-
 * Lorsque les performances sont impactées sur une petite partie de code (Buffer zero-copy modifié directement en mémoire, gestion des allocations, etc.).
 
 À l'exception de l'un ou plusieurs de ces cas `#![forbid(unsafe_code)]` DOIT
