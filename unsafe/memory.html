@@ -215,11 +215,11 @@ leading to deadlocks or not erasing sensitive data from the memory. This is why
 <code>forget</code> is <strong>unsecure</strong>.</p>
 <div class="reco" id="MEM-FORGET" type="Rule" title="Do not use `forget`">
 <p>In a secure Rust development, the <code>forget</code> function of <code>std::mem</code>
-(<code>core::mem</code>) must not be used.</p>
+(<code>core::mem</code>) MUST NOT be used.</p>
 </div>
 <!-- -->
 <div class="reco" id="MEM-FORGET-LINT" type="Recommendation" title="Use clippy lint to detect use of `forget`">
-<p>The lint <code>mem_forget</code> of Clippy may be used to automatically detect any use of
+<p>The lint <code>mem_forget</code> of Clippy SHOULD be used to automatically detect any use of
 <code>forget</code>. To enforce the absence of <code>forget</code> in a crate, add the following
 line at the top of the root file (usually <code>src/lib.rs</code> or <code>src/main.rs</code>):</p>
 <pre><code class="language-rust noplaypen ignore">#![deny(clippy::mem_forget)]</code></pre>
@@ -233,13 +233,13 @@ line at the top of the root file (usually <code>src/lib.rs</code> or <code>src/m
 <p>Those alternatives may lead to the same security issue but they have the
 additional benefit of making their goal obvious.</p>
 <div class="reco" id="MEM-LEAK" type="Rule" title="Do not use `leak` function">
-<p>In a secure Rust development, the code must not leak memory or resource in
+<p>In a secure Rust development, the code MUST NOT leak memory or resource in
 particular via <code>Box::leak</code>.</p>
 </div>
 <p><code>ManuallyDrop</code> and <code>Box::into_raw</code> shift the release responsibility from the
 compiler to the developer.</p>
 <div class="reco" id="MEM-MANUALLYDROP" type="Rule" title="Do release value wrapped in `ManuallyDrop`">
-<p>In a secure Rust development, any value wrapped in <code>ManuallyDrop</code> must be
+<p>In a secure Rust development, any value wrapped in <code>ManuallyDrop</code> MUST be
 unwrapped to allow for automatic release (<code>ManuallyDrop::into_inner</code>)
 or manually released (unsafe <code>ManuallyDrop::drop</code>).</p>
 </div>
@@ -250,8 +250,8 @@ as <em>smart pointers</em> and often have to be used in <code>unsafe</code> cont
 raw pointers must be done manually without Rust guaranties.</p>
 <div class="reco" id="MEM-NORAWPOINTER" type="Rule" title="Do no convert smart pointer into raw pointer in Rust without `unsafe`">
 <p>In a secure Rust development without <code>unsafe</code>, references and <em>smart pointers</em>
-should not be converted into <em>raw pointers</em>. For instance, functions <code>into_raw</code> ou <code>into_non_null</code>
-of smart pointers <code>Box</code>, <code>Rc</code>, <code>Arc</code> or <code>Weak</code> should not be used.</p>
+MUST NOT be converted into <em>raw pointers</em>. For instance, functions <code>into_raw</code> ou <code>into_non_null</code>
+of smart pointers <code>Box</code>, <code>Rc</code>, <code>Arc</code> or <code>Weak</code> MUST NOT be used.</p>
 </div>
 <div class="reco" id="MEM-INTOFROMRAWALWAYS" type="Rule" title="Always call `from_raw` on `into_raw`ed value">
 <p>In a secure Rust development, any pointer created with a call to <code>into_raw</code>
@@ -265,7 +265,7 @@ of smart pointers <code>Box</code>, <code>Rc</code>, <code>Arc</code> or <code>W
 <li><code>std::ffi::CString</code>,</li>
 <li><code>std::ffi::OsString</code>,</li>
 </ul>
-<p>must eventually be transformed into a value with a call to the respective
+<p>MUST eventually be transformed into a value with a call to the respective
 <code>from_raw</code> to allow for their reclamation.</p>
 <pre><pre class="playground"><code class="language-rust align"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -278,7 +278,7 @@ let _ = unsafe { Box::from_raw(raw_ptr) }; // will be freed
 <code>Rc</code> smart pointers <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html#method.from_raw">explicitly request for this condition</a>
 and, for <code>Box</code> smart pointers, conversion of C pointers into <code>Box</code> is <a href="https://doc.rust-lang.org/std/boxed/index.html#memory-layout">discouraged</a>.</p>
 <div class="reco" id="MEM-INTOFROMRAWONLY" type="Rule" title="Call `from_raw` *only* on `into_raw`ed value">
-<p>In a secure Rust development, <code>from_raw</code> should only be called on <code>into_raw</code>ed values.</p>
+<p>In a secure Rust development, <code>from_raw</code> MUST ONLY be called on <code>into_raw</code>ed values.</p>
 </div>
 <!-- -->
 <div class="note">
@@ -305,8 +305,8 @@ cleanup is not possible.</p>
 uninitialized memory (except when using <code>std::mem::uninitialized</code> or
 <code>std::mem::MaybeUninit</code>).</p>
 <div class="reco" id="MEM-UNINIT" type="Rule" title="Do not use uninitialized memory">
-<p>The <code>std::mem::uninitialized</code> function (deprecated 1.38) must never be used.
-Each usage of the <code>std::mem::MaybeUninit</code> type (stabilized 1.36) must be explicitly
+<p>The <code>std::mem::uninitialized</code> function (deprecated 1.38) MUST NOT be used.
+Each usage of the <code>std::mem::MaybeUninit</code> type (stabilized 1.36) MUST be explicitly
 justified when necessary.</p>
 </div>
 <p>The use of uninitialized memory may result in two distinct security issues:</p>
@@ -381,7 +381,7 @@ Hello, world!
 ==153637== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 </code></pre>
 <div class="reco" id="MEM-MUT-REC-RC" type="Rule" title="Avoid cyclic reference counted pointers">
-<p>Avoid recursive types whose recursivity uses reference counted pointers together with interior mutability.</p>
+<p>Recursive types whose recursivity uses reference counted pointers MUST NOT be used together with interior mutability.</p>
 </div>
                     </main>
 

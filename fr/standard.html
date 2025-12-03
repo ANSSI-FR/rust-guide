@@ -234,10 +234,10 @@ d'utiliser un champ typé par un type fantôme (<code>PhantomData</code>) :</p>
 <pre><code class="language-rust noplaypen"><span class="boring">use std::marker::PhantomData;
 </span><span class="boring">
 </span>struct SpecialType(u8, PhantomData&lt;*const ()&gt;);</code></pre>
-<div class="reco" id="LANG-SYNC-TRAITS" type="Recommandation" title="Justification de l'implémentation des traits `Send` et `Sync`">
+<div class="reco" id="LANG-SYNC-TRAITS" type="Règle" title="Justification de l'implémentation des traits `Send` et `Sync`">
 <p>Dans un développement sécurisé en Rust, l'implémentation manuelle des traits
-<code>Send</code> et <code>Sync</code> doit être évitée, et, si nécessaire, doit être justifiée,
-documentée et révisée par des pairs.</p>
+<code>Send</code> et <code>Sync</code> DEVRAIT être évitée, et, si nécessaire, DOIT être justifiée
+et documentée.</p>
 </div>
 <h2 id="les-traits-de-comparaison--partialeq-eq-partialord-ord"><a class="header" href="#les-traits-de-comparaison--partialeq-eq-partialord-ord">Les traits de comparaison : <code>PartialEq</code>, <code>Eq</code>, <code>PartialOrd</code>, <code>Ord</code></a></h2>
 <p>Les comparaisons (<code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>) en Rust reposent sur quatre
@@ -369,12 +369,12 @@ violations de propriétés de sûreté mémoire. C'est là encore un atout que d
 limiter au possible l'utilisation des blocs <code>unsafe</code>.</p>
 <div class="reco" id="LANG-CMP-INV" type="Règle" title="Respect des invariants des traits de comparaison standards">
 <p>Dans un développement sécurisé en Rust, l'implémentation des traits de
-comparaison standards doit respecter les invariants décrits dans la
+comparaison standards DOIT respecter les invariants décrits dans la
 documentation.</p>
 </div>
 <div class="reco" id="LANG-CMP-DEFAULTS" type="Recommandation" title="Utilisation des implémentations par défaut des traits de comparaison standards">
 <p>Dans un développement sécurisé en Rust, l'implémentation des traits de
-comparaison standard ne doit être effectuée que par l'implémentation des
+comparaison standard NE DEVRAIT PAS effectuée que par l'implémentation des
 méthodes ne fournissant pas d'implémentation par défaut, dans le but de
 réduire le risque de violation des invariants associés auxdits traits.</p>
 </div>
@@ -429,10 +429,10 @@ automatiquement sont bien moins sujettes à erreurs que des implémentations
 manuelles, et rendent le code plus court et plus simple à maintenir.</p>
 <div class="reco" id="LANG-CMP-DERIVE" type="Recommandation" title="Dérivation des traits de comparaison lorsque c'est possible">
 <p>Dans un développement sécurisé en Rust, l'implémentation des traits de
-comparaison standard doit être automatiquement dérivée à l'aide de
+comparaison standard DEVRAIT être automatiquement dérivée à l'aide de
 <code>#[derive(...)]</code> lorsque l'égalité structurelle et l'ordre lexicographique
 sont nécessaires. Toute implémentation manuelle d'un trait de comparaison
-standard doit être justifiée et documentée.</p>
+standard DEVRAIT être justifiée et documentée.</p>
 </div>
 
                     </main>

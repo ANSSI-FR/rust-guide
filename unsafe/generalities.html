@@ -190,7 +190,7 @@
 <p>More examples can be found in <a href="https://doc.rust-lang.org/nomicon/what-unsafe-does.html">nomicon</a>.</p>
 <p>These capabilities may be necessary for system programming but they cause the language to lose its <a href="../guarantees.html#language-guarantees">safety properties</a> and Undefined Behaviors may happen.</p>
 <div class="reco" id="UNSAFE-NOUB" type="Rule" title="No Undefined Behavior">
-<p>No Undefined Behavior is allowed.</p>
+<p>NO Undefined Behavior is allowed.</p>
 </div>
 <h2 id="a-keyword-with-two-usages"><a class="header" href="#a-keyword-with-two-usages">A keyword with two usages</a></h2>
 <p>The <code>unsafe</code> keyword is used both for marking unsafety in an API and unlocking unsafety in the implementation.</p>
@@ -224,9 +224,7 @@ The use of this keyword in an API <em>warns</em> the API user about the potentia
 <p>This promise is valid only if the code does not use <code>unsafe</code> features. When <code>unsafe</code> features are used, the compiler can no longer guarantee memory safety. The developer must then ensure that the code respects the invariants that guarantee memory safety.</p>
 <p>That is why it is crucial to limit the use of <code>unsafe</code> features as much as possible:</p>
 <div class="reco" id="LANG-UNSAFE" type="Rule" title="Don't use unsafe blocks">
-<p>In a secure Rust development, the <code>unsafe</code> blocks must be avoided. In the following,
-we list the only cases where <code>unsafe</code> may be used, provided that they come
-with a proper justification:</p>
+<p>In a secure Rust development, the <code>unsafe</code> blocks SHOULD be avoided, or MUST be justified by at least one of the following points:</p>
 <ul>
 <li>
 <p>The Foreign Function Interface (FFI) of Rust allows for describing functions whose implementations are written in C, using the <code>extern "C"</code> prefix. To use such a function, the <code>unsafe</code> keyword is required. “Safe” wrapper shall be defined to safely and seamlessly call C code.</p>
@@ -252,7 +250,7 @@ structure or module) shall be provided.</p>
 <p>Aside from the <code>unsafe</code> code itself, it is also crucial to properly encapsulate the use of <code>unsafe</code> features in a component (crate or module) so as to restore the usual Rust memory safety guarantees:</p>
 <div class="reco" id="LANG-UNSAFE-ENCP" type="Rule" title="Encapsulation of *unsafe* features">
 <p>In secure development of a Rust software component (crate or module), all
-<em>unsafe</em> code must be encapsulated in such a way that:</p>
+<em>unsafe</em> code MUST be encapsulated in such a way that:</p>
 <ul>
 <li>either it exposes a safe behavior to the user, in which no safe interaction
 can result in UB (undefined behavior);</li>

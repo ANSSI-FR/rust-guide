@@ -229,7 +229,7 @@ $ rustup override list
 $
 </code></pre>
 <div class="reco" id="DENV-STABLE" type="Rule" title="Use a stable compilation toolchain">
-<p>Development of a secure application must be done using a fully stable
+<p>Development of a secure application MUST be done using a fully stable
 toolchain, for limiting potential compiler, runtime or tool bugs.</p>
 </div>
 <p>When using a specific <code>cargo</code> subcommand that requires a nightly component,
@@ -255,7 +255,7 @@ $
 <p>Tier 3 targets are simply not officially supported.</p>
 <p>The tier distinction helps developers choose a target that matches their risk tolerance: Tier 1 for production‑grade workloads, Tier 2 for experimental or niche architectures where full support isn’t yet met.</p>
 <div class="reco" id="TIERS_TOOLCHAINS" type="Rule" title="Exclusive use of tier 1 of `rustc` for safety-critical software">
-Rustc tier 1 targets and certified toolchains must be used for safety-critical systems.
+Rustc tier 1 targets and certified toolchains MUST be used for safety-critical systems.
 </div>
 <p>A comprehensive list of supported targets is available in <a href="#rustc-book">rustc-book</a>.</p>
 <h2 id="cargo"><a class="header" href="#cargo">Cargo</a></h2>
@@ -292,7 +292,7 @@ dependencies' checksums, adhering to a TOFU (<em>Trust On First Use</em>) policy
 This file can also be created manually with <code>cargo generate-lockfile</code>. If it already exists,
 the file is overwritten with the latest available version of every crate.</p>
 <div class="reco" id="DENV-CARGO-LOCK" type="Rule" title="Track Cargo.lock in version control system">
-<p><code>Cargo.lock</code> files must be tracked by version control system.</p>
+<p><code>Cargo.lock</code> files MUST be tracked by version control system.</p>
 </div>
 <div class="warning">
 <p>Ongoing discussions occur on how to best protect
@@ -317,7 +317,7 @@ integer arithmetic.</li>
 using the debug profile that normally enables runtime checks (for example it does not enable
 <a href="./04_language.html#integer-overflows">integer overflow checks</a>).</p>
 <div class="reco" id="DENV-CARGO-OPTS" type="Rule" title="Keep default values for critical variables in cargo profiles">
-<p>The variables <code>debug-assertions</code> and <code>overflow-checks</code> must not be overridden
+<p>The variables <code>debug-assertions</code> and <code>overflow-checks</code> MUST NOT be overridden
 in development profiles' sections (<code>[profile.dev]</code> and <code>[profile.test]</code>).</p>
 </div>
 <p>Cargo proposes other ways to setup its configuration and change its behavior on
@@ -330,7 +330,7 @@ environment variable <code>RUSTC_WRAPPER</code>, for example, that may be used t
 part of the code or to run external tools before Rust compilation, it is preferable
 to use the Cargo build scripts feature.</p>
 <div class="reco" id="DENV-CARGO-ENVVARS" type="Rule" title="Keep default values for compiler environment variables when running cargo">
-<p>The environment variables <code>RUSTC</code>, <code>RUSTC_WRAPPER</code> and <code>RUSTFLAGS</code> must not
+<p>The environment variables <code>RUSTC</code>, <code>RUSTC_WRAPPER</code> and <code>RUSTFLAGS</code> MUST NOT
 be overriden when using Cargo to build the project.</p>
 </div>
 <h3 id="rustfmt"><a class="header" href="#rustfmt">Rustfmt</a></h3>
@@ -345,8 +345,8 @@ single_line_if_else_max_width = 40
 </code></pre>
 <p>For more information about the guidelines that <code>rustfmt</code> will check, have a look
 at the <a href="#rust-style">rust-style</a>.</p>
-<div class="reco" id="DENV-FORMAT" type="Rule" title="Use Rust formatter (rustfmt)">
-<p>The tool <code>rustfmt</code> can be used to ensure that the codebase respects style
+<div class="reco" id="DENV-FORMAT" type="Recommendation" title="Use Rust formatter (rustfmt)">
+<p>The tool <code>rustfmt</code> SHOULD be used to ensure that the codebase respects style
 guidelines (as described in <code>rustfmt.toml</code> file).</p>
 </div>
 <h3 id="cargo-fix"><a class="header" href="#cargo-fix">Cargo fix</a></h3>
@@ -381,12 +381,12 @@ the fix that is suggested by <code>clippy</code>, especially in the case of lint
 category <code>clippy::nursery</code> since those hints are still under development.</p>
 <p><code>clippy</code> now has similar <code>fix</code> tool as <code>rustfix</code></p>
 <div class="reco" id="DENV-LINTER" type="Rule" title="Use linter regularly">
-<p>A linter, such as <code>clippy</code>, must be used regularly during the development of
+<p>A linter, such as <code>clippy</code>, MUST be used regularly during the development of
 a secure application.</p>
 </div>
 <div class="reco" id="DENV-AUTOFIX" type="Rule" title="Manually check automatic fixes">
 <p>In a secure Rust development, any automatic fix (for instance, provided by
-<code>rustfix</code> or <code>clippy</code>) must be verified by the developer.</p>
+<code>rustfix</code> or <code>clippy</code>) MUST be verified by the developer.</p>
 </div>
 <h3 id="others"><a class="header" href="#others">Others</a></h3>
 <p>There exist other useful tools or <code>cargo</code> subcommands for enforcing program

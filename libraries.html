@@ -207,11 +207,11 @@ regex = { git = "https://github.com/rust-lang/regex.git" }
 <h2 id="dependency-security"><a class="header" href="#dependency-security">Dependency Security</a></h2>
 <p>Regardless of the method used to retrieve dependencies (<em>crate</em> or GIT commit), if they come from external organizations, the dependencies must be validated.</p>
 <div class="reco" id="LIBS-VETTING-DIRECT" type="Rule" title="Validation of Direct Third-Party Dependencies">
-<p>Each direct third-party dependency must be properly validated, and each validation must be tracked.</p>
+<p>Each direct third-party dependency MUST be properly validated, and each validation MUST be tracked.</p>
 </div>
 <p>With regard to transitive dependencies, it is also recommended to validate them individually.</p>
 <div class="reco" id="LIBS-VETTING-TRANSITIVE" type="Recommendation" title="Validation of Transitive Third-Party Dependencies">
-<p>Each third-party dependency should be properly validated, and each validation should be tracked.</p>
+<p>Each third-party dependency SHOULD be properly validated, and each validation SHOULD be tracked.</p>
 </div>
 <h2 id="dependency-validation-tools"><a class="header" href="#dependency-validation-tools">Dependency validation tools</a></h2>
 <h3 id="cargo-outdated"><a class="header" href="#cargo-outdated">Cargo-outdated</a></h3>
@@ -220,15 +220,15 @@ regex = { git = "https://github.com/rust-lang/regex.git" }
 <code>Cargo.toml</code>), and checks the latest compatible version and also the latest general
 version.</p>
 <div class="reco" id="LIBS-OUTDATED" type="Rule" title="Check for outdated dependencies versions (cargo-outdated)">
-<p>The <code>cargo-outdated</code> tool must be used to check dependencies' status. Then,
-each outdated dependency must be updated or the choice of the version must be
+<p>The <code>cargo-outdated</code> tool MUST be used to check dependencies' status. Then,
+each outdated dependency SHOULD be updated or the choice of the version MUST be
 justified.</p>
 </div>
 <h3 id="cargo-audit"><a class="header" href="#cargo-audit">Cargo-audit</a></h3>
 <p><a href="https://github.com/RustSec/cargo-audit">Cargo-audit</a> tool allows one to easily check for security vulnerabilities
 reported to the RustSec Advisory Database.</p>
 <div class="reco" id="LIBS-AUDIT" type="Rule" title="Check for security vulnerabilities report on dependencies (cargo-audit)">
-<p>The <code>cargo-audit</code> tool must be used to check for known vulnerabilities in
+<p>The <code>cargo-audit</code> tool MUST be used to check for known vulnerabilities in
 dependencies.</p>
 </div>
 <!-- ## Unsafe code in libraries -->

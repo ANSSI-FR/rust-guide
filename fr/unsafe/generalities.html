@@ -196,7 +196,7 @@
 <p>D'autres exemples peuvent être trouvé dans le <a href="https://doc.rust-lang.org/nomicon/what-unsafe-does.html">nomicon</a></p>
 <p>Si ces capacités sont nécessaires à la programmation système, elles font perdre au langage ses <a href="../guarantees.html#garanties-du-langage">propriétés de sûreté</a>, et permettent l'apparition de comportements indéfinis.</p>
 <div class="reco" id="UNSAFE-NOUB" type="Règle" title="Interdiction des comportements non définis">
-<p>Aucun comportement indéfini ne doit se produire.</p>
+<p>AUCUN comportement indéfini NE DOIT se produire.</p>
 </div>
 <h2 id="un-mot-clé-deux-usages"><a class="header" href="#un-mot-clé-deux-usages">Un mot-clé, deux usages</a></h2>
 <p>Le mot-clé <code>unsafe</code> a deux usages : le marquage dans une API et le déverrouillage dans une implémentation.</p>
@@ -235,9 +235,8 @@ d'accès concurrents à la mémoire.</p>
 C'est donc au développeur de s'assurer qu'aucun <em>UB</em> ne peut se produire dans son code.
 Aussi, il est important de limiter l'usage de <code>unsafe</code> au strict nécessaire :</p>
 <div class="reco" id="LANG-UNSAFE" type="Règle" title="Non-utilisation des blocs *unsafe*">
-<p>Pour un développement sécurisé, les blocs <code>unsafe</code> doivent être évités.
-Ci-dessous, nous listons les seuls cas pour lesquels des blocs <code>unsafe</code>
-peuvent être utilisés, à la condition que leur usage soit justifié :</p>
+<p>Pour un développement sécurisé, les blocs <code>unsafe</code> DEVRAIENT être évités,
+ou DOIVENT être justifiés par au moins l'une des raisons suivantes :</p>
 <ul>
 <li>
 <p>L'interfaçage entre Rust et d'autres langages (FFI) permet la déclaration de
@@ -265,7 +264,7 @@ arrive lorsqu'une fonction doit déréférencer un pointeur passé en argument.<
 <p>Lorsque les performances sont impactées sur une petite partie de code (Buffer zero-copy modifié directement en mémoire, gestion des allocations, etc.).</p>
 </li>
 </ul>
-<p>À l'exception de l'un ou plusieurs de ces cas <code>#![forbid(unsafe_code)]</code> doit
+<p>À l'exception de l'un ou plusieurs de ces cas <code>#![forbid(unsafe_code)]</code> DOIT
 apparaître dans à la racine de la <em>crate</em> (typiquement <code>main.rs</code> ou <code>lib.rs</code>)
 afin de générer des erreurs de compilation dans le cas ou le mot-clé <code>unsafe</code>
 est utilisé dans le projet.</p>
@@ -278,7 +277,7 @@ est utilisé dans le projet.</p>
 <p>Au delà du code <code>unsafe</code> lui-même, il est important d'encapsuler correctement les opérations <code>unsafe</code> dans un composant (<em>crate</em> ou module) de manière à rétablir les garanties usuelles de sûreté mémoire de Rust:</p>
 <div class="reco" id="LANG-UNSAFE-ENCP" type="Règle" title="Encapsulation des fonctionnalités *unsafe*">
 <p>Dans un développement sécurisé d'un composant logiciel Rust (<em>crate</em> ou module),
-tout code <code>unsafe</code> doit être encapsulé de manière :</p>
+tout code <code>unsafe</code> DOIT être encapsulé de manière :</p>
 <ul>
 <li>soit à exposer un comportement <em>safe</em> à l'utilisateur dans lequel aucune interaction <em>safe</em> ne peut aboutir à un <em>UB</em> (comportement indéfini) ;</li>
 <li>soit à exposer des fonctionnalités marquées <code>unsafe</code> et dont les conditions d'usages (préconditions, séquencements, etc.) sont commentées exhaustivement et correctement (c'est-à-dire qu'elles impliquent la sûreté mémoire).</li>

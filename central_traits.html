@@ -195,9 +195,9 @@ typically used to release external resources (network connections, files, etc.)
 or to release memory (e.g. in smart pointers such as <code>Box</code> or <code>Rc</code>).
 As a result, <code>Drop</code> trait implementations are likely to contain <code>unsafe</code> code
 blocks as well as other security-critical operations.</p>
-<div class="reco" id="LANG-DROP" type="Recommendation" title="Justify `Drop` implementation">
+<div class="reco" id="LANG-DROP" type="Rule" title="Justify `Drop` implementation">
 <p>In a Rust secure development, the implementation of the <code>std::ops::Drop</code> trait
-should be justified, documented and peer-reviewed.</p>
+MUST be justified and documented.</p>
 </div>
 <p>Second, Rust type system only ensures memory safety and, from the type system's
 standpoint, missing drops is allowed. In fact, several things may lead to
@@ -213,16 +213,16 @@ on <a href="unsafe/memory.html#forget-and-memory-leaks"><code>forget</code> and 
 resources leading to availability issues.</p>
 <div class="reco" id="LANG-DROP-NO-PANIC" type="Rule" title="Do not panic in `Drop` implementation">
 <p>In a Rust secure development, the implementation of the <code>std::ops::Drop</code> trait
-must not panic.</p>
+MUST not panic.</p>
 </div>
 <p>Beside panics, secure-critical drop should be protected.</p>
 <div class="reco" id="LANG-DROP-NO-CYCLE" type="Rule" title="Do not allow cycles of reference-counted `Drop`">
-<p>A value whose type implements <code>Drop</code> must not be embedded directly or indirectly
+<p>A value whose type implements <code>Drop</code> MUST NOT be embedded directly or indirectly
 in a cycle of reference-counted references.</p>
 </div>
-<div class="reco" id="LANG-DROP-SEC" type="Recommendation" title="Do not rely only on `Drop` to ensure security">
+<div class="reco" id="LANG-DROP-SEC" type="Rule" title="Do not rely only on `Drop` to ensure security">
 <p>Ensuring security operations at the end of some treatment (such as key erasure
-at the end of a cryptographic encryption) should not rely only on the <code>Drop</code>
+at the end of a cryptographic encryption) MUST NOT rely only on the <code>Drop</code>
 trait implementation.</p>
 </div>
 

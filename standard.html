@@ -222,10 +222,10 @@ field:</p>
 <pre><code class="language-rust noplaypen"><span class="boring">use std::marker::PhantomData;
 </span><span class="boring">
 </span>struct SpecialType(u8, PhantomData&lt;*const ()&gt;);</code></pre>
-<div class="reco" id="LANG-SYNC-TRAITS" type="Recommendation" title="Justify `Send` and `Sync` implementation">
+<div class="reco" id="LANG-SYNC-TRAITS" type="Rule" title="Justify `Send` and `Sync` implementation">
 <p>In a Rust secure development, the manual implementation of the <code>Send</code> and
-<code>Sync</code> traits should be avoided and, if necessary, should be justified,
-documented and peer-reviewed.</p>
+<code>Sync</code> traits SHOULD be avoided and, if necessary, MUST be justified
+and documented.</p>
 </div>
 <h2 id="comparison-traits-partialeq-eq-partialord-ord"><a class="header" href="#comparison-traits-partialeq-eq-partialord-ord">Comparison traits (<code>PartialEq</code>, <code>Eq</code>, <code>PartialOrd</code>, <code>Ord</code>)</a></h2>
 <p>Comparisons (<code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>) in Rust rely on four standard
@@ -350,11 +350,11 @@ safety violations. That is again a factor in the practice of limiting the use
 of <code>unsafe</code> blocks.</p>
 <div class="reco" id="LANG-CMP-INV" type="Rule" title="Respect the invariants of standard comparison traits">
 <p>In a Rust secure development, the implementation of standard comparison traits
-must respect the invariants described in the documentation.</p>
+MUST respect the invariants described in the documentation.</p>
 </div>
 <div class="reco" id="LANG-CMP-DEFAULTS" type="Recommendation" title="Use the default method implementation of standard comparison traits">
 <p>In a Rust secure development, the implementation of standard comparison traits
-should only define methods with no default implementation, so as to reduce
+SHOULD only define methods with no default implementation, so as to reduce
 the risk of violating the invariants associated with the traits.</p>
 </div>
 <p>There is a Clippy lint to check that <code>PartialEq::ne</code> is not defined in
@@ -405,9 +405,9 @@ on the field order.</p>
 than manual ones and make the code shorter and easier to maintain.</p>
 <div class="reco" id="LANG-CMP-DERIVE" type="Recommendation" title="Derive comparison traits when possible">
 <p>In a secure Rust development, the implementation of standard comparison traits
-should be automatically derived with <code>#[derive(...)]</code> when structural equality
+SHOULD be automatically derived with <code>#[derive(...)]</code> when structural equality
 and lexicographical comparison is needed. Any manual implementation of
-standard comparison traits should be documented and justified.</p>
+standard comparison traits SHOULD be documented and justified.</p>
 </div>
 
                     </main>

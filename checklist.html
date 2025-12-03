@@ -193,7 +193,7 @@ Rule - Keep default values for critical variables in cargo profiles (<a href="de
 <li><input disabled="" type="checkbox"/>
 Rule - Keep default values for compiler environment variables when running cargo (<a href="devenv.html#DENV-CARGO-ENVVARS">DENV-CARGO-ENVVARS</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Rule - Use Rust formatter (rustfmt) (<a href="devenv.html#DENV-FORMAT">DENV-FORMAT</a>)</li>
+Recommendation - Use Rust formatter (rustfmt) (<a href="devenv.html#DENV-FORMAT">DENV-FORMAT</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Rule - Use linter regularly (<a href="devenv.html#DENV-LINTER">DENV-LINTER</a>)</li>
 <li><input disabled="" type="checkbox"/>
@@ -233,7 +233,7 @@ Rule - Use appropriate arithmetic operations regarding potential overflows (<a h
 <li><input disabled="" type="checkbox"/>
 Recommendation - Implement custom <code>Error</code> type wrapping all possible errors (<a href="errors.html#LANG-ERRWRAP">LANG-ERRWRAP</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Recommendation - Use the <code>?</code> operator and do not use the <code>try!</code> macro (<a href="errors.html#LANG-ERRDO">LANG-ERRDO</a>)</li>
+Rule - Use the <code>?</code> operator and do not use the <code>try!</code> macro (<a href="errors.html#LANG-ERRDO">LANG-ERRDO</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Rule - Don't use functions that can cause <code>panic!</code> (<a href="errors.html#LANG-NOPANIC">LANG-NOPANIC</a>)</li>
 <li><input disabled="" type="checkbox"/>
@@ -246,13 +246,13 @@ Rule - Handle correctly <code>panic!</code> in FFI (<a href="errors.html#LANG-FF
 <p>Central traits:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Recommendation - Justify <code>Drop</code> implementation (<a href="central_traits.html#LANG-DROP">LANG-DROP</a>)</li>
+Rule - Justify <code>Drop</code> implementation (<a href="central_traits.html#LANG-DROP">LANG-DROP</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Rule - Do not panic in <code>Drop</code> implementation (<a href="central_traits.html#LANG-DROP-NO-PANIC">LANG-DROP-NO-PANIC</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Rule - Do not allow cycles of reference-counted <code>Drop</code> (<a href="central_traits.html#LANG-DROP-NO-CYCLE">LANG-DROP-NO-CYCLE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Recommendation - Do not rely only on <code>Drop</code> to ensure security (<a href="central_traits.html#LANG-DROP-SEC">LANG-DROP-SEC</a>)</li>
+Rule - Do not rely only on <code>Drop</code> to ensure security (<a href="central_traits.html#LANG-DROP-SEC">LANG-DROP-SEC</a>)</li>
 </ul>
 </li>
 <li>
@@ -305,7 +305,7 @@ Rule - Do not use unchecked non-robust foreign values (<a href="unsafe/ffi.html#
 <li><input disabled="" type="checkbox"/>
 Recommendation - Check foreign values in Rust (<a href="unsafe/ffi.html#FFI-CKINRUST">FFI-CKINRUST</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Recommendation - Do not use reference types but pointer types (<a href="unsafe/ffi.html#FFI-NOREF">FFI-NOREF</a>)</li>
+Rule - Do not use reference types in a FFI but pointer types (<a href="unsafe/ffi.html#FFI-NOREF">FFI-NOREF</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Rule - Do not use unchecked foreign references (<a href="unsafe/ffi.html#FFI-CKREF">FFI-CKREF</a>)</li>
 <li><input disabled="" type="checkbox"/>
@@ -315,7 +315,7 @@ Rule - Mark function pointer types in FFI as <code>extern</code> and <code>unsaf
 <li><input disabled="" type="checkbox"/>
 Rule - Check foreign function pointers (<a href="unsafe/ffi.html#FFI-CKFUNPTR">FFI-CKFUNPTR</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Recommendation - Do not use incoming Rust <code>enum</code> at FFI boundary (<a href="unsafe/ffi.html#FFI-NOENUM">FFI-NOENUM</a>)</li>
+Rule - Do not use incoming Rust <code>enum</code> at FFI boundary (<a href="unsafe/ffi.html#FFI-NOENUM">FFI-NOENUM</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Recommendation - Use dedicated Rust types for foreign opaque types (<a href="unsafe/ffi.html#FFI-R-OPAQUE">FFI-R-OPAQUE</a>)</li>
 <li><input disabled="" type="checkbox"/>
@@ -331,14 +331,14 @@ Rule - Handle <code>panic!</code> correctly in FFI (<a href="unsafe/ffi.html#FFI
 <li><input disabled="" type="checkbox"/>
 Recommendation - Provide safe wrapping to foreign library (<a href="unsafe/ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Recommendation - Expose dedicated C-compatible API only (<a href="unsafe/ffi.html#FFI-CAPI">FFI-CAPI</a>)</li>
+Rule - Expose dedicated C-compatible API only (<a href="unsafe/ffi.html#FFI-CAPI">FFI-CAPI</a>)</li>
 </ul>
 </li>
 <li>
 <p>Standard library:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Recommendation - Justify <code>Send</code> and <code>Sync</code> implementation (<a href="standard.html#LANG-SYNC-TRAITS">LANG-SYNC-TRAITS</a>)</li>
+Rule - Justify <code>Send</code> and <code>Sync</code> implementation (<a href="standard.html#LANG-SYNC-TRAITS">LANG-SYNC-TRAITS</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Rule - Respect the invariants of standard comparison traits (<a href="standard.html#LANG-CMP-INV">LANG-CMP-INV</a>)</li>
 <li><input disabled="" type="checkbox"/>

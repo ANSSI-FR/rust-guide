@@ -182,13 +182,13 @@
 <p>The <code>Result</code> type is the preferred way of handling functions that can fail.
 A <code>Result</code> object must be tested, and never ignored.</p>
 <div class="reco" id="LANG-ERRWRAP" type="Recommendation" title="Implement custom `Error` type wrapping all possible errors">
-<p>A crate can implement its own <code>Error</code> type, wrapping all possible errors.
-It must be careful to make this type exception-safe (RFC 1236), and implement
+<p>A crate may implement its own <code>Error</code> type, wrapping all possible errors.
+It MUST be careful to make this type exception-safe (RFC 1236), and implement
 <code>Error + Send + Sync + 'static</code> as well as <code>Display</code>.</p>
 </div>
-<div class="reco" id="LANG-ERRDO" type="Recommendation" title="Use the `?` operator and do not use the `try!` macro">
-<p>The <code>?</code> operator should be used to improve readability of code.
-The <code>try!</code> macro should not be used.</p>
+<div class="reco" id="LANG-ERRDO" type="Rule" title="Use the `?` operator and do not use the `try!` macro">
+<p>The <code>?</code> operator MUST be used to improve readability of code.
+The <code>try!</code> macro MUST NOT be used.</p>
 </div>
 <p>Third-party crates may be used to facilitate error handling. Most of them
 (notably <a href="https://crates.io/crates/snafu">snafu</a> or <a href="https://crates.io/crates/thiserror">thiserror</a>) address the creation of new custom
@@ -221,11 +221,11 @@ In these situations, deliberately triggering a panic (or aborting execution) mak
 </div>
 <p>In other cases where the development is not subject to this type of standard:</p>
 <div class="reco" id="LANG-NOPANIC" type="Rule" title="Don't use functions that can cause `panic!`">
-<p>Functions or instructions that can cause the code to panic at runtime must not
+<p>Functions or instructions that can cause the code to panic at runtime MUST NOT
 be used.</p>
 </div>
 <div class="reco" id="LANG-ARRINDEXING" type="Rule" title="Test properly array indexing or use the `get` method">
-<p>Array indexing must be properly tested, or the <code>get</code> method should be used to
+<p>Array indexing must be properly tested, or the <code>get</code> method SHOULD be used to
 return an <code>Option</code>.</p>
 </div>
 <!--
@@ -242,9 +242,12 @@ crate can catch all cases. Drawback: all functions need to be marked as
 be careful to never panic.
 Stack unwinding from Rust code into foreign code results in undefined behavior.</p>
 <div class="reco" id="LANG-FFIPANIC" type="Rule" title="Handle correctly `panic!` in FFI">
-<p>Rust code called from FFI must either ensure the function cannot panic, or use
-<code>catch_unwind</code> or the <code>std::panic</code> module to ensure the rust code will not
-abort or return in an unstable state.</p>
+<p>Rust code called from FFI MUST either:</p>
+<ul>
+<li>ensure the function cannot panic,</li>
+<li>use <code>catch_unwind</code> or the <code>std::panic</code> module to ensure the rust code will not
+abort or return in an unstable state.</li>
+</ul>
 </div>
 <p>Note that <code>catch_unwind</code> will only catch unwinding panics, not those that abort
 the process.</p>

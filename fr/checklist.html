@@ -199,7 +199,7 @@ Règle - Conservation des valeurs par défaut des variables critiques dans les p
 <li><input disabled="" type="checkbox"/>
 Règle - Conservation des valeurs par défaut des variables d'environnement à l'exécution de cargo (<a href="devenv.html#DENV-CARGO-ENVVARS">DENV-CARGO-ENVVARS</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Règle - Utilisation d'un outil de formatage (rustfmt) (<a href="devenv.html#DENV-FORMAT">DENV-FORMAT</a>)</li>
+Recommandation - Utilisation d'un outil de formatage (rustfmt) (<a href="devenv.html#DENV-FORMAT">DENV-FORMAT</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Utilisation régulière d'un <em>linter</em> (<a href="devenv.html#DENV-LINTER">DENV-LINTER</a>)</li>
 <li><input disabled="" type="checkbox"/>
@@ -239,7 +239,7 @@ Règle - Utilisation des opérations arithmétiques appropriées au regard des p
 <li><input disabled="" type="checkbox"/>
 Recommandation - Mise en place d'un type <code>Error</code> personnalisé pouvant contenir toutes les erreurs possibles (<a href="errors.html#LANG-ERRWRAP">LANG-ERRWRAP</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Recommandation - Utilisation de l'opérateur <code>?</code> et non-utilisation de la macro <code>try!</code> (<a href="errors.html#LANG-ERRDO">LANG-ERRDO</a>)</li>
+Règle - Utilisation de l'opérateur <code>?</code> et non-utilisation de la macro <code>try!</code> (<a href="errors.html#LANG-ERRDO">LANG-ERRDO</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Non-utilisation de fonctions qui peuvent causer des <code>panic</code> (<a href="errors.html#LANG-NOPANIC">LANG-NOPANIC</a>)</li>
 <li><input disabled="" type="checkbox"/>
@@ -252,13 +252,13 @@ Règle - Gestion correcte des <code>panic!</code> dans les FFI (<a href="errors.
 <p>Traits centraux:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Recommandation - Justification de l'implémentation du trait <code>Drop</code> (<a href="central_traits.html#LANG-DROP">LANG-DROP</a>)</li>
+Règle - Justification de l'implémentation du trait <code>Drop</code> (<a href="central_traits.html#LANG-DROP">LANG-DROP</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Absence de <code>panic</code> dans l'implémentation de <code>Drop</code> (<a href="central_traits.html#LANG-DROP-NO-PANIC">LANG-DROP-NO-PANIC</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Absence de cycles de références avec valeurs <code>Drop</code>ables (<a href="central_traits.html#LANG-DROP-NO-CYCLE">LANG-DROP-NO-CYCLE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Recommandation - Sécurité assurée par d'autres mécanismes en plus du trait <code>Drop</code> (<a href="central_traits.html#LANG-DROP-SEC">LANG-DROP-SEC</a>)</li>
+Règle - Sécurité assurée par d'autres mécanismes en plus du trait <code>Drop</code> (<a href="central_traits.html#LANG-DROP-SEC">LANG-DROP-SEC</a>)</li>
 </ul>
 </li>
 <li>
@@ -313,7 +313,7 @@ Recommandation - Vérification des valeurs externes en Rust (<a href="unsafe/ffi
 <li><input disabled="" type="checkbox"/>
 Règle - Vérification des références provenant d'un langage externe (<a href="unsafe/ffi.html#FFI-CKREF">FFI-CKREF</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Recommandation - Non-utilisation des types références et utilisation des types pointeurs (<a href="unsafe/ffi.html#FFI-NOREF">FFI-NOREF</a>)</li>
+Règle - Non-utilisation des types références au profit des types pointeurs aux frontières avec un langage externe (<a href="unsafe/ffi.html#FFI-NOREF">FFI-NOREF</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Vérification des pointeurs externes (<a href="unsafe/ffi.html#FFI-CKPTR">FFI-CKPTR</a>)</li>
 <li><input disabled="" type="checkbox"/>
@@ -321,7 +321,7 @@ Règle - Marquage des types de pointeurs de fonction dans les FFI comme <code>ex
 <li><input disabled="" type="checkbox"/>
 Règle - Vérification des pointeurs de fonction provenant d'une FFI (<a href="unsafe/ffi.html#FFI-CKFUNPTR">FFI-CKFUNPTR</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Recommandation - Non-utilisation d'<code>enum</code>s Rust provenant de l'extérieur par une FFI (<a href="unsafe/ffi.html#FFI-NOENUM">FFI-NOENUM</a>)</li>
+Règle - Non-utilisation d'<code>enum</code>s Rust provenant de l'extérieur par une FFI (<a href="unsafe/ffi.html#FFI-NOENUM">FFI-NOENUM</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Recommandation - Utilisation de types Rust dédiés pour les types opaques externes (<a href="unsafe/ffi.html#FFI-R-OPAQUE">FFI-R-OPAQUE</a>)</li>
 <li><input disabled="" type="checkbox"/>
@@ -337,14 +337,14 @@ Règle - Gestion correcte des <code>panic</code>s dans les FFI (<a href="unsafe/
 <li><input disabled="" type="checkbox"/>
 Recommandation - Mise en place d'une encapsulation sûre pour les bibliothèques externes (<a href="unsafe/ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Recommandation - Exposition exclusive d'API dédiée et compatible avec le C (<a href="unsafe/ffi.html#FFI-CAPI">FFI-CAPI</a>)</li>
+Règle - Exposition exclusive d'API dédiée et compatible avec le C (<a href="unsafe/ffi.html#FFI-CAPI">FFI-CAPI</a>)</li>
 </ul>
 </li>
 <li>
 <p>Bibliothèque standard:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Recommandation - Justification de l'implémentation des traits <code>Send</code> et <code>Sync</code> (<a href="standard.html#LANG-SYNC-TRAITS">LANG-SYNC-TRAITS</a>)</li>
+Règle - Justification de l'implémentation des traits <code>Send</code> et <code>Sync</code> (<a href="standard.html#LANG-SYNC-TRAITS">LANG-SYNC-TRAITS</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Respect des invariants des traits de comparaison standards (<a href="standard.html#LANG-CMP-INV">LANG-CMP-INV</a>)</li>
 <li><input disabled="" type="checkbox"/>

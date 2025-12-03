@@ -226,11 +226,11 @@ sensibles en mémoire. C'est pourquoi <code>forget</code> doit être considéré
 <strong>non sécurisée</strong>.</p>
 <div class="reco" id="MEM-FORGET" type="Règle" title="Non-utilisation de `forget`">
 <p>Dans un développement sécurisé en Rust (<em>unsafe</em> ou non), la fonction <code>forget</code> de <code>std::mem</code>
-(<code>core::mem</code>) ne doit pas être utilisée.</p>
+(<code>core::mem</code>) NE DOIT PAS être utilisée.</p>
 </div>
 <!-- -->
 <div class="reco" id="MEM-FORGET-LINT" type="Recommandation" title="Utilisation du *lint* clippy pour détecter l'utilisation de `forget`">
-<p>Le <em>lint</em> <code>mem_forget</code> de Clippy peut être utilisé pour automatiquement
+<p>Le <em>lint</em> <code>mem_forget</code> de Clippy DEVRAIT être utilisé pour automatiquement
 détecter toute utilisation de la fonction <code>forget</code>. Pour s'assurer de l'absence
 d'appel à <code>forget</code>, ajouter la directive suivante en début de fichier racine
 (en général <code>src/lib.rs</code> ou <code>src/main.rs</code>) :</p>
@@ -247,15 +247,15 @@ manuelle d'une valeur.</li>
 <p>Ces alternatives peuvent mener au même type de problème de sécurité, mais ont
 l'avantage de faire apparaître explicitement leur but.</p>
 <div class="reco" id="MEM-LEAK" type="Règle" title="Non-utilisation de `Box::leak`">
-<p>Dans un développement sécurisé (<em>unsafe</em> ou non) en Rust, le code ne doit pas faire fuiter de la
+<p>Dans un développement sécurisé (<em>unsafe</em> ou non) en Rust, le code NE DOIT PAS faire fuiter de la
 mémoire ou des ressources <em>via</em> <code>Box::leak</code>.</p>
 </div>
 <p><code>ManuallyDrop</code> et <code>Box::into_raw</code> passent la responsabilité de la libération de
 la ressource concernée du compilateur au développeur.</p>
 <div class="reco" id="MEM-MANUALLYDROP" type="Règle" title="Libération des valeurs *wrappées* dans `ManuallyDrop`">
 <p>Dans un développement sécurisé en Rust, toute valeur <em>wrappée</em> dans le type
-<code>ManuallyDrop</code> doit être <em>unwrapped</em> pour permettre sa libération automatique
-(<code>ManuallyDrop::into_inner</code>) ou bien doit être manuellement libérée (<em>unsafe</em>
+<code>ManuallyDrop</code> DOIT être <em>unwrapped</em> pour permettre sa libération automatique
+(<code>ManuallyDrop::into_inner</code>) ou bien DOIT être manuellement libérée (<em>unsafe</em>
 <code>ManuallyDrop::drop</code>).</p>
 </div>
 <!-- -->
@@ -266,12 +266,12 @@ pointeurs <em>intelligents</em> (<em>smart pointer</em>) de Rust. En particulier
 à la charge du programmeur.</p>
 <div class="reco" id="MEM-NORAWPOINTER" type="Règle" title="Pas de conversion en pointeur *raw* en Rust non-*usafe*">
 <p>Dans un développement sécurisé en Rust non-<em>unsafe</em>, les références et les <em>smart pointers</em>
-ne doivent pas être convertis en <em>raw pointers</em>. En particulier, les fonctions <code>into_raw</code> ou <code>into_non_null</code>
-des <em>smart pointers</em> <code>Box</code>, <code>Rc</code>, <code>Arc</code> ou <code>Weak</code> ne doivent pas être utilisées dans un code Rust non-<em>unsafe</em>.</p>
+NE DOIVENT PAS être convertis en <em>raw pointers</em>. En particulier, les fonctions <code>into_raw</code> ou <code>into_non_null</code>
+des <em>smart pointers</em> <code>Box</code>, <code>Rc</code>, <code>Arc</code> ou <code>Weak</code> NE DOIVENT PAS être utilisées dans un code Rust non-<em>unsafe</em>.</p>
 </div>
 <div class="reco" id="MEM-INTOFROMRAWALWAYS" type="Règle" title="Appel systématique à `from_raw` pour les valeurs créées avec `into_raw`">
 <p>Dans un développement sécurisé en Rust, tout pointeur créé par un appel à
-<code>into_raw</code> (ou <code>into_non_null</code>) depuis un des types suivants doit
+<code>into_raw</code> (ou <code>into_non_null</code>) depuis un des types suivants DOIT
 finalement être transformé en valeur avec l'appel à la fonction <code>from_raw</code>
 correspondant, pour permettre sa libération :</p>
 <ul>
@@ -297,7 +297,7 @@ devraient pas être utilisées sur des <em>raw pointers</em> qui ne sont pas iss
 à ce cas d'usage, et, dans le cas de <code>Box</code>, la conversion de pointeurs C en Box
 <a href="https://doc.rust-lang.org/std/boxed/index.html#memory-layout">n'est pas sûre</a>,</p>
 <div class="reco" id="MEM-INTOFROMRAWONLY" type="Règle" title="Appel de `from_raw` uniquement pour les valeurs issues de `into_raw`">
-<p>Dans un développement de sécurité en Rust, les fonctions <code>from_raw</code> ne doivent être appelées que sur des
+<p>Dans un développement de sécurité en Rust, les fonctions <code>from_raw</code> NE DOIVENT être appelées QUE sur des
 valeurs issues de la fonction <code>into_raw</code></p>
 </div>
 <!-- -->
@@ -326,9 +326,9 @@ libération manuelle n'est pas possible.</p>
 prévenir l'utilisation de mémoire non initialisée (à l'exception de
 l'utilisation de <code>std::mem::uninitialized</code> ou de <code>std::mem::MaybeUninit</code>).</p>
 <div class="reco" id="MEM-UNINIT" type="Règle" title="Pas de mémoire non initialisée">
-<p>La fonction <code>std::mem::uninitialized</code> (dépréciée depuis la version 1.38) ne doit jamais être utilisée.
-Le type <code>std::mem::MaybeUninit</code> (stabilisé dans la version 1.36) ne doit être
-utilisé qu'en fournissant une justification pour chaque cas d'usage.</p>
+<p>La fonction <code>std::mem::uninitialized</code> (dépréciée depuis la version 1.38) NE DOIT PAS être utilisée.
+Le type <code>std::mem::MaybeUninit</code> (stabilisé dans la version 1.36) NE DOIT être
+utilisé QU'en fournissant une justification pour chaque cas d'usage.</p>
 </div>
 <p>L'utilisation de mémoire non initialisée peut induire deux problèmes de
 sécurité distincts :</p>
@@ -405,7 +405,7 @@ Hello, world!
 ==153637== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 </code></pre>
 <div class="reco" id="MEM-MUT-REC-RC" type="Règle" title="Éviter les références comptées récursives mutables">
-<p>Éviter de définir des types à la fois récursifs, mutables <em>intérieurement</em>, et dont la récursion se base sur l'utilisation des références comptées <code>Rc</code> ou <code>Arc</code>.</p>
+<p>Les types récursifs dont la récursion se base sur l'utilisation des références comptées <code>Rc</code> ou <code>Arc</code> NE DOIVENT PAS être mutables <em>intérieurement</em>.</p>
 </div>
 
                     </main>

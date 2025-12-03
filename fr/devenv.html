@@ -240,7 +240,7 @@ $
 </code></pre>
 <!-- -->
 <div class="reco" id="DENV-STABLE" type="Règle" title="Utilisation de la chaîne d'outils *stable*">
-<p>Le développement d'applications sécurisées doit être mené en utilisant la
+<p>Le développement d'applications sécurisées DOIT être mené en utilisant la
 chaîne d'outils dans sa version <em>stable</em>, afin de limiter les potentiels
 <em>bugs</em> à la compilation, à l'exécution et lors de l'utilisation d'outils
 complémentaires.</p>
@@ -270,7 +270,7 @@ $
 <p>Les cibles de niveau 3 ne sont tout simplement pas prises en charge officiellement.</p>
 <p>La distinction entre les différents niveaux aide les développeurs à choisir une cible adaptée à leur tolérance au risque : le niveau 1 pour des applications de production, le niveau 2 pour des architectures plus expérimentales ou de niche dont le support complet n’est pas encore assuré.</p>
 <div class="reco" id="TIERS_TOOLCHAINS" type="Rule" title="Utilisation exclusive du tier 1 de `rustc` pour les logiciels de sureté critiques">
-Les cibles Rustc de niveau 1 et les chaînes de compilation certifiées doivent être utilisées pour les systèmes de sureté critiques.
+Les cibles Rustc de niveau 1 et les chaînes de compilation certifiées DOIVENT être utilisées pour les systèmes de sureté critiques.
 </div>
 <p>Une liste complète des cibles prises en charge est disponible dans <a href="#rustc-book">rustc-book</a>.</p>
 <h2 id="cargo"><a class="header" href="#cargo">Cargo</a></h2>
@@ -310,7 +310,7 @@ sommes de contrôle des sources téléchargées (selon le principe TOFU : <em>Tr
 Ce fichier peut également être créé manuellement avec <code>cargo generate-lockfile</code>, et s'il
 est déjà présent, un nouveau fichier est créé avec les dernières versions compatibles de chaque crate.</p>
 <div class="reco" id="DENV-CARGO-LOCK" type="Règle" title="Mise en dépôt du fichier Cargo.lock">
-<p>Le fichier <code>Cargo.lock</code> doit être versionné avec le code source du programme Rust.</p>
+<p>Le fichier <code>Cargo.lock</code> DOIT être versionné avec le code source du programme Rust.</p>
 </div>
 <div class="warning">
 <p>Des discussions sont en cours pour
@@ -339,7 +339,7 @@ vérifications (par exemple, les
 <a href="./04_language.html#integer-overflows">vérifications de dépassements d'entiers</a>)
 est utilisé.</p>
 <div class="reco" id="DENV-CARGO-OPTS" type="Règle" title="Conservation des valeurs par défaut des variables critiques dans les profils cargo">
-<p>Les variables <code>debug-assertions</code> et <code>overflow-checks</code> ne doivent pas être
+<p>Les variables <code>debug-assertions</code> et <code>overflow-checks</code> NE DOIVENT PAS être
 modifiées dans les sections de profils de développement (<code>[profile.dev]</code> and
 <code>[profile.test]</code>).</p>
 </div>
@@ -355,8 +355,8 @@ exemple pour générer une partie du code ou pour invoquer un outil externe avan
 la compilation, il est préférable d'utiliser la fonctionnalité de <em>scripts de
 compilation</em> de Cargo.</p>
 <div class="reco" id="DENV-CARGO-ENVVARS" type="Règle" title="Conservation des valeurs par défaut des variables d'environnement à l'exécution de cargo">
-<p>Les variables d'environnement <code>RUSTC</code>, <code>RUSTC_WRAPPER</code> et <code>RUSTFLAGS</code> ne
-doivent pas être modifiées lorsque Cargo est appelé pour compiler un projet.</p>
+<p>Les variables d'environnement <code>RUSTC</code>, <code>RUSTC_WRAPPER</code> et <code>RUSTFLAGS</code> NE
+DOIVENT PAS être modifiées lorsque Cargo est appelé pour compiler un projet.</p>
 </div>
 <h3 id="rustfmt"><a class="header" href="#rustfmt">Rustfmt</a></h3>
 <p><a href="https://github.com/rust-lang/rustfmt">Rustfmt</a> est un outil offrant la possibilité de formater du code en fonction
@@ -371,12 +371,10 @@ single_line_if_else_max_width = 40
 </code></pre>
 <p>Pour plus d'informations à propos des règles de convention de style que
 <code>rustfmt</code> propose, voir <a href="#rust-style">rust-style</a>.</p>
-<div class="reco" id="DENV-FORMAT" type="Règle" title="Utilisation d'un outil de formatage (rustfmt)">
-<p>L'outil de formatage <code>rustfmt</code> peut être utilisé pour assurer le respect de
-règles de convention de style (comme décrites dans le fichier <code>rustfmt.toml</code>)</p>
-<blockquote>
-<p>sur une base de code.</p>
-</blockquote>
+<div class="reco" id="DENV-FORMAT" type="Recommandation" title="Utilisation d'un outil de formatage (rustfmt)">
+<p>L'outil de formatage <code>rustfmt</code> DEVRAIT être utilisé pour assurer le respect de
+règles de convention de style (comme décrites dans le fichier <code>rustfmt.toml</code>)
+sur une base de code.</p>
 </div>
 <h3 id="cargo-fix"><a class="header" href="#cargo-fix">Cargo fix</a></h3>
 <p>La commande <code>cargo fix</code> est un
@@ -416,12 +414,12 @@ particulier dans le cas des <em>lints</em> de la catégorie <code>clippy::nurser
 ceux-ci sont encore en cours de développement et de mise au point.</p>
 <p><code>clippy</code> dispose maintenant d'un outils <code>fix</code> similaire à celui de <code>rustfix</code>.</p>
 <div class="reco" id="DENV-LINTER" type="Règle" title="Utilisation régulière d'un *linter*">
-<p>Un <em>linter</em> comme <code>clippy</code> doit être utilisé régulièrement tout au long du
+<p>Un <em>linter</em> comme <code>clippy</code> DOIT être utilisé régulièrement tout au long du
 développement d'une application sécurisée.</p>
 </div>
 <div class="reco" id="DENV-AUTOFIX" type="Règle" title="Vérification manuelle des réparations automatiques">
 <p>Dans le cadre du développement d'une application sécurisée, toute réparation
-automatique (comme celles appliquées par <code>rustfix</code> ou <code>clippy</code> par exemple) doit être
+automatique (comme celles appliquées par <code>rustfix</code> ou <code>clippy</code> par exemple) DOIT être
 vérifiée par le développeur.</p>
 </div>
 <h3 id="autres"><a class="header" href="#autres">Autres</a></h3>

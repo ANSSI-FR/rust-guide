@@ -204,9 +204,9 @@ ressources externes (connexions réseau, fichier, etc.) ou de ressources mémoir
 complexes (<em>smart pointers</em> comme les <code>Box</code> ou les <code>Rc</code> par exemple). Au
 final, il est probable que l'implémentation du trait <code>Drop</code> contienne des blocs
 <code>unsafe</code> ainsi que d'autres opérations critiques du point de vue de la sécurité.</p>
-<div class="reco" id="LANG-DROP" type="Recommandation" title="Justification de l'implémentation du trait `Drop`">
+<div class="reco" id="LANG-DROP" type="Règle" title="Justification de l'implémentation du trait `Drop`">
 <p>Dans un développement sécurisé en Rust, l'implémentation du trait
-<code>std::ops::Drop</code> doit être justifiée, documentée et examinée par des pairs.</p>
+<code>std::ops::Drop</code> DOIT être justifiée et documentée.</p>
 </div>
 <p>Ensuite, le système de types de Rust assure seulement la sûreté mémoire et,
 du point de vue du typage, des <code>drop</code>s peuvent tout à fait être manqués.
@@ -223,19 +223,19 @@ encore à l'épuisement de ressources limitées et par là même à des problèm
 d'indisponibilité.</p>
 <div class="reco" id="LANG-DROP-NO-PANIC" type="Règle" title="Absence de `panic` dans l'implémentation de `Drop`">
 <p>Dans un développement sécurisé en Rust, l'implémentation du trait
-<code>std::ops::Drop</code> ne doit pas causer de <code>panic</code>.</p>
+<code>std::ops::Drop</code> NE DOIT PAS causer de <code>panic</code>.</p>
 </div>
 <p>En plus des <code>panic</code>s, les <code>drop</code>s contenant du code critique doivent être
 protégés.</p>
 <div class="reco" id="LANG-DROP-NO-CYCLE" type="Règle" title="Absence de cycles de références avec valeurs `Drop`ables">
-<p>Les valeurs dont le type implémente <code>Drop</code> ne doivent pas être incluses,
+<p>Les valeurs dont le type implémente <code>Drop</code> NE DOIVENT PAS être incluses,
 directement ou indirectement, dans un cycle de références à compteurs.</p>
 </div>
 <!-- -->
-<div class="reco" id="LANG-DROP-SEC" type="Recommandation" title="Sécurité assurée par d'autres mécanismes en plus du trait `Drop`">
+<div class="reco" id="LANG-DROP-SEC" type="Règle" title="Sécurité assurée par d'autres mécanismes en plus du trait `Drop`">
 <p>Certaines opérations liées à la sécurité d'une application à la fin d'un
-traitement (comme l'effacement de secrets cryptographiques par exemple) ne
-doivent pas reposer uniquement sur l'implémentation du trait <code>Drop</code>.</p>
+traitement (comme l'effacement de secrets cryptographiques par exemple) NE DOIVENT PAS
+reposer uniquement sur l'implémentation du trait <code>Drop</code>.</p>
 </div>
 
                     </main>
