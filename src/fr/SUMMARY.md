@@ -15,7 +15,6 @@
 - [Gestion des entiers](integer.md)
 - [Gestion des erreurs](errors.md)
 <!-- - [Système de types](typesystem.md) -->
-- [Traits centraux](central_traits.md)
 - [Unsafe Rust](unsafe.md)
   - [Généralités](unsafe/generalities.md)
   - [Gestion de la mémoire](unsafe/memory.md)

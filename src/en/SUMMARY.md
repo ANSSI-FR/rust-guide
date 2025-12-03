@@ -15,7 +15,6 @@
 - [Integer operations](integer.md)
 - [Error handling](errors.md)
 <!-- - [Type system](typesystem.md) -->
-- [Central traits](central_traits.md)
 - [Unsafe Rust](unsafe.md)
   - [Generalities](unsafe/generalities.md)
   - [Memory management](unsafe/memory.md)
