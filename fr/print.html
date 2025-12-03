@@ -2280,7 +2280,7 @@ struct SpecialType(u8);
 impl !Send for SpecialType {}
 impl !Sync for SpecialType {}</code></pre>
 <p>L'implémentation négative de <code>Send</code> ou <code>Sync</code> est également utilisée dans la
-bibliothèque standard pour les exceptions, et est automatiquement implémentée
+bibliothèque Rust pour les exceptions, et est automatiquement implémentée
 lorsque cela est approprié. En résultat, la documentation générée est toujours
 explicite : un type implémente soit <code>Send</code> (respectivement <code>Sync</code>), soit
 <code>!Send</code> (respectivement <code>!Sync</code>).</p>

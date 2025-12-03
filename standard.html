@@ -213,7 +213,7 @@ automatic implementation of those traits with a manual
 struct SpecialType(u8);
 impl !Send for SpecialType {}
 impl !Sync for SpecialType {}</code></pre>
-<p>The negative implementation of <code>Send</code> or <code>Sync</code> are also used in the standard
+<p>The negative implementation of <code>Send</code> or <code>Sync</code> are also used in the Rust
 library for the exceptions, and are automatically implemented when appropriate.
 As a result, the generated documentation is always explicit: a type implements
 either <code>Send</code> or <code>!Send</code> (resp. <code>Sync</code> or <code>!Sync</code>).</p>
