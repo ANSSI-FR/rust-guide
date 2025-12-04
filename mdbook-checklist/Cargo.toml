@@ -6,7 +6,7 @@ edition = "2021"
 description = "An mdBook preprocessor for generating checklists and indexes."
 keywords = ["mdbook", "markdown", "preprocessor"]
 readme = "README.md"
-license-file = "LICENCE.md"
+license-file = "LICENSE.md"
 
 [dependencies]
 clap = { version = "4", features = ["derive"] }

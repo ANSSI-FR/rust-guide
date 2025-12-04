@@ -25,6 +25,6 @@
 
 - [Bibliothèque standard](standard.md)
 
-[License](LICENSE.md)
+[Licence](LICENSE.md)
 
 <!-- TODO: - [Test et fuzzing](testfuzz.md) -->

@@ -25,6 +25,6 @@
 
 - [Standard library](standard.md)
 
-[Licence](LICENCE.md)
+[License](LICENSE.md)
 
 <!-- TODO - [Test and fuzzing](testfuzz.md) -->
