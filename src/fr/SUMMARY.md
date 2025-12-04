@@ -9,12 +9,12 @@
 
 # Langage
 
-- [Garanties du langage](guarantees.md)
 - [Nommage](naming.md)
 <!-- - [Macros](macros.md) -->
 - [Gestion des entiers](integer.md)
 - [Gestion des erreurs](errors.md)
 <!-- - [Système de types](typesystem.md) -->
+- [Garanties du langage](guarantees.md)
 - [Unsafe Rust](unsafe.md)
   - [Généralités](unsafe/generalities.md)
   - [Gestion de la mémoire](unsafe/memory.md)
