@@ -32,6 +32,20 @@ particular constructs:
 - (C-FEATURE) for feature naming (conditionally enabled functionalities),
 - (C-WORD-ORDER) for word order consistency.
 
+<div class="note">
+
+The basic rule (C-CASE) is checked by the compiler (with the `nonstandard_style` lint set).
+
+In addition to the compiler, the [`clippy`](./devenv.md#clippy) tool can help in adopting naming conventions with the `style` lint category.
+For example, the `wrong_self_convention` lint checks the consistency between conversion method names and their receiver types (`self`, `&self`, `&mut self`) according to (C-CONV).
+
+<!--
+clippy::enum_variant_names
+clippy::self_named_constructors
+-->
+
+</div>
+
 <div class="reco" id="LANG-NAMING" type="Rule" title="Respect naming conventions">
 
 Development of a secure application MUST follow the naming conventions

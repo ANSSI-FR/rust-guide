@@ -36,10 +36,23 @@ plus précises pour certaines constructions particulières :
 - (C-FEATURE) pour les noms de *features* (fonctionnalités activables par configuration) ;
 - (C-WORD-ORDER) pour la cohérence sur l'ordre des mots.
 
+<div class="note">
+
+Les règles de base sont vérifiées par le compilateur (jeu d'avertissements `nonstandard_style`).
+
+En complément du compilateur, l'outil [`clippy`](devenv.md#clippy) permet de faciliter l'adoption des conventions de nommage usuelles à travers la catégorie `style`.
+Par exemple, la vérification `wrong_self_convention` contrôle la cohérence entre les noms des méthodes de conversion et le type du receveur (`self`, `&self`, `&mut self`), suivant (C-CONV).
+
+<!--
+clippy::enum_variant_names
+clippy::self_named_constructors
+-->
+
+</div>
+
 <div class="reco" id="LANG-NAMING" type="Règle" title="Respect des conventions de nommage">
 
 Le développement d'une application sécurisée DOIT suivre les conventions de
 nommage décrites dans les [@rust-guidelines].
 
 </div>
-
