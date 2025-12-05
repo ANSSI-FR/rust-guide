@@ -12,25 +12,24 @@ references:
 
 # Naming
 
-As of now, the standard library is the de facto standard for naming things in
-the Rust world. However, an effort has been made to formalize it, first in
-[@RFC-430], then in the [@rust-guidelines].
+The standard library serves as the de facto standard for naming conventions in Rust.
+An effort has been made to formalize the conventions through [@RFC-430] and later in the [@rust-guidelines].
 
-The basic rule consists in using :
+The basic rule (C-CASE) consists in using:
 
-- `UpperCamelCase` for types, traits, enum variants,
-- `snake_case` for functions, methods, macros, variables and modules,
-- `SCREAMING_SNAKE_CASE` for statics and constants,
+- `UpperCamelCase` for types, traits, enum variants, and generic type parameters,
+- `snake_case` for functions, methods, macros, variables, and modules,
+- `SCREAMING_SNAKE_CASE` for statics, constants, and generic constant parameters,
 - `'lowercase` for lifetimes.
 
 The [@rust-guidelines] also prescribes more precise naming conventions for
-some particular constructions:
+particular constructs:
 
 - (C-CONV) for conversion methods (`as_`, `to_`, `into_`),
 - (C-GETTER) for getters,
 - (C-ITER) for iterator-producing methods,
 - (C-ITER-TY) for iterator types,
-- (C-FEATURE) for feature naming,
+- (C-FEATURE) for feature naming (conditionally enabled functionalities),
 - (C-WORD-ORDER) for word order consistency.
 
 <div class="reco" id="LANG-NAMING" type="Rule" title="Respect naming conventions">
