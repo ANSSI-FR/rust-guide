@@ -1,15 +1,15 @@
 use crate::semindent::{self, Element};
-use anyhow::{Ok, anyhow};
-use markdown::{ParseOptions, mdast::Node, to_mdast};
+use anyhow::{anyhow, Ok};
+use markdown::{mdast::Node, to_mdast, ParseOptions};
 use mdbook::{
-    BookItem,
     book::Book,
     preprocess::{Preprocessor, PreprocessorContext},
+    BookItem,
 };
 
 pub(super) struct Align;
 
-fn get_content_mut<'a>(item: &'a mut BookItem) -> Vec<&'a mut String> {
+fn get_content_mut(item: &mut BookItem) -> Vec<&mut String> {
     match item {
         BookItem::Chapter(chapter) => {
             let content: &mut String = &mut chapter.content;
@@ -42,7 +42,7 @@ impl Preprocessor for Align {
         "align-preprocessor"
     }
 
-    fn run(&self, ctx: &PreprocessorContext, mut book: Book) -> anyhow::Result<Book> {
+    fn run(&self, _ctx: &PreprocessorContext, mut book: Book) -> anyhow::Result<Book> {
         for content in book.sections.iter_mut().flat_map(get_content_mut) {
             let mut changes = Vec::new();
             let ast = to_mdast(content, &ParseOptions::default())
@@ -105,7 +105,7 @@ fn align(prefix: &str, content: &str) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use markdown::{ParseOptions, to_mdast};
+    use markdown::{to_mdast, ParseOptions};
 
     fn exemple_book(content: &str) -> Vec<u8> {
         let input = serde_json::json!([
