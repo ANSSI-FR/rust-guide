@@ -470,8 +470,7 @@ single_line_if_else_max_width = 40
 <code>rustfmt</code> propose, voir <a href="devenv.html#rust-style">rust-style</a>.</p>
 <div class="reco" id="DENV-FORMAT" type="Recommandation" title="Utilisation d'un outil de formatage (rustfmt)">
 <p>L'outil de formatage <code>rustfmt</code> DEVRAIT être utilisé pour assurer le respect de
-règles de convention de style (comme décrites dans le fichier <code>rustfmt.toml</code>)
-sur une base de code.</p>
+règles de convention de style sur une base de code.</p>
 </div>
 <h3 id="cargo-fix"><a class="header" href="#cargo-fix">Cargo fix</a></h3>
 <p>La commande <code>cargo fix</code> est un
@@ -814,60 +813,6 @@ d'autres raisons.</p>
 <mark>TODO</mark> : complexité cyclomatique du code macro-expansé, limites de
 récursion, ...
 -->
-<div style="break-before: page; page-break-before: always;"></div><h1 id="traits-centraux"><a class="header" href="#traits-centraux">Traits centraux</a></h1>
-<p>Implémenter ces traits modifie la sémantique d'exécution du langage.</p>
-<h2 id="trait-drop--le-destructeur"><a class="header" href="#trait-drop--le-destructeur">Trait <code>Drop</code> : le destructeur</a></h2>
-<p>Les types implémentent le trait <code>std::ops::Drop</code> dans le but d'effectuer
-certaines opérations lorsque la mémoire associée à une valeur est réclamée.
-<code>Drop</code> est l'équivalent Rust d'un destructeur en C++ ou un finaliseur en Java.</p>
-<p><code>Drop</code> agit récursivement, depuis la valeur externe vers les valeurs imbriquées.
-Lorsqu'une valeur sort du scope (ou est explicitement relâchée avec
-<code>std::mem::drop</code>), elle est relâchée en deux étapes. La première étape a lieu
-uniquement si le type de la valeur en question implémente le trait <code>Drop</code> et
-consiste en l'appel de la méthode <code>drop</code>. La seconde étape consiste en la
-répétition de processus de <em>drop</em> récursivement sur tous les champs que contient
-la valeur. Il est à noter que l'implémentation de <code>Drop</code> est
-<em>responsable uniquement de la valeur extérieure</em>.</p>
-<p>Tout d'abord, l'implémentation de <code>Drop</code> ne doit pas être systématique. Elle est
-nécessaire uniquement lorsque le type requiert un traitement logique à la
-destruction. <code>Drop</code> est typiquement utilisé dans le cas du relâchement des
-ressources externes (connexions réseau, fichier, etc.) ou de ressources mémoire
-complexes (<em>smart pointers</em> comme les <code>Box</code> ou les <code>Rc</code> par exemple). Au
-final, il est probable que l'implémentation du trait <code>Drop</code> contienne des blocs
-<code>unsafe</code> ainsi que d'autres opérations critiques du point de vue de la sécurité.</p>
-<div class="reco" id="LANG-DROP" type="Règle" title="Justification de l'implémentation du trait `Drop`">
-<p>Dans un développement sécurisé en Rust, l'implémentation du trait
-<code>std::ops::Drop</code> DOIT être justifiée et documentée.</p>
-</div>
-<p>Ensuite, le système de types de Rust assure seulement la sûreté mémoire et,
-du point de vue du typage, des <code>drop</code>s peuvent tout à fait être manqués.
-Plusieurs situations peuvent mener à manquer des <code>drop</code>s, comme :</p>
-<ul>
-<li>un cycle dans la référence (par exemple avec <code>Rc</code> ou <code>Arc</code>) ;</li>
-<li>un appel explicite à <code>std::mem::forget</code> (ou <code>core::mem::forget</code>) (voir
-paragraphe à propos de <a href="unsafe/memory.html#forget-and-memory-leaks"><code>forget</code> et des fuites de mémoire</a>) ;</li>
-<li>un <code>panic</code> dans un <code>drop</code> ;</li>
-<li>un arrêt du programme (et un <code>panic</code> lorsque <code>abort-on-panic</code> est activé).</li>
-</ul>
-<p>Les <code>drop</code>s manqués peuvent mener à l'exposition de données sensibles ou bien
-encore à l'épuisement de ressources limitées et par là même à des problèmes
-d'indisponibilité.</p>
-<div class="reco" id="LANG-DROP-NO-PANIC" type="Règle" title="Absence de `panic` dans l'implémentation de `Drop`">
-<p>Dans un développement sécurisé en Rust, l'implémentation du trait
-<code>std::ops::Drop</code> NE DOIT PAS causer de <code>panic</code>.</p>
-</div>
-<p>En plus des <code>panic</code>s, les <code>drop</code>s contenant du code critique doivent être
-protégés.</p>
-<div class="reco" id="LANG-DROP-NO-CYCLE" type="Règle" title="Absence de cycles de références avec valeurs `Drop`ables">
-<p>Les valeurs dont le type implémente <code>Drop</code> NE DOIVENT PAS être incluses,
-directement ou indirectement, dans un cycle de références à compteurs.</p>
-</div>
-<!-- -->
-<div class="reco" id="LANG-DROP-SEC" type="Règle" title="Sécurité assurée par d'autres mécanismes en plus du trait `Drop`">
-<p>Certaines opérations liées à la sécurité d'une application à la fin d'un
-traitement (comme l'effacement de secrets cryptographiques par exemple) NE DOIVENT PAS
-reposer uniquement sur l'implémentation du trait <code>Drop</code>.</p>
-</div>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="rust-unsafe"><a class="header" href="#rust-unsafe">Rust unsafe</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="généralités-sur-lutilisation-de-unsafe"><a class="header" href="#généralités-sur-lutilisation-de-unsafe">Généralités sur l'utilisation de <code>unsafe</code></a></h1>
 <h2 id="comportements-ajoutés-par-rust-unsafe"><a class="header" href="#comportements-ajoutés-par-rust-unsafe">Comportements ajoutés par Rust <em>unsafe</em></a></h2>
@@ -939,12 +884,6 @@ déréférencer des pointeurs en Rust pour ces adresses. Afin de minimiser le
 nombre de déclarations <code>unsafe</code> pour permettre au développeur de facilement
 identifier les accès critiques, une abstraction adaptée (structure de
 données ou module) doit être mise en place.</p>
-</li>
-<li>
-<p>Une fonction peut être marquée globalement comme non sûre (en préfixant sa
-déclaration par le mot-clé <code>unsafe</code>) lorsqu'elle exhibe inévitablement des
-comportements non sûrs en fonction de ses arguments. Par exemple, cela
-arrive lorsqu'une fonction doit déréférencer un pointeur passé en argument.</p>
 </li>
 <li>
 <p>Lorsque les performances sont impactées sur une petite partie de code (Buffer zero-copy modifié directement en mémoire, gestion des allocations, etc.).</p>
@@ -2492,7 +2431,73 @@ comparaison standard DEVRAIT être automatiquement dérivée à l'aide de
 sont nécessaires. Toute implémentation manuelle d'un trait de comparaison
 standard DEVRAIT être justifiée et documentée.</p>
 </div>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="licence-ouverte--open-licence"><a class="header" href="#licence-ouverte--open-licence">LICENCE OUVERTE / OPEN LICENCE</a></h1>
+<h2 id="trait-drop--le-destructeur"><a class="header" href="#trait-drop--le-destructeur">Trait <code>Drop</code> : le destructeur</a></h2>
+<p>Les types implémentent le trait <code>std::ops::Drop</code> dans le but d'effectuer
+certaines opérations lorsque la mémoire associée à une valeur est réclamée.
+<code>Drop</code> est l'équivalent Rust d'un destructeur en C++ ou un finaliseur en Java.</p>
+<div class="note">
+<p>Implémenter ce traits modifie la sémantique d'exécution du langage. En effet,
+contrairement au fonctionnement classique des traits <sup class="footnote-reference" id="fr-1-1"><a href="#footnote-1">1</a></sup>, l'exécution d'un même code
+se verra différente avec et sans cette implémentation.</p>
+</div>
+<p><code>Drop</code> agit récursivement, depuis la valeur externe vers les valeurs imbriquées.
+Lorsqu'une valeur sort du scope (ou est explicitement relâchée avec
+<code>std::mem::drop</code>), elle est relâchée en deux étapes. La première étape a lieu
+uniquement si le type de la valeur en question implémente le trait <code>Drop</code> et
+consiste en l'appel de la méthode <code>drop</code>. La seconde étape consiste en la
+répétition de processus de <em>drop</em> récursivement sur tous les champs que contient
+la valeur. Il est à noter que l'implémentation de <code>Drop</code> est
+<em>responsable uniquement de la valeur extérieure</em>.</p>
+<p>Tout d'abord, l'implémentation de <code>Drop</code> ne doit pas être systématique. Elle est
+nécessaire uniquement lorsque le type requiert un traitement logique à la
+destruction. <code>Drop</code> est typiquement utilisé dans le cas du relâchement des
+ressources externes (connexions réseau, fichier, etc.) ou de ressources mémoire
+complexes (<em>smart pointers</em> comme les <code>Box</code> ou les <code>Rc</code> par exemple). Au
+final, il est probable que l'implémentation du trait <code>Drop</code> contienne des blocs
+<code>unsafe</code> ainsi que d'autres opérations critiques du point de vue de la sécurité.</p>
+<div class="reco" id="LANG-DROP" type="Règle" title="Justification de l'implémentation du trait `Drop`">
+<p>Dans un développement sécurisé en Rust, l'implémentation du trait
+<code>std::ops::Drop</code> DOIT être justifiée et documentée.</p>
+</div>
+<p>Ensuite, le système de types de Rust assure seulement la sûreté mémoire et,
+du point de vue du typage, des <code>drop</code>s peuvent tout à fait être manqués.
+Plusieurs situations peuvent mener à manquer des <code>drop</code>s, comme :</p>
+<ul>
+<li>un cycle dans la référence (par exemple avec <code>Rc</code> ou <code>Arc</code>) ;</li>
+<li>un appel explicite à <code>std::mem::forget</code> (ou <code>core::mem::forget</code>) (voir
+paragraphe à propos de <a href="unsafe/memory.html#forget-and-memory-leaks"><code>forget</code> et des fuites de mémoire</a>) ;</li>
+<li>un <code>panic</code> dans un <code>drop</code> ;</li>
+<li>un arrêt du programme (et un <code>panic</code> lorsque <code>abort-on-panic</code> est activé).</li>
+</ul>
+<p>Les <code>drop</code>s manqués peuvent mener à l'exposition de données sensibles ou bien
+encore à l'épuisement de ressources limitées et par là même à des problèmes
+d'indisponibilité.</p>
+<div class="reco" id="LANG-DROP-NO-PANIC" type="Règle" title="Absence de `panic` dans l'implémentation de `Drop`">
+<p>Dans un développement sécurisé en Rust, l'implémentation du trait
+<code>std::ops::Drop</code> NE DOIT PAS causer de <code>panic</code>.</p>
+</div>
+<p>En plus des <code>panic</code>s, les <code>drop</code>s contenant du code critique doivent être
+protégés.</p>
+<div class="reco" id="LANG-DROP-NO-CYCLE" type="Règle" title="Absence de cycles de références avec valeurs `Drop`ables">
+<p>Les valeurs dont le type implémente <code>Drop</code> NE DOIVENT PAS être incluses,
+directement ou indirectement, dans un cycle de références à compteurs.</p>
+</div>
+<!-- -->
+<div class="reco" id="LANG-DROP-SEC" type="Règle" title="Sécurité assurée par d'autres mécanismes en plus du trait `Drop`">
+<p>Certaines opérations liées à la sécurité d'une application à la fin d'un
+traitement (comme l'effacement de secrets cryptographiques par exemple) NE DOIVENT PAS
+reposer uniquement sur l'implémentation du trait <code>Drop</code>.</p>
+</div>
+<h2 id="références-6"><a class="header" href="#références-6">Références</a></h2>
+<ul>
+<li><a id="RFC-1210"></a> <em><a href="https://github.com/rust-lang/rfcs/blob/master/text/1210-impl-specialization.md">Specialization</a></em> (RFC-1210)</li>
+</ul>
+<hr>
+<ol class="footnote-definition"><li id="footnote-1">
+<p>excepté l'usage de contraintes négatives de type, permis par exemple par la <a href="standard.html#RFC-1210">RFC-1210</a>,
+pas encore implémentée pour la version actuelle de Rust (1.91.0) <a href="#fr-1-1">↩</a></p>
+</li>
+</ol><div style="break-before: page; page-break-before: always;"></div><h1 id="licence-ouverte--open-licence"><a class="header" href="#licence-ouverte--open-licence">LICENCE OUVERTE / OPEN LICENCE</a></h1>
 <ul>
 <li>Version 2.0</li>
 <li>Avril 2017</li>
@@ -2686,19 +2691,6 @@ Règle - Gestion correcte des <code>panic!</code> dans les FFI (<a href="errors.
 </ul>
 </li>
 <li>
-<p>Traits centraux:</p>
-<ul>
-<li><input disabled="" type="checkbox"/>
-Règle - Justification de l'implémentation du trait <code>Drop</code> (<a href="central_traits.html#LANG-DROP">LANG-DROP</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Règle - Absence de <code>panic</code> dans l'implémentation de <code>Drop</code> (<a href="central_traits.html#LANG-DROP-NO-PANIC">LANG-DROP-NO-PANIC</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Règle - Absence de cycles de références avec valeurs <code>Drop</code>ables (<a href="central_traits.html#LANG-DROP-NO-CYCLE">LANG-DROP-NO-CYCLE</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Règle - Sécurité assurée par d'autres mécanismes en plus du trait <code>Drop</code> (<a href="central_traits.html#LANG-DROP-SEC">LANG-DROP-SEC</a>)</li>
-</ul>
-</li>
-<li>
 <p>Généralités:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
@@ -2788,6 +2780,14 @@ Règle - Respect des invariants des traits de comparaison standards (<a href="st
 Recommandation - Utilisation des implémentations par défaut des traits de comparaison standards (<a href="standard.html#LANG-CMP-DEFAULTS">LANG-CMP-DEFAULTS</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Recommandation - Dérivation des traits de comparaison lorsque c'est possible (<a href="standard.html#LANG-CMP-DERIVE">LANG-CMP-DERIVE</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Règle - Justification de l'implémentation du trait <code>Drop</code> (<a href="standard.html#LANG-DROP">LANG-DROP</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Règle - Absence de <code>panic</code> dans l'implémentation de <code>Drop</code> (<a href="standard.html#LANG-DROP-NO-PANIC">LANG-DROP-NO-PANIC</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Règle - Absence de cycles de références avec valeurs <code>Drop</code>ables (<a href="standard.html#LANG-DROP-NO-CYCLE">LANG-DROP-NO-CYCLE</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Règle - Sécurité assurée par d'autres mécanismes en plus du trait <code>Drop</code> (<a href="standard.html#LANG-DROP-SEC">LANG-DROP-SEC</a>)</li>
 </ul>
 </li>
 </ul>

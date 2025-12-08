@@ -409,7 +409,68 @@ SHOULD be automatically derived with <code>#[derive(...)]</code> when structural
 and lexicographical comparison is needed. Any manual implementation of
 standard comparison traits SHOULD be documented and justified.</p>
 </div>
-
+<h2 id="drop-trait-the-destructor"><a class="header" href="#drop-trait-the-destructor"><code>Drop</code> trait, the destructor</a></h2>
+<p>Types implement the trait <code>std::ops::Drop</code> to perform some operations when the
+memory associated with a value of this type is to be reclaimed. <code>Drop</code> is the
+Rust equivalent of a destructor in C++ or a finalizer in Java.</p>
+<div class="note">
+<p>Implementing this trait changes the execution semantics of the language.
+Indeed, unlike the classical behavior of traits <sup class="footnote-reference" id="fr-1-1"><a href="#footnote-1">1</a></sup>, the execution of the same
+code will differ depending on whether this trait is implemented or not.</p>
+</div>
+<p>Dropping is done recursively from the outer value to the inner values.
+When a value goes out of scope (or is explicitly dropped with <code>std::mem::drop</code>),
+the value is dropped in two steps. The first step happens only if the type of
+this value implements <code>Drop</code>. It consists in calling the <code>drop</code> method on it.
+The second step consists in repeating the dropping process recursively on any
+field the value contains. Note that a <code>Drop</code> implementation is
+<strong>only responsible for the outer value</strong>.</p>
+<p>First and foremost, implementing <code>Drop</code> should not be systematic.
+It is only needed if the type requires some destructor logic. In fact, <code>Drop</code> is
+typically used to release external resources (network connections, files, etc.)
+or to release memory (e.g. in smart pointers such as <code>Box</code> or <code>Rc</code>).
+As a result, <code>Drop</code> trait implementations are likely to contain <code>unsafe</code> code
+blocks as well as other security-critical operations.</p>
+<div class="reco" id="LANG-DROP" type="Rule" title="Justify `Drop` implementation">
+<p>In a Rust secure development, the implementation of the <code>std::ops::Drop</code> trait
+MUST be justified and documented.</p>
+</div>
+<p>Second, Rust type system only ensures memory safety and, from the type system's
+standpoint, missing drops is allowed. In fact, several things may lead to
+missing drops, such as:</p>
+<ul>
+<li>a reference cycle (for instance, with <code>Rc</code> or <code>Arc</code>),</li>
+<li>an explicit call to <code>std::mem::forget</code> (or <code>core::mem::forget</code>) (see paragraph
+on <a href="unsafe/memory.html#forget-and-memory-leaks"><code>forget</code> and memory leaks</a>),</li>
+<li>a panic during drop,</li>
+<li>program aborts (and panics when abort-on-panic is on).</li>
+</ul>
+<p>And missing drops may lead to exposing sensitive data or to lock limited
+resources leading to availability issues.</p>
+<div class="reco" id="LANG-DROP-NO-PANIC" type="Rule" title="Do not panic in `Drop` implementation">
+<p>In a Rust secure development, the implementation of the <code>std::ops::Drop</code> trait
+MUST not panic.</p>
+</div>
+<p>Beside panics, secure-critical drop should be protected.</p>
+<div class="reco" id="LANG-DROP-NO-CYCLE" type="Rule" title="Do not allow cycles of reference-counted `Drop`">
+<p>A value whose type implements <code>Drop</code> MUST NOT be embedded directly or indirectly
+in a cycle of reference-counted references.</p>
+</div>
+<div class="reco" id="LANG-DROP-SEC" type="Rule" title="Do not rely only on `Drop` to ensure security">
+<p>Ensuring security operations at the end of some treatment (such as key erasure
+at the end of a cryptographic encryption) MUST NOT rely only on the <code>Drop</code>
+trait implementation.</p>
+</div>
+<h2 id="references"><a class="header" href="#references">References</a></h2>
+<ul>
+<li><a id="RFC-1210"></a> <em><a href="https://github.com/rust-lang/rfcs/blob/master/text/1210-impl-specialization.md">Specialization</a></em> (RFC-1210)</li>
+</ul>
+<hr>
+<ol class="footnote-definition"><li id="footnote-1">
+<p>Except for the use of negative trait bounds, which is allowed for example
+by <a href="#RFC-1210">RFC-1210</a>, but is not yet implemented for the current version of Rust (1.91.0). <a href="#fr-1-1">↩</a></p>
+</li>
+</ol>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
@@ -418,7 +479,7 @@ standard comparison traits SHOULD be documented and justified.</p>
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="LICENCE.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="LICENSE.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -432,7 +493,7 @@ standard comparison traits SHOULD be documented and justified.</p>
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="LICENCE.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="LICENSE.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

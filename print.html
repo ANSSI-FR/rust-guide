@@ -440,7 +440,7 @@ single_line_if_else_max_width = 40
 at the <a href="devenv.html#rust-style">rust-style</a>.</p>
 <div class="reco" id="DENV-FORMAT" type="Recommendation" title="Use Rust formatter (rustfmt)">
 <p>The tool <code>rustfmt</code> SHOULD be used to ensure that the codebase respects style
-guidelines (as described in <code>rustfmt.toml</code> file).</p>
+guidelines.</p>
 </div>
 <h3 id="cargo-fix"><a class="header" href="#cargo-fix">Cargo fix</a></h3>
 <p>The <code>cargo fix</code> command is a tool dedicated in
@@ -754,54 +754,6 @@ abort or return in an unstable state.</li>
 </div>
 <p>Note that <code>catch_unwind</code> will only catch unwinding panics, not those that abort
 the process.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="central-traits"><a class="header" href="#central-traits">Central traits</a></h1>
-<h2 id="drop-trait-the-destructor"><a class="header" href="#drop-trait-the-destructor"><code>Drop</code> trait, the destructor</a></h2>
-<p>Types implement the trait <code>std::ops::Drop</code> to perform some operations when the
-memory associated with a value of this type is to be reclaimed. <code>Drop</code> is the
-Rust equivalent of a destructor in C++ or a finalizer in Java.</p>
-<p>Dropping is done recursively from the outer value to the inner values.
-When a value goes out of scope (or is explicitly dropped with <code>std::mem::drop</code>),
-the value is dropped in two steps. The first step happens only if the type of
-this value implements <code>Drop</code>. It consists in calling the <code>drop</code> method on it.
-The second step consists in repeating the dropping process recursively on any
-field the value contains. Note that a <code>Drop</code> implementation is
-<strong>only responsible for the outer value</strong>.</p>
-<p>First and foremost, implementing <code>Drop</code> should not be systematic.
-It is only needed if the type requires some destructor logic. In fact, <code>Drop</code> is
-typically used to release external resources (network connections, files, etc.)
-or to release memory (e.g. in smart pointers such as <code>Box</code> or <code>Rc</code>).
-As a result, <code>Drop</code> trait implementations are likely to contain <code>unsafe</code> code
-blocks as well as other security-critical operations.</p>
-<div class="reco" id="LANG-DROP" type="Rule" title="Justify `Drop` implementation">
-<p>In a Rust secure development, the implementation of the <code>std::ops::Drop</code> trait
-MUST be justified and documented.</p>
-</div>
-<p>Second, Rust type system only ensures memory safety and, from the type system's
-standpoint, missing drops is allowed. In fact, several things may lead to
-missing drops, such as:</p>
-<ul>
-<li>a reference cycle (for instance, with <code>Rc</code> or <code>Arc</code>),</li>
-<li>an explicit call to <code>std::mem::forget</code> (or <code>core::mem::forget</code>) (see paragraph
-on <a href="unsafe/memory.html#forget-and-memory-leaks"><code>forget</code> and memory leaks</a>),</li>
-<li>a panic during drop,</li>
-<li>program aborts (and panics when abort-on-panic is on).</li>
-</ul>
-<p>And missing drops may lead to exposing sensitive data or to lock limited
-resources leading to availability issues.</p>
-<div class="reco" id="LANG-DROP-NO-PANIC" type="Rule" title="Do not panic in `Drop` implementation">
-<p>In a Rust secure development, the implementation of the <code>std::ops::Drop</code> trait
-MUST not panic.</p>
-</div>
-<p>Beside panics, secure-critical drop should be protected.</p>
-<div class="reco" id="LANG-DROP-NO-CYCLE" type="Rule" title="Do not allow cycles of reference-counted `Drop`">
-<p>A value whose type implements <code>Drop</code> MUST NOT be embedded directly or indirectly
-in a cycle of reference-counted references.</p>
-</div>
-<div class="reco" id="LANG-DROP-SEC" type="Rule" title="Do not rely only on `Drop` to ensure security">
-<p>Ensuring security operations at the end of some treatment (such as key erasure
-at the end of a cryptographic encryption) MUST NOT rely only on the <code>Drop</code>
-trait implementation.</p>
-</div>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="rust-unsafe"><a class="header" href="#rust-unsafe">Rust unsafe</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="general-information-on-unsafe"><a class="header" href="#general-information-on-unsafe">General information on <code>unsafe</code></a></h1>
 <h2 id="unsafe-operations"><a class="header" href="#unsafe-operations"><em>Unsafe</em> operations</a></h2>
@@ -858,9 +810,6 @@ The use of this keyword in an API <em>warns</em> the API user about the potentia
 <li>
 <p>For embedded device programming, registers and various other resources are often accessed through a fixed memory address. In this case, <code>unsafe</code> blocks are required to initialize and dereference those particular pointers in Rust. In order to minimize the number of unsafe accesses in the code and to allow easier identification of them by a programmer, a proper abstraction (data
 structure or module) shall be provided.</p>
-</li>
-<li>
-<p>A function can be marked unsafe globally (by prefixing its declaration with the <code>unsafe</code> keyword) when it may exhibit unsafe behaviors based on its arguments, that are unavoidable. For instance, this happens when a function tries to dereference a pointer passed as an argument.</p>
 </li>
 <li>
 <p>When hitting a performance wall on a small portion of code (E.G: Zero-copy buffer modified in-place, Allocation overhead, etc.).</p>
@@ -2291,7 +2240,68 @@ SHOULD be automatically derived with <code>#[derive(...)]</code> when structural
 and lexicographical comparison is needed. Any manual implementation of
 standard comparison traits SHOULD be documented and justified.</p>
 </div>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="open-licence-20licence-ouverte-20"><a class="header" href="#open-licence-20licence-ouverte-20">OPEN LICENCE 2.0/LICENCE OUVERTE 2.0</a></h1>
+<h2 id="drop-trait-the-destructor"><a class="header" href="#drop-trait-the-destructor"><code>Drop</code> trait, the destructor</a></h2>
+<p>Types implement the trait <code>std::ops::Drop</code> to perform some operations when the
+memory associated with a value of this type is to be reclaimed. <code>Drop</code> is the
+Rust equivalent of a destructor in C++ or a finalizer in Java.</p>
+<div class="note">
+<p>Implementing this trait changes the execution semantics of the language.
+Indeed, unlike the classical behavior of traits <sup class="footnote-reference" id="fr-1-1"><a href="#footnote-1">1</a></sup>, the execution of the same
+code will differ depending on whether this trait is implemented or not.</p>
+</div>
+<p>Dropping is done recursively from the outer value to the inner values.
+When a value goes out of scope (or is explicitly dropped with <code>std::mem::drop</code>),
+the value is dropped in two steps. The first step happens only if the type of
+this value implements <code>Drop</code>. It consists in calling the <code>drop</code> method on it.
+The second step consists in repeating the dropping process recursively on any
+field the value contains. Note that a <code>Drop</code> implementation is
+<strong>only responsible for the outer value</strong>.</p>
+<p>First and foremost, implementing <code>Drop</code> should not be systematic.
+It is only needed if the type requires some destructor logic. In fact, <code>Drop</code> is
+typically used to release external resources (network connections, files, etc.)
+or to release memory (e.g. in smart pointers such as <code>Box</code> or <code>Rc</code>).
+As a result, <code>Drop</code> trait implementations are likely to contain <code>unsafe</code> code
+blocks as well as other security-critical operations.</p>
+<div class="reco" id="LANG-DROP" type="Rule" title="Justify `Drop` implementation">
+<p>In a Rust secure development, the implementation of the <code>std::ops::Drop</code> trait
+MUST be justified and documented.</p>
+</div>
+<p>Second, Rust type system only ensures memory safety and, from the type system's
+standpoint, missing drops is allowed. In fact, several things may lead to
+missing drops, such as:</p>
+<ul>
+<li>a reference cycle (for instance, with <code>Rc</code> or <code>Arc</code>),</li>
+<li>an explicit call to <code>std::mem::forget</code> (or <code>core::mem::forget</code>) (see paragraph
+on <a href="unsafe/memory.html#forget-and-memory-leaks"><code>forget</code> and memory leaks</a>),</li>
+<li>a panic during drop,</li>
+<li>program aborts (and panics when abort-on-panic is on).</li>
+</ul>
+<p>And missing drops may lead to exposing sensitive data or to lock limited
+resources leading to availability issues.</p>
+<div class="reco" id="LANG-DROP-NO-PANIC" type="Rule" title="Do not panic in `Drop` implementation">
+<p>In a Rust secure development, the implementation of the <code>std::ops::Drop</code> trait
+MUST not panic.</p>
+</div>
+<p>Beside panics, secure-critical drop should be protected.</p>
+<div class="reco" id="LANG-DROP-NO-CYCLE" type="Rule" title="Do not allow cycles of reference-counted `Drop`">
+<p>A value whose type implements <code>Drop</code> MUST NOT be embedded directly or indirectly
+in a cycle of reference-counted references.</p>
+</div>
+<div class="reco" id="LANG-DROP-SEC" type="Rule" title="Do not rely only on `Drop` to ensure security">
+<p>Ensuring security operations at the end of some treatment (such as key erasure
+at the end of a cryptographic encryption) MUST NOT rely only on the <code>Drop</code>
+trait implementation.</p>
+</div>
+<h2 id="references-6"><a class="header" href="#references-6">References</a></h2>
+<ul>
+<li><a id="RFC-1210"></a> <em><a href="https://github.com/rust-lang/rfcs/blob/master/text/1210-impl-specialization.md">Specialization</a></em> (RFC-1210)</li>
+</ul>
+<hr>
+<ol class="footnote-definition"><li id="footnote-1">
+<p>Except for the use of negative trait bounds, which is allowed for example
+by <a href="standard.html#RFC-1210">RFC-1210</a>, but is not yet implemented for the current version of Rust (1.91.0). <a href="#fr-1-1">↩</a></p>
+</li>
+</ol><div style="break-before: page; page-break-before: always;"></div><h1 id="open-licence-20licence-ouverte-20"><a class="header" href="#open-licence-20licence-ouverte-20">OPEN LICENCE 2.0/LICENCE OUVERTE 2.0</a></h1>
 <h2 id="reuse-of-the-information-covered-by-this-licence"><a class="header" href="#reuse-of-the-information-covered-by-this-licence">“Reuse” of the “Information” covered by this licence</a></h2>
 <p>The “Grantor” grants the “Reuser” the free, non-exclusive right to “Reuse” the “Information” subject of this licence, for commercial or non-commercial purposes, worldwide and for an unlimited period, in accordance with the conditions stated below.</p>
 <p><strong>The “Reuser” is free to reuse the “Information”:</strong></p>
@@ -2412,19 +2422,6 @@ Rule - Handle correctly <code>panic!</code> in FFI (<a href="errors.html#LANG-FF
 </ul>
 </li>
 <li>
-<p>Central traits:</p>
-<ul>
-<li><input disabled="" type="checkbox"/>
-Rule - Justify <code>Drop</code> implementation (<a href="central_traits.html#LANG-DROP">LANG-DROP</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Do not panic in <code>Drop</code> implementation (<a href="central_traits.html#LANG-DROP-NO-PANIC">LANG-DROP-NO-PANIC</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Do not allow cycles of reference-counted <code>Drop</code> (<a href="central_traits.html#LANG-DROP-NO-CYCLE">LANG-DROP-NO-CYCLE</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Do not rely only on <code>Drop</code> to ensure security (<a href="central_traits.html#LANG-DROP-SEC">LANG-DROP-SEC</a>)</li>
-</ul>
-</li>
-<li>
 <p>Generalities:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
@@ -2514,6 +2511,14 @@ Rule - Respect the invariants of standard comparison traits (<a href="standard.h
 Recommendation - Use the default method implementation of standard comparison traits (<a href="standard.html#LANG-CMP-DEFAULTS">LANG-CMP-DEFAULTS</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Recommendation - Derive comparison traits when possible (<a href="standard.html#LANG-CMP-DERIVE">LANG-CMP-DERIVE</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Rule - Justify <code>Drop</code> implementation (<a href="standard.html#LANG-DROP">LANG-DROP</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Rule - Do not panic in <code>Drop</code> implementation (<a href="standard.html#LANG-DROP-NO-PANIC">LANG-DROP-NO-PANIC</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Rule - Do not allow cycles of reference-counted <code>Drop</code> (<a href="standard.html#LANG-DROP-NO-CYCLE">LANG-DROP-NO-CYCLE</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Rule - Do not rely only on <code>Drop</code> to ensure security (<a href="standard.html#LANG-DROP-SEC">LANG-DROP-SEC</a>)</li>
 </ul>
 </li>
 </ul>

@@ -255,12 +255,6 @@ identifier les accès critiques, une abstraction adaptée (structure de
 données ou module) doit être mise en place.</p>
 </li>
 <li>
-<p>Une fonction peut être marquée globalement comme non sûre (en préfixant sa
-déclaration par le mot-clé <code>unsafe</code>) lorsqu'elle exhibe inévitablement des
-comportements non sûrs en fonction de ses arguments. Par exemple, cela
-arrive lorsqu'une fonction doit déréférencer un pointeur passé en argument.</p>
-</li>
-<li>
 <p>Lorsque les performances sont impactées sur une petite partie de code (Buffer zero-copy modifié directement en mémoire, gestion des allocations, etc.).</p>
 </li>
 </ul>
