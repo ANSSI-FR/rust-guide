@@ -133,8 +133,10 @@ Tier 3 targets are simply not officially supported.
 
 The tier distinction helps developers choose a target that matches their risk tolerance: Tier 1 for production‑grade workloads, Tier 2 for experimental or niche architectures where full support isn’t yet met.
 
-<div class="reco" id="TIERS_TOOLCHAINS" type="Rule" title="Exclusive use of tier 1 of `rustc` for safety-critical software">
+<div class="reco" id="DENV-TIERS" type="Rule" title="Exclusive use of tier 1 of `rustc` for safety-critical software">
+
 Rustc tier 1 targets and certified toolchains MUST be used for safety-critical systems.
+
 </div>
 
 A comprehensive list of supported targets is available in [@rustc-book].

@@ -140,8 +140,10 @@ Les cibles de niveau 3 ne sont tout simplement pas prises en charge officielle
 La distinction entre les différents niveaux aide les développeurs à choisir une cible adaptée à leur tolérance au risque : le niveau 1 pour des applications de production, le niveau 2 pour des architectures plus expérimentales ou de niche dont le support complet n’est pas encore assuré.
 
 
-<div class="reco" id="TIERS_TOOLCHAINS" type="Rule" title="Utilisation exclusive du tier 1 de `rustc` pour les logiciels de sureté critiques">
-Les cibles Rustc de niveau 1 et les chaînes de compilation certifiées DOIVENT être utilisées pour les systèmes de sureté critiques.
+<div class="reco" id="DENV-TIERS" type="Rule" title="Utilisation exclusive du tier 1 de `rustc` pour les logiciels de sûreté critiques">
+
+Les cibles Rustc de niveau 1 et les chaînes de compilation certifiées DOIVENT être utilisées pour les systèmes de sûreté critiques.
+
 </div>
 
 
