@@ -61,7 +61,7 @@ mod ok {
     }
     // ANCHOR_END: Locatable_bool_OK
 }
-#[cfg(feature = "")]
+#[cfg(feature = "KO")]
 mod bad {
     use super::*;
     // ANCHOR: Locatable_bool_KO
@@ -75,7 +75,7 @@ mod bad {
     // ANCHOR: Locatable_UB
     fn use_locatable() {
         let buf = [4, 1, 99];
-        let located_bool: Option<bool> = find(&buf); // UB here!
+        let located_bool: Option<bool> = bool::find(&buf); // UB here!
         println!("{:?}", located_bool)
     }
     // ANCHOR_END: Locatable_UB

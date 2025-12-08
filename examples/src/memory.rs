@@ -1,5 +1,6 @@
 use std::mem::forget;
 
+#[allow(dropping_copy_types)]
 fn drop_example() {
     // ANCHOR: drop_example
     let pair = ('↑', 0xBADD_CAFEu32);
@@ -17,7 +18,7 @@ fn forget_example() {
 fn raw_pointer() {
     // ANCHOR: raw_pointer
     let boxed = Box::new(String::from("Crab"));
-    let raw_ptr = unsafe { Box::into_raw(boxed) };
+    let raw_ptr = Box::into_raw(boxed);
     let _ = unsafe { Box::from_raw(raw_ptr) }; // will be freed
     // ANCHOR_END: raw_pointer
 }
