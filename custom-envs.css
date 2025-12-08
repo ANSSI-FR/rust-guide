@@ -24,7 +24,6 @@ blockquote .note:before {
 .reco {
 	margin: 20px;
 	padding: 0 20px;
-	border-inline-start: 2px solid;
 }
 
 blockquote .reco:before {
@@ -39,7 +38,6 @@ blockquote .reco:before {
 .examplereco {
 	margin: 20px;
 	padding: 0 20px;
-	border-inline-start: 2px solid var(--reco-border);
 }
 
 blockquote .examplereco:before {
@@ -73,18 +71,18 @@ code.ub {
 	--reco-border: rgb(189, 64, 6);
 }
 
-.reco[type="Recommendation"] {
-    border-inline-start: 4px solid var(--reco-border) !important;
+[type="Recommendation"] {
+	border-inline-start: 4px solid var(--reco-border) !important;
 }
 
-.reco[type="Rule"] {
-    border-inline-start: 4px solid var(--rule-border) !important;
+[type="Rule"] {
+	border-inline-start: 4px solid var(--rule-border) !important;
 }
 
-.reco[type="Recommandation"] {
-    border-inline-start: 4px solid var(--reco-border) !important;
+[type="Recommandation"] {
+	border-inline-start: 4px solid var(--reco-border) !important;
 }
 
-.reco[type="Règle"] {
-    border-inline-start: 4px solid var(--rule-border) !important;
+[type="Règle"] {
+	border-inline-start: 4px solid var(--rule-border) !important;
 }
