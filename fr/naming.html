@@ -188,11 +188,11 @@
 standard pour le nommage des éléments des programmes écrits en Rust. Un effort a
 été fait pour formaliser ces conventions de nommage, d'abord dans la <a href="#RFC-430">RFC-430</a>,
 puis dans le document des <em><a href="#rust-guidelines">rust-guidelines</a></em>.</p>
-<p>La règle de base consiste à utiliser :</p>
+<p>La règle de base (C-CASE) consiste à utiliser :</p>
 <ul>
-<li><code>UpperCamelCase</code> pour les types, traits et valeurs d'énumérations ;</li>
+<li><code>UpperCamelCase</code> pour les types, traits, variants d'énumérations et paramètres génériques de type ;</li>
 <li><code>snake_case</code> pour les fonctions, méthodes, macros, variables et modules ;</li>
-<li><code>SCREAMING_SNAKE_CASE</code> pour les variables statiques et les constantes ;</li>
+<li><code>SCREAMING_SNAKE_CASE</code> pour les variables statiques, les constantes et les paramètres génériques constants ;</li>
 <li><code>'lowercase</code> pour les durées de vie (<em>lifetimes</em>).</li>
 </ul>
 <p>Les <a href="#rust-guidelines">rust-guidelines</a> recommandent également des conventions de nommage
@@ -202,9 +202,18 @@ plus précises pour certaines constructions particulières :</p>
 <li>(C-GETTER) pour les accesseurs ;</li>
 <li>(C-ITER) pour les méthodes produisant des itérateurs ;</li>
 <li>(C-ITER-TY) pour les types itérateur ;</li>
-<li>(C-FEATURE) pour les noms de <em>features</em> ;</li>
+<li>(C-FEATURE) pour les noms de <em>features</em> (fonctionnalités activables par configuration) ;</li>
 <li>(C-WORD-ORDER) pour la cohérence sur l'ordre des mots.</li>
 </ul>
+<div class="note">
+<p>Les règles de base sont vérifiées par le compilateur (jeu d'avertissements <code>nonstandard_style</code>).</p>
+<p>En complément du compilateur, l'outil <a href="devenv.html#clippy"><code>clippy</code></a> permet de faciliter l'adoption des conventions de nommage usuelles à travers la catégorie <code>style</code>.
+Par exemple, la vérification <code>wrong_self_convention</code> contrôle la cohérence entre les noms des méthodes de conversion et le type du receveur (<code>self</code>, <code>&amp;self</code>, <code>&amp;mut self</code>), suivant (C-CONV).</p>
+<!--
+clippy::enum_variant_names
+clippy::self_named_constructors
+-->
+</div>
 <div class="reco" id="LANG-NAMING" type="Règle" title="Respect des conventions de nommage">
 <p>Le développement d'une application sécurisée DOIT suivre les conventions de
 nommage décrites dans les <a href="#rust-guidelines">rust-guidelines</a>.</p>

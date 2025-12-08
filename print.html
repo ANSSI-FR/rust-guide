@@ -564,26 +564,34 @@ dependencies (with a tool?).
 
 -->
 <div style="break-before: page; page-break-before: always;"></div><h1 id="naming"><a class="header" href="#naming">Naming</a></h1>
-<p>As of now, the standard library is the de facto standard for naming things in
-the Rust world. However, an effort has been made to formalize it, first in
-<a href="naming.html#RFC-430">RFC-430</a>, then in the <a href="naming.html#rust-guidelines">rust-guidelines</a>.</p>
-<p>The basic rule consists in using :</p>
+<p>The standard library serves as the de facto standard for naming conventions in Rust.
+An effort has been made to formalize the conventions through <a href="naming.html#RFC-430">RFC-430</a> and later in the <a href="naming.html#rust-guidelines">rust-guidelines</a>.</p>
+<p>The basic rule (C-CASE) consists in using:</p>
 <ul>
-<li><code>UpperCamelCase</code> for types, traits, enum variants,</li>
-<li><code>snake_case</code> for functions, methods, macros, variables and modules,</li>
-<li><code>SCREAMING_SNAKE_CASE</code> for statics and constants,</li>
+<li><code>UpperCamelCase</code> for types, traits, enum variants, and generic type parameters,</li>
+<li><code>snake_case</code> for functions, methods, macros, variables, and modules,</li>
+<li><code>SCREAMING_SNAKE_CASE</code> for statics, constants, and generic constant parameters,</li>
 <li><code>'lowercase</code> for lifetimes.</li>
 </ul>
 <p>The <a href="naming.html#rust-guidelines">rust-guidelines</a> also prescribes more precise naming conventions for
-some particular constructions:</p>
+particular constructs:</p>
 <ul>
 <li>(C-CONV) for conversion methods (<code>as_</code>, <code>to_</code>, <code>into_</code>),</li>
 <li>(C-GETTER) for getters,</li>
 <li>(C-ITER) for iterator-producing methods,</li>
 <li>(C-ITER-TY) for iterator types,</li>
-<li>(C-FEATURE) for feature naming,</li>
+<li>(C-FEATURE) for feature naming (conditionally enabled functionalities),</li>
 <li>(C-WORD-ORDER) for word order consistency.</li>
 </ul>
+<div class="note">
+<p>The basic rule (C-CASE) is checked by the compiler (with the <code>nonstandard_style</code> lint set).</p>
+<p>In addition to the compiler, the <a href="./devenv.html#clippy"><code>clippy</code></a> tool can help in adopting naming conventions with the <code>style</code> lint category.
+For example, the <code>wrong_self_convention</code> lint checks the consistency between conversion method names and their receiver types (<code>self</code>, <code>&amp;self</code>, <code>&amp;mut self</code>) according to (C-CONV).</p>
+<!--
+clippy::enum_variant_names
+clippy::self_named_constructors
+-->
+</div>
 <div class="reco" id="LANG-NAMING" type="Rule" title="Respect naming conventions">
 <p>Development of a secure application MUST follow the naming conventions
 outlined in the <a href="naming.html#rust-guidelines">rust-guidelines</a>.</p>
