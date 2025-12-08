@@ -942,7 +942,7 @@ This API could require implementing the following trait:</p>
 <p>The following program produces UB.</p>
 <pre><code class="language-rust ignore align ub">fn use_locatable() {
    let buf = [4, 1, 99];
-   let located_bool: Option&lt;bool&gt; = find(&amp;buf); // UB here!
+   let located_bool: Option&lt;bool&gt; = bool::find(&amp;buf); // UB here!
    println!("{:?}", located_bool)
 }</code></pre>
 <p>The UB-detecting tool <code>miri</code> reports the following:</p>
@@ -1079,7 +1079,7 @@ of smart pointers <code>Box</code>, <code>Rc</code>, <code>Arc</code> or <code>W
 <pre><pre class="playground"><code class="language-rust align"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let boxed = Box::new(String::from("Crab"));
-let raw_ptr = unsafe { Box::into_raw(boxed) };
+let raw_ptr = Box::into_raw(boxed);
 let _ = unsafe { Box::from_raw(raw_ptr) }; // will be freed
 <span class="boring">}</span></code></pre></pre>
 </div>

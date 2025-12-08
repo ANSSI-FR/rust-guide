@@ -270,7 +270,7 @@ of smart pointers <code>Box</code>, <code>Rc</code>, <code>Arc</code> or <code>W
 <pre><pre class="playground"><code class="language-rust align"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let boxed = Box::new(String::from("Crab"));
-let raw_ptr = unsafe { Box::into_raw(boxed) };
+let raw_ptr = Box::into_raw(boxed);
 let _ = unsafe { Box::from_raw(raw_ptr) }; // will be freed
 <span class="boring">}</span></code></pre></pre>
 </div>

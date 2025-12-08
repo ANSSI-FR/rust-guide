@@ -355,7 +355,7 @@ This API could require implementing the following trait:</p>
 <p>The following program produces UB.</p>
 <pre><code class="language-rust ignore align ub">fn use_locatable() {
    let buf = [4, 1, 99];
-   let located_bool: Option&lt;bool&gt; = find(&amp;buf); // UB here!
+   let located_bool: Option&lt;bool&gt; = bool::find(&amp;buf); // UB here!
    println!("{:?}", located_bool)
 }</code></pre>
 <p>The UB-detecting tool <code>miri</code> reports the following:</p>

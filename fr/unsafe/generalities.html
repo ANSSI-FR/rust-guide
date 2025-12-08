@@ -367,7 +367,7 @@ On demande donc à l'utilisateur de l'API de fournir une implémentation à ce t
 <p>L'exécution du programme suivant produit un <em>UB</em> :</p>
 <pre><code class="language-rust ignore align ub">fn use_locatable() {
    let buf = [4, 1, 99];
-   let located_bool: Option&lt;bool&gt; = find(&amp;buf); // UB here!
+   let located_bool: Option&lt;bool&gt; = bool::find(&amp;buf); // UB here!
    println!("{:?}", located_bool)
 }</code></pre>
 <p>Voici le retour obtenu avec l'outil de détection de comportement indéfini <code>miri</code> :</p>
