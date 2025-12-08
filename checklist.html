@@ -280,6 +280,8 @@ Rule - Avoid cyclic reference counted pointers (<a href="unsafe/memory.html#MEM-
 <p>Foreign Function Interface:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
+Recommendation - Provide safe wrapping to foreign library (<a href="unsafe/ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>)</li>
+<li><input disabled="" type="checkbox"/>
 Rule - Use only C-compatible types in FFI (<a href="unsafe/ffi.html#FFI-CTYPE">FFI-CTYPE</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Rule - Use consistent types at FFI boundaries (<a href="unsafe/ffi.html#FFI-TCONS">FFI-TCONS</a>)</li>
@@ -315,8 +317,6 @@ Rule - Ensure clear data ownership in FFI (<a href="unsafe/ffi.html#FFI-MEM-OWNE
 Recommendation - Wrap foreign data in memory releasing wrapper (<a href="unsafe/ffi.html#FFI-MEM-WRAPPING">FFI-MEM-WRAPPING</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Rule - Handle <code>panic!</code> correctly in FFI (<a href="unsafe/ffi.html#FFI-NOPANIC">FFI-NOPANIC</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Recommendation - Provide safe wrapping to foreign library (<a href="unsafe/ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Rule - Expose dedicated C-compatible API only (<a href="unsafe/ffi.html#FFI-CAPI">FFI-CAPI</a>)</li>
 </ul>

@@ -240,6 +240,24 @@ fn use_static_extern() {
     }
 }
 <span class="boring">}</span></code></pre></pre>
+<h2 id="code-structure"><a class="header" href="#code-structure">Code structure</a></h2>
+<div class="reco" id="FFI-SAFEWRAPPING" type="Recommendation" title="Provide safe wrapping to foreign library">
+<p>Interfacing a library written in another language in Rust SHOULD be done in
+two parts:</p>
+<ul>
+<li>a low-level, possibly <em>hidden</em>, module that closely translates the original
+C API into <code>extern</code> blocks,</li>
+<li>a safe wrapping module that ensures memory safety and security invariants at
+the Rust level.</li>
+</ul>
+<p>If the low-level API is exposed to the world, it SHOULD be done in a dedicated
+crate with a name of the form <code>*-sys</code>.</p>
+</div>
+<p>The crate <a href="https://crates.io/crates/bindgen">rust-bindgen</a> may be used to automatically generate the low-level
+part of the binding from C header files.</p>
+<!--
+<mark>TODO</mark> example
+-->
 <h2 id="typing"><a class="header" href="#typing">Typing</a></h2>
 <p>Typing is the way Rust ensures memory safety. When interfacing with other
 languages, which may not offer the same guarantee, the choice of types in the
@@ -457,7 +475,7 @@ embedded systems or kernel-level programming). Another advantage of using Rust
 pointers in FFI is that any load of the pointed value is clearly marked inside
 an <code>unsafe</code> block or function.</p>
 <div class="reco" id="FFI-NOREF" type="Rule" title="Do not use reference types in a FFI but pointer types">
-<p>In a secure Rust development, the Rust code in a FFI MUST NOT use reference types
+<p>In a secure Rust development, the Rust <em>low-level</em> code (the <code>*-sys</code> crate) in a FFI MUST NOT use reference types
 but pointer types.</p>
 <p>Exceptions include:</p>
 <ul>
@@ -865,24 +883,6 @@ care in order to ensure both the safety and security of the program.</p>
 <p>Another approach is to simply ensure that there is no use of <code>panic!</code> with the
 <a href="https://crates.io/crates/panic-never"><code>panic-never</code></a> crate. Like <a href="https://crates.io/crates/no-panic"><code>no-panic</code></a>, <a href="https://crates.io/crates/panic-never"><code>panic-never</code></a> relies on a linking
 trick: the linker fails if a non-trivially-dead branch leads to <code>panic!</code>.</p>
-<h2 id="binding-a-foreign-library-in-rust"><a class="header" href="#binding-a-foreign-library-in-rust">Binding a foreign library in Rust</a></h2>
-<div class="reco" id="FFI-SAFEWRAPPING" type="Recommendation" title="Provide safe wrapping to foreign library">
-<p>Interfacing a library written in another language in Rust SHOULD be done in
-two parts:</p>
-<ul>
-<li>a low-level, possibly <em>hidden</em>, module that closely translates the original
-C API into <code>extern</code> blocks,</li>
-<li>a safe wrapping module that ensures memory safety and security invariants at
-the Rust level.</li>
-</ul>
-<p>If the low-level API is exposed to the world, it SHOULD be done in a dedicated
-crate with a name of the form <code>*-sys</code>.</p>
-</div>
-<p>The crate <a href="https://crates.io/crates/bindgen">rust-bindgen</a> may be used to automatically generate the low-level
-part of the binding from C header files.</p>
-<!--
-<mark>TODO</mark> example
--->
 <h2 id="binding-a-rust-library-in-another-language"><a class="header" href="#binding-a-rust-library-in-another-language">Binding a Rust library in another language</a></h2>
 <div class="reco" id="FFI-CAPI" type="Rule" title="Expose dedicated C-compatible API only">
 <p>In a secure Rust development, exposing a Rust library to a foreign language

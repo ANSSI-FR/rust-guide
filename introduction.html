@@ -235,12 +235,13 @@ propositions (<em>pull requests</em>) or in the form of suggestions and discussi
 <p>This document considers separately different phases of a typical (and simplified)
 development process.
 Firstly, we provide some advice on how to take advantage of using tools of the
-Rust ecosystem for secure development.
-A following chapter focuses on precautions to take when choosing and using
+Rust ecosystem for secure development, and other advices on precautions to take when choosing and using
 external libraries.
 Then, recommendations about the Rust language constructs are presented.</p>
 <!-- TODO: Finally, we introduce advices for writing
 tests for a project in Rust, and for using Rust fuzzing tools.-->
+<p>We finally introduce some recommendation for established Rust libraries.</p>
+<p>Note that <em>async</em> Rust is currently eluded from recommendations list.</p>
 <p>A summary of recommendations presented throughout the document is listed at the
 end of this guide.</p>
 <h2 id="notations"><a class="header" href="#notations">Notations</a></h2>
@@ -250,12 +251,12 @@ more prescriptive than the wording <em>it is recommended</em>.</p>
 this guide, for some recommendations several solutions are proposed, which differ in the level of security they provide. This allows readers to choose the solution that offers the best protection
 based on their context and security objectives.</p>
 <p>The recommendations are therefore presented as follows:</p>
-<div class="examplereco" id="EXAMPLE-RULE" type="Rule" title="General recommandation">
+<div class="examplereco" id="EXAMPLE-RULE" type="Rule" title="General recommendation">
 <p>This recommendation is formulated in conceptual terms, without taking into account
 the context of application or its implementation.</p>
 </div>
-<div class="examplereco" id="EXAMPLE-RECO" type="Recommandation" title="Recommandation for higher security requirement">
-<p>This recommandation is required for higher level security softwares.</p>
+<div class="examplereco" id="EXAMPLE-RECO" type="Recommandation" title="Recommendation for higher security requirement">
+<p>This recommendation is required for higher level security software.</p>
 </div>
 <p>As part of an ongoing process of digital risk management and continuous improvement of
 information system security <sup class="footnote-reference" id="fr-1-1"><a href="#footnote-1">1</a></sup>, the relevance of implementing the recommendations

@@ -236,12 +236,13 @@ propositions (<em>pull requests</em>) or in the form of suggestions and discussi
 <p>This document considers separately different phases of a typical (and simplified)
 development process.
 Firstly, we provide some advice on how to take advantage of using tools of the
-Rust ecosystem for secure development.
-A following chapter focuses on precautions to take when choosing and using
+Rust ecosystem for secure development, and other advices on precautions to take when choosing and using
 external libraries.
 Then, recommendations about the Rust language constructs are presented.</p>
 <!-- TODO: Finally, we introduce advices for writing
 tests for a project in Rust, and for using Rust fuzzing tools.-->
+<p>We finally introduce some recommendation for established Rust libraries.</p>
+<p>Note that <em>async</em> Rust is currently eluded from recommendations list.</p>
 <p>A summary of recommendations presented throughout the document is listed at the
 end of this guide.</p>
 <h2 id="notations"><a class="header" href="#notations">Notations</a></h2>
@@ -251,12 +252,12 @@ more prescriptive than the wording <em>it is recommended</em>.</p>
 this guide, for some recommendations several solutions are proposed, which differ in the level of security they provide. This allows readers to choose the solution that offers the best protection
 based on their context and security objectives.</p>
 <p>The recommendations are therefore presented as follows:</p>
-<div class="examplereco" id="EXAMPLE-RULE" type="Rule" title="General recommandation">
+<div class="examplereco" id="EXAMPLE-RULE" type="Rule" title="General recommendation">
 <p>This recommendation is formulated in conceptual terms, without taking into account
 the context of application or its implementation.</p>
 </div>
-<div class="examplereco" id="EXAMPLE-RECO" type="Recommandation" title="Recommandation for higher security requirement">
-<p>This recommandation is required for higher level security softwares.</p>
+<div class="examplereco" id="EXAMPLE-RECO" type="Recommandation" title="Recommendation for higher security requirement">
+<p>This recommendation is required for higher level security software.</p>
 </div>
 <p>As part of an ongoing process of digital risk management and continuous improvement of
 information system security <sup class="footnote-reference" id="fr-1-1"><a href="#footnote-1">1</a></sup>, the relevance of implementing the recommendations
@@ -562,40 +563,6 @@ dependencies (with a tool?).
 </div>
 
 -->
-<div style="break-before: page; page-break-before: always;"></div><h1 id="language-guarantees"><a class="header" href="#language-guarantees">Language guarantees</a></h1>
-<h2 id="undefined-behaviors-ub"><a class="header" href="#undefined-behaviors-ub">Undefined Behaviors (<em>UB</em>)</a></h2>
-<blockquote>
-<p>The behavior of a program is <em>undefined</em> when its semantics is not described in the Rust language.</p>
-</blockquote>
-<p>Considering <a href="guarantees.html#rust-reference">rust-reference</a>, the existence of UB is considered an <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general">error</a>.</p>
-<p>For example, dereferencing the null pointer is a <em>UB</em>. On the other hand, <code>unwrap</code>ing the <code>None</code> object is well defined because it is the language that processes this error (by launching a panic).</p>
-<p>The current list of <em>UBs</em> is given in the language <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html">reference</a>. Notice the following guarantees:</p>
-<ul>
-<li>No dereference of pointer to an unallocated or unaligned memory address (dangling pointer), which implies
-<ul>
-<li>No buffer overflow</li>
-<li>No access to freed memory</li>
-<li>No non-aligned access</li>
-</ul>
-</li>
-<li>The pointed values are <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.invalid">consistent</a> with the pointer's type. For example, a value pointed at by a boolean pointer will be byte of value 1 or 0.</li>
-<li>Respect of <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias">aliasing rules</a> (see also <a href="guarantees.html#nomicon">nomicon</a> for <a href="https://doc.rust-lang.org/nomicon/aliasing.html">examples</a>): a mutable reference cannot be shared.</li>
-<li>No <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race">concurrent access</a> (reading/writing is not possible while writing), to the same memory address (see also <a href="guarantees.html#nomicon">nomicon</a> for <a href="https://doc.rust-lang.org/nomicon/races.html">examples</a>)</li>
-</ul>
-<h2 id="rust-guarantees"><a class="header" href="#rust-guarantees">Rust guarantees</a></h2>
-<blockquote>
-<p>The language paradigm is to ensure the absence of a UB in a program using only the non-<em>unsafe</em> part of Rust.</p>
-</blockquote>
-<p>However, the language does not prevent</p>
-<ul>
-<li>resource leaks (memory, IO, ...),</li>
-<li>numeric overflows.</li>
-</ul>
-<h2 id="references-2"><a class="header" href="#references-2">References</a></h2>
-<ul>
-<li><a id="rust-reference"></a> <em><a href="https://doc.rust-lang.org/stable/reference/">The Rust Reference</a></em> (rust-reference)</li>
-<li><a id="nomicon"></a> <em><a href="https://doc.rust-lang.org/stable/nomicon/">The Rustonomicon</a></em> (nomicon)</li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="naming"><a class="header" href="#naming">Naming</a></h1>
 <p>As of now, the standard library is the de facto standard for naming things in
 the Rust world. However, an effort has been made to formalize it, first in
@@ -621,7 +588,7 @@ some particular constructions:</p>
 <p>Development of a secure application MUST follow the naming conventions
 outlined in the <a href="naming.html#rust-guidelines">rust-guidelines</a>.</p>
 </div>
-<h2 id="references-3"><a class="header" href="#references-3">References</a></h2>
+<h2 id="references-2"><a class="header" href="#references-2">References</a></h2>
 <ul>
 <li><a id="RFC-430"></a> <em><a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">General naming conventions</a></em> (RFC-430)</li>
 <li><a id="rust-guidelines"></a> <em><a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a></em> (rust-guidelines)</li>
@@ -754,6 +721,40 @@ abort or return in an unstable state.</li>
 </div>
 <p>Note that <code>catch_unwind</code> will only catch unwinding panics, not those that abort
 the process.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="language-guarantees"><a class="header" href="#language-guarantees">Language guarantees</a></h1>
+<h2 id="undefined-behaviors-ub"><a class="header" href="#undefined-behaviors-ub">Undefined Behaviors (<em>UB</em>)</a></h2>
+<blockquote>
+<p>The behavior of a program is <em>undefined</em> when its semantics is not described in the Rust language.</p>
+</blockquote>
+<p>Considering <a href="guarantees.html#rust-reference">rust-reference</a>, the existence of UB is considered an <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general">error</a>.</p>
+<p>For example, dereferencing the null pointer is a <em>UB</em>. On the other hand, <code>unwrap</code>ing the <code>None</code> object is well defined because it is the language that processes this error (by launching a panic).</p>
+<p>The current list of <em>UBs</em> is given in the language <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html">reference</a>. Notice the following guarantees:</p>
+<ul>
+<li>No dereference of pointer to an unallocated or unaligned memory address (dangling pointer), which implies
+<ul>
+<li>No buffer overflow</li>
+<li>No access to freed memory</li>
+<li>No non-aligned access</li>
+</ul>
+</li>
+<li>The pointed values are <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.invalid">consistent</a> with the pointer's type. For example, a value pointed at by a boolean pointer will be byte of value 1 or 0.</li>
+<li>Respect of <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias">aliasing rules</a> (see also <a href="guarantees.html#nomicon">nomicon</a> for <a href="https://doc.rust-lang.org/nomicon/aliasing.html">examples</a>): a mutable reference cannot be shared.</li>
+<li>No <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race">concurrent access</a> (reading/writing is not possible while writing), to the same memory address (see also <a href="guarantees.html#nomicon">nomicon</a> for <a href="https://doc.rust-lang.org/nomicon/races.html">examples</a>)</li>
+</ul>
+<h2 id="rust-guarantees"><a class="header" href="#rust-guarantees">Rust guarantees</a></h2>
+<blockquote>
+<p>The language paradigm is to ensure the absence of a UB in a program using only the non-<em>unsafe</em> part of Rust.</p>
+</blockquote>
+<p>However, the language does not prevent</p>
+<ul>
+<li>resource leaks (memory, IO, ...) (see the <a href="unsafe/memory.html">memory management section</a>),</li>
+<li>numeric overflows (see the <a href="integer.html">integer operations section</a>).</li>
+</ul>
+<h2 id="references-3"><a class="header" href="#references-3">References</a></h2>
+<ul>
+<li><a id="rust-reference"></a> <em><a href="https://doc.rust-lang.org/stable/reference/">The Rust Reference</a></em> (rust-reference)</li>
+<li><a id="nomicon"></a> <em><a href="https://doc.rust-lang.org/stable/nomicon/">The Rustonomicon</a></em> (nomicon)</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="rust-unsafe"><a class="header" href="#rust-unsafe">Rust unsafe</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="general-information-on-unsafe"><a class="header" href="#general-information-on-unsafe">General information on <code>unsafe</code></a></h1>
 <h2 id="unsafe-operations"><a class="header" href="#unsafe-operations"><em>Unsafe</em> operations</a></h2>
@@ -1245,6 +1246,24 @@ fn use_static_extern() {
     }
 }
 <span class="boring">}</span></code></pre></pre>
+<h2 id="code-structure"><a class="header" href="#code-structure">Code structure</a></h2>
+<div class="reco" id="FFI-SAFEWRAPPING" type="Recommendation" title="Provide safe wrapping to foreign library">
+<p>Interfacing a library written in another language in Rust SHOULD be done in
+two parts:</p>
+<ul>
+<li>a low-level, possibly <em>hidden</em>, module that closely translates the original
+C API into <code>extern</code> blocks,</li>
+<li>a safe wrapping module that ensures memory safety and security invariants at
+the Rust level.</li>
+</ul>
+<p>If the low-level API is exposed to the world, it SHOULD be done in a dedicated
+crate with a name of the form <code>*-sys</code>.</p>
+</div>
+<p>The crate <a href="https://crates.io/crates/bindgen">rust-bindgen</a> may be used to automatically generate the low-level
+part of the binding from C header files.</p>
+<!--
+<mark>TODO</mark> example
+-->
 <h2 id="typing"><a class="header" href="#typing">Typing</a></h2>
 <p>Typing is the way Rust ensures memory safety. When interfacing with other
 languages, which may not offer the same guarantee, the choice of types in the
@@ -1462,7 +1481,7 @@ embedded systems or kernel-level programming). Another advantage of using Rust
 pointers in FFI is that any load of the pointed value is clearly marked inside
 an <code>unsafe</code> block or function.</p>
 <div class="reco" id="FFI-NOREF" type="Rule" title="Do not use reference types in a FFI but pointer types">
-<p>In a secure Rust development, the Rust code in a FFI MUST NOT use reference types
+<p>In a secure Rust development, the Rust <em>low-level</em> code (the <code>*-sys</code> crate) in a FFI MUST NOT use reference types
 but pointer types.</p>
 <p>Exceptions include:</p>
 <ul>
@@ -1870,24 +1889,6 @@ care in order to ensure both the safety and security of the program.</p>
 <p>Another approach is to simply ensure that there is no use of <code>panic!</code> with the
 <a href="https://crates.io/crates/panic-never"><code>panic-never</code></a> crate. Like <a href="https://crates.io/crates/no-panic"><code>no-panic</code></a>, <a href="https://crates.io/crates/panic-never"><code>panic-never</code></a> relies on a linking
 trick: the linker fails if a non-trivially-dead branch leads to <code>panic!</code>.</p>
-<h2 id="binding-a-foreign-library-in-rust"><a class="header" href="#binding-a-foreign-library-in-rust">Binding a foreign library in Rust</a></h2>
-<div class="reco" id="FFI-SAFEWRAPPING" type="Recommendation" title="Provide safe wrapping to foreign library">
-<p>Interfacing a library written in another language in Rust SHOULD be done in
-two parts:</p>
-<ul>
-<li>a low-level, possibly <em>hidden</em>, module that closely translates the original
-C API into <code>extern</code> blocks,</li>
-<li>a safe wrapping module that ensures memory safety and security invariants at
-the Rust level.</li>
-</ul>
-<p>If the low-level API is exposed to the world, it SHOULD be done in a dedicated
-crate with a name of the form <code>*-sys</code>.</p>
-</div>
-<p>The crate <a href="https://crates.io/crates/bindgen">rust-bindgen</a> may be used to automatically generate the low-level
-part of the binding from C header files.</p>
-<!--
-<mark>TODO</mark> example
--->
 <h2 id="binding-a-rust-library-in-another-language"><a class="header" href="#binding-a-rust-library-in-another-language">Binding a Rust library in another language</a></h2>
 <div class="reco" id="FFI-CAPI" type="Rule" title="Expose dedicated C-compatible API only">
 <p>In a secure Rust development, exposing a Rust library to a foreign language
@@ -2459,6 +2460,8 @@ Rule - Avoid cyclic reference counted pointers (<a href="unsafe/memory.html#MEM-
 <p>Foreign Function Interface:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
+Recommendation - Provide safe wrapping to foreign library (<a href="unsafe/ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>)</li>
+<li><input disabled="" type="checkbox"/>
 Rule - Use only C-compatible types in FFI (<a href="unsafe/ffi.html#FFI-CTYPE">FFI-CTYPE</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Rule - Use consistent types at FFI boundaries (<a href="unsafe/ffi.html#FFI-TCONS">FFI-TCONS</a>)</li>
@@ -2494,8 +2497,6 @@ Rule - Ensure clear data ownership in FFI (<a href="unsafe/ffi.html#FFI-MEM-OWNE
 Recommendation - Wrap foreign data in memory releasing wrapper (<a href="unsafe/ffi.html#FFI-MEM-WRAPPING">FFI-MEM-WRAPPING</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Rule - Handle <code>panic!</code> correctly in FFI (<a href="unsafe/ffi.html#FFI-NOPANIC">FFI-NOPANIC</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Recommendation - Provide safe wrapping to foreign library (<a href="unsafe/ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Rule - Expose dedicated C-compatible API only (<a href="unsafe/ffi.html#FFI-CAPI">FFI-CAPI</a>)</li>
 </ul>

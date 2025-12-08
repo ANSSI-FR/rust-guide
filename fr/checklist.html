@@ -286,6 +286,8 @@ Règle - Éviter les références comptées récursives mutables (<a href="unsaf
 <p>FFI:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
+Recommandation - Mise en place d'une encapsulation sûre pour les bibliothèques externes (<a href="unsafe/ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>)</li>
+<li><input disabled="" type="checkbox"/>
 Règle - Utilisation exclusive de types compatibles avec le C dans les FFI (<a href="unsafe/ffi.html#FFI-CTYPE">FFI-CTYPE</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Utilisation de types cohérents pour les FFI (<a href="unsafe/ffi.html#FFI-TCONS">FFI-TCONS</a>)</li>
@@ -300,7 +302,7 @@ Recommandation - Vérification des valeurs externes en Rust (<a href="unsafe/ffi
 <li><input disabled="" type="checkbox"/>
 Règle - Vérification des références provenant d'un langage externe (<a href="unsafe/ffi.html#FFI-CKREF">FFI-CKREF</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Règle - Non-utilisation des types références au profit des types pointeurs aux frontières avec un langage externe (<a href="unsafe/ffi.html#FFI-NOREF">FFI-NOREF</a>)</li>
+Règle - Non-utilisation des types références au profit des types pointeurs à la frontière avec un langage externe (<a href="unsafe/ffi.html#FFI-NOREF">FFI-NOREF</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Vérification des pointeurs externes (<a href="unsafe/ffi.html#FFI-CKPTR">FFI-CKPTR</a>)</li>
 <li><input disabled="" type="checkbox"/>
@@ -321,8 +323,6 @@ Règle - Identification du langage responsable de la libération des données da
 Recommandation - Encapsulation des données externes dans un type <code>Drop</code> (<a href="unsafe/ffi.html#FFI-MEM-WRAPPING">FFI-MEM-WRAPPING</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Gestion correcte des <code>panic</code>s dans les FFI (<a href="unsafe/ffi.html#FFI-NOPANIC">FFI-NOPANIC</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Recommandation - Mise en place d'une encapsulation sûre pour les bibliothèques externes (<a href="unsafe/ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Exposition exclusive d'API dédiée et compatible avec le C (<a href="unsafe/ffi.html#FFI-CAPI">FFI-CAPI</a>)</li>
 </ul>
