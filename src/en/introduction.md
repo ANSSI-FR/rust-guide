@@ -119,7 +119,7 @@ the context of application or its implementation.
 
 <div class="examplereco" id="EXAMPLE-RECO" type="Recommandation" title="Recommendation for higher security requirement">
 
-This recommendation is required for higher level security softwares.
+This recommendation is required for higher level security software.
 
 </div>
 
