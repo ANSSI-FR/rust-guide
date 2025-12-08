@@ -4,6 +4,10 @@ references:
     title: Specialization
     url: https://github.com/rust-lang/rfcs/blob/master/text/1210-impl-specialization.md
     id: RFC-1210
+  - type: web
+    title: The Rustonomicon
+    url: https://doc.rust-lang.org/stable/nomicon/
+    id: nomicon
 ---
 
 # Bibliothèque standard
@@ -28,8 +32,8 @@ réel : une implémentation incorrecte peut mener à un **comportement indéfini
 Heureusement, dans la plupart des cas, il n'est pas nécessaire de fournir une
 implémentation. En Rust, la quasi-totalité des types primitifs implémente
 `Send` et `Sync`, et dans la majorité des cas, Rust fournit de manière
-automatique une implémentation pour les types composés. Quelques exceptions
-notables sont :
+automatique une implémentation pour les types composés. Comme rappelé dans
+[@nomicon], quelques exceptions notables sont :
 
 - les pointeurs `raw`, qui n'implémentent ni `Send`, ni `Sync`, puisqu'ils
   n'offrent aucune garantie quant à la sûreté ;
@@ -41,26 +45,10 @@ notables sont :
 
 L'implémentation automatique de `Send` (respectivement `Sync`) a lieu pour les
 types composés (structures ou énumérations) lorsque tous les champs contenus
-implémentent `Send` (respectivement `Sync`). Une fonctionnalité notable, mais
-**instable**, de Rust (depuis 1.37.0) permet d'empêcher cette implémentation
-automatique en annotant explicitement le type considéré avec une
-_négation d'implementation_ :
+implémentent `Send` (respectivement `Sync`).
 
-```rust,ignore,noplaypen
-#![feature(option_builtin_traits)]
-
-struct SpecialType(u8);
-impl !Send for SpecialType {}
-impl !Sync for SpecialType {}
-```
-L'implémentation négative de `Send` ou `Sync` est également utilisée dans la
-bibliothèque Rust pour les exceptions, et est automatiquement implémentée
-lorsque cela est approprié. En résultat, la documentation générée est toujours
-explicite : un type implémente soit `Send` (respectivement `Sync`), soit
-`!Send` (respectivement `!Sync`).
-
-En guise d'alternative *stable* à l'implémentation négative, il est possible
-d'utiliser un champ typé par un type fantôme (`PhantomData`) :
+Afin d’empêcher *artificiellement* qu'un type n'implémente `Send` ou `Sync`,
+il est possible d'utiliser un champ typé par un type fantôme (`PhantomData`) :
 
 ```rust,noplaypen
 # use std::marker::PhantomData;

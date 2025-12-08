@@ -4,6 +4,10 @@ references:
     title: Specialization
     url: https://github.com/rust-lang/rfcs/blob/master/text/1210-impl-specialization.md
     id: RFC-1210
+  - type: web
+    title: The Rustonomicon
+    url: https://doc.rust-lang.org/stable/nomicon/
+    id: nomicon
 ---
 
 # Standard library
@@ -26,7 +30,7 @@ implementation may lead to **undefined behavior**.
 Fortunately, in most cases, one does not need to implement it. In Rust,
 almost all primitive types are `Send` and `Sync`, and for most compound types
 the implementation is automatically provided by the Rust compiler.
-Notable exceptions are:
+As mentioned in [@nomicon], notable exceptions are:
 
 - Raw pointers are neither `Send` nor `Sync` because they offer no safety
   guards.
@@ -37,25 +41,10 @@ Notable exceptions are:
 
 Automatic implementation of `Send` (resp. `Sync`) occurs for a compound type
 (structure or enumeration) when all fields have `Send` types (resp. `Sync`
-types). Using an unstable feature (as of Rust 1.37.0), one can block the
-automatic implementation of those traits with a manual
-_negative implementation_:
+types). 
 
-```rust,ignore,noplaypen
-#![feature(option_builtin_traits)]
-
-struct SpecialType(u8);
-impl !Send for SpecialType {}
-impl !Sync for SpecialType {}
-```
-
-The negative implementation of `Send` or `Sync` are also used in the Rust
-library for the exceptions, and are automatically implemented when appropriate.
-As a result, the generated documentation is always explicit: a type implements
-either `Send` or `!Send` (resp. `Sync` or `!Sync`).
-
-As a stable alternative to negative implementation, one can use a `PhantomData`
-field:
+Preventing from automatically implementing `Send` or `Sync` can be made by using
+internal fields of type `PhantomData`.
 
 ```rust,noplaypen
 # use std::marker::PhantomData;
