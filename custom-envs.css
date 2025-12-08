@@ -79,3 +79,11 @@ code.ub {
 .reco[type="Rule"] {
     border-inline-start: 4px solid red !important;
 }
+
+.reco[type="Recommandation"] {
+    border-inline-start: 4px solid rgb(189, 64, 6) !important;
+}
+
+.reco[type="Règle"] {
+    border-inline-start: 4px solid red !important;
+}
