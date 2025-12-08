@@ -71,3 +71,11 @@ code.ub {
 	--note-border: #0096cf;
 	--reco-border: #ff0000;
 }
+
+.reco[type="Recommendation"] {
+    border-inline-start: 4px solid rgb(189, 64, 6) !important;
+}
+
+.reco[type="Rule"] {
+    border-inline-start: 4px solid red !important;
+}
