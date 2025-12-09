@@ -2040,7 +2040,7 @@ implementation may lead to <strong>undefined behavior</strong>.</p>
 <p>Fortunately, in most cases, one does not need to implement it. In Rust,
 almost all primitive types are <code>Send</code> and <code>Sync</code>, and for most compound types
 the implementation is automatically provided by the Rust compiler.
-Notable exceptions are:</p>
+As mentioned in <a href="standard.html#nomicon">nomicon</a>, notable exceptions are:</p>
 <ul>
 <li>Raw pointers are neither <code>Send</code> nor <code>Sync</code> because they offer no safety
 guards.</li>
@@ -2051,20 +2051,9 @@ unsynchronized.</li>
 </ul>
 <p>Automatic implementation of <code>Send</code> (resp. <code>Sync</code>) occurs for a compound type
 (structure or enumeration) when all fields have <code>Send</code> types (resp. <code>Sync</code>
-types). Using an unstable feature (as of Rust 1.37.0), one can block the
-automatic implementation of those traits with a manual
-<em>negative implementation</em>:</p>
-<pre><code class="language-rust ignore noplaypen">#![feature(option_builtin_traits)]
-
-struct SpecialType(u8);
-impl !Send for SpecialType {}
-impl !Sync for SpecialType {}</code></pre>
-<p>The negative implementation of <code>Send</code> or <code>Sync</code> are also used in the Rust
-library for the exceptions, and are automatically implemented when appropriate.
-As a result, the generated documentation is always explicit: a type implements
-either <code>Send</code> or <code>!Send</code> (resp. <code>Sync</code> or <code>!Sync</code>).</p>
-<p>As a stable alternative to negative implementation, one can use a <code>PhantomData</code>
-field:</p>
+types).</p>
+<p>Preventing from automatically implementing <code>Send</code> or <code>Sync</code> can be made by using
+internal fields of type <code>PhantomData</code>.</p>
 <pre><code class="language-rust noplaypen"><span class="boring">use std::marker::PhantomData;
 </span><span class="boring">
 </span>struct SpecialType(u8, PhantomData&lt;*const ()&gt;);</code></pre>
@@ -2310,6 +2299,7 @@ trait implementation.</p>
 <h2 id="references-6"><a class="header" href="#references-6">References</a></h2>
 <ul>
 <li><a id="RFC-1210"></a> <em><a href="https://github.com/rust-lang/rfcs/blob/master/text/1210-impl-specialization.md">Specialization</a></em> (RFC-1210)</li>
+<li><a id="nomicon"></a> <em><a href="https://doc.rust-lang.org/stable/nomicon/">The Rustonomicon</a></em> (nomicon)</li>
 </ul>
 <hr>
 <ol class="footnote-definition"><li id="footnote-1">

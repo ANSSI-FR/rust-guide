@@ -2220,8 +2220,8 @@ réel : une implémentation incorrecte peut mener à un <strong>comportement ind
 <p>Heureusement, dans la plupart des cas, il n'est pas nécessaire de fournir une
 implémentation. En Rust, la quasi-totalité des types primitifs implémente
 <code>Send</code> et <code>Sync</code>, et dans la majorité des cas, Rust fournit de manière
-automatique une implémentation pour les types composés. Quelques exceptions
-notables sont :</p>
+automatique une implémentation pour les types composés. Comme rappelé dans
+<a href="standard.html#nomicon">nomicon</a>, quelques exceptions notables sont :</p>
 <ul>
 <li>les pointeurs <code>raw</code>, qui n'implémentent ni <code>Send</code>, ni <code>Sync</code>, puisqu'ils
 n'offrent aucune garantie quant à la sûreté ;</li>
@@ -2233,22 +2233,9 @@ compteurs de références seraient partagés de manière désynchronisée.</li>
 </ul>
 <p>L'implémentation automatique de <code>Send</code> (respectivement <code>Sync</code>) a lieu pour les
 types composés (structures ou énumérations) lorsque tous les champs contenus
-implémentent <code>Send</code> (respectivement <code>Sync</code>). Une fonctionnalité notable, mais
-<strong>instable</strong>, de Rust (depuis 1.37.0) permet d'empêcher cette implémentation
-automatique en annotant explicitement le type considéré avec une
-<em>négation d'implementation</em> :</p>
-<pre><code class="language-rust ignore noplaypen">#![feature(option_builtin_traits)]
-
-struct SpecialType(u8);
-impl !Send for SpecialType {}
-impl !Sync for SpecialType {}</code></pre>
-<p>L'implémentation négative de <code>Send</code> ou <code>Sync</code> est également utilisée dans la
-bibliothèque Rust pour les exceptions, et est automatiquement implémentée
-lorsque cela est approprié. En résultat, la documentation générée est toujours
-explicite : un type implémente soit <code>Send</code> (respectivement <code>Sync</code>), soit
-<code>!Send</code> (respectivement <code>!Sync</code>).</p>
-<p>En guise d'alternative <em>stable</em> à l'implémentation négative, il est possible
-d'utiliser un champ typé par un type fantôme (<code>PhantomData</code>) :</p>
+implémentent <code>Send</code> (respectivement <code>Sync</code>).</p>
+<p>Afin d’empêcher <em>artificiellement</em> qu'un type n'implémente <code>Send</code> ou <code>Sync</code>,
+il est possible d'utiliser un champ typé par un type fantôme (<code>PhantomData</code>) :</p>
 <pre><code class="language-rust noplaypen"><span class="boring">use std::marker::PhantomData;
 </span><span class="boring">
 </span>struct SpecialType(u8, PhantomData&lt;*const ()&gt;);</code></pre>
@@ -2512,6 +2499,7 @@ reposer uniquement sur l'implémentation du trait <code>Drop</code>.</p>
 <h2 id="références-6"><a class="header" href="#références-6">Références</a></h2>
 <ul>
 <li><a id="RFC-1210"></a> <em><a href="https://github.com/rust-lang/rfcs/blob/master/text/1210-impl-specialization.md">Specialization</a></em> (RFC-1210)</li>
+<li><a id="nomicon"></a> <em><a href="https://doc.rust-lang.org/stable/nomicon/">The Rustonomicon</a></em> (nomicon)</li>
 </ul>
 <hr>
 <ol class="footnote-definition"><li id="footnote-1">
