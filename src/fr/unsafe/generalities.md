@@ -133,7 +133,7 @@ tout code `unsafe` DOIT être encapsulé de manière :
 
 Ainsi, une fonction utilisant des opérations `unsafe` peut-être sûre (et donc sans marque `unsafe`) si les opérations `unsafe` ne présentent pas d'*UB* étant donnés les invariants du composant (typiquement l'invariant de type pour une méthode). Inversement, une fonction sans bloc `unsafe` doit être marquée `unsafe` si elle casse ces invariants. Le choix et la connaissance de ces invariants sont donc cruciaux pour le développement sécurisé.
 
-### Exemple 1 : préservation d'un invariant de type
+## Exemple : préservation d'un invariant de type
 
 La protection des invariants d'une bibliothèque est primordiale pour se prémunir de
 bugs en général, d'*UB* en particulier.
@@ -158,98 +158,3 @@ Or, il est possible de casser cet invariant avec du code *safe*. Par exemple, co
 Si elle peut être tout à fait légitime pour du code *interne* à l'API,
 cette méthode ne doit pas être exposée par l'API ou alors doit être annotée
 par `unsafe` car elle peut conduire à des *UB* (même si elle ne comporte pas de blocs *unsafe*s).
-
-### Exemple 2 : relation de confiance *safe*/*unsafe*
-
-La relation de confiance entre le code *safe* et le code `unsafe` est délicate.
-Dans un composant logiciel, le code `unsafe` doit être écrit de manière à ce qu'aucun usage *safe* du composant ne puisse conduire à des *UB*.
-
-Le cas suivant illustre ce principe.
-On souhaite ici proposer une API générique permettant de localiser un objet dans une zone mémoire.
-On demande donc à l'utilisateur de l'API de fournir une implémentation à ce trait :
-
-```rust,ignore bad
-{{#include ../../../examples/src/generalities.rs:Locatable}}
-```
-
-L'implémentation d'un tel trait peut être réalisée en utilisant du code **sans** `unsafe`.
-
-Par exemple, on peut implémenter ce trait pour le type `bool` comme suit :
-
-```rust,ignore align
-{{#include ../../../examples/src/generalities.rs:Locatable_bool_OK}}
-```
-
-<div class="warning">
-
-L'API du trait `Locatable` est mauvaise pour deux raisons :
-
-* si l'implémentation de `Locatable` ne donne pas l'index d'un objet de type `T`, alors la fonction `read_unaligned` peut produire un *UB*.
-* si l'implémentation de `Locatable` renvoie un index en dehors du tableau ou un index tel que l'objet de type `T` ne soit pas entièrement contenu dans le tableau, alors un dépassement de tableau se produit.
-
-</div>
-
-Par exemple, cette implémentation de `Locatable` est fautive alors qu'elle n'est pas `unsafe` :
-
-```rust,ignore align bad
-{{#include ../../../examples/src/generalities.rs:Locatable_bool_KO}}
-```
-
-L'exécution du programme suivant produit un *UB* :
-
-```rust,ignore align ub
-{{#include ../../../examples/src/generalities.rs:Locatable_UB}}
-```
-
-Voici le retour obtenu avec l'outil de détection de comportement indéfini `miri` :
-
-```default
-$ cargo +nightly miri r --bin overflow
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.01s
-     Running `/home/user/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/cargo-miri runner target/miri/x86_64-unknown-linux-gnu/debug/overflow`
-error: Undefined Behavior: in-bounds pointer arithmetic failed: attempting to offset pointer by 101 bytes, but got alloc249 which is only 3 bytes from the end of the allocation
-  --> src/overflow.rs:16:29
-   |
-16 |         let ptr: *const T = buf.as_ptr().add(start).cast();
-   |                             ^^^^^^^^^^^^^^^^^^^^^^^ Undefined Behavior occurred here
-   |
-   = help: this indicates a bug in the program: it performed an invalid operation, and caused Undefined Behavior
-   = help: see https://doc.rust-lang.org/nightly/reference/behavior-considered-undefined.html for further information
-help: alloc249 was allocated here:
-  --> src/overflow.rs:22:9
-   |
-22 |     let buf = [4, 1, 99];
-   |         ^^^
-   = note: BACKTRACE (of the first span):
-   = note: inside `find::<bool>` at src/overflow.rs:16:29: 16:52
-note: inside `main`
-  --> src/overflow.rs:23:38
-   |
-23 |     let located_bool: Option<bool> = find(&buf); // UB here!
-   |                                      ^^^^^^^^^^
-
-note: some details are omitted, run with `MIRIFLAGS=-Zmiri-backtrace=full` for a verbose backtrace
-
-error: aborting due to 1 previous error
-```
-
-Dans cet exemple, il est rappelé que la responsabilité de l'exécution *safe*
-(sans *UB*) d'un code Rust incombe à la personne utilisant des blocs *unsafe*.
-
-S'il n'est pas possible de se protéger contre les fonctions/traits *safe*s lors de l'écriture d'une fonction contenant un bloc *unsafe*, deux solutions sont possibles :
-
-* marquer la fonction comme *unsafe* : ainsi la responsabilité de sa bonne exécution revient à la personne utilisant cette fonction, notamment en l'obligeant à vérifier dans la documentation de la fonction que les arguments fournis répondent bien à la   spécification de la fonction
-* marquer le trait dont dépend la fonction comme *unsafe* : ainsi, de même, la responsabilité de la bonne exécution du programme revient à l'implémenteur du trait en s'assurant que l'implémentation répond bien aux spécifications du trait (présente dans sa documentation).
-
-On pourra se référer à [@rust-book] (au chapitre [Unsafe Rust](https://doc.rust-lang.org/book/ch20-01-unsafe-rust.html)) où au [nomicon](https://doc.rust-lang.org/nomicon/safe-unsafe-meaning.html) pour d'autres exemples.
-
-<!--
-Dans ce cas particulier, la solution la plus adaptée est sans doute de marquer le trait `Locatable` comme `unsafe` :
-
-```rust
-{{#include ../../../examples/unsafe2/src/fix.rs::14}}
-```
-
-Le supertrait `Copy` permet de s'assurer que le type peut être copié par une simple lecture mémoire.
-Une alternative serait de l'ajouter aux conditions de sûreté du trait.
--->

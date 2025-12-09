@@ -119,7 +119,7 @@ without an `unsafe` block must be marked as `unsafe` if it breaks these
 invariants. The choice and knowledge of these invariants are therefore crucial
 for secure development.
 
-### Example 1: Preserving a type invariant
+## Example: Preserving a type invariant
 
 The following code comes from the [Rustonomicon](https://doc.rust-lang.org/nomicon/working-with-unsafe.html).
 It could be used to implement a custom `Vec` type.
@@ -137,91 +137,3 @@ This invariant can be broken with *safe* code. For instance
 ```
 
 This function may be necessary for internal use, but it should not be exposed in the API, or it should be marked with the `unsafe` keyword, because its use can lead to UB.
-
-### Example 2: Trust relationship between *safe* and *unsafe*
-
-In the Rust paradigm:
-
-> `unsafe`-free code cannot go wrong
-
-which means it cannot result in UB.
-This property is lost when developers use *unsafe* code, so they are responsible for not producing UB in any scenario.
-Consequently, even *safe* functions must be handled carefully in *unsafe* contexts.
-
-Suppose one wants to propose an API to find an object of a given type in memory.
-This API could require implementing the following trait:
-
-```rust bad
-{{#include ../../../examples/src/generalities.rs:Locatable}}
-```
-
-This trait can be implemented **without** using `unsafe`.
-
-For instance, the `bool` type can implement this trait as follows:
-
-```rust,ignore align
-{{#include ../../../examples/src/generalities.rs:Locatable_bool_OK}}
-```
-
-<div class="warning">
-
-The `Locatable`'s API is harmful for two reasons:
-
-* If the `Locatable` implementation does not give the index of an object of type `T`, the `read_unaligned` may produce UB.
-* If the `Locatable` implementation gives an out-of-bounds index or an index for which part of the object is out of bounds, the subsequent buffer overflow is UB.
-
-</div>
-
-For instance, the following `Locatable` implementation is incorrect, **but** it is the responsibility of the API author to take it into account.
-
-```rust align bad
-{{#include ../../../examples/src/generalities.rs:Locatable_bool_KO}}
-```
-
-The following program produces UB.
-
-```rust,ignore align ub
-{{#include ../../../examples/src/generalities.rs:Locatable_UB}}
-```
-
-The UB-detecting tool `miri` reports the following:
-
-```default
-$ cargo +nightly miri r --bin overflow
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.01s
-     Running `/home/user/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/cargo-miri runner target/miri/x86_64-unknown-linux-gnu/debug/overflow`
-error: Undefined Behavior: in-bounds pointer arithmetic failed: attempting to offset pointer by 101 bytes, but got alloc249 which is only 3 bytes from the end of the allocation
-  --> src/overflow.rs:16:29
-   |
-16 |         let ptr: *const T = buf.as_ptr().add(start).cast();
-   |                             ^^^^^^^^^^^^^^^^^^^^^^^ Undefined Behavior occurred here
-   |
-   = help: this indicates a bug in the program: it performed an invalid operation, and caused Undefined Behavior
-   = help: see https://doc.rust-lang.org/nightly/reference/behavior-considered-undefined.html for further information
-help: alloc249 was allocated here:
-  --> src/overflow.rs:22:9
-   |
-22 |     let buf = [4, 1, 99];
-   |         ^^^
-   = note: BACKTRACE (of the first span):
-   = note: inside `find::<bool>` at src/overflow.rs:16:29: 16:52
-note: inside `main`
-  --> src/overflow.rs:23:38
-   |
-23 |     let located_bool: Option<bool> = find(&buf); // UB here!
-   |                                      ^^^^^^^^^^
-
-note: some details are omitted, run with `MIRIFLAGS=-Zmiri-backtrace=full` for a verbose backtrace
-
-error: aborting due to 1 previous error
-```
-
-This example shows that developers using `unsafe` blocks
-cannot assume that *safe* functions or traits they use are well implemented, and thus must prevent UB in case these *safe* functions have bad behavior.
-
-If they cannot protect their function against poorly implemented *safe* functions or traits, they have two options:
-
-* Mark the function they *write* as `unsafe`: thus, it is the user's responsibility to provide correct arguments (by checking the `unsafe` function's documentation).
-* Mark the traits they *use* as `unsafe`: thus, it is the user's responsibility to implement the trait properly (again, by reading the trait documentation).
-
-More examples can be found in [@rust-book] (in the [Unsafe Rust](https://doc.rust-lang.org/book/ch20-01-unsafe-rust.html) chapter) or the [nomicon](https://doc.rust-lang.org/nomicon/safe-unsafe-meaning.html).
