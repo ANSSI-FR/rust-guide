@@ -564,11 +564,11 @@ regex = { git = "https://github.com/rust-lang/regex.git" }
 <h2 id="sécurité-des-dépendances"><a class="header" href="#sécurité-des-dépendances">Sécurité des dépendances</a></h2>
 <p>Quelque soit la méthode de récupération des dépendances (<em>crate</em> ou commit GIT), si elles proviennent d'organisation extérieures, les dépendances doivent faire l'objet d'une validation.</p>
 <div class="reco" id="LIBS-VETTING-DIRECT" type="Règle" title="Validation des dépendances tierces directes">
-<p>Chaque dépendance tierce directe DOIT être dûment validée, et chaque validation doit être tracée.</p>
+<p>Chaque dépendance tierce directe DOIT être dûment validée, et chaque validation DOIT être tracée.</p>
 </div>
 <p>Concernant les dépendances transitives, il est également recommandé de les valider individuellement.</p>
 <div class="reco" id="LIBS-VETTING-TRANSITIVE" type="Recommandation" title="Validation des dépendances tierces transitives">
-<p>Chaque dépendance tierce DEVRAIT être dûment validée, et chaque validation devrait être tracée.</p>
+<p>Chaque dépendance tierce DEVRAIT être dûment validée, et chaque validation DEVRAIT être tracée.</p>
 </div>
 <h2 id="outils-de-vérification-des-dépendances"><a class="header" href="#outils-de-vérification-des-dépendances">Outils de vérification des dépendances</a></h2>
 <h3 id="cargo-outdated"><a class="header" href="#cargo-outdated">Cargo-outdated</a></h3>
