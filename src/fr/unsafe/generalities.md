@@ -4,6 +4,10 @@ references:
     title: The Rust Programming Language
     url: https://doc.rust-lang.org/stable/book/
     id: rust-book
+  - type: web
+    title: The Rust Reference
+    url: https://doc.rust-lang.org/stable/reference/
+    id: rust-reference
 ---
 
 # Généralités sur l'utilisation de `unsafe`
@@ -30,7 +34,7 @@ AUCUN comportement indéfini NE DOIT se produire.
 
 ## Un mot-clé, deux usages
 
-Le mot-clé `unsafe` a deux usages : le marquage dans une API et le déverrouillage dans une implémentation.
+Comme décrit dans [@rust-reference], le mot-clé `unsafe` a deux usages : le marquage dans une API et le déverrouillage dans une implémentation.
 
 ### Marquage `unsafe`
 

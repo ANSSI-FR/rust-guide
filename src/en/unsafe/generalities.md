@@ -4,6 +4,10 @@ references:
     title: The Rust Programming Language
     url: https://doc.rust-lang.org/stable/book/
     id: rust-book
+  - type: web
+    title: The Rust Reference
+    url: https://doc.rust-lang.org/stable/reference/
+    id: rust-reference
 ---
 
 # General information on `unsafe`
@@ -30,7 +34,7 @@ NO Undefined Behavior is allowed.
 
 ## A keyword with two usages
 
-The `unsafe` keyword is used both for marking unsafety in an API and unlocking unsafety in the implementation.
+As described in [@rust-reference], the `unsafe` keyword is used both for marking unsafety in an API and unlocking unsafety in the implementation.
 
 ### `unsafe` marking
 

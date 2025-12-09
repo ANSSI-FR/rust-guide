@@ -4,6 +4,10 @@ references:
     title: Really tagged unions
     url: https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md
     id: RFC-2195
+  - type: web
+    title: Extern types
+    url: https://rust-lang.github.io/rfcs/1861-extern-types.html
+    id: RFC-1861
 ---
 
 # Foreign Function Interface (FFI)
@@ -497,10 +501,8 @@ Currently the recommended way to make a foreign opaque type is like so:
 {{#include ../../../examples/src/ffi.rs:opaque_external}}
 ```
 
-The not-yet-stabilized [RFC 1861] proposes to facilitate this encoding by allowing
+The not-yet-stabilized [@RFC-1861] proposes to facilitate this encoding by allowing
 to declare opaque types in `extern` blocks.
-
-[RFC 1861]: https://rust-lang.github.io/rfcs/1861-extern-types.html
 
 <div class="reco" id="FFI-C-OPAQUE" type="Recommendation" title="Use incomplete C/C++ `struct` pointers to make type opaque">
 

@@ -4,6 +4,10 @@ references:
     title: Really tagged unions
     url: https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md
     id: RFC-2195
+  - type: web
+    title: Extern types
+    url: https://rust-lang.github.io/rfcs/1861-extern-types.html
+    id: RFC-1861
 ---
 
 # Interfaçage avec des fonctions externes (FFI)
@@ -539,11 +543,9 @@ illustrée comme suit :
 ```rust,unsafe,noplaypen
 {{#include ../../../examples/src/ffi.rs:opaque_external}}
 ```
-La proposition [RFC 1861], non stabilisée à la rédaction de ce guide, propose
+La proposition [@RFC-1861], non stabilisée à la rédaction de ce guide, propose
 de faciliter cette situation en permettant de déclarer des types opaques dans
 des blocs `extern`.
-
-[RFC 1861]: https://rust-lang.github.io/rfcs/1861-extern-types.html
 
 <div class="reco" id="FFI-C-OPAQUE" type="Recommandation" title="Utilisation de pointeurs vers des `struct`s C/C++ pour rendre des types opaques">
 
