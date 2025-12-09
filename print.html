@@ -603,17 +603,24 @@ outlined in the <a href="naming.html#rust-guidelines">rust-guidelines</a>.</p>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="integer-operations"><a class="header" href="#integer-operations">Integer operations</a></h1>
 <h2 id="integer-overflows"><a class="header" href="#integer-overflows">Integer overflows</a></h2>
-<p>Although some verification is performed by Rust regarding potential integer
-overflows, precautions should be taken when executing arithmetic operations on
-integers.</p>
-<p>In particular, it should be noted that using debug or release compilation
-profile changes integer overflow behavior. In debug configuration, overflow
-cause the termination of the program (<code>panic</code>), whereas in the release
-configuration the computed value silently wraps around the maximum value that
-can be stored.</p>
-<p>This last behavior can be made explicit by using the <code>Wrapping</code> generic type,
-or the <code>overflowing_&lt;op&gt;</code> and <code>wrapping_&lt;op&gt;</code> operations on integers
-(the <code>&lt;op&gt;</code> part being <code>add</code>, <code>mul</code>, <code>sub</code>, <code>shr</code>, etc.).</p>
+<p>Although Rust performs some checks for potential integer overflows, precautions should be taken when executing arithmetic operations on integers.</p>
+<p>In particular, note that the compilation profile (typically <em>dev</em>, the default debug build, or <em>release</em>, the standard optimized build) changes integer overflow behavior. In the <em>dev</em> configuration, overflow causes the termination of the program (<code>panic</code>), whereas in the <em>release</em> configuration, the computed value is silently truncated to the number of bits of the numeric type, giving it wrap-around semantics.</p>
+<div class="note">
+<p>The integer overflow behavior can be explicitly defined by the compilation option <code>-C overflow-checks=true</code> (or <code>false</code>).
+It can also be modified in the profile definition in <code>Cargo.toml</code>:</p>
+<pre><code class="language-toml">[profile.release]
+overflow-checks = true  # enable overflow checks in release builds
+</code></pre>
+</div>
+<p>When an overflow is possible, the behavior can be made explicit either by using specific methods or by using specific wrapper types.</p>
+<p>The methods are of the form <code>&lt;mode&gt;_&lt;op&gt;</code>, where <code>&lt;mode&gt;</code> is <code>checked</code>, <code>overflowing</code>, <code>wrapping</code>, or <code>saturating</code>, and <code>&lt;op&gt;</code> is <code>add</code>, <code>mul</code>, <code>sub</code>, <code>shr</code>, etc. The semantics are as follows:</p>
+<ul>
+<li><code>checked_&lt;op&gt;</code> returns <code>None</code> in case of overflow,</li>
+<li><code>overflowing_&lt;op&gt;</code> returns both a possibly wrapped result and a Boolean indicating whether overflow occurred,</li>
+<li><code>wrapping_&lt;op&gt;</code> always returns the wrapped result,</li>
+<li><code>saturating_&lt;op&gt;</code> always returns the saturated result.</li>
+</ul>
+<p>The wrapper types are <code>Wrapping&lt;T&gt;</code> and <code>Saturating&lt;T&gt;</code> (from <code>std::num</code>), where <code>T</code> is an integer type. The former provides wrap-around semantics for all arithmetic operations, whereas the latter provides saturation semantics. Once the values are wrapped, all subsequent operations are performed with the given semantics.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span>#![allow(dead_code)]
 <span class="boring">fn main() {
@@ -651,9 +658,8 @@ fn use_integer() {
 }
 <span class="boring">}</span></code></pre></pre>
 <div class="reco" id="LANG-ARITH" type="Rule" title="Use appropriate arithmetic operations regarding potential overflows">
-<p>When assuming that an arithmetic operation can produce an overflow, the
-specialized functions <code>overflowing_&lt;op&gt;</code>, <code>wrapping_&lt;op&gt;</code>, or the
-<code>Wrapping</code> type MUST be used.</p>
+<p>When an arithmetic operation can produce an overflow, the usual operators MUST NOT be used directly.
+Instead, specialized methods such as <code>checked_&lt;op&gt;</code>, <code>overflowing_&lt;op&gt;</code>, <code>wrapping_&lt;op&gt;</code>, or <code>saturating_&lt;op&gt;</code>, or specialized wrapper types like <code>Wrapping</code> or <code>Saturating</code>, MUST be used to ensure explicit and consistent behavior regardless of the compilation profile.</p>
 </div>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="error-handling"><a class="header" href="#error-handling">Error handling</a></h1>
 <!-- <mark>TODO</mark>: explicit good practices in error handling. -->

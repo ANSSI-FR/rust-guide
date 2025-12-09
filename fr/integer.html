@@ -188,16 +188,23 @@
 <p>Bien que des vérifications soient effectuées par Rust en ce qui concerne les
 potentiels dépassements d'entiers, des précautions doivent être prises lors de
 l'exécution d'opérations arithmétiques sur les entiers.</p>
-<p>En particulier, il doit être noté que les profils de compilation <em>debug</em> et
-<em>release</em> produisent des variations de comportements quant à la gestion des
-dépassements d'entiers. Dans la configuration <em>debug</em>, un dépassement provoque
-la terminaison du programme (<code>panic</code>), tandis que dans la configuration
-<em>release</em> la valeur calculée est silencieusement tronquée en fonction de la
-valeur maximum qui peut être stockée pour le type considéré.</p>
-<p>Ce comportement peut être rendu explicite en utilisant le type générique
-<code>Wrapping</code>, ou les opérations sur les entiers <code>overflowing_&lt;op&gt;</code> et
-<code>wrapping_&lt;op&gt;</code> (la partie <code>&lt;op&gt;</code> étant remplacée par le type de calcul :
-<code>add</code>, <code>mul</code>, <code>sub</code>, <code>shr</code>, etc.).</p>
+<p>En particulier, il faut noter que le profil de compilation (généralement <em>dev</em>, la compilation de débogage par défaut, ou <em>release</em>, la compilation optimisée standard) modifie le comportement en cas de dépassement d'entier. En configuration <em>dev</em>, un dépassement provoque l'arrêt du programme (<code>panic</code>), tandis qu'en configuration <em>release</em>, la valeur calculée est silencieusement tronquée au nombre de bits du type numérique, ce qui donne une sémantique d'arithmétique circulaire (<em>wrap-around</em>).</p>
+<div class="note">
+<p>Le comportement en cas de dépassement d'entier peut être défini explicitement par l'option de compilation <code>-C overflow-checks=true</code> (ou <code>false</code>).
+Il peut également être modifié dans la définition du profil dans <code>Cargo.toml</code> :</p>
+<pre><code class="language-toml">[profile.release]
+overflow-checks = true  # enable overflow checks in release builds
+</code></pre>
+</div>
+<p>Lorsqu'un dépassement est possible, le comportement peut être rendu explicite soit en utilisant des méthodes spécifiques, soit en utilisant des types enveloppants spécifiques.</p>
+<p>Les méthodes sont de la forme <code>&lt;mode&gt;_&lt;op&gt;</code>, où <code>&lt;mode&gt;</code> est <code>checked</code>, <code>overflowing</code>, <code>wrapping</code> ou <code>saturating</code>, et <code>&lt;op&gt;</code> est <code>add</code>, <code>mul</code>, <code>sub</code>, <code>shr</code>, etc. Les sémantiques sont les suivantes :</p>
+<ul>
+<li><code>checked_&lt;op&gt;</code> retourne <code>None</code> en cas de dépassement,</li>
+<li><code>overflowing_&lt;op&gt;</code> retourne à la fois un résultat selon l'arithmétique circulaire et un booléen indiquant si un dépassement a eu lieu,</li>
+<li><code>wrapping_&lt;op&gt;</code> retourne toujours le résultat selon l'arithmétique circulaire,</li>
+<li><code>saturating_&lt;op&gt;</code> retourne toujours le résultat saturé.</li>
+</ul>
+<p>Les types enveloppants sont <code>Wrapping&lt;T&gt;</code> et <code>Saturating&lt;T&gt;</code> (de <code>std::num</code>), où <code>T</code> est un type entier. Le premier fournit une sémantique d'arithmétique circulaire pour toutes les opérations arithmétiques, tandis que le second fournit une sémantique de saturation. Une fois les valeurs enveloppées, toutes les opérations suivantes sont effectuées avec la sémantique correspondante.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span>#![allow(dead_code)]
 <span class="boring">fn main() {
@@ -235,9 +242,8 @@ fn use_integer() {
 }
 <span class="boring">}</span></code></pre></pre>
 <div class="reco" id="LANG-ARITH" type="Règle" title="Utilisation des opérations arithmétiques appropriées au regard des potentiels dépassements">
-<p>Lorsqu'une opération arithmétique peut produire un dépassement d'entier, les
-fonctions spécialisées <code>overflowing_&lt;op&gt;</code>, <code>wrapping_&lt;op&gt;</code> ou le type
-<code>Wrapping</code> DOIVENT être utilisés.</p>
+<p>Lorsqu'une opération arithmétique peut produire un dépassement, les opérateurs classiques sur les entiers NE DOIVENT PAS être utilisés.
+Les méthodes spécialisées comme <code>checked_&lt;op&gt;</code>, <code>overflowing_&lt;op&gt;</code>, <code>wrapping_&lt;op&gt;</code>, ou <code>saturating_&lt;op&gt;</code>, ou des types enveloppants spécialisés comme <code>Wrapping</code> ou <code>Saturating</code>, DOIVENT être utilisés pour rendre le comportement explicite et homogène, quel que soit le profil de compilation.</p>
 </div>
 
                     </main>
