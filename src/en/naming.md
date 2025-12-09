@@ -2,7 +2,7 @@
 references:
   - type: article
     title: General naming conventions
-    url: https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md
+    url: https://rust-lang.github.io/rfcs/0430-finalizing-naming-conventions.html
     id: RFC-430
   - type: article
     title: Rust API Guidelines

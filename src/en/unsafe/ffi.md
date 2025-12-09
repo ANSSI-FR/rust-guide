@@ -2,7 +2,7 @@
 references:
   - type: web
     title: Really tagged unions
-    url: https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md
+    url: https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html
     id: RFC-2195
   - type: web
     title: Extern types

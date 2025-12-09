@@ -2,7 +2,7 @@
 references:
   - type: web
     title: Specialization
-    url: https://github.com/rust-lang/rfcs/blob/master/text/1210-impl-specialization.md
+    url: https://rust-lang.github.io/rfcs/1210-impl-specialization.html
     id: RFC-1210
   - type: web
     title: The Rustonomicon
@@ -270,7 +270,7 @@ contrairement au fonctionnement classique des traits [^1], l'exécution d'un mê
 se verra différente avec et sans cette implémentation.
 
 [^1]: excepté l'usage de contraintes négatives de type, permis par exemple par la [@RFC-1210],
-pas encore implémentée pour la version actuelle de Rust (1.91.0)
+pas encore stabilisé pour la version actuelle de Rust (1.91.0)
 
 </div>
 

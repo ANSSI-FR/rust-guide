@@ -2,7 +2,7 @@
 references:
   - type: web
     title: Specialization
-    url: https://github.com/rust-lang/rfcs/blob/master/text/1210-impl-specialization.md
+    url: https://rust-lang.github.io/rfcs/1210-impl-specialization.html
     id: RFC-1210
   - type: web
     title: The Rustonomicon
@@ -253,7 +253,7 @@ Indeed, unlike the classical behavior of traits [^1], the execution of the same
 code will differ depending on whether this trait is implemented or not.
 
 [^1]: Except for the use of negative trait bounds, which is allowed for example
-by [@RFC-1210], but is not yet implemented for the current version of Rust (1.91.0).
+by [@RFC-1210], but is not yet stabilized for the current version of Rust (1.91.0).
 
 </div>
 
