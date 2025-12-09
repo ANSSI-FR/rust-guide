@@ -17,13 +17,6 @@ ce type DOIT être *exception-safe* (RFC 1236) et implémenter les traits
 
 </div>
 
-<div class="reco" id="LANG-ERRDO" type="Règle" title="Utilisation de l'opérateur `?` et non-utilisation de la macro `try!`">
-
-L'opérateur `?` DOIT être utilisé pour améliorer la lisibilité du code.
-La macro `try!` NE DOIT PAS être utilisée.
-
-</div>
-
 Des *crates* tierces peuvent être utilisées pour faciliter la gestion d'erreurs.
 La plupart ([snafu], [thiserror]) proposent la création de types
 d'erreurs personnalisées qui implémentent les traits nécessaires et permettent

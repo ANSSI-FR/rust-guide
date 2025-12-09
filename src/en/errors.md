@@ -13,13 +13,6 @@ It MUST be careful to make this type exception-safe (RFC 1236), and implement
 
 </div>
 
-<div class="reco" id="LANG-ERRDO" type="Rule" title="Use the `?` operator and do not use the `try!` macro">
-
-The `?` operator MUST be used to improve readability of code.
-The `try!` macro MUST NOT be used.
-
-</div>
-
 Third-party crates may be used to facilitate error handling. Most of them
 (notably [snafu] or [thiserror]) address the creation of new custom
 error types that implement the necessary traits and allow wrapping other
