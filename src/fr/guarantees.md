@@ -23,7 +23,7 @@ Par exemple le déréférencement d'un pointeur null est un *UB*.
 *A contrario*, un `unwrap` sur l'objet `None` est bien *défini* car c'est le langage qui traite cette erreur
 (en lançant un `panic`).
 
-La liste actuelle des *UB* est donnée [ici](https://doc.rust-lang.org/reference/behavior-considered-undefined.html).
+La liste actuelle des *UB* est donnée dans la [référence Rust](https://doc.rust-lang.org/reference/behavior-considered-undefined.html).
 On notera les garanties suivantes :
 
 * Pas de déréférencement de pointeur vers une adresse mémoire non allouée (*dangling pointer*) ou non alignée, ce qui implique

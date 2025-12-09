@@ -11,7 +11,7 @@ versions plus anciennes du compilateur).
 
 Dans la très grande majorité des cas, en Rust non-*unsafe*, le compilateur détermine **automatiquement** 
 quand il peut libérer la mémoire occupée par une valeur du programme. 
-Mais, comme rappelé dans les [généralités du langage](../guarantees.md#garantie-de-rust), ce n'est pas une garantie : un
+Mais, comme rappelé dans les [plus tôt dans ce guide](../guarantees.md#garantie-de-rust), ce n'est pas une garantie : un
 code non-*unsafe* peut mener à des fuites mémoires. Aussi certaines règles présentées dans 
 ce chapitre ne sont pas strictement *unsafe*. Cependant,
 
