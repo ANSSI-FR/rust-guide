@@ -720,10 +720,6 @@ les erreurs possibles. Des précautions supplémentaires DOIVENT être prises :
 ce type DOIT être <em>exception-safe</em> (RFC 1236) et implémenter les traits
 <code>Error + Send + Sync + 'static</code> ainsi que <code>Display</code>.</p>
 </div>
-<div class="reco" id="LANG-ERRDO" type="Règle" title="Utilisation de l'opérateur `?` et non-utilisation de la macro `try!`">
-<p>L'opérateur <code>?</code> DOIT être utilisé pour améliorer la lisibilité du code.
-La macro <code>try!</code> NE DOIT PAS être utilisée.</p>
-</div>
 <p>Des <em>crates</em> tierces peuvent être utilisées pour faciliter la gestion d'erreurs.
 La plupart (<a href="https://crates.io/crates/snafu">snafu</a>, <a href="https://crates.io/crates/thiserror">thiserror</a>) proposent la création de types
 d'erreurs personnalisées qui implémentent les traits nécessaires et permettent
@@ -2689,8 +2685,6 @@ Règle - Utilisation des opérations arithmétiques appropriées au regard des p
 <ul>
 <li><input disabled="" type="checkbox"/>
 Recommandation - Mise en place d'un type <code>Error</code> personnalisé pouvant contenir toutes les erreurs possibles (<a href="errors.html#LANG-ERRWRAP">LANG-ERRWRAP</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Règle - Utilisation de l'opérateur <code>?</code> et non-utilisation de la macro <code>try!</code> (<a href="errors.html#LANG-ERRDO">LANG-ERRDO</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Non-utilisation de fonctions qui peuvent causer des <code>panic</code> (<a href="errors.html#LANG-NOPANIC">LANG-NOPANIC</a>)</li>
 <li><input disabled="" type="checkbox"/>

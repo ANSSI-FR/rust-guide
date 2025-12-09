@@ -670,10 +670,6 @@ A <code>Result</code> object must be tested, and never ignored.</p>
 It MUST be careful to make this type exception-safe (RFC 1236), and implement
 <code>Error + Send + Sync + 'static</code> as well as <code>Display</code>.</p>
 </div>
-<div class="reco" id="LANG-ERRDO" type="Rule" title="Use the `?` operator and do not use the `try!` macro">
-<p>The <code>?</code> operator MUST be used to improve readability of code.
-The <code>try!</code> macro MUST NOT be used.</p>
-</div>
 <p>Third-party crates may be used to facilitate error handling. Most of them
 (notably <a href="https://crates.io/crates/snafu">snafu</a> or <a href="https://crates.io/crates/thiserror">thiserror</a>) address the creation of new custom
 error types that implement the necessary traits and allow wrapping other
@@ -2416,8 +2412,6 @@ Rule - Use appropriate arithmetic operations regarding potential overflows (<a h
 <ul>
 <li><input disabled="" type="checkbox"/>
 Recommendation - Implement custom <code>Error</code> type wrapping all possible errors (<a href="errors.html#LANG-ERRWRAP">LANG-ERRWRAP</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Use the <code>?</code> operator and do not use the <code>try!</code> macro (<a href="errors.html#LANG-ERRDO">LANG-ERRDO</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Rule - Don't use functions that can cause <code>panic!</code> (<a href="errors.html#LANG-NOPANIC">LANG-NOPANIC</a>)</li>
 <li><input disabled="" type="checkbox"/>

@@ -196,10 +196,6 @@ les erreurs possibles. Des précautions supplémentaires DOIVENT être prises :
 ce type DOIT être <em>exception-safe</em> (RFC 1236) et implémenter les traits
 <code>Error + Send + Sync + 'static</code> ainsi que <code>Display</code>.</p>
 </div>
-<div class="reco" id="LANG-ERRDO" type="Règle" title="Utilisation de l'opérateur `?` et non-utilisation de la macro `try!`">
-<p>L'opérateur <code>?</code> DOIT être utilisé pour améliorer la lisibilité du code.
-La macro <code>try!</code> NE DOIT PAS être utilisée.</p>
-</div>
 <p>Des <em>crates</em> tierces peuvent être utilisées pour faciliter la gestion d'erreurs.
 La plupart (<a href="https://crates.io/crates/snafu">snafu</a>, <a href="https://crates.io/crates/thiserror">thiserror</a>) proposent la création de types
 d'erreurs personnalisées qui implémentent les traits nécessaires et permettent
