@@ -47,7 +47,7 @@ Quelque soit la méthode de récupération des dépendances (*crate* ou commit G
 
 <div class="reco" id="LIBS-VETTING-DIRECT" type="Règle" title="Validation des dépendances tierces directes">
 
-Chaque dépendance tierce directe DOIT être dûment validée, et chaque validation doit être tracée.
+Chaque dépendance tierce directe DOIT être dûment validée, et chaque validation DOIT être tracée.
 
 </div>
 
@@ -55,7 +55,7 @@ Concernant les dépendances transitives, il est également recommandé de les va
 
 <div class="reco" id="LIBS-VETTING-TRANSITIVE" type="Recommandation" title="Validation des dépendances tierces transitives">
 
-Chaque dépendance tierce DEVRAIT être dûment validée, et chaque validation devrait être tracée.
+Chaque dépendance tierce DEVRAIT être dûment validée, et chaque validation DEVRAIT être tracée.
 
 </div>
 
