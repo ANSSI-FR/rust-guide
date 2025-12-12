@@ -193,7 +193,7 @@ pas décrite dans le langage Rust.</p>
 <p>Par exemple le déréférencement d'un pointeur null est un <em>UB</em>.
 <em>A contrario</em>, un <code>unwrap</code> sur l'objet <code>None</code> est bien <em>défini</em> car c'est le langage qui traite cette erreur
 (en lançant un <code>panic</code>).</p>
-<p>La liste actuelle des <em>UB</em> est donnée <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html">ici</a>.
+<p>La liste actuelle des <em>UB</em> est donnée dans la <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html">référence Rust</a>.
 On notera les garanties suivantes :</p>
 <ul>
 <li>Pas de déréférencement de pointeur vers une adresse mémoire non allouée (<em>dangling pointer</em>) ou non alignée, ce qui implique

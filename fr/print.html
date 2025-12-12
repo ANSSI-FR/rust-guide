@@ -642,7 +642,7 @@ nommage décrites dans les <a href="naming.html#rust-guidelines">rust-guidelines
 </div>
 <h2 id="références-2"><a class="header" href="#références-2">Références</a></h2>
 <ul>
-<li><a id="RFC-430"></a> <em><a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">General naming conventions</a></em> (RFC-430)</li>
+<li><a id="RFC-430"></a> <em><a href="https://rust-lang.github.io/rfcs/0430-finalizing-naming-conventions.html">General naming conventions</a></em> (RFC-430)</li>
 <li><a id="rust-guidelines"></a> <em><a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a></em> (rust-guidelines)</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="traitements-des-entiers"><a class="header" href="#traitements-des-entiers">Traitements des entiers</a></h1>
@@ -800,7 +800,7 @@ pas décrite dans le langage Rust.</p>
 <p>Par exemple le déréférencement d'un pointeur null est un <em>UB</em>.
 <em>A contrario</em>, un <code>unwrap</code> sur l'objet <code>None</code> est bien <em>défini</em> car c'est le langage qui traite cette erreur
 (en lançant un <code>panic</code>).</p>
-<p>La liste actuelle des <em>UB</em> est donnée <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html">ici</a>.
+<p>La liste actuelle des <em>UB</em> est donnée dans la <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html">référence Rust</a>.
 On notera les garanties suivantes :</p>
 <ul>
 <li>Pas de déréférencement de pointeur vers une adresse mémoire non allouée (<em>dangling pointer</em>) ou non alignée, ce qui implique
@@ -845,7 +845,7 @@ On notera les garanties suivantes :</p>
 <p>AUCUN comportement indéfini NE DOIT se produire.</p>
 </div>
 <h2 id="un-mot-clé-deux-usages"><a class="header" href="#un-mot-clé-deux-usages">Un mot-clé, deux usages</a></h2>
-<p>Le mot-clé <code>unsafe</code> a deux usages : le marquage dans une API et le déverrouillage dans une implémentation.</p>
+<p>Comme décrit dans <a href="unsafe/generalities.html#rust-reference">rust-reference</a>, le mot-clé <code>unsafe</code> a deux usages : le marquage dans une API et le déverrouillage dans une implémentation.</p>
 <h3 id="marquage-unsafe"><a class="header" href="#marquage-unsafe">Marquage <code>unsafe</code></a></h3>
 <p>Le marquage <code>unsafe</code> est une <strong>délégation de responsabilité</strong> sur la sûreté mémoire du programme du programme en développement.</p>
 <p>L'usage de ce mot-clé dans une API <em>met en garde</em> l'utilisateur de l'API contre les potentiels effets néfastes de l'usage de l'API.</p>
@@ -924,7 +924,7 @@ tout code <code>unsafe</code> DOIT être encapsulé de manière :</p>
 </ul>
 </div>
 <p>Ainsi, une fonction utilisant des opérations <code>unsafe</code> peut-être sûre (et donc sans marque <code>unsafe</code>) si les opérations <code>unsafe</code> ne présentent pas d'<em>UB</em> étant donnés les invariants du composant (typiquement l'invariant de type pour une méthode). Inversement, une fonction sans bloc <code>unsafe</code> doit être marquée <code>unsafe</code> si elle casse ces invariants. Le choix et la connaissance de ces invariants sont donc cruciaux pour le développement sécurisé.</p>
-<h3 id="exemple-1--préservation-dun-invariant-de-type"><a class="header" href="#exemple-1--préservation-dun-invariant-de-type">Exemple 1 : préservation d'un invariant de type</a></h3>
+<h2 id="exemple--préservation-dun-invariant-de-type"><a class="header" href="#exemple--préservation-dun-invariant-de-type">Exemple : préservation d'un invariant de type</a></h2>
 <p>La protection des invariants d'une bibliothèque est primordiale pour se prémunir de
 bugs en général, d'<em>UB</em> en particulier.</p>
 <p>L'exemple qui suit est extrait du <a href="https://doc.rust-lang.org/nomicon/working-with-unsafe.html">Rustonomicon</a>.</p>
@@ -967,118 +967,9 @@ la plage d'octets allant de <code>self.ptr</code> à <code>self.ptr + self.cap *
 <p>Si elle peut être tout à fait légitime pour du code <em>interne</em> à l'API,
 cette méthode ne doit pas être exposée par l'API ou alors doit être annotée
 par <code>unsafe</code> car elle peut conduire à des <em>UB</em> (même si elle ne comporte pas de blocs <em>unsafe</em>s).</p>
-<h3 id="exemple-2--relation-de-confiance-safeunsafe"><a class="header" href="#exemple-2--relation-de-confiance-safeunsafe">Exemple 2 : relation de confiance <em>safe</em>/<em>unsafe</em></a></h3>
-<p>La relation de confiance entre le code <em>safe</em> et le code <code>unsafe</code> est délicate.
-Dans un composant logiciel, le code <code>unsafe</code> doit être écrit de manière à ce qu'aucun usage <em>safe</em> du composant ne puisse conduire à des <em>UB</em>.</p>
-<p>Le cas suivant illustre ce principe.
-On souhaite ici proposer une API générique permettant de localiser un objet dans une zone mémoire.
-On demande donc à l'utilisateur de l'API de fournir une implémentation à ce trait :</p>
-<pre><code class="language-rust ignore bad">trait Locatable {
-    /// Find object of type `Self` in the buffer `buf`.
-    /// Returns the index of the first byte representing
-    /// an object of type `Self`
-    fn locate_instance_into(buf: &amp;[u8]) -&gt; Option&lt;usize&gt;;
-
-    fn find(buf: &amp;[u8]) -&gt; Option&lt;Self&gt;
-    where
-        Self: Sized,
-    {
-        let start = Self::locate_instance_into(buf)?;
-        unsafe {
-            let ptr: *const Self = buf.as_ptr().add(start).cast();
-            Some(ptr.read_unaligned())
-        }
-    }
-}</code></pre>
-<p>L'implémentation d'un tel trait peut être réalisée en utilisant du code <strong>sans</strong> <code>unsafe</code>.</p>
-<p>Par exemple, on peut implémenter ce trait pour le type <code>bool</code> comme suit :</p>
-<pre><code class="language-rust ignore align">impl Locatable for bool {
-   fn locate_instance_into(buf: &amp;[u8]) -&gt; Option&lt;usize&gt; {
-      buf.iter().position(|u| *u == 0 || *u == 1)
-   }
-}</code></pre>
-<div class="warning">
-<p>L'API du trait <code>Locatable</code> est mauvaise pour deux raisons :</p>
-<ul>
-<li>si l'implémentation de <code>Locatable</code> ne donne pas l'index d'un objet de type <code>T</code>, alors la fonction <code>read_unaligned</code> peut produire un <em>UB</em>.</li>
-<li>si l'implémentation de <code>Locatable</code> renvoie un index en dehors du tableau ou un index tel que l'objet de type <code>T</code> ne soit pas entièrement contenu dans le tableau, alors un dépassement de tableau se produit.</li>
-</ul>
-</div>
-<p>Par exemple, cette implémentation de <code>Locatable</code> est fautive alors qu'elle n'est pas <code>unsafe</code> :</p>
-<pre><code class="language-rust ignore align bad">impl Locatable for bool {
-   fn locate_instance_into(buf: &amp;[u8]) -&gt; Option&lt;usize&gt; {
-      buf.iter().position(|u| *u == 0 || *u == 1).map(|n| n + 100)
-   }
-}</code></pre>
-<p>L'exécution du programme suivant produit un <em>UB</em> :</p>
-<pre><code class="language-rust ignore align ub">fn use_locatable() {
-   let buf = [4, 1, 99];
-   let located_bool: Option&lt;bool&gt; = bool::find(&amp;buf); // UB here!
-   println!("{:?}", located_bool)
-}</code></pre>
-<p>Voici le retour obtenu avec l'outil de détection de comportement indéfini <code>miri</code> :</p>
-<pre><code class="language-default">$ cargo +nightly miri r --bin overflow
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.01s
-     Running `/home/user/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/cargo-miri runner target/miri/x86_64-unknown-linux-gnu/debug/overflow`
-error: Undefined Behavior: in-bounds pointer arithmetic failed: attempting to offset pointer by 101 bytes, but got alloc249 which is only 3 bytes from the end of the allocation
-  --&gt; src/overflow.rs:16:29
-   |
-16 |         let ptr: *const T = buf.as_ptr().add(start).cast();
-   |                             ^^^^^^^^^^^^^^^^^^^^^^^ Undefined Behavior occurred here
-   |
-   = help: this indicates a bug in the program: it performed an invalid operation, and caused Undefined Behavior
-   = help: see https://doc.rust-lang.org/nightly/reference/behavior-considered-undefined.html for further information
-help: alloc249 was allocated here:
-  --&gt; src/overflow.rs:22:9
-   |
-22 |     let buf = [4, 1, 99];
-   |         ^^^
-   = note: BACKTRACE (of the first span):
-   = note: inside `find::&lt;bool&gt;` at src/overflow.rs:16:29: 16:52
-note: inside `main`
-  --&gt; src/overflow.rs:23:38
-   |
-23 |     let located_bool: Option&lt;bool&gt; = find(&amp;buf); // UB here!
-   |                                      ^^^^^^^^^^
-
-note: some details are omitted, run with `MIRIFLAGS=-Zmiri-backtrace=full` for a verbose backtrace
-
-error: aborting due to 1 previous error
-</code></pre>
-<p>Dans cet exemple, il est rappelé que la responsabilité de l'exécution <em>safe</em>
-(sans <em>UB</em>) d'un code Rust incombe à la personne utilisant des blocs <em>unsafe</em>.</p>
-<p>S'il n'est pas possible de se protéger contre les fonctions/traits <em>safe</em>s lors de l'écriture d'une fonction contenant un bloc <em>unsafe</em>, deux solutions sont possibles :</p>
-<ul>
-<li>marquer la fonction comme <em>unsafe</em> : ainsi la responsabilité de sa bonne exécution revient à la personne utilisant cette fonction, notamment en l'obligeant à vérifier dans la documentation de la fonction que les arguments fournis répondent bien à la   spécification de la fonction</li>
-<li>marquer le trait dont dépend la fonction comme <em>unsafe</em> : ainsi, de même, la responsabilité de la bonne exécution du programme revient à l'implémenteur du trait en s'assurant que l'implémentation répond bien aux spécifications du trait (présente dans sa documentation).</li>
-</ul>
-<p>On pourra se référer à <a href="unsafe/generalities.html#rust-book">rust-book</a> (au chapitre <a href="https://doc.rust-lang.org/book/ch20-01-unsafe-rust.html">Unsafe Rust</a>) où au <a href="https://doc.rust-lang.org/nomicon/safe-unsafe-meaning.html">nomicon</a> pour d'autres exemples.</p>
-<!--
-Dans ce cas particulier, la solution la plus adaptée est sans doute de marquer le trait `Locatable` comme `unsafe` :
-
-```rust
-/// Trait for types that can be located in and loaded from a byte buffer.
-///
-/// # Safety
-///
-/// This trait is marked unsafe because the index returned by `locate_instance_into`
-/// must point to a valid instance of `Self` in the provided buffer:
-///
-/// - valid representation,
-/// - in-bound byte range.
-unsafe trait Locatable: Copy {
-    /// Finds an object of type `Self` in the buffer `buf` and returns the index of
-    /// the first byte representing an object of type `Self`
-    fn locate_instance_into(buf: &[u8]) -> Option<usize>;
-}
-```
-
-Le supertrait `Copy` permet de s'assurer que le type peut être copié par une simple lecture mémoire.
-Une alternative serait de l'ajouter aux conditions de sûreté du trait.
--->
 <h2 id="références-4"><a class="header" href="#références-4">Références</a></h2>
 <ul>
-<li><a id="rust-book"></a> <em><a href="https://doc.rust-lang.org/stable/book/">The Rust Programming Language</a></em> (rust-book)</li>
+<li><a id="rust-reference"></a> <em><a href="https://doc.rust-lang.org/stable/reference/">The Rust Reference</a></em> (rust-reference)</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="gestion-de-la-mémoire"><a class="header" href="#gestion-de-la-mémoire">Gestion de la mémoire</a></h1>
 <!-- ## À propos de la sûreté mémoire en Rust -->
@@ -1090,7 +981,7 @@ versions plus anciennes du compilateur).
 -->
 <p>Dans la très grande majorité des cas, en Rust non-<em>unsafe</em>, le compilateur détermine <strong>automatiquement</strong>
 quand il peut libérer la mémoire occupée par une valeur du programme.
-Mais, comme rappelé dans les <a href="unsafe/../guarantees.html#garantie-de-rust">généralités du langage</a>, ce n'est pas une garantie : un
+Mais, comme rappelé dans les <a href="unsafe/../guarantees.html#garantie-de-rust">plus tôt dans ce guide</a>, ce n'est pas une garantie : un
 code non-<em>unsafe</em> peut mener à des fuites mémoires. Aussi certaines règles présentées dans
 ce chapitre ne sont pas strictement <em>unsafe</em>. Cependant,</p>
 <blockquote>
@@ -1803,7 +1694,7 @@ pub struct OpaqueFoo {
 unsafe extern "C" {
     fn handle_opaque_foo(arg: *mut OpaqueFoo);
 }</code></pre>
-<p>La proposition <a href="https://rust-lang.github.io/rfcs/1861-extern-types.html">RFC 1861</a>, non stabilisée à la rédaction de ce guide, propose
+<p>La proposition <a href="unsafe/ffi.html#RFC-1861">RFC-1861</a>, non stabilisée à la rédaction de ce guide, propose
 de faciliter cette situation en permettant de déclarer des types opaques dans
 des blocs <code>extern</code>.</p>
 <div class="reco" id="FFI-C-OPAQUE" type="Recommandation" title="Utilisation de pointeurs vers des `struct`s C/C++ pour rendre des types opaques">
@@ -2195,7 +2086,8 @@ int main(int argc, const char **argv)
 </code></pre>
 <h2 id="références-5"><a class="header" href="#références-5">Références</a></h2>
 <ul>
-<li><a id="RFC-2195"></a> <em><a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">Really tagged unions</a></em> (RFC-2195)</li>
+<li><a id="RFC-2195"></a> <em><a href="https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html">Really tagged unions</a></em> (RFC-2195)</li>
+<li><a id="RFC-1861"></a> <em><a href="https://rust-lang.github.io/rfcs/1861-extern-types.html">Extern types</a></em> (RFC-1861)</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="bibliothèque-standard"><a class="header" href="#bibliothèque-standard">Bibliothèque standard</a></h1>
 <h2 id="les-traits-send-et-sync"><a class="header" href="#les-traits-send-et-sync">Les traits <code>Send</code> et <code>Sync</code></a></h2>
@@ -2494,13 +2386,13 @@ reposer uniquement sur l'implémentation du trait <code>Drop</code>.</p>
 </div>
 <h2 id="références-6"><a class="header" href="#références-6">Références</a></h2>
 <ul>
-<li><a id="RFC-1210"></a> <em><a href="https://github.com/rust-lang/rfcs/blob/master/text/1210-impl-specialization.md">Specialization</a></em> (RFC-1210)</li>
+<li><a id="RFC-1210"></a> <em><a href="https://rust-lang.github.io/rfcs/1210-impl-specialization.html">Specialization</a></em> (RFC-1210)</li>
 <li><a id="nomicon"></a> <em><a href="https://doc.rust-lang.org/stable/nomicon/">The Rustonomicon</a></em> (nomicon)</li>
 </ul>
 <hr>
 <ol class="footnote-definition"><li id="footnote-1">
 <p>excepté l'usage de contraintes négatives de type, permis par exemple par la <a href="standard.html#RFC-1210">RFC-1210</a>,
-pas encore implémentée pour la version actuelle de Rust (1.91.0) <a href="#fr-1-1">↩</a></p>
+pas encore stabilisé pour la version actuelle de Rust (1.91.0) <a href="#fr-1-1">↩</a></p>
 </li>
 </ol><div style="break-before: page; page-break-before: always;"></div><h1 id="licence-ouverte--open-licence"><a class="header" href="#licence-ouverte--open-licence">LICENCE OUVERTE / OPEN LICENCE</a></h1>
 <ul>

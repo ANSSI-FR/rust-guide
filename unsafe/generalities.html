@@ -193,7 +193,7 @@
 <p>NO Undefined Behavior is allowed.</p>
 </div>
 <h2 id="a-keyword-with-two-usages"><a class="header" href="#a-keyword-with-two-usages">A keyword with two usages</a></h2>
-<p>The <code>unsafe</code> keyword is used both for marking unsafety in an API and unlocking unsafety in the implementation.</p>
+<p>As described in <a href="#rust-reference">rust-reference</a>, the <code>unsafe</code> keyword is used both for marking unsafety in an API and unlocking unsafety in the implementation.</p>
 <h3 id="unsafe-marking"><a class="header" href="#unsafe-marking"><code>unsafe</code> marking</a></h3>
 <p>Marking with <code>unsafe</code> is a delegation of responsibility with respect to memory safety from the API author to the API user.
 The use of this keyword in an API <em>warns</em> the API user about the potential harmful effects of using the API.</p>
@@ -261,7 +261,7 @@ invariants (typically the type invariant for a method). Conversely, a function
 without an <code>unsafe</code> block must be marked as <code>unsafe</code> if it breaks these
 invariants. The choice and knowledge of these invariants are therefore crucial
 for secure development.</p>
-<h3 id="example-1-preserving-a-type-invariant"><a class="header" href="#example-1-preserving-a-type-invariant">Example 1: Preserving a type invariant</a></h3>
+<h2 id="example-preserving-a-type-invariant"><a class="header" href="#example-preserving-a-type-invariant">Example: Preserving a type invariant</a></h2>
 <p>The following code comes from the <a href="https://doc.rust-lang.org/nomicon/working-with-unsafe.html">Rustonomicon</a>.
 It could be used to implement a custom <code>Vec</code> type.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
@@ -299,105 +299,9 @@ impl&lt;T&gt; Vec&lt;T&gt; {
 }
 <span class="boring">}</span></code></pre></pre>
 <p>This function may be necessary for internal use, but it should not be exposed in the API, or it should be marked with the <code>unsafe</code> keyword, because its use can lead to UB.</p>
-<h3 id="example-2-trust-relationship-between-safe-and-unsafe"><a class="header" href="#example-2-trust-relationship-between-safe-and-unsafe">Example 2: Trust relationship between <em>safe</em> and <em>unsafe</em></a></h3>
-<p>In the Rust paradigm:</p>
-<blockquote>
-<p><code>unsafe</code>-free code cannot go wrong</p>
-</blockquote>
-<p>which means it cannot result in UB.
-This property is lost when developers use <em>unsafe</em> code, so they are responsible for not producing UB in any scenario.
-Consequently, even <em>safe</em> functions must be handled carefully in <em>unsafe</em> contexts.</p>
-<p>Suppose one wants to propose an API to find an object of a given type in memory.
-This API could require implementing the following trait:</p>
-<pre><pre class="playground"><code class="language-rust bad"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>trait Locatable {
-    /// Find object of type `Self` in the buffer `buf`.
-    /// Returns the index of the first byte representing
-    /// an object of type `Self`
-    fn locate_instance_into(buf: &amp;[u8]) -&gt; Option&lt;usize&gt;;
-
-    fn find(buf: &amp;[u8]) -&gt; Option&lt;Self&gt;
-    where
-        Self: Sized,
-    {
-        let start = Self::locate_instance_into(buf)?;
-        unsafe {
-            let ptr: *const Self = buf.as_ptr().add(start).cast();
-            Some(ptr.read_unaligned())
-        }
-    }
-}
-<span class="boring">}</span></code></pre></pre>
-<p>This trait can be implemented <strong>without</strong> using <code>unsafe</code>.</p>
-<p>For instance, the <code>bool</code> type can implement this trait as follows:</p>
-<pre><code class="language-rust ignore align">impl Locatable for bool {
-   fn locate_instance_into(buf: &amp;[u8]) -&gt; Option&lt;usize&gt; {
-      buf.iter().position(|u| *u == 0 || *u == 1)
-   }
-}</code></pre>
-<div class="warning">
-<p>The <code>Locatable</code>'s API is harmful for two reasons:</p>
-<ul>
-<li>If the <code>Locatable</code> implementation does not give the index of an object of type <code>T</code>, the <code>read_unaligned</code> may produce UB.</li>
-<li>If the <code>Locatable</code> implementation gives an out-of-bounds index or an index for which part of the object is out of bounds, the subsequent buffer overflow is UB.</li>
-</ul>
-</div>
-<p>For instance, the following <code>Locatable</code> implementation is incorrect, <strong>but</strong> it is the responsibility of the API author to take it into account.</p>
-<pre><pre class="playground"><code class="language-rust align bad"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>impl Locatable for bool {
-   fn locate_instance_into(buf: &amp;[u8]) -&gt; Option&lt;usize&gt; {
-      buf.iter().position(|u| *u == 0 || *u == 1).map(|n| n + 100)
-   }
-}
-<span class="boring">}</span></code></pre></pre>
-<p>The following program produces UB.</p>
-<pre><code class="language-rust ignore align ub">fn use_locatable() {
-   let buf = [4, 1, 99];
-   let located_bool: Option&lt;bool&gt; = bool::find(&amp;buf); // UB here!
-   println!("{:?}", located_bool)
-}</code></pre>
-<p>The UB-detecting tool <code>miri</code> reports the following:</p>
-<pre><code class="language-default">$ cargo +nightly miri r --bin overflow
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.01s
-     Running `/home/user/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/cargo-miri runner target/miri/x86_64-unknown-linux-gnu/debug/overflow`
-error: Undefined Behavior: in-bounds pointer arithmetic failed: attempting to offset pointer by 101 bytes, but got alloc249 which is only 3 bytes from the end of the allocation
-  --&gt; src/overflow.rs:16:29
-   |
-16 |         let ptr: *const T = buf.as_ptr().add(start).cast();
-   |                             ^^^^^^^^^^^^^^^^^^^^^^^ Undefined Behavior occurred here
-   |
-   = help: this indicates a bug in the program: it performed an invalid operation, and caused Undefined Behavior
-   = help: see https://doc.rust-lang.org/nightly/reference/behavior-considered-undefined.html for further information
-help: alloc249 was allocated here:
-  --&gt; src/overflow.rs:22:9
-   |
-22 |     let buf = [4, 1, 99];
-   |         ^^^
-   = note: BACKTRACE (of the first span):
-   = note: inside `find::&lt;bool&gt;` at src/overflow.rs:16:29: 16:52
-note: inside `main`
-  --&gt; src/overflow.rs:23:38
-   |
-23 |     let located_bool: Option&lt;bool&gt; = find(&amp;buf); // UB here!
-   |                                      ^^^^^^^^^^
-
-note: some details are omitted, run with `MIRIFLAGS=-Zmiri-backtrace=full` for a verbose backtrace
-
-error: aborting due to 1 previous error
-</code></pre>
-<p>This example shows that developers using <code>unsafe</code> blocks
-cannot assume that <em>safe</em> functions or traits they use are well implemented, and thus must prevent UB in case these <em>safe</em> functions have bad behavior.</p>
-<p>If they cannot protect their function against poorly implemented <em>safe</em> functions or traits, they have two options:</p>
-<ul>
-<li>Mark the function they <em>write</em> as <code>unsafe</code>: thus, it is the user's responsibility to provide correct arguments (by checking the <code>unsafe</code> function's documentation).</li>
-<li>Mark the traits they <em>use</em> as <code>unsafe</code>: thus, it is the user's responsibility to implement the trait properly (again, by reading the trait documentation).</li>
-</ul>
-<p>More examples can be found in <a href="#rust-book">rust-book</a> (in the <a href="https://doc.rust-lang.org/book/ch20-01-unsafe-rust.html">Unsafe Rust</a> chapter) or the <a href="https://doc.rust-lang.org/nomicon/safe-unsafe-meaning.html">nomicon</a>.</p>
 <h2 id="references"><a class="header" href="#references">References</a></h2>
 <ul>
-<li><a id="rust-book"></a> <em><a href="https://doc.rust-lang.org/stable/book/">The Rust Programming Language</a></em> (rust-book)</li>
+<li><a id="rust-reference"></a> <em><a href="https://doc.rust-lang.org/stable/reference/">The Rust Reference</a></em> (rust-reference)</li>
 </ul>
 
                     </main>
