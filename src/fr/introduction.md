@@ -129,7 +129,7 @@ du contexte d’application ni des modalités de sa mise en œuvre.
 <div class="examplereco" id="EXAMPLE-RECO" type="Recommandation" title="Recommandation adaptée à un besoin de sécurité plus élevé">
 
 L'implémentation technique de cette recommandation offre un niveau de sécurité
-adapté à un besoin de sécurité plus élevé
+adapté à un besoin de sécurité plus élevé.
 
 </div>
 
