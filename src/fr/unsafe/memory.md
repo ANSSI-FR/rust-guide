@@ -11,12 +11,12 @@ versions plus anciennes du compilateur).
 
 Dans la très grande majorité des cas, en Rust non-*unsafe*, le compilateur détermine **automatiquement** 
 quand il peut libérer la mémoire occupée par une valeur du programme. 
-Mais, comme rappelé dans les [plus tôt dans ce guide](../guarantees.md#garantie-de-rust), ce n'est pas une garantie : un
-code non-*unsafe* peut mener à des fuites mémoires. Aussi certaines règles présentées dans 
-ce chapitre ne sont pas strictement *unsafe*. Cependant,
+Mais, comme rappelé [plus tôt dans ce guide](../guarantees.md#garantie-de-rust), ce n'est pas une garantie : un
+code non-*unsafe* peut mener à des fuites mémoires. Aussi, certaines règles présentées dans ce chapitre ne sont pas strictement *unsafe*.
+Cependant,
 
-> même si certaines des fonctions présentées dans la suite ne sont pas `unsafe`, elle
-> elle ne devrait être utilisée qu'en Rust *unsafe*.
+> même si certaines des fonctions présentées dans la suite ne sont pas `unsafe`,
+> elles ne devraient être utilisées qu'en Rust *unsafe*.
 
 ## `forget` et fuites de mémoire
 
@@ -134,7 +134,7 @@ correspondant, pour permettre sa libération :
 
 </div>
 
-La réciproque est aussi vrai, c'est à dire que les fonctions `from_raw` ne
+La réciproque est aussi vraie, c'est-à-dire que les fonctions `from_raw` ne
 devraient pas être utilisées sur des *raw pointers* qui ne sont pas issus de la fonction
 `into_raw` associée. En effet, pour les cas comme `Rc`, la documentation officielle 
 [limite](https://doc.rust-lang.org/std/rc/struct.Rc.html#method.from_raw) explicitement ces fonctions
@@ -199,7 +199,7 @@ pour effacer des valeurs sensibles.
 
 ## Cycle dans les références comptées (`Rc` et `Arc`)
 
-La **combinaison** de la mutabilité *[intérieure](https://doc.rust-lang.org/reference/interior-mutability.html)*, des références comptées et des types récursifs n'est pas sûre. En effet, elle peut conduire à fuites mémoire, et donc éventuellement à des attaques par déni de service et en des fuites de secrets.
+La **combinaison** de la mutabilité *[intérieure](https://doc.rust-lang.org/reference/interior-mutability.html)*, des références comptées et des types récursifs n'est pas sûre. En effet, elle peut conduire à des fuites mémoire, et donc éventuellement à des attaques par déni de service et à des fuites de secrets.
 
 L'exemple non-`unsafe` suivant montre, la création d'une fuite mémoire en utilisant la mutabilité intérieure et les références comptées.
 
@@ -207,7 +207,7 @@ L'exemple non-`unsafe` suivant montre, la création d'une fuite mémoire en util
 {{#include ../../../examples/src/memory.rs:cyclic}}
 ```
 
-La fuite peut-être mise en évidence grâce à `valgrind` :
+La fuite peut être mise en évidence grâce à `valgrind` :
 
 ```
 $ valgrind --leak-check=full target/release/safe-rust-leak 

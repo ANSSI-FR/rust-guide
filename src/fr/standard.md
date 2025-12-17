@@ -37,7 +37,7 @@ automatique une implémentation pour les types composés. Comme rappelé dans
 
 - les pointeurs `raw`, qui n'implémentent ni `Send`, ni `Sync`, puisqu'ils
   n'offrent aucune garantie quant à la sûreté ;
-- les références `UnsafeCell`, qui n'implémentent pas `Sync` (et par extensions,
+- les références `UnsafeCell`, qui n'implémentent pas `Sync` (et par extension,
   les références `Cell` et `RefCell` non plus), puisqu'elles autorisent la
   mutabilité des valeurs contenues (*interior mutability*) ;
 - les références `Rc`, qui n'implémentent ni `Send`, ni `Sync`, puisque les
@@ -124,12 +124,12 @@ Comme stipulé dans la documentation de la bibliothèque standard, Rust présupp
     - `a.le(b)` ssi `a.lt(b) || a.eq(b)`.
     - `a.ge(b)` ssi `a.gt(b) || a.eq(b)`.
 
-    Il faut noter qu'en définissant seulement `partial_cmp`, la consistance
+    Il faut noter qu'en définissant seulement `partial_cmp`, la cohérence
     interne est garantie par les implémentations par défaut de `lt`, `le`, `gt`,
-    and `ge`.
+    et `ge`.
 
   - *Antisymétrie* : `a.lt(b)` (respectivement `a.gt(b)`) implique `b.gt(a)`
-    (respectivement `b.lt(b)`). Du point de vue du développeur, cela signifie
+    (respectivement `b.lt(a)`). Du point de vue du développeur, cela signifie
     que :
 
     - `A: PartialOrd<B>`.
@@ -176,7 +176,7 @@ documentation.
 <div class="reco" id="LANG-CMP-DEFAULTS" type="Recommandation" title="Utilisation des implémentations par défaut des traits de comparaison standards">
 
 Dans un développement sécurisé en Rust, l'implémentation des traits de
-comparaison standard NE DEVRAIT PAS effectuée que par l'implémentation des
+comparaison standard NE DEVRAIT être effectuée que par l'implémentation des
 méthodes ne fournissant pas d'implémentation par défaut, dans le but de
 réduire le risque de violation des invariants associés auxdits traits.
 
@@ -265,7 +265,7 @@ certaines opérations lorsque la mémoire associée à une valeur est réclamée
 
 <div class="note">
 
-Implémenter ce traits modifie la sémantique d'exécution du langage. En effet,
+Implémenter ce trait modifie la sémantique d'exécution du langage. En effet,
 contrairement au fonctionnement classique des traits [^1], l'exécution d'un même code
 se verra différente avec et sans cette implémentation.
 
@@ -279,7 +279,7 @@ Lorsqu'une valeur sort du scope (ou est explicitement relâchée avec
 `std::mem::drop`), elle est relâchée en deux étapes. La première étape a lieu
 uniquement si le type de la valeur en question implémente le trait `Drop` et
 consiste en l'appel de la méthode `drop`. La seconde étape consiste en la
-répétition de processus de *drop* récursivement sur tous les champs que contient
+répétition du processus de *drop* récursivement sur tous les champs que contient
 la valeur. Il est à noter que l'implémentation de `Drop` est
 *responsable uniquement de la valeur extérieure*.
 
@@ -302,7 +302,7 @@ Ensuite, le système de types de Rust assure seulement la sûreté mémoire et,
 du point de vue du typage, des `drop`s peuvent tout à fait être manqués.
 Plusieurs situations peuvent mener à manquer des `drop`s, comme :
 
-- un cycle dans la référence (par exemple avec `Rc` ou `Arc`) ;
+- un cycle de références (par exemple avec `Rc` ou `Arc`) ;
 - un appel explicite à `std::mem::forget` (ou `core::mem::forget`) (voir
   paragraphe à propos de [`forget` et des fuites de mémoire](unsafe/memory.md#forget-and-memory-leaks)) ;
 - un `panic` dans un `drop` ;

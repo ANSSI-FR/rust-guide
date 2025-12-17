@@ -53,13 +53,13 @@ Des motifs courants de code qui provoquent des `panic` sont :
 <div class="warning">
 
 Dans certains domaines critiques pour la sécurité, il est obligatoire de passer en mode sans échec dès qu'une erreur susceptible d'entraîner un comportement indéfini se produit.
-Dans ces situations, il est judicieux de déclencher délibérément un panic (ou d'interrompre l'exécution) puisque cela permet d'arrêter le système avant que des données ne soient corrompues, ou des défaillances liées à la sureté ou la sécurité ne se propagent.
+Dans ces situations, il est judicieux de déclencher délibérément un panic (ou d'interrompre l'exécution) puisque cela permet d'arrêter le système avant que des données ne soient corrompues, ou des défaillances liées à la sûreté ou la sécurité ne se propagent.
 
 Pour un avion ou d'autres types de véhicule, ce comportement « fail-fast » peut être crucial : l'unité de contrôle principale doit s'arrêter immédiatement en cas de défaillance grave, puis transférer le contrôle à un sous-système redondant ou de secours capable d'arrêter le véhicule en toute sécurité ou de poursuivre son fonctionnement en mode réduit. Le redémarrage sur un système secondaire fiable garantit que le véhicule reste contrôlable, protège les occupants et évite les conséquences dangereuses qui pourraient résulter de la poursuite de l'exécution dans un état imprévisible.
 
 </div>
 
-Dans le cas ou le développement n'est pas soumis à ce type de normes:
+Dans le cas où le développement n'est pas soumis à ce type de normes:
 
 <div class="reco" id="LANG-NOPANIC" type="Règle" title="Non-utilisation de fonctions qui peuvent causer des `panic`">
 
@@ -97,9 +97,9 @@ comportement indéfini.
 
 Le code Rust appelé depuis une FFI DOIT :
 
-* soit être assuré de ne pas paniquer,
-* soit utiliser `catch_unwind` ou le module `std::panic` pour s'assurer qu'il
-ne va pas abandonner un traitement puis que l'exécution retourne dans le
+- soit être assuré de ne pas paniquer,
+- soit utiliser `catch_unwind` ou le module `std::panic` pour s'assurer qu'il
+ne va pas abandonner un traitement puis laisser l'exécution retourner dans le
 langage appelant dans un état instable.
 
 </div>

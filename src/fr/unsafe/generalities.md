@@ -14,7 +14,7 @@ references:
 
 ## Comportements ajoutés par Rust *unsafe*
 
-Les capacités du langages peuvent être étendues en utilisant du code `unsafe`. La liste complète de ces capacités est donnée dans le [manuel de référence de Rust][r-unsafety]. On notera les capacités suivantes :
+Les capacités du langage peuvent être étendues en utilisant du code `unsafe`. La liste complète de ces capacités est donnée dans le [manuel de référence de Rust][r-unsafety]. On notera les capacités suivantes :
 
 * Déréférencer un *raw pointer*
 * Lire ou écrire une variable statique mutable et/ou externe
@@ -22,7 +22,7 @@ Les capacités du langages peuvent être étendues en utilisant du code `unsafe`
 * Implémenter un trait `unsafe`
 * Déclarer un bloc `extern`
 
-D'autres exemples peuvent être trouvé dans le [nomicon](https://doc.rust-lang.org/nomicon/what-unsafe-does.html)
+D'autres exemples peuvent être trouvés dans le [nomicon](https://doc.rust-lang.org/nomicon/what-unsafe-does.html)
 
 Si ces capacités sont nécessaires à la programmation système, elles font perdre au langage ses [propriétés de sûreté](../guarantees.md#garanties-du-langage), et permettent l'apparition de comportements indéfinis.
 
@@ -38,7 +38,7 @@ Comme décrit dans [@rust-reference], le mot-clé `unsafe` a deux usages : le ma
 
 ### Marquage `unsafe`
 
-Le marquage `unsafe` est une **délégation de responsabilité** sur la sûreté mémoire du programme du programme en développement.
+Le marquage `unsafe` est une **délégation de responsabilité** sur la sûreté mémoire du programme en développement.
 
 L'usage de ce mot-clé dans une API *met en garde* l'utilisateur de l'API contre les potentiels effets néfastes de l'usage de l'API.
 
@@ -109,7 +109,7 @@ ou DOIVENT être justifiés par au moins l'une des raisons suivantes :
 
 À l'exception de l'un ou plusieurs de ces cas `#![forbid(unsafe_code)]` DOIT
 apparaître dans à la racine de la *crate* (typiquement `main.rs` ou `lib.rs`)
-afin de générer des erreurs de compilation dans le cas ou le mot-clé `unsafe`
+afin de générer des erreurs de compilation dans le cas où le mot-clé `unsafe`
 est utilisé dans le projet.
 
 </div>
@@ -140,7 +140,7 @@ bugs en général, d'*UB* en particulier.
 
 L'exemple qui suit est extrait du [Rustonomicon](https://doc.rust-lang.org/nomicon/working-with-unsafe.html).
 
-Si l'on souhait réimplémenter le type `Vec`, on pourrait utiliser le code suivant :
+Si l'on souhaite réimplémenter le type `Vec`, on pourrait utiliser le code suivant :
 
 ```rust
 {{#include ../../../examples/src/generalities.rs:naive_vec}}

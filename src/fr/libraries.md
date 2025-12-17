@@ -2,9 +2,9 @@
 
 ## Dépôts de dépendances
 
-La gestion de bibliothèques externes est intégrée dans l'outils `Cargo`. Plusieurs moyens existent pour définir la provenance de ces bibliothèques, certains sont donnés dans la suite.
+La gestion de bibliothèques externes est intégrée dans l'outil `Cargo`. Plusieurs moyens existent pour définir la provenance de ces bibliothèques, certains sont donnés dans la suite.
 
-On rappelle que le traçage exact des versions de ces bibliothèques est une condition important de la bonne sécurité des logiciels écrits en Rust. Ce besoin est matérialisé par la règle [DENV-CARGO-LOCK](devenv.md#DENV-CARGO-LOCK).
+On rappelle que le traçage exact des versions de ces bibliothèques est une condition importante de la bonne sécurité des logiciels écrits en Rust. Ce besoin est matérialisé par la règle [DENV-CARGO-LOCK](devenv.md#DENV-CARGO-LOCK).
 
 ### Crates
 
@@ -30,20 +30,20 @@ Le dépôt par défaut est [crates.io](https://crates.io). Il est aussi possible
 
 ### Dépendances Git
 
-Chaque dépendance du fichier `Cargo.toml` peut également faire référence à [un dépôt GIT](https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies-from-git-repositories). Par exemple :
+Chaque dépendance du fichier `Cargo.toml` peut également faire référence à [un dépôt Git](https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies-from-git-repositories). Par exemple :
 
 ```toml
 [dependencies]
 regex = { git = "https://github.com/rust-lang/regex.git" }
 ```
 
-Il est possible de spécifier plus en détails la version souhaitée en donnant soit une branche, soit un tag, soit un hash de commit.
+Il est possible de spécifier plus en détail la version souhaitée en donnant soit une branche, soit un tag, soit un hash de commit.
 
-Le système de [verrou des dépendances](devenv.md#cargo) est opérant même dans le cas d'un dépôt GIT : dans le cas où la dépendance ne spécifie pas un commit en particulier, le commit le plus récent répondant aux critères du fichier `Cargo.toml` est récupéré au moment de la première compilation et est pérennisé dans le fichier `Cargo.lock`. Toutes les compilations suivantes utiliseront le même commit (sauf si le ficher `Cargo.lock` est mis à jour).
+Le système de [verrou des dépendances](devenv.md#cargo) est opérant même dans le cas d'un dépôt Git : dans le cas où la dépendance ne spécifie pas un commit en particulier, le commit le plus récent répondant aux critères du fichier `Cargo.toml` est récupéré au moment de la première compilation et est pérennisé dans le fichier `Cargo.lock`. Toutes les compilations suivantes utiliseront le même commit (sauf si le fichier `Cargo.lock` est mis à jour).
 
 ## Sécurité des dépendances
 
-Quelque soit la méthode de récupération des dépendances (*crate* ou commit GIT), si elles proviennent d'organisation extérieures, les dépendances doivent faire l'objet d'une validation.
+Quelle que soit la méthode de récupération des dépendances (*crate* ou commit Git), si elles proviennent d'organisations extérieures, les dépendances doivent faire l'objet d'une validation.
 
 <div class="reco" id="LIBS-VETTING-DIRECT" type="Règle" title="Validation des dépendances tierces directes">
 
@@ -99,7 +99,7 @@ connues dans les dépendances d'un projet.
 <!-- ## Code *unsafe* dans les bibliothèques -->
 
 <!--
-<mark>TODO</mark>: les blocs de code `unsafe` sont discutés dans le chapitre 
+<mark>TODO</mark>: les blocs de code `unsafe` sont discutés dans le chapitre
 suivant. Le développeur a besoin de s'assurer que ces types de blocs ne sont pas
 mal utilisés dans les dépendances de son projet.
 -->

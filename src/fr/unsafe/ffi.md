@@ -38,6 +38,7 @@ Rust si celles-ci sont déclarées dans un bloc `extern` :
 ```rust
 {{#include ../../../examples/src/ffi.rs:import_c}}
 ```
+
 <div class="note">
 
 Toute fonction écrite dans un autre langage et importée dans Rust par l'usage
@@ -358,9 +359,9 @@ des références soit défini par l'implémentation. Enfin, le code C++ doit êt
 vérifié pour éviter toute confusion de pointeurs et de références.
 
 Les références Rust peuvent être raisonnablement utilisées avec d'autres
-langages compatibles avec le C, incluants les variantes de C qui mettent en
-oeuvre la vérification que les pointeurs sont non nuls, comme du code annoté à
-l'aide Microsoft SAL par exemple.
+langages compatibles avec le C, incluant les variantes de C qui mettent en
+œuvre la vérification que les pointeurs sont non nuls, comme du code annoté à
+l'aide de Microsoft SAL par exemple.
 
 <div class="reco" id="FFI-NOREF" type="Règle" title="Non-utilisation des types références au profit des types pointeurs à la frontière avec un langage externe">
 
@@ -420,6 +421,7 @@ du C, la fonction peut alors être utilisée comme suit :
 ```c
 {{#include ../../../examples/src/ffi.c:pointers}}
 ```
+
 <div class="note">
 
 Les valeurs de type `Option<&T>` ou `Option<&mut T>`, pour tout T tel que
@@ -428,9 +430,8 @@ comparaison explicite avec la valeur nulle. En raison de la garantie de Rust
 vis-à-vis des optimisations de pointeurs pouvant être nuls, un pointeur nul
 est acceptable du côté C. La valeur C `NULL` est comprise par Rust comme la
 valeur `None`, tandis qu'un pointeur non nul est encapsulé dans le
-constructeur `Some`. Bien qu'ergonomique, cette fonctionnalité ne permet par
-contre pas des validations fortes des valeurs de pointeurs comme
-l'appartenance à une plage d'adresses mémoire valides.
+constructeur `Some`.
+Bien qu'ergonomique, cette fonctionnalité ne permet pas en revanche des validations fortes des valeurs de pointeurs comme l'appartenance à une plage d'adresses mémoire valides.
 
 </div>
 
@@ -456,7 +457,6 @@ alternatives possibles :
 - l'utilisation de pointeurs de fonctions *wrappé* dans une valeur de type
   `Option`, accompagnée d'un test contre la valeur nulle :
 
-  
   ```rust,noplaypen
   {{#include ../../../examples/src/ffi.rs:function_pointers}}
   ```
@@ -543,6 +543,7 @@ illustrée comme suit :
 ```rust,unsafe,noplaypen
 {{#include ../../../examples/src/ffi.rs:opaque_external}}
 ```
+
 La proposition [@RFC-1861], non stabilisée à la rédaction de ce guide, propose
 de faciliter cette situation en permettant de déclarer des types opaques dans
 des blocs `extern`.

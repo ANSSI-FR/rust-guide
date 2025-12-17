@@ -63,7 +63,6 @@ l'édition utilisée propose.
 
 </div>
 
-[edition guide]: https://doc.rust-lang.org/edition-guide/
 
 ### Chaînes d'outils *stable*, *nightly* et *beta*
 
@@ -120,6 +119,7 @@ $ # or
 $ cargo +nightly fmt
 $
 ```
+
 ### Garantie de niveau pour Rustc
 
 Rustc utilise LLVM comme backend, il hérite donc du support de ce dernier et classe ses cibles prises en charge en différents niveaux afin d’indiquer le degré de stabilité et de tests effectué.
@@ -172,7 +172,7 @@ Cargo permet la récupération automatique des dépendances avant compilation.
 L'utilitaire permet de vérifier l'intégrité des dépendances après téléchargement.
 Il utilise pour cela un fichier `Cargo.lock` qui, s'il est présent au moment de la compilation,
 contraint les sommes de contrôle des dépendances. En cas de différence entre
-les sources téléchargées et le fichier `Cargo.lock`, un erreur apparaît.
+les sources téléchargées et le fichier `Cargo.lock`, une erreur apparaît.
 
 ```
 error: checksum for `sha256 v1.6.0` changed between lock files
@@ -201,7 +201,7 @@ Le fichier `Cargo.lock` DOIT être versionné avec le code source du programme R
 
 Des discussions sont en cours pour
 déterminer le meilleur moyen de protéger et de valider les *crates* lors de leur ajout au projet
-(les téléchargements suivants sont vérifié par le fichier `Cargo.lock`). Pour le
+(les téléchargements suivants sont vérifiés par le fichier `Cargo.lock`). Pour le
 moment, la sécurité des premiers téléchargements de `cargo` repose sur la bonne sécurité du site web
 [crates.io] ainsi que celle du dépôt, hébergé sur GitHub, contenant l'index du
 registre de *crates*. Pour les cas les plus sensibles, il peut être préférable
@@ -232,7 +232,7 @@ est utilisé.
 <div class="reco" id="DENV-CARGO-OPTS" type="Règle" title="Conservation des valeurs par défaut des variables critiques dans les profils cargo">
 
 Les variables `debug-assertions` et `overflow-checks` NE DOIVENT PAS être
-modifiées dans les sections de profils de développement (`[profile.dev]` and
+modifiées dans les sections de profils de développement (`[profile.dev]` et
 `[profile.test]`).
 
 </div>
@@ -305,7 +305,7 @@ $ cargo fix --edition
 ```
 
 Rustfix va soit réparer le code afin de le rendre compatible avec Rust 2024,
-ou bien afficher un avertissement décrivant le problème. Le problème devra alors
+soit afficher un avertissement décrivant le problème. Le problème devra alors
 être réparé manuellement. En exécutant la commande (et en réparant
 potentiellement les problèmes manuellement) jusqu'à ce qu'elle n'affiche plus
 aucun avertissement, il est possible de s'assurer que le code est compatible
@@ -323,7 +323,6 @@ configuration, certaines réparations (comme celles proposées avec l'option
 `--edition-idioms`) sont connues pour casser la compilation ou pour modifier
 la sémantique d'un programme dans certains cas.
 
-[rustfix]: https://github.com/rust-lang-nursery/rustfix
 
 ### Clippy
 
