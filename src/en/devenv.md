@@ -123,7 +123,7 @@ The target is fully vetted by the community. It passes the entire test suite, re
 
 #### Tier 2 - guaranteed to build
 
-The target’s source code compiles cleanly, but it does not receive the same level of testing or maintenance as Tier 1. It may lack full coverage in the test suite, and certain optimizations or newer LLVM features could be missing or unstable. Users can still generate code for these backends, but they should expect occasional breakage or the need for manual patches. Tier 1 targets can be thought of as "guaranteed to build" but not as "guaranteed to work".
+The target’s source code compiles cleanly, but it does not receive the same level of testing or maintenance as Tier 1. It may lack full coverage in the test suite, and certain optimizations or newer LLVM features could be missing or unstable. Users can still generate code for these backends, but they should expect occasional breakage or the need for manual patches. Tier 2 targets can be thought of as "guaranteed to build" but not as "guaranteed to work".
 
 #### Tier 3
 

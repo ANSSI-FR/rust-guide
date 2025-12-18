@@ -87,12 +87,12 @@ propositions (*pull requests*) or in the form of suggestions and discussions
 This document considers separately different phases of a typical (and simplified)
 development process.
 Firstly, we provide some advice on how to take advantage of using tools of the
-Rust ecosystem for secure development, and other advices on precautions to take when choosing and using
+Rust ecosystem for secure development, and other advice on precautions to take when choosing and using
 external libraries.
 Then, recommendations about the Rust language constructs are presented.
-<!-- TODO: Finally, we introduce advices for writing
+<!-- TODO: Finally, we introduce advice for writing
 tests for a project in Rust, and for using Rust fuzzing tools.-->
-We finally introduce some recommendation for established Rust libraries.
+We finally introduce some recommendations for established Rust libraries.
 
 Note that *async* Rust is currently eluded from recommendations list.
 
