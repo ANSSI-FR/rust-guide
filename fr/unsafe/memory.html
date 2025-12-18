@@ -193,12 +193,12 @@ versions plus anciennes du compilateur).
 -->
 <p>Dans la très grande majorité des cas, en Rust non-<em>unsafe</em>, le compilateur détermine <strong>automatiquement</strong>
 quand il peut libérer la mémoire occupée par une valeur du programme.
-Mais, comme rappelé dans les <a href="../guarantees.html#garantie-de-rust">plus tôt dans ce guide</a>, ce n'est pas une garantie : un
-code non-<em>unsafe</em> peut mener à des fuites mémoires. Aussi certaines règles présentées dans
-ce chapitre ne sont pas strictement <em>unsafe</em>. Cependant,</p>
+Mais, comme rappelé <a href="../guarantees.html#garantie-de-rust">plus tôt dans ce guide</a>, ce n'est pas une garantie : un
+code non-<em>unsafe</em> peut mener à des fuites mémoires. Aussi, certaines règles présentées dans ce chapitre ne sont pas strictement <em>unsafe</em>.
+Cependant,</p>
 <blockquote>
-<p>même si certaines des fonctions présentées dans la suite ne sont pas <code>unsafe</code>, elle
-elle ne devrait être utilisée qu'en Rust <em>unsafe</em>.</p>
+<p>même si certaines des fonctions présentées dans la suite ne sont pas <code>unsafe</code>,
+elles ne devraient être utilisées qu'en Rust <em>unsafe</em>.</p>
 </blockquote>
 <h2 id="forget-et-fuites-de-mémoire"><a class="header" href="#forget-et-fuites-de-mémoire"><code>forget</code> et fuites de mémoire</a></h2>
 <p>Rust fournit
@@ -290,7 +290,7 @@ let raw_ptr = Box::into_raw(boxed);
 let _ = unsafe { Box::from_raw(raw_ptr) }; // will be freed
 <span class="boring">}</span></code></pre></pre>
 </div>
-<p>La réciproque est aussi vrai, c'est à dire que les fonctions <code>from_raw</code> ne
+<p>La réciproque est aussi vraie, c'est-à-dire que les fonctions <code>from_raw</code> ne
 devraient pas être utilisées sur des <em>raw pointers</em> qui ne sont pas issus de la fonction
 <code>into_raw</code> associée. En effet, pour les cas comme <code>Rc</code>, la documentation officielle
 <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html#method.from_raw">limite</a> explicitement ces fonctions
@@ -346,7 +346,7 @@ C'est problématique en particulier si l'on considère l'utilisation de <code>Dr
 pour effacer des valeurs sensibles.</p>
 </div>
 <h2 id="cycle-dans-les-références-comptées-rc-et-arc"><a class="header" href="#cycle-dans-les-références-comptées-rc-et-arc">Cycle dans les références comptées (<code>Rc</code> et <code>Arc</code>)</a></h2>
-<p>La <strong>combinaison</strong> de la mutabilité <em><a href="https://doc.rust-lang.org/reference/interior-mutability.html">intérieure</a></em>, des références comptées et des types récursifs n'est pas sûre. En effet, elle peut conduire à fuites mémoire, et donc éventuellement à des attaques par déni de service et en des fuites de secrets.</p>
+<p>La <strong>combinaison</strong> de la mutabilité <em><a href="https://doc.rust-lang.org/reference/interior-mutability.html">intérieure</a></em>, des références comptées et des types récursifs n'est pas sûre. En effet, elle peut conduire à des fuites mémoire, et donc éventuellement à des attaques par déni de service et à des fuites de secrets.</p>
 <p>L'exemple non-<code>unsafe</code> suivant montre, la création d'une fuite mémoire en utilisant la mutabilité intérieure et les références comptées.</p>
 <pre><pre class="playground"><code class="language-rust align bad">use std::{cell::Cell, rc::Rc};
 
@@ -367,7 +367,7 @@ fn main() {
    a.other.set(Some(bb));
    b.other.set(Some(aa));
 }</code></pre></pre>
-<p>La fuite peut-être mise en évidence grâce à <code>valgrind</code> :</p>
+<p>La fuite peut être mise en évidence grâce à <code>valgrind</code> :</p>
 <pre><code>$ valgrind --leak-check=full target/release/safe-rust-leak 
 ==153637== Memcheck, a memory error detector
 ==153637== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.

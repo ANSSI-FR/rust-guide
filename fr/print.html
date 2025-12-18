@@ -252,9 +252,9 @@ externes.
 Ensuite, les recommandations à propos des constructions du langage
 sont présentées.</p>
 <!-- TODO: Enfin, nous discutons de la bonne utilisation des outils de
-test et de *fuzzing* pour un projet réalisé en Rust.--> 
+test et de *fuzzing* pour un projet réalisé en Rust.-->
 <p>Enfin, nous discutons du bon usage de certaines librairies.</p>
-<p>Il est à noter que la version actuelle du guide ne propose pas de recommandation concernant Rust <em>async</em>.</p>
+<p>Il est à noter qu'à ce jour ce document n'aborde pas le sujet du Rust <em>async</em>.</p>
 <p>Un résumé des règles et recommandations est disponible à la fin de ce guide.</p>
 <h2 id="convention-de-lecture"><a class="header" href="#convention-de-lecture">Convention de lecture</a></h2>
 <p>Pour chacune des recommandations de ce guide, l’utilisation du verbe <em>devoir</em> est volontairement
@@ -395,7 +395,7 @@ forme de sous-commandes.</li>
 L'utilitaire permet de vérifier l'intégrité des dépendances après téléchargement.
 Il utilise pour cela un fichier <code>Cargo.lock</code> qui, s'il est présent au moment de la compilation,
 contraint les sommes de contrôle des dépendances. En cas de différence entre
-les sources téléchargées et le fichier <code>Cargo.lock</code>, un erreur apparaît.</p>
+les sources téléchargées et le fichier <code>Cargo.lock</code>, une erreur apparaît.</p>
 <pre><code>error: checksum for `sha256 v1.6.0` changed between lock files
 
 this could be indicative of a few possible errors:
@@ -416,7 +416,7 @@ est déjà présent, un nouveau fichier est créé avec les dernières versions 
 <div class="warning">
 <p>Des discussions sont en cours pour
 déterminer le meilleur moyen de protéger et de valider les <em>crates</em> lors de leur ajout au projet
-(les téléchargements suivants sont vérifié par le fichier <code>Cargo.lock</code>). Pour le
+(les téléchargements suivants sont vérifiés par le fichier <code>Cargo.lock</code>). Pour le
 moment, la sécurité des premiers téléchargements de <code>cargo</code> repose sur la bonne sécurité du site web
 <a href="https://crates.io">crates.io</a> ainsi que celle du dépôt, hébergé sur GitHub, contenant l'index du
 registre de <em>crates</em>. Pour les cas les plus sensibles, il peut être préférable
@@ -441,7 +441,7 @@ vérifications (par exemple, les
 est utilisé.</p>
 <div class="reco" id="DENV-CARGO-OPTS" type="Règle" title="Conservation des valeurs par défaut des variables critiques dans les profils cargo">
 <p>Les variables <code>debug-assertions</code> et <code>overflow-checks</code> NE DOIVENT PAS être
-modifiées dans les sections de profils de développement (<code>[profile.dev]</code> and
+modifiées dans les sections de profils de développement (<code>[profile.dev]</code> et
 <code>[profile.test]</code>).</p>
 </div>
 <p>Cargo propose d'autres moyens de configuration afin de modifier son comportement
@@ -487,7 +487,7 @@ est possible de lancer la commande suivante :</p>
 <pre><code class="language-shell">$ cargo fix --edition
 </code></pre>
 <p>Rustfix va soit réparer le code afin de le rendre compatible avec Rust 2024,
-ou bien afficher un avertissement décrivant le problème. Le problème devra alors
+soit afficher un avertissement décrivant le problème. Le problème devra alors
 être réparé manuellement. En exécutant la commande (et en réparant
 potentiellement les problèmes manuellement) jusqu'à ce qu'elle n'affiche plus
 aucun avertissement, il est possible de s'assurer que le code est compatible
@@ -536,8 +536,8 @@ portées et de leurs objectifs.</p>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="bibliothèques"><a class="header" href="#bibliothèques">Bibliothèques</a></h1>
 <h2 id="dépôts-de-dépendances"><a class="header" href="#dépôts-de-dépendances">Dépôts de dépendances</a></h2>
-<p>La gestion de bibliothèques externes est intégrée dans l'outils <code>Cargo</code>. Plusieurs moyens existent pour définir la provenance de ces bibliothèques, certains sont donnés dans la suite.</p>
-<p>On rappelle que le traçage exact des versions de ces bibliothèques est une condition important de la bonne sécurité des logiciels écrits en Rust. Ce besoin est matérialisé par la règle <a href="devenv.html#DENV-CARGO-LOCK">DENV-CARGO-LOCK</a>.</p>
+<p>La gestion de bibliothèques externes est intégrée dans l'outil <code>Cargo</code>. Plusieurs moyens existent pour définir la provenance de ces bibliothèques, certains sont donnés dans la suite.</p>
+<p>On rappelle que le traçage exact des versions de ces bibliothèques est une condition importante de la bonne sécurité des logiciels écrits en Rust. Ce besoin est matérialisé par la règle <a href="devenv.html#DENV-CARGO-LOCK">DENV-CARGO-LOCK</a>.</p>
 <h3 id="crates"><a class="header" href="#crates">Crates</a></h3>
 <p>En complément de la bibliothèque standard du langage, l'outil <code>cargo</code> fournit un
 moyen pratique d'intégrer des bibliothèques tierces dans un projet en Rust. Ces
@@ -555,14 +555,14 @@ serde = "1.0.219"
 </code></pre>
 <p>Le dépôt par défaut est <a href="https://crates.io">crates.io</a>. Il est aussi possible d'utiliser <a href="https://doc.rust-lang.org/cargo/reference/registries.html">son propre dépôt</a>.</p>
 <h3 id="dépendances-git"><a class="header" href="#dépendances-git">Dépendances Git</a></h3>
-<p>Chaque dépendance du fichier <code>Cargo.toml</code> peut également faire référence à <a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies-from-git-repositories">un dépôt GIT</a>. Par exemple :</p>
+<p>Chaque dépendance du fichier <code>Cargo.toml</code> peut également faire référence à <a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies-from-git-repositories">un dépôt Git</a>. Par exemple :</p>
 <pre><code class="language-toml">[dependencies]
 regex = { git = "https://github.com/rust-lang/regex.git" }
 </code></pre>
-<p>Il est possible de spécifier plus en détails la version souhaitée en donnant soit une branche, soit un tag, soit un hash de commit.</p>
-<p>Le système de <a href="devenv.html#cargo">verrou des dépendances</a> est opérant même dans le cas d'un dépôt GIT : dans le cas où la dépendance ne spécifie pas un commit en particulier, le commit le plus récent répondant aux critères du fichier <code>Cargo.toml</code> est récupéré au moment de la première compilation et est pérennisé dans le fichier <code>Cargo.lock</code>. Toutes les compilations suivantes utiliseront le même commit (sauf si le ficher <code>Cargo.lock</code> est mis à jour).</p>
+<p>Il est possible de spécifier plus en détail la version souhaitée en donnant soit une branche, soit un tag, soit un hash de commit.</p>
+<p>Le système de <a href="devenv.html#cargo">verrou des dépendances</a> est opérant même dans le cas d'un dépôt Git : dans le cas où la dépendance ne spécifie pas un commit en particulier, le commit le plus récent répondant aux critères du fichier <code>Cargo.toml</code> est récupéré au moment de la première compilation et est pérennisé dans le fichier <code>Cargo.lock</code>. Toutes les compilations suivantes utiliseront le même commit (sauf si le fichier <code>Cargo.lock</code> est mis à jour).</p>
 <h2 id="sécurité-des-dépendances"><a class="header" href="#sécurité-des-dépendances">Sécurité des dépendances</a></h2>
-<p>Quelque soit la méthode de récupération des dépendances (<em>crate</em> ou commit GIT), si elles proviennent d'organisation extérieures, les dépendances doivent faire l'objet d'une validation.</p>
+<p>Quelle que soit la méthode de récupération des dépendances (<em>crate</em> ou commit Git), si elles proviennent d'organisations extérieures, les dépendances doivent faire l'objet d'une validation.</p>
 <div class="reco" id="LIBS-VETTING-DIRECT" type="Règle" title="Validation des dépendances tierces directes">
 <p>Chaque dépendance tierce directe DOIT être dûment validée, et chaque validation DOIT être tracée.</p>
 </div>
@@ -593,7 +593,7 @@ connues dans les dépendances d'un projet.</p>
 </div>
 <!-- ## Code *unsafe* dans les bibliothèques -->
 <!--
-<mark>TODO</mark>: les blocs de code `unsafe` sont discutés dans le chapitre 
+<mark>TODO</mark>: les blocs de code `unsafe` sont discutés dans le chapitre
 suivant. Le développeur a besoin de s'assurer que ces types de blocs ne sont pas
 mal utilisés dans les dépendances de son projet.
 -->
@@ -746,10 +746,10 @@ ou d'instructions qui peuvent échouer en engendrant un <code>panic</code>.</p>
 </ul>
 <div class="warning">
 <p>Dans certains domaines critiques pour la sécurité, il est obligatoire de passer en mode sans échec dès qu'une erreur susceptible d'entraîner un comportement indéfini se produit.
-Dans ces situations, il est judicieux de déclencher délibérément un panic (ou d'interrompre l'exécution) puisque cela permet d'arrêter le système avant que des données ne soient corrompues, ou des défaillances liées à la sureté ou la sécurité ne se propagent.</p>
+Dans ces situations, il est judicieux de déclencher délibérément un panic (ou d'interrompre l'exécution) puisque cela permet d'arrêter le système avant que des données ne soient corrompues, ou des défaillances liées à la sûreté ou la sécurité ne se propagent.</p>
 <p>Pour un avion ou d'autres types de véhicule, ce comportement « fail-fast » peut être crucial : l'unité de contrôle principale doit s'arrêter immédiatement en cas de défaillance grave, puis transférer le contrôle à un sous-système redondant ou de secours capable d'arrêter le véhicule en toute sécurité ou de poursuivre son fonctionnement en mode réduit. Le redémarrage sur un système secondaire fiable garantit que le véhicule reste contrôlable, protège les occupants et évite les conséquences dangereuses qui pourraient résulter de la poursuite de l'exécution dans un état imprévisible.</p>
 </div>
-<p>Dans le cas ou le développement n'est pas soumis à ce type de normes:</p>
+<p>Dans le cas où le développement n'est pas soumis à ce type de normes:</p>
 <div class="reco" id="LANG-NOPANIC" type="Règle" title="Non-utilisation de fonctions qui peuvent causer des `panic`">
 <p>Les fonctions et instructions qui peuvent causer des <code>panic</code> à l'exécution
 NE DOIVENT PAS être utilisées.</p>
@@ -778,7 +778,7 @@ comportement indéfini.</p>
 <ul>
 <li>soit être assuré de ne pas paniquer,</li>
 <li>soit utiliser <code>catch_unwind</code> ou le module <code>std::panic</code> pour s'assurer qu'il
-ne va pas abandonner un traitement puis que l'exécution retourne dans le
+ne va pas abandonner un traitement puis laisser l'exécution retourner dans le
 langage appelant dans un état instable.</li>
 </ul>
 </div>
@@ -831,7 +831,7 @@ On notera les garanties suivantes :</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="rust-unsafe"><a class="header" href="#rust-unsafe">Rust unsafe</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="généralités-sur-lutilisation-de-unsafe"><a class="header" href="#généralités-sur-lutilisation-de-unsafe">Généralités sur l'utilisation de <code>unsafe</code></a></h1>
 <h2 id="comportements-ajoutés-par-rust-unsafe"><a class="header" href="#comportements-ajoutés-par-rust-unsafe">Comportements ajoutés par Rust <em>unsafe</em></a></h2>
-<p>Les capacités du langages peuvent être étendues en utilisant du code <code>unsafe</code>. La liste complète de ces capacités est donnée dans le [manuel de référence de Rust][r-unsafety]. On notera les capacités suivantes :</p>
+<p>Les capacités du langage peuvent être étendues en utilisant du code <code>unsafe</code>. La liste complète de ces capacités est donnée dans le [manuel de référence de Rust][r-unsafety]. On notera les capacités suivantes :</p>
 <ul>
 <li>Déréférencer un <em>raw pointer</em></li>
 <li>Lire ou écrire une variable statique mutable et/ou externe</li>
@@ -839,7 +839,7 @@ On notera les garanties suivantes :</p>
 <li>Implémenter un trait <code>unsafe</code></li>
 <li>Déclarer un bloc <code>extern</code></li>
 </ul>
-<p>D'autres exemples peuvent être trouvé dans le <a href="https://doc.rust-lang.org/nomicon/what-unsafe-does.html">nomicon</a></p>
+<p>D'autres exemples peuvent être trouvés dans le <a href="https://doc.rust-lang.org/nomicon/what-unsafe-does.html">nomicon</a></p>
 <p>Si ces capacités sont nécessaires à la programmation système, elles font perdre au langage ses <a href="unsafe/../guarantees.html#garanties-du-langage">propriétés de sûreté</a>, et permettent l'apparition de comportements indéfinis.</p>
 <div class="reco" id="UNSAFE-NOUB" type="Règle" title="Interdiction des comportements non définis">
 <p>AUCUN comportement indéfini NE DOIT se produire.</p>
@@ -847,7 +847,7 @@ On notera les garanties suivantes :</p>
 <h2 id="un-mot-clé-deux-usages"><a class="header" href="#un-mot-clé-deux-usages">Un mot-clé, deux usages</a></h2>
 <p>Comme décrit dans <a href="unsafe/generalities.html#rust-reference">rust-reference</a>, le mot-clé <code>unsafe</code> a deux usages : le marquage dans une API et le déverrouillage dans une implémentation.</p>
 <h3 id="marquage-unsafe"><a class="header" href="#marquage-unsafe">Marquage <code>unsafe</code></a></h3>
-<p>Le marquage <code>unsafe</code> est une <strong>délégation de responsabilité</strong> sur la sûreté mémoire du programme du programme en développement.</p>
+<p>Le marquage <code>unsafe</code> est une <strong>délégation de responsabilité</strong> sur la sûreté mémoire du programme en développement.</p>
 <p>L'usage de ce mot-clé dans une API <em>met en garde</em> l'utilisateur de l'API contre les potentiels effets néfastes de l'usage de l'API.</p>
 <ul>
 <li>Dans une signature de fonction (<a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.fn">r-unsafe.fn</a>), <code>unsafe</code> signifie que le comportement de la fonction peut conduire à des <em>UB</em> si le contrat d'usage de la fonction (dans sa documentation) n'est pas respecté.</li>
@@ -906,7 +906,7 @@ données ou module) doit être mise en place.</p>
 </ul>
 <p>À l'exception de l'un ou plusieurs de ces cas <code>#![forbid(unsafe_code)]</code> DOIT
 apparaître dans à la racine de la <em>crate</em> (typiquement <code>main.rs</code> ou <code>lib.rs</code>)
-afin de générer des erreurs de compilation dans le cas ou le mot-clé <code>unsafe</code>
+afin de générer des erreurs de compilation dans le cas où le mot-clé <code>unsafe</code>
 est utilisé dans le projet.</p>
 </div>
 <p>En cas d'usage d'<code>unsafe</code>, il est donc de la responsabilité du développeur du programme:</p>
@@ -928,7 +928,7 @@ tout code <code>unsafe</code> DOIT être encapsulé de manière :</p>
 <p>La protection des invariants d'une bibliothèque est primordiale pour se prémunir de
 bugs en général, d'<em>UB</em> en particulier.</p>
 <p>L'exemple qui suit est extrait du <a href="https://doc.rust-lang.org/nomicon/working-with-unsafe.html">Rustonomicon</a>.</p>
-<p>Si l'on souhait réimplémenter le type <code>Vec</code>, on pourrait utiliser le code suivant :</p>
+<p>Si l'on souhaite réimplémenter le type <code>Vec</code>, on pourrait utiliser le code suivant :</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::ptr;
@@ -981,12 +981,12 @@ versions plus anciennes du compilateur).
 -->
 <p>Dans la très grande majorité des cas, en Rust non-<em>unsafe</em>, le compilateur détermine <strong>automatiquement</strong>
 quand il peut libérer la mémoire occupée par une valeur du programme.
-Mais, comme rappelé dans les <a href="unsafe/../guarantees.html#garantie-de-rust">plus tôt dans ce guide</a>, ce n'est pas une garantie : un
-code non-<em>unsafe</em> peut mener à des fuites mémoires. Aussi certaines règles présentées dans
-ce chapitre ne sont pas strictement <em>unsafe</em>. Cependant,</p>
+Mais, comme rappelé <a href="unsafe/../guarantees.html#garantie-de-rust">plus tôt dans ce guide</a>, ce n'est pas une garantie : un
+code non-<em>unsafe</em> peut mener à des fuites mémoires. Aussi, certaines règles présentées dans ce chapitre ne sont pas strictement <em>unsafe</em>.
+Cependant,</p>
 <blockquote>
-<p>même si certaines des fonctions présentées dans la suite ne sont pas <code>unsafe</code>, elle
-elle ne devrait être utilisée qu'en Rust <em>unsafe</em>.</p>
+<p>même si certaines des fonctions présentées dans la suite ne sont pas <code>unsafe</code>,
+elles ne devraient être utilisées qu'en Rust <em>unsafe</em>.</p>
 </blockquote>
 <h2 id="forget-et-fuites-de-mémoire"><a class="header" href="#forget-et-fuites-de-mémoire"><code>forget</code> et fuites de mémoire</a></h2>
 <p>Rust fournit
@@ -1078,7 +1078,7 @@ let raw_ptr = Box::into_raw(boxed);
 let _ = unsafe { Box::from_raw(raw_ptr) }; // will be freed
 <span class="boring">}</span></code></pre></pre>
 </div>
-<p>La réciproque est aussi vrai, c'est à dire que les fonctions <code>from_raw</code> ne
+<p>La réciproque est aussi vraie, c'est-à-dire que les fonctions <code>from_raw</code> ne
 devraient pas être utilisées sur des <em>raw pointers</em> qui ne sont pas issus de la fonction
 <code>into_raw</code> associée. En effet, pour les cas comme <code>Rc</code>, la documentation officielle
 <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html#method.from_raw">limite</a> explicitement ces fonctions
@@ -1134,7 +1134,7 @@ C'est problématique en particulier si l'on considère l'utilisation de <code>Dr
 pour effacer des valeurs sensibles.</p>
 </div>
 <h2 id="cycle-dans-les-références-comptées-rc-et-arc"><a class="header" href="#cycle-dans-les-références-comptées-rc-et-arc">Cycle dans les références comptées (<code>Rc</code> et <code>Arc</code>)</a></h2>
-<p>La <strong>combinaison</strong> de la mutabilité <em><a href="https://doc.rust-lang.org/reference/interior-mutability.html">intérieure</a></em>, des références comptées et des types récursifs n'est pas sûre. En effet, elle peut conduire à fuites mémoire, et donc éventuellement à des attaques par déni de service et en des fuites de secrets.</p>
+<p>La <strong>combinaison</strong> de la mutabilité <em><a href="https://doc.rust-lang.org/reference/interior-mutability.html">intérieure</a></em>, des références comptées et des types récursifs n'est pas sûre. En effet, elle peut conduire à des fuites mémoire, et donc éventuellement à des attaques par déni de service et à des fuites de secrets.</p>
 <p>L'exemple non-<code>unsafe</code> suivant montre, la création d'une fuite mémoire en utilisant la mutabilité intérieure et les références comptées.</p>
 <pre><pre class="playground"><code class="language-rust align bad">use std::{cell::Cell, rc::Rc};
 
@@ -1155,7 +1155,7 @@ fn main() {
    a.other.set(Some(bb));
    b.other.set(Some(aa));
 }</code></pre></pre>
-<p>La fuite peut-être mise en évidence grâce à <code>valgrind</code> :</p>
+<p>La fuite peut être mise en évidence grâce à <code>valgrind</code> :</p>
 <pre><code>$ valgrind --leak-check=full target/release/safe-rust-leak 
 ==153637== Memcheck, a memory error detector
 ==153637== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
@@ -1515,9 +1515,9 @@ liées aux références C++ bien que l'ABI d'une fonction <code>extern "C"</code
 des références soit défini par l'implémentation. Enfin, le code C++ doit être
 vérifié pour éviter toute confusion de pointeurs et de références.</p>
 <p>Les références Rust peuvent être raisonnablement utilisées avec d'autres
-langages compatibles avec le C, incluants les variantes de C qui mettent en
-oeuvre la vérification que les pointeurs sont non nuls, comme du code annoté à
-l'aide Microsoft SAL par exemple.</p>
+langages compatibles avec le C, incluant les variantes de C qui mettent en
+œuvre la vérification que les pointeurs sont non nuls, comme du code annoté à
+l'aide de Microsoft SAL par exemple.</p>
 <div class="reco" id="FFI-NOREF" type="Règle" title="Non-utilisation des types références au profit des types pointeurs à la frontière avec un langage externe">
 <p>Dans un développement sécurisé en Rust, le code Rust de la partie
 <em>bas-niveau</em> de la liaison à une bibliothèque écrite dans un langage externe
@@ -1589,9 +1589,8 @@ comparaison explicite avec la valeur nulle. En raison de la garantie de Rust
 vis-à-vis des optimisations de pointeurs pouvant être nuls, un pointeur nul
 est acceptable du côté C. La valeur C <code>NULL</code> est comprise par Rust comme la
 valeur <code>None</code>, tandis qu'un pointeur non nul est encapsulé dans le
-constructeur <code>Some</code>. Bien qu'ergonomique, cette fonctionnalité ne permet par
-contre pas des validations fortes des valeurs de pointeurs comme
-l'appartenance à une plage d'adresses mémoire valides.</p>
+constructeur <code>Some</code>.
+Bien qu'ergonomique, cette fonctionnalité ne permet pas en revanche des validations fortes des valeurs de pointeurs comme l'appartenance à une plage d'adresses mémoire valides.</p>
 </div>
 <h4 id="pointeurs-de-fonction"><a class="header" href="#pointeurs-de-fonction">Pointeurs de fonction</a></h4>
 <p>Les pointeurs de fonction qui traversent les frontières d'une FFI peuvent mener
@@ -2113,7 +2112,7 @@ automatique une implémentation pour les types composés. Comme rappelé dans
 <ul>
 <li>les pointeurs <code>raw</code>, qui n'implémentent ni <code>Send</code>, ni <code>Sync</code>, puisqu'ils
 n'offrent aucune garantie quant à la sûreté ;</li>
-<li>les références <code>UnsafeCell</code>, qui n'implémentent pas <code>Sync</code> (et par extensions,
+<li>les références <code>UnsafeCell</code>, qui n'implémentent pas <code>Sync</code> (et par extension,
 les références <code>Cell</code> et <code>RefCell</code> non plus), puisqu'elles autorisent la
 mutabilité des valeurs contenues (<em>interior mutability</em>) ;</li>
 <li>les références <code>Rc</code>, qui n'implémentent ni <code>Send</code>, ni <code>Sync</code>, puisque les
@@ -2207,13 +2206,13 @@ implémenté (<code>Eq</code> ne fournit aucune méthode).</p>
 <li><code>a.le(b)</code> ssi <code>a.lt(b) || a.eq(b)</code>.</li>
 <li><code>a.ge(b)</code> ssi <code>a.gt(b) || a.eq(b)</code>.</li>
 </ul>
-<p>Il faut noter qu'en définissant seulement <code>partial_cmp</code>, la consistance
+<p>Il faut noter qu'en définissant seulement <code>partial_cmp</code>, la cohérence
 interne est garantie par les implémentations par défaut de <code>lt</code>, <code>le</code>, <code>gt</code>,
-and <code>ge</code>.</p>
+et <code>ge</code>.</p>
 </li>
 <li>
 <p><em>Antisymétrie</em> : <code>a.lt(b)</code> (respectivement <code>a.gt(b)</code>) implique <code>b.gt(a)</code>
-(respectivement <code>b.lt(b)</code>). Du point de vue du développeur, cela signifie
+(respectivement <code>b.lt(a)</code>). Du point de vue du développeur, cela signifie
 que :</p>
 <ul>
 <li><code>A: PartialOrd&lt;B&gt;</code>.</li>
@@ -2267,7 +2266,7 @@ documentation.</p>
 </div>
 <div class="reco" id="LANG-CMP-DEFAULTS" type="Recommandation" title="Utilisation des implémentations par défaut des traits de comparaison standards">
 <p>Dans un développement sécurisé en Rust, l'implémentation des traits de
-comparaison standard NE DEVRAIT PAS effectuée que par l'implémentation des
+comparaison standard NE DEVRAIT être effectuée que par l'implémentation des
 méthodes ne fournissant pas d'implémentation par défaut, dans le but de
 réduire le risque de violation des invariants associés auxdits traits.</p>
 </div>
@@ -2332,7 +2331,7 @@ standard DEVRAIT être justifiée et documentée.</p>
 certaines opérations lorsque la mémoire associée à une valeur est réclamée.
 <code>Drop</code> est l'équivalent Rust d'un destructeur en C++ ou un finaliseur en Java.</p>
 <div class="note">
-<p>Implémenter ce traits modifie la sémantique d'exécution du langage. En effet,
+<p>Implémenter ce trait modifie la sémantique d'exécution du langage. En effet,
 contrairement au fonctionnement classique des traits <sup class="footnote-reference" id="fr-1-1"><a href="#footnote-1">1</a></sup>, l'exécution d'un même code
 se verra différente avec et sans cette implémentation.</p>
 </div>
@@ -2341,7 +2340,7 @@ Lorsqu'une valeur sort du scope (ou est explicitement relâchée avec
 <code>std::mem::drop</code>), elle est relâchée en deux étapes. La première étape a lieu
 uniquement si le type de la valeur en question implémente le trait <code>Drop</code> et
 consiste en l'appel de la méthode <code>drop</code>. La seconde étape consiste en la
-répétition de processus de <em>drop</em> récursivement sur tous les champs que contient
+répétition du processus de <em>drop</em> récursivement sur tous les champs que contient
 la valeur. Il est à noter que l'implémentation de <code>Drop</code> est
 <em>responsable uniquement de la valeur extérieure</em>.</p>
 <p>Tout d'abord, l'implémentation de <code>Drop</code> ne doit pas être systématique. Elle est
@@ -2359,7 +2358,7 @@ final, il est probable que l'implémentation du trait <code>Drop</code> contienn
 du point de vue du typage, des <code>drop</code>s peuvent tout à fait être manqués.
 Plusieurs situations peuvent mener à manquer des <code>drop</code>s, comme :</p>
 <ul>
-<li>un cycle dans la référence (par exemple avec <code>Rc</code> ou <code>Arc</code>) ;</li>
+<li>un cycle de références (par exemple avec <code>Rc</code> ou <code>Arc</code>) ;</li>
 <li>un appel explicite à <code>std::mem::forget</code> (ou <code>core::mem::forget</code>) (voir
 paragraphe à propos de <a href="unsafe/memory.html#forget-and-memory-leaks"><code>forget</code> et des fuites de mémoire</a>) ;</li>
 <li>un <code>panic</code> dans un <code>drop</code> ;</li>

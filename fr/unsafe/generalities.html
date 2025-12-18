@@ -185,7 +185,7 @@
                     <main>
                         <h1 id="généralités-sur-lutilisation-de-unsafe"><a class="header" href="#généralités-sur-lutilisation-de-unsafe">Généralités sur l'utilisation de <code>unsafe</code></a></h1>
 <h2 id="comportements-ajoutés-par-rust-unsafe"><a class="header" href="#comportements-ajoutés-par-rust-unsafe">Comportements ajoutés par Rust <em>unsafe</em></a></h2>
-<p>Les capacités du langages peuvent être étendues en utilisant du code <code>unsafe</code>. La liste complète de ces capacités est donnée dans le [manuel de référence de Rust][r-unsafety]. On notera les capacités suivantes :</p>
+<p>Les capacités du langage peuvent être étendues en utilisant du code <code>unsafe</code>. La liste complète de ces capacités est donnée dans le [manuel de référence de Rust][r-unsafety]. On notera les capacités suivantes :</p>
 <ul>
 <li>Déréférencer un <em>raw pointer</em></li>
 <li>Lire ou écrire une variable statique mutable et/ou externe</li>
@@ -193,7 +193,7 @@
 <li>Implémenter un trait <code>unsafe</code></li>
 <li>Déclarer un bloc <code>extern</code></li>
 </ul>
-<p>D'autres exemples peuvent être trouvé dans le <a href="https://doc.rust-lang.org/nomicon/what-unsafe-does.html">nomicon</a></p>
+<p>D'autres exemples peuvent être trouvés dans le <a href="https://doc.rust-lang.org/nomicon/what-unsafe-does.html">nomicon</a></p>
 <p>Si ces capacités sont nécessaires à la programmation système, elles font perdre au langage ses <a href="../guarantees.html#garanties-du-langage">propriétés de sûreté</a>, et permettent l'apparition de comportements indéfinis.</p>
 <div class="reco" id="UNSAFE-NOUB" type="Règle" title="Interdiction des comportements non définis">
 <p>AUCUN comportement indéfini NE DOIT se produire.</p>
@@ -201,7 +201,7 @@
 <h2 id="un-mot-clé-deux-usages"><a class="header" href="#un-mot-clé-deux-usages">Un mot-clé, deux usages</a></h2>
 <p>Comme décrit dans <a href="#rust-reference">rust-reference</a>, le mot-clé <code>unsafe</code> a deux usages : le marquage dans une API et le déverrouillage dans une implémentation.</p>
 <h3 id="marquage-unsafe"><a class="header" href="#marquage-unsafe">Marquage <code>unsafe</code></a></h3>
-<p>Le marquage <code>unsafe</code> est une <strong>délégation de responsabilité</strong> sur la sûreté mémoire du programme du programme en développement.</p>
+<p>Le marquage <code>unsafe</code> est une <strong>délégation de responsabilité</strong> sur la sûreté mémoire du programme en développement.</p>
 <p>L'usage de ce mot-clé dans une API <em>met en garde</em> l'utilisateur de l'API contre les potentiels effets néfastes de l'usage de l'API.</p>
 <ul>
 <li>Dans une signature de fonction (<a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.fn">r-unsafe.fn</a>), <code>unsafe</code> signifie que le comportement de la fonction peut conduire à des <em>UB</em> si le contrat d'usage de la fonction (dans sa documentation) n'est pas respecté.</li>
@@ -260,7 +260,7 @@ données ou module) doit être mise en place.</p>
 </ul>
 <p>À l'exception de l'un ou plusieurs de ces cas <code>#![forbid(unsafe_code)]</code> DOIT
 apparaître dans à la racine de la <em>crate</em> (typiquement <code>main.rs</code> ou <code>lib.rs</code>)
-afin de générer des erreurs de compilation dans le cas ou le mot-clé <code>unsafe</code>
+afin de générer des erreurs de compilation dans le cas où le mot-clé <code>unsafe</code>
 est utilisé dans le projet.</p>
 </div>
 <p>En cas d'usage d'<code>unsafe</code>, il est donc de la responsabilité du développeur du programme:</p>
@@ -282,7 +282,7 @@ tout code <code>unsafe</code> DOIT être encapsulé de manière :</p>
 <p>La protection des invariants d'une bibliothèque est primordiale pour se prémunir de
 bugs en général, d'<em>UB</em> en particulier.</p>
 <p>L'exemple qui suit est extrait du <a href="https://doc.rust-lang.org/nomicon/working-with-unsafe.html">Rustonomicon</a>.</p>
-<p>Si l'on souhait réimplémenter le type <code>Vec</code>, on pourrait utiliser le code suivant :</p>
+<p>Si l'on souhaite réimplémenter le type <code>Vec</code>, on pourrait utiliser le code suivant :</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::ptr;

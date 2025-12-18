@@ -294,7 +294,7 @@ forme de sous-commandes.</li>
 L'utilitaire permet de vérifier l'intégrité des dépendances après téléchargement.
 Il utilise pour cela un fichier <code>Cargo.lock</code> qui, s'il est présent au moment de la compilation,
 contraint les sommes de contrôle des dépendances. En cas de différence entre
-les sources téléchargées et le fichier <code>Cargo.lock</code>, un erreur apparaît.</p>
+les sources téléchargées et le fichier <code>Cargo.lock</code>, une erreur apparaît.</p>
 <pre><code>error: checksum for `sha256 v1.6.0` changed between lock files
 
 this could be indicative of a few possible errors:
@@ -315,7 +315,7 @@ est déjà présent, un nouveau fichier est créé avec les dernières versions 
 <div class="warning">
 <p>Des discussions sont en cours pour
 déterminer le meilleur moyen de protéger et de valider les <em>crates</em> lors de leur ajout au projet
-(les téléchargements suivants sont vérifié par le fichier <code>Cargo.lock</code>). Pour le
+(les téléchargements suivants sont vérifiés par le fichier <code>Cargo.lock</code>). Pour le
 moment, la sécurité des premiers téléchargements de <code>cargo</code> repose sur la bonne sécurité du site web
 <a href="https://crates.io">crates.io</a> ainsi que celle du dépôt, hébergé sur GitHub, contenant l'index du
 registre de <em>crates</em>. Pour les cas les plus sensibles, il peut être préférable
@@ -340,7 +340,7 @@ vérifications (par exemple, les
 est utilisé.</p>
 <div class="reco" id="DENV-CARGO-OPTS" type="Règle" title="Conservation des valeurs par défaut des variables critiques dans les profils cargo">
 <p>Les variables <code>debug-assertions</code> et <code>overflow-checks</code> NE DOIVENT PAS être
-modifiées dans les sections de profils de développement (<code>[profile.dev]</code> and
+modifiées dans les sections de profils de développement (<code>[profile.dev]</code> et
 <code>[profile.test]</code>).</p>
 </div>
 <p>Cargo propose d'autres moyens de configuration afin de modifier son comportement
@@ -386,7 +386,7 @@ est possible de lancer la commande suivante :</p>
 <pre><code class="language-shell">$ cargo fix --edition
 </code></pre>
 <p>Rustfix va soit réparer le code afin de le rendre compatible avec Rust 2024,
-ou bien afficher un avertissement décrivant le problème. Le problème devra alors
+soit afficher un avertissement décrivant le problème. Le problème devra alors
 être réparé manuellement. En exécutant la commande (et en réparant
 potentiellement les problèmes manuellement) jusqu'à ce qu'elle n'affiche plus
 aucun avertissement, il est possible de s'assurer que le code est compatible

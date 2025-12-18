@@ -503,9 +503,9 @@ liées aux références C++ bien que l'ABI d'une fonction <code>extern "C"</code
 des références soit défini par l'implémentation. Enfin, le code C++ doit être
 vérifié pour éviter toute confusion de pointeurs et de références.</p>
 <p>Les références Rust peuvent être raisonnablement utilisées avec d'autres
-langages compatibles avec le C, incluants les variantes de C qui mettent en
-oeuvre la vérification que les pointeurs sont non nuls, comme du code annoté à
-l'aide Microsoft SAL par exemple.</p>
+langages compatibles avec le C, incluant les variantes de C qui mettent en
+œuvre la vérification que les pointeurs sont non nuls, comme du code annoté à
+l'aide de Microsoft SAL par exemple.</p>
 <div class="reco" id="FFI-NOREF" type="Règle" title="Non-utilisation des types références au profit des types pointeurs à la frontière avec un langage externe">
 <p>Dans un développement sécurisé en Rust, le code Rust de la partie
 <em>bas-niveau</em> de la liaison à une bibliothèque écrite dans un langage externe
@@ -577,9 +577,8 @@ comparaison explicite avec la valeur nulle. En raison de la garantie de Rust
 vis-à-vis des optimisations de pointeurs pouvant être nuls, un pointeur nul
 est acceptable du côté C. La valeur C <code>NULL</code> est comprise par Rust comme la
 valeur <code>None</code>, tandis qu'un pointeur non nul est encapsulé dans le
-constructeur <code>Some</code>. Bien qu'ergonomique, cette fonctionnalité ne permet par
-contre pas des validations fortes des valeurs de pointeurs comme
-l'appartenance à une plage d'adresses mémoire valides.</p>
+constructeur <code>Some</code>.
+Bien qu'ergonomique, cette fonctionnalité ne permet pas en revanche des validations fortes des valeurs de pointeurs comme l'appartenance à une plage d'adresses mémoire valides.</p>
 </div>
 <h4 id="pointeurs-de-fonction"><a class="header" href="#pointeurs-de-fonction">Pointeurs de fonction</a></h4>
 <p>Les pointeurs de fonction qui traversent les frontières d'une FFI peuvent mener

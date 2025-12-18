@@ -185,8 +185,8 @@
                     <main>
                         <h1 id="bibliothèques"><a class="header" href="#bibliothèques">Bibliothèques</a></h1>
 <h2 id="dépôts-de-dépendances"><a class="header" href="#dépôts-de-dépendances">Dépôts de dépendances</a></h2>
-<p>La gestion de bibliothèques externes est intégrée dans l'outils <code>Cargo</code>. Plusieurs moyens existent pour définir la provenance de ces bibliothèques, certains sont donnés dans la suite.</p>
-<p>On rappelle que le traçage exact des versions de ces bibliothèques est une condition important de la bonne sécurité des logiciels écrits en Rust. Ce besoin est matérialisé par la règle <a href="devenv.html#DENV-CARGO-LOCK">DENV-CARGO-LOCK</a>.</p>
+<p>La gestion de bibliothèques externes est intégrée dans l'outil <code>Cargo</code>. Plusieurs moyens existent pour définir la provenance de ces bibliothèques, certains sont donnés dans la suite.</p>
+<p>On rappelle que le traçage exact des versions de ces bibliothèques est une condition importante de la bonne sécurité des logiciels écrits en Rust. Ce besoin est matérialisé par la règle <a href="devenv.html#DENV-CARGO-LOCK">DENV-CARGO-LOCK</a>.</p>
 <h3 id="crates"><a class="header" href="#crates">Crates</a></h3>
 <p>En complément de la bibliothèque standard du langage, l'outil <code>cargo</code> fournit un
 moyen pratique d'intégrer des bibliothèques tierces dans un projet en Rust. Ces
@@ -204,14 +204,14 @@ serde = "1.0.219"
 </code></pre>
 <p>Le dépôt par défaut est <a href="https://crates.io">crates.io</a>. Il est aussi possible d'utiliser <a href="https://doc.rust-lang.org/cargo/reference/registries.html">son propre dépôt</a>.</p>
 <h3 id="dépendances-git"><a class="header" href="#dépendances-git">Dépendances Git</a></h3>
-<p>Chaque dépendance du fichier <code>Cargo.toml</code> peut également faire référence à <a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies-from-git-repositories">un dépôt GIT</a>. Par exemple :</p>
+<p>Chaque dépendance du fichier <code>Cargo.toml</code> peut également faire référence à <a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies-from-git-repositories">un dépôt Git</a>. Par exemple :</p>
 <pre><code class="language-toml">[dependencies]
 regex = { git = "https://github.com/rust-lang/regex.git" }
 </code></pre>
-<p>Il est possible de spécifier plus en détails la version souhaitée en donnant soit une branche, soit un tag, soit un hash de commit.</p>
-<p>Le système de <a href="devenv.html#cargo">verrou des dépendances</a> est opérant même dans le cas d'un dépôt GIT : dans le cas où la dépendance ne spécifie pas un commit en particulier, le commit le plus récent répondant aux critères du fichier <code>Cargo.toml</code> est récupéré au moment de la première compilation et est pérennisé dans le fichier <code>Cargo.lock</code>. Toutes les compilations suivantes utiliseront le même commit (sauf si le ficher <code>Cargo.lock</code> est mis à jour).</p>
+<p>Il est possible de spécifier plus en détail la version souhaitée en donnant soit une branche, soit un tag, soit un hash de commit.</p>
+<p>Le système de <a href="devenv.html#cargo">verrou des dépendances</a> est opérant même dans le cas d'un dépôt Git : dans le cas où la dépendance ne spécifie pas un commit en particulier, le commit le plus récent répondant aux critères du fichier <code>Cargo.toml</code> est récupéré au moment de la première compilation et est pérennisé dans le fichier <code>Cargo.lock</code>. Toutes les compilations suivantes utiliseront le même commit (sauf si le fichier <code>Cargo.lock</code> est mis à jour).</p>
 <h2 id="sécurité-des-dépendances"><a class="header" href="#sécurité-des-dépendances">Sécurité des dépendances</a></h2>
-<p>Quelque soit la méthode de récupération des dépendances (<em>crate</em> ou commit GIT), si elles proviennent d'organisation extérieures, les dépendances doivent faire l'objet d'une validation.</p>
+<p>Quelle que soit la méthode de récupération des dépendances (<em>crate</em> ou commit Git), si elles proviennent d'organisations extérieures, les dépendances doivent faire l'objet d'une validation.</p>
 <div class="reco" id="LIBS-VETTING-DIRECT" type="Règle" title="Validation des dépendances tierces directes">
 <p>Chaque dépendance tierce directe DOIT être dûment validée, et chaque validation DOIT être tracée.</p>
 </div>
@@ -242,7 +242,7 @@ connues dans les dépendances d'un projet.</p>
 </div>
 <!-- ## Code *unsafe* dans les bibliothèques -->
 <!--
-<mark>TODO</mark>: les blocs de code `unsafe` sont discutés dans le chapitre 
+<mark>TODO</mark>: les blocs de code `unsafe` sont discutés dans le chapitre
 suivant. Le développeur a besoin de s'assurer que ces types de blocs ne sont pas
 mal utilisés dans les dépendances de son projet.
 -->

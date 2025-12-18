@@ -207,7 +207,7 @@ automatique une implémentation pour les types composés. Comme rappelé dans
 <ul>
 <li>les pointeurs <code>raw</code>, qui n'implémentent ni <code>Send</code>, ni <code>Sync</code>, puisqu'ils
 n'offrent aucune garantie quant à la sûreté ;</li>
-<li>les références <code>UnsafeCell</code>, qui n'implémentent pas <code>Sync</code> (et par extensions,
+<li>les références <code>UnsafeCell</code>, qui n'implémentent pas <code>Sync</code> (et par extension,
 les références <code>Cell</code> et <code>RefCell</code> non plus), puisqu'elles autorisent la
 mutabilité des valeurs contenues (<em>interior mutability</em>) ;</li>
 <li>les références <code>Rc</code>, qui n'implémentent ni <code>Send</code>, ni <code>Sync</code>, puisque les
@@ -301,13 +301,13 @@ implémenté (<code>Eq</code> ne fournit aucune méthode).</p>
 <li><code>a.le(b)</code> ssi <code>a.lt(b) || a.eq(b)</code>.</li>
 <li><code>a.ge(b)</code> ssi <code>a.gt(b) || a.eq(b)</code>.</li>
 </ul>
-<p>Il faut noter qu'en définissant seulement <code>partial_cmp</code>, la consistance
+<p>Il faut noter qu'en définissant seulement <code>partial_cmp</code>, la cohérence
 interne est garantie par les implémentations par défaut de <code>lt</code>, <code>le</code>, <code>gt</code>,
-and <code>ge</code>.</p>
+et <code>ge</code>.</p>
 </li>
 <li>
 <p><em>Antisymétrie</em> : <code>a.lt(b)</code> (respectivement <code>a.gt(b)</code>) implique <code>b.gt(a)</code>
-(respectivement <code>b.lt(b)</code>). Du point de vue du développeur, cela signifie
+(respectivement <code>b.lt(a)</code>). Du point de vue du développeur, cela signifie
 que :</p>
 <ul>
 <li><code>A: PartialOrd&lt;B&gt;</code>.</li>
@@ -361,7 +361,7 @@ documentation.</p>
 </div>
 <div class="reco" id="LANG-CMP-DEFAULTS" type="Recommandation" title="Utilisation des implémentations par défaut des traits de comparaison standards">
 <p>Dans un développement sécurisé en Rust, l'implémentation des traits de
-comparaison standard NE DEVRAIT PAS effectuée que par l'implémentation des
+comparaison standard NE DEVRAIT être effectuée que par l'implémentation des
 méthodes ne fournissant pas d'implémentation par défaut, dans le but de
 réduire le risque de violation des invariants associés auxdits traits.</p>
 </div>
@@ -426,7 +426,7 @@ standard DEVRAIT être justifiée et documentée.</p>
 certaines opérations lorsque la mémoire associée à une valeur est réclamée.
 <code>Drop</code> est l'équivalent Rust d'un destructeur en C++ ou un finaliseur en Java.</p>
 <div class="note">
-<p>Implémenter ce traits modifie la sémantique d'exécution du langage. En effet,
+<p>Implémenter ce trait modifie la sémantique d'exécution du langage. En effet,
 contrairement au fonctionnement classique des traits <sup class="footnote-reference" id="fr-1-1"><a href="#footnote-1">1</a></sup>, l'exécution d'un même code
 se verra différente avec et sans cette implémentation.</p>
 </div>
@@ -435,7 +435,7 @@ Lorsqu'une valeur sort du scope (ou est explicitement relâchée avec
 <code>std::mem::drop</code>), elle est relâchée en deux étapes. La première étape a lieu
 uniquement si le type de la valeur en question implémente le trait <code>Drop</code> et
 consiste en l'appel de la méthode <code>drop</code>. La seconde étape consiste en la
-répétition de processus de <em>drop</em> récursivement sur tous les champs que contient
+répétition du processus de <em>drop</em> récursivement sur tous les champs que contient
 la valeur. Il est à noter que l'implémentation de <code>Drop</code> est
 <em>responsable uniquement de la valeur extérieure</em>.</p>
 <p>Tout d'abord, l'implémentation de <code>Drop</code> ne doit pas être systématique. Elle est
@@ -453,7 +453,7 @@ final, il est probable que l'implémentation du trait <code>Drop</code> contienn
 du point de vue du typage, des <code>drop</code>s peuvent tout à fait être manqués.
 Plusieurs situations peuvent mener à manquer des <code>drop</code>s, comme :</p>
 <ul>
-<li>un cycle dans la référence (par exemple avec <code>Rc</code> ou <code>Arc</code>) ;</li>
+<li>un cycle de références (par exemple avec <code>Rc</code> ou <code>Arc</code>) ;</li>
 <li>un appel explicite à <code>std::mem::forget</code> (ou <code>core::mem::forget</code>) (voir
 paragraphe à propos de <a href="unsafe/memory.html#forget-and-memory-leaks"><code>forget</code> et des fuites de mémoire</a>) ;</li>
 <li>un <code>panic</code> dans un <code>drop</code> ;</li>
