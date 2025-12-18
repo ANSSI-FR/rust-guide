@@ -23,13 +23,13 @@ references:
 
 [Rustup] is the Rust toolchain installer. Among other things, it enables
 switching between different flavors of the toolchain (stable, beta, nightly),
-managing additional components installation and keeping them up to date.
+managing the installation of additional components and keeping them up to date.
 
 <div class="warning">
 
 From a security perspective, `rustup` does perform all downloads over HTTPS,
 but does not yet validate signatures of downloads. Protection against
-downgrade attacks, certificate pinning, validation of signatures are still
+downgrade attacks, certificate pinning, and validation of signatures are still
 works in progress.
 In some cases, it may be preferable to opt for an alternative installation
 method listed in the *Install* section of the official Rust website.
@@ -156,10 +156,10 @@ It has a fundamental role in most Rust developments:
 - It’s also a front-end to run complementary tools such as those that are
   described below, in the form of sub-commands.
 
-Cargo enables automatic dependencies resolution before compilation 
+Cargo enables automatic dependency resolution before compilation 
 by checking their checksums.
-File `Cargo.lock` contains all dependencies checksums which are compared to
-the one downloaded.
+The `Cargo.lock` file contains the checksums of all dependencies, which are compared to
+the ones downloaded.
 If a difference is detected, compilation fails:
 
 ```
@@ -181,14 +181,14 @@ the file is overwritten with the latest available version of every crate.
 
 <div class="reco" id="DENV-CARGO-LOCK" type="Rule" title="Track Cargo.lock in version control system">
 
-`Cargo.lock` files MUST be tracked by version control system.
+`Cargo.lock` files MUST be tracked by a version control system.
 
 </div>
 
 <div class="warning">
 
 Ongoing discussions occur on how to best protect
-and verify crates *on their first download* (according TOFU rule).
+and verify crates *on their first download* (according to the TOFU rule).
 For now, the security of the first download relies on the good security of the
 website [crates.io] and the GitHub hosted repository containing the
 registry index. In some cases, it may be preferable to opt for an alternative
@@ -219,7 +219,7 @@ in development profiles' sections (`[profile.dev]` and `[profile.test]`).
 
 </div>
 
-Cargo proposes other ways to setup its configuration and change its behavior on
+Cargo proposes other ways to set up its configuration and change its behavior on
 a given system. This can be very useful, but it may also be difficult to know
 and remember at a given time all the options that are effectively used, and
 in particular passed to the compiler. At the end, this can affect the confidence
@@ -232,7 +232,7 @@ to use the Cargo build scripts feature.
 <div class="reco" id="DENV-CARGO-ENVVARS" type="Rule" title="Keep default values for compiler environment variables when running cargo">
 
 The environment variables `RUSTC`, `RUSTC_WRAPPER` and `RUSTFLAGS` MUST NOT
-be overriden when using Cargo to build the project.
+be overridden when using Cargo to build the project.
 
 </div>
 
@@ -268,7 +268,7 @@ guidelines.
 
 ### Cargo fix
 
-The `cargo fix` command is a tool dedicated in
+The `cargo fix` command is a tool dedicated to
 fixing compiler warnings as well as easing transitions between editions.
 
 ```shell
@@ -313,7 +313,7 @@ detect. The warnings should be re-checked by the programmer before committing
 the fix that is suggested by `clippy`, especially in the case of lints of the
 category `clippy::nursery` since those hints are still under development.
 
-`clippy` now has similar `fix` tool as `rustfix`
+`clippy` now has a `fix` tool similar to `cargo fix`.
 
 [clippy]: https://github.com/rust-lang/rust-clippy
 

@@ -8,4 +8,4 @@
 
 ### cargo-fuzz
 
-<mark>TODO</mark>: good practices in fuzzing programs or part of programs.
+<mark>TODO</mark>: good practices in fuzzing programs or parts of programs.

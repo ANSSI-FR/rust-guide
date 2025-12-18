@@ -9,11 +9,11 @@ It is important to note that accurately tracking the versions of these libraries
 ### Crates
 
 In addition to the standard library, Rust provides an easy way to import other
-libraries in a project, thanks to `cargo`. The libraries, known as *crates* in
-the Rust ecosystem, are imported from an open-source components central
-repository.
+libraries in a project, thanks to `cargo`.
+The libraries, known as *crates* in the Rust ecosystem, are imported from a central repository of open-source
+components.
 
-An example of dependency declaration in the `Cargo.toml` file:
+An example of a dependency declaration in the `Cargo.toml` file:
 
 ```toml
 [dependencies]
@@ -63,15 +63,15 @@ Each third-party dependency SHOULD be properly validated, and each validation SH
 
 ### Cargo-outdated
 
-[Cargo-outdated] tool allows one to easily manage dependencies' versions.
+[cargo-outdated] tool allows one to easily manage dependency versions.
 
-For a given crate, it lists current dependencies' versions (using its
+For a given crate, it lists the current versions of dependencies (using
 `Cargo.toml`), and checks the latest compatible version and also the latest general
 version.
 
-<div class="reco" id="LIBS-OUTDATED" type="Rule" title="Check for outdated dependencies versions (cargo-outdated)">
+<div class="reco" id="LIBS-OUTDATED" type="Rule" title="Check for outdated dependencies (cargo-outdated)">
 
-The `cargo-outdated` tool MUST be used to check dependencies' status. Then,
+The `cargo-outdated` tool MUST be used to check the status of dependencies. Then,
 each outdated dependency SHOULD be updated or the choice of the version MUST be
 justified.
 
@@ -84,7 +84,7 @@ justified.
 [Cargo-audit] tool allows one to easily check for security vulnerabilities
 reported to the RustSec Advisory Database.
 
-<div class="reco" id="LIBS-AUDIT" type="Rule" title="Check for security vulnerabilities report on dependencies (cargo-audit)">
+<div class="reco" id="LIBS-AUDIT" type="Rule" title="Check for security vulnerability reports on dependencies (cargo-audit)">
 
 The `cargo-audit` tool MUST be used to check for known vulnerabilities in
 dependencies.

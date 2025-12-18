@@ -40,7 +40,7 @@ Besides, static typing discipline, type inference, and ad hoc polymorphism (in
 the form of traits) are other ways Rust provides to build libraries and programs
 in a safe manner.
 
-Finally, the toolchain (rustup, cargo) greatly facilitate the use of Rust by simplifying
+Finally, the toolchain (rustup, cargo) greatly facilitates the use of Rust by simplifying
 the configuration of the software construction, while giving priority to good compilation
 safety practices.
 
@@ -94,7 +94,7 @@ Then, recommendations about the Rust language constructs are presented.
 tests for a project in Rust, and for using Rust fuzzing tools.-->
 We finally introduce some recommendations for established Rust libraries.
 
-Note that *async* Rust is currently eluded from recommendations list.
+Note that *async* Rust is currently not addressed in this document.
 
 A summary of recommendations presented throughout the document is listed at the
 end of this guide.

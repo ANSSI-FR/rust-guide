@@ -92,7 +92,7 @@ Stack unwinding from Rust code into foreign code results in undefined behavior.
 Rust code called from FFI MUST either:
 
 * ensure the function cannot panic,
-* use `catch_unwind` or the `std::panic` module to ensure the rust code will not
+* use `catch_unwind` or the `std::panic` module to ensure the Rust code will not
 abort or return in an unstable state.
 
 </div>
