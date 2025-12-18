@@ -198,7 +198,7 @@ program parts in the same vein as in functional programming languages.
 Besides, static typing discipline, type inference, and ad hoc polymorphism (in
 the form of traits) are other ways Rust provides to build libraries and programs
 in a safe manner.</p>
-<p>Finally, the toolchain (rustup, cargo) greatly facilitate the use of Rust by simplifying
+<p>Finally, the toolchain (rustup, cargo) greatly facilitates the use of Rust by simplifying
 the configuration of the software construction, while giving priority to good compilation
 safety practices.</p>
 <p>Nevertheless, due to its versatility, the language possibly offers some
@@ -236,13 +236,13 @@ propositions (<em>pull requests</em>) or in the form of suggestions and discussi
 <p>This document considers separately different phases of a typical (and simplified)
 development process.
 Firstly, we provide some advice on how to take advantage of using tools of the
-Rust ecosystem for secure development, and other advices on precautions to take when choosing and using
+Rust ecosystem for secure development, and other advice on precautions to take when choosing and using
 external libraries.
 Then, recommendations about the Rust language constructs are presented.</p>
-<!-- TODO: Finally, we introduce advices for writing
+<!-- TODO: Finally, we introduce advice for writing
 tests for a project in Rust, and for using Rust fuzzing tools.-->
-<p>We finally introduce some recommendation for established Rust libraries.</p>
-<p>Note that <em>async</em> Rust is currently eluded from recommendations list.</p>
+<p>We finally introduce some recommendations for established Rust libraries.</p>
+<p>Note that <em>async</em> Rust is currently not addressed in this document.</p>
 <p>A summary of recommendations presented throughout the document is listed at the
 end of this guide.</p>
 <h2 id="notations"><a class="header" href="#notations">Notations</a></h2>
@@ -275,11 +275,11 @@ described in this document must be periodically reassessed.</p>
 <h2 id="rustup"><a class="header" href="#rustup">Rustup</a></h2>
 <p><a href="https://github.com/rust-lang/rustup.rs">Rustup</a> is the Rust toolchain installer. Among other things, it enables
 switching between different flavors of the toolchain (stable, beta, nightly),
-managing additional components installation and keeping them up to date.</p>
+managing the installation of additional components and keeping them up to date.</p>
 <div class="warning">
 <p>From a security perspective, <code>rustup</code> does perform all downloads over HTTPS,
 but does not yet validate signatures of downloads. Protection against
-downgrade attacks, certificate pinning, validation of signatures are still
+downgrade attacks, certificate pinning, and validation of signatures are still
 works in progress.
 In some cases, it may be preferable to opt for an alternative installation
 method listed in the <em>Install</em> section of the official Rust website.</p>
@@ -344,7 +344,7 @@ $
 <h4 id="tier-1---guaranteed-to-work"><a class="header" href="#tier-1---guaranteed-to-work">Tier 1 - guaranteed to work</a></h4>
 <p>The target is fully vetted by the community. It passes the entire test suite, receives regular regression testing, and is kept up‑to‑date with new releases. In practice, you can rely on consistent code generation, stable ABI, and predictable performance. Tier 1 targets can be thought of as "guaranteed to work".</p>
 <h4 id="tier-2---guaranteed-to-build"><a class="header" href="#tier-2---guaranteed-to-build">Tier 2 - guaranteed to build</a></h4>
-<p>The target’s source code compiles cleanly, but it does not receive the same level of testing or maintenance as Tier 1. It may lack full coverage in the test suite, and certain optimizations or newer LLVM features could be missing or unstable. Users can still generate code for these backends, but they should expect occasional breakage or the need for manual patches. Tier 1 targets can be thought of as "guaranteed to build" but not as "guaranteed to work".</p>
+<p>The target’s source code compiles cleanly, but it does not receive the same level of testing or maintenance as Tier 1. It may lack full coverage in the test suite, and certain optimizations or newer LLVM features could be missing or unstable. Users can still generate code for these backends, but they should expect occasional breakage or the need for manual patches. Tier 2 targets can be thought of as "guaranteed to build" but not as "guaranteed to work".</p>
 <h4 id="tier-3"><a class="header" href="#tier-3">Tier 3</a></h4>
 <p>Tier 3 targets are simply not officially supported.</p>
 <p>The tier distinction helps developers choose a target that matches their risk tolerance: Tier 1 for production‑grade workloads, Tier 2 for experimental or niche architectures where full support isn’t yet met.</p>
@@ -366,10 +366,10 @@ It has a fundamental role in most Rust developments:</p>
 <li>It’s also a front-end to run complementary tools such as those that are
 described below, in the form of sub-commands.</li>
 </ul>
-<p>Cargo enables automatic dependencies resolution before compilation
+<p>Cargo enables automatic dependency resolution before compilation
 by checking their checksums.
-File <code>Cargo.lock</code> contains all dependencies checksums which are compared to
-the one downloaded.
+The <code>Cargo.lock</code> file contains the checksums of all dependencies, which are compared to
+the ones downloaded.
 If a difference is detected, compilation fails:</p>
 <pre><code>error: checksum for `sha256 v1.6.0` changed between lock files
 
@@ -386,11 +386,11 @@ dependencies' checksums, adhering to a TOFU (<em>Trust On First Use</em>) policy
 This file can also be created manually with <code>cargo generate-lockfile</code>. If it already exists,
 the file is overwritten with the latest available version of every crate.</p>
 <div class="reco" id="DENV-CARGO-LOCK" type="Rule" title="Track Cargo.lock in version control system">
-<p><code>Cargo.lock</code> files MUST be tracked by version control system.</p>
+<p><code>Cargo.lock</code> files MUST be tracked by a version control system.</p>
 </div>
 <div class="warning">
 <p>Ongoing discussions occur on how to best protect
-and verify crates <em>on their first download</em> (according TOFU rule).
+and verify crates <em>on their first download</em> (according to the TOFU rule).
 For now, the security of the first download relies on the good security of the
 website <a href="https://crates.io">crates.io</a> and the GitHub hosted repository containing the
 registry index. In some cases, it may be preferable to opt for an alternative
@@ -414,7 +414,7 @@ using the debug profile that normally enables runtime checks (for example it doe
 <p>The variables <code>debug-assertions</code> and <code>overflow-checks</code> MUST NOT be overridden
 in development profiles' sections (<code>[profile.dev]</code> and <code>[profile.test]</code>).</p>
 </div>
-<p>Cargo proposes other ways to setup its configuration and change its behavior on
+<p>Cargo proposes other ways to set up its configuration and change its behavior on
 a given system. This can be very useful, but it may also be difficult to know
 and remember at a given time all the options that are effectively used, and
 in particular passed to the compiler. At the end, this can affect the confidence
@@ -425,7 +425,7 @@ part of the code or to run external tools before Rust compilation, it is prefera
 to use the Cargo build scripts feature.</p>
 <div class="reco" id="DENV-CARGO-ENVVARS" type="Rule" title="Keep default values for compiler environment variables when running cargo">
 <p>The environment variables <code>RUSTC</code>, <code>RUSTC_WRAPPER</code> and <code>RUSTFLAGS</code> MUST NOT
-be overriden when using Cargo to build the project.</p>
+be overridden when using Cargo to build the project.</p>
 </div>
 <h3 id="rustfmt"><a class="header" href="#rustfmt">Rustfmt</a></h3>
 <p>Included with Rust, <a href="https://github.com/rust-lang/rustfmt">Rustfmt</a> is a tool that formats your code according to style guidelines.</p>
@@ -444,7 +444,7 @@ at the <a href="devenv.html#rust-style">rust-style</a>.</p>
 guidelines.</p>
 </div>
 <h3 id="cargo-fix"><a class="header" href="#cargo-fix">Cargo fix</a></h3>
-<p>The <code>cargo fix</code> command is a tool dedicated in
+<p>The <code>cargo fix</code> command is a tool dedicated to
 fixing compiler warnings as well as easing transitions between editions.</p>
 <pre><code class="language-shell">$ cargo fix
 </code></pre>
@@ -473,7 +473,7 @@ as a project dependency.</p>
 detect. The warnings should be re-checked by the programmer before committing
 the fix that is suggested by <code>clippy</code>, especially in the case of lints of the
 category <code>clippy::nursery</code> since those hints are still under development.</p>
-<p><code>clippy</code> now has similar <code>fix</code> tool as <code>rustfix</code></p>
+<p><code>clippy</code> now has a <code>fix</code> tool similar to <code>cargo fix</code>.</p>
 <div class="reco" id="DENV-LINTER" type="Rule" title="Use linter regularly">
 <p>A linter, such as <code>clippy</code>, MUST be used regularly during the development of
 a secure application.</p>
@@ -500,10 +500,10 @@ chapters, according to their goals.</p>
 <p>It is important to note that accurately tracking the versions of these libraries is a critical condition for the security of software written in Rust. This requirement is embodied in the rule <a href="devenv.html#DENV-CARGO-LOCK">DENV-CARGO-LOCK</a>.</p>
 <h3 id="crates"><a class="header" href="#crates">Crates</a></h3>
 <p>In addition to the standard library, Rust provides an easy way to import other
-libraries in a project, thanks to <code>cargo</code>. The libraries, known as <em>crates</em> in
-the Rust ecosystem, are imported from an open-source components central
-repository.</p>
-<p>An example of dependency declaration in the <code>Cargo.toml</code> file:</p>
+libraries in a project, thanks to <code>cargo</code>.
+The libraries, known as <em>crates</em> in the Rust ecosystem, are imported from a central repository of open-source
+components.</p>
+<p>An example of a dependency declaration in the <code>Cargo.toml</code> file:</p>
 <pre><code class="language-toml">[dependencies]
 mdbook = { version = "0.4.52" }
 anyhow = "1.0.99"
@@ -532,19 +532,19 @@ regex = { git = "https://github.com/rust-lang/regex.git" }
 </div>
 <h2 id="dependency-validation-tools"><a class="header" href="#dependency-validation-tools">Dependency validation tools</a></h2>
 <h3 id="cargo-outdated"><a class="header" href="#cargo-outdated">Cargo-outdated</a></h3>
-<p><a href="https://github.com/kbknapp/cargo-outdated">Cargo-outdated</a> tool allows one to easily manage dependencies' versions.</p>
-<p>For a given crate, it lists current dependencies' versions (using its
+<p><a href="https://github.com/kbknapp/cargo-outdated">cargo-outdated</a> tool allows one to easily manage dependency versions.</p>
+<p>For a given crate, it lists the current versions of dependencies (using
 <code>Cargo.toml</code>), and checks the latest compatible version and also the latest general
 version.</p>
-<div class="reco" id="LIBS-OUTDATED" type="Rule" title="Check for outdated dependencies versions (cargo-outdated)">
-<p>The <code>cargo-outdated</code> tool MUST be used to check dependencies' status. Then,
+<div class="reco" id="LIBS-OUTDATED" type="Rule" title="Check for outdated dependencies (cargo-outdated)">
+<p>The <code>cargo-outdated</code> tool MUST be used to check the status of dependencies. Then,
 each outdated dependency SHOULD be updated or the choice of the version MUST be
 justified.</p>
 </div>
 <h3 id="cargo-audit"><a class="header" href="#cargo-audit">Cargo-audit</a></h3>
 <p><a href="https://github.com/RustSec/cargo-audit">Cargo-audit</a> tool allows one to easily check for security vulnerabilities
 reported to the RustSec Advisory Database.</p>
-<div class="reco" id="LIBS-AUDIT" type="Rule" title="Check for security vulnerabilities report on dependencies (cargo-audit)">
+<div class="reco" id="LIBS-AUDIT" type="Rule" title="Check for security vulnerability reports on dependencies (cargo-audit)">
 <p>The <code>cargo-audit</code> tool MUST be used to check for known vulnerabilities in
 dependencies.</p>
 </div>
@@ -697,7 +697,7 @@ fail and cause the code to panic.</p>
 <div class="warning">
 <p>In certain safety‑critical domains, it is mandatory to transition to a safe‑mode state whenever an error occurs that could otherwise lead to undefined behavior.
 In these situations, deliberately triggering a panic (or aborting execution) makes sense because it stops the system before corrupted data or safety and security‑related faults can propagate.</p>
-<p>For a plane or other vehicles, this “fail‑fast” behavior can be crucial: the primary control unit must halt immediately on a serious fault, then hand over control to a redundant or backup subsystem that can bring the vehicule to a safe stop or continue operation in a reduced‑capability mode. Restarting on a trusted secondary system ensures that the plane remains controllable, protects occupants, and prevents hazardous outcomes that could arise from continuing execution in an unpredictable state.</p>
+<p>For a plane or other vehicles, this “fail‑fast” behavior can be crucial: the primary control unit must halt immediately on a serious fault, then hand over control to a redundant or backup subsystem that can bring the vehicle to a safe stop or continue operation in a reduced‑capability mode. Restarting on a trusted secondary system ensures that the plane remains controllable, protects occupants, and prevents hazardous outcomes that could arise from continuing execution in an unpredictable state.</p>
 </div>
 <p>In other cases where the development is not subject to this type of standard:</p>
 <div class="reco" id="LANG-NOPANIC" type="Rule" title="Don't use functions that can cause `panic!`">
@@ -725,7 +725,7 @@ Stack unwinding from Rust code into foreign code results in undefined behavior.<
 <p>Rust code called from FFI MUST either:</p>
 <ul>
 <li>ensure the function cannot panic,</li>
-<li>use <code>catch_unwind</code> or the <code>std::panic</code> module to ensure the rust code will not
+<li>use <code>catch_unwind</code> or the <code>std::panic</code> module to ensure the Rust code will not
 abort or return in an unstable state.</li>
 </ul>
 </div>
@@ -765,7 +765,7 @@ the process.</p>
 <li><a id="rust-reference"></a> <em><a href="https://doc.rust-lang.org/stable/reference/">The Rust Reference</a></em> (rust-reference)</li>
 <li><a id="nomicon"></a> <em><a href="https://doc.rust-lang.org/stable/nomicon/">The Rustonomicon</a></em> (nomicon)</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="rust-unsafe"><a class="header" href="#rust-unsafe">Rust unsafe</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="unsafe-rust"><a class="header" href="#unsafe-rust">Unsafe Rust</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="general-information-on-unsafe"><a class="header" href="#general-information-on-unsafe">General information on <code>unsafe</code></a></h1>
 <h2 id="unsafe-operations"><a class="header" href="#unsafe-operations"><em>Unsafe</em> operations</a></h2>
 <p>Language capabilities can be extended using unsafe code. The full list of these features is given in the <a href="https://doc.rust-lang.org/reference/unsafety.html">Rust reference</a>. Notice the following ones.</p>
@@ -2040,7 +2040,7 @@ guaranteed by the default implementation of <code>lt</code>, <code>le</code>, <c
 </li>
 <li>
 <p><em>Antisymmetry</em>: <code>a.lt(b)</code> (respectively <code>a.gt(b)</code>) implies <code>b.gt(a)</code>
-(respectively, <code>b.lt(b)</code>). From the developer's standpoint, it also means:</p>
+(respectively, <code>b.lt(a)</code>). From the developer's standpoint, it also means:</p>
 <ul>
 <li><code>A: PartialOrd&lt;B&gt;</code>,</li>
 <li><code>B: PartialOrd&lt;A&gt;</code>,</li>
@@ -2293,9 +2293,9 @@ Rule - Validation of Direct Third-Party Dependencies (<a href="libraries.html#LI
 <li><input disabled="" type="checkbox"/>
 Recommendation - Validation of Transitive Third-Party Dependencies (<a href="libraries.html#LIBS-VETTING-TRANSITIVE">LIBS-VETTING-TRANSITIVE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Rule - Check for outdated dependencies versions (cargo-outdated) (<a href="libraries.html#LIBS-OUTDATED">LIBS-OUTDATED</a>)</li>
+Rule - Check for outdated dependencies (cargo-outdated) (<a href="libraries.html#LIBS-OUTDATED">LIBS-OUTDATED</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Rule - Check for security vulnerabilities report on dependencies (cargo-audit) (<a href="libraries.html#LIBS-AUDIT">LIBS-AUDIT</a>)</li>
+Rule - Check for security vulnerability reports on dependencies (cargo-audit) (<a href="libraries.html#LIBS-AUDIT">LIBS-AUDIT</a>)</li>
 </ul>
 </li>
 <li>

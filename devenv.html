@@ -181,11 +181,11 @@
 <h2 id="rustup"><a class="header" href="#rustup">Rustup</a></h2>
 <p><a href="https://github.com/rust-lang/rustup.rs">Rustup</a> is the Rust toolchain installer. Among other things, it enables
 switching between different flavors of the toolchain (stable, beta, nightly),
-managing additional components installation and keeping them up to date.</p>
+managing the installation of additional components and keeping them up to date.</p>
 <div class="warning">
 <p>From a security perspective, <code>rustup</code> does perform all downloads over HTTPS,
 but does not yet validate signatures of downloads. Protection against
-downgrade attacks, certificate pinning, validation of signatures are still
+downgrade attacks, certificate pinning, and validation of signatures are still
 works in progress.
 In some cases, it may be preferable to opt for an alternative installation
 method listed in the <em>Install</em> section of the official Rust website.</p>
@@ -250,7 +250,7 @@ $
 <h4 id="tier-1---guaranteed-to-work"><a class="header" href="#tier-1---guaranteed-to-work">Tier 1 - guaranteed to work</a></h4>
 <p>The target is fully vetted by the community. It passes the entire test suite, receives regular regression testing, and is kept up‑to‑date with new releases. In practice, you can rely on consistent code generation, stable ABI, and predictable performance. Tier 1 targets can be thought of as "guaranteed to work".</p>
 <h4 id="tier-2---guaranteed-to-build"><a class="header" href="#tier-2---guaranteed-to-build">Tier 2 - guaranteed to build</a></h4>
-<p>The target’s source code compiles cleanly, but it does not receive the same level of testing or maintenance as Tier 1. It may lack full coverage in the test suite, and certain optimizations or newer LLVM features could be missing or unstable. Users can still generate code for these backends, but they should expect occasional breakage or the need for manual patches. Tier 1 targets can be thought of as "guaranteed to build" but not as "guaranteed to work".</p>
+<p>The target’s source code compiles cleanly, but it does not receive the same level of testing or maintenance as Tier 1. It may lack full coverage in the test suite, and certain optimizations or newer LLVM features could be missing or unstable. Users can still generate code for these backends, but they should expect occasional breakage or the need for manual patches. Tier 2 targets can be thought of as "guaranteed to build" but not as "guaranteed to work".</p>
 <h4 id="tier-3"><a class="header" href="#tier-3">Tier 3</a></h4>
 <p>Tier 3 targets are simply not officially supported.</p>
 <p>The tier distinction helps developers choose a target that matches their risk tolerance: Tier 1 for production‑grade workloads, Tier 2 for experimental or niche architectures where full support isn’t yet met.</p>
@@ -272,10 +272,10 @@ It has a fundamental role in most Rust developments:</p>
 <li>It’s also a front-end to run complementary tools such as those that are
 described below, in the form of sub-commands.</li>
 </ul>
-<p>Cargo enables automatic dependencies resolution before compilation
+<p>Cargo enables automatic dependency resolution before compilation
 by checking their checksums.
-File <code>Cargo.lock</code> contains all dependencies checksums which are compared to
-the one downloaded.
+The <code>Cargo.lock</code> file contains the checksums of all dependencies, which are compared to
+the ones downloaded.
 If a difference is detected, compilation fails:</p>
 <pre><code>error: checksum for `sha256 v1.6.0` changed between lock files
 
@@ -292,11 +292,11 @@ dependencies' checksums, adhering to a TOFU (<em>Trust On First Use</em>) policy
 This file can also be created manually with <code>cargo generate-lockfile</code>. If it already exists,
 the file is overwritten with the latest available version of every crate.</p>
 <div class="reco" id="DENV-CARGO-LOCK" type="Rule" title="Track Cargo.lock in version control system">
-<p><code>Cargo.lock</code> files MUST be tracked by version control system.</p>
+<p><code>Cargo.lock</code> files MUST be tracked by a version control system.</p>
 </div>
 <div class="warning">
 <p>Ongoing discussions occur on how to best protect
-and verify crates <em>on their first download</em> (according TOFU rule).
+and verify crates <em>on their first download</em> (according to the TOFU rule).
 For now, the security of the first download relies on the good security of the
 website <a href="https://crates.io">crates.io</a> and the GitHub hosted repository containing the
 registry index. In some cases, it may be preferable to opt for an alternative
@@ -320,7 +320,7 @@ using the debug profile that normally enables runtime checks (for example it doe
 <p>The variables <code>debug-assertions</code> and <code>overflow-checks</code> MUST NOT be overridden
 in development profiles' sections (<code>[profile.dev]</code> and <code>[profile.test]</code>).</p>
 </div>
-<p>Cargo proposes other ways to setup its configuration and change its behavior on
+<p>Cargo proposes other ways to set up its configuration and change its behavior on
 a given system. This can be very useful, but it may also be difficult to know
 and remember at a given time all the options that are effectively used, and
 in particular passed to the compiler. At the end, this can affect the confidence
@@ -331,7 +331,7 @@ part of the code or to run external tools before Rust compilation, it is prefera
 to use the Cargo build scripts feature.</p>
 <div class="reco" id="DENV-CARGO-ENVVARS" type="Rule" title="Keep default values for compiler environment variables when running cargo">
 <p>The environment variables <code>RUSTC</code>, <code>RUSTC_WRAPPER</code> and <code>RUSTFLAGS</code> MUST NOT
-be overriden when using Cargo to build the project.</p>
+be overridden when using Cargo to build the project.</p>
 </div>
 <h3 id="rustfmt"><a class="header" href="#rustfmt">Rustfmt</a></h3>
 <p>Included with Rust, <a href="https://github.com/rust-lang/rustfmt">Rustfmt</a> is a tool that formats your code according to style guidelines.</p>
@@ -350,7 +350,7 @@ at the <a href="#rust-style">rust-style</a>.</p>
 guidelines.</p>
 </div>
 <h3 id="cargo-fix"><a class="header" href="#cargo-fix">Cargo fix</a></h3>
-<p>The <code>cargo fix</code> command is a tool dedicated in
+<p>The <code>cargo fix</code> command is a tool dedicated to
 fixing compiler warnings as well as easing transitions between editions.</p>
 <pre><code class="language-shell">$ cargo fix
 </code></pre>
@@ -379,7 +379,7 @@ as a project dependency.</p>
 detect. The warnings should be re-checked by the programmer before committing
 the fix that is suggested by <code>clippy</code>, especially in the case of lints of the
 category <code>clippy::nursery</code> since those hints are still under development.</p>
-<p><code>clippy</code> now has similar <code>fix</code> tool as <code>rustfix</code></p>
+<p><code>clippy</code> now has a <code>fix</code> tool similar to <code>cargo fix</code>.</p>
 <div class="reco" id="DENV-LINTER" type="Rule" title="Use linter regularly">
 <p>A linter, such as <code>clippy</code>, MUST be used regularly during the development of
 a secure application.</p>

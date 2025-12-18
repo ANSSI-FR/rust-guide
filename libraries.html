@@ -183,10 +183,10 @@
 <p>It is important to note that accurately tracking the versions of these libraries is a critical condition for the security of software written in Rust. This requirement is embodied in the rule <a href="devenv.html#DENV-CARGO-LOCK">DENV-CARGO-LOCK</a>.</p>
 <h3 id="crates"><a class="header" href="#crates">Crates</a></h3>
 <p>In addition to the standard library, Rust provides an easy way to import other
-libraries in a project, thanks to <code>cargo</code>. The libraries, known as <em>crates</em> in
-the Rust ecosystem, are imported from an open-source components central
-repository.</p>
-<p>An example of dependency declaration in the <code>Cargo.toml</code> file:</p>
+libraries in a project, thanks to <code>cargo</code>.
+The libraries, known as <em>crates</em> in the Rust ecosystem, are imported from a central repository of open-source
+components.</p>
+<p>An example of a dependency declaration in the <code>Cargo.toml</code> file:</p>
 <pre><code class="language-toml">[dependencies]
 mdbook = { version = "0.4.52" }
 anyhow = "1.0.99"
@@ -215,19 +215,19 @@ regex = { git = "https://github.com/rust-lang/regex.git" }
 </div>
 <h2 id="dependency-validation-tools"><a class="header" href="#dependency-validation-tools">Dependency validation tools</a></h2>
 <h3 id="cargo-outdated"><a class="header" href="#cargo-outdated">Cargo-outdated</a></h3>
-<p><a href="https://github.com/kbknapp/cargo-outdated">Cargo-outdated</a> tool allows one to easily manage dependencies' versions.</p>
-<p>For a given crate, it lists current dependencies' versions (using its
+<p><a href="https://github.com/kbknapp/cargo-outdated">cargo-outdated</a> tool allows one to easily manage dependency versions.</p>
+<p>For a given crate, it lists the current versions of dependencies (using
 <code>Cargo.toml</code>), and checks the latest compatible version and also the latest general
 version.</p>
-<div class="reco" id="LIBS-OUTDATED" type="Rule" title="Check for outdated dependencies versions (cargo-outdated)">
-<p>The <code>cargo-outdated</code> tool MUST be used to check dependencies' status. Then,
+<div class="reco" id="LIBS-OUTDATED" type="Rule" title="Check for outdated dependencies (cargo-outdated)">
+<p>The <code>cargo-outdated</code> tool MUST be used to check the status of dependencies. Then,
 each outdated dependency SHOULD be updated or the choice of the version MUST be
 justified.</p>
 </div>
 <h3 id="cargo-audit"><a class="header" href="#cargo-audit">Cargo-audit</a></h3>
 <p><a href="https://github.com/RustSec/cargo-audit">Cargo-audit</a> tool allows one to easily check for security vulnerabilities
 reported to the RustSec Advisory Database.</p>
-<div class="reco" id="LIBS-AUDIT" type="Rule" title="Check for security vulnerabilities report on dependencies (cargo-audit)">
+<div class="reco" id="LIBS-AUDIT" type="Rule" title="Check for security vulnerability reports on dependencies (cargo-audit)">
 <p>The <code>cargo-audit</code> tool MUST be used to check for known vulnerabilities in
 dependencies.</p>
 </div>
