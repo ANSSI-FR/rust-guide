@@ -19,7 +19,7 @@ references:
 [Rust](https://www.rust-lang.org) est un langage multiparadigmes orienté vers
 la sûreté mémoire.
 
-Il est entre autres orienté programmation système, en permettant par exemple 
+Il est entre autres orienté programmation système, en permettant par exemple
 une gestion de la mémoire sans ramasse-miettes et sans nécessiter
 d'allocations et de libérations manuelles, ou encore protège la mémoire contre
 les accès concurrents (*data race*).
@@ -100,10 +100,10 @@ externes.
 Ensuite, les recommandations à propos des constructions du langage
 sont présentées.
 <!-- TODO: Enfin, nous discutons de la bonne utilisation des outils de
-test et de *fuzzing* pour un projet réalisé en Rust.--> 
+test et de *fuzzing* pour un projet réalisé en Rust.-->
 Enfin, nous discutons du bon usage de certaines librairies.
 
-Il est à noter que la version actuelle du guide ne propose pas de recommandation concernant Rust *async*.
+Il est à noter qu'à ce jour ce document n'aborde pas le sujet du Rust *async*.
 
 Un résumé des règles et recommandations est disponible à la fin de ce guide.
 
