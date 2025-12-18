@@ -41,7 +41,7 @@ As mentioned in [@nomicon], notable exceptions are:
 
 Automatic implementation of `Send` (resp. `Sync`) occurs for a compound type
 (structure or enumeration) when all fields have `Send` types (resp. `Sync`
-types). 
+types).
 
 Preventing from automatically implementing `Send` or `Sync` can be made by using
 internal fields of type `PhantomData`.
@@ -79,18 +79,18 @@ about each implementation of those traits:
 
 - For `PartialEq`
 
-  - *Internal consistency*: `a.ne(b)` is equivalent to `!a.eq(b)`, i.e., `ne` is
+  - _Internal consistency_: `a.ne(b)` is equivalent to `!a.eq(b)`, i.e., `ne` is
     the strict inverse of `eq`. The default implementation of `ne` is precisely
     that.
 
-  - *Symmetry*: `a.eq(b)` and `b.eq(a)`, are equivalent. From the developer's
+  - _Symmetry_: `a.eq(b)` and `b.eq(a)`, are equivalent. From the developer's
     point of view, it means:
 
     - `PartialEq<B>` is implemented for type `A` (noted `A: PartialEq<B>`),
     - `PartialEq<A>` is implemented for type `B` (noted `B: PartialEq<A>`),
     - both implementations are consistent with each other.
 
-  - *Transitivity*: `a.eq(b)` and `b.eq(c)` implies `a.eq(c)`. It means that:
+  - _Transitivity_: `a.eq(b)` and `b.eq(c)` implies `a.eq(c)`. It means that:
 
     - `A: PartialEq<B>`,
     - `B: PartialEq<C>`,
@@ -102,15 +102,15 @@ about each implementation of those traits:
 
   - `PartialEq<Self>` is implemented.
 
-  - *Reflexivity*: `a.eq(a)`. This stands for `PartialEq<Self>` (`Eq` does not
+  - _Reflexivity_: `a.eq(a)`. This stands for `PartialEq<Self>` (`Eq` does not
     provide any method).
 
 - For `PartialOrd`
 
-  - *Equality consistency*:
+  - _Equality consistency_:
     `a.eq(b)` is equivalent to `a.partial_cmp(b) == Some(std::ordering::Eq)`.
 
-  - *Internal consistency*:
+  - _Internal consistency_:
 
     - `a.lt(b)` iff `a.partial_cmp(b) == Some(std::ordering::Less)`,
     - `a.gt(b)` iff `a.partial_cmp(b) == Some(std::ordering::Greater)`,
@@ -120,14 +120,14 @@ about each implementation of those traits:
     Note that by only defining `partial_cmp`, the internal consistency is
     guaranteed by the default implementation of `lt`, `le`, `gt`, and `ge`.
 
-  - *Antisymmetry*: `a.lt(b)` (respectively `a.gt(b)`) implies `b.gt(a)`
-    (respectively, `b.lt(b)`). From the developer's standpoint, it also means:
+  - _Antisymmetry_: `a.lt(b)` (respectively `a.gt(b)`) implies `b.gt(a)`
+    (respectively, `b.lt(a)`). From the developer's standpoint, it also means:
 
     - `A: PartialOrd<B>`,
     - `B: PartialOrd<A>`,
     - both implementations are consistent with each other.
 
-  - *Transitivity*: `a.lt(b)` and `b.lt(c)` implies `a.lt(c)` (also with `gt`,
+  - _Transitivity_: `a.lt(b)` and `b.lt(c)` implies `a.lt(c)` (also with `gt`,
     `le` and `ge`). It also means:
 
     - `A: PartialOrd<B>`,
@@ -139,10 +139,10 @@ about each implementation of those traits:
 
   - `PartialOrd<Self>`
 
-  - *Totality*: `a.partial_cmp(b) != None` always. In other words,
+  - _Totality_: `a.partial_cmp(b) != None` always. In other words,
     exactly one of `a.eq(b)`, `a.lt(b)`, `a.gt(b)` is true.
 
-  - *Consistency with `PartialOrd<Self>`*: `Some(a.cmp(b)) == a.partial_cmp(b)`.
+  - _Consistency with `PartialOrd<Self>`_: `Some(a.cmp(b)) == a.partial_cmp(b)`.
 
 The compiler does not check any of those requirements except for the type checking
 itself. However, comparisons are critical because they intervene both in
@@ -249,7 +249,7 @@ Rust equivalent of a destructor in C++ or a finalizer in Java.
 <div class="note">
 
 Implementing this trait changes the execution semantics of the language.
-Indeed, unlike the classical behavior of traits [^1], the execution of the same 
+Indeed, unlike the classical behavior of traits [^1], the execution of the same
 code will differ depending on whether this trait is implemented or not.
 
 [^1]: Except for the use of negative trait bounds, which is allowed for example
@@ -288,7 +288,6 @@ missing drops, such as:
   on [`forget` and memory leaks](unsafe/memory.md#forget-and-memory-leaks)),
 - a panic during drop,
 - program aborts (and panics when abort-on-panic is on).
-
 
 And missing drops may lead to exposing sensitive data or to lock limited
 resources leading to availability issues.
