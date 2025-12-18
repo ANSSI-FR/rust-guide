@@ -9,9 +9,9 @@ It is not intended to be a course on how to write Rust programs, there are
 already plenty of good learning resources for this purpose (see the *External
 references* section below). The purpose is rather to guide the programmer and to
 inform them about certain pitfalls, especially in case they are involved in the
-development of applications with strong security requirements.  These
+development of applications with strong security requirements. These
 recommendations form a complement to the good level of trust the Rust language
-already provides. That said, recalls are sometimes necessary for clarity, and
+already provides. That said, reminders are sometimes necessary for clarity, and
 the experienced Rust programmer may rely solely on highlighted inserts
 (*Rule*, *Recommendation*, *Warning*, etc.).
 
@@ -51,18 +51,18 @@ Thus, feel free to create pull requests to suggest recommendations or
 modifications, or to submit an issue to start discussions. Specifically, please
 opt for a *pull request* for small changes like:
 
- - complementing a paragraph,
- - adding a small example in the form of code snippet,
- - updating some information 
- - fixing typos and English mistakes,
- - etc.
+- complementing a paragraph,
+- adding a small example in the form of code snippet,
+- updating some information
+- fixing typos and English mistakes,
+- etc.
 
 and for an *issue* in case of more substantive changes:
 
- - suggesting a new recommendation,
- - discussing controversial points,
- - rewording a consistent part of the text,
- - etc.
+- suggesting a new recommendation,
+- discussing controversial points,
+- rewording a consistent part of the text,
+- etc.
 
 ## Licence
 
