@@ -66,7 +66,7 @@ Les usages de `expect` et de `assert!` DOIVENT être restreints aux seuls cas in
 
 </div>
 
-Les fonctions suivantes sont connues pour emettre des `panic` en cas d'arguments ne respectant pas les conditions d'usage.
+Les fonctions suivantes sont connues pour émettre des `panic` en cas d'arguments ne respectant pas les conditions d'usage.
 
 - un accès non vérifié à un tableau (voir la recommendation [suivante](#LANG-ARRINDEXING)) ;
 - un dépassement d'entier (en mode *debug*, voir le chepitre sur le [traitement des entiers](integer.md)) ;
@@ -87,7 +87,7 @@ Dans ces situations, il est judicieux d'interrompre l'exécution puisque cela pe
 
 Pour un avion ou d'autres types de véhicule, ce comportement « fail-fast » peut être crucial : l'unité de contrôle principale doit s'arrêter immédiatement en cas de défaillance grave, puis transférer le contrôle à un sous-système redondant ou de secours capable d'arrêter le véhicule en toute sécurité ou de poursuivre son fonctionnement en mode réduit. Le redémarrage sur un système secondaire fiable garantit que le véhicule reste contrôlable, protège les occupants et évite les conséquences dangereuses qui pourraient résulter de la poursuite de l'exécution dans un état imprévisible.
 
-Pour ce cas d'usage, l'usage de `panic` associé à `panic = 'abort'` dans Cargo.toml permet d'arrêter le programme dès l'émission du `panic`.
+Pour ce cas d'usage, activer l'attribut `panic = 'abort'` dans la section [profile.release] du fichier Cargo.toml permet d'arrêter le programme dès l'émission du `panic`.
 
 </div>
 
