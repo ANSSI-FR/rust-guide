@@ -1,4 +1,17 @@
 # Guide to develop secure applications with Rust
+![badge_repo](https://img.shields.io/badge/ANSSI--FR-rust--guide-white)
+[![category_badge_doctrinal](https://img.shields.io/badge/category-doctrinal-%23e9c7e7)](https://github.com/ANSSI-FR#types-de-projets)
+[![openess_badge_A](https://img.shields.io/badge/code.gouv.fr-collaborative-blue)](https://documentation.ouvert.numerique.gouv.fr/les-parcours-de-documentation/ouvrir-un-projet-num%C3%A9rique/#niveau-ouverture)
+
+## French Cybersecurity Agency (ANSSI)
+
+<img src="https://www.sgdsn.gouv.fr/files/styles/ds_image_paragraphe/public/files/Notre_Organisation/logo_anssi.png" alt="ANSSI logo" width="30%">
+
+*This projet is managed by [ANSSI](https://cyber.gouv.fr/). To find out more,
+you can go to the
+[page](https://cyber.gouv.fr/enjeux-technologiques/open-source/) (in French)
+dedicated to the ANSSI open source strategy. You can also click on the badges
+above to learn more about their meaning*.
 
 ## Objectives
 
@@ -40,29 +53,7 @@ $ mdbook serve -o
 
 ## Call for Contributions
 
-At this time, this guide is intended to be a living document. It still lacks
-important points and details, and future versions of the language and compiler
-may render some recommendations obsolete. We are eager to discuss and to receive
-contributions from anyone who is aware of common or uncommon pitfalls to avoid,
-or good coding practices and tools that can help building more robust software
-with the Rust language.
-
-Thus, feel free to create pull requests to suggest recommendations or
-modifications, or to submit an issue to start discussions. Specifically, please
-opt for a *pull request* for small changes like:
-
-- complementing a paragraph,
-- adding a small example in the form of code snippet,
-- updating some information
-- fixing typos and English mistakes,
-- etc.
-
-and for an *issue* in case of more substantive changes:
-
-- suggesting a new recommendation,
-- discussing controversial points,
-- rewording a consistent part of the text,
-- etc.
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Licence
 
