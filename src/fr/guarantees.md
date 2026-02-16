@@ -14,17 +14,26 @@ references:
 
 ## Comportements indéfinis
 
-> Le comportement d'un programme est *indéfini* (*UB* pour [*Undefined Behavior*](https://doc.rust-lang.org/reference/behavior-considered-undefined.html)) lorsque sa sémantique n'est 
-> pas décrite dans le langage Rust.
+<div class="definition">
 
-Selon la [référence Rust @rust-reference], l'existence d'*UB* est considéré comme une [erreur](https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general).
+Le comportement d'un programme est *indéfini* (*UB* pour [*Undefined Behavior*](https://doc.rust-lang.org/reference/behavior-considered-undefined.html)) lorsque sa sémantique n'est 
+pas décrite dans le langage Rust.
 
-Par exemple le déréférencement d'un pointeur null est un *UB*.
+</div>
+
+L'existence d'*UB* est considéré comme une 
+[erreur de programmation](https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general) et doit être évitée.
+
+<div class="example">
+
+Le déréférencement d'un pointeur null est un *UB*.
 *A contrario*, un `unwrap` sur l'objet `None` est bien *défini* car c'est le langage qui traite cette erreur
 (en lançant un `panic`).
 
-La liste actuelle des *UB* est donnée dans la [référence Rust](https://doc.rust-lang.org/reference/behavior-considered-undefined.html).
-On notera les garanties suivantes :
+</div>
+
+Une liste d'erreurs de programmation conduisant à un *UB* est [donnée](https://doc.rust-lang.org/reference/behavior-considered-undefined.html)
+dans la [référence Rust @rust-reference]. Parmi elles, on notera les erreurs suivantes :
 
 * Pas de déréférencement de pointeur vers une adresse mémoire non allouée (*dangling pointer*) ou non alignée, ce qui implique
   * Pas de dépassement de tableau
@@ -32,13 +41,22 @@ On notera les garanties suivantes :
   * Accès toujours aligné quelque soit la plateforme
 * Les valeurs pointées sont [cohérentes](https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.invalid) avec le type du pointeur. Par exemple, une valeur pointée par un pointeur booléen sera l'octet 1 ou 0.
 * Respect des règles d'[*aliasing*](https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias) (voir aussi le [Rustonomicon @nomicon] pour des [exemples](https://doc.rust-lang.org/nomicon/aliasing.html)): une référence mutable ne peux être partagée.
-* Pas d'[accès concurrent](https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race) (un accès en lecture et un autre en écriture ou en lecture) à la même adresse mémoire (voir aussi le [Rustonomicon @nomicon] pour des [exemples](https://doc.rust-lang.org/nomicon/races.html))
+* Pas d'[accès concurrent](https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race) (deux accès simultanés non atomiques, l'un en écriture et l'autre en écriture ou en lecture) à la même adresse mémoire (voir aussi le [Rustonomicon @nomicon] pour des [exemples](https://doc.rust-lang.org/nomicon/races.html))
+
 
 ## Garantie de Rust
 
-> La volonté du langage est d'assurer l'absence d'*UB* dans un programme utilisant uniquement la partie non *unsafe* de Rust.
+<div class="important">
 
-Cependant, le langage ***ne protège pas*** contre les erreurs suivantes :
+Le langage Rust est conçu dans le but de garantir l'absence d'*UB* dans un programme n'utilisant pas de fonctionnalités *unsafe*.
+
+</div>
+
+<div class="note">
+
+On notera que cette garantie qu'offre le langage Rust ***ne protège pas*** contre les erreurs suivantes :
 
 * fuites de resources (mémoire, IO, ...) (voir la section sur la [gestion mémoire](unsafe/memory.md#chapter-memory)) ;
 * dépassements numériques (voir la section sur le traitement des [entiers](integer.md#chapter-integer)).
+
+</div>
