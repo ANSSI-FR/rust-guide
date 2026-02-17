@@ -14,16 +14,7 @@ references:
 
 ## Comportements ajoutés par Rust *unsafe*
 
-Les capacités du langage peuvent être étendues en utilisant du code `unsafe`. La liste complète de ces capacités est donnée dans le [manuel de référence de Rust](https://doc.rust-lang.org/reference/unsafety.html). On notera les capacités suivantes :
-
-* Déréférencer un *raw pointer*
-* Lire ou écrire une variable statique mutable et/ou externe
-* Accéder aux champs d'une `union`
-* Implémenter un trait `unsafe`
-* Déclarer un bloc `extern`
-
-D'autres exemples peuvent être trouvés dans le [nomicon](https://doc.rust-lang.org/nomicon/what-unsafe-does.html)
-
+Les capacités du langage peuvent être étendues en utilisant du code `unsafe`. La liste complète de ces capacités est donnée dans le [manuel de référence de Rust](https://doc.rust-lang.org/reference/unsafety.html).
 Si ces capacités sont nécessaires à la programmation système, elles font perdre au langage ses [propriétés de sûreté](../guarantees.md#garanties-du-langage), et permettent l'apparition de comportements indéfinis.
 
 <div class="reco" id="UNSAFE-NOUB" type="Règle" title="Interdiction des comportements non définis">
@@ -74,16 +65,20 @@ Enfin, depuis l'édition 2024 de Rust, il est nécessaire également de déverro
 
 Paraphrasant le [Rustonomicon](https://doc.rust-lang.org/nomicon/safe-unsafe-meaning.html), le principe fondamental de Rust pourrait se résumer à :
 
-> un code sans `unsafe` ne peut pas mal se comporter
+<div class="important">
+
+Un code sans `unsafe` ne peut pas mal se comporter
+
+</div>
 
 L'utilisation conjointe du système de types et du système d'*ownership* assure l'absence
-de comportement indéfini (*UB*) et apporter un haut niveau de sûreté quant à la gestion de la mémoire dans les
+de comportement indéfini (*UB*) et apporte un haut niveau de sûreté quant à la gestion de la mémoire dans les
 programmes écrits en Rust. Le langage permet alors d'éviter les débordements
 mémoire, la construction de pointeurs nuls ou invalides, et les problèmes
 d'accès concurrents à la mémoire.
 
 Cette promesse faite au développeur de code sans `unsafe` est perdue lors de l'utilisation de code *unsafe*.
-C'est donc au développeur de s'assurer qu'aucun *UB* ne peut se produire dans son code.
+C'est donc au développeur de s'assurer que son code respecte les invariants garantissant la sûreté mémoire.
 Aussi, il est important de limiter l'usage de `unsafe` au strict nécessaire :
 
 <div class="reco" id="LANG-UNSAFE" type="Règle" title="Non-utilisation des blocs *unsafe*">

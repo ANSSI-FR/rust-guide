@@ -14,16 +14,7 @@ references:
 
 ## *Unsafe* operations
 
-Language capabilities can be extended using unsafe code. The full list of these features is given in the [Rust reference](https://doc.rust-lang.org/reference/unsafety.html). Notice the following ones.
-
-* Dereference a raw pointer
-* Read or write a mutable or extern static variable
-* Read a field of an `union`
-* Implement an `unsafe` trait
-* Declare an `extern` block
-
-More examples can be found in [nomicon](https://doc.rust-lang.org/nomicon/what-unsafe-does.html).
-
+Language capabilities can be extended using unsafe code. The full list of these features is given in the [Rust reference](https://doc.rust-lang.org/reference/unsafety.html).
 These capabilities may be necessary for system programming but they cause the language to lose its [safety properties](../guarantees.md#language-guarantees) and Undefined Behaviors may happen.
 
 <div class="reco" id="UNSAFE-NOUB" type="Rule" title="No Undefined Behavior">
@@ -73,7 +64,11 @@ Lastly, Since the 2024 edition, `unsafe` is also required to unlock the followin
 
 Paraphrasing the [Rustonomicon](https://doc.rust-lang.org/nomicon/), the fundamental principle of Rust can be summed up as follows:
 
-> `unsafe`-free code cannot go wrong
+<div class="important">
+
+`unsafe`-free code cannot go wrong
+
+</div>
 
 The combined use of the type system and the ownership system enforces a high-level memory safety in Rust programs. This way, the language helps prevent memory overflows, null or invalid pointer constructions, and data races.
 
