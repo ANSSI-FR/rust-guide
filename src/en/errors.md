@@ -38,45 +38,56 @@ provide context to the wrapped error.
 
 ## Panics
 
-Explicit error handling (`Result`) should always be preferred instead of calling
+Explicit error handling (`Result`) should generally be preferred instead of calling
 `panic`.  The cause of the error should be available, and generic errors should
 be avoided.
+
+<div class="reco" id="LANG-LIMIT-PANIC" type="Rule" title="Limit `panic` use">
+
+A Rust function MUST NOT panic UNLESS its usage conditions have been violated.
+
+</div>
 
 Crates providing libraries should never use functions or instructions that can
 fail and cause the code to panic.
 
-Common patterns that can cause panics are:
+Following patterns can cause panics (by design):
 
 - using `unwrap` or `expect`,
-- using `assert`,
-- an unchecked access to an array,
-- integer overflow (in debug mode),
+- using `assert!`.
+
+The following rule is deduced from the [previous rule](#LANG-LIMIT-PANIC).
+
+
+<div class="reco" id="LANG-LIMIT-EXPECT" type="Rule" title="Limit use of `panic`-ing functions">
+
+Uses of `unwrap`, `expect` and `assert!` MUST be restricted to cases explicitly forbidden by the function’s specification.
+
+</div>
+
+The following functions are known to panic if their arguments do not meet the usage conditions.
+
+- an unchecked access to an array (see [next](#LANG-ARRINDEXING) rule),
+- integer overflow (in debug mode, see chapter on [integers](integer.md#chapter-integer)),
 - division by zero,
 - large allocations,
 - string formatting using `format!`.
-
-<div class="warning">
-
-In certain safety‑critical domains, it is mandatory to transition to a safe‑mode state whenever an error occurs that could otherwise lead to undefined behavior.
-In these situations, deliberately triggering a panic (or aborting execution) makes sense because it stops the system before corrupted data or safety and security‑related faults can propagate.
-
-For a plane or other vehicles, this “fail‑fast” behavior can be crucial: the primary control unit must halt immediately on a serious fault, then hand over control to a redundant or backup subsystem that can bring the vehicle to a safe stop or continue operation in a reduced‑capability mode. Restarting on a trusted secondary system ensures that the plane remains controllable, protects occupants, and prevents hazardous outcomes that could arise from continuing execution in an unpredictable state.
-
-</div>
-
-In other cases where the development is not subject to this type of standard:
-
-<div class="reco" id="LANG-NOPANIC" type="Rule" title="Don't use functions that can cause `panic!`">
-
-Functions or instructions that can cause the code to panic at runtime MUST NOT
-be used.
-
-</div>
 
 <div class="reco" id="LANG-ARRINDEXING" type="Rule" title="Test properly array indexing or use the `get` method">
 
 Array indexing must be properly tested, or the `get` method SHOULD be used to
 return an `Option`.
+
+</div>
+
+<div class="warning">
+
+In certain safety‑critical domains, it is mandatory to transition to a safe‑mode state whenever an error occurs that could otherwise lead to undefined behavior.
+In these situations, deliberately aborting execution makes sense because it stops the system before corrupted data or safety faults can propagate.
+
+For a plane or other vehicles, this “fail‑fast” behavior can be crucial: the primary control unit must halt immediately on a serious fault, then hand over control to a redundant or backup subsystem that can bring the vehicle to a safe stop or continue operation in a reduced‑capability mode. Restarting on a trusted secondary system ensures that the plane remains controllable, protects occupants, and prevents hazardous outcomes that could arise from continuing execution in an unpredictable state.
+
+For this use case, enabling the `panic = 'abort'` attribute in the `[profile.release]` section of the Cargo.toml file will terminate the program as soon as a panic occurs.
 
 </div>
 

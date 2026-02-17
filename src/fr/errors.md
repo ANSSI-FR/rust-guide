@@ -43,44 +43,55 @@ ainsi initialement enveloppées, contrairement à la première approche.
 
 ## *Panics*
 
-La gestion explicite des erreurs (`Result`) doit être préférée à la place de
+Dans le cas général, la gestion explicite des erreurs (`Result`) doit être préférée à la place de
 l'utilisation de la macro `panic`. La cause de l'erreur doit être rendue
 disponible, et les erreurs trop génériques doivent être évitées.
+
+<div class="reco" id="LANG-LIMIT-PANIC" type="Règle" title="Usage limité des `panic`">
+
+Une fonction Rust NE PEUT émettre de `panic` QUE lorsque les conditions de son usage ont été violées.
+
+</div>
 
 Les *crates* fournissant des bibliothèques ne doivent pas utiliser de fonctions
 ou d'instructions qui peuvent échouer en engendrant un `panic`.
 
-Des motifs courants de code qui provoquent des `panic` sont :
+Les motifs de code suivants provoquent explicitement des `panic` :
 
 - une utilisation de `unwrap` ou de `expect` ;
-- une utilisation de `assert` ;
-- un accès non vérifié à un tableau ;
-- un dépassement d'entier (en mode *debug*) ;
+- une utilisation de `assert!`.
+
+De la règle [précédente](#LANG-LIMIT-PANIC) découle la règle suivante.
+
+<div class="reco" id="LANG-LIMIT-EXPECT" type="Règle" title="Limitation des fonctions déclenchant des `panic`s">
+
+Les usages de `unwrap`, `expect` et de `assert!` DOIVENT être restreints aux seuls cas interdits par la spécification de la fonction.
+
+</div>
+
+Les fonctions suivantes sont connues pour émettre des `panic` en cas d'arguments ne respectant pas les conditions d'usage.
+
+- un accès non vérifié à un tableau (voir la recommendation [suivante](#LANG-ARRINDEXING)) ;
+- un dépassement d'entier (en mode *debug*, voir le chapitre sur le [traitement des entiers](integer.md#chapter-integer)) ;
 - une division par zéro ;
+- allocation importante de mémoire ;
 - l'utilisation de `format!` pour le formatage d'une chaîne de caractères.
-
-<div class="warning">
-
-Dans certains domaines critiques pour la sécurité, il est obligatoire de passer en mode sans échec dès qu'une erreur susceptible d'entraîner un comportement indéfini se produit.
-Dans ces situations, il est judicieux de déclencher délibérément un panic (ou d'interrompre l'exécution) puisque cela permet d'arrêter le système avant que des données ne soient corrompues, ou des défaillances liées à la sûreté ou la sécurité ne se propagent.
-
-Pour un avion ou d'autres types de véhicule, ce comportement « fail-fast » peut être crucial : l'unité de contrôle principale doit s'arrêter immédiatement en cas de défaillance grave, puis transférer le contrôle à un sous-système redondant ou de secours capable d'arrêter le véhicule en toute sécurité ou de poursuivre son fonctionnement en mode réduit. Le redémarrage sur un système secondaire fiable garantit que le véhicule reste contrôlable, protège les occupants et évite les conséquences dangereuses qui pourraient résulter de la poursuite de l'exécution dans un état imprévisible.
-
-</div>
-
-Dans le cas où le développement n'est pas soumis à ce type de normes:
-
-<div class="reco" id="LANG-NOPANIC" type="Règle" title="Non-utilisation de fonctions qui peuvent causer des `panic`">
-
-Les fonctions et instructions qui peuvent causer des `panic` à l'exécution
-NE DOIVENT PAS être utilisées.
-
-</div>
 
 <div class="reco" id="LANG-ARRINDEXING" type="Règle" title="Test des indices d'accès aux tableaux ou utilisation de la méthode `get`">
 
 L'indice d'accès à un tableau DOIT être testé, ou la méthode `get` DOIT être
 utilisée pour récupérer une `Option`.
+
+</div>
+
+<div class="warning">
+
+Dans certains domaines critiques pour la sureté, il est obligatoire de passer en mode sans échec dès qu'une erreur susceptible d'entraîner un comportement indéfini se produit.
+Dans ces situations, il est judicieux d'interrompre l'exécution puisque cela permet d'arrêter le système avant que des données ne soient corrompues, ou des défaillances liées à la sûreté ne se propagent.
+
+Pour un avion ou d'autres types de véhicule, ce comportement « fail-fast » peut être crucial : l'unité de contrôle principale doit s'arrêter immédiatement en cas de défaillance grave, puis transférer le contrôle à un sous-système redondant ou de secours capable d'arrêter le véhicule en toute sécurité ou de poursuivre son fonctionnement en mode réduit. Le redémarrage sur un système secondaire fiable garantit que le véhicule reste contrôlable, protège les occupants et évite les conséquences dangereuses qui pourraient résulter de la poursuite de l'exécution dans un état imprévisible.
+
+Pour ce cas d'usage, activer l'attribut `panic = 'abort'` dans la section `[profile.release]` du fichier Cargo.toml permet d'arrêter le programme dès l'émission du `panic`.
 
 </div>
 
