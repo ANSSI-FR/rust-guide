@@ -75,7 +75,7 @@ line at the top of the root file (usually `src/lib.rs` or `src/main.rs`):
 The standard library includes other way to *forget* dropping values:
 
 - [`Box::leak`] to leak a resource,
-- [`Box::into_raw`] to exploit the value in some unsafe code, notably in FFI,
+- [`Box::into_raw`] to exploit the `Box` as a **pointer** in some unsafe code, notably in FFI,
 - [`ManuallyDrop`] (in `std::mem` or `core::mem`) to enforce manual release of some value.
 
 Those alternatives may lead to the same security issue but they have the

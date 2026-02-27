@@ -80,8 +80,8 @@ d'appel à [`mem::forget`], ajouter la directive suivante en début de fichier r
 
 La bibliothèque standard inclut d'autres moyens d'*oublier* une valeur :
 
-- [`Box::leak`] pour libérer une ressource ;
-- [`Box::into_raw`] pour exploiter une valeur dans un bloc *unsafe*, notamment
+- [`Box::leak`] pour désactiver le destructeur d'une `Box` ;
+- [`Box::into_raw`] pour exploiter une `Box` sous forme d'un pointeur *raw* dans un bloc *unsafe*, notamment
   dans une FFI ;
 - [`ManuallyDrop`] (dans `std::mem` ou `core::mem`) pour assurer la libération
   manuelle d'une valeur.
@@ -138,7 +138,7 @@ Dans le cas contraire, l'usage de *raw pointers* en Rust non-*unsafe* DOIT être
 
 <div class="reco" id="MEM-INTOFROMRAWALWAYS" type="Règle" title="Appel systématique à `from_raw` pour les valeurs créées avec `into_raw`">
 
-Dans un développement sécurisé en Rust, tout pointeur créé par un appel à
+Dans un développement sécurisé en Rust, tout pointeur *raw* créé par un appel à
 `into_raw` (ou `into_non_null`) depuis un des types suivants DOIT
 finalement être transformé en valeur avec l'appel à la fonction `from_raw`
 correspondant, pour permettre sa libération :
