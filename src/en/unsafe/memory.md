@@ -13,8 +13,12 @@ But, as [noted earlier](../guarantees.md#rust-guarantees), this is not
 a guarantee: code without `unsafe` can still lead to memory leaks. Therefore, some of the
 rules presented in this chapter are not strictly related to the `unsafe` keyword. However,
 
-> even if a function in the following is not `unsafe`,
-> it should only be used in Rust *unsafe*.
+<div class="important">
+
+Even if a function in the following is not `unsafe`,
+it should only be used in Rust *unsafe*.
+
+</div>
 
 ## [`mem::forget`] and memory leaks {#forget-and-memory-leaks}
 

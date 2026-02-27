@@ -15,8 +15,12 @@ Mais, comme rappelé [plus tôt dans ce guide](../guarantees.md#garantie-de-rust
 code non-*unsafe* peut mener à des fuites mémoires. Aussi, certaines règles présentées dans ce chapitre ne sont pas strictement *unsafe*.
 Cependant,
 
-> même si certaines des fonctions présentées dans la suite ne sont pas `unsafe`,
-> elles ne devraient être utilisées qu'en Rust *unsafe*.
+<div class="important">
+
+Même si certaines des fonctions présentées dans la suite ne sont pas `unsafe`,
+elles ne devraient être utilisées qu'en Rust *unsafe*.
+
+</div>
 
 ## [`mem::forget`] et fuites de mémoire {#forget-and-memory-leaks}
 
