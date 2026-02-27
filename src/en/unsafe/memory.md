@@ -20,6 +20,14 @@ it should only be used in Rust *unsafe*.
 
 </div>
 
+As a general rule, memory leaks must be avoided.
+
+<div class="reco" id="MEM-NO-LEAK" type="Rule" title="No memory leak">
+
+In a secure Rust development, NO memory leak is allowed.
+
+</div>
+
 ## [`mem::forget`] and memory leaks {#forget-and-memory-leaks}
 
 While the usual way for memory to be reclaimed is for a variable to go out of

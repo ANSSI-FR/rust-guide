@@ -22,6 +22,14 @@ elles ne devraient être utilisées qu'en Rust *unsafe*.
 
 </div>
 
+De manière générale, les fuites mémoires doivent être évitées.
+
+<div class="reco" id="MEM-NO-LEAK" type="Règle" title="Absence de fuites mémoires">
+
+Dans un développement sécurisé en Rust, le code NE DOIT PAS provoquer de fuites mémoire.
+
+</div>
+
 ## [`mem::forget`] et fuites de mémoire {#forget-and-memory-leaks}
 
 Rust fournit
