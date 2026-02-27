@@ -129,8 +129,10 @@ pointeurs *intelligents* (*smart pointer*) de Rust. En particulier, leur libéra
 <div class="reco" id="MEM-NORAWPOINTER" type="Règle" title="Pas de conversion en pointeur *raw* en Rust non-*unsafe*">
 
 Dans un développement sécurisé en Rust non-*unsafe*, les références et les *smart pointers*
-NE DOIVENT PAS être convertis en *raw pointers*. En particulier, les fonctions `into_raw` ou `into_non_null`
-des *smart pointers* [`Box`], [`Rc`], [`Arc`], [`rc::Weak`] ou [`sync::Weak`] NE DOIVENT PAS être utilisées dans un code Rust non-*unsafe*.
+NE DEVRAIENT PAS être convertis en *raw pointers*. En particulier, les fonctions `into_raw` ou `into_non_null`
+des *smart pointers* [`Box`], [`Rc`], [`Arc`], [`rc::Weak`] ou [`sync::Weak`] NE DEVRAIT PAS être utilisées dans un code Rust non-*unsafe*.
+
+Dans le cas contraire, l'usage de *raw pointers* en Rust non-*unsafe* DOIT être documenté et justifié.
 
 </div>
 
