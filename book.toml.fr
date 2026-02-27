@@ -25,6 +25,7 @@ format = "latex"
 compile = true
 optional = true
 display-logs = false
+static-dir = "src/static"
 
 [preprocessor.checklist]
 title = "Liste des recommandations"
