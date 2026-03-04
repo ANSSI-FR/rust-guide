@@ -94,7 +94,7 @@ connues dans les dépendances d'un projet.
 
 </div>
 
-[cargo-audit]: https://github.com/RustSec/cargo-audit
+[cargo-audit]: https://crates.io/crates/cargo-audit
 
 <!-- ## Code *unsafe* dans les bibliothèques -->
 

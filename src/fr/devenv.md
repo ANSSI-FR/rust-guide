@@ -139,8 +139,8 @@ Les cibles de niveau 3 ne sont tout simplement pas prises en charge officielle
 
 La distinction entre les différents niveaux aide les développeurs à choisir une cible adaptée à leur tolérance au risque : le niveau 1 pour des applications de production, le niveau 2 pour des architectures plus expérimentales ou de niche dont le support complet n’est pas encore assuré.
 
-
-<div class="reco" id="DENV-TIERS" type="Rule" title="Utilisation exclusive du tier 1 de `rustc` pour les logiciels de sûreté critiques">
+type="Reco
+<div class="reco" id="DENV-TIERS" type="Règle" title="Utilisation exclusive du tier 1 de `rustc` pour les logiciels de sûreté critiques">
 
 Les cibles Rustc de niveau 1 et les chaînes de compilation certifiées DOIVENT être utilisées pour les systèmes de sûreté critiques.
 
@@ -339,7 +339,7 @@ développeur avant d'appliquer la réparation suggérée par `clippy`, en
 particulier dans le cas des *lints* de la catégorie `clippy::nursery` puisque
 ceux-ci sont encore en cours de développement et de mise au point.
 
-`clippy` dispose maintenant d'un outils `fix` similaire à celui de `rustfix`.
+`clippy` dispose maintenant d'un outil `fix` similaire à celui de `rustfix`.
 
 [clippy]: https://github.com/rust-lang/rust-clippy
 

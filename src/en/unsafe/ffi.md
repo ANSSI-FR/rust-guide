@@ -118,7 +118,7 @@ The following types are considered C-compatible:
 - `repr(C)`-annotated `struct`,
 - `repr(C)` or `repr(Int)`-annotated `enum` with at least one variant and only
   fieldless variants (where `Int` is an integral primitive type),
-- pointers,
+- raw pointers,
 - an `Option<T>` where `T` is either
   - `core::ptr::NonNull<U>` and `U` is a `Sized` C-compatible type, then it is
       compatible to a `*const T` and `*mut T` pointer;

@@ -91,7 +91,7 @@ dependencies.
 
 </div>
 
-[cargo-audit]: https://github.com/RustSec/cargo-audit
+[cargo-audit]: https://crates.io/crates/cargo-audit
 
 <!-- ## Unsafe code in libraries -->
 

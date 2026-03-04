@@ -80,11 +80,12 @@ highlighted inserts (*Rule*, *Recommendation*, *Warning*, etc.).
 ## Contributions
 
 This guide is written in a collaborative and open manner, via the GitHub
-platform
-([https://github.com/ANSSI-FR/rust-guide](https://github.com/ANSSI-FR/rust-guide)).
+platform [^1].
 All contributions for future versions are welcome, whether in the form of direct
 propositions (*pull requests*) or in the form of suggestions and discussions
 (*issues*).
+
+[^1]: [`https://github.com/ANSSI-FR/rust-guide`](https://github.com/ANSSI-FR/rust-guide)
 
 ## Structure of the Document
 
@@ -121,7 +122,7 @@ the context of application or its implementation.
 
 </div>
 
-<div class="examplereco" id="EXAMPLE-RECO" type="Recommandation" title="Recommendation for higher security requirement">
+<div class="examplereco" id="EXAMPLE-RECO" type="Recommendation" title="Recommendation for higher security requirement">
 
 This recommendation is required for higher level security software.
 

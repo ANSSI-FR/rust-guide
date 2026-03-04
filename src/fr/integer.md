@@ -1,4 +1,4 @@
-# Traitements des entiers {#chapter-integer}
+# Traitement des entiers {#chapter-integer}
 
 Bien que des vérifications soient effectuées par Rust en ce qui concerne les
 potentiels dépassements d'entiers, des précautions doivent être prises lors de

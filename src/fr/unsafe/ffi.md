@@ -121,7 +121,7 @@ Les types suivants sont considérés comme compatibles avec le C :
 - les `enum`s annotées avec `repr(C)` ou `repr(Int)` (où `Int` est un type
   primitif entier), contenant au moins un variant et dont tous les variants ne
   comportent pas de champ ;
-- les pointeurs ;
+- les pointeurs bruts ;
 - les `Option<T>` où `T` est:
   - `core::ptr::NonNull<U>` et `U` est un type compatible avec le C et `Sized`,
     auquel cas le type est équivalent à un pointeur `*const T` et `*mut T`,
@@ -601,7 +601,7 @@ de la gestion de son allocation et de sa libération.
 Dans un développement sécurisé en Rust, lorsqu'une donnée, quel que soit son
 type, est échangée par une FFI, il est nécessaire de s'assurer que :
 
-- un seul langage DOIT gérer l'allocation et de la libération d'une
+- un seul langage DOIT gérer l'allocation et la libération d'une
   donnée ;
 - l'autre langage NE DOIT NI allouer, NI libérer la donnée directement, mais
   peut utiliser une fonction externe dédiée fournie par le langage responsable

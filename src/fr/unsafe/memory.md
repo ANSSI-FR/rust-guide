@@ -105,7 +105,7 @@ Comme leur nom l'indique, ces types sont *bruts* et n'ont pas toutes les capacit
 pointeurs *intelligents* (*smart pointer*) de Rust. En particulier, leur libération est
 à la charge du programmeur.
 
-<div class="reco" id="MEM-NORAWPOINTER" type="Règle" title="Pas de conversion en pointeur *raw* en Rust non-*usafe*">
+<div class="reco" id="MEM-NORAWPOINTER" type="Règle" title="Pas de conversion en pointeur *raw* en Rust non-*unsafe*">
 
 Dans un développement sécurisé en Rust non-*unsafe*, les références et les *smart pointers*
 NE DOIVENT PAS être convertis en *raw pointers*. En particulier, les fonctions `into_raw` ou `into_non_null`

@@ -87,11 +87,12 @@ expérimenté peut s'appuyer principalement sur le contenu des encarts (*Règle*
 ## Contributions
 
 Ce guide est rédigé de manière collaborative et ouverte, via la plateforme
-GitHub
-([https://github.com/ANSSI-FR/rust-guide](https://github.com/ANSSI-FR/rust-guide)).
+GitHub [^1].
 Toutes les contributions pour de futures versions sont les bienvenues, que ce
 soit directement sous la forme de propositions (*pull requests*) ou bien de
 suggestions et discussions (*issues*).
+
+[^1]: [`https://github.com/ANSSI-FR/rust-guide`](https://github.com/ANSSI-FR/rust-guide)
 
 ## Organisation du guide
 
