@@ -12,17 +12,17 @@ references:
 
 # Bibliothèque standard
 
-## Les traits `Send` et `Sync`
+## Les traits [`Send`] et [`Sync`]
 
-Les traits `Send` et `Sync` (définis dans `std::marker` ou `core::marker`) sont
+Les traits [`Send`] et [`Sync`] (définis dans `std::marker` ou `core::marker`) sont
 des marqueurs utilisés pour assurer la sûreté des accès concurrents en Rust.
 Lorsqu'ils sont correctement implémentés, ils permettent au compilateur Rust de
 garantir l'absence de problèmes d'accès concurrents. Leurs sémantiques sont
 définies comme suit :
 
-- Un type est `Send` s’il est sûr d'envoyer (*move*) des valeurs de ce type vers
+- Un type est [`Send`] s’il est sûr d'envoyer (*move*) des valeurs de ce type vers
   un autre fil d'exécution.
-- Un type est `Sync` s’il est sûr de partager des valeurs de ce type par une
+- Un type est [`Sync`] s’il est sûr de partager des valeurs de ce type par une
   référence immutable avec un autre fil d'exécution.
 
 Ces deux traits sont des traits *unsafe*, c'est-à-dire que le compilateur Rust
@@ -31,24 +31,24 @@ réel : une implémentation incorrecte peut mener à un **comportement indéfini
 
 Heureusement, dans la plupart des cas, il n'est pas nécessaire de fournir une
 implémentation. En Rust, la quasi-totalité des types primitifs implémente
-`Send` et `Sync`, et dans la majorité des cas, Rust fournit de manière
+[`Send`] et [`Sync`], et dans la majorité des cas, Rust fournit de manière
 automatique une implémentation pour les types composés. Comme rappelé dans
 [Rustonomicon @nomicon], quelques exceptions notables sont :
 
-- les pointeurs `raw`, qui n'implémentent ni `Send`, ni `Sync`, puisqu'ils
+- les pointeurs `raw`, qui n'implémentent ni [`Send`], ni [`Sync`], puisqu'ils
   n'offrent aucune garantie quant à la sûreté ;
-- les références `UnsafeCell`, qui n'implémentent pas `Sync` (et par extension,
-  les références `Cell` et `RefCell` non plus), puisqu'elles autorisent la
+- les références [`UnsafeCell`], qui n'implémentent pas [`Sync`] (et par extension,
+  les références [`Cell`] et [`RefCell`] non plus), puisqu'elles autorisent la
   mutabilité des valeurs contenues (*interior mutability*) ;
-- les références `Rc`, qui n'implémentent ni `Send`, ni `Sync`, puisque les
+- les références [`Rc`], qui n'implémentent ni [`Send`], ni [`Sync`], puisque les
   compteurs de références seraient partagés de manière désynchronisée.
 
-L'implémentation automatique de `Send` (respectivement `Sync`) a lieu pour les
+L'implémentation automatique de [`Send`] (respectivement [`Sync`]) a lieu pour les
 types composés (structures ou énumérations) lorsque tous les champs contenus
-implémentent `Send` (respectivement `Sync`).
+implémentent [`Send`] (respectivement [`Sync`]).
 
-Afin d’empêcher *artificiellement* qu'un type n'implémente `Send` ou `Sync`,
-il est possible d'utiliser un champ typé par un type fantôme (`PhantomData`) :
+Afin d’empêcher *artificiellement* qu'un type n'implémente [`Send`] ou [`Sync`],
+il est possible d'utiliser un champ typé par un type fantôme ([`PhantomData`]) :
 
 ```rust,noplaypen
 # use std::marker::PhantomData;
@@ -59,31 +59,37 @@ struct SpecialType(u8, PhantomData<*const ()>);
 <div class="reco" id="LANG-SYNC-TRAITS" type="Règle" title="Justification de l'implémentation des traits `Send` et `Sync`">
 
 Dans un développement sécurisé en Rust, l'implémentation manuelle des traits
-`Send` et `Sync` DEVRAIT être évitée, et, si nécessaire, DOIT être justifiée
+[`Send`] et [`Sync`] DEVRAIT être évitée, et, si nécessaire, DOIT être justifiée
 et documentée.
 
 </div>
 
-## Les traits de comparaison : `PartialEq`, `Eq`, `PartialOrd`, `Ord`
+[`Rc`]: https://doc.rust-lang.org/std/rc/struct.Rc.html
+[`Cell`]: https://doc.rust-lang.org/std/cell/struct.Cell.html
+[`RefCell`]: https://doc.rust-lang.org/std/cell/struct.RefCell.html
+[`UnsafeCell`]: https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html
+[`PhantomData`]: https://doc.rust-lang.org/std/marker/struct.PhantomData.html
+
+## Les traits de comparaison : [`PartialEq`], [`Eq`], [`PartialOrd`], [`Ord`]
 
 Les comparaisons (`==`, `!=`, `<`, `<=`, `>`, `>=`) en Rust reposent sur quatre
 traits de la bibliothèque standard disponibles dans `std::cmp` (ou `core::cmp`
 pour une compilation avec `no_std`) :
 
-- `PartialEq<Rhs>` qui définit la relation d'équivalence partielle entre objets
+- [`PartialEq<Rhs>`] qui définit la relation d'équivalence partielle entre objets
   de types `Self` et `Rhs` ;
-- `PartialOrd<Rhs>` qui définit la relation d'ordre partiel entre les objets de
+- [`PartialOrd<Rhs>`] qui définit la relation d'ordre partiel entre les objets de
   types `Self` et `Rhs` ;
-- `Eq` qui définit la relation d'équivalence totale entre les objets du même
+- [`Eq`] qui définit la relation d'équivalence totale entre les objets du même
   type. Il s'agit d'un trait de marquage qui requiert le trait
   `PartialEq<Self>` ;
-- `Ord` qui définit la relation d'ordre total entre les objets du même type.
+- [`Ord`] qui définit la relation d'ordre total entre les objets du même type.
   Le trait `PartialOrd<Self>` est alors requis.
 
 Comme stipulé dans la documentation de la bibliothèque standard, Rust présuppose
 **de nombreux invariants** lors de l'implémentation de ces traits :
 
-- Pour `PartialEq` :
+- Pour [`PartialEq`] :
 
   - *Cohérence interne* : `a.ne(b)` est équivalent à `!a.eq(b)`, c.-à-d., `ne`
     est le strict inverse de `eq`. Cela correspond précisément à
@@ -105,14 +111,14 @@ Comme stipulé dans la documentation de la bibliothèque standard, Rust présupp
     - Les trois implémentations sont cohérentes les unes avec les autres (ainsi
       qu'avec leurs implémentations symétriques).
 
-- Pour `Eq` :
+- Pour [`Eq`] :
 
   - `PartialEq<Self>` est implémenté.
 
   - *Réflexivité* : `a.eq(a)`. Cela signifie que `PartialEq<Self>` est
-    implémenté (`Eq` ne fournit aucune méthode).
+    implémenté ([`Eq`] ne fournit aucune méthode).
 
-- Pour `PartialOrd` :
+- Pour [`PartialOrd`] :
 
   - *Consistance de la relation d'égalité* : `a.eq(b)` est équivalent à
     `a.partial_cmp(b) == Some(std::ordering::Eq)`.
@@ -145,7 +151,7 @@ Comme stipulé dans la documentation de la bibliothèque standard, Rust présupp
     - Les trois implémentations sont cohérentes les unes avec les autres (et
       avec leurs implémentations symétriques).
 
-- Pour `Ord` :
+- Pour [`Ord`] :
 
   - `PartialOrd<Self>`
 
@@ -183,21 +189,21 @@ réduire le risque de violation des invariants associés auxdits traits.
 </div>
 
 Il existe un *lint* Clippy qui permet de vérifier que `PartialEq::ne` n'est pas
-défini lors d'une implémentation du trait `PartialEq`.
+défini lors d'une implémentation du trait [`PartialEq`].
 
 Rust propose une façon de fournir automatiquement des implémentations par défaut
 pour les traits de comparaison, au travers de l'attribut `#[derive(...)]` :
 
-- La dérivation de `PartialEq` implémente `PartialEq<Self>` avec une **égalité
+- La dérivation de [`PartialEq`] implémente `PartialEq<Self>` avec une **égalité
   structurelle** à condition que chacun des types des données membres implémente
   `PartialEq<Self>`.
-- La dérivation de `Eq` implémente le trait de marquage `Eq` à condition que
-  chacun des types des données membres implémente `Eq`.
-- La dérivation de `PartialOrd` implémente `PartialOrd<Self>` comme un **ordre
+- La dérivation de [`Eq`] implémente le trait de marquage [`Eq`] à condition que
+  chacun des types des données membres implémente [`Eq`].
+- La dérivation de [`PartialOrd`] implémente `PartialOrd<Self>` comme un **ordre
   lexicographique** à condition que chacun des types des données membres
-  implémente `PartialOrd`.
-- La dérivation de `Ord` implémente `Ord` comme un **ordre lexicographique** à
-  condition que chacun des types des données membres implémente `Ord`.
+  implémente [`PartialOrd`].
+- La dérivation de [`Ord`] implémente [`Ord`] comme un **ordre lexicographique** à
+  condition que chacun des types des données membres implémente [`Ord`].
 
 Par exemple, le court extrait de code suivant montre comment comparer deux
 valeurs de type `T1` facilement. Toutes les assertions sont vraies.
@@ -257,11 +263,11 @@ standard DEVRAIT être justifiée et documentée.
 
 </div>
 
-## Trait `Drop` : le destructeur
+## Trait [`Drop`] : le destructeur
 
-Les types implémentent le trait `std::ops::Drop` dans le but d'effectuer
+Les types implémentent le trait [`std::ops::Drop`] dans le but d'effectuer
 certaines opérations lorsque la mémoire associée à une valeur est réclamée.
-`Drop` est l'équivalent Rust d'un destructeur en C++ ou un finaliseur en Java.
+[`Drop`] est l'équivalent Rust d'un destructeur en C++ ou un finaliseur en Java.
 
 <div class="note">
 
@@ -274,57 +280,57 @@ pas encore stabilisé pour la version actuelle de Rust (1.91.0)
 
 </div>
 
-`Drop` agit récursivement, depuis la valeur externe vers les valeurs imbriquées.
+[`Drop`] agit récursivement, depuis la valeur externe vers les valeurs imbriquées.
 Lorsqu'une valeur sort du scope (ou est explicitement relâchée avec
-`std::mem::drop`), elle est relâchée en deux étapes. La première étape a lieu
-uniquement si le type de la valeur en question implémente le trait `Drop` et
-consiste en l'appel de la méthode `drop`. La seconde étape consiste en la
+[`mem::drop`]), elle est relâchée en deux étapes. La première étape a lieu
+uniquement si le type de la valeur en question implémente le trait [`Drop`] et
+consiste en l'appel de la méthode [`mem::drop`]. La seconde étape consiste en la
 répétition du processus de *drop* récursivement sur tous les champs que contient
-la valeur. Il est à noter que l'implémentation de `Drop` est
+la valeur. Il est à noter que l'implémentation de [`Drop`] est
 *responsable uniquement de la valeur extérieure*.
 
-Tout d'abord, l'implémentation de `Drop` ne doit pas être systématique. Elle est
+Tout d'abord, l'implémentation de [`Drop`] ne doit pas être systématique. Elle est
 nécessaire uniquement lorsque le type requiert un traitement logique à la
-destruction. `Drop` est typiquement utilisé dans le cas du relâchement des
+destruction. [`Drop`] est typiquement utilisé dans le cas du relâchement des
 ressources externes (connexions réseau, fichier, etc.) ou de ressources mémoire
 complexes (*smart pointers* comme les `Box` ou les `Rc` par exemple). Au
-final, il est probable que l'implémentation du trait `Drop` contienne des blocs
+final, il est probable que l'implémentation du trait [`Drop`] contienne des blocs
 `unsafe` ainsi que d'autres opérations critiques du point de vue de la sécurité.
 
 <div class="reco" id="LANG-DROP" type="Règle" title="Justification de l'implémentation du trait `Drop`">
 
 Dans un développement sécurisé en Rust, l'implémentation du trait
-`std::ops::Drop` DOIT être justifiée et documentée.
+[`std::ops::Drop`] DOIT être justifiée et documentée.
 
 </div>
 
 Ensuite, le système de types de Rust assure seulement la sûreté mémoire et,
-du point de vue du typage, des `drop`s peuvent tout à fait être manqués.
-Plusieurs situations peuvent mener à manquer des `drop`s, comme :
+du point de vue du typage, des [`mem::drop`]s peuvent tout à fait être manqués.
+Plusieurs situations peuvent mener à manquer des [`mem::drop`]s, comme :
 
 - un cycle de références (par exemple avec `Rc` ou `Arc`) ;
-- un appel explicite à `std::mem::forget` (ou `core::mem::forget`) (voir
-  paragraphe à propos de [`forget` et des fuites de mémoire](unsafe/memory.md#forget-and-memory-leaks)) ;
-- un `panic` dans un `drop` ;
+- un appel explicite à [`mem::forget`] (voir
+  paragraphe à propos de [`mem::forget` et des fuites de mémoire](unsafe/memory.md#forget-and-memory-leaks)) ;
+- un `panic` dans un [`mem::drop`] ;
 - un arrêt du programme (et un `panic` lorsque `abort-on-panic` est activé).
 
-Les `drop`s manqués peuvent mener à l'exposition de données sensibles ou bien
+Les [`mem::drop`]s manqués peuvent mener à l'exposition de données sensibles ou bien
 encore à l'épuisement de ressources limitées et par là même à des problèmes
 d'indisponibilité.
 
 <div class="reco" id="LANG-DROP-NO-PANIC" type="Règle" title="Absence de `panic` dans l'implémentation de `Drop`">
 
 Dans un développement sécurisé en Rust, l'implémentation du trait
-`std::ops::Drop` NE DOIT PAS causer de `panic`.
+[`Drop`] NE DOIT PAS causer de `panic`.
 
 </div>
 
-En plus des `panic`s, les `drop`s contenant du code critique doivent être
+En plus des `panic`s, les [`mem::drop`]s contenant du code critique doivent être
 protégés.
 
 <div class="reco" id="LANG-DROP-NO-CYCLE" type="Règle" title="Absence de cycles de références avec valeurs `Drop`ables">
 
-Les valeurs dont le type implémente `Drop` NE DOIVENT PAS être incluses,
+Les valeurs dont le type implémente [`Drop`] NE DOIVENT PAS être incluses,
 directement ou indirectement, dans un cycle de références à compteurs.
 
 </div>
@@ -335,6 +341,19 @@ directement ou indirectement, dans un cycle de références à compteurs.
 
 Certaines opérations liées à la sécurité d'une application à la fin d'un
 traitement (comme l'effacement de secrets cryptographiques par exemple) NE DOIVENT PAS
-reposer uniquement sur l'implémentation du trait `Drop`.
+reposer uniquement sur l'implémentation du trait [`Drop`].
 
 </div>
+
+[`Send`]: https://doc.rust-lang.org/std/marker/trait.Send.html
+[`Sync`]: https://doc.rust-lang.org/std/marker/trait.Sync.html
+[`PartialEq`]: https://doc.rust-lang.org/std/cmp/trait.PartialEq.html
+[`PartialEq<Rhs>`]: https://doc.rust-lang.org/std/cmp/trait.PartialEq.html
+[`PartialOrd`]: https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html
+[`PartialOrd<Rhs>`]: https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html
+[`Eq`]: https://doc.rust-lang.org/std/cmp/trait.Eq.html
+[`Ord`]: https://doc.rust-lang.org/std/cmp/trait.Ord.html
+[`mem::forget`]: https://doc.rust-lang.org/std/mem/fn.forget.html
+[`mem::drop`]: https://doc.rust-lang.org/std/mem/fn.drop.html
+[`Drop`]: https://doc.rust-lang.org/std/ops/trait.Drop.html
+[`std::ops::Drop`]: https://doc.rust-lang.org/std/ops/trait.Drop.html

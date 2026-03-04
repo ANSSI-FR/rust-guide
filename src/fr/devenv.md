@@ -163,7 +163,7 @@ permet notamment de :
 - lancer la génération de la documentation (`cargo doc`) ;
 - lancer les tests (`cargo test`) et les *benchmarks* (`cargo bench`) ;
 - gérer le téléchargement des dépendances ;
-- rendre le projet distribuable et le publier sur [crates.io]
+- rendre le projet distribuable et le publier sur [`crates.io`]
   (`cargo publish`) ;
 - lancer des outils complémentaires tels que ceux décrits ci-après, sous la
   forme de sous-commandes.
@@ -203,7 +203,7 @@ Des discussions sont en cours pour
 déterminer le meilleur moyen de protéger et de valider les *crates* lors de leur ajout au projet
 (les téléchargements suivants sont vérifiés par le fichier `Cargo.lock`). Pour le
 moment, la sécurité des premiers téléchargements de `cargo` repose sur la bonne sécurité du site web
-[crates.io] ainsi que celle du dépôt, hébergé sur GitHub, contenant l'index du
+[`crates.io`] ainsi que celle du dépôt, hébergé sur GitHub, contenant l'index du
 registre de *crates*. Pour les cas les plus sensibles, il peut être préférable
 d'opter pour une méthode d'installation alternative pour les dépendances.
 
@@ -218,9 +218,9 @@ Certaines de ces options requièrent une attention particulière.
 La section `[profile.*]` permet de configurer la façon dont le compilateur est
 invoqué. Par exemple :
 
-- La variable `debug-assertions` contrôle l'activation des assertions de
+- La variable [`debug-assertions`] contrôle l'activation des assertions de
   *debug*.
-- La variable `overflow-checks` contrôle l'activation de la vérification des
+- La variable [`overflow-checks`] contrôle l'activation de la vérification des
   dépassements d'entiers lors d'opérations arithmétiques.
 
 Changer les options par défaut pour ces variables peut entraîner l'apparition de
@@ -231,7 +231,7 @@ est utilisé.
 
 <div class="reco" id="DENV-CARGO-OPTS" type="Règle" title="Conservation des valeurs par défaut des variables critiques dans les profils cargo">
 
-Les variables `debug-assertions` et `overflow-checks` NE DOIVENT PAS être
+Les variables [`debug-assertions`] et [`overflow-checks`] NE DOIVENT PAS être
 modifiées dans les sections de profils de développement (`[profile.dev]` et
 `[profile.test]`).
 
@@ -256,8 +256,10 @@ DOIVENT PAS être modifiées lorsque Cargo est appelé pour compiler un projet.
 
 </div>
 
-[crates.io]: https://crates.io
+[`crates.io`]: https://crates.io
 [cargo]: https://doc.rust-lang.org/stable/cargo/
+[`debug-assertions`]: https://doc.rust-lang.org/cargo/reference/profiles.html#debug-assertions
+[`overflow-checks`]: https://doc.rust-lang.org/cargo/reference/profiles.html#overflow-checks
 
 ### Rustfmt
 
@@ -289,7 +291,7 @@ règles de convention de style sur une base de code.
 
 ### Cargo fix
 
-La commande `cargo fix` est un
+La commande [`cargo fix`] est un
 outil dédié à la réparation des avertissements de compilation et facilitant la
 transition entre éditions.
 
@@ -322,6 +324,8 @@ Il est important de noter que l'outil ne fournit que peu de garanties quant
 configuration, certaines réparations (comme celles proposées avec l'option
 `--edition-idioms`) sont connues pour casser la compilation ou pour modifier
 la sémantique d'un programme dans certains cas.
+
+[`cargo fix`]: https://doc.rust-lang.org/cargo/commands/cargo-fix.html
 
 
 ### Clippy

@@ -14,7 +14,7 @@ references:
 
 ## Comportements ajoutés par Rust *unsafe*
 
-Les capacités du langage peuvent être étendues en utilisant du code `unsafe`. La liste complète de ces capacités est donnée dans le [manuel de référence de Rust][r-unsafety]. On notera les capacités suivantes :
+Les capacités du langage peuvent être étendues en utilisant du code `unsafe`. La liste complète de ces capacités est donnée dans le [manuel de référence de Rust](https://doc.rust-lang.org/reference/unsafety.html). On notera les capacités suivantes :
 
 * Déréférencer un *raw pointer*
 * Lire ou écrire une variable statique mutable et/ou externe
@@ -42,8 +42,8 @@ Le marquage `unsafe` est une **délégation de responsabilité** sur la sûreté
 
 L'usage de ce mot-clé dans une API *met en garde* l'utilisateur de l'API contre les potentiels effets néfastes de l'usage de l'API.
 
-* Dans une signature de fonction ([r-unsafe.fn]), `unsafe` signifie que le comportement de la fonction peut conduire à des *UB* si le contrat d'usage de la fonction (dans sa documentation) n'est pas respecté.
-* Dans la déclaration d'un trait ([r-unsafe.trait]), `unsafe` signifie qu'une implémentation erronée de ce trait peut conduire à des *UB* si le contrat d'implémentation du trait (de préférence documenté) n'est pas respecté.
+* Dans une signature de fonction (section [r-unsafe.fn] de la [référence Rust @rust-reference]), `unsafe` signifie que le comportement de la fonction peut conduire à des *UB* si le contrat d'usage de la fonction (dans sa documentation) n'est pas respecté.
+* Dans la déclaration d'un trait (section [r-unsafe.trait] de la [référence Rust @rust-reference]), `unsafe` signifie qu'une implémentation erronée de ce trait peut conduire à des *UB* si le contrat d'implémentation du trait (de préférence documenté) n'est pas respecté.
 
 [r-unsafe.fn]: <https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.fn>
 [r-unsafe.trait]: <https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.trait>
@@ -52,18 +52,18 @@ L'usage de ce mot-clé dans une API *met en garde* l'utilisateur de l'API contre
 
 Le déverrouillage `unsafe` est une **prise de responsabilité** sur la sûreté mémoire du programme en développement.
 
-L'usage d'un bloc `unsafe` dans le corps d'une fonction ou dans la définition d'une constante est imposé par le compilateur ([r-unsafe.block]) pour empêcher l'usage *par inadvertance* d'opérations `unsafe`. Parmi ces opérations, on trouve :
+L'usage d'un bloc `unsafe` dans le corps d'une fonction ou dans la définition d'une constante est imposé par le compilateur (section [r-unsafe.block] de la [référence Rust @rust-reference]) pour empêcher l'usage *par inadvertance* d'opérations `unsafe`. Parmi ces opérations, on trouve :
 
 * l'utilisation de fonctions marquées unsafe
 * la modification de variable mutables statiques
 * l'utilisation de fonctions externes
 
-De manière similaire, l'implémentation d'un trait marqué `unsafe` nécessite `unsafe` ([r-unsafe.impl]) pour indiquer la prise en compte *explicite* par le développeur des contrats de sûreté du trait. Il permet donc de *déverrouiller* l'implémentation de traits `unsafe`.
+De manière similaire, l'implémentation d'un trait marqué `unsafe` nécessite `unsafe` (section [r-unsafe.impl] de la [référence Rust @rust-reference]) pour indiquer la prise en compte *explicite* par le développeur des contrats de sûreté du trait. Il permet donc de *déverrouiller* l'implémentation de traits `unsafe`.
 
 Enfin, depuis l'édition 2024 de Rust, il est nécessaire également de déverrouiller à l'aide du mot-clé `unsafe` :
 
-* les blocs `extern` ([r-unsafe.extern]) contenant les déclarations externes pour le [FFI](./ffi.md#chapter-ffi) ;
-* certains attributs (par exemple, `no_mangle`, cf. [r-attributes.safety]).
+* les blocs `extern` (section [r-unsafe.extern] de la [référence Rust @rust-reference]) contenant les déclarations externes pour le [FFI](./ffi.md#chapter-ffi) ;
+* certains attributs (par exemple, `no_mangle`, voir la section [r-attributes.safety] de la [référence Rust @rust-reference]).
 
 [r-unsafe.impl]: <https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.impl>
 [r-unsafe.block]: <https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.block>

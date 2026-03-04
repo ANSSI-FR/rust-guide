@@ -14,7 +14,7 @@ references:
 
 ## Comportements indéfinis
 
-> Le comportement d'un programme est *indéfini* (*UB* pour *Undefined Behavior*) lorsque sa sémantique n'est 
+> Le comportement d'un programme est *indéfini* (*UB* pour [*Undefined Behavior*](https://doc.rust-lang.org/reference/behavior-considered-undefined.html)) lorsque sa sémantique n'est 
 > pas décrite dans le langage Rust.
 
 Selon la [référence Rust @rust-reference], l'existence d'*UB* est considéré comme une [erreur](https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general).

@@ -14,7 +14,7 @@ references:
 
 ## Undefined Behaviors (*UB*)
 
-> The behavior of a program is *undefined* when its semantics is not described in the Rust language.
+> The behavior of a program is [*undefined*](https://doc.rust-lang.org/reference/behavior-considered-undefined.html) when its semantics is not described in the Rust language.
 
 Considering the [Rust Reference @rust-reference], the existence of UB is considered an [error](https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general).
 

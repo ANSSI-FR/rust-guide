@@ -527,14 +527,14 @@ which language is responsible for reclaiming the memory space for this data.
 The same is true for other kind of resources such as sockets or files.
 
 Rust tracks variable ownership and lifetime to determine at compilation time if
-and when memory should be deallocated. Thanks to the `Drop` trait, one can
+and when memory should be deallocated. Thanks to the [`Drop`] trait, one can
 exploit this system to reclaim other kind of resources such as file or network
 access. *Moving* some piece of data from Rust to a foreign language means also
 abandoning the possible reclamations associated with it.
 
 <div class="reco" id="FFI-MEM-NODROP" type="Rule" title="Do not use types that implement `Drop` at FFI boundary">
 
-In a secure Rust development, Rust code MUST NOT implement `Drop` for any
+In a secure Rust development, Rust code MUST NOT implement [`Drop`] for any
 types that are directly transmitted to foreign code  (i.e. not through a
 pointer or reference).
 
@@ -569,7 +569,7 @@ wrapper around the foreign type:
 
 In a secure Rust development, any non-sensitive foreign piece of data that are
 allocated and deallocated in the foreign language SHOULD be encapsulated in a
-`Drop` type in such a way as to provide automatic deallocation in Rust,
+[`Drop`] type in such a way as to provide automatic deallocation in Rust,
 through an automatic call to the foreign language deallocation routine.
 
 </div>
@@ -620,22 +620,26 @@ stack unwinding from Rust code into foreign code results in **undefined behavior
 <div class="reco" id="FFI-NOPANIC" type="Rule" title="Handle `panic!` correctly in FFI">
 
 Rust code called from FFI MUST either ensure the function cannot panic, or use
-a panic handling mechanism (such as `std::panic::catch_unwind`,
-`std::panic::set_hook`, `#[panic_handler]`) to ensure the rust code will not
+a panic handling mechanism (such as [`std::panic::catch_unwind`],
+[`std::panic::set_hook`], [`#[panic_handler]`](https://doc.rust-lang.org/reference/panic.html#r-panic.panic_handler)) to ensure the rust code will not
 abort or return in an unstable state.
 
 </div>
 
-Note that `catch_unwind` will only catch unwinding panics, not those that abort
+Note that [`catch_unwind`] will only catch unwinding panics, not those that abort
 the process.
 
 ```rust,unsafe,noplaypen,ignore
 {{#include ../../../examples/src/ffi.rs:panic}}
 ```
 
+[`catch_unwind`]: https://doc.rust-lang.org/std/panic/fn.catch_unwind.html
+[`std::panic::catch_unwind`]: https://doc.rust-lang.org/std/panic/fn.catch_unwind.html
+[`std::panic::set_hook`]: https://doc.rust-lang.org/std/panic/fn.set_hook.html
+
 ### `no_std`
 
-In the case of `#![no_std]` program, a panic handler (`#[panic_handler]`) must
+In the case of `#![no_std]` program, a panic handler ([`#[panic_handler]`](https://doc.rust-lang.org/reference/panic.html#r-panic.panic_handler)) must
 be defined to ensure security. The panic handler should be written with great
 care in order to ensure both the safety and security of the program.
 
@@ -679,3 +683,5 @@ C header, `counter.h`:
 ```c
 {{#include ../../../examples/src/counter.c}}
 ```
+
+[`Drop`]: https://doc.rust-lang.org/std/ops/trait.Drop.html

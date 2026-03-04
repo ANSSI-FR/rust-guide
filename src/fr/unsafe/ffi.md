@@ -574,7 +574,7 @@ les descripteurs de fichiers ou les *sockets*.
 
 Rust piste le responsable ainsi que la durée de vie des variables pour
 déterminer à la compilation si et quand la mémoire associée doit être libérée.
-Grâce au trait `Drop`, il est possible d'exploiter ce système pour libérer
+Grâce au trait [`Drop`], il est possible d'exploiter ce système pour libérer
 toutes sortes de ressources comme des fichiers ou des accès au réseau.
 *Déplacer* une donnée depuis Rust vers un langage signifie également abandonner
 de possibles réclamations de la mémoire qui lui est associée.
@@ -582,7 +582,7 @@ de possibles réclamations de la mémoire qui lui est associée.
 <div class="reco" id="FFI-MEM-NODROP" type="Règle" title="Non-utilisation de types qui implémentent `Drop` dans des FFI">
 
 Dans un développement sécurisé en Rust, le code Rust NE DOIT PAS implémenter
-`Drop` pour les valeurs de types qui sont directement transmis à du code
+[`Drop`] pour les valeurs de types qui sont directement transmis à du code
 externe (c'est-à-dire ni par pointeur, ni par référence).
 
 </div>
@@ -620,7 +620,7 @@ externe.
 
 Dans un développement sécurisé en Rust, toute donnée à caractère non sensible
 allouée et libérée du côté du langage externe DEVRAIT être encapsulée dans un
-type implémentant `Drop`, de telle sorte que Rust fournisse l'appel
+type implémentant [`Drop`], de telle sorte que Rust fournisse l'appel
 automatique au destructeur Rust.
 
 </div>
@@ -677,23 +677,27 @@ Le code Rust appelé depuis un langage externe DOIT :
 
 * soit s'assurer que la fonction ne peut pas provoquer de `panic`, 
 * soit utiliser un mécanisme de
-récupération de `panic` (comme `std::panic::catch_unwind`,
-`std::panic::set_hook`, `#[panic_handler]`), afin d'assurer que la fonction
+récupération de `panic` (comme [`std::panic::catch_unwind`],
+[`std::panic::set_hook`], [`#[panic_handler]`](https://doc.rust-lang.org/reference/panic.html#r-panic.panic_handler)), afin d'assurer que la fonction
 Rust ne peut pas quitter ou retourner dans un état instable.
 
 </div>
 
-Il faut noter que `catch_unwind` rattrapera seulement les *unwinding `panic`s*
+Il faut noter que [`catch_unwind`] rattrapera seulement les *unwinding `panic`s*
 mais pas ceux provoquant un arrêt du processus.
 
 ```rust,unsafe,noplaypen,ignore
 {{#include ../../../examples/src/ffi.rs:panic}}
 ```
 
+[`catch_unwind`]: https://doc.rust-lang.org/std/panic/fn.catch_unwind.html
+[`std::panic::catch_unwind`]: https://doc.rust-lang.org/std/panic/fn.catch_unwind.html
+[`std::panic::set_hook`]: https://doc.rust-lang.org/std/panic/fn.set_hook.html
+
 ### `no_std`
 
 Dans le cas des programmes n'utilisant pas la bibliothèque standard
-Rust (`#[no_std]`), un gestionnaire de `panic` (`#[panic_handler]`) doit être
+Rust (`#[no_std]`), un gestionnaire de `panic` ([`#[panic_handler]`](https://doc.rust-lang.org/reference/panic.html#r-panic.panic_handler)) doit être
 défini pour la sécurité du programme. Le gestionnaire de `panic` doit être écrit
 avec la plus grande précaution pour garantir non seulement la sécurité, mais
 aussi la sûreté du programme.
@@ -742,3 +746,5 @@ générer un *header* C cohérent, `counter.h` :
 ```c
 {{#include ../../../examples/src/counter.c}}
 ```
+
+[`Drop`]: https://doc.rust-lang.org/std/ops/trait.Drop.html

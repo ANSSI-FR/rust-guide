@@ -152,7 +152,7 @@ It has a fundamental role in most Rust developments:
 - It generates the project's documentation (`cargo doc`),
 - It runs tests (`cargo test`) and benchmarks (`cargo bench`),
 - It manages and downloads dependencies,
-- It makes packages distributable and publishes them on [crates.io],
+- It makes packages distributable and publishes them on [`crates.io`],
 - It’s also a front-end to run complementary tools such as those that are
   described below, in the form of sub-commands.
 
@@ -190,7 +190,7 @@ the file is overwritten with the latest available version of every crate.
 Ongoing discussions occur on how to best protect
 and verify crates *on their first download* (according to the TOFU rule).
 For now, the security of the first download relies on the good security of the
-website [crates.io] and the GitHub hosted repository containing the
+website [`crates.io`] and the GitHub hosted repository containing the
 registry index. In some cases, it may be preferable to opt for an alternative
 installation method for dependencies.
 
@@ -204,8 +204,8 @@ During the development of a secure application, some of the options may require
 some attention. The `[profile.*]` sections allow configuring how the compiler is
 invoked. For example:
 
-- the `debug-assertions` variable controls whether debug assertions are enabled,
-- the `overflow-checks` variable controls whether overflows are checked for
+- the [`debug-assertions`] variable controls whether debug assertions are enabled,
+- the [`overflow-checks`] variable controls whether overflows are checked for
   integer arithmetic.
 
 Overriding the default options may cause bugs not being detected, even when
@@ -214,7 +214,7 @@ using the debug profile that normally enables runtime checks (for example it doe
 
 <div class="reco" id="DENV-CARGO-OPTS" type="Rule" title="Keep default values for critical variables in cargo profiles">
 
-The variables `debug-assertions` and `overflow-checks` MUST NOT be overridden
+The variables [`debug-assertions`] and [`overflow-checks`] MUST NOT be overridden
 in development profiles' sections (`[profile.dev]` and `[profile.test]`).
 
 </div>
@@ -236,8 +236,10 @@ be overridden when using Cargo to build the project.
 
 </div>
 
-[crates.io]: https://crates.io
+[`crates.io`]: https://crates.io
 [cargo]: https://doc.rust-lang.org/stable/cargo/
+[`debug-assertions`]: https://doc.rust-lang.org/cargo/reference/profiles.html#debug-assertions
+[`overflow-checks`]: https://doc.rust-lang.org/cargo/reference/profiles.html#overflow-checks
 
 ### Rustfmt
 
@@ -268,7 +270,7 @@ guidelines.
 
 ### Cargo fix
 
-The `cargo fix` command is a tool dedicated to
+The [`cargo fix`] command is a tool dedicated to
 fixing compiler warnings as well as easing transitions between editions.
 
 ```shell
@@ -298,7 +300,8 @@ proposed fixes. In particular, some corrections (such as some of those
 provided with the `--edition-idioms`) are known to break the compilation
 or change the program semantics in some cases.
 
-[rustfix]: https://github.com/rust-lang-nursery/rustfix
+[`cargo fix`]: https://doc.rust-lang.org/cargo/commands/cargo-fix.html
+
 
 ### Clippy
 
