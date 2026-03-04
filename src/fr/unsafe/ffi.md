@@ -142,7 +142,7 @@ Certains types sont compatibles, mais avec certaines limitations :
 - les types à taille nulle, qui ne sont pas spécifiés pour le C et mènent à des
   contradictions dans les spécifications du C++ ;
 - les `enum`s avec champs annotés avec `repr(C)`, `repr(C, Int)` ou `repr(Int)`
-  (voir [@RFC-2195]).
+  (voir [RFC 2195 @RFC-2195]).
 
 [Rust Reference: Type Layout]: https://doc.rust-lang.org/reference/type-layout.html
 
@@ -159,7 +159,7 @@ DOIVENT avoir la même taille et respecter le même alignement.
 </div>
 
 En ce qui concerne les `enum`s avec des champs en particulier, les types
-correspondant en C (ou en C++) ne sont pas évidents ([@RFC-2195]).
+correspondant en C (ou en C++) ne sont pas évidents ([RFC 2195 @RFC-2195]).
 
 Les outils permettant de générer automatiquement des *bindings*, comme
 [rust-bindgen] ou [cbindgen], peuvent aider à assurer la cohérence entre les
@@ -544,7 +544,7 @@ illustrée comme suit :
 {{#include ../../../examples/src/ffi.rs:opaque_external}}
 ```
 
-La proposition [@RFC-1861], non stabilisée à la rédaction de ce guide, propose
+La proposition [RFC 1861 @RFC-1861], non stabilisée à la rédaction de ce guide, propose
 de faciliter cette situation en permettant de déclarer des types opaques dans
 des blocs `extern`.
 

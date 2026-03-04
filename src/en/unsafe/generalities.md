@@ -34,7 +34,7 @@ NO Undefined Behavior is allowed.
 
 ## A keyword with two usages
 
-As described in [@rust-reference], the `unsafe` keyword is used both for marking unsafety in an API and unlocking unsafety in the implementation.
+As described in the [Rust Reference @rust-reference], the `unsafe` keyword is used both for marking unsafety in an API and unlocking unsafety in the implementation.
 
 ### `unsafe` marking
 

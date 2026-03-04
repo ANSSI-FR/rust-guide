@@ -13,7 +13,7 @@ references:
 # Naming
 
 The standard library serves as the de facto standard for naming conventions in Rust.
-An effort has been made to formalize the conventions through [@RFC-430] and later in the [@rust-guidelines].
+An effort has been made to formalize the conventions through the [RFC 43 @RFC-430] and later in the [Rust API Guidelines @rust-guidelines].
 
 The basic rule (C-CASE) consists in using:
 
@@ -22,7 +22,7 @@ The basic rule (C-CASE) consists in using:
 - `SCREAMING_SNAKE_CASE` for statics, constants, and generic constant parameters,
 - `'lowercase` for lifetimes.
 
-The [@rust-guidelines] also prescribes more precise naming conventions for
+The [Rust API Guidelines @rust-guidelines] also prescribes more precise naming conventions for
 particular constructs:
 
 - (C-CONV) for conversion methods (`as_`, `to_`, `into_`),
@@ -49,6 +49,6 @@ clippy::self_named_constructors
 <div class="reco" id="LANG-NAMING" type="Rule" title="Respect naming conventions">
 
 Development of a secure application MUST follow the naming conventions
-outlined in the [@rust-guidelines].
+outlined in the [Rust API Guidelines @rust-guidelines].
 
 </div>

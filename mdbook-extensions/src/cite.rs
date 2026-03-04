@@ -4,7 +4,8 @@ use regex::Regex;
 use serde::Deserialize;
 use serde_yaml_ng::Value;
 
-static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\[@([a-zA-Z0-9\-_]*)\]").unwrap());
+static RE: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"\[([^\]]*) @([a-zA-Z0-9\-_]*)\]").unwrap());
 
 #[derive(Debug, Deserialize)]
 struct Entry {
@@ -28,9 +29,18 @@ pub fn cite_proc<'a>(
     if let Some(bib) = meta.get("references") {
         let bib: Vec<Entry> =
             serde_yaml_ng::from_value(bib.to_owned()).expect("Cannot read CSL-YAML library");
-        let mut new_content = RE.replace_all(content, "[$1](#$1)").into_owned();
+        // let mut new_content = RE.replace_all(content, "[$1](#$2)").into_owned();
+        let replacement = |cap: &regex::Captures| {
+            let id = &cap[2];
+            let name = &cap[1];
+            match bib.iter().find(|e| e.id == id).and_then(|e| e.url.as_ref()) {
+                Some(url) => format!("[{name}]({url})"),
+                None => format!("{name} [{id}](#{id})"),
+            }
+        };
+        let mut new_content = RE.replace_all(content, replacement).into_owned();
         let mut refs = Vec::new();
-        for (_, [reference]) in RE.captures_iter(content).map(|c| c.extract()) {
+        for (_, [_name, reference]) in RE.captures_iter(content).map(|c| c.extract()) {
             refs.push(reference);
         }
         if !refs.is_empty() {

@@ -12,6 +12,10 @@ references:
     publisher: ANSSI
     title: Maîtrise du risque numérique - l’atout confiance
     type: report
+  - type: web
+    title: Asynchronous Programming in Rust
+    url: https://rust-lang.github.io/async-book/
+    id: rust-async
 ---
 
 # Introduction
@@ -103,7 +107,7 @@ sont présentées.
 test et de *fuzzing* pour un projet réalisé en Rust.-->
 Enfin, nous discutons du bon usage de certaines librairies.
 
-Il est à noter qu'à ce jour ce document n'aborde pas le sujet du Rust *async*.
+Il est à noter qu'à ce jour ce document n'aborde pas le sujet du Rust *async* (voir le guide sur [rust asynchrone @rust-async]).
 
 Un résumé des règles et recommandations est disponible à la fin de ce guide.
 
@@ -134,9 +138,9 @@ adapté à un besoin de sécurité plus élevé.
 </div>
 
 Dans une démarche permanente de gestion du risque numérique et d’amélioration continue de
-la sécurité des systèmes d’information [^1], la pertinence de mise en œuvre des recommandations
+la sécurité des systèmes d’information [^2], la pertinence de mise en œuvre des recommandations
 décrites dans ce document doit être périodiquement réévaluée.
 
 La liste récapitulative des recommandations est disponible en <span class="gotochecklist"></span>.
 
-[^1]: Se reporter au guide ANSSI relatif à la maîtrise du risque numérique [@anssi-risque-numerique]
+[^2]: Se reporter au guide ANSSI relatif à la [maîtrise du risque numérique @anssi-risque-numerique]

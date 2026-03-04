@@ -16,8 +16,8 @@ references:
 
 La convention de nommage employée par la bibliothèque standard est *de facto* le
 standard pour le nommage des éléments des programmes écrits en Rust. Un effort a
-été fait pour formaliser ces conventions de nommage, d'abord dans la [@RFC-430],
-puis dans le document des *[@rust-guidelines]*.
+été fait pour formaliser ces conventions de nommage, d'abord dans la [RFC 430 @RFC-430],
+puis dans le document des [bonnes pratiques Rust @rust-guidelines].
 
 La règle de base (C-CASE) consiste à utiliser :
 
@@ -26,7 +26,7 @@ La règle de base (C-CASE) consiste à utiliser :
 - `SCREAMING_SNAKE_CASE` pour les variables statiques, les constantes et les paramètres génériques constants ;
 - `'lowercase` pour les durées de vie (*lifetimes*).
 
-Les [@rust-guidelines] recommandent également des conventions de nommage
+Les [bonnes pratiques Rust @rust-guidelines] recommandent également des conventions de nommage
 plus précises pour certaines constructions particulières :
 
 - (C-CONV) pour les méthodes de conversion (`as_`, `to_`, `into_`) ;
@@ -53,6 +53,6 @@ clippy::self_named_constructors
 <div class="reco" id="LANG-NAMING" type="Règle" title="Respect des conventions de nommage">
 
 Le développement d'une application sécurisée DOIT suivre les conventions de
-nommage décrites dans les [@rust-guidelines].
+nommage décrites dans les [bonnes pratiques Rust @rust-guidelines].
 
 </div>

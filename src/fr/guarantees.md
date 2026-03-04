@@ -17,7 +17,7 @@ references:
 > Le comportement d'un programme est *indéfini* (*UB* pour *Undefined Behavior*) lorsque sa sémantique n'est 
 > pas décrite dans le langage Rust.
 
-Selon [@rust-reference], l'existence d'*UB* est considéré comme une [erreur](https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general).
+Selon la [référence Rust @rust-reference], l'existence d'*UB* est considéré comme une [erreur](https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general).
 
 Par exemple le déréférencement d'un pointeur null est un *UB*.
 *A contrario*, un `unwrap` sur l'objet `None` est bien *défini* car c'est le langage qui traite cette erreur
@@ -31,8 +31,8 @@ On notera les garanties suivantes :
   * Pas d'accès à de la mémoire libérée
   * Accès toujours aligné quelque soit la plateforme
 * Les valeurs pointées sont [cohérentes](https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.invalid) avec le type du pointeur. Par exemple, une valeur pointée par un pointeur booléen sera l'octet 1 ou 0.
-* Respect des règles d'[*aliasing*](https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias) (voir aussi le [@nomicon] pour des [exemples](https://doc.rust-lang.org/nomicon/aliasing.html)): une référence mutable ne peux être partagée.
-* Pas d'[accès concurrent]((https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race)) (un accès en lecture et un autre en écriture ou en lecture) à la même adresse mémoire (voir aussi le [@nomicon] pour des [exemples](https://doc.rust-lang.org/nomicon/races.html))
+* Respect des règles d'[*aliasing*](https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias) (voir aussi le [Rustonomicon @nomicon] pour des [exemples](https://doc.rust-lang.org/nomicon/aliasing.html)): une référence mutable ne peux être partagée.
+* Pas d'[accès concurrent](https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race) (un accès en lecture et un autre en écriture ou en lecture) à la même adresse mémoire (voir aussi le [Rustonomicon @nomicon] pour des [exemples](https://doc.rust-lang.org/nomicon/races.html))
 
 ## Garantie de Rust
 

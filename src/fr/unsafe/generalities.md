@@ -34,7 +34,7 @@ AUCUN comportement indéfini NE DOIT se produire.
 
 ## Un mot-clé, deux usages
 
-Comme décrit dans [@rust-reference], le mot-clé `unsafe` a deux usages : le marquage dans une API et le déverrouillage dans une implémentation.
+Comme décrit dans la [référence de Rust @rust-reference], le mot-clé `unsafe` a deux usages : le marquage dans une API et le déverrouillage dans une implémentation.
 
 ### Marquage `unsafe`
 

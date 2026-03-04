@@ -30,7 +30,7 @@ implementation may lead to **undefined behavior**.
 Fortunately, in most cases, one does not need to implement it. In Rust,
 almost all primitive types are `Send` and `Sync`, and for most compound types
 the implementation is automatically provided by the Rust compiler.
-As mentioned in [@nomicon], notable exceptions are:
+As mentioned in [Rustonomicon @nomicon], notable exceptions are:
 
 - Raw pointers are neither `Send` nor `Sync` because they offer no safety
   guards.
@@ -253,7 +253,7 @@ Indeed, unlike the classical behavior of traits [^1], the execution of the same
 code will differ depending on whether this trait is implemented or not.
 
 [^1]: Except for the use of negative trait bounds, which is allowed for example
-by [@RFC-1210], but is not yet stabilized for the current version of Rust (1.91.0).
+by [RFC 1210 @RFC-1210], but is not yet stabilized for the current version of Rust (1.91.0).
 
 </div>
 

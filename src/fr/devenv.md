@@ -45,7 +45,7 @@ site officiel du langage Rust.
 Il existe plusieurs variantes du langage Rust, appelées *éditions*. Le concept
 d'éditions a été introduit afin de distinguer la mise en place de nouvelles
 fonctionnalités dans le langage, et de rendre ce processus incrémental.
-Toutefois, comme mentionné dans le [@rust-edition-guide], cela ne signifie pas que
+Toutefois, comme mentionné dans le [manuel Rust @rust-edition-guide], cela ne signifie pas que
 de nouvelles fonctionnalités et améliorations ne seront incluses que dans la
 dernière édition.
 
@@ -147,7 +147,7 @@ Les cibles Rustc de niveau 1 et les chaînes de compilation certifiées DOIVENT 
 </div>
 
 
-Une liste complète des cibles prises en charge est disponible dans [@rustc-book].
+Une liste complète des cibles prises en charge est disponible dans le [Rust Book @rustc-book].
 
 
 ## Cargo
@@ -211,7 +211,7 @@ d'opter pour une méthode d'installation alternative pour les dépendances.
 
 Cargo propose différentes commandes et options pour adapter le processus de
 compilation aux besoins de chaque projet, principalement au travers du fichier
-`Cargo.toml`. Pour une présentation complète, voir le [@cargo-book].
+`Cargo.toml`. Pour une présentation complète, voir le [Cargo Book @cargo-book].
 
 Certaines de ces options requièrent une attention particulière.
 
@@ -276,7 +276,7 @@ single_line_if_else_max_width = 40
 ```
 
 Pour plus d'informations à propos des règles de convention de style que
-`rustfmt` propose, voir [@rust-style].
+`rustfmt` propose, voir le [guide des conventions de style @rust-style].
 
 <div class="reco" id="DENV-FORMAT" type="Recommandation" title="Utilisation d'un outil de formatage (rustfmt)">
 

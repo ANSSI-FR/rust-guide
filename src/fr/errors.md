@@ -1,3 +1,12 @@
+---
+references:
+  - type: web
+    title: Recover
+    date: 2015
+    url: https://rust-lang.github.io/rfcs/1236-stabilize-catch-panic.html
+    id: RFC-1236
+---
+
 # Gestion des erreurs
 
 <!--
@@ -12,7 +21,7 @@ testé et jamais ignoré.
 
 Une *crate* PEUT implanter son propre type `Error` qui peut contenir toutes
 les erreurs possibles. Des précautions supplémentaires DOIVENT être prises :
-ce type DOIT être *exception-safe* (RFC 1236) et implémenter les traits
+ce type DOIT être *exception-safe* ([RFC 1236 @RFC-1236]) et implémenter les traits
 `Error + Send + Sync + 'static` ainsi que `Display`.
 
 </div>

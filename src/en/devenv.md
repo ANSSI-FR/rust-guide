@@ -44,7 +44,7 @@ Several flavors, called *editions*, of the Rust language coexist.
 
 The concept of editions has been introduced to clarify the
 implementation of new features and to make them incremental. A new edition will be produced
-every two or three years, as stated in [@rust-edition-guide], but this doesn’t
+every two or three years, as stated in the [Rust Manual @rust-edition-guide], but this doesn’t
 mean that new features and improvements will only be shipped in a new edition.
 
 Some editions bring new keywords and language constructs. Recommendations for
@@ -139,7 +139,7 @@ Rustc tier 1 targets and certified toolchains MUST be used for safety-critical s
 
 </div>
 
-A comprehensive list of supported targets is available in [@rustc-book].
+A comprehensive list of supported targets is available in the [Rust Book @rustc-book].
 
 ## Cargo
 
@@ -198,7 +198,7 @@ installation method for dependencies.
 
 Cargo proposes many different commands and options to adapt the build process to
 your project needs, mainly through the manifest file `Cargo.toml`. For a
-complete presentation, see [@cargo-book].
+complete presentation, see the [Cargo Book @cargo-book].
 
 During the development of a secure application, some of the options may require
 some attention. The `[profile.*]` sections allow configuring how the compiler is
@@ -255,7 +255,7 @@ single_line_if_else_max_width = 40
 ```
 
 For more information about the guidelines that `rustfmt` will check, have a look
-at the [@rust-style].
+at the [Rust Style Guidelines Book@rust-style].
 
 <div class="reco" id="DENV-FORMAT" type="Recommendation" title="Use Rust formatter (rustfmt)">
 

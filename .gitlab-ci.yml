@@ -21,7 +21,7 @@ stages: # List of stages for jobs, and their order of execution
   - test
   - deploy
 
-image: $CI_REGISTRY/anssi-fr/collab/rust-guide/worker:1.0.0
+image: $CI_REGISTRY/anssi-fr/collab/rust-guide/worker:2.0.0
 
 build-job: # This job runs in the build stage, which runs first.
   stage: build

@@ -12,6 +12,10 @@ references:
     publisher: ANSSI
     title: Controlling the digital risk - The trust advantage
     type: report
+  - type: web
+    title: Asynchronous Programming in Rust
+    url: https://rust-lang.github.io/async-book/
+    id: rust-async
 ---
 
 # Introduction
@@ -94,7 +98,7 @@ Then, recommendations about the Rust language constructs are presented.
 tests for a project in Rust, and for using Rust fuzzing tools.-->
 We finally introduce some recommendations for established Rust libraries.
 
-Note that *async* Rust is currently not addressed in this document.
+Note that *async* Rust (see [Asynchronous Programming in Rust @rust-async]) is currently not addressed in this document.
 
 A summary of recommendations presented throughout the document is listed at the
 end of this guide.
@@ -124,9 +128,9 @@ This recommendation is required for higher level security software.
 </div>
 
 As part of an ongoing process of digital risk management and continuous improvement of
-information system security [^1], the relevance of implementing the recommendations
+information system security [^2], the relevance of implementing the recommendations
 described in this document must be periodically reassessed.
 
 The checklist can be found <span class="gotochecklist"></span>.
 
-[^1]: For further information, please refer to the ANSSI's digital risk management guide [@anssi-risque-numerique]
+[^2]: For further information, please refer to the [ANSSI's digital risk management guide @anssi-risque-numerique]

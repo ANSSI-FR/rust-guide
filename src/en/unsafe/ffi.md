@@ -139,7 +139,7 @@ Some types are compatible with some caveats:
 - Zero-sized types, which is really zero sized (which is left unspecified in C
   and contradicts the C++ specification),
 - `repr(C)`, `repr(C, Int)`, or `repr(Int)`-annotated enum with fields
-  (see [@RFC-2195]).
+  (see [RFC 2195 @RFC-2195]).
 
 [Rust Reference: Type Layout]: https://doc.rust-lang.org/reference/type-layout.html
 
@@ -156,7 +156,7 @@ and the same alignment requirement.
 </div>
 
 Concerning enums with fields in particular, the corresponding types in C (or
-C++) are not obvious, cf. [@RFC-2195].
+C++) are not obvious, cf. [RFC 2195 @RFC-2195].
 
 Automated tools to generate bindings, such as [rust-bindgen] or
 [cbindgen], may be of help in making types consistent between C and Rust.
@@ -501,7 +501,7 @@ Currently the recommended way to make a foreign opaque type is like so:
 {{#include ../../../examples/src/ffi.rs:opaque_external}}
 ```
 
-The not-yet-stabilized [@RFC-1861] proposes to facilitate this encoding by allowing
+The not-yet-stabilized [RFC 1861 @RFC-1861] proposes to facilitate this encoding by allowing
 to declare opaque types in `extern` blocks.
 
 <div class="reco" id="FFI-C-OPAQUE" type="Recommendation" title="Use incomplete C/C++ `struct` pointers to make type opaque">

@@ -33,7 +33,7 @@ Heureusement, dans la plupart des cas, il n'est pas nécessaire de fournir une
 implémentation. En Rust, la quasi-totalité des types primitifs implémente
 `Send` et `Sync`, et dans la majorité des cas, Rust fournit de manière
 automatique une implémentation pour les types composés. Comme rappelé dans
-[@nomicon], quelques exceptions notables sont :
+[Rustonomicon @nomicon], quelques exceptions notables sont :
 
 - les pointeurs `raw`, qui n'implémentent ni `Send`, ni `Sync`, puisqu'ils
   n'offrent aucune garantie quant à la sûreté ;
@@ -269,7 +269,7 @@ Implémenter ce trait modifie la sémantique d'exécution du langage. En effet,
 contrairement au fonctionnement classique des traits [^1], l'exécution d'un même code
 se verra différente avec et sans cette implémentation.
 
-[^1]: excepté l'usage de contraintes négatives de type, permis par exemple par la [@RFC-1210],
+[^1]: excepté l'usage de contraintes négatives de type, permis par exemple par la [RFC 1210 @RFC-1210],
 pas encore stabilisé pour la version actuelle de Rust (1.91.0)
 
 </div>

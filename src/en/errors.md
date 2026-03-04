@@ -1,3 +1,12 @@
+---
+references:
+  - type: web
+    title: Recover
+    date: 2015
+    url: https://rust-lang.github.io/rfcs/1236-stabilize-catch-panic.html
+    id: RFC-1236
+---
+
 # Error handling
 
 <!-- <mark>TODO</mark>: explicit good practices in error handling. -->
@@ -8,7 +17,7 @@ A `Result` object must be tested, and never ignored.
 <div class="reco" id="LANG-ERRWRAP" type="Recommendation" title="Implement custom `Error` type wrapping all possible errors">
 
 A crate may implement its own `Error` type, wrapping all possible errors.
-It MUST be careful to make this type exception-safe (RFC 1236), and implement
+It MUST be careful to make this type exception-safe ([RFC 1236 @RFC-1236]), and implement
 `Error + Send + Sync + 'static` as well as `Display`.
 
 </div>
