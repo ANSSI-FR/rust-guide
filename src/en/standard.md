@@ -255,11 +255,6 @@ Rust equivalent of a destructor in C++ or a finalizer in Java.
 <div class="note">
 
 Implementing this trait changes the execution semantics of the language.
-Indeed, unlike the classical behavior of traits [^1], the execution of the same
-code will differ depending on whether this trait is implemented or not.
-
-[^1]: Except for the use of negative trait bounds, which is allowed for example
-by [RFC 1210 @RFC-1210], but is not yet stabilized for the current version of Rust (1.91.0).
 
 </div>
 

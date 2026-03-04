@@ -271,12 +271,7 @@ certaines opérations lorsque la mémoire associée à une valeur est réclamée
 
 <div class="note">
 
-Implémenter ce trait modifie la sémantique d'exécution du langage. En effet,
-contrairement au fonctionnement classique des traits [^1], l'exécution d'un même code
-se verra différente avec et sans cette implémentation.
-
-[^1]: excepté l'usage de contraintes négatives de type, permis par exemple par la [RFC 1210 @RFC-1210],
-pas encore stabilisé pour la version actuelle de Rust (1.91.0)
+Implémenter ce trait modifie la sémantique d'exécution du langage. 
 
 </div>
 
