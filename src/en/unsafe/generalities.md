@@ -61,7 +61,7 @@ Similarly, the implementation of an `unsafe` trait requires `unsafe` for the dev
 
 Lastly, Since the 2024 edition, `unsafe` is also required to unlock the following:
 
-* `extern` blocks, which contain declarations of foreign functions and variables, for [FFI](./ffi.md),
+* `extern` blocks, which contain declarations of foreign functions and variables, for [FFI](./ffi.md#chapter-ffi),
 * some attributes (for instance , no_mangle, cf. [r-attributes.safety]).
 
 [r-attributes.safety]: <https://doc.rust-lang.org/reference/attributes.html#r-attributes.safety>

@@ -1,4 +1,4 @@
-# Gestion de la mémoire
+# Gestion de la mémoire {#chapter-memory}
 
 <!-- ## À propos de la sûreté mémoire en Rust -->
 
@@ -18,7 +18,7 @@ Cependant,
 > même si certaines des fonctions présentées dans la suite ne sont pas `unsafe`,
 > elles ne devraient être utilisées qu'en Rust *unsafe*.
 
-## `forget` et fuites de mémoire
+## `forget` et fuites de mémoire {#forget-and-memory-leaks}
 
 Rust fournit
 des fonctions spéciales pour réclamer manuellement la mémoire : les fonctions

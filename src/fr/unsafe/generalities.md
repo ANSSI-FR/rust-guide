@@ -62,7 +62,7 @@ De manière similaire, l'implémentation d'un trait marqué `unsafe` nécessite 
 
 Enfin, depuis l'édition 2024 de Rust, il est nécessaire également de déverrouiller à l'aide du mot-clé `unsafe` :
 
-* les blocs `extern` ([r-unsafe.extern]) contenant les déclarations externes pour le [FFI](./ffi.md) ;
+* les blocs `extern` ([r-unsafe.extern]) contenant les déclarations externes pour le [FFI](./ffi.md#chapter-ffi) ;
 * certains attributs (par exemple, `no_mangle`, cf. [r-attributes.safety]).
 
 [r-unsafe.impl]: <https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.impl>

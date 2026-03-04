@@ -210,7 +210,7 @@ invoked. For example:
 
 Overriding the default options may cause bugs not being detected, even when
 using the debug profile that normally enables runtime checks (for example it does not enable
-[integer overflow checks](./04_language.html#integer-overflows)).
+[integer overflow checks](integer.md#chapter-integer)).
 
 <div class="reco" id="DENV-CARGO-OPTS" type="Rule" title="Keep default values for critical variables in cargo profiles">
 

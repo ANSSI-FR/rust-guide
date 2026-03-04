@@ -1,4 +1,4 @@
-# Memory management
+# Memory management {#chapter-memory}
 
 <!-- ## About Rust memory safety -->
 
@@ -16,7 +16,7 @@ rules presented in this chapter are not strictly related to the `unsafe` keyword
 > even if a function in the following is not `unsafe`,
 > it should only be used in Rust *unsafe*.
 
-## `forget` and memory leaks
+## `forget` and memory leaks {#forget-and-memory-leaks}
 
 While the usual way for memory to be reclaimed is for a variable to go out of
 scope, Rust provides special functions to manually reclaim memory: `forget` and

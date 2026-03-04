@@ -36,7 +36,7 @@ particular constructs:
 
 The basic rule (C-CASE) is checked by the compiler (with the `nonstandard_style` lint set).
 
-In addition to the compiler, the [`clippy`](./devenv.md#clippy) tool can help in adopting naming conventions with the `style` lint category.
+In addition to the compiler, the [`clippy`](devenv.md#clippy) tool can help in adopting naming conventions with the `style` lint category.
 For example, the `wrong_self_convention` lint checks the consistency between conversion method names and their receiver types (`self`, `&self`, `&mut self`) according to (C-CONV).
 
 <!--

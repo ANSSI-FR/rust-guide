@@ -40,5 +40,5 @@ On notera les garanties suivantes :
 
 Cependant, le langage ***ne protège pas*** contre les erreurs suivantes :
 
-* fuites de resources (mémoire, IO, ...) (voir la section sur la [gestion mémoire](unsafe/memory.md)) ;
-* dépassements numériques (voir la section sur le traitement des [entiers](integer.md)).
+* fuites de resources (mémoire, IO, ...) (voir la section sur la [gestion mémoire](unsafe/memory.md#chapter-memory)) ;
+* dépassements numériques (voir la section sur le traitement des [entiers](integer.md#chapter-integer)).

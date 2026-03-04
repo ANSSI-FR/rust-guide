@@ -10,7 +10,7 @@ references:
     id: RFC-1861
 ---
 
-# Foreign Function Interface (FFI)
+# Foreign Function Interface (FFI) { #chapter-ffi }
 
 The Rust approach to interfacing with other languages relies on a strong
 compatibility with C. However, this boundary is by its very nature **unsafe**

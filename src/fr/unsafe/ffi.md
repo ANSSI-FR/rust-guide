@@ -10,7 +10,7 @@ references:
     id: RFC-1861
 ---
 
-# Interfaçage avec des fonctions externes (FFI)
+# Interfaçage avec des fonctions externes (FFI) { #chapter-ffi }
 
 L'approche de Rust en ce qui concerne l'interfaçage avec des fonctions d'autres
 langages repose sur une compatibilité forte avec le C. Toutefois, cette

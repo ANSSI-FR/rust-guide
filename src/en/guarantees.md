@@ -36,5 +36,5 @@ The current list of *UBs* is given in the language [reference](https://doc.rust-
 
 However, the language does not prevent
 
-* resource leaks (memory, IO, ...) (see the [memory management section](unsafe/memory.md)),
-* numeric overflows (see the [integer operations section](integer.md)).
+* resource leaks (memory, IO, ...) (see the [memory management section](unsafe/memory.md#chapter-memory)),
+* numeric overflows (see the [integer operations section](integer.md#chapter-integer)).

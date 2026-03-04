@@ -1,6 +1,4 @@
-# Integer operations
-
-## Integer overflows
+# Integer operations {#chapter-integer}
 
 Although Rust performs some checks for potential integer overflows, precautions should be taken when executing arithmetic operations on integers.
 

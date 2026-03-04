@@ -226,7 +226,7 @@ invoqué. Par exemple :
 Changer les options par défaut pour ces variables peut entraîner l'apparition de
 *bugs* non détectés, même si le profil de *debug* qui active normalement les
 vérifications (par exemple, les
-[vérifications de dépassements d'entiers](./04_language.html#integer-overflows))
+[vérifications de dépassements d'entiers](integer.md#chapter-integer))
 est utilisé.
 
 <div class="reco" id="DENV-CARGO-OPTS" type="Règle" title="Conservation des valeurs par défaut des variables critiques dans les profils cargo">
