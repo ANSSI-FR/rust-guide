@@ -437,7 +437,7 @@ dépassements d'entiers lors d'opérations arithmétiques.</li>
 <p>Changer les options par défaut pour ces variables peut entraîner l'apparition de
 <em>bugs</em> non détectés, même si le profil de <em>debug</em> qui active normalement les
 vérifications (par exemple, les
-<a href="./04_language.html#integer-overflows">vérifications de dépassements d'entiers</a>)
+<a href="integer.html#chapter-integer">vérifications de dépassements d'entiers</a>)
 est utilisé.</p>
 <div class="reco" id="DENV-CARGO-OPTS" type="Règle" title="Conservation des valeurs par défaut des variables critiques dans les profils cargo">
 <p>Les variables <code>debug-assertions</code> et <code>overflow-checks</code> NE DOIVENT PAS être
@@ -645,8 +645,7 @@ nommage décrites dans les <a href="naming.html#rust-guidelines">rust-guidelines
 <li><a id="RFC-430"></a> <em><a href="https://rust-lang.github.io/rfcs/0430-finalizing-naming-conventions.html">General naming conventions</a></em> (RFC-430)</li>
 <li><a id="rust-guidelines"></a> <em><a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a></em> (rust-guidelines)</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="traitements-des-entiers"><a class="header" href="#traitements-des-entiers">Traitements des entiers</a></h1>
-<h2 id="dépassement-dentiers"><a class="header" href="#dépassement-dentiers">Dépassement d'entiers</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-integer"><a class="header" href="#chapter-integer">Traitements des entiers</a></h1>
 <p>Bien que des vérifications soient effectuées par Rust en ce qui concerne les
 potentiels dépassements d'entiers, des précautions doivent être prises lors de
 l'exécution d'opérations arithmétiques sur les entiers.</p>
@@ -820,8 +819,8 @@ On notera les garanties suivantes :</p>
 </blockquote>
 <p>Cependant, le langage <em><strong>ne protège pas</strong></em> contre les erreurs suivantes :</p>
 <ul>
-<li>fuites de resources (mémoire, IO, ...) (voir la section sur la <a href="unsafe/memory.html">gestion mémoire</a>) ;</li>
-<li>dépassements numériques (voir la section sur le traitement des <a href="integer.html">entiers</a>).</li>
+<li>fuites de resources (mémoire, IO, ...) (voir la section sur la <a href="unsafe/memory.html#chapter-memory">gestion mémoire</a>) ;</li>
+<li>dépassements numériques (voir la section sur le traitement des <a href="integer.html#chapter-integer">entiers</a>).</li>
 </ul>
 <h2 id="références-3"><a class="header" href="#références-3">Références</a></h2>
 <ul>
@@ -864,7 +863,7 @@ On notera les garanties suivantes :</p>
 <p>De manière similaire, l'implémentation d'un trait marqué <code>unsafe</code> nécessite <code>unsafe</code> (<a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.impl">r-unsafe.impl</a>) pour indiquer la prise en compte <em>explicite</em> par le développeur des contrats de sûreté du trait. Il permet donc de <em>déverrouiller</em> l'implémentation de traits <code>unsafe</code>.</p>
 <p>Enfin, depuis l'édition 2024 de Rust, il est nécessaire également de déverrouiller à l'aide du mot-clé <code>unsafe</code> :</p>
 <ul>
-<li>les blocs <code>extern</code> (<a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.extern">r-unsafe.extern</a>) contenant les déclarations externes pour le <a href="unsafe/./ffi.html">FFI</a> ;</li>
+<li>les blocs <code>extern</code> (<a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.extern">r-unsafe.extern</a>) contenant les déclarations externes pour le <a href="unsafe/./ffi.html#chapter-ffi">FFI</a> ;</li>
 <li>certains attributs (par exemple, <code>no_mangle</code>, cf. <a href="https://doc.rust-lang.org/reference/attributes.html#r-attributes.safety">r-attributes.safety</a>).</li>
 </ul>
 <h2 id="limitations-et-précautions-dusage"><a class="header" href="#limitations-et-précautions-dusage">Limitations et précautions d'usage</a></h2>
@@ -971,7 +970,7 @@ par <code>unsafe</code> car elle peut conduire à des <em>UB</em> (même si elle
 <ul>
 <li><a id="rust-reference"></a> <em><a href="https://doc.rust-lang.org/stable/reference/">The Rust Reference</a></em> (rust-reference)</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="gestion-de-la-mémoire"><a class="header" href="#gestion-de-la-mémoire">Gestion de la mémoire</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-memory"><a class="header" href="#chapter-memory">Gestion de la mémoire</a></h1>
 <!-- ## À propos de la sûreté mémoire en Rust -->
 <!--
 <mark>TODO</mark> : expliquer les allocations/désallocations sûres,
@@ -988,7 +987,7 @@ Cependant,</p>
 <p>même si certaines des fonctions présentées dans la suite ne sont pas <code>unsafe</code>,
 elles ne devraient être utilisées qu'en Rust <em>unsafe</em>.</p>
 </blockquote>
-<h2 id="forget-et-fuites-de-mémoire"><a class="header" href="#forget-et-fuites-de-mémoire"><code>forget</code> et fuites de mémoire</a></h2>
+<h2 id="forget-and-memory-leaks"><a class="header" href="#forget-and-memory-leaks"><code>forget</code> et fuites de mémoire</a></h2>
 <p>Rust fournit
 des fonctions spéciales pour réclamer manuellement la mémoire : les fonctions
 <code>forget</code> et <code>drop</code> du module <code>std::mem</code> (ou <code>core::mem</code>). <code>drop</code> déclenche
@@ -1195,7 +1194,7 @@ Hello, world!
 <div class="reco" id="MEM-MUT-REC-RC" type="Règle" title="Éviter les références comptées récursives mutables">
 <p>Les types récursifs dont la récursion se base sur l'utilisation des références comptées <code>Rc</code> ou <code>Arc</code> NE DOIVENT PAS être mutables <em>intérieurement</em>.</p>
 </div>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="interfaçage-avec-des-fonctions-externes-ffi"><a class="header" href="#interfaçage-avec-des-fonctions-externes-ffi">Interfaçage avec des fonctions externes (FFI)</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-ffi"><a class="header" href="#chapter-ffi">Interfaçage avec des fonctions externes (FFI)</a></h1>
 <p>L'approche de Rust en ce qui concerne l'interfaçage avec des fonctions d'autres
 langages repose sur une compatibilité forte avec le C. Toutefois, cette
 frontière est par nature <strong>non sûre</strong> (voir <a href="https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html">Rust Book: Unsafe Rust</a>).</p>

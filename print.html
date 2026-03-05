@@ -409,7 +409,7 @@ integer arithmetic.</li>
 </ul>
 <p>Overriding the default options may cause bugs not being detected, even when
 using the debug profile that normally enables runtime checks (for example it does not enable
-<a href="./04_language.html#integer-overflows">integer overflow checks</a>).</p>
+<a href="integer.html#chapter-integer">integer overflow checks</a>).</p>
 <div class="reco" id="DENV-CARGO-OPTS" type="Rule" title="Keep default values for critical variables in cargo profiles">
 <p>The variables <code>debug-assertions</code> and <code>overflow-checks</code> MUST NOT be overridden
 in development profiles' sections (<code>[profile.dev]</code> and <code>[profile.test]</code>).</p>
@@ -585,7 +585,7 @@ particular constructs:</p>
 </ul>
 <div class="note">
 <p>The basic rule (C-CASE) is checked by the compiler (with the <code>nonstandard_style</code> lint set).</p>
-<p>In addition to the compiler, the <a href="./devenv.html#clippy"><code>clippy</code></a> tool can help in adopting naming conventions with the <code>style</code> lint category.
+<p>In addition to the compiler, the <a href="devenv.html#clippy"><code>clippy</code></a> tool can help in adopting naming conventions with the <code>style</code> lint category.
 For example, the <code>wrong_self_convention</code> lint checks the consistency between conversion method names and their receiver types (<code>self</code>, <code>&amp;self</code>, <code>&amp;mut self</code>) according to (C-CONV).</p>
 <!--
 clippy::enum_variant_names
@@ -601,8 +601,7 @@ outlined in the <a href="naming.html#rust-guidelines">rust-guidelines</a>.</p>
 <li><a id="RFC-430"></a> <em><a href="https://rust-lang.github.io/rfcs/0430-finalizing-naming-conventions.html">General naming conventions</a></em> (RFC-430)</li>
 <li><a id="rust-guidelines"></a> <em><a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a></em> (rust-guidelines)</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="integer-operations"><a class="header" href="#integer-operations">Integer operations</a></h1>
-<h2 id="integer-overflows"><a class="header" href="#integer-overflows">Integer overflows</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-integer"><a class="header" href="#chapter-integer">Integer operations</a></h1>
 <p>Although Rust performs some checks for potential integer overflows, precautions should be taken when executing arithmetic operations on integers.</p>
 <p>In particular, note that the compilation profile (typically <em>dev</em>, the default debug build, or <em>release</em>, the standard optimized build) changes integer overflow behavior. In the <em>dev</em> configuration, overflow causes the termination of the program (<code>panic</code>), whereas in the <em>release</em> configuration, the computed value is silently truncated to the number of bits of the numeric type, giving it wrap-around semantics.</p>
 <div class="note">
@@ -757,8 +756,8 @@ the process.</p>
 </blockquote>
 <p>However, the language does not prevent</p>
 <ul>
-<li>resource leaks (memory, IO, ...) (see the <a href="unsafe/memory.html">memory management section</a>),</li>
-<li>numeric overflows (see the <a href="integer.html">integer operations section</a>).</li>
+<li>resource leaks (memory, IO, ...) (see the <a href="unsafe/memory.html#chapter-memory">memory management section</a>),</li>
+<li>numeric overflows (see the <a href="integer.html#chapter-integer">integer operations section</a>).</li>
 </ul>
 <h2 id="references-3"><a class="header" href="#references-3">References</a></h2>
 <ul>
@@ -801,7 +800,7 @@ The use of this keyword in an API <em>warns</em> the API user about the potentia
 <p>Similarly, the implementation of an <code>unsafe</code> trait requires <code>unsafe</code> for the developer to explicitly take into account the memory safety contracts. The keyword <code>unsafe</code> <em>unlocks</em> the implementation of <code>unsafe</code> traits.</p>
 <p>Lastly, Since the 2024 edition, <code>unsafe</code> is also required to unlock the following:</p>
 <ul>
-<li><code>extern</code> blocks, which contain declarations of foreign functions and variables, for <a href="unsafe/./ffi.html">FFI</a>,</li>
+<li><code>extern</code> blocks, which contain declarations of foreign functions and variables, for <a href="unsafe/./ffi.html#chapter-ffi">FFI</a>,</li>
 <li>some attributes (for instance , no_mangle, cf. <a href="https://doc.rust-lang.org/reference/attributes.html#r-attributes.safety">r-attributes.safety</a>).</li>
 </ul>
 <h2 id="limitations-and-precautions"><a class="header" href="#limitations-and-precautions">Limitations and precautions</a></h2>
@@ -892,7 +891,7 @@ impl&lt;T&gt; Vec&lt;T&gt; {
 <ul>
 <li><a id="rust-reference"></a> <em><a href="https://doc.rust-lang.org/stable/reference/">The Rust Reference</a></em> (rust-reference)</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="memory-management"><a class="header" href="#memory-management">Memory management</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-memory"><a class="header" href="#chapter-memory">Memory management</a></h1>
 <!-- ## About Rust memory safety -->
 <!--
 <mark>TODO</mark>: explain safe allocations/deallocations, ownership/borrowing,
@@ -1097,7 +1096,7 @@ Hello, world!
 </code></pre>
 <div class="reco" id="MEM-MUT-REC-RC" type="Rule" title="Avoid cyclic reference counted pointers">
 <p>Recursive types whose recursivity uses reference counted pointers MUST NOT be used together with interior mutability.</p>
-</div><div style="break-before: page; page-break-before: always;"></div><h1 id="foreign-function-interface-ffi"><a class="header" href="#foreign-function-interface-ffi">Foreign Function Interface (FFI)</a></h1>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-ffi"><a class="header" href="#chapter-ffi">Foreign Function Interface (FFI)</a></h1>
 <p>The Rust approach to interfacing with other languages relies on a strong
 compatibility with C. However, this boundary is by its very nature <strong>unsafe</strong>
 (see <a href="https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html">Rust Book: Unsafe Rust</a>).</p>
