@@ -92,19 +92,6 @@ crate can catch all cases. Drawback: all functions need to be marked as
 
 ## FFI and panics
 
-When calling Rust code from another language (for ex. C), the Rust code must
-be careful to never panic.
-Stack unwinding from Rust code into foreign code results in undefined behavior.
+The integration of other languages into Rust is achieved through an *FFI* (*Foreign Function Interface*).
+This feature is described in more detail in the [dedicated chapter](unsafe/ffi.md#ffi-panic).
 
-<div class="reco" id="LANG-FFIPANIC" type="Rule" title="Handle correctly `panic!` in FFI">
-
-Rust code called from FFI MUST either:
-
-* ensure the function cannot panic,
-* use `catch_unwind` or the `std::panic` module to ensure the Rust code will not
-abort or return in an unstable state.
-
-</div>
-
-Note that `catch_unwind` will only catch unwinding panics, not those that abort
-the process.

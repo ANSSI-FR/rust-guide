@@ -96,26 +96,8 @@ marquées avec `#[no_panic]`.
 
 ## FFI et `panic`s
 
-Lorsque du code Rust est appelé depuis du code écrit dans un autre
-langage (par exemple, du code C), le code Rust doit être écrit de sorte à ne
-jamais pouvoir paniquer.
-Dérouler (*unwinding*) depuis le code Rust vers le code étranger résulte en un
-comportement indéfini.
-
-<div class="reco" id="LANG-FFIPANIC" type="Règle" title="Gestion correcte des `panic!` dans les FFI">
-
-Le code Rust appelé depuis une FFI DOIT :
-
-- soit être assuré de ne pas paniquer,
-- soit utiliser `catch_unwind` ou le module `std::panic` pour s'assurer qu'il
-ne va pas abandonner un traitement puis laisser l'exécution retourner dans le
-langage appelant dans un état instable.
-
-</div>
-
-Il est porté à l'attention du développeur que `catch_unwind` ne va traiter que
-les cas de `panic`, et va préserver les abandons de processus causés par
-d'autres raisons.
+L'intégration d'autres langages en Rust passe par une *FFI* (*Foreign Function Interface*).
+Cette fonctionnalité est décrite plus en détails dans le [chapitre dédié](unsafe/ffi.md#ffi-panic).
 
 <!-- ## Macros -->
 

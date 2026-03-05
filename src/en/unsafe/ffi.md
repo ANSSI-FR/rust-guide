@@ -8,6 +8,10 @@ references:
     title: Extern types
     url: https://rust-lang.github.io/rfcs/1861-extern-types.html
     id: RFC-1861
+  - type: web
+    title: Unwinding
+    url: https://doc.rust-lang.org/stable/reference/items/functions.html#unwinding
+    id: unwinding
 ---
 
 # Foreign Function Interface (FFI) { #chapter-ffi }
@@ -611,15 +615,19 @@ A compatible C call:
 {{#include ../../../examples/src/ffi.c:free_intern}}
 ```
 
-## Panics with foreign code
+## Panics with foreign code {#ffi-panic}
 
-When calling Rust code from another language (e.g. C), the Rust code must
+When calling Rust code from another language (e.g. C), the Rust code should
 be careful to never panic:
-stack unwinding from Rust code into foreign code results in **undefined behavior**.
+since version [1.81.0](https://releases.rs/docs/1.81.0/), stack unwinding from
+Rust code into foreign code is not an undefined behavior anymore, but strict sepration
+of stack unwinding between languages is recommanded in order to prevent potential unwanted abortion[^ffi-panic-abort].
 
-<div class="reco" id="FFI-NOPANIC" type="Rule" title="Handle `panic!` correctly in FFI">
+[^ffi-panic-abort]: More details can be found in the [unwinding specification @unwinding].
 
-Rust code called from FFI MUST either ensure the function cannot panic, or use
+<div class="reco" id="FFI-NOPANIC" type="Recommendation" title="Handle `panic!` correctly in FFI">
+
+Rust code called from FFI SHOULD either ensure the function cannot panic, or use
 a panic handling mechanism (such as [`std::panic::catch_unwind`],
 [`std::panic::set_hook`], [`#[panic_handler]`](https://doc.rust-lang.org/reference/panic.html#r-panic.panic_handler)) to ensure the rust code will not
 abort or return in an unstable state.

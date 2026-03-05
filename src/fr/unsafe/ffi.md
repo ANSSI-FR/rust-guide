@@ -8,6 +8,10 @@ references:
     title: Extern types
     url: https://rust-lang.github.io/rfcs/1861-extern-types.html
     id: RFC-1861
+  - type: web
+    title: Unwinding
+    url: https://doc.rust-lang.org/stable/reference/items/functions.html#unwinding
+    id: unwinding
 ---
 
 # Interfaçage avec des fonctions externes (FFI) { #chapter-ffi }
@@ -665,15 +669,19 @@ Un appel C compatible :
 {{#include ../../../examples/src/ffi.c:free_intern}}
 ```
 
-## `Panic`s et code externe
+## `Panic`s et code externe {#ffi-panic}
 
 Lors de l'appel à du code Rust depuis un autre langage (par exemple, du C), le
-code Rust ne doit pas provoquer de `panic` : dérouler (*unwinding*) depuis le
-code Rust dans du code externe résulte en un **comportement indéfini**.
+code Rust ne devrait pas provoquer de `panic` : Depuis la version [1.81.0](https://releases.rs/docs/1.81.0/),
+dérouler (*unwinding*) depuis le code Rust dans du code externe n'est plus un comportement indéfini.
+Cependant, il est préconisé d'empêcher de dérouler depuis Rust vers le langage externe afin
+d'éviter un potentiel arrêt inopiné non contrôlé (`abort`)[^ffi-panic-abort].
 
-<div class="reco" id="FFI-NOPANIC" type="Règle" title="Gestion correcte des `panic`s dans les FFI">
+[^ffi-panic-abort]: La liste des cas où un arrêt brutal est observé est décrite dans la spécification de [l'*unwinding* @unwinding].
 
-Le code Rust appelé depuis un langage externe DOIT :
+<div class="reco" id="FFI-NOPANIC" type="Recommandation" title="Gestion correcte des `panic`s dans les FFI">
+
+Le code Rust appelé depuis un langage externe DEVRAIT :
 
 * soit s'assurer que la fonction ne peut pas provoquer de `panic`, 
 * soit utiliser un mécanisme de
