@@ -82,28 +82,47 @@
           };
 
         });
+        runtime = with pkgs; [
+          #mdbook0421.legacyPackages.${system}.mdbook
+          mdbook-custom
+          bash
+          mdbook-checklist
+          mdbook-shiftinclude
+          mdbook-code-align
+          mdbook-extensions
+          pandoc
+          (texlive.combine {
+            inherit (texlive)
+              scheme-small
+              svg
+              transparent
+              biblatex
+              framed
+              ;
+          })
+        ];
+        # mdbook-script = pkgs.writeShellScriptBin "mdbook" ''
+        #   ${mdbook-custom}/bin/mdbook
+        # '';
+        mdbook-app = pkgs.writeShellApplication {
+          name = "mdbook";
+          runtimeInputs = runtime;
+          text = ''
+            RUST_BACKTRACE=1 RUST_LOG=info mdbook "$@"
+          '';
+        };
       in
       {
+        apps."mdbook" = {
+          type = "app";
+          program = "${mdbook-app}/bin/mdbook";
+        };
+        apps.default = {
+          type = "app";
+          program = "${mdbook-app}/bin/mdbook";
+        };
         devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            #mdbook0421.legacyPackages.${system}.mdbook
-            mdbook-custom
-            bash
-            mdbook-checklist
-            mdbook-shiftinclude
-            mdbook-code-align
-            mdbook-extensions
-            pandoc
-            (texlive.combine {
-              inherit (texlive)
-                scheme-small
-                svg
-                transparent
-                biblatex
-                framed
-                ;
-            })
-          ];
+          buildInputs = runtime;
         };
       }
     );
