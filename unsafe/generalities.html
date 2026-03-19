@@ -179,47 +179,39 @@
                     <main>
                         <h1 id="general-information-on-unsafe"><a class="header" href="#general-information-on-unsafe">General information on <code>unsafe</code></a></h1>
 <h2 id="unsafe-operations"><a class="header" href="#unsafe-operations"><em>Unsafe</em> operations</a></h2>
-<p>Language capabilities can be extended using unsafe code. The full list of these features is given in the <a href="https://doc.rust-lang.org/reference/unsafety.html">Rust reference</a>. Notice the following ones.</p>
-<ul>
-<li>Dereference a raw pointer</li>
-<li>Read or write a mutable or extern static variable</li>
-<li>Read a field of an <code>union</code></li>
-<li>Implement an <code>unsafe</code> trait</li>
-<li>Declare an <code>extern</code> block</li>
-</ul>
-<p>More examples can be found in <a href="https://doc.rust-lang.org/nomicon/what-unsafe-does.html">nomicon</a>.</p>
-<p>These capabilities may be necessary for system programming but they cause the language to lose its <a href="../guarantees.html#language-guarantees">safety properties</a> and Undefined Behaviors may happen.</p>
+<p>Language capabilities can be extended using unsafe code. The full list of these features is given in the <a href="https://doc.rust-lang.org/reference/unsafety.html">Rust reference</a>.
+These capabilities may be necessary for system programming but they cause the language to lose its <a href="../guarantees.html#language-guarantees">safety properties</a> and Undefined Behaviors may happen.</p>
 <div class="reco" id="UNSAFE-NOUB" type="Rule" title="No Undefined Behavior">
 <p>NO Undefined Behavior is allowed.</p>
 </div>
 <h2 id="a-keyword-with-two-usages"><a class="header" href="#a-keyword-with-two-usages">A keyword with two usages</a></h2>
-<p>As described in <a href="#rust-reference">rust-reference</a>, the <code>unsafe</code> keyword is used both for marking unsafety in an API and unlocking unsafety in the implementation.</p>
+<p>As described in the <a href="https://doc.rust-lang.org/stable/reference/">Rust Reference</a>, the <code>unsafe</code> keyword is used both for marking unsafety in an API and unlocking unsafety in the implementation.</p>
 <h3 id="unsafe-marking"><a class="header" href="#unsafe-marking"><code>unsafe</code> marking</a></h3>
 <p>Marking with <code>unsafe</code> is a delegation of responsibility with respect to memory safety from the API author to the API user.
 The use of this keyword in an API <em>warns</em> the API user about the potential harmful effects of using the API.</p>
 <ul>
-<li>In a function signature (<a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.fn">r-unsafe.fn</a>), <code>unsafe</code> means that the behavior of the function may lead to UB if the use of the function does not comply with its interface contract (informally described in its documentation).</li>
-<li>In a trait declaration (<a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.trait">r-unsafe.trait</a>), <code>unsafe</code> means that an erroneous implementation of this trait may lead to UB if the implementation contract (preferably documented) is not respected.</li>
+<li>In a function signature (section <a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.fn">r-unsafe.fn</a> of the <a href="https://doc.rust-lang.org/stable/reference/">Rust Reference</a>), <code>unsafe</code> means that the behavior of the function may lead to UB if the use of the function does not comply with its interface contract (informally described in its documentation).</li>
+<li>In a trait declaration (section <a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.trait">r-unsafe.trait</a> of the <a href="https://doc.rust-lang.org/stable/reference/">Rust Reference</a>), <code>unsafe</code> means that an erroneous implementation of this trait may lead to UB if the implementation contract (preferably documented) is not respected.</li>
 </ul>
 <h3 id="unsafe-unlocking"><a class="header" href="#unsafe-unlocking"><code>unsafe</code> unlocking</a></h3>
 <p>Unlocking with <code>unsafe</code> means taking responsibility for memory safety from the compiler to the developer.</p>
-<p>Using an <code>unsafe</code> block in a function body or in a constant declaration is imposed by the compiler to prevent the <em>inadvertent use</em> of <code>unsafe</code> capabilities like</p>
+<p>Using an <code>unsafe</code> block in a function body or in a constant declaration is imposed by the compiler (section <a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.block">r-unsafe.block</a> of the <a href="https://doc.rust-lang.org/stable/reference/">Rust Reference</a>) to prevent the <em>inadvertent use</em> of <code>unsafe</code> capabilities like</p>
 <ul>
 <li>using <code>unsafe</code> tagged functions</li>
 <li>modifying static variables</li>
 <li>using extern functions</li>
 </ul>
-<p>Similarly, the implementation of an <code>unsafe</code> trait requires <code>unsafe</code> for the developer to explicitly take into account the memory safety contracts. The keyword <code>unsafe</code> <em>unlocks</em> the implementation of <code>unsafe</code> traits.</p>
+<p>Similarly, the implementation of an <code>unsafe</code> trait requires <code>unsafe</code> (section <a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.impl">r-unsafe.impl</a> of the <a href="https://doc.rust-lang.org/stable/reference/">Rust Reference</a>) for the developer to explicitly take into account the memory safety contracts. The keyword <code>unsafe</code> <em>unlocks</em> the implementation of <code>unsafe</code> traits.</p>
 <p>Lastly, Since the 2024 edition, <code>unsafe</code> is also required to unlock the following:</p>
 <ul>
-<li><code>extern</code> blocks, which contain declarations of foreign functions and variables, for <a href="./ffi.html#chapter-ffi">FFI</a>,</li>
-<li>some attributes (for instance , no_mangle, cf. <a href="https://doc.rust-lang.org/reference/attributes.html#r-attributes.safety">r-attributes.safety</a>).</li>
+<li><code>extern</code> blocks (section <a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.extern">r-unsafe.extern</a> of the <a href="https://doc.rust-lang.org/stable/reference/">Rust Reference</a>), which contain declarations of foreign functions and variables, for <a href="./ffi.html#chapter-ffi">FFI</a>,</li>
+<li>some attributes (for instance , no_mangle, cf. <a href="https://doc.rust-lang.org/reference/attributes.html#r-attributes.safety">r-attributes.safety</a> of the <a href="https://doc.rust-lang.org/stable/reference/">Rust Reference</a>).</li>
 </ul>
 <h2 id="limitations-and-precautions"><a class="header" href="#limitations-and-precautions">Limitations and precautions</a></h2>
 <p>Paraphrasing the <a href="https://doc.rust-lang.org/nomicon/">Rustonomicon</a>, the fundamental principle of Rust can be summed up as follows:</p>
-<blockquote>
+<div class="important">
 <p><code>unsafe</code>-free code cannot go wrong</p>
-</blockquote>
+</div>
 <p>The combined use of the type system and the ownership system enforces a high-level memory safety in Rust programs. This way, the language helps prevent memory overflows, null or invalid pointer constructions, and data races.</p>
 <p>This promise is valid only if the code does not use <code>unsafe</code> features. When <code>unsafe</code> features are used, the compiler can no longer guarantee memory safety. The developer must then ensure that the code respects the invariants that guarantee memory safety.</p>
 <p>That is why it is crucial to limit the use of <code>unsafe</code> features as much as possible:</p>

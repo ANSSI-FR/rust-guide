@@ -233,11 +233,11 @@ Rule - Use appropriate arithmetic operations regarding potential overflows (<a h
 <li><input disabled="" type="checkbox"/>
 Recommendation - Implement custom <code>Error</code> type wrapping all possible errors (<a href="errors.html#LANG-ERRWRAP">LANG-ERRWRAP</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Rule - Don't use functions that can cause <code>panic!</code> (<a href="errors.html#LANG-NOPANIC">LANG-NOPANIC</a>)</li>
+Rule - Limit <code>panic</code> use (<a href="errors.html#LANG-LIMIT-PANIC">LANG-LIMIT-PANIC</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Rule - Limit use of <code>panic</code>-ing functions (<a href="errors.html#LANG-LIMIT-EXPECT">LANG-LIMIT-EXPECT</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Rule - Test properly array indexing or use the <code>get</code> method (<a href="errors.html#LANG-ARRINDEXING">LANG-ARRINDEXING</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Handle correctly <code>panic!</code> in FFI (<a href="errors.html#LANG-FFIPANIC">LANG-FFIPANIC</a>)</li>
 </ul>
 </li>
 <li>
@@ -255,9 +255,11 @@ Rule - Encapsulation of <em>unsafe</em> features (<a href="unsafe/generalities.h
 <p>Memory management:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Rule - Do not use <code>forget</code> (<a href="unsafe/memory.html#MEM-FORGET">MEM-FORGET</a>)</li>
+Rule - No memory leak (<a href="unsafe/memory.html#MEM-NO-LEAK">MEM-NO-LEAK</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Recommendation - Use clippy lint to detect use of <code>forget</code> (<a href="unsafe/memory.html#MEM-FORGET-LINT">MEM-FORGET-LINT</a>)</li>
+Rule - Do not use <code>mem::forget</code> (<a href="unsafe/memory.html#MEM-FORGET">MEM-FORGET</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Recommendation - Use clippy lint to detect use of <code>mem::forget</code> (<a href="unsafe/memory.html#MEM-FORGET-LINT">MEM-FORGET-LINT</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Rule - Do not use <code>leak</code> function (<a href="unsafe/memory.html#MEM-LEAK">MEM-LEAK</a>)</li>
 <li><input disabled="" type="checkbox"/>
@@ -270,8 +272,6 @@ Rule - Always call <code>from_raw</code> on <code>into_raw</code>ed value (<a hr
 Rule - Call <code>from_raw</code> <em>only</em> on <code>into_raw</code>ed value (<a href="unsafe/memory.html#MEM-INTOFROMRAWONLY">MEM-INTOFROMRAWONLY</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Rule - Do not use uninitialized memory (<a href="unsafe/memory.html#MEM-UNINIT">MEM-UNINIT</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Avoid cyclic reference counted pointers (<a href="unsafe/memory.html#MEM-MUT-REC-RC">MEM-MUT-REC-RC</a>)</li>
 </ul>
 </li>
 <li>
@@ -292,11 +292,11 @@ Rule - Do not use unchecked non-robust foreign values (<a href="unsafe/ffi.html#
 <li><input disabled="" type="checkbox"/>
 Recommendation - Check foreign values in Rust (<a href="unsafe/ffi.html#FFI-CKINRUST">FFI-CKINRUST</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Rule - Do not use reference types in a FFI but pointer types (<a href="unsafe/ffi.html#FFI-NOREF">FFI-NOREF</a>)</li>
+Rule - Check foreign pointers (<a href="unsafe/ffi.html#FFI-CK-PTR-VALID">FFI-CK-PTR-VALID</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Rule - Do not use unchecked foreign references (<a href="unsafe/ffi.html#FFI-CKREF">FFI-CKREF</a>)</li>
+Recommendation - Use raw pointer to encode pointers coming from the external language (<a href="unsafe/ffi.html#FFI-INPUT-PTR">FFI-INPUT-PTR</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Rule - Check foreign pointers (<a href="unsafe/ffi.html#FFI-CKPTR">FFI-CKPTR</a>)</li>
+Rule - Do not use unchecked foreign references (<a href="unsafe/ffi.html#FFI-CK-INPUT-REF-VALID">FFI-CK-INPUT-REF-VALID</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Rule - Mark function pointer types in FFI as <code>extern</code> and <code>unsafe</code> (<a href="unsafe/ffi.html#FFI-MARKEDFUNPTR">FFI-MARKEDFUNPTR</a>)</li>
 <li><input disabled="" type="checkbox"/>
@@ -308,13 +308,15 @@ Recommendation - Use dedicated Rust types for foreign opaque types (<a href="uns
 <li><input disabled="" type="checkbox"/>
 Recommendation - Use incomplete C/C++ <code>struct</code> pointers to make type opaque (<a href="unsafe/ffi.html#FFI-C-OPAQUE">FFI-C-OPAQUE</a>)</li>
 <li><input disabled="" type="checkbox"/>
+Rule - Preservation of Rust’s memory model when transferring indirections at its boundary (<a href="unsafe/ffi.html#FFI-CK-REF-MODEL">FFI-CK-REF-MODEL</a>)</li>
+<li><input disabled="" type="checkbox"/>
 Rule - Do not use types that implement <code>Drop</code> at FFI boundary (<a href="unsafe/ffi.html#FFI-MEM-NODROP">FFI-MEM-NODROP</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Rule - Ensure clear data ownership in FFI (<a href="unsafe/ffi.html#FFI-MEM-OWNER">FFI-MEM-OWNER</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Recommendation - Wrap foreign data in memory releasing wrapper (<a href="unsafe/ffi.html#FFI-MEM-WRAPPING">FFI-MEM-WRAPPING</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Rule - Handle <code>panic!</code> correctly in FFI (<a href="unsafe/ffi.html#FFI-NOPANIC">FFI-NOPANIC</a>)</li>
+Recommendation - Handle <code>panic!</code> correctly in FFI (<a href="unsafe/ffi.html#FFI-NOPANIC">FFI-NOPANIC</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Rule - Expose dedicated C-compatible API only (<a href="unsafe/ffi.html#FFI-CAPI">FFI-CAPI</a>)</li>
 </ul>
@@ -338,6 +340,8 @@ Rule - Do not panic in <code>Drop</code> implementation (<a href="standard.html#
 Rule - Do not allow cycles of reference-counted <code>Drop</code> (<a href="standard.html#LANG-DROP-NO-CYCLE">LANG-DROP-NO-CYCLE</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Rule - Do not rely only on <code>Drop</code> to ensure security (<a href="standard.html#LANG-DROP-SEC">LANG-DROP-SEC</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Rule - Avoid cyclic reference counted pointers (<a href="standard.html#MEM-MUT-REC-RC">MEM-MUT-REC-RC</a>)</li>
 </ul>
 </li>
 </ul>

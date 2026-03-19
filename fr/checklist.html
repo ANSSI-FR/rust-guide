@@ -191,7 +191,7 @@
 <li><input disabled="" type="checkbox"/>
 Règle - Utilisation de la chaîne d'outils <em>stable</em> (<a href="devenv.html#DENV-STABLE">DENV-STABLE</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Rule - Utilisation exclusive du tier 1 de <code>rustc</code> pour les logiciels de sûreté critiques (<a href="devenv.html#DENV-TIERS">DENV-TIERS</a>)</li>
+Règle - Utilisation exclusive du tier 1 de <code>rustc</code> pour les logiciels de sûreté critiques (<a href="devenv.html#DENV-TIERS">DENV-TIERS</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Mise en dépôt du fichier Cargo.lock (<a href="devenv.html#DENV-CARGO-LOCK">DENV-CARGO-LOCK</a>)</li>
 <li><input disabled="" type="checkbox"/>
@@ -239,11 +239,11 @@ Règle - Utilisation des opérations arithmétiques appropriées au regard des p
 <li><input disabled="" type="checkbox"/>
 Recommandation - Mise en place d'un type <code>Error</code> personnalisé pouvant contenir toutes les erreurs possibles (<a href="errors.html#LANG-ERRWRAP">LANG-ERRWRAP</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Règle - Non-utilisation de fonctions qui peuvent causer des <code>panic</code> (<a href="errors.html#LANG-NOPANIC">LANG-NOPANIC</a>)</li>
+Règle - Usage limité des <code>panic</code> (<a href="errors.html#LANG-LIMIT-PANIC">LANG-LIMIT-PANIC</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Règle - Limitation des fonctions déclenchant des <code>panic</code>s (<a href="errors.html#LANG-LIMIT-EXPECT">LANG-LIMIT-EXPECT</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Test des indices d'accès aux tableaux ou utilisation de la méthode <code>get</code> (<a href="errors.html#LANG-ARRINDEXING">LANG-ARRINDEXING</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Règle - Gestion correcte des <code>panic!</code> dans les FFI (<a href="errors.html#LANG-FFIPANIC">LANG-FFIPANIC</a>)</li>
 </ul>
 </li>
 <li>
@@ -261,23 +261,23 @@ Règle - Encapsulation des fonctionnalités <em>unsafe</em> (<a href="unsafe/gen
 <p>Gestion de la mémoire:</p>
 <ul>
 <li><input disabled="" type="checkbox"/>
-Règle - Non-utilisation de <code>forget</code> (<a href="unsafe/memory.html#MEM-FORGET">MEM-FORGET</a>)</li>
+Règle - Absence de fuites mémoires (<a href="unsafe/memory.html#MEM-NO-LEAK">MEM-NO-LEAK</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Recommandation - Utilisation du <em>lint</em> clippy pour détecter l'utilisation de <code>forget</code> (<a href="unsafe/memory.html#MEM-FORGET-LINT">MEM-FORGET-LINT</a>)</li>
+Règle - Non-utilisation de <code>mem::forget</code> (<a href="unsafe/memory.html#MEM-FORGET">MEM-FORGET</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Recommandation - Utilisation du <em>lint</em> clippy pour détecter l'utilisation de <code>mem::forget</code> (<a href="unsafe/memory.html#MEM-FORGET-LINT">MEM-FORGET-LINT</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Non-utilisation de <code>Box::leak</code> (<a href="unsafe/memory.html#MEM-LEAK">MEM-LEAK</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Libération des valeurs <em>wrappées</em> dans <code>ManuallyDrop</code> (<a href="unsafe/memory.html#MEM-MANUALLYDROP">MEM-MANUALLYDROP</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Règle - Pas de conversion en pointeur <em>raw</em> en Rust non-<em>usafe</em> (<a href="unsafe/memory.html#MEM-NORAWPOINTER">MEM-NORAWPOINTER</a>)</li>
+Règle - Pas de conversion en pointeur <em>raw</em> en Rust non-<em>unsafe</em> (<a href="unsafe/memory.html#MEM-NORAWPOINTER">MEM-NORAWPOINTER</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Appel systématique à <code>from_raw</code> pour les valeurs créées avec <code>into_raw</code> (<a href="unsafe/memory.html#MEM-INTOFROMRAWALWAYS">MEM-INTOFROMRAWALWAYS</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Appel de <code>from_raw</code> uniquement pour les valeurs issues de <code>into_raw</code> (<a href="unsafe/memory.html#MEM-INTOFROMRAWONLY">MEM-INTOFROMRAWONLY</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Pas de mémoire non initialisée (<a href="unsafe/memory.html#MEM-UNINIT">MEM-UNINIT</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Règle - Éviter les références comptées récursives mutables (<a href="unsafe/memory.html#MEM-MUT-REC-RC">MEM-MUT-REC-RC</a>)</li>
 </ul>
 </li>
 <li>
@@ -298,11 +298,11 @@ Règle - Vérification des valeurs de types non-robustes (<a href="unsafe/ffi.ht
 <li><input disabled="" type="checkbox"/>
 Recommandation - Vérification des valeurs externes en Rust (<a href="unsafe/ffi.html#FFI-CKINRUST">FFI-CKINRUST</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Règle - Vérification des références provenant d'un langage externe (<a href="unsafe/ffi.html#FFI-CKREF">FFI-CKREF</a>)</li>
+Règle - Vérification des pointeurs bruts (<a href="unsafe/ffi.html#FFI-CK-PTR-VALID">FFI-CK-PTR-VALID</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Règle - Non-utilisation des types références au profit des types pointeurs à la frontière avec un langage externe (<a href="unsafe/ffi.html#FFI-NOREF">FFI-NOREF</a>)</li>
+Recommandation - Utilisation des pointeurs bruts pour encoder les pointeurs provenant du langage externe (<a href="unsafe/ffi.html#FFI-INPUT-PTR">FFI-INPUT-PTR</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Règle - Vérification des pointeurs externes (<a href="unsafe/ffi.html#FFI-CKPTR">FFI-CKPTR</a>)</li>
+Règle - Vérification des références provenant d'un langage externe (<a href="unsafe/ffi.html#FFI-CK-INPUT-REF-VALID">FFI-CK-INPUT-REF-VALID</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Marquage des types de pointeurs de fonction dans les FFI comme <code>extern</code> et <code>unsafe</code> (<a href="unsafe/ffi.html#FFI-MARKEDFUNPTR">FFI-MARKEDFUNPTR</a>)</li>
 <li><input disabled="" type="checkbox"/>
@@ -314,13 +314,15 @@ Recommandation - Utilisation de types Rust dédiés pour les types opaques exter
 <li><input disabled="" type="checkbox"/>
 Recommandation - Utilisation de pointeurs vers des <code>struct</code>s C/C++ pour rendre des types opaques (<a href="unsafe/ffi.html#FFI-C-OPAQUE">FFI-C-OPAQUE</a>)</li>
 <li><input disabled="" type="checkbox"/>
+Règle - Préservation du modèle mémoire de Rust lors du transfert d'indirections à sa frontière (<a href="unsafe/ffi.html#FFI-CK-REF-MODEL">FFI-CK-REF-MODEL</a>)</li>
+<li><input disabled="" type="checkbox"/>
 Règle - Non-utilisation de types qui implémentent <code>Drop</code> dans des FFI (<a href="unsafe/ffi.html#FFI-MEM-NODROP">FFI-MEM-NODROP</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Identification du langage responsable de la libération des données dans les FFI (<a href="unsafe/ffi.html#FFI-MEM-OWNER">FFI-MEM-OWNER</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Recommandation - Encapsulation des données externes dans un type <code>Drop</code> (<a href="unsafe/ffi.html#FFI-MEM-WRAPPING">FFI-MEM-WRAPPING</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Règle - Gestion correcte des <code>panic</code>s dans les FFI (<a href="unsafe/ffi.html#FFI-NOPANIC">FFI-NOPANIC</a>)</li>
+Recommandation - Gestion correcte des <code>panic</code>s dans les FFI (<a href="unsafe/ffi.html#FFI-NOPANIC">FFI-NOPANIC</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Exposition exclusive d'API dédiée et compatible avec le C (<a href="unsafe/ffi.html#FFI-CAPI">FFI-CAPI</a>)</li>
 </ul>
@@ -344,6 +346,8 @@ Règle - Absence de <code>panic</code> dans l'implémentation de <code>Drop</cod
 Règle - Absence de cycles de références avec valeurs <code>Drop</code>ables (<a href="standard.html#LANG-DROP-NO-CYCLE">LANG-DROP-NO-CYCLE</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Sécurité assurée par d'autres mécanismes en plus du trait <code>Drop</code> (<a href="standard.html#LANG-DROP-SEC">LANG-DROP-SEC</a>)</li>
+<li><input disabled="" type="checkbox"/>
+Règle - Éviter les références comptées récursives mutables (<a href="standard.html#MEM-MUT-REC-RC">MEM-MUT-REC-RC</a>)</li>
 </ul>
 </li>
 </ul>

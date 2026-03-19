@@ -183,7 +183,7 @@
 A <code>Result</code> object must be tested, and never ignored.</p>
 <div class="reco" id="LANG-ERRWRAP" type="Recommendation" title="Implement custom `Error` type wrapping all possible errors">
 <p>A crate may implement its own <code>Error</code> type, wrapping all possible errors.
-It MUST be careful to make this type exception-safe (RFC 1236), and implement
+It MUST be careful to make this type exception-safe (<a href="https://rust-lang.github.io/rfcs/1236-stabilize-catch-panic.html">RFC 1236</a>), and implement
 <code>Error + Send + Sync + 'static</code> as well as <code>Display</code>.</p>
 </div>
 <p>Third-party crates may be used to facilitate error handling. Most of them
@@ -195,34 +195,40 @@ wrapping of errors into a single universal error type. Such wrappers should not
 be used in libraries and complex systems because they do not allow developers to
 provide context to the wrapped error.</p>
 <h2 id="panics"><a class="header" href="#panics">Panics</a></h2>
-<p>Explicit error handling (<code>Result</code>) should always be preferred instead of calling
+<p>Explicit error handling (<code>Result</code>) should generally be preferred instead of calling
 <code>panic</code>.  The cause of the error should be available, and generic errors should
 be avoided.</p>
+<div class="reco" id="LANG-LIMIT-PANIC" type="Rule" title="Limit `panic` use">
+<p>A Rust function MUST NOT panic UNLESS its usage conditions have been violated.</p>
+</div>
 <p>Crates providing libraries should never use functions or instructions that can
 fail and cause the code to panic.</p>
-<p>Common patterns that can cause panics are:</p>
+<p>Following patterns can cause panics (by design):</p>
 <ul>
 <li>using <code>unwrap</code> or <code>expect</code>,</li>
-<li>using <code>assert</code>,</li>
-<li>an unchecked access to an array,</li>
-<li>integer overflow (in debug mode),</li>
+<li>using <code>assert!</code>.</li>
+</ul>
+<p>The following rule is deduced from the <a href="#LANG-LIMIT-PANIC">previous rule</a>.</p>
+<div class="reco" id="LANG-LIMIT-EXPECT" type="Rule" title="Limit use of `panic`-ing functions">
+<p>Uses of <code>unwrap</code>, <code>expect</code> and <code>assert!</code> MUST be restricted to cases explicitly forbidden by the function’s specification.</p>
+</div>
+<p>The following functions are known to panic if their arguments do not meet the usage conditions.</p>
+<ul>
+<li>an unchecked access to an array (see <a href="#LANG-ARRINDEXING">next</a> rule),</li>
+<li>integer overflow (in debug mode, see chapter on <a href="integer.html#chapter-integer">integers</a>),</li>
 <li>division by zero,</li>
 <li>large allocations,</li>
 <li>string formatting using <code>format!</code>.</li>
 </ul>
-<div class="warning">
-<p>In certain safety‑critical domains, it is mandatory to transition to a safe‑mode state whenever an error occurs that could otherwise lead to undefined behavior.
-In these situations, deliberately triggering a panic (or aborting execution) makes sense because it stops the system before corrupted data or safety and security‑related faults can propagate.</p>
-<p>For a plane or other vehicles, this “fail‑fast” behavior can be crucial: the primary control unit must halt immediately on a serious fault, then hand over control to a redundant or backup subsystem that can bring the vehicle to a safe stop or continue operation in a reduced‑capability mode. Restarting on a trusted secondary system ensures that the plane remains controllable, protects occupants, and prevents hazardous outcomes that could arise from continuing execution in an unpredictable state.</p>
-</div>
-<p>In other cases where the development is not subject to this type of standard:</p>
-<div class="reco" id="LANG-NOPANIC" type="Rule" title="Don't use functions that can cause `panic!`">
-<p>Functions or instructions that can cause the code to panic at runtime MUST NOT
-be used.</p>
-</div>
 <div class="reco" id="LANG-ARRINDEXING" type="Rule" title="Test properly array indexing or use the `get` method">
 <p>Array indexing must be properly tested, or the <code>get</code> method SHOULD be used to
 return an <code>Option</code>.</p>
+</div>
+<div class="warning">
+<p>In certain safety‑critical domains, it is mandatory to transition to a safe‑mode state whenever an error occurs that could otherwise lead to undefined behavior.
+In these situations, deliberately aborting execution makes sense because it stops the system before corrupted data or safety faults can propagate.</p>
+<p>For a plane or other vehicles, this “fail‑fast” behavior can be crucial: the primary control unit must halt immediately on a serious fault, then hand over control to a redundant or backup subsystem that can bring the vehicle to a safe stop or continue operation in a reduced‑capability mode. Restarting on a trusted secondary system ensures that the plane remains controllable, protects occupants, and prevents hazardous outcomes that could arise from continuing execution in an unpredictable state.</p>
+<p>For this use case, enabling the <code>panic = 'abort'</code> attribute in the <code>[profile.release]</code> section of the Cargo.toml file will terminate the program as soon as a panic occurs.</p>
 </div>
 <!--
 <mark>TODO</mark> Check if the [no_panic](https://github.com/dtolnay/no-panic)
@@ -234,19 +240,12 @@ crate can catch all cases. Drawback: all functions need to be marked as
 [rustig](https://github.com/Technolution/rustig) (doesn't build here)
 -->
 <h2 id="ffi-and-panics"><a class="header" href="#ffi-and-panics">FFI and panics</a></h2>
-<p>When calling Rust code from another language (for ex. C), the Rust code must
-be careful to never panic.
-Stack unwinding from Rust code into foreign code results in undefined behavior.</p>
-<div class="reco" id="LANG-FFIPANIC" type="Rule" title="Handle correctly `panic!` in FFI">
-<p>Rust code called from FFI MUST either:</p>
+<p>The integration of other languages into Rust is achieved through an <em>FFI</em> (<em>Foreign Function Interface</em>).
+This feature is described in more detail in the <a href="unsafe/ffi.html#ffi-panic">dedicated chapter</a>.</p>
+<h2 id="references"><a class="header" href="#references">References</a></h2>
 <ul>
-<li>ensure the function cannot panic,</li>
-<li>use <code>catch_unwind</code> or the <code>std::panic</code> module to ensure the Rust code will not
-abort or return in an unstable state.</li>
+<li><a id="RFC-1236"></a> <em><a href="https://rust-lang.github.io/rfcs/1236-stabilize-catch-panic.html">Recover</a></em> (RFC-1236)</li>
 </ul>
-</div>
-<p>Note that <code>catch_unwind</code> will only catch unwinding panics, not those that abort
-the process.</p>
 
                     </main>
 

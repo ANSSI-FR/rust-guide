@@ -194,7 +194,7 @@ method listed in the <em>Install</em> section of the official Rust website.</p>
 <p>Several flavors, called <em>editions</em>, of the Rust language coexist.</p>
 <p>The concept of editions has been introduced to clarify the
 implementation of new features and to make them incremental. A new edition will be produced
-every two or three years, as stated in <a href="#rust-edition-guide">rust-edition-guide</a>, but this doesn’t
+every two or three years, as stated in the <a href="https://doc.rust-lang.org/edition-guide/">Rust Manual</a>, but this doesn’t
 mean that new features and improvements will only be shipped in a new edition.</p>
 <p>Some editions bring new keywords and language constructs. Recommendations for
 secure applications development then remain closely linked to features of the
@@ -257,7 +257,7 @@ $
 <div class="reco" id="DENV-TIERS" type="Rule" title="Exclusive use of tier 1 of `rustc` for safety-critical software">
 <p>Rustc tier 1 targets and certified toolchains MUST be used for safety-critical systems.</p>
 </div>
-<p>A comprehensive list of supported targets is available in <a href="#rustc-book">rustc-book</a>.</p>
+<p>A comprehensive list of supported targets is available in the <a href="https://doc.rust-lang.org/stable/rustc/index.html">Rust Book</a>.</p>
 <h2 id="cargo"><a class="header" href="#cargo">Cargo</a></h2>
 <p>Once Rustup has set up the appropriate Rust toolchain, <a href="https://doc.rust-lang.org/stable/cargo/">Cargo</a> is available
 through the command line program <code>cargo</code>. Cargo is the Rust package manager.
@@ -268,7 +268,7 @@ It has a fundamental role in most Rust developments:</p>
 <li>It generates the project's documentation (<code>cargo doc</code>),</li>
 <li>It runs tests (<code>cargo test</code>) and benchmarks (<code>cargo bench</code>),</li>
 <li>It manages and downloads dependencies,</li>
-<li>It makes packages distributable and publishes them on <a href="https://crates.io">crates.io</a>,</li>
+<li>It makes packages distributable and publishes them on <a href="https://crates.io"><code>crates.io</code></a>,</li>
 <li>It’s also a front-end to run complementary tools such as those that are
 described below, in the form of sub-commands.</li>
 </ul>
@@ -298,26 +298,26 @@ the file is overwritten with the latest available version of every crate.</p>
 <p>Ongoing discussions occur on how to best protect
 and verify crates <em>on their first download</em> (according to the TOFU rule).
 For now, the security of the first download relies on the good security of the
-website <a href="https://crates.io">crates.io</a> and the GitHub hosted repository containing the
+website <a href="https://crates.io"><code>crates.io</code></a> and the GitHub hosted repository containing the
 registry index. In some cases, it may be preferable to opt for an alternative
 installation method for dependencies.</p>
 </div>
 <p>Cargo proposes many different commands and options to adapt the build process to
 your project needs, mainly through the manifest file <code>Cargo.toml</code>. For a
-complete presentation, see <a href="#cargo-book">cargo-book</a>.</p>
+complete presentation, see the <a href="https://doc.rust-lang.org/cargo/index.html">Cargo Book</a>.</p>
 <p>During the development of a secure application, some of the options may require
 some attention. The <code>[profile.*]</code> sections allow configuring how the compiler is
 invoked. For example:</p>
 <ul>
-<li>the <code>debug-assertions</code> variable controls whether debug assertions are enabled,</li>
-<li>the <code>overflow-checks</code> variable controls whether overflows are checked for
+<li>the <a href="https://doc.rust-lang.org/cargo/reference/profiles.html#debug-assertions"><code>debug-assertions</code></a> variable controls whether debug assertions are enabled,</li>
+<li>the <a href="https://doc.rust-lang.org/cargo/reference/profiles.html#overflow-checks"><code>overflow-checks</code></a> variable controls whether overflows are checked for
 integer arithmetic.</li>
 </ul>
 <p>Overriding the default options may cause bugs not being detected, even when
 using the debug profile that normally enables runtime checks (for example it does not enable
 <a href="integer.html#chapter-integer">integer overflow checks</a>).</p>
 <div class="reco" id="DENV-CARGO-OPTS" type="Rule" title="Keep default values for critical variables in cargo profiles">
-<p>The variables <code>debug-assertions</code> and <code>overflow-checks</code> MUST NOT be overridden
+<p>The variables <a href="https://doc.rust-lang.org/cargo/reference/profiles.html#debug-assertions"><code>debug-assertions</code></a> and <a href="https://doc.rust-lang.org/cargo/reference/profiles.html#overflow-checks"><code>overflow-checks</code></a> MUST NOT be overridden
 in development profiles' sections (<code>[profile.dev]</code> and <code>[profile.test]</code>).</p>
 </div>
 <p>Cargo proposes other ways to set up its configuration and change its behavior on
@@ -344,13 +344,13 @@ max_width = 120
 single_line_if_else_max_width = 40
 </code></pre>
 <p>For more information about the guidelines that <code>rustfmt</code> will check, have a look
-at the <a href="#rust-style">rust-style</a>.</p>
+at the [Rust Style Guidelines Book@rust-style].</p>
 <div class="reco" id="DENV-FORMAT" type="Recommendation" title="Use Rust formatter (rustfmt)">
 <p>The tool <code>rustfmt</code> SHOULD be used to ensure that the codebase respects style
 guidelines.</p>
 </div>
 <h3 id="cargo-fix"><a class="header" href="#cargo-fix">Cargo fix</a></h3>
-<p>The <code>cargo fix</code> command is a tool dedicated to
+<p>The <a href="https://doc.rust-lang.org/cargo/commands/cargo-fix.html"><code>cargo fix</code></a> command is a tool dedicated to
 fixing compiler warnings as well as easing transitions between editions.</p>
 <pre><code class="language-shell">$ cargo fix
 </code></pre>
@@ -397,7 +397,6 @@ chapters, according to their goals.</p>
 <ul>
 <li><a id="rust-edition-guide"></a> <em><a href="https://doc.rust-lang.org/edition-guide/">The Rust Edition Guide</a></em> (rust-edition-guide)</li>
 <li><a id="cargo-book"></a> <em><a href="https://doc.rust-lang.org/cargo/index.html">The Cargo Book</a></em> (cargo-book)</li>
-<li><a id="rust-style"></a> <em><a href="https://doc.rust-lang.org/style-guide/index.html">Rust Style Guide</a></em> (rust-style)</li>
 <li><a id="rustc-book"></a> <em><a href="https://doc.rust-lang.org/stable/rustc/index.html">The rustc book</a></em> (rustc-book)</li>
 </ul>
 

@@ -226,8 +226,7 @@ for clarity, and the experienced Rust programmer may rely solely on
 highlighted inserts (<em>Rule</em>, <em>Recommendation</em>, <em>Warning</em>, etc.).</p>
 <h2 id="contributions"><a class="header" href="#contributions">Contributions</a></h2>
 <p>This guide is written in a collaborative and open manner, via the GitHub
-platform
-(<a href="https://github.com/ANSSI-FR/rust-guide">https://github.com/ANSSI-FR/rust-guide</a>).
+platform <sup class="footnote-reference" id="fr-1-1"><a href="#footnote-1">1</a></sup>.
 All contributions for future versions are welcome, whether in the form of direct
 propositions (<em>pull requests</em>) or in the form of suggestions and discussions
 (<em>issues</em>).</p>
@@ -241,7 +240,7 @@ Then, recommendations about the Rust language constructs are presented.</p>
 <!-- TODO: Finally, we introduce advice for writing
 tests for a project in Rust, and for using Rust fuzzing tools.-->
 <p>We finally introduce some recommendations for established Rust libraries.</p>
-<p>Note that <em>async</em> Rust is currently not addressed in this document.</p>
+<p>Note that <em>async</em> Rust (see <a href="https://rust-lang.github.io/async-book/">Asynchronous Programming in Rust</a>) is currently not addressed in this document.</p>
 <p>A summary of recommendations presented throughout the document is listed at the
 end of this guide.</p>
 <h2 id="notations"><a class="header" href="#notations">Notations</a></h2>
@@ -255,20 +254,24 @@ based on their context and security objectives.</p>
 <p>This recommendation is formulated in conceptual terms, without taking into account
 the context of application or its implementation.</p>
 </div>
-<div class="examplereco" id="EXAMPLE-RECO" type="Recommandation" title="Recommendation for higher security requirement">
+<div class="examplereco" id="EXAMPLE-RECO" type="Recommendation" title="Recommendation for higher security requirement">
 <p>This recommendation is required for higher level security software.</p>
 </div>
 <p>As part of an ongoing process of digital risk management and continuous improvement of
-information system security <sup class="footnote-reference" id="fr-1-1"><a href="#footnote-1">1</a></sup>, the relevance of implementing the recommendations
+information system security <sup class="footnote-reference" id="fr-2-1"><a href="#footnote-2">2</a></sup>, the relevance of implementing the recommendations
 described in this document must be periodically reassessed.</p>
 <p>The checklist can be found <span class="gotochecklist"></span>.</p>
 <h2 id="references"><a class="header" href="#references">References</a></h2>
 <ul>
 <li><a id="anssi-risque-numerique"></a> <em><a href="https://cyber.gouv.fr/en/publications/controlling-digital-risk-trust-advantage">Controlling the digital risk - The trust advantage</a></em> (anssi-risque-numerique)</li>
+<li><a id="rust-async"></a> <em><a href="https://rust-lang.github.io/async-book/">Asynchronous Programming in Rust</a></em> (rust-async)</li>
 </ul>
 <hr>
 <ol class="footnote-definition"><li id="footnote-1">
-<p>For further information, please refer to the ANSSI's digital risk management guide <a href="#anssi-risque-numerique">anssi-risque-numerique</a> <a href="#fr-1-1">↩</a></p>
+<p><a href="https://github.com/ANSSI-FR/rust-guide"><code>https://github.com/ANSSI-FR/rust-guide</code></a> <a href="#fr-1-1">↩</a></p>
+</li>
+<li id="footnote-2">
+<p>For further information, please refer to the <a href="https://cyber.gouv.fr/en/publications/controlling-digital-risk-trust-advantage">ANSSI's digital risk management guide</a> <a href="#fr-2-1">↩</a></p>
 </li>
 </ol>
                     </main>

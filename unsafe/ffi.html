@@ -310,7 +310,7 @@ side.</p>
 <li><code>repr(C)</code>-annotated <code>struct</code>,</li>
 <li><code>repr(C)</code> or <code>repr(Int)</code>-annotated <code>enum</code> with at least one variant and only
 fieldless variants (where <code>Int</code> is an integral primitive type),</li>
-<li>pointers,</li>
+<li>raw pointers,</li>
 <li>an <code>Option&lt;T&gt;</code> where <code>T</code> is either
 <ul>
 <li><code>core::ptr::NonNull&lt;U&gt;</code> and <code>U</code> is a <code>Sized</code> C-compatible type, then it is
@@ -334,7 +334,7 @@ field has a C-compatible type.</li>
 <li>Zero-sized types, which is really zero sized (which is left unspecified in C
 and contradicts the C++ specification),</li>
 <li><code>repr(C)</code>, <code>repr(C, Int)</code>, or <code>repr(Int)</code>-annotated enum with fields
-(see <a href="#RFC-2195">RFC-2195</a>).</li>
+(see <a href="https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html">RFC 2195</a>).</li>
 </ul>
 <h3 id="type-consistency"><a class="header" href="#type-consistency">Type consistency</a></h3>
 <div class="reco" id="FFI-TCONS" type="Rule" title="Use consistent types at FFI boundaries">
@@ -344,7 +344,7 @@ and contradicts the C++ specification),</li>
 and the same alignment requirement.</p>
 </div>
 <p>Concerning enums with fields in particular, the corresponding types in C (or
-C++) are not obvious, cf. <a href="#RFC-2195">RFC-2195</a>.</p>
+C++) are not obvious, cf. <a href="https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html">RFC 2195</a>.</p>
 <p>Automated tools to generate bindings, such as <a href="https://crates.io/crates/bindgen">rust-bindgen</a> or
 <a href="https://crates.io/crates/cbindgen">cbindgen</a>, may be of help in making types consistent between C and Rust.</p>
 <div class="reco" id="FFI-AUTOMATE" type="Recommendation" title="Use automatic binding generator tools">
@@ -395,7 +395,7 @@ to ensure type consistency on a specific platform. They should be used during
 the build process for each target to ensure that the generation is sound for
 the specific target platform.</p>
 </div>
-<h3 id="non-robust-types-references-function-pointers-enums"><a class="header" href="#non-robust-types-references-function-pointers-enums">Non-robust types: references, function pointers, enums</a></h3>
+<h3 id="robustness"><a class="header" href="#robustness">Non-robust types: references, function pointers, enums</a></h3>
 <p>A <em>trap representation</em> of a particular type is a representation (pattern of
 bits) that respects the type's representation constraints (such as size and
 alignment) but does not represent a valid value of this type and leads to
@@ -453,11 +453,9 @@ pointer cast). To detect such a bad reinterpretation, sanitizers such as
 LLVM's <code>-fsanitize=bool</code> may be used.</p>
 </div>
 <h4 id="references-and-pointers"><a class="header" href="#references-and-pointers">References and pointers</a></h4>
-<p>Although they are allowed by the Rust compiler, the use of Rust references in
-FFI may break Rust memory safety. Because their “unsafety” is more explicit,
-pointers are preferred over Rust references when binding to another language.</p>
-<p>On the one hand, reference types are very non-robust: they allow only pointers
-to valid memory objects. Any deviation leads to undefined behavior.</p>
+<p>The types &amp;mut T and &amp;T are subject to the same validity requirements as the
+type T, with the additional constraint that they must refer to a properly
+allocated value. Any deviation leads to undefined behavior</p>
 <p>When binding to and from C, the problem is particularly severe because C has
 no references (in the sense of valid pointers) and the compiler does not offer
 any safety guarantee.</p>
@@ -468,15 +466,25 @@ against pointer/reference confusion.</p>
 <p>Rust references may be used reasonably with other C-compatible languages
 including C variants allowing for non-null type checking, e.g. Microsoft SAL
 annotated code.</p>
-<p>On the other hand, Rust <em>pointer types</em> may also lead to undefined behaviors
-but are more verifiable, mostly against <code>std/core::ptr::null()</code> (C's <code>(void*)0</code>)
+<p>By contrast, Rust’s raw pointer types (<code>*const T</code> and <code>*mut T</code>) defer validity
+checks from the point of binding to the point of use. Furthermore, they allow
+validity to be assessed primarily against <code>std/core::ptr::null()</code> (C's <code>(void*)0</code>)
 but also in some contexts against a known valid memory range (particularly in
-embedded systems or kernel-level programming). Another advantage of using Rust
+embedded systems or kernel-level programming) or against alignment requirements.</p>
+<p>Another advantage of using Rust
 pointers in FFI is that any load of the pointed value is clearly marked inside
 an <code>unsafe</code> block or function.</p>
-<div class="reco" id="FFI-NOREF" type="Rule" title="Do not use reference types in a FFI but pointer types">
-<p>In a secure Rust development, the Rust <em>low-level</em> code (the <code>*-sys</code> crate) in a FFI MUST NOT use reference types
-but pointer types.</p>
+<div class="reco" id="FFI-CK-PTR-VALID" type="Rule" title="Check foreign pointers">
+<p>In a secure Rust development, any Rust code that dereferences a foreign
+pointer MUST check their validity beforehand.
+In particular, pointers MUST be checked to be non-null before any use.</p>
+<p>Stronger approaches are advisable when possible. They include checking
+pointers against known valid memory range, tagging (or signing) pointers
+(particularly applicable if the pointed value is only manipulated from Rust)
+or checking data alignment.</p>
+</div>
+<div class="reco" id="FFI-INPUT-PTR" type="Recommendation" title="Use raw pointer to encode pointers coming from the external language">
+<p>In a secure Rust development, pointers received from the external language SHOULD be encoded by Rust <em>raw pointers</em>.</p>
 <p>Exceptions include:</p>
 <ul>
 <li>Rust references that are opaque in the foreign language and only manipulated
@@ -487,8 +495,9 @@ variants or from C++ compiled in an environment where <code>extern "C"</code>
 references are encoded as pointers.</li>
 </ul>
 </div>
-<!-- -->
-<div class="reco" id="FFI-CKREF" type="Rule" title="Do not use unchecked foreign references">
+<p>Where the previous recommendation cannot be applied, pointer validity checks must
+be carried out by the language from which the pointer originates (that is, the external language).</p>
+<div class="reco" id="FFI-CK-INPUT-REF-VALID" type="Rule" title="Do not use unchecked foreign references">
 <p>In a secure Rust development, every foreign reference that is transmitted to
 Rust through FFI MUST be <strong>checked on the foreign side</strong> either automatically
 (for instance, by a compiler) or manually.</p>
@@ -497,14 +506,6 @@ and manipulated only from the Rust side and <code>Option</code>-wrapped referenc
 (see Note below).</p>
 </div>
 <!-- -->
-<div class="reco" id="FFI-CKPTR" type="Rule" title="Check foreign pointers">
-<p>In a secure Rust development, any Rust code that dereferences a foreign
-pointer MUST check their validity beforehand.
-In particular, pointers MUST be checked to be non-null before any use.</p>
-<p>Stronger approaches are advisable when possible. They include checking
-pointers against known valid memory range or tagging (or signing) pointers
-(particularly applicable if the pointed value is only manipulated from Rust).</p>
-</div>
 <p>The following code a simple example of foreign pointer use in an exported Rust
 function:</p>
 <pre><code class="language-rust noplaypen">/// Add in place
@@ -628,7 +629,7 @@ pub struct OpaqueFoo {
 unsafe extern "C" {
     fn handle_opaque_foo(arg: *mut OpaqueFoo);
 }</code></pre>
-<p>The not-yet-stabilized <a href="#RFC-1861">RFC-1861</a> proposes to facilitate this encoding by allowing
+<p>The not-yet-stabilized <a href="https://rust-lang.github.io/rfcs/1861-extern-types.html">RFC 1861</a> proposes to facilitate this encoding by allowing
 to declare opaque types in <code>extern</code> blocks.</p>
 <div class="reco" id="FFI-C-OPAQUE" type="Recommendation" title="Use incomplete C/C++ `struct` pointers to make type opaque">
 <p>In a secure Rust development, when interfacing with C or C++, Rust types that
@@ -660,18 +661,92 @@ pub unsafe extern "C" fn destroy_opaque(o: *mut Opaque) {
     })
     .unwrap_or_default();
 }</code></pre>
+<h3 id="ffi-memory-model"><a class="header" href="#ffi-memory-model">Preserving Rust memory model</a></h3>
+<p>The Rust compiler uses information from the <em>borrow checker</em> to optimize code execution.
+In doing so, it assumes that the conditions verified by the borrow checker,
+in particular the <a href="https://doc.rust-lang.org/nomicon/aliasing.html">aliasing</a> rules,
+are valid, and it bases its optimizations on these assumptions. More details about this
+memory model can be found in the <a href="https://doc.rust-lang.org/core/ptr/index.html"><code>core</code> API documentation</a>.</p>
+<p>Violating these assumptions can therefore lead to the occurrence of UB.</p>
+<div class="reco" id="FFI-CK-REF-MODEL" type="Rule" title="Preservation of Rust’s memory model when transferring indirections at its boundary">
+<p>In secure development in Rust, the use of indirection (pointers, references)
+crossing the boundary MUST preserve Rust’s memory model.</p>
+</div>
+<div class="example">
+<p>In the following example, the Rust code manipulates pointers originating from C,
+showing the importance of respecting Rust’s invariants from the C side.</p>
+<p>The <code>swap</code> function defined below produces undefined behaviour (UB) if it is
+called from the following C code, because Rust’s memory model forbids the <em>aliasing</em> of mutable references.</p>
+<pre><code class="language-rust noplaypen">extern "C" fn swap(a: *mut u8, b: *mut u8) {
+    let a = unsafe { a.as_mut() }.unwrap();
+    let b = unsafe { b.as_mut() }.unwrap();
+    std::mem::swap(a, b);
+}</code></pre>
+<pre><code class="language-c ub">void use_swap()
+{
+	uint8_t a = 42;
+	swap(&amp;a, &amp;a);
+}
+</code></pre>
+</div>
+<div class="example">
+<p>In the following example, the Rust code passes a pointer to C code,
+illustrating the importance of reflecting, in Rust’s type system,
+the operations performed on the C side.</p>
+<p>The imported function <code>inc_wrap</code> increments the variable <code>a</code>.</p>
+<pre><code class="language-c">void inc_wrap(uint8_t *a)
+{
+	if (*a == 255)
+	{
+		*a = 0;
+	}
+	else
+	{
+		*a = *a + 1;
+	}
+}
+</code></pre>
+<p>The Rust code passes a pointer to the immutable variable <code>val</code>
+to the C function, thereby violating Rust’s memory model and resulting in <em>UB</em>.</p>
+<pre><code class="language-rust noplaypen">unsafe extern "C" {
+    fn inc_wrap(a: *mut u8);
+}
+
+fn run_inc() {
+    let val: u8 = 6;
+    let p = (&amp;val as *const u8) as *mut u8;
+    unsafe { inc_wrap(p) };
+}</code></pre>
+<p>In this example, the error could have been detected by placing stronger constraints
+on the binding to the C library API, either by modifying its signature directly,
+or by wrapping the <code>inc_wrap</code> function, as in the following example.</p>
+<pre><pre class="playground"><code class="language-rust good"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn safe_inc_wrap(a: &amp;mut u8) {
+    unsafe {
+        inc_wrap(a);
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>The <code>safe_inc_wrap</code> function is indeed <em>safe</em> because:</p>
+<ul>
+<li>any memory value can be interpreted as a value of type <code>u8</code> (the <code>u8</code> type is <a href="#robustness">robust</a>),</li>
+<li>the type of the <code>safe_inc_wrap</code> function enforces the <em>non-aliasing</em> and <em>mutability</em> constraints,</li>
+<li>the C code neither frees the pointer nor “retains” it (via a <code>static</code> variable, for example) beyond the call to the <code>inc_wrap</code> function.</li>
+</ul>
+</div>
 <h2 id="memory-and-resource-management"><a class="header" href="#memory-and-resource-management">Memory and resource management</a></h2>
 <p>Programming languages handle memory in various ways. As a result, it is
 important to known when transmitting data between Rust and another language
 which language is responsible for reclaiming the memory space for this data.
 The same is true for other kind of resources such as sockets or files.</p>
 <p>Rust tracks variable ownership and lifetime to determine at compilation time if
-and when memory should be deallocated. Thanks to the <code>Drop</code> trait, one can
+and when memory should be deallocated. Thanks to the <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a> trait, one can
 exploit this system to reclaim other kind of resources such as file or network
 access. <em>Moving</em> some piece of data from Rust to a foreign language means also
 abandoning the possible reclamations associated with it.</p>
 <div class="reco" id="FFI-MEM-NODROP" type="Rule" title="Do not use types that implement `Drop` at FFI boundary">
-<p>In a secure Rust development, Rust code MUST NOT implement <code>Drop</code> for any
+<p>In a secure Rust development, Rust code MUST NOT implement <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a> for any
 types that are directly transmitted to foreign code  (i.e. not through a
 pointer or reference).</p>
 </div>
@@ -698,7 +773,7 @@ wrapper around the foreign type:</p>
 <div class="reco" id="FFI-MEM-WRAPPING" type="Recommendation" title="Wrap foreign data in memory releasing wrapper">
 <p>In a secure Rust development, any non-sensitive foreign piece of data that are
 allocated and deallocated in the foreign language SHOULD be encapsulated in a
-<code>Drop</code> type in such a way as to provide automatic deallocation in Rust,
+<a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a> type in such a way as to provide automatic deallocation in Rust,
 through an automatic call to the foreign language deallocation routine.</p>
 </div>
 <p>A simple example of Rust wrapping over an external opaque type:</p>
@@ -852,17 +927,19 @@ int use_xtra()
 	xtra_with(cb);
 }
 </code></pre>
-<h2 id="panics-with-foreign-code"><a class="header" href="#panics-with-foreign-code">Panics with foreign code</a></h2>
-<p>When calling Rust code from another language (e.g. C), the Rust code must
+<h2 id="ffi-panic"><a class="header" href="#ffi-panic">Panics with foreign code</a></h2>
+<p>When calling Rust code from another language (e.g. C), the Rust code should
 be careful to never panic:
-stack unwinding from Rust code into foreign code results in <strong>undefined behavior</strong>.</p>
-<div class="reco" id="FFI-NOPANIC" type="Rule" title="Handle `panic!` correctly in FFI">
-<p>Rust code called from FFI MUST either ensure the function cannot panic, or use
-a panic handling mechanism (such as <code>std::panic::catch_unwind</code>,
-<code>std::panic::set_hook</code>, <code>#[panic_handler]</code>) to ensure the rust code will not
+since version <a href="https://releases.rs/docs/1.81.0/">1.81.0</a>, stack unwinding from
+Rust code into foreign code is not an undefined behavior anymore, but strict sepration
+of stack unwinding between languages is recommanded in order to prevent potential unwanted abortion<sup class="footnote-reference" id="fr-ffi-panic-abort-1"><a href="#footnote-ffi-panic-abort">1</a></sup>.</p>
+<div class="reco" id="FFI-NOPANIC" type="Recommendation" title="Handle `panic!` correctly in FFI">
+<p>Rust code called from FFI SHOULD either ensure the function cannot panic, or use
+a panic handling mechanism (such as <a href="https://doc.rust-lang.org/std/panic/fn.catch_unwind.html"><code>std::panic::catch_unwind</code></a>,
+<a href="https://doc.rust-lang.org/std/panic/fn.set_hook.html"><code>std::panic::set_hook</code></a>, <a href="https://doc.rust-lang.org/reference/panic.html#r-panic.panic_handler"><code>#[panic_handler]</code></a>) to ensure the rust code will not
 abort or return in an unstable state.</p>
 </div>
-<p>Note that <code>catch_unwind</code> will only catch unwinding panics, not those that abort
+<p>Note that <a href="https://doc.rust-lang.org/std/panic/fn.catch_unwind.html"><code>catch_unwind</code></a> will only catch unwinding panics, not those that abort
 the process.</p>
 <pre><code class="language-rust unsafe noplaypen ignore">fn may_panic() {
     /* Something may panic... */
@@ -877,7 +954,7 @@ pub unsafe extern "C" fn no_panic() -&gt; i32 {
     }
 }</code></pre>
 <h3 id="no_std"><a class="header" href="#no_std"><code>no_std</code></a></h3>
-<p>In the case of <code>#![no_std]</code> program, a panic handler (<code>#[panic_handler]</code>) must
+<p>In the case of <code>#![no_std]</code> program, a panic handler (<a href="https://doc.rust-lang.org/reference/panic.html#r-panic.panic_handler"><code>#[panic_handler]</code></a>) must
 be defined to ensure security. The panic handler should be written with great
 care in order to ensure both the safety and security of the program.</p>
 <p>Another approach is to simply ensure that there is no use of <code>panic!</code> with the
@@ -1003,8 +1080,14 @@ int main(int argc, const char **argv)
 <ul>
 <li><a id="RFC-2195"></a> <em><a href="https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html">Really tagged unions</a></em> (RFC-2195)</li>
 <li><a id="RFC-1861"></a> <em><a href="https://rust-lang.github.io/rfcs/1861-extern-types.html">Extern types</a></em> (RFC-1861)</li>
+<li><a id="memory-model"></a> <em><a href="https://doc.rust-lang.org/core/ptr/index.html">Memory model</a></em> (memory-model)</li>
+<li><a id="unwinding"></a> <em><a href="https://doc.rust-lang.org/stable/reference/items/functions.html#unwinding">Unwinding</a></em> (unwinding)</li>
 </ul>
-
+<hr>
+<ol class="footnote-definition"><li id="footnote-ffi-panic-abort">
+<p>More details can be found in the <a href="https://doc.rust-lang.org/stable/reference/items/functions.html#unwinding">unwinding specification</a>. <a href="#fr-ffi-panic-abort-1">↩</a></p>
+</li>
+</ol>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

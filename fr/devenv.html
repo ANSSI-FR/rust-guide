@@ -202,7 +202,7 @@ site officiel du langage Rust.</p>
 <p>Il existe plusieurs variantes du langage Rust, appelées <em>éditions</em>. Le concept
 d'éditions a été introduit afin de distinguer la mise en place de nouvelles
 fonctionnalités dans le langage, et de rendre ce processus incrémental.
-Toutefois, comme mentionné dans le <a href="#rust-edition-guide">rust-edition-guide</a>, cela ne signifie pas que
+Toutefois, comme mentionné dans le <a href="https://doc.rust-lang.org/edition-guide/">manuel Rust</a>, cela ne signifie pas que
 de nouvelles fonctionnalités et améliorations ne seront incluses que dans la
 dernière édition.</p>
 <p>Certaines éditions peuvent introduire de nouvelles constructions dans le langage
@@ -269,10 +269,11 @@ $
 <h4 id="tier-3"><a class="header" href="#tier-3">Tier 3</a></h4>
 <p>Les cibles de niveau 3 ne sont tout simplement pas prises en charge officiellement.</p>
 <p>La distinction entre les différents niveaux aide les développeurs à choisir une cible adaptée à leur tolérance au risque : le niveau 1 pour des applications de production, le niveau 2 pour des architectures plus expérimentales ou de niche dont le support complet n’est pas encore assuré.</p>
-<div class="reco" id="DENV-TIERS" type="Rule" title="Utilisation exclusive du tier 1 de `rustc` pour les logiciels de sûreté critiques">
+<p>type="Reco</p>
+<div class="reco" id="DENV-TIERS" type="Règle" title="Utilisation exclusive du tier 1 de `rustc` pour les logiciels de sûreté critiques">
 <p>Les cibles Rustc de niveau 1 et les chaînes de compilation certifiées DOIVENT être utilisées pour les systèmes de sûreté critiques.</p>
 </div>
-<p>Une liste complète des cibles prises en charge est disponible dans <a href="#rustc-book">rustc-book</a>.</p>
+<p>Une liste complète des cibles prises en charge est disponible dans le <a href="https://doc.rust-lang.org/stable/rustc/index.html">Rust Book</a>.</p>
 <h2 id="cargo"><a class="header" href="#cargo">Cargo</a></h2>
 <p>Une fois que la chaîne d'outils appropriée a été sélectionnée avec Rustup,
 l'outil <a href="https://doc.rust-lang.org/stable/cargo/">Cargo</a> est disponible pour exécuter ces différents outils en
@@ -285,7 +286,7 @@ permet notamment de :</p>
 <li>lancer la génération de la documentation (<code>cargo doc</code>) ;</li>
 <li>lancer les tests (<code>cargo test</code>) et les <em>benchmarks</em> (<code>cargo bench</code>) ;</li>
 <li>gérer le téléchargement des dépendances ;</li>
-<li>rendre le projet distribuable et le publier sur <a href="https://crates.io">crates.io</a>
+<li>rendre le projet distribuable et le publier sur <a href="https://crates.io"><code>crates.io</code></a>
 (<code>cargo publish</code>) ;</li>
 <li>lancer des outils complémentaires tels que ceux décrits ci-après, sous la
 forme de sous-commandes.</li>
@@ -317,20 +318,20 @@ est déjà présent, un nouveau fichier est créé avec les dernières versions 
 déterminer le meilleur moyen de protéger et de valider les <em>crates</em> lors de leur ajout au projet
 (les téléchargements suivants sont vérifiés par le fichier <code>Cargo.lock</code>). Pour le
 moment, la sécurité des premiers téléchargements de <code>cargo</code> repose sur la bonne sécurité du site web
-<a href="https://crates.io">crates.io</a> ainsi que celle du dépôt, hébergé sur GitHub, contenant l'index du
+<a href="https://crates.io"><code>crates.io</code></a> ainsi que celle du dépôt, hébergé sur GitHub, contenant l'index du
 registre de <em>crates</em>. Pour les cas les plus sensibles, il peut être préférable
 d'opter pour une méthode d'installation alternative pour les dépendances.</p>
 </div>
 <p>Cargo propose différentes commandes et options pour adapter le processus de
 compilation aux besoins de chaque projet, principalement au travers du fichier
-<code>Cargo.toml</code>. Pour une présentation complète, voir le <a href="#cargo-book">cargo-book</a>.</p>
+<code>Cargo.toml</code>. Pour une présentation complète, voir le <a href="https://doc.rust-lang.org/cargo/index.html">Cargo Book</a>.</p>
 <p>Certaines de ces options requièrent une attention particulière.</p>
 <p>La section <code>[profile.*]</code> permet de configurer la façon dont le compilateur est
 invoqué. Par exemple :</p>
 <ul>
-<li>La variable <code>debug-assertions</code> contrôle l'activation des assertions de
+<li>La variable <a href="https://doc.rust-lang.org/cargo/reference/profiles.html#debug-assertions"><code>debug-assertions</code></a> contrôle l'activation des assertions de
 <em>debug</em>.</li>
-<li>La variable <code>overflow-checks</code> contrôle l'activation de la vérification des
+<li>La variable <a href="https://doc.rust-lang.org/cargo/reference/profiles.html#overflow-checks"><code>overflow-checks</code></a> contrôle l'activation de la vérification des
 dépassements d'entiers lors d'opérations arithmétiques.</li>
 </ul>
 <p>Changer les options par défaut pour ces variables peut entraîner l'apparition de
@@ -339,7 +340,7 @@ vérifications (par exemple, les
 <a href="integer.html#chapter-integer">vérifications de dépassements d'entiers</a>)
 est utilisé.</p>
 <div class="reco" id="DENV-CARGO-OPTS" type="Règle" title="Conservation des valeurs par défaut des variables critiques dans les profils cargo">
-<p>Les variables <code>debug-assertions</code> et <code>overflow-checks</code> NE DOIVENT PAS être
+<p>Les variables <a href="https://doc.rust-lang.org/cargo/reference/profiles.html#debug-assertions"><code>debug-assertions</code></a> et <a href="https://doc.rust-lang.org/cargo/reference/profiles.html#overflow-checks"><code>overflow-checks</code></a> NE DOIVENT PAS être
 modifiées dans les sections de profils de développement (<code>[profile.dev]</code> et
 <code>[profile.test]</code>).</p>
 </div>
@@ -370,13 +371,13 @@ max_width = 120
 single_line_if_else_max_width = 40
 </code></pre>
 <p>Pour plus d'informations à propos des règles de convention de style que
-<code>rustfmt</code> propose, voir <a href="#rust-style">rust-style</a>.</p>
+<code>rustfmt</code> propose, voir le <a href="https://doc.rust-lang.org/style-guide/index.html">guide des conventions de style</a>.</p>
 <div class="reco" id="DENV-FORMAT" type="Recommandation" title="Utilisation d'un outil de formatage (rustfmt)">
 <p>L'outil de formatage <code>rustfmt</code> DEVRAIT être utilisé pour assurer le respect de
 règles de convention de style sur une base de code.</p>
 </div>
 <h3 id="cargo-fix"><a class="header" href="#cargo-fix">Cargo fix</a></h3>
-<p>La commande <code>cargo fix</code> est un
+<p>La commande <a href="https://doc.rust-lang.org/cargo/commands/cargo-fix.html"><code>cargo fix</code></a> est un
 outil dédié à la réparation des avertissements de compilation et facilitant la
 transition entre éditions.</p>
 <pre><code class="language-shell">$ cargo fix
@@ -411,7 +412,7 @@ vise à détecter dans le code. Les avertissements doivent être revérifiés pa
 développeur avant d'appliquer la réparation suggérée par <code>clippy</code>, en
 particulier dans le cas des <em>lints</em> de la catégorie <code>clippy::nursery</code> puisque
 ceux-ci sont encore en cours de développement et de mise au point.</p>
-<p><code>clippy</code> dispose maintenant d'un outils <code>fix</code> similaire à celui de <code>rustfix</code>.</p>
+<p><code>clippy</code> dispose maintenant d'un outil <code>fix</code> similaire à celui de <code>rustfix</code>.</p>
 <div class="reco" id="DENV-LINTER" type="Règle" title="Utilisation régulière d'un *linter*">
 <p>Un <em>linter</em> comme <code>clippy</code> DOIT être utilisé régulièrement tout au long du
 développement d'une application sécurisée.</p>
