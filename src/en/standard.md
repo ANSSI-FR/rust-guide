@@ -223,7 +223,7 @@ we have `T1 {a: 1, b: 0} > T1 {a: 0, b: 1}` but
 Second, if one of the underlying comparisons panics, the order may change the
 result due to the use of short-circuit logic in the automatic implementation.
 
-For enums, the derived comparisons depend first on the **variant order**, then
+For enumerations, the derived comparisons depend first on the **variant order**, then
 on the field order.
 
 </div>

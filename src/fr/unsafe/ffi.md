@@ -5,7 +5,7 @@ references:
     url: https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html
     id: RFC-2195
   - type: web
-    title: Extern types
+    title: External types
     url: https://rust-lang.github.io/rfcs/1861-extern-types.html
     id: RFC-1861
   - type: web
@@ -38,7 +38,7 @@ la manière standard en C d'appeler des fonctions.
 ```
 
 Pour que la fonction `mylib_f` soit accessible avec le même nom, la fonction
-doit être annotée avec l'attribut `#[unsafe(no_mangle)]`).
+doit être annotée avec l'attribut `#[unsafe(no_mangle)]`.
 
 À l'inverse, il est possible d'appeler des fonctions écrites en C depuis du code
 Rust si celles-ci sont déclarées dans un bloc `extern` :
@@ -79,7 +79,7 @@ ayant un nom de la forme `*-sys`.
 
 </div>
 
-La *crate* [rust-bindgen] peut être utilisée pour générer automatiquement la
+La *crate* [`rust-bindgen`] peut être utilisée pour générer automatiquement la
 partie bas-niveau du *binding* depuis les fichiers *header* C.
 
 <!--
@@ -125,25 +125,25 @@ comme **opaques** du côté du langage externe.
 Les types suivants sont considérés comme compatibles avec le C :
 
 - les types primitifs entiers et à virgule flottante ;
-- les `struct`s annotées avec `repr(C)` ;
-- les `enum`s annotées avec `repr(C)` ou `repr(Int)` (où `Int` est un type
+- les structures annotées avec `repr(C)` ;
+- les énumérations annotées avec `repr(C)` ou `repr(Int)` (où `Int` est un type
   primitif entier), contenant au moins un variant et dont tous les variants ne
   comportent pas de champ ;
 - les pointeurs bruts ;
 - les `Option<T>` où `T` est:
-  - `core::ptr::NonNull<U>` et `U` est un type compatible avec le C et `Sized`,
+  - `core::ptr::NonNull<U>`, et `U` est un type compatible avec le C et `Sized`,
     auquel cas le type est équivalent à un pointeur `*const T` et `*mut T`,
   - `core::num::NonZero*`, auquel cas le type est équivalent au type primitif
     entier correspondant ;
-- les `struct`s annotées avec `repr(transparent)` possédant un seul champ, qui
+- les structures annotées avec `repr(transparent)` possédant un seul champ, qui
   est d'un type C-compatible.
 
 Les types suivants ne sont pas compatibles avec le C :
 
 - les types à taille variable ;
 - les `trait object`s ;
-- les `enum`s dont les variants comportent des champs ;
-- les n-uplets (sauf les `struct`s à n-uplet annotées avec `repr(C)`).
+- les énumérations dont les variants comportent des champs ;
+- les n-uplets (sauf les structures à n-uplet (par exemple `struct Type(A, B)`) annotées avec `repr(C)`).
 
 Certains types sont compatibles, mais avec certaines limitations :
 
@@ -170,7 +170,7 @@ En ce qui concerne les `enum`s avec des champs en particulier, les types
 correspondant en C (ou en C++) ne sont pas évidents ([RFC 2195 @RFC-2195]).
 
 Les outils permettant de générer automatiquement des *bindings*, comme
-[rust-bindgen] ou [cbindgen], peuvent aider à assurer la cohérence entre les
+[`rust-bindgen`] ou [`cbindgen`], peuvent aider à assurer la cohérence entre les
 types du côté C et ceux du côté Rust.
 
 <div class="reco" id="FFI-AUTOMATE" type="Recommandation" title="Utilisation des outils de génération automatique de *bindings*">
@@ -185,7 +185,7 @@ continu.
 
 <div class="warning">
 
-Pour les *bindings* C/C++ vers Rust, [rust-bindgen] est capable de générer
+Pour les *bindings* C/C++ vers Rust, [`rust-bindgen`] est capable de générer
 automatiquement des *bindings* de bas niveau. L'écriture d'un *binding* de
 plus haut niveau est fortement recommandée (voir Recommandation
 [FFI-SAFEWRAPPING](ffi.md#FFI-SAFEWRAPPING)). Attention également à certaines
@@ -193,8 +193,8 @@ options dangereuses de `rust-bindgen`, en particulier `rustified_enum`.
 
 </div>
 
-[rust-bindgen]: https://crates.io/crates/bindgen
-[cbindgen]: https://crates.io/crates/cbindgen
+[`rust-bindgen`]: https://crates.io/crates/bindgen
+[`cbindgen`]: https://crates.io/crates/cbindgen
 
 ### Types dépendants de la plateforme d'exécution
 
@@ -220,7 +220,7 @@ la bibliothèque standard offre des alias de types portables dans `std::os::raw`
 - `c_float` pour `float` (toujours `f32`) ;
 - `c_double` pour `double` (toujours `f64`).
 
-La crate [libc] offre des types supplémentaires compatibles avec le C qui
+La crate [`libc`] offre des types supplémentaires compatibles avec le C qui
 couvrent la quasi-entièreté de la bibliothèque standard du C.
 
 <div class="reco" id="FFI-PFTYPE" type="Règle" title="Utilisation des alias portables `c_*` pour faire correspondre les types dépendants de la plateforme d'exécution">
@@ -229,7 +229,7 @@ Dans un développement sécurisé en Rust, lors de l'interfaçage avec du code
 faisant usage de types dépendants de la plateforme d'exécution, comme les
 `int`s et les `long`s du C, le code Rust DOIT utiliser les alias portables de
 types, comme ceux fournis dans la bibliothèque standard ou dans la crate
-[libc], au lieu des types spécifiques à la plateforme, à l'exception du cas
+[`libc`], au lieu des types spécifiques à la plateforme, à l'exception du cas
 où les *bindings* sont générés automatiquement pour chaque plateforme (voir
 la note ci-dessous).
 
@@ -239,15 +239,15 @@ la note ci-dessous).
 
 <div class="note">
 
-Les outils de génération automatiques de *bindings* (par exemple [cbindgen] ou
-[rust-bindgen]) sont capables d'assurer la cohérence des types dépendants de
+Les outils de génération automatiques de *bindings* (par exemple [`cbindgen`] ou
+[`rust-bindgen`]) sont capables d'assurer la cohérence des types dépendants de
 la plateforme. Ils doivent être utilisés durant le processus de compilation
 pour chaque cible afin d'assurer que la génération est cohérente pour la
 plateforme visée.
 
 </div>
 
-[libc]: https://crates.io/crates/libc
+[`libc`]: https://crates.io/crates/libc
 
 ### Types non-robustes : références, pointeurs de fonction, énumérations {#robustness}
 
@@ -392,7 +392,7 @@ Les exceptions sont :
 
 - les références qui sont opaques dans le langage externe et qui sont
   seulement manipulées du côté Rust ;
-- les références *wrappées* dans un type `Option` (voir note ci-dessous) ;
+- les références *encapsulées* dans un type `Option` (voir note ci-dessous) ;
 - les références liées à des références sûres dans le langage externe, par
   exemple dans des variantes du C ou dans du code compilé en C++ dans un
   environnement où les références de fonctions `extern "C"` sont encodées
@@ -410,8 +410,8 @@ côté Rust par le biais d'une FFI DOIVENT être **vérifiées du côté du lang
 externe**, que ce soit de manière automatique (par exemple, par un
 compilateur) ou de manière manuelle.
 
-Les exceptions comprennent les références Rust *wrappées* de façon opaque et
-manipulées uniquement du côté Rust, et les références *wrappées* dans un type
+Les exceptions comprennent les références Rust *encapsulées* de façon opaque et
+manipulées uniquement du côté Rust, et les références *encapsulées* dans un type
 `Option` (voir note ci-dessous).
 
 </div>
@@ -464,7 +464,7 @@ pointeurs simples. En particulier, la validité des pointeurs de fonction ne peu
 pas être vérifiée directement du côté Rust. Toutefois, Rust offre deux
 alternatives possibles :
 
-- l'utilisation de pointeurs de fonctions *wrappé* dans une valeur de type
+- l'utilisation de pointeurs de fonctions *encapsulés* dans une valeur de type
   `Option`, accompagnée d'un test contre la valeur nulle :
 
   ```rust,noplaypen
@@ -509,7 +509,7 @@ conversion contrôlée vers le type `enum`.
 Du côté externe, cela est possible uniquement si l'autre langage permet la mise
 en place de tests plus stricts que ceux proposés en C. C'est par exemple
 possible en C++ avec les `enum class`. Notons toutefois pour référence que
-l'ABI `extern "C"` d'une `enum class` est définie par l'implémentation et doit
+l'ABI `extern "C"` d'un `enum class` est définie par l'implémentation et doit
 être vérifiée pour chaque environnement d'exécution.
 
 <div class="reco" id="FFI-NOENUM" type="Règle" title="Non-utilisation d'`enum`s Rust provenant de l'extérieur par une FFI">
@@ -613,7 +613,7 @@ car le modèle mémoire de Rust interdit l'*aliasing* de références mutables.
 <div class="example">
 
 Dans l'exemple suivant le code Rust transmet au code C un pointeur, montrant l'importance de refléter,
-dans le système de types de Rust, les opérations effectuées du coté du C.
+dans le système de types de Rust, les opérations effectuées du côté du C.
 
 La fonction importée `inc_wrap` incrémente la variable `a`.
 
@@ -686,7 +686,7 @@ type, est échangée par une FFI, il est nécessaire de s'assurer que :
   donnée ;
 - l'autre langage NE DOIT NI allouer, NI libérer la donnée directement, mais
   peut utiliser une fonction externe dédiée fournie par le langage responsable
-  choisie.
+  choisi.
 
 </div>
 
@@ -787,7 +787,7 @@ défini pour la sécurité du programme. Le gestionnaire de `panic` doit être �
 avec la plus grande précaution pour garantir non seulement la sécurité, mais
 aussi la sûreté du programme.
 
-Un approche alternative est de simplement s'assurer qu'il n'y a aucune
+Une approche alternative est de simplement s'assurer qu'il n'y a aucune
 utilisation de `panic!` avec la *crate* [`panic-never`]. Comme [`no-panic`],
 [`panic-never`] repose sur une astuce au moment de l'édition de liens : le
 programme d'édition de liens échoue si une branche non trivialement
@@ -801,13 +801,13 @@ inaccessible mène à un appel à `panic!`.
 
 <div class="reco" id="FFI-CAPI" type="Règle" title="Exposition exclusive d'API dédiée et compatible avec le C">
 
-Dans un développement sécurisé en Rust, exposer un bibliothèque Rust à un
+Dans un développement sécurisé en Rust, exposer une bibliothèque Rust à un
 langage externe DOIT être uniquement fait par le biais d'une **API dédiée et
 compatible avec le C**.
 
 </div>
 
-La *crate* [cbindgen] peut être utilisée pour générer automatiquement les
+La *crate* [`cbindgen`] peut être utilisée pour générer automatiquement les
 *bindings* C ou C++ pour l'API Rust compatible avec le C d'une bibliothèque
 Rust.
 
@@ -819,7 +819,7 @@ Rust.
 {{#include ../../../examples/src/counter.rs}}
 ```
 
-En utilisant [cbindgen] (`[cbindgen] -l c > counter.h`), il est possible de
+En utilisant [`cbindgen`] (`cbindgen -l c > counter.h`), il est possible de
 générer un *header* C cohérent, `counter.h` :
 
 ```c

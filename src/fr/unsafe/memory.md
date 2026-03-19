@@ -53,7 +53,7 @@ inaccessible, mais non libérée.
 
 En particulier, l'utilisation de [`mem::forget`] peut causer la rétention en mémoire de
 ressources critiques, menant à des interblocages et à la persistance de données
-sensibles en mémoire. C'est pourquoi [`mem::forget`] doit être considérée comme
+sensibles en mémoire. C'est pourquoi la fonction [`mem::forget`] doit être considérée comme
 **non sécurisée**.
 
 <div class="reco" id="MEM-FORGET" type="Règle" title="Non-utilisation de `mem::forget`">
@@ -80,8 +80,8 @@ d'appel à [`mem::forget`], ajouter la directive suivante en début de fichier r
 
 La bibliothèque standard inclut d'autres moyens d'*oublier* une valeur :
 
-- [`Box::leak`] pour désactiver le destructeur d'une `Box` ;
-- [`Box::into_raw`] pour exploiter une `Box` sous forme d'un pointeur *raw* dans un bloc *unsafe*, notamment
+- [`Box::leak`] pour désactiver le destructeur de `Box` ;
+- [`Box::into_raw`] pour exploiter une valeur de type `Box` sous forme d'un pointeur *raw* dans un bloc *unsafe*, notamment
   dans une FFI ;
 - [`ManuallyDrop`] (dans `std::mem` ou `core::mem`) pour assurer la libération
   manuelle d'une valeur.
@@ -99,9 +99,9 @@ mémoire ou des ressources *via* [`Box::leak`].
 [`ManuallyDrop`] et [`Box::into_raw`] passent la responsabilité de la libération de
 la ressource concernée du compilateur au développeur.
 
-<div class="reco" id="MEM-MANUALLYDROP" type="Règle" title="Libération des valeurs *wrappées* dans `ManuallyDrop`">
+<div class="reco" id="MEM-MANUALLYDROP" type="Règle" title="Libération des valeurs *encapsulées* dans `ManuallyDrop`">
 
-Dans un développement sécurisé en Rust, toute valeur *wrappée* dans le type
+Dans un développement sécurisé en Rust, toute valeur *encapsulée* dans le type
 [`ManuallyDrop`] DOIT être *unwrapped* pour permettre sa libération automatique
 ([`ManuallyDrop::into_inner`]) ou bien DOIT être manuellement libérée (*unsafe*
 [`ManuallyDrop::drop`]).
@@ -130,7 +130,7 @@ pointeurs *intelligents* (*smart pointer*) de Rust. En particulier, leur libéra
 
 Dans un développement sécurisé en Rust non-*unsafe*, les références et les *smart pointers*
 NE DEVRAIENT PAS être convertis en *raw pointers*. En particulier, les fonctions `into_raw` ou `into_non_null`
-des *smart pointers* [`Box`], [`Rc`], [`Arc`], [`rc::Weak`] ou [`sync::Weak`] NE DEVRAIT PAS être utilisées dans un code Rust non-*unsafe*.
+des *smart pointers* [`Box`], [`Rc`], [`Arc`], [`rc::Weak`] ou [`sync::Weak`] NE DEVRAIENT PAS être utilisées dans un code Rust non-*unsafe*.
 
 Dans le cas contraire, l'usage de *raw pointers* en Rust non-*unsafe* DOIT être documenté et justifié.
 

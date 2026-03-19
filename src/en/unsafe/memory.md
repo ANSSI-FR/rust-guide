@@ -119,7 +119,7 @@ raw pointers must be done manually without Rust guaranties.
 <div class="reco" id="MEM-NORAWPOINTER" type="Rule" title="Do no convert smart pointer into raw pointer in Rust without `unsafe`">
 
 In a secure Rust development without `unsafe`, references and *smart pointers*
-SHOULD NOT be converted into *raw pointers*. For instance, functions `into_raw` ou `into_non_null`
+SHOULD NOT be converted into *raw pointers*. For instance, functions `into_raw` or `into_non_null`
 of smart pointers [`Box`], [`Rc`], [`Arc`], [`rc::Weak`] or [`sync::Weak`] SHOULD NOT be used.
 
 The use of *raw pointers* without `unsafe` code MUST otherwise be documented and justified.

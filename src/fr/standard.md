@@ -23,7 +23,7 @@ définies comme suit :
 - Un type est [`Send`] s’il est sûr d'envoyer (*move*) des valeurs de ce type vers
   un autre fil d'exécution.
 - Un type est [`Sync`] s’il est sûr de partager des valeurs de ce type par une
-  référence immutable avec un autre fil d'exécution.
+  référence immuable avec un autre fil d'exécution.
 
 Ces deux traits sont des traits *unsafe*, c'est-à-dire que le compilateur Rust
 ne vérifie d'aucune manière que leur implémentation est correcte. Le danger est
@@ -58,16 +58,16 @@ struct SpecialType(u8, PhantomData<*const ()>);
 
 <div class="reco" id="LANG-SYNC-TRAITS" type="Règle" title="Justification de l'implémentation des traits `Send` et `Sync`">
 
-Dans un développement sécurisé en Rust, l'implémentation manuelle des traits
-[`Send`] et [`Sync`] DEVRAIT être évitée, et, si nécessaire, DOIT être justifiée
-et documentée.
+Dans un développement sécurisé en Rust, les traits
+[`Send`] et [`Sync`] NE DEVRAIENT PAS être implémentés manuellement, et, si nécessaire,
+l'implémentation DOIT être justifiée et documentée.
 
 </div>
 
 ## Les traits de comparaison : [`PartialEq`], [`Eq`], [`PartialOrd`], [`Ord`]
 
 Les comparaisons (`==`, `!=`, `<`, `<=`, `>`, `>=`) en Rust reposent sur quatre
-traits de la bibliothèque standard disponibles dans `std::cmp` (ou `core::cmp`
+traits de la bibliothèque standard, disponibles dans `std::cmp` (ou `core::cmp`
 pour une compilation avec `no_std`) :
 
 - [`PartialEq<Rhs>`] qui définit la relation d'équivalence partielle entre objets
@@ -85,7 +85,7 @@ Comme stipulé dans la documentation de la bibliothèque standard, Rust présupp
 
 - Pour [`PartialEq`] :
 
-  - *Cohérence interne* : `a.ne(b)` est équivalent à `!a.eq(b)`, c.-à-d., `ne`
+  - *Cohérence interne* : `a.ne(b)` est équivalent à `!a.eq(b)`, c'est-à-dire, `ne`
     est le strict inverse de `eq`. Cela correspond précisément à
     l'implémentation par défaut de `ne`.
 
@@ -150,7 +150,7 @@ Comme stipulé dans la documentation de la bibliothèque standard, Rust présupp
   - `PartialOrd<Self>`
 
   - *Totalité* : `a.partial_cmp(b) != None` est toujours vrai. En d'autres mots,
-    exactement une assertion parmi `a.eq(b)`, `a.lt(b)` et `a.gt(b)` est vraie.
+    exactement une assertion parmi `a.eq(b)`, `a.lt(b)` et `a.gt(b)`, est vraie.
 
   - *Cohérence avec `PartialOrd<Self>`*: `Some(a.cmp(b)) == a.partial_cmp(b)`.
 
@@ -235,8 +235,8 @@ on a `T1 {a: 1, b: 0} > T1 {a: 0, b: 1}` mais
 `T2 {a: 1, b: 0} < T2 {a: 0, b: 1}`.
 
 Ensuite, si une comparaison sous-jacente provoque un `panic`, l'ordre peut
-changer le résultat à cause de l'utilisation d'un opérateur logique court-
-circuitant dans l'implémentation automatique.
+changer le résultat à cause de l'utilisation d'un opérateur logique 
+court-circuitant dans l'implémentation automatique.
 
 Pour les énumérations, les comparaisons dérivées dépendent d'abord de
 **l'ordre des variants**, puis de l'ordre des champs.
@@ -338,9 +338,9 @@ reposer uniquement sur l'implémentation du trait [`Drop`].
 
 Les références comptées permettent de cloner à peu de frais des valeurs de n'importe quel type.
 Pour cela, ces valeurs sont associées à un compteur qui dénombre le nombre de clones attachés à cette valeur, et lorsque
-le compteur tombe à zero, la valeur est détruite. 
+le compteur tombe à zéro, la valeur est détruite. 
 
-Ce paradigme peut introduire des fuites mémoires lorsque les références comptés sont utilisées dans des cycles.
+Ce paradigme peut introduire des fuites mémoires lorsque les références comptées sont utilisées dans des cycles.
 
 <center>
 

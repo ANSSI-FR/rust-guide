@@ -167,7 +167,7 @@ l’administration en vertu du décret pris en application de l’article L.323-
 du CRPA.
 
 Etalab est la mission chargée, sous l’autorité du Premier ministre, d’ouvrir le
-plus grand nombre de données publiques des administrations de l’Etat et de ses
+plus grand nombre de données publiques des administrations de l’État et de ses
 établissements publics. Elle a réalisé la Licence Ouverte pour faciliter la
 réutilisation libre et gratuite de ces informations publiques, telles que
 définies par l’article L321-1 du CRPA.

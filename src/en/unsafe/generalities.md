@@ -32,33 +32,33 @@ As described in the [Rust Reference @rust-reference], the `unsafe` keyword is us
 Marking with `unsafe` is a delegation of responsibility with respect to memory safety from the API author to the API user.
 The use of this keyword in an API *warns* the API user about the potential harmful effects of using the API.
 
-* In a function signature (section [r-unsafe.fn] of the [Rust Reference @rust-reference]), `unsafe` means that the behavior of the function may lead to UB if the use of the function does not comply with its interface contract (informally described in its documentation).
-* In a trait declaration (section [r-unsafe.trait] of the [Rust Reference @rust-reference]), `unsafe` means that an erroneous implementation of this trait may lead to UB if the implementation contract (preferably documented) is not respected.
+* In a function signature (section [`r-unsafe.fn`] of the [Rust Reference @rust-reference]), `unsafe` means that the behavior of the function may lead to UB if the use of the function does not comply with its interface contract (informally described in its documentation).
+* In a trait declaration (section [`r-unsafe.trait`] of the [Rust Reference @rust-reference]), `unsafe` means that an erroneous implementation of this trait may lead to UB if the implementation contract (preferably documented) is not respected.
 
-[r-unsafe.fn]: <https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.fn>
-[r-unsafe.trait]: <https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.trait>
+[`r-unsafe.fn`]: <https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.fn>
+[`r-unsafe.trait`]: <https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.trait>
 
 ### `unsafe` unlocking
 
 Unlocking with `unsafe` means taking responsibility for memory safety from the compiler to the developer.
 
-Using an `unsafe` block in a function body or in a constant declaration is imposed by the compiler (section [r-unsafe.block] of the [Rust Reference @rust-reference]) to prevent the *inadvertent use* of `unsafe` capabilities like
+Using an `unsafe` block in a function body or in a constant declaration is imposed by the compiler (section [`r-unsafe.block`] of the [Rust Reference @rust-reference]) to prevent the *inadvertent use* of `unsafe` capabilities like
 
 * using `unsafe` tagged functions
 * modifying static variables
-* using extern functions
+* using `extern` functions
 
-Similarly, the implementation of an `unsafe` trait requires `unsafe` (section [r-unsafe.impl] of the [Rust Reference @rust-reference]) for the developer to explicitly take into account the memory safety contracts. The keyword `unsafe` *unlocks* the implementation of `unsafe` traits.
+Similarly, the implementation of an `unsafe` trait requires `unsafe` (section [`r-unsafe.impl`] of the [Rust Reference @rust-reference]) for the developer to explicitly take into account the memory safety contracts. The keyword `unsafe` *unlocks* the implementation of `unsafe` traits.
 
 Lastly, Since the 2024 edition, `unsafe` is also required to unlock the following:
 
-* `extern` blocks (section [r-unsafe.extern] of the [Rust Reference @rust-reference]), which contain declarations of foreign functions and variables, for [FFI](./ffi.md#chapter-ffi),
-* some attributes (for instance , no_mangle, cf. [r-attributes.safety] of the [Rust Reference @rust-reference]).
+* `extern` blocks (section [`r-unsafe.extern`] of the [Rust Reference @rust-reference]), which contain declarations of foreign functions and variables, for [FFI](./ffi.md#chapter-ffi),
+* some attributes (for instance , no_mangle, cf. [`r-attributes.safety`] of the [Rust Reference @rust-reference]).
 
-[r-unsafe.impl]: <https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.impl>
-[r-unsafe.block]: <https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.block>
-[r-unsafe.extern]: <https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.extern>
-[r-attributes.safety]: <https://doc.rust-lang.org/reference/attributes.html#r-attributes.safety>
+[`r-unsafe.impl`]: <https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.impl>
+[`r-unsafe.block`]: <https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.block>
+[`r-unsafe.extern`]: <https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.extern>
+[`r-attributes.safety`]: <https://doc.rust-lang.org/reference/attributes.html#r-attributes.safety>
 
 ## Limitations and precautions
 

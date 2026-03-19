@@ -118,7 +118,7 @@ Pour chacune des recommandations de ce guide, l’utilisation du verbe *devoir* 
 plus prescriptive que la formulation *il est recommandé*.
 
 Pour certaines recommandations, il est proposé, au vu des menaces constatées lors de la rédaction
-de ce guide, plusieurs solutions qui se distinguent par le niveau de sécurité qu’elles permettent
+de ce guide, plusieurs solutions qui se distinguent par le niveau de sécurité qu'elles permettent
 d’atteindre. Le lecteur a ainsi la possibilité de choisir une solution offrant la meilleure protection
 en fonction du contexte et de ses objectifs de sécurité.
 

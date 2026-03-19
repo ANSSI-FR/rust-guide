@@ -5,7 +5,7 @@ references:
     url: https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html
     id: RFC-2195
   - type: web
-    title: Extern types
+    title: External types
     url: https://rust-lang.github.io/rfcs/1861-extern-types.html
     id: RFC-1861
   - type: web
@@ -78,7 +78,7 @@ crate with a name of the form `*-sys`.
 
 </div>
 
-The crate [rust-bindgen] may be used to automatically generate the low-level
+The crate [`rust-bindgen`] may be used to automatically generate the low-level
 part of the binding from C header files.
 
 <!--
@@ -125,7 +125,7 @@ The following types are considered C-compatible:
 - integral or floating point primitive types,
 - `repr(C)`-annotated `struct`,
 - `repr(C)` or `repr(Int)`-annotated `enum` with at least one variant and only
-  fieldless variants (where `Int` is an integral primitive type),
+  variants without field (where `Int` is an integral primitive type),
 - raw pointers,
 - an `Option<T>` where `T` is either
   - `core::ptr::NonNull<U>` and `U` is a `Sized` C-compatible type, then it is
@@ -139,7 +139,7 @@ The following types are not C-compatible:
 
 - Dynamically sized types,
 - Trait objects,
-- Enums with fields,
+- Enumerations with fields,
 - Tuples (but `repr(C)` tuple structures are OK).
 
 Some types are compatible with some caveats:
@@ -163,11 +163,11 @@ and the same alignment requirement.
 
 </div>
 
-Concerning enums with fields in particular, the corresponding types in C (or
+Concerning enumerations with fields in particular, the corresponding types in C (or
 C++) are not obvious, cf. [RFC 2195 @RFC-2195].
 
-Automated tools to generate bindings, such as [rust-bindgen] or
-[cbindgen], may be of help in making types consistent between C and Rust.
+Automated tools to generate bindings, such as [`rust-bindgen`] or
+[`cbindgen`], may be of help in making types consistent between C and Rust.
 
 <div class="reco" id="FFI-AUTOMATE" type="Recommendation" title="Use automatic binding generator tools">
 
@@ -180,16 +180,16 @@ generate bindings when possible and to maintain them continually.
 
 <div class="warning">
 
-For binding C/C++ to Rust, [rust-bindgen] is able to automatically generate
+For binding C/C++ to Rust, [`rust-bindgen`] is able to automatically generate
 the low-level binding. A high-level safe binding is highly recommended (see
 Recommendation [FFI-SAFEWRAPPING](ffi.md#FFI-SAFEWRAPPING)).
-Also some options of rust-bindgen may result in dangerous translations, in
+Also some options of [`rust-bindgen`] may result in dangerous translations, in
 particular `rustified_enum`.
 
 </div>
 
-[rust-bindgen]: https://crates.io/crates/bindgen
-[cbindgen]: https://crates.io/crates/cbindgen
+[`rust-bindgen`]: https://crates.io/crates/bindgen
+[`cbindgen`]: https://crates.io/crates/cbindgen
 
 ### Platform-dependent types
 
@@ -213,7 +213,7 @@ library offers portable type aliases in `std:os::raw` (or `core::os::raw`):
 - `c_float` for `float` (always `f32`),
 - `c_double` for `double` (always `f64`).
 
-The [libc] crate offers more C compatible types that cover almost exhaustively
+The [`libc`] crate offers more C compatible types that cover almost exhaustively
 the C standard library.
 
 <div class="reco" id="FFI-PFTYPE" type="Rule" title="Use portable aliases `c_*` when binding to platform-dependent types">
@@ -221,7 +221,7 @@ the C standard library.
 In a secure Rust development, when interfacing with foreign code that
 uses platform-dependent types, such as C's `int` and `long`, Rust code MUST
 use portable type aliases, such as the ones provided by the standard library or the
-[libc] crate, rather than platform-specific types, except if
+[`libc`] crate, rather than platform-specific types, except if
 the binding is automatically generated for each platform (see Note below).
 
 </div>
@@ -230,16 +230,16 @@ the binding is automatically generated for each platform (see Note below).
 
 <div class="note">
 
-Automatic binding generation tools (e.g. [cbindgen], [rust-bindgen]) are able
+Automatic binding generation tools (e.g. [`cbindgen`], [`rust-bindgen`]) are able
 to ensure type consistency on a specific platform. They should be used during
 the build process for each target to ensure that the generation is sound for
 the specific target platform.
 
 </div>
 
-[libc]: https://crates.io/crates/libc
+[`libc`]: https://crates.io/crates/libc
 
-### Non-robust types: references, function pointers, enums {#robustness}
+### Non-robust types: references, function pointers, enumerations {#robustness}
 
 A *trap representation* of a particular type is a representation (pattern of
 bits) that respects the type's representation constraints (such as size and
@@ -259,7 +259,7 @@ the C-compatible types:
 - `bool` (1 byte, 256 representations, only 2 valid ones),
 - references,
 - function pointers,
-- enums,
+- enumerations,
 - floats (even if almost all languages have the same understanding of what is
   a valid float),
 - compound types that contain a field of a non-robust type.
@@ -298,7 +298,7 @@ strong guarantees. For instance, some C++ subset (without reinterpretation)
 allows developers to do lot of type checking. Because Rust natively separates
 the safe and unsafe segments, the recommendation is to always use Rust to check
 when possible. Concerning risks, the most dangerous types are references,
-function references, and enums, and are discussed below.
+function references, and enumerations, and are discussed below.
 
 <div class="warning">
 
@@ -315,7 +315,7 @@ LLVM's `-fsanitize=bool` may be used.
 
 #### References and pointers
 
-The types &mut T and &T are subject to the same validity requirements as the
+The types `&mut T` and `&T` are subject to the same validity requirements as the
 type T, with the additional constraint that they must refer to a properly 
 allocated value. Any deviation leads to undefined behavior
 
@@ -454,7 +454,7 @@ the FFI boundary.
 When binding with C or even C++, one cannot guarantee easily the validity of 
 function pointers. Moreover, C++ function objects (also known as functors) are not C-compatible.
 
-#### Enums
+#### Enumerations
 
 Usually the possible bit patterns of valid `enum` values are really small with
 respect to the number of possible bit patterns of the same size. Mishandling an
@@ -481,11 +481,11 @@ Exceptions include Rust `enum` types that are:
 
 - opaque in the foreign language and only manipulated from the
   Rust side,
-- bound to safe enums in the foreign language, e.g. `enum class` types in C++.
+- bound to safe enumerations in the foreign language, e.g. `enum class` types in C++.
 
 </div>
 
-Concerning fieldless enums, crates like [`num_derive`] or [`num_enum`] allow
+Concerning enumerations without field, crates like [`num_derive`] or [`num_enum`] allow
 developers to easily provide safe conversions from integer to enumeration and may
 be use to safely convert an integer (provided from a C `enum`) into a Rust enum.
 
@@ -696,8 +696,8 @@ A compatible C call:
 When calling Rust code from another language (e.g. C), the Rust code should
 be careful to never panic:
 since version [1.81.0](https://releases.rs/docs/1.81.0/), stack unwinding from
-Rust code into foreign code is not an undefined behavior anymore, but strict sepration
-of stack unwinding between languages is recommanded in order to prevent potential unwanted abortion[^ffi-panic-abort].
+Rust code into foreign code is not an undefined behavior anymore, but strict separation
+of stack unwinding between languages is recommended in order to prevent potential unwanted abortion[^ffi-panic-abort].
 
 [^ffi-panic-abort]: More details can be found in the [unwinding specification @unwinding].
 
@@ -744,7 +744,7 @@ SHOULD only be done through a **dedicated C-compatible API**.
 
 </div>
 
-The crate [cbindgen] may be used to automatically generate C or C++ bindings to
+The crate [`cbindgen`] may be used to automatically generate C or C++ bindings to
 the Rust C-compatible API of a Rust library.
 
 ### Minimal example of a C-exported Rust library
@@ -755,7 +755,7 @@ the Rust C-compatible API of a Rust library.
 {{#include ../../../examples/src/counter.rs}}
 ```
 
-Using [cbindgen] (`[cbindgen] -l c > counter.h`), one can generate a consistent
+Using [`cbindgen`] (`cbindgen -l c > counter.h`), one can generate a consistent
 C header, `counter.h`:
 
 ```c

@@ -80,7 +80,7 @@ Les fonctions suivantes sont connues pour émettre des `panic` en cas d'argument
 <div class="reco" id="LANG-ARRINDEXING" type="Règle" title="Test des indices d'accès aux tableaux ou utilisation de la méthode `get`">
 
 L'indice d'accès à un tableau DOIT être testé, ou la méthode `get` DOIT être
-utilisée pour récupérer une `Option`.
+utilisée pour récupérer un type `Option`.
 
 </div>
 
