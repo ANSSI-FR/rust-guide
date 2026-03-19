@@ -60,12 +60,6 @@ and documented.
 
 </div>
 
-[`Rc`]: https://doc.rust-lang.org/std/rc/struct.Rc.html
-[`Cell`]: https://doc.rust-lang.org/std/cell/struct.Cell.html
-[`RefCell`]: https://doc.rust-lang.org/std/cell/struct.RefCell.html
-[`UnsafeCell`]: https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html
-[`PhantomData`]: https://doc.rust-lang.org/std/marker/struct.PhantomData.html
-
 ## Comparison traits ([`PartialEq`], [`Eq`], [`PartialOrd`], [`Ord`])
 
 Comparisons (`==`, `!=`, `<`, `<=`, `>`, `>=`) in Rust rely on four standard
@@ -269,7 +263,7 @@ field the value contains. Note that a [`Drop`] implementation is
 First and foremost, implementing [`Drop`] should not be systematic.
 It is only needed if the type requires some destructor logic. In fact, [`Drop`] is
 typically used to release external resources (network connections, files, etc.)
-or to release memory (e.g. in smart pointers such as `Box` or `Rc`).
+or to release memory (e.g. in smart pointers such as `Box` or [`Rc`]).
 As a result, [`Drop`] trait implementations are likely to contain `unsafe` code
 blocks as well as other security-critical operations.
 
@@ -284,7 +278,7 @@ Second, Rust type system only ensures memory safety and, from the type system's
 standpoint, missing drops is allowed. In fact, several things may lead to
 missing drops, such as:
 
-- a reference cycle (for instance, with `Rc` or `Arc`),
+- a reference cycle (for instance, with [`Rc`] or [`Arc`]),
 - an explicit call to [`mem::forget`] (see paragraph
   on [`mem::forget` and memory leaks](unsafe/memory.md#forget-and-memory-leaks)),
 - a panic during drop,
@@ -317,20 +311,7 @@ trait implementation.
 
 </div>
 
-[`Send`]: https://doc.rust-lang.org/std/marker/trait.Send.html
-[`Sync`]: https://doc.rust-lang.org/std/marker/trait.Sync.html
-[`PartialEq`]: https://doc.rust-lang.org/std/cmp/trait.PartialEq.html
-[`PartialEq<Rhs>`]: https://doc.rust-lang.org/std/cmp/trait.PartialEq.html
-[`PartialOrd`]: https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html
-[`PartialOrd<Rhs>`]: https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html
-[`Eq`]: https://doc.rust-lang.org/std/cmp/trait.Eq.html
-[`Ord`]: https://doc.rust-lang.org/std/cmp/trait.Ord.html
-[`mem::forget`]: https://doc.rust-lang.org/std/mem/fn.forget.html
-[`mem::drop`]: https://doc.rust-lang.org/std/mem/fn.drop.html
-[`Drop`]: https://doc.rust-lang.org/std/ops/trait.Drop.html
-[`std::ops::Drop`]: https://doc.rust-lang.org/std/ops/trait.Drop.html
-
-## Cyclic reference counted pointers (`Rc` and `Arc`)
+## Cyclic reference counted pointers ([`Rc`] and [`Arc`])
 
 Reference-counting pointers allow values of any type to be cloned.
 To do this, these values are associated with a counter that counts the number of clones attached to that value, and when
@@ -400,3 +381,22 @@ Hello, world!
 Recursive types whose recursivity uses reference counted pointers MUST NOT be used together with interior mutability.
 
 </div>
+
+[`Rc`]: https://doc.rust-lang.org/std/rc/struct.Rc.html
+[`Arc`]: https://doc.rust-lang.org/std/sync/struct.Arc.html
+[`Cell`]: https://doc.rust-lang.org/std/cell/struct.Cell.html
+[`RefCell`]: https://doc.rust-lang.org/std/cell/struct.RefCell.html
+[`UnsafeCell`]: https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html
+[`PhantomData`]: https://doc.rust-lang.org/std/marker/struct.PhantomData.html
+[`Send`]: https://doc.rust-lang.org/std/marker/trait.Send.html
+[`Sync`]: https://doc.rust-lang.org/std/marker/trait.Sync.html
+[`PartialEq`]: https://doc.rust-lang.org/std/cmp/trait.PartialEq.html
+[`PartialEq<Rhs>`]: https://doc.rust-lang.org/std/cmp/trait.PartialEq.html
+[`PartialOrd`]: https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html
+[`PartialOrd<Rhs>`]: https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html
+[`Eq`]: https://doc.rust-lang.org/std/cmp/trait.Eq.html
+[`Ord`]: https://doc.rust-lang.org/std/cmp/trait.Ord.html
+[`mem::forget`]: https://doc.rust-lang.org/std/mem/fn.forget.html
+[`mem::drop`]: https://doc.rust-lang.org/std/mem/fn.drop.html
+[`Drop`]: https://doc.rust-lang.org/std/ops/trait.Drop.html
+[`std::ops::Drop`]: https://doc.rust-lang.org/std/ops/trait.Drop.html

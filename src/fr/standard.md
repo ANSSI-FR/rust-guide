@@ -64,12 +64,6 @@ et documentée.
 
 </div>
 
-[`Rc`]: https://doc.rust-lang.org/std/rc/struct.Rc.html
-[`Cell`]: https://doc.rust-lang.org/std/cell/struct.Cell.html
-[`RefCell`]: https://doc.rust-lang.org/std/cell/struct.RefCell.html
-[`UnsafeCell`]: https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html
-[`PhantomData`]: https://doc.rust-lang.org/std/marker/struct.PhantomData.html
-
 ## Les traits de comparaison : [`PartialEq`], [`Eq`], [`PartialOrd`], [`Ord`]
 
 Les comparaisons (`==`, `!=`, `<`, `<=`, `>`, `>=`) en Rust reposent sur quatre
@@ -288,7 +282,7 @@ Tout d'abord, l'implémentation de [`Drop`] ne doit pas être systématique. Ell
 nécessaire uniquement lorsque le type requiert un traitement logique à la
 destruction. [`Drop`] est typiquement utilisé dans le cas du relâchement des
 ressources externes (connexions réseau, fichier, etc.) ou de ressources mémoire
-complexes (*smart pointers* comme les `Box` ou les `Rc` par exemple). Au
+complexes (*smart pointers* comme les `Box` ou les [`Rc`] par exemple). Au
 final, il est probable que l'implémentation du trait [`Drop`] contienne des blocs
 `unsafe` ainsi que d'autres opérations critiques du point de vue de la sécurité.
 
@@ -303,7 +297,7 @@ Ensuite, le système de types de Rust assure seulement la sûreté mémoire et,
 du point de vue du typage, des [`mem::drop`]s peuvent tout à fait être manqués.
 Plusieurs situations peuvent mener à manquer des [`mem::drop`]s, comme :
 
-- un cycle de références (par exemple avec `Rc` ou `Arc`) ;
+- un cycle de références (par exemple avec [`Rc`] ou [`Arc`]) ;
 - un appel explicite à [`mem::forget`] (voir
   paragraphe à propos de [`mem::forget` et des fuites de mémoire](unsafe/memory.md#forget-and-memory-leaks)) ;
 - un `panic` dans un [`mem::drop`] ;
@@ -340,20 +334,7 @@ reposer uniquement sur l'implémentation du trait [`Drop`].
 
 </div>
 
-[`Send`]: https://doc.rust-lang.org/std/marker/trait.Send.html
-[`Sync`]: https://doc.rust-lang.org/std/marker/trait.Sync.html
-[`PartialEq`]: https://doc.rust-lang.org/std/cmp/trait.PartialEq.html
-[`PartialEq<Rhs>`]: https://doc.rust-lang.org/std/cmp/trait.PartialEq.html
-[`PartialOrd`]: https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html
-[`PartialOrd<Rhs>`]: https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html
-[`Eq`]: https://doc.rust-lang.org/std/cmp/trait.Eq.html
-[`Ord`]: https://doc.rust-lang.org/std/cmp/trait.Ord.html
-[`mem::forget`]: https://doc.rust-lang.org/std/mem/fn.forget.html
-[`mem::drop`]: https://doc.rust-lang.org/std/mem/fn.drop.html
-[`Drop`]: https://doc.rust-lang.org/std/ops/trait.Drop.html
-[`std::ops::Drop`]: https://doc.rust-lang.org/std/ops/trait.Drop.html
-
-## Références comptées (`Rc` et `Arc`)
+## Références comptées ([`Rc`] et [`Arc`])
 
 Les références comptées permettent de cloner à peu de frais des valeurs de n'importe quel type.
 Pour cela, ces valeurs sont associées à un compteur qui dénombre le nombre de clones attachés à cette valeur, et lorsque
@@ -423,3 +404,22 @@ Hello, world!
  Les types récursifs dont la récursion se base sur l'utilisation des références comptées [`Rc`] ou [`Arc`] NE DOIVENT PAS être mutables *intérieurement*.
 
 </div>
+
+[`Rc`]: https://doc.rust-lang.org/std/rc/struct.Rc.html
+[`Arc`]: https://doc.rust-lang.org/std/sync/struct.Arc.html
+[`Cell`]: https://doc.rust-lang.org/std/cell/struct.Cell.html
+[`RefCell`]: https://doc.rust-lang.org/std/cell/struct.RefCell.html
+[`UnsafeCell`]: https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html
+[`PhantomData`]: https://doc.rust-lang.org/std/marker/struct.PhantomData.html
+[`Send`]: https://doc.rust-lang.org/std/marker/trait.Send.html
+[`Sync`]: https://doc.rust-lang.org/std/marker/trait.Sync.html
+[`PartialEq`]: https://doc.rust-lang.org/std/cmp/trait.PartialEq.html
+[`PartialEq<Rhs>`]: https://doc.rust-lang.org/std/cmp/trait.PartialEq.html
+[`PartialOrd`]: https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html
+[`PartialOrd<Rhs>`]: https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html
+[`Eq`]: https://doc.rust-lang.org/std/cmp/trait.Eq.html
+[`Ord`]: https://doc.rust-lang.org/std/cmp/trait.Ord.html
+[`mem::forget`]: https://doc.rust-lang.org/std/mem/fn.forget.html
+[`mem::drop`]: https://doc.rust-lang.org/std/mem/fn.drop.html
+[`Drop`]: https://doc.rust-lang.org/std/ops/trait.Drop.html
+[`std::ops::Drop`]: https://doc.rust-lang.org/std/ops/trait.Drop.html
