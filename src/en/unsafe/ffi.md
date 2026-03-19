@@ -9,6 +9,10 @@ references:
     url: https://rust-lang.github.io/rfcs/1861-extern-types.html
     id: RFC-1861
   - type: web
+    title: Memory model
+    url: https://doc.rust-lang.org/core/ptr/index.html
+    id: memory-model
+  - type: web
     title: Unwinding
     url: https://doc.rust-lang.org/stable/reference/items/functions.html#unwinding
     id: unwinding
@@ -235,7 +239,7 @@ the specific target platform.
 
 [libc]: https://crates.io/crates/libc
 
-### Non-robust types: references, function pointers, enums
+### Non-robust types: references, function pointers, enums {#robustness}
 
 A *trap representation* of a particular type is a representation (pattern of
 bits) that respects the type's representation constraints (such as size and
@@ -311,12 +315,9 @@ LLVM's `-fsanitize=bool` may be used.
 
 #### References and pointers
 
-Although they are allowed by the Rust compiler, the use of Rust references in
-FFI may break Rust memory safety. Because their “unsafety” is more explicit,
-pointers are preferred over Rust references when binding to another language.
-
-On the one hand, reference types are very non-robust: they allow only pointers
-to valid memory objects. Any deviation leads to undefined behavior.
+The types &mut T and &T are subject to the same validity requirements as the
+type T, with the additional constraint that they must refer to a properly 
+allocated value. Any deviation leads to undefined behavior
 
 When binding to and from C, the problem is particularly severe because C has
 no references (in the sense of valid pointers) and the compiler does not offer
@@ -331,17 +332,32 @@ Rust references may be used reasonably with other C-compatible languages
 including C variants allowing for non-null type checking, e.g. Microsoft SAL
 annotated code.
 
-On the other hand, Rust *pointer types* may also lead to undefined behaviors
-but are more verifiable, mostly against `std/core::ptr::null()` (C's `(void*)0`)
+By contrast, Rust’s raw pointer types (`*const T` and `*mut T`) defer validity
+checks from the point of binding to the point of use. Furthermore, they allow
+validity to be assessed primarily against `std/core::ptr::null()` (C's `(void*)0`)
 but also in some contexts against a known valid memory range (particularly in
-embedded systems or kernel-level programming). Another advantage of using Rust
+embedded systems or kernel-level programming) or against alignment requirements.
+
+Another advantage of using Rust
 pointers in FFI is that any load of the pointed value is clearly marked inside
 an `unsafe` block or function.
 
-<div class="reco" id="FFI-NOREF" type="Rule" title="Do not use reference types in a FFI but pointer types">
+<div class="reco" id="FFI-CK-PTR-VALID" type="Rule" title="Check foreign pointers">
 
-In a secure Rust development, the Rust *low-level* code (the `*-sys` crate) in a FFI MUST NOT use reference types
-but pointer types.
+In a secure Rust development, any Rust code that dereferences a foreign
+pointer MUST check their validity beforehand.
+In particular, pointers MUST be checked to be non-null before any use.
+
+Stronger approaches are advisable when possible. They include checking
+pointers against known valid memory range, tagging (or signing) pointers
+(particularly applicable if the pointed value is only manipulated from Rust)
+or checking data alignment.
+
+</div>
+
+<div class="reco" id="FFI-INPUT-PTR" type="Recommendation" title="Use raw pointer to encode pointers coming from the external language">
+
+In a secure Rust development, pointers received from the external language SHOULD be encoded by Rust *raw pointers*.
 
 Exceptions include:
 
@@ -354,9 +370,10 @@ Exceptions include:
 
 </div>
 
-<!-- -->
+Where the previous recommendation cannot be applied, pointer validity checks must
+be carried out by the language from which the pointer originates (that is, the external language).
 
-<div class="reco" id="FFI-CKREF" type="Rule" title="Do not use unchecked foreign references">
+<div class="reco" id="FFI-CK-INPUT-REF-VALID" type="Rule" title="Do not use unchecked foreign references">
 
 In a secure Rust development, every foreign reference that is transmitted to
 Rust through FFI MUST be **checked on the foreign side** either automatically
@@ -369,18 +386,6 @@ and manipulated only from the Rust side and `Option`-wrapped references
 </div>
 
 <!-- -->
-
-<div class="reco" id="FFI-CKPTR" type="Rule" title="Check foreign pointers">
-
-In a secure Rust development, any Rust code that dereferences a foreign
-pointer MUST check their validity beforehand.
-In particular, pointers MUST be checked to be non-null before any use.
-
-Stronger approaches are advisable when possible. They include checking
-pointers against known valid memory range or tagging (or signing) pointers
-(particularly applicable if the pointed value is only manipulated from Rust).
-
-</div>
 
 The following code a simple example of foreign pointer use in an exported Rust
 function:
@@ -522,6 +527,77 @@ Example of opaque Rust type:
 ```rust,unsafe,noplaypen
 {{#include ../../../examples/src/ffi.rs:opaque_internal}}
 ```
+
+### Preserving Rust memory model {#ffi-memory-model}
+
+The Rust compiler uses information from the *borrow checker* to optimize code execution.
+In doing so, it assumes that the conditions verified by the borrow checker,
+in particular the [aliasing](https://doc.rust-lang.org/nomicon/aliasing.html) rules,
+are valid, and it bases its optimizations on these assumptions. More details about this
+memory model can be found in the [`core` API documentation @memory-model].
+
+Violating these assumptions can therefore lead to the occurrence of UB.
+
+<div class="reco" id="FFI-CK-REF-MODEL" type="Rule" title="Preservation of Rust’s memory model when transferring indirections at its boundary">
+
+In secure development in Rust, the use of indirection (pointers, references)
+crossing the boundary MUST preserve Rust’s memory model.
+
+</div>
+
+<div class="example">
+
+In the following example, the Rust code manipulates pointers originating from C,
+showing the importance of respecting Rust’s invariants from the C side.
+
+The `swap` function defined below produces undefined behaviour (UB) if it is 
+called from the following C code, because Rust’s memory model forbids the *aliasing* of mutable references.
+
+
+```rust,noplaypen
+{{#include ../../../examples/src/ffi.rs:input_pointer_alias}}
+```
+
+```c ub
+{{#include ../../../examples/src/ffi.c:input_pointer_alias}}
+```
+
+</div>
+
+<div class="example">
+
+In the following example, the Rust code passes a pointer to C code,
+illustrating the importance of reflecting, in Rust’s type system,
+the operations performed on the C side.
+
+The imported function `inc_wrap` increments the variable `a`.
+
+```c
+{{#include ../../../examples/src/ffi.c:output_pointer}}
+```
+The Rust code passes a pointer to the immutable variable `val`
+to the C function, thereby violating Rust’s memory model and resulting in *UB*.
+
+
+```rust,noplaypen
+{{#include ../../../examples/src/ffi.rs:output_pointer}}
+```
+
+In this example, the error could have been detected by placing stronger constraints
+on the binding to the C library API, either by modifying its signature directly,
+or by wrapping the `inc_wrap` function, as in the following example.
+
+```rust good
+{{#include ../../../examples/src/ffi.rs:output_pointer_good}}
+```
+
+The `safe_inc_wrap` function is indeed *safe* because:
+
+* any memory value can be interpreted as a value of type `u8` (the `u8` type is [robust](#robustness)),
+* the type of the `safe_inc_wrap` function enforces the *non-aliasing* and *mutability* constraints,
+* the C code neither frees the pointer nor “retains” it (via a `static` variable, for example) beyond the call to the `inc_wrap` function.
+
+</div>
 
 ## Memory and resource management
 

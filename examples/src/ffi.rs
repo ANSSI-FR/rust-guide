@@ -265,3 +265,31 @@ pub unsafe extern "C" fn no_panic() -> i32 {
     }
 }
 /////////////////////// ANCHOR_END: panic
+
+/////////////////////// ANCHOR: output_pointer
+unsafe extern "C" {
+    fn inc_wrap(a: *mut u8);
+}
+
+fn run_inc() {
+    let val: u8 = 6;
+    let p = (&val as *const u8) as *mut u8;
+    unsafe { inc_wrap(p) };
+}
+/////////////////////// ANCHOR_END: output_pointer
+
+/////////////////////// ANCHOR: output_pointer_good
+fn safe_inc_wrap(a: &mut u8) {
+    unsafe {
+        inc_wrap(a);
+    }
+}
+/////////////////////// ANCHOR_END: output_pointer_good
+
+/////////////////////// ANCHOR: input_pointer_alias
+extern "C" fn swap(a: *mut u8, b: *mut u8) {
+    let a = unsafe { a.as_mut() }.unwrap();
+    let b = unsafe { b.as_mut() }.unwrap();
+    std::mem::swap(a, b);
+}
+/////////////////////// ANCHOR_END: input_pointer_alias

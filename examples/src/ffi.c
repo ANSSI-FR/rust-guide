@@ -52,3 +52,25 @@ int use_xtra()
 	xtra_with(cb);
 }
 /////////////////////// ANCHOR_END: free_intern
+
+/////////////////////// ANCHOR: output_pointer
+void inc_wrap(uint8_t *a)
+{
+	if (*a == 255)
+	{
+		*a = 0;
+	}
+	else
+	{
+		*a = *a + 1;
+	}
+}
+/////////////////////// ANCHOR_END: output_pointer
+
+/////////////////////// ANCHOR: input_pointer_alias
+void use_swap()
+{
+	uint8_t a = 42;
+	swap(&a, &a);
+}
+/////////////////////// ANCHOR_END: input_pointer_alias
