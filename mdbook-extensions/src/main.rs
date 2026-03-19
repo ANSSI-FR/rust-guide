@@ -8,6 +8,8 @@ use std::process;
 
 mod cite;
 mod extensions;
+mod grammarcheck;
+mod spellcheck;
 
 use clap::{Parser, Subcommand};
 /// A mdbook preprocessor
@@ -28,6 +30,7 @@ enum Commands {
 }
 
 fn main() {
+    env_logger::init();
     let cli = Cli::parse();
 
     let preprocessor = extensions::Ext;

@@ -32,9 +32,16 @@ title = "Recommendations checklist"
 renderers = ["html"]
 after = ["links", "extensions"]
 
-[preprocessor.extensions]
-title = "References"
+[preprocessor.extensions.cite-proc]
+section-name = "References"
 renderers = ["html"]
+
+[preprocessor.extensions.spell-checker]
+extra-dict = "en.pws"
+allow-errors = false
+
+[preprocessor.extensions.grammar-checker]
+allow-errors = false
 
 [preprocessor.code-align]
 after = ["links", "extensions"]

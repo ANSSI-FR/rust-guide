@@ -91,6 +91,18 @@
           mdbook-code-align
           mdbook-extensions
           pandoc
+          (aspellWithDicts (
+            dicts: with dicts; [
+              en
+              fr
+            ]
+          ))
+          (python311.withPackages (
+            ps: with ps; [
+              grammalecte
+            ]
+          ))
+          languagetool
           (texlive.combine {
             inherit (texlive)
               scheme-small
@@ -124,6 +136,7 @@
         devShell = pkgs.mkShell {
           buildInputs = runtime;
         };
+        # packages.default = { };
       }
     );
 }
