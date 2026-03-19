@@ -415,7 +415,7 @@ field the value contains. Note that a <a href="https://doc.rust-lang.org/std/ops
 <p>First and foremost, implementing <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a> should not be systematic.
 It is only needed if the type requires some destructor logic. In fact, <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a> is
 typically used to release external resources (network connections, files, etc.)
-or to release memory (e.g. in smart pointers such as <code>Box</code> or <code>Rc</code>).
+or to release memory (e.g. in smart pointers such as <code>Box</code> or <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a>).
 As a result, <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a> trait implementations are likely to contain <code>unsafe</code> code
 blocks as well as other security-critical operations.</p>
 <div class="reco" id="LANG-DROP" type="Rule" title="Justify `Drop` implementation">
@@ -426,7 +426,7 @@ MUST be justified and documented.</p>
 standpoint, missing drops is allowed. In fact, several things may lead to
 missing drops, such as:</p>
 <ul>
-<li>a reference cycle (for instance, with <code>Rc</code> or <code>Arc</code>),</li>
+<li>a reference cycle (for instance, with <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a> or <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc</code></a>),</li>
 <li>an explicit call to <a href="https://doc.rust-lang.org/std/mem/fn.forget.html"><code>mem::forget</code></a> (see paragraph
 on <a href="unsafe/memory.html#forget-and-memory-leaks"><code>mem::forget</code> and memory leaks</a>),</li>
 <li>a panic during drop,</li>
@@ -448,7 +448,7 @@ in a cycle of reference-counted references.</p>
 at the end of a cryptographic encryption) MUST NOT rely only on the <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a>
 trait implementation.</p>
 </div>
-<h2 id="cyclic-reference-counted-pointers-rc-and-arc"><a class="header" href="#cyclic-reference-counted-pointers-rc-and-arc">Cyclic reference counted pointers (<code>Rc</code> and <code>Arc</code>)</a></h2>
+<h2 id="cyclic-reference-counted-pointers-rc-and-arc"><a class="header" href="#cyclic-reference-counted-pointers-rc-and-arc">Cyclic reference counted pointers (<a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a> and <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc</code></a>)</a></h2>
 <p>Reference-counting pointers allow values of any type to be cloned.
 To do this, these values are associated with a counter that counts the number of clones attached to that value, and when
 the counter reaches zero, the value is destroyed.</p>

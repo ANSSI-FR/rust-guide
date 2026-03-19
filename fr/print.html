@@ -2370,7 +2370,7 @@ la valeur. Il est à noter que l'implémentation de <a href="https://doc.rust-la
 nécessaire uniquement lorsque le type requiert un traitement logique à la
 destruction. <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a> est typiquement utilisé dans le cas du relâchement des
 ressources externes (connexions réseau, fichier, etc.) ou de ressources mémoire
-complexes (<em>smart pointers</em> comme les <code>Box</code> ou les <code>Rc</code> par exemple). Au
+complexes (<em>smart pointers</em> comme les <code>Box</code> ou les <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a> par exemple). Au
 final, il est probable que l'implémentation du trait <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a> contienne des blocs
 <code>unsafe</code> ainsi que d'autres opérations critiques du point de vue de la sécurité.</p>
 <div class="reco" id="LANG-DROP" type="Règle" title="Justification de l'implémentation du trait `Drop`">
@@ -2381,7 +2381,7 @@ final, il est probable que l'implémentation du trait <a href="https://doc.rust-
 du point de vue du typage, des <a href="https://doc.rust-lang.org/std/mem/fn.drop.html"><code>mem::drop</code></a>s peuvent tout à fait être manqués.
 Plusieurs situations peuvent mener à manquer des <a href="https://doc.rust-lang.org/std/mem/fn.drop.html"><code>mem::drop</code></a>s, comme :</p>
 <ul>
-<li>un cycle de références (par exemple avec <code>Rc</code> ou <code>Arc</code>) ;</li>
+<li>un cycle de références (par exemple avec <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a> ou <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc</code></a>) ;</li>
 <li>un appel explicite à <a href="https://doc.rust-lang.org/std/mem/fn.forget.html"><code>mem::forget</code></a> (voir
 paragraphe à propos de <a href="unsafe/memory.html#forget-and-memory-leaks"><code>mem::forget</code> et des fuites de mémoire</a>) ;</li>
 <li>un <code>panic</code> dans un <a href="https://doc.rust-lang.org/std/mem/fn.drop.html"><code>mem::drop</code></a> ;</li>
@@ -2406,7 +2406,7 @@ directement ou indirectement, dans un cycle de références à compteurs.</p>
 traitement (comme l'effacement de secrets cryptographiques par exemple) NE DOIVENT PAS
 reposer uniquement sur l'implémentation du trait <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a>.</p>
 </div>
-<h2 id="références-comptées-rc-et-arc"><a class="header" href="#références-comptées-rc-et-arc">Références comptées (<code>Rc</code> et <code>Arc</code>)</a></h2>
+<h2 id="références-comptées-rc-et-arc"><a class="header" href="#références-comptées-rc-et-arc">Références comptées (<a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a> et <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc</code></a>)</a></h2>
 <p>Les références comptées permettent de cloner à peu de frais des valeurs de n'importe quel type.
 Pour cela, ces valeurs sont associées à un compteur qui dénombre le nombre de clones attachés à cette valeur, et lorsque
 le compteur tombe à zero, la valeur est détruite.</p>
@@ -2475,7 +2475,7 @@ Hello, world!
 ==153637== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 </code></pre>
 <div class="reco" id="MEM-MUT-REC-RC" type="Règle" title="Éviter les références comptées récursives mutables">
-<p>Les types récursifs dont la récursion se base sur l'utilisation des références comptées <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a> ou [<code>Arc</code>] NE DOIVENT PAS être mutables <em>intérieurement</em>.</p>
+<p>Les types récursifs dont la récursion se base sur l'utilisation des références comptées <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a> ou <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc</code></a> NE DOIVENT PAS être mutables <em>intérieurement</em>.</p>
 </div>
 <h2 id="références-7"><a class="header" href="#références-7">Références</a></h2>
 <ul>
