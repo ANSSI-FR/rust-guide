@@ -29,12 +29,29 @@
             lockFile = "${src}/Cargo.lock";
           };
 
+          checkFlags = [
+            # rustc version 1.87 and after changes output formatting which fails tests
+            "--skip=test::failing_tests"
+          ];
+
         });
         mdbook-checklist = pkgs.rustPlatform.buildRustPackage (finalAttrs: rec {
           pname = "mdbook-checklist";
           version = "0.2.0";
 
           src = ./mdbook-checklist;
+
+          cargoLock = {
+            lockFile = "${src}/Cargo.lock";
+          };
+
+        });
+
+        examples = pkgs.rustPlatform.buildRustPackage (finalAttrs: rec {
+          pname = "examples";
+          version = "0.1.0";
+
+          src = ./examples;
 
           cargoLock = {
             lockFile = "${src}/Cargo.lock";
@@ -90,6 +107,7 @@
           mdbook-shiftinclude
           mdbook-code-align
           mdbook-extensions
+          examples
           pandoc
           (aspellWithDicts (
             dicts: with dicts; [
@@ -123,6 +141,21 @@
             RUST_BACKTRACE=1 RUST_LOG=info mdbook "$@"
           '';
         };
+        shell-app = pkgs.writeShellApplication {
+          name = "shell";
+          runtimeInputs = runtime ++ [
+            # Minimal dependencies for container used in CI
+            pkgs.coreutils
+            pkgs.gnugrep
+
+            # Used for testing examples
+            pkgs.cargo
+            pkgs.gcc
+          ];
+          text = ''
+            sh -c "$@"
+          '';
+        };
       in
       {
         apps."mdbook" = {
@@ -133,10 +166,34 @@
           type = "app";
           program = "${mdbook-app}/bin/mdbook";
         };
-        devShell = pkgs.mkShell {
-          buildInputs = runtime;
+        # devShell = pkgs.mkShell {
+        #   buildInputs = runtime;
+        # };
+        packages.default = pkgs.stdenv.mkDerivation {
+          name = "rust-guide";
+          src = ./.;
+          buildPhase = ''
+            bash lang.sh fr
+            ${mdbook-app}/bin/mdbook build
+            bash lang.sh en
+            ${mdbook-app}/bin/mdbook build
+          '';
+          installPhase = ''
+            mkdir -p $out
+            mv book $out/
+          '';
         };
-        # packages.default = { };
+        packages."image" = pkgs.dockerTools.buildImage {
+          name = "registry.gitlab.com/anssi-fr/collab/rust-guide/worker";
+          tag = "3.0.0";
+          config = {
+            Entrypoint = [ "${shell-app}/bin/shell" ];
+          };
+          copyToRoot = [
+            pkgs.dockerTools.binSh
+            pkgs.dockerTools.usrBinEnv
+          ];
+        };
       }
     );
 }

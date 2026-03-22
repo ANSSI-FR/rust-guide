@@ -21,7 +21,7 @@ stages: # List of stages for jobs, and their order of execution
   - test
   - deploy
 
-image: $CI_REGISTRY/anssi-fr/collab/rust-guide/worker:2.0.0
+image: $CI_REGISTRY/anssi-fr/collab/rust-guide/worker:3.0.0
 
 build-job: # This job runs in the build stage, which runs first.
   stage: build
@@ -30,6 +30,7 @@ build-job: # This job runs in the build stage, which runs first.
     # - cargo install --path ./mdbook-checklist --locked
     # - cargo install --path ./mdbook-code-align --locked
     # - cargo install --path ./mdbook-extensions --locked
+    - mkdir /tmp
     - ./lang.sh en && mdbook build
     - ./lang.sh fr && mdbook build
     - mv book/fr/html book/en/html/fr
@@ -49,6 +50,7 @@ deploy-pages:
 unit-test-job: # This job runs in the test stage.
   stage: test # It only starts when the job in the build stage completes successfully.
   script:
+    - mkdir /tmp
     - cd examples
     - cargo build --verbose --features OK
     - cargo build --verbose --features KO
