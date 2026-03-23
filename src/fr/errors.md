@@ -63,7 +63,7 @@ Les motifs de code suivants provoquent explicitement des `panic` :
 
 De la règle [précédente](#LANG-LIMIT-PANIC) découle la règle suivante.
 
-<div class="reco" id="LANG-LIMIT-EXPECT" type="Règle" title="Limitation des fonctions déclenchant des `panic`s">
+<div class="reco" id="LANG-LIMIT-PANIC-SRC" type="Règle" title="Limitation des fonctions déclenchant des `panic`s">
 
 Les usages de `unwrap`, `expect` et de `assert!` DOIVENT être restreints aux seuls cas interdits par la spécification de la fonction.
 

@@ -300,6 +300,8 @@ Beside panics, secure-critical drop should be protected.
 
 A value whose type implements [`Drop`] MUST NOT be embedded directly or indirectly
 in a cycle of reference-counted references.
+(see section on [cyclic reference counted pointers](#cyclic-rc-pointer)).
+
 
 </div>
 
@@ -311,7 +313,7 @@ trait implementation.
 
 </div>
 
-## Cyclic reference counted pointers ([`Rc`] and [`Arc`])
+## Cyclic reference counted pointers ([`Rc`] and [`Arc`]) {#cyclic-rc-pointer}
 
 Reference-counting pointers allow values of any type to be cloned.
 To do this, these values are associated with a counter that counts the number of clones attached to that value, and when

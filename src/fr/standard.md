@@ -320,7 +320,8 @@ protégés.
 <div class="reco" id="LANG-DROP-NO-CYCLE" type="Règle" title="Absence de cycles de références avec valeurs `Drop`ables">
 
 Les valeurs dont le type implémente [`Drop`] NE DOIVENT PAS être incluses,
-directement ou indirectement, dans un cycle de références à compteurs.
+directement ou indirectement, dans un cycle de références à compteurs
+(voir la section sur les [cycles dans les références à compteurs](#cyclic-rc-pointer)).
 
 </div>
 
@@ -334,13 +335,13 @@ reposer uniquement sur l'implémentation du trait [`Drop`].
 
 </div>
 
-## Références comptées ([`Rc`] et [`Arc`])
+## Références à compteurs ([`Rc`] et [`Arc`]) {#cyclic-rc-pointer}
 
-Les références comptées permettent de cloner à peu de frais des valeurs de n'importe quel type.
+Les références à compteurs permettent de cloner à peu de frais des valeurs de n'importe quel type.
 Pour cela, ces valeurs sont associées à un compteur qui dénombre le nombre de clones attachés à cette valeur, et lorsque
 le compteur tombe à zéro, la valeur est détruite. 
 
-Ce paradigme peut introduire des fuites mémoires lorsque les références comptées sont utilisées dans des cycles.
+Ce paradigme peut introduire des fuites mémoires lorsque les références à compteurs sont utilisées dans des cycles.
 
 <center>
 
@@ -351,9 +352,9 @@ Ce paradigme peut introduire des fuites mémoires lorsque les références compt
 Dans cet exemple, les objets `A`, `B` et `C` sont chacun référencés par au moins un autre objet : tant que ces trois objets existent,
 ils ne seront pas supprimés. On a donc une fuite mémoire.
 
-La **combinaison** de la mutabilité *[intérieure](https://doc.rust-lang.org/reference/interior-mutability.html)*, des références comptées et des types récursifs peut conduire à des fuites mémoire, et donc éventuellement à des attaques par déni de service et à des fuites de secrets.
+La **combinaison** de la mutabilité *[intérieure](https://doc.rust-lang.org/reference/interior-mutability.html)*, des références à compteurs et des types récursifs peut conduire à des fuites mémoire, et donc éventuellement à des attaques par déni de service et à des fuites de secrets.
 
-L'exemple non-`unsafe` suivant montre, la création d'une fuite mémoire en utilisant la mutabilité intérieure et les références comptées.
+L'exemple non-`unsafe` suivant montre la création d'une fuite mémoire en utilisant la mutabilité intérieure et les références à compteurs.
 
 ```rust align bad
 {{#include ../../examples/src/memory.rs:cyclic}}
@@ -399,9 +400,9 @@ Hello, world!
 ==153637== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 ```
 
-<div class="reco" id="MEM-MUT-REC-RC" type="Règle" title="Éviter les références comptées récursives mutables">
+<div class="reco" id="MEM-MUT-REC-RC" type="Règle" title="Éviter les références à compteurs récursives mutables">
 
- Les types récursifs dont la récursion se base sur l'utilisation des références comptées [`Rc`] ou [`Arc`] NE DOIVENT PAS être mutables *intérieurement*.
+ Les types récursifs dont la récursion se base sur l'utilisation des références à compteurs [`Rc`] ou [`Arc`] NE DOIVENT PAS être mutables *intérieurement*.
 
 </div>
 

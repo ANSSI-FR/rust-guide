@@ -59,7 +59,7 @@ Following patterns can cause panics (by design):
 The following rule is deduced from the [previous rule](#LANG-LIMIT-PANIC).
 
 
-<div class="reco" id="LANG-LIMIT-EXPECT" type="Rule" title="Limit use of `panic`-ing functions">
+<div class="reco" id="LANG-LIMIT-PANIC-SRC" type="Rule" title="Limit use of `panic`-ing functions">
 
 Uses of `unwrap`, `expect` and `assert!` MUST be restricted to cases explicitly forbidden by the function’s specification.
 
