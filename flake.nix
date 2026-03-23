@@ -131,9 +131,6 @@
               ;
           })
         ];
-        # mdbook-script = pkgs.writeShellScriptBin "mdbook" ''
-        #   ${mdbook-custom}/bin/mdbook
-        # '';
         mdbook-app = pkgs.writeShellApplication {
           name = "mdbook";
           runtimeInputs = runtime;
@@ -166,9 +163,9 @@
           type = "app";
           program = "${mdbook-app}/bin/mdbook";
         };
-        # devShell = pkgs.mkShell {
-        #   buildInputs = runtime;
-        # };
+        devShell = pkgs.mkShell {
+          buildInputs = runtime;
+        };
         packages.default = pkgs.stdenv.mkDerivation {
           name = "rust-guide";
           src = ./.;
