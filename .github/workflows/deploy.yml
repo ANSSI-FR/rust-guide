@@ -16,7 +16,7 @@ jobs:
       - name: Install Nix
         uses: cachix/install-nix-action@v31
       - name: Build document
-        uses: nix build .
+        run: nix build .
       - name: Copy result into local directory
         run: cp -r result/book .
       - name: Move FR version
