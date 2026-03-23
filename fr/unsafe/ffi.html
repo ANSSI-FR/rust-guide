@@ -202,7 +202,7 @@ extern "C" fn mylib_f(param: u32) -&gt; i32 {
 }
 <span class="boring">}</span></code></pre></pre>
 <p>Pour que la fonction <code>mylib_f</code> soit accessible avec le même nom, la fonction
-doit être annotée avec l'attribut <code>#[unsafe(no_mangle)]</code>).</p>
+doit être annotée avec l'attribut <code>#[unsafe(no_mangle)]</code>.</p>
 <p>À l'inverse, il est possible d'appeler des fonctions écrites en C depuis du code
 Rust si celles-ci sont déclarées dans un bloc <code>extern</code> :</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
@@ -260,7 +260,7 @@ niveau de Rust.</li>
 <p>Si l'API bas-niveau est exposée, cela DEVRAIT être fait dans un <em>crate</em> dédiée
 ayant un nom de la forme <code>*-sys</code>.</p>
 </div>
-<p>La <em>crate</em> <a href="https://crates.io/crates/bindgen">rust-bindgen</a> peut être utilisée pour générer automatiquement la
+<p>La <em>crate</em> <a href="https://crates.io/crates/bindgen"><code>rust-bindgen</code></a> peut être utilisée pour générer automatiquement la
 partie bas-niveau du <em>binding</em> depuis les fichiers <em>header</em> C.</p>
 <!--
 <mark>TODO</mark> example
@@ -315,28 +315,28 @@ comme <strong>opaques</strong> du côté du langage externe.</p>
 <p>Les types suivants sont considérés comme compatibles avec le C :</p>
 <ul>
 <li>les types primitifs entiers et à virgule flottante ;</li>
-<li>les <code>struct</code>s annotées avec <code>repr(C)</code> ;</li>
-<li>les <code>enum</code>s annotées avec <code>repr(C)</code> ou <code>repr(Int)</code> (où <code>Int</code> est un type
+<li>les structures annotées avec <code>repr(C)</code> ;</li>
+<li>les énumérations annotées avec <code>repr(C)</code> ou <code>repr(Int)</code> (où <code>Int</code> est un type
 primitif entier), contenant au moins un variant et dont tous les variants ne
 comportent pas de champ ;</li>
 <li>les pointeurs bruts ;</li>
 <li>les <code>Option&lt;T&gt;</code> où <code>T</code> est:
 <ul>
-<li><code>core::ptr::NonNull&lt;U&gt;</code> et <code>U</code> est un type compatible avec le C et <code>Sized</code>,
+<li><code>core::ptr::NonNull&lt;U&gt;</code>, et <code>U</code> est un type compatible avec le C et <code>Sized</code>,
 auquel cas le type est équivalent à un pointeur <code>*const T</code> et <code>*mut T</code>,</li>
 <li><code>core::num::NonZero*</code>, auquel cas le type est équivalent au type primitif
 entier correspondant ;</li>
 </ul>
 </li>
-<li>les <code>struct</code>s annotées avec <code>repr(transparent)</code> possédant un seul champ, qui
+<li>les structures annotées avec <code>repr(transparent)</code> possédant un seul champ, qui
 est d'un type C-compatible.</li>
 </ul>
 <p>Les types suivants ne sont pas compatibles avec le C :</p>
 <ul>
 <li>les types à taille variable ;</li>
 <li>les <code>trait object</code>s ;</li>
-<li>les <code>enum</code>s dont les variants comportent des champs ;</li>
-<li>les n-uplets (sauf les <code>struct</code>s à n-uplet annotées avec <code>repr(C)</code>).</li>
+<li>les énumérations dont les variants comportent des champs ;</li>
+<li>les n-uplets (sauf les structures à n-uplet (par exemple <code>struct Type(A, B)</code>) annotées avec <code>repr(C)</code>).</li>
 </ul>
 <p>Certains types sont compatibles, mais avec certaines limitations :</p>
 <ul>
@@ -355,7 +355,7 @@ DOIVENT avoir la même taille et respecter le même alignement.</p>
 <p>En ce qui concerne les <code>enum</code>s avec des champs en particulier, les types
 correspondant en C (ou en C++) ne sont pas évidents (<a href="https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html">RFC 2195</a>).</p>
 <p>Les outils permettant de générer automatiquement des <em>bindings</em>, comme
-<a href="https://crates.io/crates/bindgen">rust-bindgen</a> ou <a href="https://crates.io/crates/cbindgen">cbindgen</a>, peuvent aider à assurer la cohérence entre les
+<a href="https://crates.io/crates/bindgen"><code>rust-bindgen</code></a> ou <a href="https://crates.io/crates/cbindgen"><code>cbindgen</code></a>, peuvent aider à assurer la cohérence entre les
 types du côté C et ceux du côté Rust.</p>
 <div class="reco" id="FFI-AUTOMATE" type="Recommandation" title="Utilisation des outils de génération automatique de *bindings*">
 <p>Dans un développement sécurisé en Rust, les outils de génération automatique
@@ -364,7 +364,7 @@ continu.</p>
 </div>
 <!-- -->
 <div class="warning">
-<p>Pour les <em>bindings</em> C/C++ vers Rust, <a href="https://crates.io/crates/bindgen">rust-bindgen</a> est capable de générer
+<p>Pour les <em>bindings</em> C/C++ vers Rust, <a href="https://crates.io/crates/bindgen"><code>rust-bindgen</code></a> est capable de générer
 automatiquement des <em>bindings</em> de bas niveau. L'écriture d'un <em>binding</em> de
 plus haut niveau est fortement recommandée (voir Recommandation
 <a href="ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>). Attention également à certaines
@@ -392,21 +392,21 @@ la bibliothèque standard offre des alias de types portables dans <code>std::os:
 <li><code>c_float</code> pour <code>float</code> (toujours <code>f32</code>) ;</li>
 <li><code>c_double</code> pour <code>double</code> (toujours <code>f64</code>).</li>
 </ul>
-<p>La crate <a href="https://crates.io/crates/libc">libc</a> offre des types supplémentaires compatibles avec le C qui
+<p>La crate <a href="https://crates.io/crates/libc"><code>libc</code></a> offre des types supplémentaires compatibles avec le C qui
 couvrent la quasi-entièreté de la bibliothèque standard du C.</p>
 <div class="reco" id="FFI-PFTYPE" type="Règle" title="Utilisation des alias portables `c_*` pour faire correspondre les types dépendants de la plateforme d'exécution">
 <p>Dans un développement sécurisé en Rust, lors de l'interfaçage avec du code
 faisant usage de types dépendants de la plateforme d'exécution, comme les
 <code>int</code>s et les <code>long</code>s du C, le code Rust DOIT utiliser les alias portables de
 types, comme ceux fournis dans la bibliothèque standard ou dans la crate
-<a href="https://crates.io/crates/libc">libc</a>, au lieu des types spécifiques à la plateforme, à l'exception du cas
+<a href="https://crates.io/crates/libc"><code>libc</code></a>, au lieu des types spécifiques à la plateforme, à l'exception du cas
 où les <em>bindings</em> sont générés automatiquement pour chaque plateforme (voir
 la note ci-dessous).</p>
 </div>
 <!-- -->
 <div class="note">
-<p>Les outils de génération automatiques de <em>bindings</em> (par exemple <a href="https://crates.io/crates/cbindgen">cbindgen</a> ou
-<a href="https://crates.io/crates/bindgen">rust-bindgen</a>) sont capables d'assurer la cohérence des types dépendants de
+<p>Les outils de génération automatiques de <em>bindings</em> (par exemple <a href="https://crates.io/crates/cbindgen"><code>cbindgen</code></a> ou
+<a href="https://crates.io/crates/bindgen"><code>rust-bindgen</code></a>) sont capables d'assurer la cohérence des types dépendants de
 la plateforme. Ils doivent être utilisés durant le processus de compilation
 pour chaque cible afin d'assurer que la génération est cohérente pour la
 plateforme visée.</p>
@@ -523,7 +523,7 @@ est seulement manipulée depuis le code Rust.</p>
 <ul>
 <li>les références qui sont opaques dans le langage externe et qui sont
 seulement manipulées du côté Rust ;</li>
-<li>les références <em>wrappées</em> dans un type <code>Option</code> (voir note ci-dessous) ;</li>
+<li>les références <em>encapsulées</em> dans un type <code>Option</code> (voir note ci-dessous) ;</li>
 <li>les références liées à des références sûres dans le langage externe, par
 exemple dans des variantes du C ou dans du code compilé en C++ dans un
 environnement où les références de fonctions <code>extern "C"</code> sont encodées
@@ -537,8 +537,8 @@ comme des pointeurs.</li>
 côté Rust par le biais d'une FFI DOIVENT être <strong>vérifiées du côté du langage
 externe</strong>, que ce soit de manière automatique (par exemple, par un
 compilateur) ou de manière manuelle.</p>
-<p>Les exceptions comprennent les références Rust <em>wrappées</em> de façon opaque et
-manipulées uniquement du côté Rust, et les références <em>wrappées</em> dans un type
+<p>Les exceptions comprennent les références Rust <em>encapsulées</em> de façon opaque et
+manipulées uniquement du côté Rust, et les références <em>encapsulées</em> dans un type
 <code>Option</code> (voir note ci-dessous).</p>
 </div>
 <p>Le code suivant est un simple exemple d'utilisation de pointeur externe dans une
@@ -595,7 +595,7 @@ pas être vérifiée directement du côté Rust. Toutefois, Rust offre deux
 alternatives possibles :</p>
 <ul>
 <li>
-<p>l'utilisation de pointeurs de fonctions <em>wrappé</em> dans une valeur de type
+<p>l'utilisation de pointeurs de fonctions <em>encapsulés</em> dans une valeur de type
 <code>Option</code>, accompagnée d'un test contre la valeur nulle :</p>
 <pre><code class="language-rust noplaypen">#[unsafe(no_mangle)]
 pub unsafe extern "C" fn repeat(
@@ -644,7 +644,7 @@ conversion contrôlée vers le type <code>enum</code>.</p>
 <p>Du côté externe, cela est possible uniquement si l'autre langage permet la mise
 en place de tests plus stricts que ceux proposés en C. C'est par exemple
 possible en C++ avec les <code>enum class</code>. Notons toutefois pour référence que
-l'ABI <code>extern "C"</code> d'une <code>enum class</code> est définie par l'implémentation et doit
+l'ABI <code>extern "C"</code> d'un <code>enum class</code> est définie par l'implémentation et doit
 être vérifiée pour chaque environnement d'exécution.</p>
 <div class="reco" id="FFI-NOENUM" type="Règle" title="Non-utilisation d'`enum`s Rust provenant de l'extérieur par une FFI">
 <p>Dans un développement sécurisé en Rust, lors de l'interfaçage avec un
@@ -746,7 +746,7 @@ car le modèle mémoire de Rust interdit l'<em>aliasing</em> de références mut
 </div>
 <div class="example">
 <p>Dans l'exemple suivant le code Rust transmet au code C un pointeur, montrant l'importance de refléter,
-dans le système de types de Rust, les opérations effectuées du coté du C.</p>
+dans le système de types de Rust, les opérations effectuées du côté du C.</p>
 <p>La fonction importée <code>inc_wrap</code> incrémente la variable <code>a</code>.</p>
 <pre><code class="language-c">void inc_wrap(uint8_t *a)
 {
@@ -825,7 +825,7 @@ type, est échangée par une FFI, il est nécessaire de s'assurer que :</p>
 donnée ;</li>
 <li>l'autre langage NE DOIT NI allouer, NI libérer la donnée directement, mais
 peut utiliser une fonction externe dédiée fournie par le langage responsable
-choisie.</li>
+choisi.</li>
 </ul>
 </div>
 <p>L'identification d'un langage responsable de la gestion des données en mémoire
@@ -1028,18 +1028,18 @@ Rust (<code>#[no_std]</code>), un gestionnaire de <code>panic</code> (<a href="h
 défini pour la sécurité du programme. Le gestionnaire de <code>panic</code> doit être écrit
 avec la plus grande précaution pour garantir non seulement la sécurité, mais
 aussi la sûreté du programme.</p>
-<p>Un approche alternative est de simplement s'assurer qu'il n'y a aucune
+<p>Une approche alternative est de simplement s'assurer qu'il n'y a aucune
 utilisation de <code>panic!</code> avec la <em>crate</em> <a href="https://crates.io/crates/panic-never"><code>panic-never</code></a>. Comme <a href="https://crates.io/crates/no-panic"><code>no-panic</code></a>,
 <a href="https://crates.io/crates/panic-never"><code>panic-never</code></a> repose sur une astuce au moment de l'édition de liens : le
 programme d'édition de liens échoue si une branche non trivialement
 inaccessible mène à un appel à <code>panic!</code>.</p>
 <h2 id="liaison-entre-une-bibliothèque-rust-et-du-code-dun-autre-langage"><a class="header" href="#liaison-entre-une-bibliothèque-rust-et-du-code-dun-autre-langage">Liaison entre une bibliothèque Rust et du code d'un autre langage</a></h2>
 <div class="reco" id="FFI-CAPI" type="Règle" title="Exposition exclusive d'API dédiée et compatible avec le C">
-<p>Dans un développement sécurisé en Rust, exposer un bibliothèque Rust à un
+<p>Dans un développement sécurisé en Rust, exposer une bibliothèque Rust à un
 langage externe DOIT être uniquement fait par le biais d'une <strong>API dédiée et
 compatible avec le C</strong>.</p>
 </div>
-<p>La <em>crate</em> <a href="https://crates.io/crates/cbindgen">cbindgen</a> peut être utilisée pour générer automatiquement les
+<p>La <em>crate</em> <a href="https://crates.io/crates/cbindgen"><code>cbindgen</code></a> peut être utilisée pour générer automatiquement les
 <em>bindings</em> C ou C++ pour l'API Rust compatible avec le C d'une bibliothèque
 Rust.</p>
 <h3 id="exemple-minimal-dune-bibliothèque-rust-exportée-vers-du-c"><a class="header" href="#exemple-minimal-dune-bibliothèque-rust-exportée-vers-du-c">Exemple minimal d'une bibliothèque Rust exportée vers du C</a></h3>
@@ -1101,7 +1101,7 @@ pub unsafe extern "C" fn counter_destroy(counter: *mut Counter) -&gt; std::os::r
         -1
     }
 }</code></pre>
-<p>En utilisant <a href="https://crates.io/crates/cbindgen">cbindgen</a> (<code>[cbindgen] -l c &gt; counter.h</code>), il est possible de
+<p>En utilisant <a href="https://crates.io/crates/cbindgen"><code>cbindgen</code></a> (<code>cbindgen -l c &gt; counter.h</code>), il est possible de
 générer un <em>header</em> C cohérent, <code>counter.h</code> :</p>
 <pre><code class="language-c">#include &lt;stdarg.h&gt;
 #include &lt;stdbool.h&gt;
@@ -1154,7 +1154,7 @@ int main(int argc, const char **argv)
 <h2 id="références"><a class="header" href="#références">Références</a></h2>
 <ul>
 <li><a id="RFC-2195"></a> <em><a href="https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html">Really tagged unions</a></em> (RFC-2195)</li>
-<li><a id="RFC-1861"></a> <em><a href="https://rust-lang.github.io/rfcs/1861-extern-types.html">Extern types</a></em> (RFC-1861)</li>
+<li><a id="RFC-1861"></a> <em><a href="https://rust-lang.github.io/rfcs/1861-extern-types.html">External types</a></em> (RFC-1861)</li>
 <li><a id="memory-model"></a> <em><a href="https://doc.rust-lang.org/core/ptr/index.html">Memory model</a></em> (memory-model)</li>
 <li><a id="unwinding"></a> <em><a href="https://doc.rust-lang.org/stable/reference/items/functions.html#unwinding">Unwinding</a></em> (unwinding)</li>
 </ul>

@@ -193,7 +193,7 @@ pas décrite dans le langage Rust.</p>
 <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general">erreur de programmation</a> et doit être évitée.</p>
 <div class="example">
 <p>Le déréférencement d'un pointeur null est un <em>UB</em>.
-<em>A contrario</em>, un <code>unwrap</code> sur l'objet <code>None</code> est bien <em>défini</em> car c'est le langage qui traite cette erreur
+<em>A contrario</em>, un <code>unwrap</code> sur l'objet <code>None</code> est bien <em>défini</em>, car c'est le langage qui traite cette erreur
 (en lançant un <code>panic</code>).</p>
 </div>
 <p>Une liste d'erreurs de programmation conduisant à un <em>UB</em> est <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html">donnée</a>
@@ -201,14 +201,14 @@ dans la <a href="https://doc.rust-lang.org/stable/reference/">référence Rust</
 <ul>
 <li>Pas de déréférencement de pointeur vers une adresse mémoire non allouée (<em>dangling pointer</em>) ou non alignée, ce qui implique
 <ul>
-<li>Pas de dépassement de tableau</li>
-<li>Pas d'accès à de la mémoire libérée</li>
-<li>Accès toujours aligné quelque soit la plateforme</li>
+<li>Pas de dépassement de tableau ;</li>
+<li>Pas d'accès à de la mémoire libérée ;</li>
+<li>Accès toujours aligné quelle que soit la plateforme.</li>
 </ul>
 </li>
 <li>Les valeurs pointées sont <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.invalid">cohérentes</a> avec le type du pointeur. Par exemple, une valeur pointée par un pointeur booléen sera l'octet 1 ou 0.</li>
-<li>Respect des règles d'<a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias"><em>aliasing</em></a> (voir aussi le <a href="https://doc.rust-lang.org/stable/nomicon/">Rustonomicon</a> pour des <a href="https://doc.rust-lang.org/nomicon/aliasing.html">exemples</a>): une référence mutable ne peux être partagée.</li>
-<li>Pas d'<a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race">accès concurrent</a> (deux accès simultanés non atomiques, l'un en écriture et l'autre en écriture ou en lecture) à la même adresse mémoire (voir aussi le <a href="https://doc.rust-lang.org/stable/nomicon/">Rustonomicon</a> pour des <a href="https://doc.rust-lang.org/nomicon/races.html">exemples</a>)</li>
+<li>Respect des règles d'<a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias"><em>aliasing</em></a> (voir aussi le <a href="https://doc.rust-lang.org/stable/nomicon/">Rustonomicon</a> pour des <a href="https://doc.rust-lang.org/nomicon/aliasing.html">exemples</a>): une référence mutable ne peut être partagée.</li>
+<li>Pas d'<a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race">accès concurrent</a> (deux accès simultanés non atomiques, l'un en écriture et l'autre en écriture ou en lecture) à la même adresse mémoire (voir aussi le <a href="https://doc.rust-lang.org/stable/nomicon/">Rustonomicon</a> pour des <a href="https://doc.rust-lang.org/nomicon/races.html">exemples</a>).</li>
 </ul>
 <h2 id="garantie-de-rust"><a class="header" href="#garantie-de-rust">Garantie de Rust</a></h2>
 <div class="important">
@@ -217,7 +217,7 @@ dans la <a href="https://doc.rust-lang.org/stable/reference/">référence Rust</
 <div class="note">
 <p>On notera que cette garantie qu'offre le langage Rust <em><strong>ne protège pas</strong></em> contre les erreurs suivantes :</p>
 <ul>
-<li>fuites de resources (mémoire, IO, ...) (voir la section sur la <a href="unsafe/memory.html#chapter-memory">gestion mémoire</a>) ;</li>
+<li>fuites de resources (mémoire, IO, <em>etc.</em>) (voir la section sur la <a href="unsafe/memory.html#chapter-memory">gestion mémoire</a>) ;</li>
 <li>dépassements numériques (voir la section sur le traitement des <a href="integer.html#chapter-integer">entiers</a>).</li>
 </ul>
 </div>

@@ -180,7 +180,7 @@
                         <h1 id="naming"><a class="header" href="#naming">Naming</a></h1>
 <p>The standard library serves as the de facto standard for naming conventions in Rust.
 An effort has been made to formalize the conventions through the <a href="https://rust-lang.github.io/rfcs/0430-finalizing-naming-conventions.html">RFC 43</a> and later in the <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a>.</p>
-<p>The basic rule <a href="https://rust-lang.github.io/api-guidelines/naming.html#casing-conforms-to-rfc-430-c-case">(C-CASE)</a> consists in using:</p>
+<p>The basic rule <a href="https://rust-lang.github.io/api-guidelines/naming.html#casing-conforms-to-rfc-430-c-case"><code>(C-CASE)</code></a> consists in using:</p>
 <ul>
 <li><code>UpperCamelCase</code> for types, traits, enum variants, and generic type parameters,</li>
 <li><code>snake_case</code> for functions, methods, macros, variables, and modules,</li>
@@ -190,17 +190,17 @@ An effort has been made to formalize the conventions through the <a href="https:
 <p>The <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a> also prescribes more precise naming conventions for
 particular constructs:</p>
 <ul>
-<li><a href="https://rust-lang.github.io/api-guidelines/naming.html#ad-hoc-conversions-follow-as_-to_-into_-conventions-c-conv">(C-CONV)</a> for conversion methods (<code>as_</code>, <code>to_</code>, <code>into_</code>),</li>
-<li><a href="https://rust-lang.github.io/api-guidelines/naming.html#getter-names-follow-rust-convention-c-getter">(C-GETTER)</a> for getters,</li>
-<li><a href="https://rust-lang.github.io/api-guidelines/naming.html#methods-on-collections-that-produce-iterators-follow-iter-iter_mut-into_iter-c-iter">(C-ITER)</a> for iterator-producing methods,</li>
-<li><a href="https://rust-lang.github.io/api-guidelines/naming.html#iterator-type-names-match-the-methods-that-produce-them-c-iter-ty">(C-ITER-TY)</a> for iterator types,</li>
-<li><a href="https://rust-lang.github.io/api-guidelines/naming.html#feature-names-are-free-of-placeholder-words-c-feature">(C-FEATURE)</a> for feature naming (conditionally enabled functionalities),</li>
-<li><a href="https://rust-lang.github.io/api-guidelines/naming.html#names-use-a-consistent-word-order-c-word-order">(C-WORD-ORDER)</a> for word order consistency.</li>
+<li><a href="https://rust-lang.github.io/api-guidelines/naming.html#ad-hoc-conversions-follow-as_-to_-into_-conventions-c-conv"><code>(C-CONV)</code></a> for conversion methods (<code>as_</code>, <code>to_</code>, <code>into_</code>),</li>
+<li><a href="https://rust-lang.github.io/api-guidelines/naming.html#getter-names-follow-rust-convention-c-getter"><code>(C-GETTER)</code></a> for getters,</li>
+<li><a href="https://rust-lang.github.io/api-guidelines/naming.html#methods-on-collections-that-produce-iterators-follow-iter-iter_mut-into_iter-c-iter"><code>(C-ITER)</code></a> for iterator-producing methods,</li>
+<li><a href="https://rust-lang.github.io/api-guidelines/naming.html#iterator-type-names-match-the-methods-that-produce-them-c-iter-ty"><code>(C-ITER-TY)</code></a> for iterator types,</li>
+<li><a href="https://rust-lang.github.io/api-guidelines/naming.html#feature-names-are-free-of-placeholder-words-c-feature"><code>(C-FEATURE)</code></a> for feature naming (conditionally enabled functionalities),</li>
+<li><a href="https://rust-lang.github.io/api-guidelines/naming.html#names-use-a-consistent-word-order-c-word-order"><code>(C-WORD-ORDER)</code></a> for word order consistency.</li>
 </ul>
 <div class="note">
-<p>The basic rule <a href="https://rust-lang.github.io/api-guidelines/naming.html#casing-conforms-to-rfc-430-c-case">(C-CASE)</a> is checked by the compiler (with the <code>nonstandard_style</code> lint set).</p>
+<p>The basic rule <a href="https://rust-lang.github.io/api-guidelines/naming.html#casing-conforms-to-rfc-430-c-case"><code>(C-CASE)</code></a> is checked by the compiler (with the <code>nonstandard_style</code> lint set).</p>
 <p>In addition to the compiler, the <a href="devenv.html#clippy"><code>clippy</code></a> tool can help in adopting naming conventions with the <code>style</code> lint category.
-For example, the <a href="https://rust-lang.github.io/rust-clippy/master/index.html#wrong_self_convention"><code>wrong_self_convention</code></a> lint checks the consistency between conversion method names and their receiver types (<code>self</code>, <code>&amp;self</code>, <code>&amp;mut self</code>) according to <a href="https://rust-lang.github.io/api-guidelines/naming.html#ad-hoc-conversions-follow-as_-to_-into_-conventions-c-conv">(C-CONV)</a>.</p>
+For example, the <a href="https://rust-lang.github.io/rust-clippy/master/index.html#wrong_self_convention"><code>wrong_self_convention</code></a> lint checks the consistency between conversion method names and their receiver types (<code>self</code>, <code>&amp;self</code>, <code>&amp;mut self</code>) according to <a href="https://rust-lang.github.io/api-guidelines/naming.html#ad-hoc-conversions-follow-as_-to_-into_-conventions-c-conv"><code>(C-CONV)</code></a>.</p>
 <!--
 clippy::enum_variant_names
 clippy::self_named_constructors

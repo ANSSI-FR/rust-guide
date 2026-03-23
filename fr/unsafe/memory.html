@@ -226,7 +226,7 @@ forget(s); // Leak memory
 <span class="boring">}</span></code></pre></pre>
 <p>En particulier, l'utilisation de <a href="https://doc.rust-lang.org/std/mem/fn.forget.html"><code>mem::forget</code></a> peut causer la rétention en mémoire de
 ressources critiques, menant à des interblocages et à la persistance de données
-sensibles en mémoire. C'est pourquoi <a href="https://doc.rust-lang.org/std/mem/fn.forget.html"><code>mem::forget</code></a> doit être considérée comme
+sensibles en mémoire. C'est pourquoi la fonction <a href="https://doc.rust-lang.org/std/mem/fn.forget.html"><code>mem::forget</code></a> doit être considérée comme
 <strong>non sécurisée</strong>.</p>
 <div class="reco" id="MEM-FORGET" type="Règle" title="Non-utilisation de `mem::forget`">
 <p>Dans un développement sécurisé en Rust (<em>unsafe</em> ou non), la fonction <a href="https://doc.rust-lang.org/std/mem/fn.forget.html"><code>mem::forget</code></a> de <code>std::mem</code>
@@ -242,8 +242,8 @@ d'appel à <a href="https://doc.rust-lang.org/std/mem/fn.forget.html"><code>mem:
 </div>
 <p>La bibliothèque standard inclut d'autres moyens d'<em>oublier</em> une valeur :</p>
 <ul>
-<li><a href="https://doc.rust-lang.org/std/boxed/struct.Box.html#method.leak"><code>Box::leak</code></a> pour désactiver le destructeur d'une <code>Box</code> ;</li>
-<li><a href="https://doc.rust-lang.org/std/boxed/struct.Box.html#method.into_raw"><code>Box::into_raw</code></a> pour exploiter une <code>Box</code> sous forme d'un pointeur <em>raw</em> dans un bloc <em>unsafe</em>, notamment
+<li><a href="https://doc.rust-lang.org/std/boxed/struct.Box.html#method.leak"><code>Box::leak</code></a> pour désactiver le destructeur de <code>Box</code> ;</li>
+<li><a href="https://doc.rust-lang.org/std/boxed/struct.Box.html#method.into_raw"><code>Box::into_raw</code></a> pour exploiter une valeur de type <code>Box</code> sous forme d'un pointeur <em>raw</em> dans un bloc <em>unsafe</em>, notamment
 dans une FFI ;</li>
 <li><a href="https://doc.rust-lang.org/beta/std/mem/struct.ManuallyDrop.html"><code>ManuallyDrop</code></a> (dans <code>std::mem</code> ou <code>core::mem</code>) pour assurer la libération
 manuelle d'une valeur.</li>
@@ -256,8 +256,8 @@ mémoire ou des ressources <em>via</em> <a href="https://doc.rust-lang.org/std/b
 </div>
 <p><a href="https://doc.rust-lang.org/beta/std/mem/struct.ManuallyDrop.html"><code>ManuallyDrop</code></a> et <a href="https://doc.rust-lang.org/std/boxed/struct.Box.html#method.into_raw"><code>Box::into_raw</code></a> passent la responsabilité de la libération de
 la ressource concernée du compilateur au développeur.</p>
-<div class="reco" id="MEM-MANUALLYDROP" type="Règle" title="Libération des valeurs *wrappées* dans `ManuallyDrop`">
-<p>Dans un développement sécurisé en Rust, toute valeur <em>wrappée</em> dans le type
+<div class="reco" id="MEM-MANUALLYDROP" type="Règle" title="Libération des valeurs *encapsulées* dans `ManuallyDrop`">
+<p>Dans un développement sécurisé en Rust, toute valeur <em>encapsulée</em> dans le type
 <a href="https://doc.rust-lang.org/beta/std/mem/struct.ManuallyDrop.html"><code>ManuallyDrop</code></a> DOIT être <em>unwrapped</em> pour permettre sa libération automatique
 (<a href="https://doc.rust-lang.org/beta/std/mem/struct.ManuallyDrop.html#method.into_inner"><code>ManuallyDrop::into_inner</code></a>) ou bien DOIT être manuellement libérée (<em>unsafe</em>
 <a href="https://doc.rust-lang.org/beta/std/mem/struct.ManuallyDrop.html#method.drop"><code>ManuallyDrop::drop</code></a>).</p>
@@ -271,7 +271,7 @@ pointeurs <em>intelligents</em> (<em>smart pointer</em>) de Rust. En particulier
 <div class="reco" id="MEM-NORAWPOINTER" type="Règle" title="Pas de conversion en pointeur *raw* en Rust non-*unsafe*">
 <p>Dans un développement sécurisé en Rust non-<em>unsafe</em>, les références et les <em>smart pointers</em>
 NE DEVRAIENT PAS être convertis en <em>raw pointers</em>. En particulier, les fonctions <code>into_raw</code> ou <code>into_non_null</code>
-des <em>smart pointers</em> <a href="https://doc.rust-lang.org/std/boxed/struct.Box.html"><code>Box</code></a>, <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a>, <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc</code></a>, <a href="https://doc.rust-lang.org/std/rc/struct.Weak.html"><code>rc::Weak</code></a> ou <a href="https://doc.rust-lang.org/std/sync/struct.Weak.html"><code>sync::Weak</code></a> NE DEVRAIT PAS être utilisées dans un code Rust non-<em>unsafe</em>.</p>
+des <em>smart pointers</em> <a href="https://doc.rust-lang.org/std/boxed/struct.Box.html"><code>Box</code></a>, <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a>, <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc</code></a>, <a href="https://doc.rust-lang.org/std/rc/struct.Weak.html"><code>rc::Weak</code></a> ou <a href="https://doc.rust-lang.org/std/sync/struct.Weak.html"><code>sync::Weak</code></a> NE DEVRAIENT PAS être utilisées dans un code Rust non-<em>unsafe</em>.</p>
 <p>Dans le cas contraire, l'usage de <em>raw pointers</em> en Rust non-<em>unsafe</em> DOIT être documenté et justifié.</p>
 </div>
 <div class="reco" id="MEM-INTOFROMRAWALWAYS" type="Règle" title="Appel systématique à `from_raw` pour les valeurs créées avec `into_raw`">

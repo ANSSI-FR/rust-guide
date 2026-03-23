@@ -254,7 +254,7 @@ as <em>smart pointers</em> and often have to be used in <code>unsafe</code> cont
 raw pointers must be done manually without Rust guaranties.</p>
 <div class="reco" id="MEM-NORAWPOINTER" type="Rule" title="Do no convert smart pointer into raw pointer in Rust without `unsafe`">
 <p>In a secure Rust development without <code>unsafe</code>, references and <em>smart pointers</em>
-SHOULD NOT be converted into <em>raw pointers</em>. For instance, functions <code>into_raw</code> ou <code>into_non_null</code>
+SHOULD NOT be converted into <em>raw pointers</em>. For instance, functions <code>into_raw</code> or <code>into_non_null</code>
 of smart pointers <a href="https://doc.rust-lang.org/std/boxed/struct.Box.html"><code>Box</code></a>, <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a>, <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc</code></a>, <a href="https://doc.rust-lang.org/std/rc/struct.Weak.html"><code>rc::Weak</code></a> or <a href="https://doc.rust-lang.org/std/sync/struct.Weak.html"><code>sync::Weak</code></a> SHOULD NOT be used.</p>
 <p>The use of <em>raw pointers</em> without <code>unsafe</code> code MUST otherwise be documented and justified.</p>
 </div>

@@ -387,7 +387,7 @@ struct T2{
 <code>T2 {a: 1, b: 0} &lt; T2 {a: 0, b: 1}</code>.</p>
 <p>Second, if one of the underlying comparisons panics, the order may change the
 result due to the use of short-circuit logic in the automatic implementation.</p>
-<p>For enums, the derived comparisons depend first on the <strong>variant order</strong>, then
+<p>For enumerations, the derived comparisons depend first on the <strong>variant order</strong>, then
 on the field order.</p>
 </div>
 <p>Despite the ordering caveat, derived comparisons are a lot less error-prone

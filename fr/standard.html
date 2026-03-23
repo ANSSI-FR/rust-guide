@@ -194,7 +194,7 @@ définies comme suit :</p>
 <li>Un type est <a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a> s’il est sûr d'envoyer (<em>move</em>) des valeurs de ce type vers
 un autre fil d'exécution.</li>
 <li>Un type est <a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a> s’il est sûr de partager des valeurs de ce type par une
-référence immutable avec un autre fil d'exécution.</li>
+référence immuable avec un autre fil d'exécution.</li>
 </ul>
 <p>Ces deux traits sont des traits <em>unsafe</em>, c'est-à-dire que le compilateur Rust
 ne vérifie d'aucune manière que leur implémentation est correcte. Le danger est
@@ -222,13 +222,13 @@ il est possible d'utiliser un champ typé par un type fantôme (<a href="https:/
 </span><span class="boring">
 </span>struct SpecialType(u8, PhantomData&lt;*const ()&gt;);</code></pre>
 <div class="reco" id="LANG-SYNC-TRAITS" type="Règle" title="Justification de l'implémentation des traits `Send` et `Sync`">
-<p>Dans un développement sécurisé en Rust, l'implémentation manuelle des traits
-<a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a> et <a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a> DEVRAIT être évitée, et, si nécessaire, DOIT être justifiée
-et documentée.</p>
+<p>Dans un développement sécurisé en Rust, les traits
+<a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a> et <a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a> NE DEVRAIENT PAS être implémentés manuellement, et, si nécessaire,
+l'implémentation DOIT être justifiée et documentée.</p>
 </div>
 <h2 id="les-traits-de-comparaison--partialeq-eq-partialord-ord"><a class="header" href="#les-traits-de-comparaison--partialeq-eq-partialord-ord">Les traits de comparaison : <a href="https://doc.rust-lang.org/std/cmp/trait.PartialEq.html"><code>PartialEq</code></a>, <a href="https://doc.rust-lang.org/std/cmp/trait.Eq.html"><code>Eq</code></a>, <a href="https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html"><code>PartialOrd</code></a>, <a href="https://doc.rust-lang.org/std/cmp/trait.Ord.html"><code>Ord</code></a></a></h2>
 <p>Les comparaisons (<code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>) en Rust reposent sur quatre
-traits de la bibliothèque standard disponibles dans <code>std::cmp</code> (ou <code>core::cmp</code>
+traits de la bibliothèque standard, disponibles dans <code>std::cmp</code> (ou <code>core::cmp</code>
 pour une compilation avec <code>no_std</code>) :</p>
 <ul>
 <li><a href="https://doc.rust-lang.org/std/cmp/trait.PartialEq.html"><code>PartialEq&lt;Rhs&gt;</code></a> qui définit la relation d'équivalence partielle entre objets
@@ -248,7 +248,7 @@ Le trait <code>PartialOrd&lt;Self&gt;</code> est alors requis.</li>
 <p>Pour <a href="https://doc.rust-lang.org/std/cmp/trait.PartialEq.html"><code>PartialEq</code></a> :</p>
 <ul>
 <li>
-<p><em>Cohérence interne</em> : <code>a.ne(b)</code> est équivalent à <code>!a.eq(b)</code>, c.-à-d., <code>ne</code>
+<p><em>Cohérence interne</em> : <code>a.ne(b)</code> est équivalent à <code>!a.eq(b)</code>, c'est-à-dire, <code>ne</code>
 est le strict inverse de <code>eq</code>. Cela correspond précisément à
 l'implémentation par défaut de <code>ne</code>.</p>
 </li>
@@ -336,7 +336,7 @@ avec leurs implémentations symétriques).</li>
 </li>
 <li>
 <p><em>Totalité</em> : <code>a.partial_cmp(b) != None</code> est toujours vrai. En d'autres mots,
-exactement une assertion parmi <code>a.eq(b)</code>, <code>a.lt(b)</code> et <code>a.gt(b)</code> est vraie.</p>
+exactement une assertion parmi <code>a.eq(b)</code>, <code>a.lt(b)</code> et <code>a.gt(b)</code>, est vraie.</p>
 </li>
 <li>
 <p><em>Cohérence avec <code>PartialOrd&lt;Self&gt;</code></em>: <code>Some(a.cmp(b)) == a.partial_cmp(b)</code>.</p>
@@ -406,8 +406,8 @@ struct T2{
 <p>on a <code>T1 {a: 1, b: 0} &gt; T1 {a: 0, b: 1}</code> mais
 <code>T2 {a: 1, b: 0} &lt; T2 {a: 0, b: 1}</code>.</p>
 <p>Ensuite, si une comparaison sous-jacente provoque un <code>panic</code>, l'ordre peut
-changer le résultat à cause de l'utilisation d'un opérateur logique court-
-circuitant dans l'implémentation automatique.</p>
+changer le résultat à cause de l'utilisation d'un opérateur logique
+court-circuitant dans l'implémentation automatique.</p>
 <p>Pour les énumérations, les comparaisons dérivées dépendent d'abord de
 <strong>l'ordre des variants</strong>, puis de l'ordre des champs.</p>
 </div>
@@ -479,8 +479,8 @@ reposer uniquement sur l'implémentation du trait <a href="https://doc.rust-lang
 <h2 id="références-comptées-rc-et-arc"><a class="header" href="#références-comptées-rc-et-arc">Références comptées (<a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a> et <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc</code></a>)</a></h2>
 <p>Les références comptées permettent de cloner à peu de frais des valeurs de n'importe quel type.
 Pour cela, ces valeurs sont associées à un compteur qui dénombre le nombre de clones attachés à cette valeur, et lorsque
-le compteur tombe à zero, la valeur est détruite.</p>
-<p>Ce paradigme peut introduire des fuites mémoires lorsque les références comptés sont utilisées dans des cycles.</p>
+le compteur tombe à zéro, la valeur est détruite.</p>
+<p>Ce paradigme peut introduire des fuites mémoires lorsque les références comptées sont utilisées dans des cycles.</p>
 <center>
 <p><img src="static/images/cycle-color.svg" alt="Cycle de références" /></p>
 </center>

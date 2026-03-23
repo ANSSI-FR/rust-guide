@@ -196,22 +196,22 @@ Si ces capacités sont nécessaires à la programmation système, elles font per
 <p>Le marquage <code>unsafe</code> est une <strong>délégation de responsabilité</strong> sur la sûreté mémoire du programme en développement.</p>
 <p>L'usage de ce mot-clé dans une API <em>met en garde</em> l'utilisateur de l'API contre les potentiels effets néfastes de l'usage de l'API.</p>
 <ul>
-<li>Dans une signature de fonction (section <a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.fn">r-unsafe.fn</a> de la <a href="https://doc.rust-lang.org/stable/reference/">référence Rust</a>), <code>unsafe</code> signifie que le comportement de la fonction peut conduire à des <em>UB</em> si le contrat d'usage de la fonction (dans sa documentation) n'est pas respecté.</li>
-<li>Dans la déclaration d'un trait (section <a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.trait">r-unsafe.trait</a> de la <a href="https://doc.rust-lang.org/stable/reference/">référence Rust</a>), <code>unsafe</code> signifie qu'une implémentation erronée de ce trait peut conduire à des <em>UB</em> si le contrat d'implémentation du trait (de préférence documenté) n'est pas respecté.</li>
+<li>Dans une signature de fonction (section <a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.fn"><code>r-unsafe.fn</code></a> de la <a href="https://doc.rust-lang.org/stable/reference/">référence Rust</a>), <code>unsafe</code> signifie que le comportement de la fonction peut conduire à des <em>UB</em> si le contrat d'usage de la fonction (dans sa documentation) n'est pas respecté.</li>
+<li>Dans la déclaration d'un trait (section <a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.trait"><code>r-unsafe.trait</code></a> de la <a href="https://doc.rust-lang.org/stable/reference/">référence Rust</a>), <code>unsafe</code> signifie qu'une implémentation erronée de ce trait peut conduire à des <em>UB</em> si le contrat d'implémentation du trait (de préférence documenté) n'est pas respecté.</li>
 </ul>
 <h3 id="déverrouillage-unsafe"><a class="header" href="#déverrouillage-unsafe">Déverrouillage <code>unsafe</code></a></h3>
 <p>Le déverrouillage <code>unsafe</code> est une <strong>prise de responsabilité</strong> sur la sûreté mémoire du programme en développement.</p>
-<p>L'usage d'un bloc <code>unsafe</code> dans le corps d'une fonction ou dans la définition d'une constante est imposé par le compilateur (section <a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.block">r-unsafe.block</a> de la <a href="https://doc.rust-lang.org/stable/reference/">référence Rust</a>) pour empêcher l'usage <em>par inadvertance</em> d'opérations <code>unsafe</code>. Parmi ces opérations, on trouve :</p>
+<p>L'usage d'un bloc <code>unsafe</code> dans le corps d'une fonction ou dans la définition d'une constante est imposé par le compilateur (section <a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.block"><code>r-unsafe.block</code></a> de la <a href="https://doc.rust-lang.org/stable/reference/">référence Rust</a>) pour empêcher l'usage <em>par inadvertance</em> d'opérations <code>unsafe</code>. Parmi ces opérations, on trouve :</p>
 <ul>
 <li>l'utilisation de fonctions marquées unsafe</li>
 <li>la modification de variable mutables statiques</li>
 <li>l'utilisation de fonctions externes</li>
 </ul>
-<p>De manière similaire, l'implémentation d'un trait marqué <code>unsafe</code> nécessite <code>unsafe</code> (section <a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.impl">r-unsafe.impl</a> de la <a href="https://doc.rust-lang.org/stable/reference/">référence Rust</a>) pour indiquer la prise en compte <em>explicite</em> par le développeur des contrats de sûreté du trait. Il permet donc de <em>déverrouiller</em> l'implémentation de traits <code>unsafe</code>.</p>
+<p>De manière similaire, l'implémentation d'un trait marqué comme <code>unsafe</code> nécessite <code>unsafe</code> (section <a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.impl"><code>r-unsafe.impl</code></a> de la <a href="https://doc.rust-lang.org/stable/reference/">référence Rust</a>) pour indiquer la prise en compte <em>explicite</em> par le développeur des contrats de sûreté du trait. Il permet donc de <em>déverrouiller</em> l'implémentation de traits <code>unsafe</code>.</p>
 <p>Enfin, depuis l'édition 2024 de Rust, il est nécessaire également de déverrouiller à l'aide du mot-clé <code>unsafe</code> :</p>
 <ul>
-<li>les blocs <code>extern</code> (section <a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.extern">r-unsafe.extern</a> de la <a href="https://doc.rust-lang.org/stable/reference/">référence Rust</a>) contenant les déclarations externes pour le <a href="./ffi.html#chapter-ffi">FFI</a> ;</li>
-<li>certains attributs (par exemple, <code>no_mangle</code>, voir la section <a href="https://doc.rust-lang.org/reference/attributes.html#r-attributes.safety">r-attributes.safety</a> de la <a href="https://doc.rust-lang.org/stable/reference/">référence Rust</a>).</li>
+<li>les blocs <code>extern</code> (section <a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.extern"><code>r-unsafe.extern</code></a> de la <a href="https://doc.rust-lang.org/stable/reference/">référence Rust</a>) contenant les déclarations externes pour le <a href="./ffi.html#chapter-ffi">FFI</a> ;</li>
+<li>certains attributs (par exemple, <code>no_mangle</code>, voir la section <a href="https://doc.rust-lang.org/reference/attributes.html#r-attributes.safety"><code>r-attributes.safety</code></a> de la <a href="https://doc.rust-lang.org/stable/reference/">référence Rust</a>).</li>
 </ul>
 <h2 id="limitations-et-précautions-dusage"><a class="header" href="#limitations-et-précautions-dusage">Limitations et précautions d'usage</a></h2>
 <p>Paraphrasant le <a href="https://doc.rust-lang.org/nomicon/safe-unsafe-meaning.html">Rustonomicon</a>, le principe fondamental de Rust pourrait se résumer à :</p>
@@ -260,7 +260,7 @@ est utilisé dans le projet.</p>
 <li>de s'assurer qu'aucun <em>UB</em> n'est possible en cas de déverrouillage ;</li>
 <li>de s'assurer que les conditions d'usage (invariants) soient exhaustives et correctes en cas de marquage.</li>
 </ul>
-<p>Au delà du code <code>unsafe</code> lui-même, il est important d'encapsuler correctement les opérations <code>unsafe</code> dans un composant (<em>crate</em> ou module) de manière à rétablir les garanties usuelles de sûreté mémoire de Rust:</p>
+<p>Au-delà du code <code>unsafe</code> lui-même, il est important d'encapsuler correctement les opérations <code>unsafe</code> dans un composant (<em>crate</em> ou module) de manière à rétablir les garanties usuelles de sûreté mémoire de Rust:</p>
 <div class="reco" id="LANG-UNSAFE-ENCP" type="Règle" title="Encapsulation des fonctionnalités *unsafe*">
 <p>Dans un développement sécurisé d'un composant logiciel Rust (<em>crate</em> ou module),
 tout code <code>unsafe</code> DOIT être encapsulé de manière :</p>
@@ -312,7 +312,7 @@ la plage d'octets allant de <code>self.ptr</code> à <code>self.ptr + self.cap *
 <span class="boring">}</span></code></pre></pre>
 <p>Si elle peut être tout à fait légitime pour du code <em>interne</em> à l'API,
 cette méthode ne doit pas être exposée par l'API ou alors doit être annotée
-par <code>unsafe</code> car elle peut conduire à des <em>UB</em> (même si elle ne comporte pas de blocs <em>unsafe</em>s).</p>
+par <code>unsafe</code>, car elle peut conduire à des <em>UB</em> (même si elle ne comporte pas de blocs <em>unsafe</em>s).</p>
 <h2 id="références"><a class="header" href="#références">Références</a></h2>
 <ul>
 <li><a id="rust-reference"></a> <em><a href="https://doc.rust-lang.org/stable/reference/">The Rust Reference</a></em> (rust-reference)</li>

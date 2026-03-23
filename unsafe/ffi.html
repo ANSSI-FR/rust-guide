@@ -253,7 +253,7 @@ the Rust level.</li>
 <p>If the low-level API is exposed to the world, it SHOULD be done in a dedicated
 crate with a name of the form <code>*-sys</code>.</p>
 </div>
-<p>The crate <a href="https://crates.io/crates/bindgen">rust-bindgen</a> may be used to automatically generate the low-level
+<p>The crate <a href="https://crates.io/crates/bindgen"><code>rust-bindgen</code></a> may be used to automatically generate the low-level
 part of the binding from C header files.</p>
 <!--
 <mark>TODO</mark> example
@@ -309,7 +309,7 @@ side.</p>
 <li>integral or floating point primitive types,</li>
 <li><code>repr(C)</code>-annotated <code>struct</code>,</li>
 <li><code>repr(C)</code> or <code>repr(Int)</code>-annotated <code>enum</code> with at least one variant and only
-fieldless variants (where <code>Int</code> is an integral primitive type),</li>
+variants without field (where <code>Int</code> is an integral primitive type),</li>
 <li>raw pointers,</li>
 <li>an <code>Option&lt;T&gt;</code> where <code>T</code> is either
 <ul>
@@ -326,7 +326,7 @@ field has a C-compatible type.</li>
 <ul>
 <li>Dynamically sized types,</li>
 <li>Trait objects,</li>
-<li>Enums with fields,</li>
+<li>Enumerations with fields,</li>
 <li>Tuples (but <code>repr(C)</code> tuple structures are OK).</li>
 </ul>
 <p>Some types are compatible with some caveats:</p>
@@ -343,20 +343,20 @@ and contradicts the C++ specification),</li>
 (typically to make a type opaque), types on both sides MUST have the same size
 and the same alignment requirement.</p>
 </div>
-<p>Concerning enums with fields in particular, the corresponding types in C (or
+<p>Concerning enumerations with fields in particular, the corresponding types in C (or
 C++) are not obvious, cf. <a href="https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html">RFC 2195</a>.</p>
-<p>Automated tools to generate bindings, such as <a href="https://crates.io/crates/bindgen">rust-bindgen</a> or
-<a href="https://crates.io/crates/cbindgen">cbindgen</a>, may be of help in making types consistent between C and Rust.</p>
+<p>Automated tools to generate bindings, such as <a href="https://crates.io/crates/bindgen"><code>rust-bindgen</code></a> or
+<a href="https://crates.io/crates/cbindgen"><code>cbindgen</code></a>, may be of help in making types consistent between C and Rust.</p>
 <div class="reco" id="FFI-AUTOMATE" type="Recommendation" title="Use automatic binding generator tools">
 <p>In a secure Rust development, automated generation tools SHOULD be used to
 generate bindings when possible and to maintain them continually.</p>
 </div>
 <!-- -->
 <div class="warning">
-<p>For binding C/C++ to Rust, <a href="https://crates.io/crates/bindgen">rust-bindgen</a> is able to automatically generate
+<p>For binding C/C++ to Rust, <a href="https://crates.io/crates/bindgen"><code>rust-bindgen</code></a> is able to automatically generate
 the low-level binding. A high-level safe binding is highly recommended (see
 Recommendation <a href="ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>).
-Also some options of rust-bindgen may result in dangerous translations, in
+Also some options of <a href="https://crates.io/crates/bindgen"><code>rust-bindgen</code></a> may result in dangerous translations, in
 particular <code>rustified_enum</code>.</p>
 </div>
 <h3 id="platform-dependent-types"><a class="header" href="#platform-dependent-types">Platform-dependent types</a></h3>
@@ -379,23 +379,23 @@ library offers portable type aliases in <code>std:os::raw</code> (or <code>core:
 <li><code>c_float</code> for <code>float</code> (always <code>f32</code>),</li>
 <li><code>c_double</code> for <code>double</code> (always <code>f64</code>).</li>
 </ul>
-<p>The <a href="https://crates.io/crates/libc">libc</a> crate offers more C compatible types that cover almost exhaustively
+<p>The <a href="https://crates.io/crates/libc"><code>libc</code></a> crate offers more C compatible types that cover almost exhaustively
 the C standard library.</p>
 <div class="reco" id="FFI-PFTYPE" type="Rule" title="Use portable aliases `c_*` when binding to platform-dependent types">
 <p>In a secure Rust development, when interfacing with foreign code that
 uses platform-dependent types, such as C's <code>int</code> and <code>long</code>, Rust code MUST
 use portable type aliases, such as the ones provided by the standard library or the
-<a href="https://crates.io/crates/libc">libc</a> crate, rather than platform-specific types, except if
+<a href="https://crates.io/crates/libc"><code>libc</code></a> crate, rather than platform-specific types, except if
 the binding is automatically generated for each platform (see Note below).</p>
 </div>
 <!-- -->
 <div class="note">
-<p>Automatic binding generation tools (e.g. <a href="https://crates.io/crates/cbindgen">cbindgen</a>, <a href="https://crates.io/crates/bindgen">rust-bindgen</a>) are able
+<p>Automatic binding generation tools (e.g. <a href="https://crates.io/crates/cbindgen"><code>cbindgen</code></a>, <a href="https://crates.io/crates/bindgen"><code>rust-bindgen</code></a>) are able
 to ensure type consistency on a specific platform. They should be used during
 the build process for each target to ensure that the generation is sound for
 the specific target platform.</p>
 </div>
-<h3 id="robustness"><a class="header" href="#robustness">Non-robust types: references, function pointers, enums</a></h3>
+<h3 id="robustness"><a class="header" href="#robustness">Non-robust types: references, function pointers, enumerations</a></h3>
 <p>A <em>trap representation</em> of a particular type is a representation (pattern of
 bits) that respects the type's representation constraints (such as size and
 alignment) but does not represent a valid value of this type and leads to
@@ -412,7 +412,7 @@ the C-compatible types:</p>
 <li><code>bool</code> (1 byte, 256 representations, only 2 valid ones),</li>
 <li>references,</li>
 <li>function pointers,</li>
-<li>enums,</li>
+<li>enumerations,</li>
 <li>floats (even if almost all languages have the same understanding of what is
 a valid float),</li>
 <li>compound types that contain a field of a non-robust type.</li>
@@ -441,7 +441,7 @@ strong guarantees. For instance, some C++ subset (without reinterpretation)
 allows developers to do lot of type checking. Because Rust natively separates
 the safe and unsafe segments, the recommendation is to always use Rust to check
 when possible. Concerning risks, the most dangerous types are references,
-function references, and enums, and are discussed below.</p>
+function references, and enumerations, and are discussed below.</p>
 <div class="warning">
 <p>Rust <code>bool</code> has been made equivalent to C99's <code>_Bool</code> (aliased as <code>bool</code>
 in <code>&lt;stdbool.h&gt;</code>) and C++'s <code>bool</code>. However, loading a value other than 0 and
@@ -453,7 +453,7 @@ pointer cast). To detect such a bad reinterpretation, sanitizers such as
 LLVM's <code>-fsanitize=bool</code> may be used.</p>
 </div>
 <h4 id="references-and-pointers"><a class="header" href="#references-and-pointers">References and pointers</a></h4>
-<p>The types &amp;mut T and &amp;T are subject to the same validity requirements as the
+<p>The types <code>&amp;mut T</code> and <code>&amp;T</code> are subject to the same validity requirements as the
 type T, with the additional constraint that they must refer to a properly
 allocated value. Any deviation leads to undefined behavior</p>
 <p>When binding to and from C, the problem is particularly severe because C has
@@ -587,7 +587,7 @@ the FFI boundary.</p>
 </div>
 <p>When binding with C or even C++, one cannot guarantee easily the validity of
 function pointers. Moreover, C++ function objects (also known as functors) are not C-compatible.</p>
-<h4 id="enums"><a class="header" href="#enums">Enums</a></h4>
+<h4 id="enumerations"><a class="header" href="#enumerations">Enumerations</a></h4>
 <p>Usually the possible bit patterns of valid <code>enum</code> values are really small with
 respect to the number of possible bit patterns of the same size. Mishandling an
 <code>enum</code> value provided by a foreign code may lead to type confusion and have
@@ -608,10 +608,10 @@ the Rust code MUST NOT accept incoming values of any Rust <code>enum</code> type
 <ul>
 <li>opaque in the foreign language and only manipulated from the
 Rust side,</li>
-<li>bound to safe enums in the foreign language, e.g. <code>enum class</code> types in C++.</li>
+<li>bound to safe enumerations in the foreign language, e.g. <code>enum class</code> types in C++.</li>
 </ul>
 </div>
-<p>Concerning fieldless enums, crates like [<code>num_derive</code>] or [<code>num_enum</code>] allow
+<p>Concerning enumerations without field, crates like [<code>num_derive</code>] or [<code>num_enum</code>] allow
 developers to easily provide safe conversions from integer to enumeration and may
 be use to safely convert an integer (provided from a C <code>enum</code>) into a Rust enum.</p>
 <h3 id="opaque-types"><a class="header" href="#opaque-types">Opaque types</a></h3>
@@ -931,8 +931,8 @@ int use_xtra()
 <p>When calling Rust code from another language (e.g. C), the Rust code should
 be careful to never panic:
 since version <a href="https://releases.rs/docs/1.81.0/">1.81.0</a>, stack unwinding from
-Rust code into foreign code is not an undefined behavior anymore, but strict sepration
-of stack unwinding between languages is recommanded in order to prevent potential unwanted abortion<sup class="footnote-reference" id="fr-ffi-panic-abort-1"><a href="#footnote-ffi-panic-abort">1</a></sup>.</p>
+Rust code into foreign code is not an undefined behavior anymore, but strict separation
+of stack unwinding between languages is recommended in order to prevent potential unwanted abortion<sup class="footnote-reference" id="fr-ffi-panic-abort-1"><a href="#footnote-ffi-panic-abort">1</a></sup>.</p>
 <div class="reco" id="FFI-NOPANIC" type="Recommendation" title="Handle `panic!` correctly in FFI">
 <p>Rust code called from FFI SHOULD either ensure the function cannot panic, or use
 a panic handling mechanism (such as <a href="https://doc.rust-lang.org/std/panic/fn.catch_unwind.html"><code>std::panic::catch_unwind</code></a>,
@@ -965,7 +965,7 @@ trick: the linker fails if a non-trivially-dead branch leads to <code>panic!</co
 <p>In a secure Rust development, exposing a Rust library to a foreign language
 SHOULD only be done through a <strong>dedicated C-compatible API</strong>.</p>
 </div>
-<p>The crate <a href="https://crates.io/crates/cbindgen">cbindgen</a> may be used to automatically generate C or C++ bindings to
+<p>The crate <a href="https://crates.io/crates/cbindgen"><code>cbindgen</code></a> may be used to automatically generate C or C++ bindings to
 the Rust C-compatible API of a Rust library.</p>
 <h3 id="minimal-example-of-a-c-exported-rust-library"><a class="header" href="#minimal-example-of-a-c-exported-rust-library">Minimal example of a C-exported Rust library</a></h3>
 <p><code>src/lib.rs</code>:</p>
@@ -1026,7 +1026,7 @@ pub unsafe extern "C" fn counter_destroy(counter: *mut Counter) -&gt; std::os::r
         -1
     }
 }</code></pre>
-<p>Using <a href="https://crates.io/crates/cbindgen">cbindgen</a> (<code>[cbindgen] -l c &gt; counter.h</code>), one can generate a consistent
+<p>Using <a href="https://crates.io/crates/cbindgen"><code>cbindgen</code></a> (<code>cbindgen -l c &gt; counter.h</code>), one can generate a consistent
 C header, <code>counter.h</code>:</p>
 <pre><code class="language-c">#include &lt;stdarg.h&gt;
 #include &lt;stdbool.h&gt;
@@ -1079,7 +1079,7 @@ int main(int argc, const char **argv)
 <h2 id="references"><a class="header" href="#references">References</a></h2>
 <ul>
 <li><a id="RFC-2195"></a> <em><a href="https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html">Really tagged unions</a></em> (RFC-2195)</li>
-<li><a id="RFC-1861"></a> <em><a href="https://rust-lang.github.io/rfcs/1861-extern-types.html">Extern types</a></em> (RFC-1861)</li>
+<li><a id="RFC-1861"></a> <em><a href="https://rust-lang.github.io/rfcs/1861-extern-types.html">External types</a></em> (RFC-1861)</li>
 <li><a id="memory-model"></a> <em><a href="https://doc.rust-lang.org/core/ptr/index.html">Memory model</a></em> (memory-model)</li>
 <li><a id="unwinding"></a> <em><a href="https://doc.rust-lang.org/stable/reference/items/functions.html#unwinding">Unwinding</a></em> (unwinding)</li>
 </ul>
