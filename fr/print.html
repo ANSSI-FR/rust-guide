@@ -373,7 +373,6 @@ $
 <h4 id="tier-3"><a class="header" href="#tier-3">Tier 3</a></h4>
 <p>Les cibles de niveau 3 ne sont tout simplement pas prises en charge officiellement.</p>
 <p>La distinction entre les différents niveaux aide les développeurs à choisir une cible adaptée à leur tolérance au risque : le niveau 1 pour des applications de production, le niveau 2 pour des architectures plus expérimentales ou de niche dont le support complet n’est pas encore assuré.</p>
-<p>type="Reco</p>
 <div class="reco" id="DENV-TIERS" type="Règle" title="Utilisation exclusive du tier 1 de `rustc` pour les logiciels de sûreté critiques">
 <p>Les cibles Rustc de niveau 1 et les chaînes de compilation certifiées DOIVENT être utilisées pour les systèmes de sûreté critiques.</p>
 </div>
@@ -747,7 +746,7 @@ ou d'instructions qui peuvent échouer en engendrant un <code>panic</code>.</p>
 <li>une utilisation de <code>assert!</code>.</li>
 </ul>
 <p>De la règle <a href="errors.html#LANG-LIMIT-PANIC">précédente</a> découle la règle suivante.</p>
-<div class="reco" id="LANG-LIMIT-EXPECT" type="Règle" title="Limitation des fonctions déclenchant des `panic`s">
+<div class="reco" id="LANG-LIMIT-PANIC-SRC" type="Règle" title="Limitation des fonctions déclenchant des `panic`s">
 <p>Les usages de <code>unwrap</code>, <code>expect</code> et de <code>assert!</code> DOIVENT être restreints aux seuls cas interdits par la spécification de la fonction.</p>
 </div>
 <p>Les fonctions suivantes sont connues pour émettre des <code>panic</code> en cas d'arguments ne respectant pas les conditions d'usage.</p>
@@ -2398,7 +2397,8 @@ d'indisponibilité.</p>
 protégés.</p>
 <div class="reco" id="LANG-DROP-NO-CYCLE" type="Règle" title="Absence de cycles de références avec valeurs `Drop`ables">
 <p>Les valeurs dont le type implémente <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a> NE DOIVENT PAS être incluses,
-directement ou indirectement, dans un cycle de références à compteurs.</p>
+directement ou indirectement, dans un cycle de références à compteurs
+(voir la section sur les <a href="standard.html#cyclic-rc-pointer">cycles dans les références à compteurs</a>).</p>
 </div>
 <!-- -->
 <div class="reco" id="LANG-DROP-SEC" type="Règle" title="Sécurité assurée par d'autres mécanismes en plus du trait `Drop`">
@@ -2406,18 +2406,18 @@ directement ou indirectement, dans un cycle de références à compteurs.</p>
 traitement (comme l'effacement de secrets cryptographiques par exemple) NE DOIVENT PAS
 reposer uniquement sur l'implémentation du trait <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a>.</p>
 </div>
-<h2 id="références-comptées-rc-et-arc"><a class="header" href="#références-comptées-rc-et-arc">Références comptées (<a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a> et <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc</code></a>)</a></h2>
-<p>Les références comptées permettent de cloner à peu de frais des valeurs de n'importe quel type.
+<h2 id="cyclic-rc-pointer"><a class="header" href="#cyclic-rc-pointer">Références à compteurs (<a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a> et <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc</code></a>)</a></h2>
+<p>Les références à compteurs permettent de cloner à peu de frais des valeurs de n'importe quel type.
 Pour cela, ces valeurs sont associées à un compteur qui dénombre le nombre de clones attachés à cette valeur, et lorsque
 le compteur tombe à zéro, la valeur est détruite.</p>
-<p>Ce paradigme peut introduire des fuites mémoires lorsque les références comptées sont utilisées dans des cycles.</p>
+<p>Ce paradigme peut introduire des fuites mémoires lorsque les références à compteurs sont utilisées dans des cycles.</p>
 <center>
 <p><img src="static/images/cycle-color.svg" alt="Cycle de références" /></p>
 </center>
 <p>Dans cet exemple, les objets <code>A</code>, <code>B</code> et <code>C</code> sont chacun référencés par au moins un autre objet : tant que ces trois objets existent,
 ils ne seront pas supprimés. On a donc une fuite mémoire.</p>
-<p>La <strong>combinaison</strong> de la mutabilité <em><a href="https://doc.rust-lang.org/reference/interior-mutability.html">intérieure</a></em>, des références comptées et des types récursifs peut conduire à des fuites mémoire, et donc éventuellement à des attaques par déni de service et à des fuites de secrets.</p>
-<p>L'exemple non-<code>unsafe</code> suivant montre, la création d'une fuite mémoire en utilisant la mutabilité intérieure et les références comptées.</p>
+<p>La <strong>combinaison</strong> de la mutabilité <em><a href="https://doc.rust-lang.org/reference/interior-mutability.html">intérieure</a></em>, des références à compteurs et des types récursifs peut conduire à des fuites mémoire, et donc éventuellement à des attaques par déni de service et à des fuites de secrets.</p>
+<p>L'exemple non-<code>unsafe</code> suivant montre la création d'une fuite mémoire en utilisant la mutabilité intérieure et les références à compteurs.</p>
 <pre><pre class="playground"><code class="language-rust align bad">use std::{cell::Cell, rc::Rc};
 
 struct LinkedStruct {
@@ -2474,8 +2474,8 @@ Hello, world!
 ==153637== For lists of detected and suppressed errors, rerun with: -s
 ==153637== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 </code></pre>
-<div class="reco" id="MEM-MUT-REC-RC" type="Règle" title="Éviter les références comptées récursives mutables">
-<p>Les types récursifs dont la récursion se base sur l'utilisation des références comptées <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a> ou <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc</code></a> NE DOIVENT PAS être mutables <em>intérieurement</em>.</p>
+<div class="reco" id="MEM-MUT-REC-RC" type="Règle" title="Éviter les références à compteurs récursives mutables">
+<p>Les types récursifs dont la récursion se base sur l'utilisation des références à compteurs <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a> ou <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc</code></a> NE DOIVENT PAS être mutables <em>intérieurement</em>.</p>
 </div>
 <h2 id="références-7"><a class="header" href="#références-7">Références</a></h2>
 <ul>
@@ -2667,7 +2667,7 @@ Recommandation - Mise en place d'un type <code>Error</code> personnalisé pouvan
 <li><input disabled="" type="checkbox"/>
 Règle - Usage limité des <code>panic</code> (<a href="errors.html#LANG-LIMIT-PANIC">LANG-LIMIT-PANIC</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Règle - Limitation des fonctions déclenchant des <code>panic</code>s (<a href="errors.html#LANG-LIMIT-EXPECT">LANG-LIMIT-EXPECT</a>)</li>
+Règle - Limitation des fonctions déclenchant des <code>panic</code>s (<a href="errors.html#LANG-LIMIT-PANIC-SRC">LANG-LIMIT-PANIC-SRC</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Règle - Test des indices d'accès aux tableaux ou utilisation de la méthode <code>get</code> (<a href="errors.html#LANG-ARRINDEXING">LANG-ARRINDEXING</a>)</li>
 </ul>
@@ -2773,7 +2773,7 @@ Règle - Absence de cycles de références avec valeurs <code>Drop</code>ables (
 <li><input disabled="" type="checkbox"/>
 Règle - Sécurité assurée par d'autres mécanismes en plus du trait <code>Drop</code> (<a href="standard.html#LANG-DROP-SEC">LANG-DROP-SEC</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Règle - Éviter les références comptées récursives mutables (<a href="standard.html#MEM-MUT-REC-RC">MEM-MUT-REC-RC</a>)</li>
+Règle - Éviter les références à compteurs récursives mutables (<a href="standard.html#MEM-MUT-REC-RC">MEM-MUT-REC-RC</a>)</li>
 </ul>
 </li>
 </ul>

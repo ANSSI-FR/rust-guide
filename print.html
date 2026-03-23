@@ -694,7 +694,7 @@ fail and cause the code to panic.</p>
 <li>using <code>assert!</code>.</li>
 </ul>
 <p>The following rule is deduced from the <a href="errors.html#LANG-LIMIT-PANIC">previous rule</a>.</p>
-<div class="reco" id="LANG-LIMIT-EXPECT" type="Rule" title="Limit use of `panic`-ing functions">
+<div class="reco" id="LANG-LIMIT-PANIC-SRC" type="Rule" title="Limit use of `panic`-ing functions">
 <p>Uses of <code>unwrap</code>, <code>expect</code> and <code>assert!</code> MUST be restricted to cases explicitly forbidden by the function’s specification.</p>
 </div>
 <p>The following functions are known to panic if their arguments do not meet the usage conditions.</p>
@@ -2212,14 +2212,15 @@ MUST not panic.</p>
 <p>Beside panics, secure-critical drop should be protected.</p>
 <div class="reco" id="LANG-DROP-NO-CYCLE" type="Rule" title="Do not allow cycles of reference-counted `Drop`">
 <p>A value whose type implements <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a> MUST NOT be embedded directly or indirectly
-in a cycle of reference-counted references.</p>
+in a cycle of reference-counted references.
+(see section on <a href="standard.html#cyclic-rc-pointer">cyclic reference counted pointers</a>).</p>
 </div>
 <div class="reco" id="LANG-DROP-SEC" type="Rule" title="Do not rely only on `Drop` to ensure security">
 <p>Ensuring security operations at the end of some treatment (such as key erasure
 at the end of a cryptographic encryption) MUST NOT rely only on the <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a>
 trait implementation.</p>
 </div>
-<h2 id="cyclic-reference-counted-pointers-rc-and-arc"><a class="header" href="#cyclic-reference-counted-pointers-rc-and-arc">Cyclic reference counted pointers (<a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a> and <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc</code></a>)</a></h2>
+<h2 id="cyclic-rc-pointer"><a class="header" href="#cyclic-rc-pointer">Cyclic reference counted pointers (<a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a> and <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc</code></a>)</a></h2>
 <p>Reference-counting pointers allow values of any type to be cloned.
 To do this, these values are associated with a counter that counts the number of clones attached to that value, and when
 the counter reaches zero, the value is destroyed.</p>
@@ -2407,7 +2408,7 @@ Recommendation - Implement custom <code>Error</code> type wrapping all possible 
 <li><input disabled="" type="checkbox"/>
 Rule - Limit <code>panic</code> use (<a href="errors.html#LANG-LIMIT-PANIC">LANG-LIMIT-PANIC</a>)</li>
 <li><input disabled="" type="checkbox"/>
-Rule - Limit use of <code>panic</code>-ing functions (<a href="errors.html#LANG-LIMIT-EXPECT">LANG-LIMIT-EXPECT</a>)</li>
+Rule - Limit use of <code>panic</code>-ing functions (<a href="errors.html#LANG-LIMIT-PANIC-SRC">LANG-LIMIT-PANIC-SRC</a>)</li>
 <li><input disabled="" type="checkbox"/>
 Rule - Test properly array indexing or use the <code>get</code> method (<a href="errors.html#LANG-ARRINDEXING">LANG-ARRINDEXING</a>)</li>
 </ul>

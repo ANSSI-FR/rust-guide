@@ -468,7 +468,8 @@ d'indisponibilité.</p>
 protégés.</p>
 <div class="reco" id="LANG-DROP-NO-CYCLE" type="Règle" title="Absence de cycles de références avec valeurs `Drop`ables">
 <p>Les valeurs dont le type implémente <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a> NE DOIVENT PAS être incluses,
-directement ou indirectement, dans un cycle de références à compteurs.</p>
+directement ou indirectement, dans un cycle de références à compteurs
+(voir la section sur les <a href="#cyclic-rc-pointer">cycles dans les références à compteurs</a>).</p>
 </div>
 <!-- -->
 <div class="reco" id="LANG-DROP-SEC" type="Règle" title="Sécurité assurée par d'autres mécanismes en plus du trait `Drop`">
@@ -476,18 +477,18 @@ directement ou indirectement, dans un cycle de références à compteurs.</p>
 traitement (comme l'effacement de secrets cryptographiques par exemple) NE DOIVENT PAS
 reposer uniquement sur l'implémentation du trait <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a>.</p>
 </div>
-<h2 id="références-comptées-rc-et-arc"><a class="header" href="#références-comptées-rc-et-arc">Références comptées (<a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a> et <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc</code></a>)</a></h2>
-<p>Les références comptées permettent de cloner à peu de frais des valeurs de n'importe quel type.
+<h2 id="cyclic-rc-pointer"><a class="header" href="#cyclic-rc-pointer">Références à compteurs (<a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a> et <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc</code></a>)</a></h2>
+<p>Les références à compteurs permettent de cloner à peu de frais des valeurs de n'importe quel type.
 Pour cela, ces valeurs sont associées à un compteur qui dénombre le nombre de clones attachés à cette valeur, et lorsque
 le compteur tombe à zéro, la valeur est détruite.</p>
-<p>Ce paradigme peut introduire des fuites mémoires lorsque les références comptées sont utilisées dans des cycles.</p>
+<p>Ce paradigme peut introduire des fuites mémoires lorsque les références à compteurs sont utilisées dans des cycles.</p>
 <center>
 <p><img src="static/images/cycle-color.svg" alt="Cycle de références" /></p>
 </center>
 <p>Dans cet exemple, les objets <code>A</code>, <code>B</code> et <code>C</code> sont chacun référencés par au moins un autre objet : tant que ces trois objets existent,
 ils ne seront pas supprimés. On a donc une fuite mémoire.</p>
-<p>La <strong>combinaison</strong> de la mutabilité <em><a href="https://doc.rust-lang.org/reference/interior-mutability.html">intérieure</a></em>, des références comptées et des types récursifs peut conduire à des fuites mémoire, et donc éventuellement à des attaques par déni de service et à des fuites de secrets.</p>
-<p>L'exemple non-<code>unsafe</code> suivant montre, la création d'une fuite mémoire en utilisant la mutabilité intérieure et les références comptées.</p>
+<p>La <strong>combinaison</strong> de la mutabilité <em><a href="https://doc.rust-lang.org/reference/interior-mutability.html">intérieure</a></em>, des références à compteurs et des types récursifs peut conduire à des fuites mémoire, et donc éventuellement à des attaques par déni de service et à des fuites de secrets.</p>
+<p>L'exemple non-<code>unsafe</code> suivant montre la création d'une fuite mémoire en utilisant la mutabilité intérieure et les références à compteurs.</p>
 <pre><pre class="playground"><code class="language-rust align bad">use std::{cell::Cell, rc::Rc};
 
 struct LinkedStruct {
@@ -544,8 +545,8 @@ Hello, world!
 ==153637== For lists of detected and suppressed errors, rerun with: -s
 ==153637== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 </code></pre>
-<div class="reco" id="MEM-MUT-REC-RC" type="Règle" title="Éviter les références comptées récursives mutables">
-<p>Les types récursifs dont la récursion se base sur l'utilisation des références comptées <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a> ou <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc</code></a> NE DOIVENT PAS être mutables <em>intérieurement</em>.</p>
+<div class="reco" id="MEM-MUT-REC-RC" type="Règle" title="Éviter les références à compteurs récursives mutables">
+<p>Les types récursifs dont la récursion se base sur l'utilisation des références à compteurs <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a> ou <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc</code></a> NE DOIVENT PAS être mutables <em>intérieurement</em>.</p>
 </div>
 <h2 id="références"><a class="header" href="#références">Références</a></h2>
 <ul>

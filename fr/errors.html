@@ -220,7 +220,7 @@ ou d'instructions qui peuvent échouer en engendrant un <code>panic</code>.</p>
 <li>une utilisation de <code>assert!</code>.</li>
 </ul>
 <p>De la règle <a href="#LANG-LIMIT-PANIC">précédente</a> découle la règle suivante.</p>
-<div class="reco" id="LANG-LIMIT-EXPECT" type="Règle" title="Limitation des fonctions déclenchant des `panic`s">
+<div class="reco" id="LANG-LIMIT-PANIC-SRC" type="Règle" title="Limitation des fonctions déclenchant des `panic`s">
 <p>Les usages de <code>unwrap</code>, <code>expect</code> et de <code>assert!</code> DOIVENT être restreints aux seuls cas interdits par la spécification de la fonction.</p>
 </div>
 <p>Les fonctions suivantes sont connues pour émettre des <code>panic</code> en cas d'arguments ne respectant pas les conditions d'usage.</p>
