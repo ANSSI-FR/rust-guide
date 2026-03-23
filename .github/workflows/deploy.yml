@@ -19,6 +19,8 @@ jobs:
         run: nix build .
       - name: Copy result into local directory
         run: cp -r result/book .
+      - name: Add write permissions to book directory
+        run: chmod -R +w book
       - name: Move FR version
         run: mv book/fr/html book/en/html/fr
       - name: Deploy
