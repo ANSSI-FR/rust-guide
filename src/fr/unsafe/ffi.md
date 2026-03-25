@@ -329,9 +329,11 @@ compilateurs C et C++ assurent qu'aucune autre valeur que 0 et 1 ne peut être
 *stockée* dans un `_Bool`/`bool` mais ne peuvent garantir l'absence d'une
 *réinterprétation incorrecte* (par exemple dans un type union ou *via* un
 *cast* de pointeur). Pour détecter une telle réinterprétation, un
-*sanitizer* tel que l'option `-fsanitize=bool` de LLVM peut être utilisé.
+*sanitizer* tel que l'option `-fsanitize=bool` de [LLVM] peut être utilisé.
 
 </div>
+
+[LLVM]: https://llvm.org/
 
 #### Références et pointeurs
 

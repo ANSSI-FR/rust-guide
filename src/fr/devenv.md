@@ -122,7 +122,9 @@ $
 
 ### Garantie de niveau pour Rustc
 
-Rustc utilise LLVM comme backend, il hérite donc du support de ce dernier et classe ses cibles prises en charge en différents niveaux afin d’indiquer le degré de stabilité et de tests effectué.
+Rustc utilise [LLVM] comme backend, il hérite donc du support de ce dernier et classe ses cibles prises en charge en différents niveaux afin d’indiquer le degré de stabilité et de tests effectué.
+
+[LLVM]: https://llvm.org/
 
 #### Tier 1 - Fonctionnement garanti
 

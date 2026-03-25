@@ -115,7 +115,9 @@ $
 
 ### Rustc Tier guarantees
 
-As Rustc's backend is based on LLVM, it inherits and classifies its supported targets into tiers to communicate how much stability and testing each backend receives.
+As Rustc's backend is based on [LLVM], it inherits and classifies its supported targets into tiers to communicate how much stability and testing each backend receives.
+
+[LLVM]: https://llvm.org/
 
 #### Tier 1 - guaranteed to work
 
@@ -123,7 +125,7 @@ The target is fully vetted by the community. It passes the entire test suite, re
 
 #### Tier 2 - guaranteed to build
 
-The target’s source code compiles cleanly, but it does not receive the same level of testing or maintenance as Tier 1. It may lack full coverage in the test suite, and certain optimizations or newer LLVM features could be missing or unstable. Users can still generate code for these backends, but they should expect occasional breakage or the need for manual patches. Tier 2 targets can be thought of as "guaranteed to build" but not as "guaranteed to work".
+The target’s source code compiles cleanly, but it does not receive the same level of testing or maintenance as Tier 1. It may lack full coverage in the test suite, and certain optimizations or newer [LLVM] features could be missing or unstable. Users can still generate code for these backends, but they should expect occasional breakage or the need for manual patches. Tier 2 targets can be thought of as "guaranteed to build" but not as "guaranteed to work".
 
 #### Tier 3
 

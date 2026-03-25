@@ -26,7 +26,9 @@ serde_json = "1.0.143"
 serde = "1.0.219"
 ```
 
-The default repository is [crates.io](https://crates.io). It is also possible to use [your own registry](https://doc.rust-lang.org/cargo/reference/registries.html).
+The default repository is [`crates.io`]. It is also possible to use [your own registry](https://doc.rust-lang.org/cargo/reference/registries.html).
+
+[`crates.io`]: https://crates.io
 
 ### Git Dependencies
 

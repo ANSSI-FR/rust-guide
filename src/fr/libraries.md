@@ -26,7 +26,9 @@ serde_json = "1.0.143"
 serde = "1.0.219"
 ```
 
-Le dépôt par défaut est [crates.io](https://crates.io). Il est aussi possible d'utiliser [son propre dépôt](https://doc.rust-lang.org/cargo/reference/registries.html).
+Le dépôt par défaut est [`crates.io`]. Il est aussi possible d'utiliser [son propre dépôt](https://doc.rust-lang.org/cargo/reference/registries.html).
+
+[`crates.io`]: https://crates.io
 
 ### Dépendances Git
 

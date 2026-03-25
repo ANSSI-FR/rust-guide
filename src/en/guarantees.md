@@ -51,7 +51,7 @@ The language paradigm is to ensure the absence of a UB in a program using only t
 
 Despite these memory safety guarantees, the language does not prevent
 
-* resource leaks (memory, IO, ...) (see the [memory management section](unsafe/memory.md#chapter-memory)),
+* resource leaks (memory, I/O, ...) (see the [memory management section](unsafe/memory.md#chapter-memory)),
 * numeric overflows (see the [integer operations section](integer.md#chapter-integer)).
 
 </div>

@@ -56,7 +56,7 @@ Le langage Rust est conçu dans le but de garantir l'absence d'*UB* dans un prog
 
 On notera que cette garantie qu'offre le langage Rust ***ne protège pas*** contre les erreurs suivantes :
 
-* fuites de resources (mémoire, IO, *etc.*) (voir la section sur la [gestion mémoire](unsafe/memory.md#chapter-memory)) ;
+* fuites de resources (mémoire, I/O, *etc.*) (voir la section sur la [gestion mémoire](unsafe/memory.md#chapter-memory)) ;
 * dépassements numériques (voir la section sur le traitement des [entiers](integer.md#chapter-integer)).
 
 </div>

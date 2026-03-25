@@ -309,9 +309,11 @@ Safe Rust ensures that. Standard-compliant C and C++ compilers ensure that no
 value but 0 and 1 can be *stored* in a `_Bool`/`bool` value but cannot
 guarantee the absence of an *incorrect reinterpretation* (e.g., union types,
 pointer cast). To detect such a bad reinterpretation, sanitizers such as
-LLVM's `-fsanitize=bool` may be used.
+[LLVM]'s `-fsanitize=bool` may be used.
 
 </div>
+
+[LLVM]: https://llvm.org/
 
 #### References and pointers
 
