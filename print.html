@@ -343,11 +343,11 @@ $ cargo +nightly fmt
 $
 </code></pre>
 <h3 id="rustc-tier-guarantees"><a class="header" href="#rustc-tier-guarantees">Rustc Tier guarantees</a></h3>
-<p>As Rustc's backend is based on LLVM, it inherits and classifies its supported targets into tiers to communicate how much stability and testing each backend receives.</p>
+<p>As Rustc's backend is based on <a href="https://llvm.org/">LLVM</a>, it inherits and classifies its supported targets into tiers to communicate how much stability and testing each backend receives.</p>
 <h4 id="tier-1---guaranteed-to-work"><a class="header" href="#tier-1---guaranteed-to-work">Tier 1 - guaranteed to work</a></h4>
 <p>The target is fully vetted by the community. It passes the entire test suite, receives regular regression testing, and is kept up‑to‑date with new releases. In practice, you can rely on consistent code generation, stable ABI, and predictable performance. Tier 1 targets can be thought of as "guaranteed to work".</p>
 <h4 id="tier-2---guaranteed-to-build"><a class="header" href="#tier-2---guaranteed-to-build">Tier 2 - guaranteed to build</a></h4>
-<p>The target’s source code compiles cleanly, but it does not receive the same level of testing or maintenance as Tier 1. It may lack full coverage in the test suite, and certain optimizations or newer LLVM features could be missing or unstable. Users can still generate code for these backends, but they should expect occasional breakage or the need for manual patches. Tier 2 targets can be thought of as "guaranteed to build" but not as "guaranteed to work".</p>
+<p>The target’s source code compiles cleanly, but it does not receive the same level of testing or maintenance as Tier 1. It may lack full coverage in the test suite, and certain optimizations or newer <a href="https://llvm.org/">LLVM</a> features could be missing or unstable. Users can still generate code for these backends, but they should expect occasional breakage or the need for manual patches. Tier 2 targets can be thought of as "guaranteed to build" but not as "guaranteed to work".</p>
 <h4 id="tier-3"><a class="header" href="#tier-3">Tier 3</a></h4>
 <p>Tier 3 targets are simply not officially supported.</p>
 <p>The tier distinction helps developers choose a target that matches their risk tolerance: Tier 1 for production‑grade workloads, Tier 2 for experimental or niche architectures where full support isn’t yet met.</p>
@@ -515,7 +515,7 @@ semver = "1.0.26"
 serde_json = "1.0.143"
 serde = "1.0.219"
 </code></pre>
-<p>The default repository is <a href="https://crates.io">crates.io</a>. It is also possible to use <a href="https://doc.rust-lang.org/cargo/reference/registries.html">your own registry</a>.</p>
+<p>The default repository is <a href="https://crates.io"><code>crates.io</code></a>. It is also possible to use <a href="https://doc.rust-lang.org/cargo/reference/registries.html">your own registry</a>.</p>
 <h3 id="git-dependencies"><a class="header" href="#git-dependencies">Git Dependencies</a></h3>
 <p>Each dependency in the <code>Cargo.toml</code> file can also refer to <a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies-from-git-repositories">a GIT repository</a>. For example:</p>
 <pre><code class="language-toml">[dependencies]
@@ -761,7 +761,7 @@ in the <a href="https://doc.rust-lang.org/stable/reference/">Rust reference</a>.
 <div class="note">
 <p>Despite these memory safety guarantees, the language does not prevent</p>
 <ul>
-<li>resource leaks (memory, IO, ...) (see the <a href="unsafe/memory.html#chapter-memory">memory management section</a>),</li>
+<li>resource leaks (memory, I/O, ...) (see the <a href="unsafe/memory.html#chapter-memory">memory management section</a>),</li>
 <li>numeric overflows (see the <a href="integer.html#chapter-integer">integer operations section</a>).</li>
 </ul>
 </div>
@@ -1311,7 +1311,7 @@ Safe Rust ensures that. Standard-compliant C and C++ compilers ensure that no
 value but 0 and 1 can be <em>stored</em> in a <code>_Bool</code>/<code>bool</code> value but cannot
 guarantee the absence of an <em>incorrect reinterpretation</em> (e.g., union types,
 pointer cast). To detect such a bad reinterpretation, sanitizers such as
-LLVM's <code>-fsanitize=bool</code> may be used.</p>
+<a href="https://llvm.org/">LLVM</a>'s <code>-fsanitize=bool</code> may be used.</p>
 </div>
 <h4 id="references-and-pointers"><a class="header" href="#references-and-pointers">References and pointers</a></h4>
 <p>The types <code>&amp;mut T</code> and <code>&amp;T</code> are subject to the same validity requirements as the

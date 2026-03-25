@@ -261,7 +261,7 @@ $ cargo +nightly fmt
 $
 </code></pre>
 <h3 id="garantie-de-niveau-pour-rustc"><a class="header" href="#garantie-de-niveau-pour-rustc">Garantie de niveau pour Rustc</a></h3>
-<p>Rustc utilise LLVM comme backend, il hérite donc du support de ce dernier et classe ses cibles prises en charge en différents niveaux afin d’indiquer le degré de stabilité et de tests effectué.</p>
+<p>Rustc utilise <a href="https://llvm.org/">LLVM</a> comme backend, il hérite donc du support de ce dernier et classe ses cibles prises en charge en différents niveaux afin d’indiquer le degré de stabilité et de tests effectué.</p>
 <h4 id="tier-1---fonctionnement-garanti"><a class="header" href="#tier-1---fonctionnement-garanti">Tier 1 - Fonctionnement garanti</a></h4>
 <p>La cible est entièrement examinée par la communauté. Elle réussit l’ensemble complet de la batterie de tests, fait l’objet de tests de régression réguliers et est maintenue à jour avec les nouvelles versions. En pratique, vous pouvez compter sur une génération de code cohérente, une ABI stable et des performances prévisibles d’une version à l’autre. Les cibles de tier 1 offrent une garantie de <strong>fonctionnement</strong>.</p>
 <h4 id="tier-2---compilation-garantie"><a class="header" href="#tier-2---compilation-garantie">Tier 2 - Compilation garantie</a></h4>
