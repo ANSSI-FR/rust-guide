@@ -198,10 +198,10 @@ overflow-checks = true  # enable overflow checks in release builds
 <p>Lorsqu'un dépassement est possible, le comportement peut être rendu explicite soit en utilisant des méthodes spécifiques, soit en utilisant des types enveloppants spécifiques.</p>
 <p>Les méthodes sont de la forme <code>&lt;mode&gt;_&lt;op&gt;</code>, où <code>&lt;mode&gt;</code> est <code>checked</code>, <code>overflowing</code>, <code>wrapping</code> ou <code>saturating</code>, et <code>&lt;op&gt;</code> est <code>add</code>, <code>mul</code>, <code>sub</code>, <code>shr</code>, etc. Les sémantiques sont les suivantes :</p>
 <ul>
-<li><code>checked_&lt;op&gt;</code> retourne <code>None</code> en cas de dépassement,</li>
-<li><code>overflowing_&lt;op&gt;</code> retourne à la fois un résultat selon l'arithmétique circulaire et un booléen indiquant si un dépassement a eu lieu,</li>
-<li><code>wrapping_&lt;op&gt;</code> retourne toujours le résultat selon l'arithmétique circulaire,</li>
-<li><code>saturating_&lt;op&gt;</code> retourne toujours le résultat saturé.</li>
+<li><code>checked_&lt;op&gt;</code> renvoie <code>None</code> en cas de dépassement,</li>
+<li><code>overflowing_&lt;op&gt;</code> renvoie à la fois un résultat selon l'arithmétique circulaire et un booléen indiquant si un dépassement a eu lieu,</li>
+<li><code>wrapping_&lt;op&gt;</code> renvoie toujours le résultat selon l'arithmétique circulaire,</li>
+<li><code>saturating_&lt;op&gt;</code> renvoie toujours le résultat saturé.</li>
 </ul>
 <p>Les types enveloppants sont <code>Wrapping&lt;T&gt;</code> et <code>Saturating&lt;T&gt;</code> (de <code>std::num</code>), où <code>T</code> est un type entier. Le premier fournit une sémantique d'arithmétique circulaire pour toutes les opérations arithmétiques, tandis que le second fournit une sémantique de saturation. Une fois les valeurs enveloppées, toutes les opérations suivantes sont effectuées avec la sémantique correspondante.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]

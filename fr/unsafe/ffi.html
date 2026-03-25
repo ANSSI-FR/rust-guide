@@ -1005,7 +1005,7 @@ d'éviter un potentiel arrêt inopiné non contrôlé (<code>abort</code>)<sup c
 <li>soit utiliser un mécanisme de
 récupération de <code>panic</code> (comme <a href="https://doc.rust-lang.org/std/panic/fn.catch_unwind.html"><code>std::panic::catch_unwind</code></a>,
 <a href="https://doc.rust-lang.org/std/panic/fn.set_hook.html"><code>std::panic::set_hook</code></a>, <a href="https://doc.rust-lang.org/reference/panic.html#r-panic.panic_handler"><code>#[panic_handler]</code></a>), afin d'assurer que la fonction
-Rust ne peut pas quitter ou retourner dans un état instable.</li>
+Rust ne peut pas aboutir à un état instable.</li>
 </ul>
 </div>
 <p>Il faut noter que <a href="https://doc.rust-lang.org/std/panic/fn.catch_unwind.html"><code>catch_unwind</code></a> rattrapera seulement les <em>unwinding <code>panic</code>s</em>
