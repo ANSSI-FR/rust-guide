@@ -766,7 +766,7 @@ Le code Rust appelé depuis un langage externe DEVRAIT :
 * soit utiliser un mécanisme de
 récupération de `panic` (comme [`std::panic::catch_unwind`],
 [`std::panic::set_hook`], [`#[panic_handler]`](https://doc.rust-lang.org/reference/panic.html#r-panic.panic_handler)), afin d'assurer que la fonction
-Rust ne peut pas quitter ou retourner dans un état instable.
+Rust ne peut pas aboutir à un état instable.
 
 </div>
 

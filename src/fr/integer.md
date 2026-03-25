@@ -22,10 +22,10 @@ Lorsqu'un dépassement est possible, le comportement peut être rendu explicite 
 
 Les méthodes sont de la forme `<mode>_<op>`, où `<mode>` est `checked`, `overflowing`, `wrapping` ou `saturating`, et `<op>` est `add`, `mul`, `sub`, `shr`, etc. Les sémantiques sont les suivantes :
 
-- `checked_<op>` retourne `None` en cas de dépassement,
-- `overflowing_<op>` retourne à la fois un résultat selon l'arithmétique circulaire et un booléen indiquant si un dépassement a eu lieu,
-- `wrapping_<op>` retourne toujours le résultat selon l'arithmétique circulaire,
-- `saturating_<op>` retourne toujours le résultat saturé.
+- `checked_<op>` renvoie `None` en cas de dépassement,
+- `overflowing_<op>` renvoie à la fois un résultat selon l'arithmétique circulaire et un booléen indiquant si un dépassement a eu lieu,
+- `wrapping_<op>` renvoie toujours le résultat selon l'arithmétique circulaire,
+- `saturating_<op>` renvoie toujours le résultat saturé.
 
 Les types enveloppants sont `Wrapping<T>` et `Saturating<T>` (de `std::num`), où `T` est un type entier. Le premier fournit une sémantique d'arithmétique circulaire pour toutes les opérations arithmétiques, tandis que le second fournit une sémantique de saturation. Une fois les valeurs enveloppées, toutes les opérations suivantes sont effectuées avec la sémantique correspondante.
 
