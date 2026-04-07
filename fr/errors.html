@@ -236,7 +236,7 @@ ou d'instructions qui peuvent échouer en engendrant un <code>panic</code>.</p>
 utilisée pour récupérer un type <code>Option</code>.</p>
 </div>
 <div class="warning">
-<p>Dans certains domaines critiques pour la sureté, il est obligatoire de passer en mode sans échec dès qu'une erreur susceptible d'entraîner un comportement indéfini se produit.
+<p>Dans certains domaines critiques pour la sûreté, il est obligatoire de passer en mode sans échec dès qu'une erreur susceptible d'entraîner un comportement indéfini se produit.
 Dans ces situations, il est judicieux d'interrompre l'exécution puisque cela permet d'arrêter le système avant que des données ne soient corrompues, ou des défaillances liées à la sûreté ne se propagent.</p>
 <p>Pour un avion ou d'autres types de véhicule, ce comportement « fail-fast » peut être crucial : l'unité de contrôle principale doit s'arrêter immédiatement en cas de défaillance grave, puis transférer le contrôle à un sous-système redondant ou de secours capable d'arrêter le véhicule en toute sécurité ou de poursuivre son fonctionnement en mode réduit. Le redémarrage sur un système secondaire fiable garantit que le véhicule reste contrôlable, protège les occupants et évite les conséquences dangereuses qui pourraient résulter de la poursuite de l'exécution dans un état imprévisible.</p>
 <p>Pour ce cas d'usage, activer l'attribut <code>panic = 'abort'</code> dans la section <code>[profile.release]</code> du fichier Cargo.toml permet d'arrêter le programme dès l'émission du <code>panic</code>.</p>

@@ -218,6 +218,7 @@ versions, called <em>release channels</em>:</p>
 <p>When playing with different toolchains, it is important to check not only what
 the default toolchain is, but also if overrides are currently set for some
 directories.</p>
+<div class="example">
 <pre><code class="language-shell">$ pwd
 /tmp/foo
 $ rustup toolchain list
@@ -228,14 +229,18 @@ $ rustup override list
 /tmp/foo                                    nightly-x86_64-unknown-linux-gnu
 $
 </code></pre>
+<p>This example shows that toolchain <code>stable-x86_64-unknown-linux-gnu</code> is the default toolchain,
+but is overridden in directory <code>/tmp/foo</code> by <code>nightly-x86_64-unknown-linux-gnu</code>.</p>
+</div>
 <div class="reco" id="DENV-STABLE" type="Rule" title="Use a stable compilation toolchain">
 <p>Development of a secure application MUST be done using a fully stable
 toolchain, for limiting potential compiler, runtime or tool bugs.</p>
 </div>
 <p>When using a specific <code>cargo</code> subcommand that requires a nightly component,
 it is preferable to run it by switching the toolchain only locally, instead
-of explicitly switching the complete toolchain. For example, to run the
-(nightly) latest <code>rustfmt</code>:</p>
+of explicitly switching the complete toolchain.</p>
+<div class="example">
+<p>For example, to run the (nightly) latest <code>rustfmt</code>:</p>
 <pre><code class="language-shell">$ rustup toolchain list
 stable-x86_64-unknown-linux-gnu (default)
 beta-x86_64-unknown-linux-gnu
@@ -245,10 +250,27 @@ $ # or
 $ cargo +nightly fmt
 $
 </code></pre>
+</div>
 <h3 id="rustc-tier-guarantees"><a class="header" href="#rustc-tier-guarantees">Rustc Tier guarantees</a></h3>
 <p>As Rustc's backend is based on <a href="https://llvm.org/">LLVM</a>, it inherits and classifies its supported targets into tiers to communicate how much stability and testing each backend receives.</p>
+<div class="example">
+<p>The list of Rust's targets is given by the following command.</p>
+<pre><code class="language-shell">$ rustup target list
+...
+wasm32-unknown-emscripten
+wasm32-unknown-unknown (installed)
+wasm32-wasip1
+...
+x86_64-unknown-illumos
+x86_64-unknown-linux-gnu (installed)
+x86_64-unknown-linux-gnux32
+...
+
+</code></pre>
+<p>Here targets <code>wasm32-unknown-unknown</code> and <code>x86_64-unknown-linux-gnu</code> are installed.</p>
+</div>
 <h4 id="tier-1---guaranteed-to-work"><a class="header" href="#tier-1---guaranteed-to-work">Tier 1 - guaranteed to work</a></h4>
-<p>The target is fully vetted by the community. It passes the entire test suite, receives regular regression testing, and is kept up‑to‑date with new releases. In practice, you can rely on consistent code generation, stable ABI, and predictable performance. Tier 1 targets can be thought of as "guaranteed to work".</p>
+<p>The target is fully vetted by the community. It passes the entire test suite, receives regular regression testing, and is kept up‑to‑date with new releases. In practice, you can rely on consistent code generation, stable ABI<sup class="footnote-reference" id="fr-abi-1"><a href="#footnote-abi">1</a></sup>, and predictable performance. Tier 1 targets can be thought of as "guaranteed to work".</p>
 <h4 id="tier-2---guaranteed-to-build"><a class="header" href="#tier-2---guaranteed-to-build">Tier 2 - guaranteed to build</a></h4>
 <p>The target’s source code compiles cleanly, but it does not receive the same level of testing or maintenance as Tier 1. It may lack full coverage in the test suite, and certain optimizations or newer <a href="https://llvm.org/">LLVM</a> features could be missing or unstable. Users can still generate code for these backends, but they should expect occasional breakage or the need for manual patches. Tier 2 targets can be thought of as "guaranteed to build" but not as "guaranteed to work".</p>
 <h4 id="tier-3"><a class="header" href="#tier-3">Tier 3</a></h4>
@@ -306,15 +328,19 @@ installation method for dependencies.</p>
 your project needs, mainly through the manifest file <code>Cargo.toml</code>. For a
 complete presentation, see the <a href="https://doc.rust-lang.org/cargo/index.html">Cargo Book</a>.</p>
 <p>During the development of a secure application, some of the options may require
-some attention. The <code>[profile.*]</code> sections allow configuring how the compiler is
-invoked. For example:</p>
+some attention.</p>
+<p>Cargo provides the notion of <em>profiles</em>. Four profiles are builtin: <code>dev</code>, <code>release</code>, <code>test</code> and <code>bench</code>.
+They are applied accordingly with <code>cargo</code> commands.</p>
+<p>For instance, <code>cargo build</code> uses <code>dev</code> profile, and <code>cargo build --release</code> or <code>cargo install</code>
+use <code>release</code> profile.</p>
+<p>Profiles can be created/altered in <code>[profile.*]</code> sections. For example:</p>
 <ul>
 <li>the <a href="https://doc.rust-lang.org/cargo/reference/profiles.html#debug-assertions"><code>debug-assertions</code></a> variable controls whether debug assertions are enabled,</li>
 <li>the <a href="https://doc.rust-lang.org/cargo/reference/profiles.html#overflow-checks"><code>overflow-checks</code></a> variable controls whether overflows are checked for
 integer arithmetic.</li>
 </ul>
 <p>Overriding the default options may cause bugs not being detected, even when
-using the debug profile that normally enables runtime checks (for example it does not enable
+using the <code>dev</code> profile that normally enables runtime checks (for example it does not enable
 <a href="integer.html#chapter-integer">integer overflow checks</a>).</p>
 <div class="reco" id="DENV-CARGO-OPTS" type="Rule" title="Keep default values for critical variables in cargo profiles">
 <p>The variables <a href="https://doc.rust-lang.org/cargo/reference/profiles.html#debug-assertions"><code>debug-assertions</code></a> and <a href="https://doc.rust-lang.org/cargo/reference/profiles.html#overflow-checks"><code>overflow-checks</code></a> MUST NOT be overridden
@@ -399,7 +425,11 @@ chapters, according to their goals.</p>
 <li><a id="cargo-book"></a> <em><a href="https://doc.rust-lang.org/cargo/index.html">The Cargo Book</a></em> (cargo-book)</li>
 <li><a id="rustc-book"></a> <em><a href="https://doc.rust-lang.org/stable/rustc/index.html">The rustc book</a></em> (rustc-book)</li>
 </ul>
-
+<hr>
+<ol class="footnote-definition"><li id="footnote-abi">
+<p>Application Binary Interface <a href="#fr-abi-1">↩</a></p>
+</li>
+</ol>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

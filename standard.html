@@ -278,13 +278,13 @@ provide any method).</p>
 <ul>
 <li>
 <p><em>Equality consistency</em>:
-<code>a.eq(b)</code> is equivalent to <code>a.partial_cmp(b) == Some(std::ordering::Eq)</code>.</p>
+<code>a.eq(b)</code> is equivalent to <code>a.partial_cmp(b) == Some(std::cmp::Ordering::Equal)</code>.</p>
 </li>
 <li>
 <p><em>Internal consistency</em>:</p>
 <ul>
-<li><code>a.lt(b)</code> iff <code>a.partial_cmp(b) == Some(std::ordering::Less)</code>,</li>
-<li><code>a.gt(b)</code> iff <code>a.partial_cmp(b) == Some(std::ordering::Greater)</code>,</li>
+<li><code>a.lt(b)</code> iff <code>a.partial_cmp(b) == Some(std::cmp::Ordering::Less)</code>,</li>
+<li><code>a.gt(b)</code> iff <code>a.partial_cmp(b) == Some(std::cmp::Ordering::Greater)</code>,</li>
 <li><code>a.le(b)</code> iff <code>a.lt(b) || a.eq(b)</code>,</li>
 <li><code>a.ge(b)</code> iff <code>a.gt(b) || a.eq(b)</code>.</li>
 </ul>

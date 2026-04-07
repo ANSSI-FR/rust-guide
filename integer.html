@@ -190,10 +190,22 @@ overflow-checks = true  # enable overflow checks in release builds
 <p>When an overflow is possible, the behavior can be made explicit either by using specific methods or by using specific wrapper types.</p>
 <p>The methods are of the form <code>&lt;mode&gt;_&lt;op&gt;</code>, where <code>&lt;mode&gt;</code> is <code>checked</code>, <code>overflowing</code>, <code>wrapping</code>, or <code>saturating</code>, and <code>&lt;op&gt;</code> is <code>add</code>, <code>mul</code>, <code>sub</code>, <code>shr</code>, etc. The semantics are as follows:</p>
 <ul>
-<li><code>checked_&lt;op&gt;</code> returns <code>None</code> in case of overflow,</li>
-<li><code>overflowing_&lt;op&gt;</code> returns both a possibly wrapped result and a Boolean indicating whether overflow occurred,</li>
-<li><code>wrapping_&lt;op&gt;</code> always returns the wrapped result,</li>
-<li><code>saturating_&lt;op&gt;</code> always returns the saturated result.</li>
+<li>
+<p><code>checked_&lt;op&gt;</code> returns <code>None</code> in case of overflow.</p>
+<p>For instance, <code>255u8.checked_add(1)</code> returns <code>None</code>.</p>
+</li>
+<li>
+<p><code>overflowing_&lt;op&gt;</code> returns both a possibly wrapped result and a Boolean indicating whether overflow occurred.</p>
+<p>For instance, <code>255u8.overflowing_add(1)</code> returns <code>(0, true)</code>.</p>
+</li>
+<li>
+<p><code>wrapping_&lt;op&gt;</code> always returns the wrapped result.</p>
+<p>For instance, <code>255u8.wrapping_add(1)</code> returns <code>0</code>.</p>
+</li>
+<li>
+<p><code>saturating_&lt;op&gt;</code> always returns the saturated result.</p>
+<p>For instance, <code>255u8.saturating_add(1)</code> returns <code>255</code>.</p>
+</li>
 </ul>
 <p>The wrapper types are <code>Wrapping&lt;T&gt;</code> and <code>Saturating&lt;T&gt;</code> (from <code>std::num</code>), where <code>T</code> is an integer type. The former provides wrap-around semantics for all arithmetic operations, whereas the latter provides saturation semantics. Once the values are wrapped, all subsequent operations are performed with the given semantics.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]

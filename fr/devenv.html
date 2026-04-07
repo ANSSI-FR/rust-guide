@@ -227,7 +227,8 @@ déclinée en trois variantes appelées <em>release channels</em>.</p>
 <p>Lors du développement d'un projet, il est important de vérifier non seulement
 la version de la chaîne d'outils couramment sélectionnée par défaut, mais aussi
 les potentielles surcharges qui peuvent être définies en fonction des
-répertoires :</p>
+répertoires.</p>
+<div class="example">
 <pre><code class="language-shell">$ pwd
 /tmp/foo
 $ rustup toolchain list
@@ -238,6 +239,10 @@ $ rustup override list
 /tmp/foo                                    nightly-x86_64-unknown-linux-gnu
 $
 </code></pre>
+<p>L'exemple suivant montre que la chaîne d'outils est configurée par défaut avec
+<code>stable-x86_64-unknown-linux-gnu</code>, mais que le répertoire <code>/tmp/foo</code> la surcharge
+par <code>nightly-x86_64-unknown-linux-gnu</code>.</p>
+</div>
 <!-- -->
 <div class="reco" id="DENV-STABLE" type="Règle" title="Utilisation de la chaîne d'outils *stable*">
 <p>Le développement d'applications sécurisées DOIT être mené en utilisant la
@@ -249,8 +254,9 @@ complémentaires.</p>
 requiert l'installation d'un composant dans une chaîne d'outils non <em>stable</em>,
 le basculement de variante doit être effectué de la façon la plus locale
 possible (idéalement, uniquement pendant la commande concernée) au lieu
-d'explicitement basculer la version courante. Par exemple, pour lancer la
-version <em>nightly</em> de la commande <code>rustfmt</code> :</p>
+d'explicitement basculer la version courante.</p>
+<div class="example">
+<p>Par exemple, pour lancer la version <em>nightly</em> de la commande <code>rustfmt</code> :</p>
 <pre><code class="language-shell">$ rustup toolchain list
 stable-x86_64-unknown-linux-gnu (default)
 beta-x86_64-unknown-linux-gnu
@@ -260,10 +266,27 @@ $ # or
 $ cargo +nightly fmt
 $
 </code></pre>
+</div>
 <h3 id="garantie-de-niveau-pour-rustc"><a class="header" href="#garantie-de-niveau-pour-rustc">Garantie de niveau pour Rustc</a></h3>
 <p>Rustc utilise <a href="https://llvm.org/">LLVM</a> comme backend, il hérite donc du support de ce dernier et classe ses cibles prises en charge en différents niveaux afin d’indiquer le degré de stabilité et de tests effectué.</p>
+<div class="example">
+<p>La liste des cibles utilisables par cargo est donnée par la commande suivante :</p>
+<pre><code class="language-shell">$ rustup target list
+...
+wasm32-unknown-emscripten
+wasm32-unknown-unknown (installed)
+wasm32-wasip1
+...
+x86_64-unknown-illumos
+x86_64-unknown-linux-gnu (installed)
+x86_64-unknown-linux-gnux32
+...
+
+</code></pre>
+<p>Dans cet exemple, on voit que, parmi l'ensemble des cibles installables, les cibles <code>wasm32-unknown-unknown</code> et <code>x86_64-unknown-linux-gnu</code> sont installées.</p>
+</div>
 <h4 id="tier-1---fonctionnement-garanti"><a class="header" href="#tier-1---fonctionnement-garanti">Tier 1 - Fonctionnement garanti</a></h4>
-<p>La cible est entièrement examinée par la communauté. Elle réussit l’ensemble complet de la batterie de tests, fait l’objet de tests de régression réguliers et est maintenue à jour avec les nouvelles versions. En pratique, vous pouvez compter sur une génération de code cohérente, une ABI stable et des performances prévisibles d’une version à l’autre. Les cibles de tier 1 offrent une garantie de <strong>fonctionnement</strong>.</p>
+<p>La cible est entièrement examinée par la communauté. Elle réussit l’ensemble complet de la batterie de tests, fait l’objet de tests de régression réguliers et est maintenue à jour avec les nouvelles versions. En pratique, vous pouvez compter sur une génération de code cohérente, une ABI<sup class="footnote-reference" id="fr-abi-1"><a href="#footnote-abi">1</a></sup> stable et des performances prévisibles d’une version à l’autre. Les cibles de tier 1 offrent une garantie de <strong>fonctionnement</strong>.</p>
 <h4 id="tier-2---compilation-garantie"><a class="header" href="#tier-2---compilation-garantie">Tier 2 - Compilation garantie</a></h4>
 <p>La cible se compile correctement, mais elle ne bénéficie pas du même niveau de tests ni de la même maintenance que les cibles de niveau 1. Elle peut ne pas être entièrement couverte par les tests, et certaines optimisations ou fonctionnalités récentes peuvent être absentes ou instables. Les utilisateurs peuvent tout de même générer du code pour ces cibles, mais ils doivent s’attendre à d’éventuels problèmes occasionnels ou à devoir appliquer des correctifs manuels. Les cibles de tier 2 offrent une garantie de <strong>compilation</strong> mais pas de <strong>fonctionnement</strong>.</p>
 <h4 id="tier-3"><a class="header" href="#tier-3">Tier 3</a></h4>
@@ -325,16 +348,21 @@ d'opter pour une méthode d'installation alternative pour les dépendances.</p>
 compilation aux besoins de chaque projet, principalement au travers du fichier
 <code>Cargo.toml</code>. Pour une présentation complète, voir le <a href="https://doc.rust-lang.org/cargo/index.html">Cargo Book</a>.</p>
 <p>Certaines de ces options requièrent une attention particulière.</p>
-<p>La section <code>[profile.*]</code> permet de configurer la façon dont le compilateur est
-invoqué. Par exemple :</p>
+<p>Cargo dispose de la notion de <em>profils de compilations</em>.
+Quatre profils sont définis par défaut : <code>dev</code>, <code>release</code>, <code>test</code> et <code>bench</code>.
+Ils sont appliqués automatiquement en fonction de la commande <code>cargo</code> choisie.</p>
+<p>Par exemple, la commande <code>cargo build</code> applique le profil <code>dev</code> alors que les
+commandes <code>cargo build --release</code> ou <code>cargo install</code> appliquent le profile <code>release</code>.</p>
+<p>Chaque profil peut être défini/modifié grâce à la section <code>[profile.*]</code> du fichier
+<code>Cargo.toml</code>. En particulier,</p>
 <ul>
-<li>La variable <a href="https://doc.rust-lang.org/cargo/reference/profiles.html#debug-assertions"><code>debug-assertions</code></a> contrôle l'activation des assertions de
-<em>debug</em>.</li>
-<li>La variable <a href="https://doc.rust-lang.org/cargo/reference/profiles.html#overflow-checks"><code>overflow-checks</code></a> contrôle l'activation de la vérification des
+<li>la variable <a href="https://doc.rust-lang.org/cargo/reference/profiles.html#debug-assertions"><code>debug-assertions</code></a> contrôle l'activation des assertions de
+<em>debug</em> ;</li>
+<li>la variable <a href="https://doc.rust-lang.org/cargo/reference/profiles.html#overflow-checks"><code>overflow-checks</code></a> contrôle l'activation de la vérification des
 dépassements d'entiers lors d'opérations arithmétiques.</li>
 </ul>
 <p>Changer les options par défaut pour ces variables peut entraîner l'apparition de
-<em>bugs</em> non détectés, même si le profil de <em>debug</em> qui active normalement les
+<em>bugs</em> non détectés, même si le profil <code>dev</code> qui active normalement les
 vérifications (par exemple, les
 <a href="integer.html#chapter-integer">vérifications de dépassements d'entiers</a>)
 est utilisé.</p>
@@ -433,7 +461,11 @@ portées et de leurs objectifs.</p>
 <li><a id="rust-style"></a> <em><a href="https://doc.rust-lang.org/style-guide/index.html">Rust Style Guide</a></em> (rust-style)</li>
 <li><a id="rustc-book"></a> <em><a href="https://doc.rust-lang.org/stable/rustc/index.html">The rustc book</a></em> (rustc-book)</li>
 </ul>
-
+<hr>
+<ol class="footnote-definition"><li id="footnote-abi">
+<p>Application Binary Interface <a href="#fr-abi-1">↩</a></p>
+</li>
+</ol>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
