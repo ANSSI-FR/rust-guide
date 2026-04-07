@@ -115,7 +115,7 @@ Comme stipulé dans la documentation de la bibliothèque standard, Rust présupp
 - Pour [`PartialOrd`] :
 
   - *Consistance de la relation d'égalité* : `a.eq(b)` est équivalent à
-    `a.partial_cmp(b) == Some(std::cmp::Ordering::Eq)`.
+    `a.partial_cmp(b) == Some(std::cmp::Ordering::Equal)`.
 
   - *Consistence interne* :
 
