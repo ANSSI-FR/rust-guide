@@ -78,6 +78,8 @@ When playing with different toolchains, it is important to check not only what
 the default toolchain is, but also if overrides are currently set for some
 directories.
 
+<div class="example">
+
 ```shell
 $ pwd
 /tmp/foo
@@ -90,6 +92,11 @@ $ rustup override list
 $
 ```
 
+This example shows that toolchain `stable-x86_64-unknown-linux-gnu` is the default toolchain,
+but is overridden in directory `/tmp/foo` by `nightly-x86_64-unknown-linux-gnu`.
+
+</div>
+
 <div class="reco" id="DENV-STABLE" type="Rule" title="Use a stable compilation toolchain">
 
 Development of a secure application MUST be done using a fully stable
@@ -99,8 +106,11 @@ toolchain, for limiting potential compiler, runtime or tool bugs.
 
 When using a specific `cargo` subcommand that requires a nightly component,
 it is preferable to run it by switching the toolchain only locally, instead
-of explicitly switching the complete toolchain. For example, to run the
-(nightly) latest `rustfmt`:
+of explicitly switching the complete toolchain. 
+
+<div class="example">
+
+For example, to run the (nightly) latest `rustfmt`:
 
 ```shell
 $ rustup toolchain list
@@ -113,15 +123,41 @@ $ cargo +nightly fmt
 $
 ```
 
+</div>
+
 ### Rustc Tier guarantees
 
 As Rustc's backend is based on [LLVM], it inherits and classifies its supported targets into tiers to communicate how much stability and testing each backend receives.
 
 [LLVM]: https://llvm.org/
 
+<div class="example">
+
+The list of Rust's targets is given by the following command.
+
+```shell
+$ rustup target list
+...
+wasm32-unknown-emscripten
+wasm32-unknown-unknown (installed)
+wasm32-wasip1
+...
+x86_64-unknown-illumos
+x86_64-unknown-linux-gnu (installed)
+x86_64-unknown-linux-gnux32
+...
+
+```
+
+Here targets `wasm32-unknown-unknown` and `x86_64-unknown-linux-gnu` are installed.
+
+</div>
+
 #### Tier 1 - guaranteed to work
 
-The target is fully vetted by the community. It passes the entire test suite, receives regular regression testing, and is kept up‑to‑date with new releases. In practice, you can rely on consistent code generation, stable ABI, and predictable performance. Tier 1 targets can be thought of as "guaranteed to work".
+The target is fully vetted by the community. It passes the entire test suite, receives regular regression testing, and is kept up‑to‑date with new releases. In practice, you can rely on consistent code generation, stable ABI[^abi], and predictable performance. Tier 1 targets can be thought of as "guaranteed to work".
+
+[^abi]: Application Binary Interface
 
 #### Tier 2 - guaranteed to build
 
@@ -203,15 +239,22 @@ your project needs, mainly through the manifest file `Cargo.toml`. For a
 complete presentation, see the [Cargo Book @cargo-book].
 
 During the development of a secure application, some of the options may require
-some attention. The `[profile.*]` sections allow configuring how the compiler is
-invoked. For example:
+some attention. 
+
+Cargo provides the notion of *profiles*. Four profiles are builtin: `dev`, `release`, `test` and `bench`.
+They are applied accordingly with `cargo` commands.
+
+For instance, `cargo build` uses `dev` profile, and `cargo build --release` or `cargo install`
+use `release` profile.
+
+Profiles can be created/altered in `[profile.*]` sections. For example:
 
 - the [`debug-assertions`] variable controls whether debug assertions are enabled,
 - the [`overflow-checks`] variable controls whether overflows are checked for
   integer arithmetic.
 
 Overriding the default options may cause bugs not being detected, even when
-using the debug profile that normally enables runtime checks (for example it does not enable
+using the `dev` profile that normally enables runtime checks (for example it does not enable
 [integer overflow checks](integer.md#chapter-integer)).
 
 <div class="reco" id="DENV-CARGO-OPTS" type="Rule" title="Keep default values for critical variables in cargo profiles">

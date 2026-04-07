@@ -20,12 +20,20 @@ overflow-checks = true  # enable overflow checks in release builds
 
 Lorsqu'un dépassement est possible, le comportement peut être rendu explicite soit en utilisant des méthodes spécifiques, soit en utilisant des types enveloppants spécifiques.
 
-Les méthodes sont de la forme `<mode>_<op>`, où `<mode>` est `checked`, `overflowing`, `wrapping` ou `saturating`, et `<op>` est `add`, `mul`, `sub`, `shr`, etc. Les sémantiques sont les suivantes :
+Les méthodes sont de la forme `<mode>_<op>`, où `<mode>` est `checked`, `overflowing`, `wrapping` ou `saturating`, et `<op>` est `add`, `mul`, `sub`, `shr`, etc. Les sémantiques sont les suivantes.
 
-- `checked_<op>` renvoie `None` en cas de dépassement,
-- `overflowing_<op>` renvoie à la fois un résultat selon l'arithmétique circulaire et un booléen indiquant si un dépassement a eu lieu,
-- `wrapping_<op>` renvoie toujours le résultat selon l'arithmétique circulaire,
+- `checked_<op>` renvoie `None` en cas de dépassement.
+  
+  Par exemple, `255u8.checked_add(1)` renvoie `None`.
+- `overflowing_<op>` renvoie à la fois un résultat selon l'arithmétique circulaire et un booléen indiquant si un dépassement a eu lieu.
+  
+  Par exemple, `255u8.overflowing_add(1)` renvoie `(0, true)`.
+- `wrapping_<op>` renvoie toujours le résultat selon l'arithmétique circulaire.
+  
+  Par exemple, `255u8.wrapping_add(1)` renvoie `0`.
 - `saturating_<op>` renvoie toujours le résultat saturé.
+  
+  Par exemple, `255u8.saturating_add(1)` renvoie `255`.
 
 Les types enveloppants sont `Wrapping<T>` et `Saturating<T>` (de `std::num`), où `T` est un type entier. Le premier fournit une sémantique d'arithmétique circulaire pour toutes les opérations arithmétiques, tandis que le second fournit une sémantique de saturation. Une fois les valeurs enveloppées, toutes les opérations suivantes sont effectuées avec la sémantique correspondante.
 

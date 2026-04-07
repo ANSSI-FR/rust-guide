@@ -77,7 +77,9 @@ déclinée en trois variantes appelées *release channels*.
 Lors du développement d'un projet, il est important de vérifier non seulement
 la version de la chaîne d'outils couramment sélectionnée par défaut, mais aussi
 les potentielles surcharges qui peuvent être définies en fonction des
-répertoires :
+répertoires.
+
+<div class="example">
 
 ```shell
 $ pwd
@@ -90,6 +92,12 @@ $ rustup override list
 /tmp/foo                                    nightly-x86_64-unknown-linux-gnu
 $
 ```
+
+L'exemple suivant montre que la chaîne d'outils est configurée par défaut avec
+`stable-x86_64-unknown-linux-gnu`, mais que le répertoire `/tmp/foo` la surcharge
+par `nightly-x86_64-unknown-linux-gnu`.
+
+</div>
 
 <!-- -->
 
@@ -106,8 +114,11 @@ Enfin, lorsque l'utilisation d'un outil (par exemple, une sous-commande `cargo`)
 requiert l'installation d'un composant dans une chaîne d'outils non *stable*,
 le basculement de variante doit être effectué de la façon la plus locale
 possible (idéalement, uniquement pendant la commande concernée) au lieu
-d'explicitement basculer la version courante. Par exemple, pour lancer la
-version *nightly* de la commande `rustfmt` :
+d'explicitement basculer la version courante. 
+
+<div class="example">
+
+Par exemple, pour lancer la version *nightly* de la commande `rustfmt` :
 
 ```shell
 $ rustup toolchain list
@@ -120,15 +131,41 @@ $ cargo +nightly fmt
 $
 ```
 
+</div>
+
 ### Garantie de niveau pour Rustc
 
 Rustc utilise [LLVM] comme backend, il hérite donc du support de ce dernier et classe ses cibles prises en charge en différents niveaux afin d’indiquer le degré de stabilité et de tests effectué.
 
 [LLVM]: https://llvm.org/
 
+<div class="example">
+
+La liste des cibles utilisables par cargo est donnée par la commande suivante :
+
+```shell
+$ rustup target list
+...
+wasm32-unknown-emscripten
+wasm32-unknown-unknown (installed)
+wasm32-wasip1
+...
+x86_64-unknown-illumos
+x86_64-unknown-linux-gnu (installed)
+x86_64-unknown-linux-gnux32
+...
+
+```
+
+Dans cet exemple, on voit que, parmi l'ensemble des cibles installables, les cibles `wasm32-unknown-unknown` et `x86_64-unknown-linux-gnu` sont installées.
+
+</div>
+
 #### Tier 1 - Fonctionnement garanti
 
-La cible est entièrement examinée par la communauté. Elle réussit l’ensemble complet de la batterie de tests, fait l’objet de tests de régression réguliers et est maintenue à jour avec les nouvelles versions. En pratique, vous pouvez compter sur une génération de code cohérente, une ABI stable et des performances prévisibles d’une version à l’autre. Les cibles de tier 1 offrent une garantie de **fonctionnement**.
+La cible est entièrement examinée par la communauté. Elle réussit l’ensemble complet de la batterie de tests, fait l’objet de tests de régression réguliers et est maintenue à jour avec les nouvelles versions. En pratique, vous pouvez compter sur une génération de code cohérente, une ABI[^abi] stable et des performances prévisibles d’une version à l’autre. Les cibles de tier 1 offrent une garantie de **fonctionnement**.
+
+[^abi]: Application Binary Interface
 
 #### Tier 2 - Compilation garantie
 
@@ -216,16 +253,23 @@ compilation aux besoins de chaque projet, principalement au travers du fichier
 
 Certaines de ces options requièrent une attention particulière.
 
-La section `[profile.*]` permet de configurer la façon dont le compilateur est
-invoqué. Par exemple :
+Cargo dispose de la notion de *profils de compilations*.
+Quatre profils sont définis par défaut : `dev`, `release`, `test` et `bench`.
+Ils sont appliqués automatiquement en fonction de la commande `cargo` choisie.
 
-- La variable [`debug-assertions`] contrôle l'activation des assertions de
-  *debug*.
-- La variable [`overflow-checks`] contrôle l'activation de la vérification des
+Par exemple, la commande `cargo build` applique le profil `dev` alors que les
+commandes `cargo build --release` ou `cargo install` appliquent le profile `release`.
+
+Chaque profil peut être défini/modifié grâce à la section `[profile.*]` du fichier
+`Cargo.toml`. En particulier,
+
+- la variable [`debug-assertions`] contrôle l'activation des assertions de
+  *debug* ;
+- la variable [`overflow-checks`] contrôle l'activation de la vérification des
   dépassements d'entiers lors d'opérations arithmétiques.
 
 Changer les options par défaut pour ces variables peut entraîner l'apparition de
-*bugs* non détectés, même si le profil de *debug* qui active normalement les
+*bugs* non détectés, même si le profil `dev` qui active normalement les
 vérifications (par exemple, les
 [vérifications de dépassements d'entiers](integer.md#chapter-integer))
 est utilisé.

@@ -108,12 +108,12 @@ about each implementation of those traits:
 - For [`PartialOrd`]
 
   - _Equality consistency_:
-    `a.eq(b)` is equivalent to `a.partial_cmp(b) == Some(std::ordering::Eq)`.
+    `a.eq(b)` is equivalent to `a.partial_cmp(b) == Some(std::cmp::Ordering::Equal)`.
 
   - _Internal consistency_:
 
-    - `a.lt(b)` iff `a.partial_cmp(b) == Some(std::ordering::Less)`,
-    - `a.gt(b)` iff `a.partial_cmp(b) == Some(std::ordering::Greater)`,
+    - `a.lt(b)` iff `a.partial_cmp(b) == Some(std::cmp::Ordering::Less)`,
+    - `a.gt(b)` iff `a.partial_cmp(b) == Some(std::cmp::Ordering::Greater)`,
     - `a.le(b)` iff `a.lt(b) || a.eq(b)`,
     - `a.ge(b)` iff `a.gt(b) || a.eq(b)`.
 

@@ -115,12 +115,12 @@ Comme stipulé dans la documentation de la bibliothèque standard, Rust présupp
 - Pour [`PartialOrd`] :
 
   - *Consistance de la relation d'égalité* : `a.eq(b)` est équivalent à
-    `a.partial_cmp(b) == Some(std::ordering::Eq)`.
+    `a.partial_cmp(b) == Some(std::cmp::Ordering::Eq)`.
 
   - *Consistence interne* :
 
-    - `a.lt(b)` ssi `a.partial_cmp(b) == Some(std::ordering::Less)`.
-    - `a.gt(b)` ssi `a.partial_cmp(b) == Some(std::ordering::Greater)`.
+    - `a.lt(b)` ssi `a.partial_cmp(b) == Some(std::cmp::Ordering::Less)`.
+    - `a.gt(b)` ssi `a.partial_cmp(b) == Some(std::cmp::Ordering::Greater)`.
     - `a.le(b)` ssi `a.lt(b) || a.eq(b)`.
     - `a.ge(b)` ssi `a.gt(b) || a.eq(b)`.
 

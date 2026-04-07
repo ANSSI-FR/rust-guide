@@ -20,10 +20,18 @@ When an overflow is possible, the behavior can be made explicit either by using 
 
 The methods are of the form `<mode>_<op>`, where `<mode>` is `checked`, `overflowing`, `wrapping`, or `saturating`, and `<op>` is `add`, `mul`, `sub`, `shr`, etc. The semantics are as follows:
 
-- `checked_<op>` returns `None` in case of overflow,
-- `overflowing_<op>` returns both a possibly wrapped result and a Boolean indicating whether overflow occurred,
-- `wrapping_<op>` always returns the wrapped result,
+- `checked_<op>` returns `None` in case of overflow.
+  
+  For instance, `255u8.checked_add(1)` returns `None`.
+- `overflowing_<op>` returns both a possibly wrapped result and a Boolean indicating whether overflow occurred.
+  
+  For instance, `255u8.overflowing_add(1)` returns `(0, true)`.
+- `wrapping_<op>` always returns the wrapped result.
+  
+  For instance, `255u8.wrapping_add(1)` returns `0`.
 - `saturating_<op>` always returns the saturated result.
+  
+  For instance, `255u8.saturating_add(1)` returns `255`.
 
 The wrapper types are `Wrapping<T>` and `Saturating<T>` (from `std::num`), where `T` is an integer type. The former provides wrap-around semantics for all arithmetic operations, whereas the latter provides saturation semantics. Once the values are wrapped, all subsequent operations are performed with the given semantics.
 
