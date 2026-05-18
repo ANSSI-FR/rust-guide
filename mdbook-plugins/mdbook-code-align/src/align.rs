@@ -1,10 +1,9 @@
 use crate::semindent::{self, Element};
 use anyhow::{anyhow, Ok};
 use markdown::{mdast::Node, to_mdast, ParseOptions};
-use mdbook::{
-    book::Book,
-    preprocess::{Preprocessor, PreprocessorContext},
-    BookItem,
+use mdbook_preprocessor::{
+    book::{Book, BookItem},
+    Preprocessor, PreprocessorContext,
 };
 
 pub(super) struct Align;
@@ -43,7 +42,7 @@ impl Preprocessor for Align {
     }
 
     fn run(&self, _ctx: &PreprocessorContext, mut book: Book) -> anyhow::Result<Book> {
-        for content in book.sections.iter_mut().flat_map(get_content_mut) {
+        for content in book.items.iter_mut().flat_map(get_content_mut) {
             let mut changes = Vec::new();
             let ast = to_mdast(content, &ParseOptions::default())
                 .map_err(|md_msg| anyhow!("{}", md_msg))?;
@@ -115,7 +114,6 @@ mod tests {
                     "book": {
                         "authors": ["AUTHOR"],
                         "language": "en",
-                        "multilingual": false,
                         "src": "src",
                         "title": "TITLE"
                     },
@@ -127,7 +125,7 @@ mod tests {
                 "mdbook_version": "0.4.21"
             },
             {
-                "sections": [
+                "items": [
                     {
                         "Chapter": {
                             "name": "Chapter 1",
@@ -194,9 +192,8 @@ fin
         let input_json: &[u8] = &exemple_book(content);
         let expected_json: &[u8] = &exemple_book(expected);
 
-        let (ctx, book) = mdbook::preprocess::CmdPreprocessor::parse_input(input_json).unwrap();
-        let (_, expected_book) =
-            mdbook::preprocess::CmdPreprocessor::parse_input(expected_json).unwrap();
+        let (ctx, book) = mdbook_preprocessor::parse_input(input_json).unwrap();
+        let (_, expected_book) = mdbook_preprocessor::parse_input(expected_json).unwrap();
         let result = Align.run(&ctx, book);
         assert!(result.is_ok());
 
@@ -236,9 +233,8 @@ fin
         let input_json: &[u8] = &exemple_book(content);
         let expected_json: &[u8] = &exemple_book(expected);
 
-        let (ctx, book) = mdbook::preprocess::CmdPreprocessor::parse_input(input_json).unwrap();
-        let (_, expected_book) =
-            mdbook::preprocess::CmdPreprocessor::parse_input(expected_json).unwrap();
+        let (ctx, book) = mdbook_preprocessor::parse_input(input_json).unwrap();
+        let (_, expected_book) = mdbook_preprocessor::parse_input(expected_json).unwrap();
         let result = Align.run(&ctx, book);
         assert!(result.is_ok());
 
@@ -263,9 +259,8 @@ fin
         let input_json: &[u8] = &exemple_book(content);
         let expected_json: &[u8] = &exemple_book(expected);
 
-        let (ctx, book) = mdbook::preprocess::CmdPreprocessor::parse_input(input_json).unwrap();
-        let (_, expected_book) =
-            mdbook::preprocess::CmdPreprocessor::parse_input(expected_json).unwrap();
+        let (ctx, book) = mdbook_preprocessor::parse_input(input_json).unwrap();
+        let (_, expected_book) = mdbook_preprocessor::parse_input(expected_json).unwrap();
         let result = Align.run(&ctx, book);
         assert!(result.is_ok());
 

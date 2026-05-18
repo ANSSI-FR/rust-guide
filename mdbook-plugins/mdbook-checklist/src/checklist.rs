@@ -1,4 +1,4 @@
-use mdbook::book::Chapter;
+use mdbook_preprocessor::book::Chapter;
 use std::path::PathBuf;
 use toml::{value::Table, Value};
 

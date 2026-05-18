@@ -5,7 +5,8 @@ edition = "2024"
 rust-version = "1.86"
 
 [dependencies]
-mdbook = { workspace = true }
+mdbook-preprocessor = { workspace = true }
+mdbook-markdown = { workspace = true }
 anyhow = { workspace = true }
 clap = { workspace = true }
 semver = { workspace = true }
@@ -15,5 +16,4 @@ serde_yaml_ng = { workspace = true }
 regex = { workspace = true }
 log = { workspace = true }
 env_logger = { workspace = true }
-pulldown-cmark = { workspace = true }
 tempfile = { workspace = true }

@@ -1,7 +1,6 @@
-use mdbook::{
-    BookItem,
-    book::Book,
-    preprocess::{Preprocessor, PreprocessorContext},
+use mdbook_preprocessor::{
+    Preprocessor, PreprocessorContext,
+    book::{Book, BookItem},
 };
 use serde::Deserialize;
 
@@ -27,7 +26,7 @@ impl Preprocessor for Ext {
         let renderer = &ctx.renderer;
         let config: ExtConfig = ctx
             .config
-            .get_deserialized_opt("preprocessor.extensions")
+            .get("preprocessor.extensions")
             .unwrap()
             .expect("Cannot find configuration for preprocessor.extensions");
         book.for_each_mut(|item| {

@@ -1,8 +1,8 @@
 use crate::checklist::Checklist;
-use mdbook::book::{Book, BookItem, Chapter};
-use mdbook::errors::Error;
-use mdbook::preprocess::{Preprocessor, PreprocessorContext};
-use pulldown_cmark::{Tag, TagEnd};
+use mdbook_markdown::pulldown_cmark::{Tag, TagEnd};
+use mdbook_preprocessor::book::{Book, BookItem, Chapter};
+use mdbook_preprocessor::errors::Error;
+use mdbook_preprocessor::{Preprocessor, PreprocessorContext};
 use quick_xml::errors::IllFormedError;
 use quick_xml::Reader;
 
@@ -19,8 +19,12 @@ impl Preprocessor for ChecklistPre {
 
     fn run(&self, ctx: &PreprocessorContext, mut book: Book) -> Result<Book, Error> {
         let mut checklist = Checklist::new();
-        if let Some(cfg) = ctx.config.get_preprocessor(NAME) {
-            checklist.update_config(cfg);
+        if let Some(cfg) = ctx
+            .config
+            .get("preprocessor.checklist")
+            .expect("Cannot read configuration")
+        {
+            checklist.update_config(&cfg);
         }
 
         book.for_each_mut(|section: &mut BookItem| {
@@ -30,14 +34,14 @@ impl Preprocessor for ChecklistPre {
         });
 
         let checklist_chapter = checklist.generate_chapter();
-        book.sections.push(BookItem::Chapter(checklist_chapter));
+        book.items.push(BookItem::Chapter(checklist_chapter));
 
         Ok(book)
     }
 }
 
 fn collect_and_replace(chapter: &Chapter, checklist: &mut Checklist) {
-    use pulldown_cmark::{Event, Parser, TextMergeStream};
+    use mdbook_markdown::pulldown_cmark::{Event, Parser, TextMergeStream};
 
     let iterator = TextMergeStream::new(Parser::new(&chapter.content));
 
@@ -88,46 +92,44 @@ fn get_reco(mut reader: Reader<&[u8]>) -> Vec<Reco> {
             Err(e) => panic!("Error at position {}: {:?}", reader.error_position(), e),
             Ok(Event::Eof) => return res,
 
-            Ok(Event::Start(e)) => {
-                if e.local_name().as_ref() == b"div" {
-                    if let Some(class) = e
-                        .html_attributes()
-                        .filter_map(|attr| attr.ok())
-                        .find(|attr| attr.key.local_name().as_ref() == b"class")
-                        .and_then(|attr| attr.unescape_value().ok())
-                    {
-                        if class == "reco" {
-                            let typ = e
-                                .html_attributes()
-                                .filter_map(|attr| attr.ok())
-                                .find(|attr| attr.key.local_name().as_ref() == b"type")
-                                .and_then(|attr| attr.unescape_value().ok());
-                            let title = e
-                                .html_attributes()
-                                .filter_map(|attr| attr.ok())
-                                .find(|attr| attr.key.local_name().as_ref() == b"title")
-                                .and_then(|attr| attr.unescape_value().ok());
-                            let id = e
-                                .html_attributes()
-                                .filter_map(|attr| attr.ok())
-                                .find(|attr| attr.key.local_name().as_ref() == b"id")
-                                .and_then(|attr| attr.unescape_value().ok());
-                            match (id, typ, title) {
-                                (None, _, _) => {
-                                    eprintln!("Recommendation div tag without \"id\" attribute")
-                                }
-                                (_, None, _) => {
-                                    eprintln!("Recommendation div tag without \"type\" attribute")
-                                }
-                                (_, _, None) => {
-                                    eprintln!("Recommendation div tag without \"title\" attribute")
-                                }
-                                (Some(id), Some(typ), Some(title)) => res.push(Reco {
-                                    typ: typ.to_string(),
-                                    id: id.to_string(),
-                                    title: title.to_string(),
-                                }),
+            Ok(Event::Start(e)) if e.local_name().as_ref() == b"div" => {
+                if let Some(class) = e
+                    .html_attributes()
+                    .filter_map(|attr| attr.ok())
+                    .find(|attr| attr.key.local_name().as_ref() == b"class")
+                    .and_then(|attr| attr.unescape_value().ok())
+                {
+                    if class == "reco" {
+                        let typ = e
+                            .html_attributes()
+                            .filter_map(|attr| attr.ok())
+                            .find(|attr| attr.key.local_name().as_ref() == b"type")
+                            .and_then(|attr| attr.unescape_value().ok());
+                        let title = e
+                            .html_attributes()
+                            .filter_map(|attr| attr.ok())
+                            .find(|attr| attr.key.local_name().as_ref() == b"title")
+                            .and_then(|attr| attr.unescape_value().ok());
+                        let id = e
+                            .html_attributes()
+                            .filter_map(|attr| attr.ok())
+                            .find(|attr| attr.key.local_name().as_ref() == b"id")
+                            .and_then(|attr| attr.unescape_value().ok());
+                        match (id, typ, title) {
+                            (None, _, _) => {
+                                eprintln!("Recommendation div tag without \"id\" attribute")
                             }
+                            (_, None, _) => {
+                                eprintln!("Recommendation div tag without \"type\" attribute")
+                            }
+                            (_, _, None) => {
+                                eprintln!("Recommendation div tag without \"title\" attribute")
+                            }
+                            (Some(id), Some(typ), Some(title)) => res.push(Reco {
+                                typ: typ.to_string(),
+                                id: id.to_string(),
+                                title: title.to_string(),
+                            }),
                         }
                     }
                 }

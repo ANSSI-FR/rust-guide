@@ -4,7 +4,8 @@ members = ["mdbook-checklist", "mdbook-code-align", "mdbook-extensions"]
 
 [workspace.dependencies]
 
-mdbook = { version = "0.4.52" }
+mdbook-preprocessor = { version = "0.5.2" }
+mdbook-markdown = { version = "0.5.2" }
 anyhow = "1.0.99"
 clap = { version = "4.5.47", features = ["derive"] }
 semver = "1.0.26"
@@ -14,7 +15,6 @@ serde_yaml_ng = "0.10.0"
 regex = "1.11.3"
 log = "0.4.29"
 env_logger = "0.11.9"
-pulldown-cmark = "0.13.1"
 tempfile = "3.27.0"
 quick-xml = "0.38.3"
 toml = "0.5"

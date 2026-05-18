@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-mdbook = { workspace = true }
+mdbook-preprocessor = { workspace = true }
 anyhow = { workspace = true }
 clap = { workspace = true }
 markdown = { workspace = true }

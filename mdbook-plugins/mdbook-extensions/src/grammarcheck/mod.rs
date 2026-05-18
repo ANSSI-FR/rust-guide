@@ -1,6 +1,6 @@
 use std::{borrow::Cow, process::exit};
 
-use pulldown_cmark::{Event, Options, Parser, Tag, TagEnd};
+use mdbook_markdown::pulldown_cmark::{Event, Options, Parser, Tag, TagEnd};
 use serde::Deserialize;
 use serde_yaml_ng::Value;
 

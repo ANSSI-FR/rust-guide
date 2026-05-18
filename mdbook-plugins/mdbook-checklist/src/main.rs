@@ -5,8 +5,8 @@ mod checklist_pre;
 
 use checklist_pre::ChecklistPre;
 
-use mdbook::errors::Error;
-use mdbook::preprocess::{CmdPreprocessor, Preprocessor};
+use mdbook_preprocessor::errors::Error;
+use mdbook_preprocessor::Preprocessor;
 
 use std::io;
 use std::process;
@@ -42,7 +42,9 @@ fn main() {
 }
 
 fn handle_supports(pre: &dyn Preprocessor, renderer: &str) -> ! {
-    let supported = pre.supports_renderer(renderer);
+    let supported = pre
+        .supports_renderer(renderer)
+        .expect("Error while verifying renderer support");
 
     // Signal whether the renderer is supported by exiting with 1 or 0.
     if supported {
@@ -53,14 +55,14 @@ fn handle_supports(pre: &dyn Preprocessor, renderer: &str) -> ! {
 }
 
 fn handle_preprocessing(pre: &dyn Preprocessor) -> Result<(), Error> {
-    let (ctx, book) = CmdPreprocessor::parse_input(io::stdin())?;
+    let (ctx, book) = mdbook_preprocessor::parse_input(io::stdin())?;
 
-    if ctx.mdbook_version != mdbook::MDBOOK_VERSION {
+    if ctx.mdbook_version != mdbook_preprocessor::MDBOOK_VERSION {
         eprintln!(
             "Warning: The {} plugin was built against version {} of mdbook, \
              but we're being called from version {}",
             pre.name(),
-            mdbook::MDBOOK_VERSION,
+            mdbook_preprocessor::MDBOOK_VERSION,
             ctx.mdbook_version
         );
     }

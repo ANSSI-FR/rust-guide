@@ -16,13 +16,13 @@
         pkgs = nixpkgs.legacyPackages.${system};
         mdbook-custom = pkgs.rustPlatform.buildRustPackage (finalAttrs: rec {
           pname = "mdBook";
-          version = "0.4.52";
+          version = "0.5.2";
 
           src = pkgs.fetchFromGitHub {
             owner = "hg-anssi";
             repo = pname;
-            rev = "c5a35b9296c6d5e48570e30022bd69403050a9f4";
-            hash = "sha256-2pUzx5woxGsLu9SMID1u7AufAwa1C7tATln4binTPek=";
+            rev = "38552256db00b606ccdd8796cd77a61395645396";
+            hash = "sha256-n49l2xENzkMOKrlakMLM905m6AN76zhT+IFy2NcuyOw=";
           };
 
           cargoLock = {
@@ -157,7 +157,7 @@
         };
         packages."image" = pkgs.dockerTools.buildImage {
           name = "registry.gitlab.com/anssi-fr/collab/rust-guide/worker";
-          tag = "3.0.0";
+          tag = "4.0.0";
           config = {
             Entrypoint = [ "${shell-app}/bin/shell" ];
           };

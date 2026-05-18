@@ -6,7 +6,7 @@ use std::{
     process::{Command, Stdio, exit},
 };
 
-use pulldown_cmark::{Event, Options, Parser, Tag, TagEnd, TextMergeStream};
+use mdbook_markdown::pulldown_cmark::{Event, Options, Parser, Tag, TagEnd, TextMergeStream};
 use serde::Deserialize;
 use serde_yaml_ng::Value;
 

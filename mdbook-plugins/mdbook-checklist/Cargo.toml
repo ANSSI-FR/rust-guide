@@ -10,8 +10,8 @@ license-file = "LICENSE.md"
 
 [dependencies]
 clap = { workspace = true }
-mdbook = { workspace = true }
-pulldown-cmark = { workspace = true }
+mdbook-preprocessor = { workspace = true }
+mdbook-markdown = { workspace = true }
 quick-xml = { workspace = true }
 regex = { workspace = true }
 serde_json = { workspace = true }
