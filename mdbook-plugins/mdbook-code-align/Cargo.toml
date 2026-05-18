@@ -1,0 +1,13 @@
+[package]
+name = "mdbook-code-align"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+mdbook = { workspace = true }
+anyhow = { workspace = true }
+clap = { workspace = true }
+markdown = { workspace = true }
+semver = { workspace = true }
+serde_json = { workspace = true }
+serde = { workspace = true }

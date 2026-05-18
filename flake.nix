@@ -35,17 +35,6 @@
           ];
 
         });
-        mdbook-checklist = pkgs.rustPlatform.buildRustPackage (finalAttrs: rec {
-          pname = "mdbook-checklist";
-          version = "0.2.0";
-
-          src = ./mdbook-checklist;
-
-          cargoLock = {
-            lockFile = "${src}/Cargo.lock";
-          };
-
-        });
 
         examples = pkgs.rustPlatform.buildRustPackage (finalAttrs: rec {
           pname = "examples";
@@ -59,23 +48,11 @@
 
         });
 
-        mdbook-code-align = pkgs.rustPlatform.buildRustPackage (finalAttrs: rec {
-          pname = "mdbook-code-align";
+        mdbook-plugins = pkgs.rustPlatform.buildRustPackage (finalAttrs: rec {
+          pname = "mdbook-plugins";
           version = "0.1.0";
 
-          src = ./mdbook-code-align;
-
-          cargoLock = {
-            lockFile = "${src}/Cargo.lock";
-          };
-
-        });
-
-        mdbook-extensions = pkgs.rustPlatform.buildRustPackage (finalAttrs: rec {
-          pname = "mdbook-extensions";
-          version = "0.1.0";
-
-          src = ./mdbook-extensions;
+          src = ./mdbook-plugins;
 
           cargoLock = {
             lockFile = "${src}/Cargo.lock";
@@ -103,10 +80,8 @@
           #mdbook0421.legacyPackages.${system}.mdbook
           mdbook-custom
           bash
-          mdbook-checklist
           mdbook-shiftinclude
-          mdbook-code-align
-          mdbook-extensions
+          mdbook-plugins
           examples
           pandoc
           (aspellWithDicts (
