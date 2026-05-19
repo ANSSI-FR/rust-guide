@@ -13,25 +13,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="pagetoc.css">
-        <link rel="stylesheet" href="custom-envs.css">
+        <link rel="stylesheet" href="custom-envs-59fe9022.css">
 
 
         <!-- Provide site root and default themes to javascript -->
@@ -39,10 +37,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex.js";
+            window.path_to_searchindex_js = "searchindex-570df679.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="toc-f8e5a37a.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -56,7 +54,7 @@
             </div>
         </div>
     </div>
-    <div id="body-container">
+    <div id="mdbook-body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
@@ -85,12 +83,12 @@
             html.classList.add("js");
         </script>
 
-        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             let sidebar = null;
-            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
@@ -105,39 +103,39 @@
             }
         </script>
 
-        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
                 <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
             </noscript>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
             </div>
         </nav>
 
-        <div id="page-wrapper" class="page-wrapper">
+        <div id="mdbook-page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                            <i class="fa fa-bars"></i>
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
                         </label>
-                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                            <i class="fa fa-paint-brush"></i>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
                         </button>
-                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
-                            <i class="fa fa-search"></i>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
                         </button>
                     </div>
 
@@ -145,38 +143,38 @@
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
-                            <i id="print-button" class="fa fa-print"></i>
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
                         </a>
 
                     </div>
                 </div>
 
-                <div id="search-wrapper" class="hidden">
-                    <form id="searchbar-outer" class="searchbar-outer">
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
                         <div class="search-wrapper">
-                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
                             <div class="spinner-wrapper">
-                                <i class="fa fa-spinner fa-spin"></i>
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
                             </div>
                         </div>
                     </form>
-                    <div id="searchresults-outer" class="searchresults-outer hidden">
-                        <div id="searchresults-header" class="searchresults-header"></div>
-                        <ul id="searchresults">
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
                         </ul>
                     </div>
                 </div>
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script>
-                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
-                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
-                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
                         link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
                     });
                 </script>
 
-                <div id="content" class="content">
+                <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
 <p><a href="https://www.rust-lang.org">Rust</a> is a multi-paradigm language with a focus on
@@ -255,9 +253,11 @@ based on their context and security objectives.</p>
 <p>This recommendation is formulated in conceptual terms, without taking into account
 the context of application or its implementation.</p>
 </div>
+
 <div class="examplereco" id="EXAMPLE-RECO" type="Recommendation" title="Recommendation for higher security requirement">
 <p>This recommendation is required for higher level security software.</p>
 </div>
+
 <p>As part of an ongoing process of digital risk management and continuous improvement of
 information system security <sup class="footnote-reference" id="fr-2-1"><a href="#footnote-2">2</a></sup>, the relevance of implementing the recommendations
 described in this document must be periodically reassessed.</p>
@@ -268,13 +268,16 @@ described in this document must be periodically reassessed.</p>
 <li><a id="rust-async"></a> <em><a href="https://rust-lang.github.io/async-book/">Asynchronous Programming in Rust</a></em> (rust-async)</li>
 </ul>
 <hr>
-<ol class="footnote-definition"><li id="footnote-1">
+<ol class="footnote-definition">
+<li id="footnote-1">
 <p><a href="https://github.com/ANSSI-FR/rust-guide"><code>https://github.com/ANSSI-FR/rust-guide</code></a> <a href="#fr-1-1">↩</a></p>
 </li>
 <li id="footnote-2">
-<p>For further information, please refer to the <a href="https://cyber.gouv.fr/en/publications/controlling-digital-risk-trust-advantage">ANSSI's digital risk management guide</a> <a href="#fr-2-1">↩</a></p>
+<p>For further information, please refer to the <a href="https://cyber.gouv.fr/en/publications/controlling-digital-risk-trust-advantage">ANSSI’s digital risk management guide</a> <a href="#fr-2-1">↩</a></p>
 </li>
-</ol><div style="break-before: page; page-break-before: always;"></div><h1 id="development-environment"><a class="header" href="#development-environment">Development environment</a></h1>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="development-environment"><a class="header" href="#development-environment">Development environment</a></h1>
 <h2 id="rustup"><a class="header" href="#rustup">Rustup</a></h2>
 <p><a href="https://github.com/rust-lang/rustup.rs">Rustup</a> is the Rust toolchain installer. Among other things, it enables
 switching between different flavors of the toolchain (stable, beta, nightly),
@@ -287,6 +290,7 @@ works in progress.
 In some cases, it may be preferable to opt for an alternative installation
 method listed in the <em>Install</em> section of the official Rust website.</p>
 </div>
+
 <h3 id="rust-editions"><a class="header" href="#rust-editions">Rust Editions</a></h3>
 <p>Several flavors, called <em>editions</em>, of the Rust language coexist.</p>
 <p>The concept of editions has been introduced to clarify the
@@ -303,6 +307,7 @@ and language features that are specific to a particular Rust edition.</p>
 recommendations related to the features offered by the edition that has been
 chosen.</p>
 </div>
+
 <h3 id="stable-nightly-and-beta-toolchains"><a class="header" href="#stable-nightly-and-beta-toolchains">Stable, nightly and beta toolchains</a></h3>
 <p>Independently from the choice of edition that allows one to select a flavor (a set of features)
 of the Rust language, the Rust toolchain is provided in three different
@@ -329,10 +334,12 @@ $
 <p>This example shows that toolchain <code>stable-x86_64-unknown-linux-gnu</code> is the default toolchain,
 but is overridden in directory <code>/tmp/foo</code> by <code>nightly-x86_64-unknown-linux-gnu</code>.</p>
 </div>
+
 <div class="reco" id="DENV-STABLE" type="Rule" title="Use a stable compilation toolchain">
 <p>Development of a secure application MUST be done using a fully stable
 toolchain, for limiting potential compiler, runtime or tool bugs.</p>
 </div>
+
 <p>When using a specific <code>cargo</code> subcommand that requires a nightly component,
 it is preferable to run it by switching the toolchain only locally, instead
 of explicitly switching the complete toolchain.</p>
@@ -348,10 +355,11 @@ $ cargo +nightly fmt
 $
 </code></pre>
 </div>
+
 <h3 id="rustc-tier-guarantees"><a class="header" href="#rustc-tier-guarantees">Rustc Tier guarantees</a></h3>
-<p>As Rustc's backend is based on <a href="https://llvm.org/">LLVM</a>, it inherits and classifies its supported targets into tiers to communicate how much stability and testing each backend receives.</p>
+<p>As Rustc’s backend is based on <a href="https://llvm.org/">LLVM</a>, it inherits and classifies its supported targets into tiers to communicate how much stability and testing each backend receives.</p>
 <div class="example">
-<p>The list of Rust's targets is given by the following command.</p>
+<p>The list of Rust’s targets is given by the following command.</p>
 <pre><code class="language-shell">$ rustup target list
 ...
 wasm32-unknown-emscripten
@@ -366,25 +374,27 @@ x86_64-unknown-linux-gnux32
 </code></pre>
 <p>Here targets <code>wasm32-unknown-unknown</code> and <code>x86_64-unknown-linux-gnu</code> are installed.</p>
 </div>
+
 <h4 id="tier-1---guaranteed-to-work"><a class="header" href="#tier-1---guaranteed-to-work">Tier 1 - guaranteed to work</a></h4>
-<p>The target is fully vetted by the community. It passes the entire test suite, receives regular regression testing, and is kept up‑to‑date with new releases. In practice, you can rely on consistent code generation, stable ABI<sup class="footnote-reference" id="fr-abi-1"><a href="#footnote-abi">1</a></sup>, and predictable performance. Tier 1 targets can be thought of as "guaranteed to work".</p>
+<p>The target is fully vetted by the community. It passes the entire test suite, receives regular regression testing, and is kept up‑to‑date with new releases. In practice, you can rely on consistent code generation, stable ABI<sup class="footnote-reference" id="fr-abi-1"><a href="#footnote-abi">1</a></sup>, and predictable performance. Tier 1 targets can be thought of as “guaranteed to work”.</p>
 <h4 id="tier-2---guaranteed-to-build"><a class="header" href="#tier-2---guaranteed-to-build">Tier 2 - guaranteed to build</a></h4>
-<p>The target’s source code compiles cleanly, but it does not receive the same level of testing or maintenance as Tier 1. It may lack full coverage in the test suite, and certain optimizations or newer <a href="https://llvm.org/">LLVM</a> features could be missing or unstable. Users can still generate code for these backends, but they should expect occasional breakage or the need for manual patches. Tier 2 targets can be thought of as "guaranteed to build" but not as "guaranteed to work".</p>
+<p>The target’s source code compiles cleanly, but it does not receive the same level of testing or maintenance as Tier 1. It may lack full coverage in the test suite, and certain optimizations or newer <a href="https://llvm.org/">LLVM</a> features could be missing or unstable. Users can still generate code for these backends, but they should expect occasional breakage or the need for manual patches. Tier 2 targets can be thought of as “guaranteed to build” but not as “guaranteed to work”.</p>
 <h4 id="tier-3"><a class="header" href="#tier-3">Tier 3</a></h4>
 <p>Tier 3 targets are simply not officially supported.</p>
 <p>The tier distinction helps developers choose a target that matches their risk tolerance: Tier 1 for production‑grade workloads, Tier 2 for experimental or niche architectures where full support isn’t yet met.</p>
 <div class="reco" id="DENV-TIERS" type="Rule" title="Exclusive use of tier 1 of `rustc` for safety-critical software">
 <p>Rustc tier 1 targets and certified toolchains MUST be used for safety-critical systems.</p>
 </div>
+
 <p>A comprehensive list of supported targets is available in the <a href="https://doc.rust-lang.org/stable/rustc/index.html">Rust Book</a>.</p>
 <h2 id="cargo"><a class="header" href="#cargo">Cargo</a></h2>
 <p>Once Rustup has set up the appropriate Rust toolchain, <a href="https://doc.rust-lang.org/stable/cargo/">Cargo</a> is available
 through the command line program <code>cargo</code>. Cargo is the Rust package manager.
 It has a fundamental role in most Rust developments:</p>
 <ul>
-<li>It structures the project by providing the project's skeleton (<code>cargo new</code>),</li>
+<li>It structures the project by providing the project’s skeleton (<code>cargo new</code>),</li>
 <li>It compiles the project (<code>cargo build</code>),</li>
-<li>It generates the project's documentation (<code>cargo doc</code>),</li>
+<li>It generates the project’s documentation (<code>cargo doc</code>),</li>
 <li>It runs tests (<code>cargo test</code>) and benchmarks (<code>cargo bench</code>),</li>
 <li>It manages and downloads dependencies,</li>
 <li>It makes packages distributable and publishes them on <a href="https://crates.io"><code>crates.io</code></a>,</li>
@@ -407,12 +417,13 @@ this could be indicative of a few possible errors:
 unable to verify that `sha256 v1.6.0` is the same as when the lockfile was generated
 </code></pre>
 <p>When the <code>Cargo.lock</code> file is missing, it is generated on first build and records the
-dependencies' checksums, adhering to a TOFU (<em>Trust On First Use</em>) policy.
+dependencies’ checksums, adhering to a TOFU (<em>Trust On First Use</em>) policy.
 This file can also be created manually with <code>cargo generate-lockfile</code>. If it already exists,
 the file is overwritten with the latest available version of every crate.</p>
 <div class="reco" id="DENV-CARGO-LOCK" type="Rule" title="Track Cargo.lock in version control system">
 <p><code>Cargo.lock</code> files MUST be tracked by a version control system.</p>
 </div>
+
 <div class="warning">
 <p>Ongoing discussions occur on how to best protect
 and verify crates <em>on their first download</em> (according to the TOFU rule).
@@ -421,6 +432,7 @@ website <a href="https://crates.io"><code>crates.io</code></a> and the GitHub ho
 registry index. In some cases, it may be preferable to opt for an alternative
 installation method for dependencies.</p>
 </div>
+
 <p>Cargo proposes many different commands and options to adapt the build process to
 your project needs, mainly through the manifest file <code>Cargo.toml</code>. For a
 complete presentation, see the <a href="https://doc.rust-lang.org/cargo/index.html">Cargo Book</a>.</p>
@@ -438,11 +450,12 @@ integer arithmetic.</li>
 </ul>
 <p>Overriding the default options may cause bugs not being detected, even when
 using the <code>dev</code> profile that normally enables runtime checks (for example it does not enable
-<a href="integer.html#chapter-integer">integer overflow checks</a>).</p>
+<a href="#chapter-integer">integer overflow checks</a>).</p>
 <div class="reco" id="DENV-CARGO-OPTS" type="Rule" title="Keep default values for critical variables in cargo profiles">
 <p>The variables <a href="https://doc.rust-lang.org/cargo/reference/profiles.html#debug-assertions"><code>debug-assertions</code></a> and <a href="https://doc.rust-lang.org/cargo/reference/profiles.html#overflow-checks"><code>overflow-checks</code></a> MUST NOT be overridden
-in development profiles' sections (<code>[profile.dev]</code> and <code>[profile.test]</code>).</p>
+in development profiles’ sections (<code>[profile.dev]</code> and <code>[profile.test]</code>).</p>
 </div>
+
 <p>Cargo proposes other ways to set up its configuration and change its behavior on
 a given system. This can be very useful, but it may also be difficult to know
 and remember at a given time all the options that are effectively used, and
@@ -456,6 +469,7 @@ to use the Cargo build scripts feature.</p>
 <p>The environment variables <code>RUSTC</code>, <code>RUSTC_WRAPPER</code> and <code>RUSTFLAGS</code> MUST NOT
 be overridden when using Cargo to build the project.</p>
 </div>
+
 <h3 id="rustfmt"><a class="header" href="#rustfmt">Rustfmt</a></h3>
 <p>Included with Rust, <a href="https://github.com/rust-lang/rustfmt">Rustfmt</a> is a tool that formats your code according to style guidelines.</p>
 <p>These guidelines can be customized to your needs by creating a <code>rustfmt.toml</code> or
@@ -472,6 +486,7 @@ at the [Rust Style Guidelines Book@rust-style].</p>
 <p>The tool <code>rustfmt</code> SHOULD be used to ensure that the codebase respects style
 guidelines.</p>
 </div>
+
 <h3 id="cargo-fix"><a class="header" href="#cargo-fix">Cargo fix</a></h3>
 <p>The <a href="https://doc.rust-lang.org/cargo/commands/cargo-fix.html"><code>cargo fix</code></a> command is a tool dedicated to
 fixing compiler warnings as well as easing transitions between editions.</p>
@@ -507,10 +522,12 @@ category <code>clippy::nursery</code> since those hints are still under developm
 <p>A linter, such as <code>clippy</code>, MUST be used regularly during the development of
 a secure application.</p>
 </div>
+
 <div class="reco" id="DENV-AUTOFIX" type="Rule" title="Manually check automatic fixes">
 <p>In a secure Rust development, any automatic fix (for instance, provided by
 <code>rustfix</code> or <code>clippy</code>) MUST be verified by the developer.</p>
 </div>
+
 <h3 id="others"><a class="header" href="#others">Others</a></h3>
 <p>There exist other useful tools or <code>cargo</code> subcommands for enforcing program
 security whether by searching for specific code patterns or by providing
@@ -523,13 +540,16 @@ chapters, according to their goals.</p>
 <li><a id="rustc-book"></a> <em><a href="https://doc.rust-lang.org/stable/rustc/index.html">The rustc book</a></em> (rustc-book)</li>
 </ul>
 <hr>
-<ol class="footnote-definition"><li id="footnote-abi">
+<ol class="footnote-definition">
+<li id="footnote-abi">
 <p>Application Binary Interface <a href="#fr-abi-1">↩</a></p>
 </li>
-</ol><div style="break-before: page; page-break-before: always;"></div><h1 id="libraries"><a class="header" href="#libraries">Libraries</a></h1>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="libraries"><a class="header" href="#libraries">Libraries</a></h1>
 <h2 id="dependency-repositories"><a class="header" href="#dependency-repositories">Dependency Repositories</a></h2>
 <p>The management of external libraries is integrated into the <code>Cargo</code> tool. There are several ways to specify the source of these libraries, some of which are presented below.</p>
-<p>It is important to note that accurately tracking the versions of these libraries is a critical condition for the security of software written in Rust. This requirement is embodied in the rule <a href="devenv.html#DENV-CARGO-LOCK">DENV-CARGO-LOCK</a>.</p>
+<p>It is important to note that accurately tracking the versions of these libraries is a critical condition for the security of software written in Rust. This requirement is embodied in the rule <a href="#DENV-CARGO-LOCK">DENV-CARGO-LOCK</a>.</p>
 <h3 id="crates"><a class="header" href="#crates">Crates</a></h3>
 <p>In addition to the standard library, Rust provides an easy way to import other
 libraries in a project, thanks to <code>cargo</code>.
@@ -552,16 +572,18 @@ serde = "1.0.219"
 regex = { git = "https://github.com/rust-lang/regex.git" }
 </code></pre>
 <p>It is possible to specify the desired version in more detail by providing either a branch, a tag, or a commit hash.</p>
-<p>The <a href="devenv.html#cargo">dependency lock system</a> operates even in the case of a GIT repository: if the dependency does not specify a particular commit, the most recent commit matching the criteria in the <code>Cargo.toml</code> file is fetched during the first compilation and is recorded in the <code>Cargo.lock</code> file. All subsequent compilations will use the same commit (unless the <code>Cargo.lock</code> file is updated).</p>
+<p>The <a href="#cargo">dependency lock system</a> operates even in the case of a GIT repository: if the dependency does not specify a particular commit, the most recent commit matching the criteria in the <code>Cargo.toml</code> file is fetched during the first compilation and is recorded in the <code>Cargo.lock</code> file. All subsequent compilations will use the same commit (unless the <code>Cargo.lock</code> file is updated).</p>
 <h2 id="dependency-security"><a class="header" href="#dependency-security">Dependency Security</a></h2>
 <p>Regardless of the method used to retrieve dependencies (<em>crate</em> or GIT commit), if they come from external organizations, the dependencies must be validated.</p>
 <div class="reco" id="LIBS-VETTING-DIRECT" type="Rule" title="Validation of Direct Third-Party Dependencies">
 <p>Each direct third-party dependency MUST be properly validated, and each validation MUST be tracked.</p>
 </div>
+
 <p>With regard to transitive dependencies, it is also recommended to validate them individually.</p>
 <div class="reco" id="LIBS-VETTING-TRANSITIVE" type="Recommendation" title="Validation of Transitive Third-Party Dependencies">
 <p>Each third-party dependency SHOULD be properly validated, and each validation SHOULD be tracked.</p>
 </div>
+
 <h2 id="dependency-validation-tools"><a class="header" href="#dependency-validation-tools">Dependency validation tools</a></h2>
 <h3 id="cargo-outdated"><a class="header" href="#cargo-outdated">Cargo-outdated</a></h3>
 <p><a href="https://github.com/kbknapp/cargo-outdated">cargo-outdated</a> tool allows one to easily manage dependency versions.</p>
@@ -573,6 +595,7 @@ version.</p>
 each outdated dependency SHOULD be updated or the choice of the version MUST be
 justified.</p>
 </div>
+
 <h3 id="cargo-audit"><a class="header" href="#cargo-audit">Cargo-audit</a></h3>
 <p><a href="https://crates.io/crates/cargo-audit">Cargo-audit</a> tool allows one to easily check for security vulnerabilities
 reported to the RustSec Advisory Database.</p>
@@ -580,6 +603,7 @@ reported to the RustSec Advisory Database.</p>
 <p>The <code>cargo-audit</code> tool MUST be used to check for known vulnerabilities in
 dependencies.</p>
 </div>
+
 <!-- ## Unsafe code in libraries -->
 <!--
 <mark>TODO</mark>: `unsafe` blocks are discussed in the following chapter.
@@ -595,7 +619,8 @@ dependencies (with a tool?).
 </div>
 
 -->
-<div style="break-before: page; page-break-before: always;"></div><h1 id="naming"><a class="header" href="#naming">Naming</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="naming"><a class="header" href="#naming">Naming</a></h1>
 <p>The standard library serves as the de facto standard for naming conventions in Rust.
 An effort has been made to formalize the conventions through the <a href="https://rust-lang.github.io/rfcs/0430-finalizing-naming-conventions.html">RFC 43</a> and later in the <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a>.</p>
 <p>The basic rule <a href="https://rust-lang.github.io/api-guidelines/naming.html#casing-conforms-to-rfc-430-c-case"><code>(C-CASE)</code></a> consists in using:</p>
@@ -617,23 +642,26 @@ particular constructs:</p>
 </ul>
 <div class="note">
 <p>The basic rule <a href="https://rust-lang.github.io/api-guidelines/naming.html#casing-conforms-to-rfc-430-c-case"><code>(C-CASE)</code></a> is checked by the compiler (with the <code>nonstandard_style</code> lint set).</p>
-<p>In addition to the compiler, the <a href="devenv.html#clippy"><code>clippy</code></a> tool can help in adopting naming conventions with the <code>style</code> lint category.
+<p>In addition to the compiler, the <a href="#clippy"><code>clippy</code></a> tool can help in adopting naming conventions with the <code>style</code> lint category.
 For example, the <a href="https://rust-lang.github.io/rust-clippy/master/index.html#wrong_self_convention"><code>wrong_self_convention</code></a> lint checks the consistency between conversion method names and their receiver types (<code>self</code>, <code>&amp;self</code>, <code>&amp;mut self</code>) according to <a href="https://rust-lang.github.io/api-guidelines/naming.html#ad-hoc-conversions-follow-as_-to_-into_-conventions-c-conv"><code>(C-CONV)</code></a>.</p>
 <!--
 clippy::enum_variant_names
 clippy::self_named_constructors
 -->
 </div>
+
 <div class="reco" id="LANG-NAMING" type="Rule" title="Respect naming conventions">
 <p>Development of a secure application MUST follow the naming conventions
 outlined in the <a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a>.</p>
 </div>
+
 <h2 id="references-2"><a class="header" href="#references-2">References</a></h2>
 <ul>
 <li><a id="RFC-430"></a> <em><a href="https://rust-lang.github.io/rfcs/0430-finalizing-naming-conventions.html">General naming conventions</a></em> (RFC-430)</li>
 <li><a id="rust-guidelines"></a> <em><a href="https://rust-lang.github.io/api-guidelines/">Rust API Guidelines</a></em> (rust-guidelines)</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-integer"><a class="header" href="#chapter-integer">Integer operations</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="chapter-integer"><a class="header" href="#chapter-integer">Integer operations</a></h1>
 <p>Although Rust performs some checks for potential integer overflows, precautions should be taken when executing arithmetic operations on integers.</p>
 <p>In particular, note that the compilation profile (typically <em>dev</em>, the default debug build, or <em>release</em>, the standard optimized build) changes integer overflow behavior. In the <em>dev</em> configuration, overflow causes the termination of the program (<code>panic</code>), whereas in the <em>release</em> configuration, the computed value is silently truncated to the number of bits of the numeric type, giving it wrap-around semantics.</p>
 <div class="note">
@@ -643,6 +671,7 @@ It can also be modified in the profile definition in <code>Cargo.toml</code>:</p
 overflow-checks = true  # enable overflow checks in release builds
 </code></pre>
 </div>
+
 <p>When an overflow is possible, the behavior can be made explicit either by using specific methods or by using specific wrapper types.</p>
 <p>The methods are of the form <code>&lt;mode&gt;_&lt;op&gt;</code>, where <code>&lt;mode&gt;</code> is <code>checked</code>, <code>overflowing</code>, <code>wrapping</code>, or <code>saturating</code>, and <code>&lt;op&gt;</code> is <code>add</code>, <code>mul</code>, <code>sub</code>, <code>shr</code>, etc. The semantics are as follows:</p>
 <ul>
@@ -664,7 +693,7 @@ overflow-checks = true  # enable overflow checks in release builds
 </li>
 </ul>
 <p>The wrapper types are <code>Wrapping&lt;T&gt;</code> and <code>Saturating&lt;T&gt;</code> (from <code>std::num</code>), where <code>T</code> is an integer type. The former provides wrap-around semantics for all arithmetic operations, whereas the latter provides saturation semantics. Once the values are wrapped, all subsequent operations are performed with the given semantics.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span>#![allow(dead_code)]
 <span class="boring">fn main() {
 </span>use std::num::Wrapping;
@@ -699,12 +728,14 @@ fn use_integer() {
         println!("panic");
     }
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">}</span></code></pre>
 <div class="reco" id="LANG-ARITH" type="Rule" title="Use appropriate arithmetic operations regarding potential overflows">
 <p>When an arithmetic operation can produce an overflow, the usual operators MUST NOT be used directly.
 Instead, specialized methods such as <code>checked_&lt;op&gt;</code>, <code>overflowing_&lt;op&gt;</code>, <code>wrapping_&lt;op&gt;</code>, or <code>saturating_&lt;op&gt;</code>, or specialized wrapper types like <code>Wrapping</code> or <code>Saturating</code>, MUST be used to ensure explicit and consistent behavior regardless of the compilation profile.</p>
 </div>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="error-handling"><a class="header" href="#error-handling">Error handling</a></h1>
+
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="error-handling"><a class="header" href="#error-handling">Error handling</a></h1>
 <!-- <mark>TODO</mark>: explicit good practices in error handling. -->
 <p>The <code>Result</code> type is the preferred way of handling functions that can fail.
 A <code>Result</code> object must be tested, and never ignored.</p>
@@ -713,6 +744,7 @@ A <code>Result</code> object must be tested, and never ignored.</p>
 It MUST be careful to make this type exception-safe (<a href="https://rust-lang.github.io/rfcs/1236-stabilize-catch-panic.html">RFC 1236</a>), and implement
 <code>Error + Send + Sync + 'static</code> as well as <code>Display</code>.</p>
 </div>
+
 <p>Third-party crates may be used to facilitate error handling. Most of them
 (notably <a href="https://crates.io/crates/snafu">snafu</a> or <a href="https://crates.io/crates/thiserror">thiserror</a>) address the creation of new custom
 error types that implement the necessary traits and allow wrapping other
@@ -728,6 +760,7 @@ be avoided.</p>
 <div class="reco" id="LANG-LIMIT-PANIC" type="Rule" title="Limit `panic` use">
 <p>A Rust function MUST NOT panic UNLESS its usage conditions have been violated.</p>
 </div>
+
 <p>Crates providing libraries should never use functions or instructions that can
 fail and cause the code to panic.</p>
 <p>Following patterns can cause panics (by design):</p>
@@ -735,14 +768,15 @@ fail and cause the code to panic.</p>
 <li>using <code>unwrap</code> or <code>expect</code>,</li>
 <li>using <code>assert!</code>.</li>
 </ul>
-<p>The following rule is deduced from the <a href="errors.html#LANG-LIMIT-PANIC">previous rule</a>.</p>
+<p>The following rule is deduced from the <a href="#LANG-LIMIT-PANIC">previous rule</a>.</p>
 <div class="reco" id="LANG-LIMIT-PANIC-SRC" type="Rule" title="Limit use of `panic`-ing functions">
 <p>Uses of <code>unwrap</code>, <code>expect</code> and <code>assert!</code> MUST be restricted to cases explicitly forbidden by the function’s specification.</p>
 </div>
+
 <p>The following functions are known to panic if their arguments do not meet the usage conditions.</p>
 <ul>
-<li>an unchecked access to an array (see <a href="errors.html#LANG-ARRINDEXING">next</a> rule),</li>
-<li>integer overflow (in debug mode, see chapter on <a href="integer.html#chapter-integer">integers</a>),</li>
+<li>an unchecked access to an array (see <a href="#LANG-ARRINDEXING">next</a> rule),</li>
+<li>integer overflow (in debug mode, see chapter on <a href="#chapter-integer">integers</a>),</li>
 <li>division by zero,</li>
 <li>large allocations,</li>
 <li>string formatting using <code>format!</code>.</li>
@@ -751,12 +785,14 @@ fail and cause the code to panic.</p>
 <p>Array indexing must be properly tested, or the <code>get</code> method SHOULD be used to
 return an <code>Option</code>.</p>
 </div>
+
 <div class="warning">
 <p>In certain safety‑critical domains, it is mandatory to transition to a safe‑mode state whenever an error occurs that could otherwise lead to undefined behavior.
 In these situations, deliberately aborting execution makes sense because it stops the system before corrupted data or safety faults can propagate.</p>
 <p>For a plane or other vehicles, this “fail‑fast” behavior can be crucial: the primary control unit must halt immediately on a serious fault, then hand over control to a redundant or backup subsystem that can bring the vehicle to a safe stop or continue operation in a reduced‑capability mode. Restarting on a trusted secondary system ensures that the plane remains controllable, protects occupants, and prevents hazardous outcomes that could arise from continuing execution in an unpredictable state.</p>
 <p>For this use case, enabling the <code>panic = 'abort'</code> attribute in the <code>[profile.release]</code> section of the Cargo.toml file will terminate the program as soon as a panic occurs.</p>
 </div>
+
 <!--
 <mark>TODO</mark> Check if the [no_panic](https://github.com/dtolnay/no-panic)
 crate can catch all cases. Drawback: all functions need to be marked as
@@ -768,20 +804,23 @@ crate can catch all cases. Drawback: all functions need to be marked as
 -->
 <h2 id="ffi-and-panics"><a class="header" href="#ffi-and-panics">FFI and panics</a></h2>
 <p>The integration of other languages into Rust is achieved through an <em>FFI</em> (<em>Foreign Function Interface</em>).
-This feature is described in more detail in the <a href="unsafe/ffi.html#ffi-panic">dedicated chapter</a>.</p>
+This feature is described in more detail in the <a href="#ffi-panic">dedicated chapter</a>.</p>
 <h2 id="references-3"><a class="header" href="#references-3">References</a></h2>
 <ul>
 <li><a id="RFC-1236"></a> <em><a href="https://rust-lang.github.io/rfcs/1236-stabilize-catch-panic.html">Recover</a></em> (RFC-1236)</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="language-guarantees"><a class="header" href="#language-guarantees">Language guarantees</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="language-guarantees"><a class="header" href="#language-guarantees">Language guarantees</a></h1>
 <h2 id="undefined-behaviors-ub"><a class="header" href="#undefined-behaviors-ub">Undefined Behaviors (<em>UB</em>)</a></h2>
 <div class="definition">
 <p>The behavior of a program is <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html"><em>undefined</em></a> when its semantics is not described in the Rust language.</p>
 </div>
+
 <p>the existence of UB is considered a <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.general">programming error</a> and must be avoided.</p>
 <div class="example">
 <p>Dereferencing the null pointer is a <em>UB</em>. On the other hand, <code>unwrap</code>ing the <code>None</code> object is well defined because it is the language that processes this error (by launching a panic).</p>
 </div>
+
 <p>A list of programming errors leading to UBs is <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html">given</a>
 in the <a href="https://doc.rust-lang.org/stable/reference/">Rust reference</a>. Among them, the following errors are noteworthy:</p>
 <ul>
@@ -792,7 +831,7 @@ in the <a href="https://doc.rust-lang.org/stable/reference/">Rust reference</a>.
 <li>No non-aligned access</li>
 </ul>
 </li>
-<li>The pointed values are <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.invalid">consistent</a> with the pointer's type. For example, a value pointed at by a boolean pointer will be byte of value 1 or 0.</li>
+<li>The pointed values are <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.invalid">consistent</a> with the pointer’s type. For example, a value pointed at by a boolean pointer will be byte of value 1 or 0.</li>
 <li>Respect of <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.alias">aliasing rules</a> (see also the <a href="https://doc.rust-lang.org/stable/nomicon/">Rustonomicon</a> for <a href="https://doc.rust-lang.org/nomicon/aliasing.html">examples</a>): a mutable reference cannot be shared.</li>
 <li>No <a href="https://doc.rust-lang.org/reference/behavior-considered-undefined.html#r-undefined.race">concurrent access</a> (reading/writing is not possible while simultaneously writing), to the same memory address (see also the <a href="https://doc.rust-lang.org/stable/nomicon/">Rustonomicon</a> for <a href="https://doc.rust-lang.org/nomicon/races.html">examples</a>)</li>
 </ul>
@@ -800,26 +839,31 @@ in the <a href="https://doc.rust-lang.org/stable/reference/">Rust reference</a>.
 <div class="important">
 <p>The language paradigm is to ensure the absence of a UB in a program using only the non-<em>unsafe</em> part of Rust.</p>
 </div>
+
 <div class="note">
 <p>Despite these memory safety guarantees, the language does not prevent</p>
 <ul>
-<li>resource leaks (memory, I/O, ...) (see the <a href="unsafe/memory.html#chapter-memory">memory management section</a>),</li>
-<li>numeric overflows (see the <a href="integer.html#chapter-integer">integer operations section</a>).</li>
+<li>resource leaks (memory, I/O, …) (see the <a href="#chapter-memory">memory management section</a>),</li>
+<li>numeric overflows (see the <a href="#chapter-integer">integer operations section</a>).</li>
 </ul>
 </div>
+
 <h2 id="references-4"><a class="header" href="#references-4">References</a></h2>
 <ul>
 <li><a id="rust-reference"></a> <em><a href="https://doc.rust-lang.org/stable/reference/">The Rust Reference</a></em> (rust-reference)</li>
 <li><a id="nomicon"></a> <em><a href="https://doc.rust-lang.org/stable/nomicon/">The Rustonomicon</a></em> (nomicon)</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="unsafe-rust"><a class="header" href="#unsafe-rust">Unsafe Rust</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="general-information-on-unsafe"><a class="header" href="#general-information-on-unsafe">General information on <code>unsafe</code></a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="unsafe-rust"><a class="header" href="#unsafe-rust">Unsafe Rust</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="general-information-on-unsafe"><a class="header" href="#general-information-on-unsafe">General information on <code>unsafe</code></a></h1>
 <h2 id="unsafe-operations"><a class="header" href="#unsafe-operations"><em>Unsafe</em> operations</a></h2>
 <p>Language capabilities can be extended using unsafe code. The full list of these features is given in the <a href="https://doc.rust-lang.org/reference/unsafety.html">Rust reference</a>.
-These capabilities may be necessary for system programming but they cause the language to lose its <a href="unsafe/../guarantees.html#language-guarantees">safety properties</a> and Undefined Behaviors may happen.</p>
+These capabilities may be necessary for system programming but they cause the language to lose its <a href="#language-guarantees">safety properties</a> and Undefined Behaviors may happen.</p>
 <div class="reco" id="UNSAFE-NOUB" type="Rule" title="No Undefined Behavior">
 <p>NO Undefined Behavior is allowed.</p>
 </div>
+
 <h2 id="a-keyword-with-two-usages"><a class="header" href="#a-keyword-with-two-usages">A keyword with two usages</a></h2>
 <p>As described in the <a href="https://doc.rust-lang.org/stable/reference/">Rust Reference</a>, the <code>unsafe</code> keyword is used both for marking unsafety in an API and unlocking unsafety in the implementation.</p>
 <h3 id="unsafe-marking"><a class="header" href="#unsafe-marking"><code>unsafe</code> marking</a></h3>
@@ -840,7 +884,7 @@ The use of this keyword in an API <em>warns</em> the API user about the potentia
 <p>Similarly, the implementation of an <code>unsafe</code> trait requires <code>unsafe</code> (section <a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.impl"><code>r-unsafe.impl</code></a> of the <a href="https://doc.rust-lang.org/stable/reference/">Rust Reference</a>) for the developer to explicitly take into account the memory safety contracts. The keyword <code>unsafe</code> <em>unlocks</em> the implementation of <code>unsafe</code> traits.</p>
 <p>Lastly, Since the 2024 edition, <code>unsafe</code> is also required to unlock the following:</p>
 <ul>
-<li><code>extern</code> blocks (section <a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.extern"><code>r-unsafe.extern</code></a> of the <a href="https://doc.rust-lang.org/stable/reference/">Rust Reference</a>), which contain declarations of foreign functions and variables, for <a href="unsafe/./ffi.html#chapter-ffi">FFI</a>,</li>
+<li><code>extern</code> blocks (section <a href="https://doc.rust-lang.org/reference/unsafe-keyword.html#r-unsafe.extern"><code>r-unsafe.extern</code></a> of the <a href="https://doc.rust-lang.org/stable/reference/">Rust Reference</a>), which contain declarations of foreign functions and variables, for <a href="#chapter-ffi">FFI</a>,</li>
 <li>some attributes (for instance , no_mangle, cf. <a href="https://doc.rust-lang.org/reference/attributes.html#r-attributes.safety"><code>r-attributes.safety</code></a> of the <a href="https://doc.rust-lang.org/stable/reference/">Rust Reference</a>).</li>
 </ul>
 <h2 id="limitations-and-precautions"><a class="header" href="#limitations-and-precautions">Limitations and precautions</a></h2>
@@ -848,10 +892,11 @@ The use of this keyword in an API <em>warns</em> the API user about the potentia
 <div class="important">
 <p><code>unsafe</code>-free code cannot go wrong</p>
 </div>
+
 <p>The combined use of the type system and the ownership system enforces a high-level memory safety in Rust programs. This way, the language helps prevent memory overflows, null or invalid pointer constructions, and data races.</p>
 <p>This promise is valid only if the code does not use <code>unsafe</code> features. When <code>unsafe</code> features are used, the compiler can no longer guarantee memory safety. The developer must then ensure that the code respects the invariants that guarantee memory safety.</p>
 <p>That is why it is crucial to limit the use of <code>unsafe</code> features as much as possible:</p>
-<div class="reco" id="LANG-UNSAFE" type="Rule" title="Don't use unsafe blocks">
+<div class="reco" id="LANG-UNSAFE" type="Rule" title="Don&#39;t use unsafe blocks">
 <p>In a secure Rust development, the <code>unsafe</code> blocks SHOULD be avoided, or MUST be justified by at least one of the following points:</p>
 <ul>
 <li>
@@ -867,6 +912,7 @@ structure or module) shall be provided.</p>
 </ul>
 <p>With the exception of these cases, <code>#![forbid(unsafe_code)]</code> must appear in the crate root (typically <code>main.rs</code> or <code>lib.rs</code>) to generate compilation errors if <code>unsafe</code> is used in the code base.</p>
 </div>
+
 <p>If the use of <code>unsafe</code> is necessary, it is the responsibility of the developer to:</p>
 <ul>
 <li>ensure that the use of <code>unsafe</code> unlocking does not lead to <em>UB</em>s,</li>
@@ -883,8 +929,9 @@ can result in UB (undefined behavior);</li>
 (preconditions, sequencing, etc.) are exhaustively documented.</li>
 </ul>
 </div>
+
 <p>Thus, a function using <code>unsafe</code> operations can be <em>safe</em> if the <code>unsafe</code>
-operations do not present any <em>UB</em> (undefined behavior) given the component's
+operations do not present any <em>UB</em> (undefined behavior) given the component’s
 invariants (typically the type invariant for a method). Conversely, a function
 without an <code>unsafe</code> block must be marked as <code>unsafe</code> if it breaks these
 invariants. The choice and knowledge of these invariants are therefore crucial
@@ -892,7 +939,7 @@ for secure development.</p>
 <h2 id="example-preserving-a-type-invariant"><a class="header" href="#example-preserving-a-type-invariant">Example: Preserving a type invariant</a></h2>
 <p>The following code comes from the <a href="https://doc.rust-lang.org/nomicon/working-with-unsafe.html">Rustonomicon</a>.
 It could be used to implement a custom <code>Vec</code> type.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::ptr;
 
@@ -914,10 +961,10 @@ impl&lt;T&gt; Vec&lt;T&gt; {
         }
     }
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">}</span></code></pre>
 <p>Soundness and safety of this code rely on the fact that bytes from address <code>self.ptr</code> to <code>self.ptr + self.cap * size_of&lt;T&gt;()</code> are allocated.</p>
 <p>This invariant can be broken with <em>safe</em> code. For instance</p>
-<pre><pre class="playground"><code class="language-rust bad"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust bad"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>impl&lt;T&gt; Vec&lt;T&gt; {
     pub fn make_room(&amp;mut self) {
@@ -925,13 +972,14 @@ impl&lt;T&gt; Vec&lt;T&gt; {
         self.cap += 1;
     }
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">}</span></code></pre>
 <p>This function may be necessary for internal use, but it should not be exposed in the API, or it should be marked with the <code>unsafe</code> keyword, because its use can lead to UB.</p>
 <h2 id="references-5"><a class="header" href="#references-5">References</a></h2>
 <ul>
-<li><a id="rust-reference"></a> <em><a href="https://doc.rust-lang.org/stable/reference/">The Rust Reference</a></em> (rust-reference)</li>
+<li><a id="rust-reference-1"></a> <em><a href="https://doc.rust-lang.org/stable/reference/">The Rust Reference</a></em> (rust-reference)</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-memory"><a class="header" href="#chapter-memory">Memory management</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="chapter-memory"><a class="header" href="#chapter-memory">Memory management</a></h1>
 <!-- ## About Rust memory safety -->
 <!--
 <mark>TODO</mark>: explain safe allocations/deallocations, ownership/borrowing,
@@ -939,35 +987,37 @@ and identify language constructs that may break memory safety (for instance,
 unsound behaviors in older versions of the compiler).
 -->
 <p>In the vast majority of cases, in non-<code>unsafe</code> Rust (i.e., code that does not use <code>unsafe</code>), the compiler <strong>automatically</strong> determines when it can release the memory occupied by a value in the program.
-But, as <a href="unsafe/../guarantees.html#rust-guarantees">noted earlier</a>, this is not
+But, as <a href="#rust-guarantees">noted earlier</a>, this is not
 a guarantee: code without <code>unsafe</code> can still lead to memory leaks. Therefore, some of the
 rules presented in this chapter are not strictly related to the <code>unsafe</code> keyword. However,</p>
 <div class="important">
 <p>Even if a function in the following is not <code>unsafe</code>,
 it should only be used in Rust <em>unsafe</em>.</p>
 </div>
+
 <p>As a general rule, memory leaks must be avoided.</p>
 <div class="reco" id="MEM-NO-LEAK" type="Rule" title="No memory leak">
 <p>In a secure Rust development, NO memory leak is allowed.</p>
 </div>
+
 <h2 id="forget-and-memory-leaks"><a class="header" href="#forget-and-memory-leaks"><a href="https://doc.rust-lang.org/std/mem/fn.forget.html"><code>mem::forget</code></a> and memory leaks</a></h2>
 <p>While the usual way for memory to be reclaimed is for a variable to go out of
 scope, Rust provides special functions to manually reclaim memory: <a href="https://doc.rust-lang.org/std/mem/fn.forget.html"><code>mem::forget</code></a> and
 <a href="https://doc.rust-lang.org/std/mem/fn.drop.html"><code>mem::drop</code></a> of the <code>std::mem</code> module (or <code>core::mem</code>). While <a href="https://doc.rust-lang.org/std/mem/fn.drop.html"><code>mem::drop</code></a> simply triggers
 an early memory reclamation that calls associated destructors when needed,
 <a href="https://doc.rust-lang.org/std/mem/fn.forget.html"><code>mem::forget</code></a> skips any call to the destructors.</p>
-<pre><pre class="playground"><code class="language-rust align"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust align"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let pair = ('↑', 0xBADD_CAFEu32);
 drop(pair);
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">}</span></code></pre>
 <p>Both functions are <strong>memory safe</strong> in Rust. However, <a href="https://doc.rust-lang.org/std/mem/fn.forget.html"><code>mem::forget</code></a> will make any
 resource managed by the value unreachable and unclaimed.</p>
-<pre><pre class="playground"><code class="language-rust align bad"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust align bad"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = String::from("Hello");
 forget(s); // Leak memory
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">}</span></code></pre>
 <p>In particular, using <a href="https://doc.rust-lang.org/std/mem/fn.forget.html"><code>mem::forget</code></a> may result in not releasing critical resources,
 leading to deadlocks or not erasing sensitive data from the memory. This is why
 <a href="https://doc.rust-lang.org/std/mem/fn.forget.html"><code>mem::forget</code></a> is <strong>unsecure</strong>.</p>
@@ -975,6 +1025,7 @@ leading to deadlocks or not erasing sensitive data from the memory. This is why
 <p>In a secure Rust development, the <a href="https://doc.rust-lang.org/std/mem/fn.forget.html"><code>mem::forget</code></a> function of <code>std::mem</code>
 (<code>core::mem</code>) MUST NOT be used.</p>
 </div>
+
 <!-- -->
 <div class="reco" id="MEM-FORGET-LINT" type="Recommendation" title="Use clippy lint to detect use of `mem::forget`">
 <p>The lint <code>mem_forget</code> of Clippy SHOULD be used to automatically detect any use of
@@ -982,6 +1033,7 @@ leading to deadlocks or not erasing sensitive data from the memory. This is why
 line at the top of the root file (usually <code>src/lib.rs</code> or <code>src/main.rs</code>):</p>
 <pre><code class="language-rust noplaypen ignore">#![deny(clippy::mem_forget)]</code></pre>
 </div>
+
 <p>The standard library includes other way to <em>forget</em> dropping values:</p>
 <ul>
 <li><a href="https://doc.rust-lang.org/std/boxed/struct.Box.html#method.leak"><code>Box::leak</code></a> to leak a resource,</li>
@@ -994,6 +1046,7 @@ additional benefit of making their goal obvious.</p>
 <p>In a secure Rust development, the code MUST NOT leak memory or resource in
 particular via <a href="https://doc.rust-lang.org/std/boxed/struct.Box.html#method.leak"><code>Box::leak</code></a>.</p>
 </div>
+
 <p><a href="https://doc.rust-lang.org/beta/std/mem/struct.ManuallyDrop.html"><code>ManuallyDrop</code></a> and <a href="https://doc.rust-lang.org/std/boxed/struct.Box.html#method.into_raw"><code>Box::into_raw</code></a> shift the release responsibility from the
 compiler to the developer.</p>
 <div class="reco" id="MEM-MANUALLYDROP" type="Rule" title="Do release value wrapped in `ManuallyDrop`">
@@ -1001,6 +1054,7 @@ compiler to the developer.</p>
 unwrapped to allow for automatic release (<a href="https://doc.rust-lang.org/beta/std/mem/struct.ManuallyDrop.html#method.into_inner"><code>ManuallyDrop::into_inner</code></a>)
 or manually released (unsafe <a href="https://doc.rust-lang.org/beta/std/mem/struct.ManuallyDrop.html#method.drop"><code>ManuallyDrop::drop</code></a>).</p>
 </div>
+
 <!-- -->
 <h2 id="raw-pointers"><a class="header" href="#raw-pointers">Raw pointers</a></h2>
 <p>These pointers are mainly used for C pointers. They do not have the same protections
@@ -1012,6 +1066,7 @@ SHOULD NOT be converted into <em>raw pointers</em>. For instance, functions <cod
 of smart pointers <a href="https://doc.rust-lang.org/std/boxed/struct.Box.html"><code>Box</code></a>, <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a>, <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc</code></a>, <a href="https://doc.rust-lang.org/std/rc/struct.Weak.html"><code>rc::Weak</code></a> or <a href="https://doc.rust-lang.org/std/sync/struct.Weak.html"><code>sync::Weak</code></a> SHOULD NOT be used.</p>
 <p>The use of <em>raw pointers</em> without <code>unsafe</code> code MUST otherwise be documented and justified.</p>
 </div>
+
 <div class="reco" id="MEM-INTOFROMRAWALWAYS" type="Rule" title="Always call `from_raw` on `into_raw`ed value">
 <p>In a secure Rust development, any pointer created with a call to <code>into_raw</code>
 (or <code>into_non_null</code>) from one of the following types:</p>
@@ -1026,24 +1081,26 @@ of smart pointers <a href="https://doc.rust-lang.org/std/boxed/struct.Box.html">
 </ul>
 <p>MUST eventually be transformed into a value with a call to the respective
 <code>from_raw</code> to allow for their reclamation.</p>
-<pre><pre class="playground"><code class="language-rust align"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust align"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let boxed = Box::new(String::from("Crab"));
 let raw_ptr = Box::into_raw(boxed);
 let _ = unsafe { Box::from_raw(raw_ptr) }; // will be freed
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">}</span></code></pre>
 </div>
+
 <p>The converse is also true! That is, <code>from_raw</code> should be call <strong>only</strong> on <code>into_raw</code>ed value. For instance,
 <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a> smart pointers <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html#method.from_raw">explicitly request for this condition</a>
 and, for <a href="https://doc.rust-lang.org/std/boxed/struct.Box.html"><code>Box</code></a> smart pointers, conversion of C pointers into <a href="https://doc.rust-lang.org/std/boxed/struct.Box.html"><code>Box</code></a> is <a href="https://doc.rust-lang.org/std/boxed/index.html#memory-layout">discouraged</a>.</p>
 <div class="reco" id="MEM-INTOFROMRAWONLY" type="Rule" title="Call `from_raw` *only* on `into_raw`ed value">
 <p>In a secure Rust development, <code>from_raw</code> MUST ONLY be called on <code>into_raw</code>ed values.</p>
 </div>
+
 <!-- -->
 <div class="note">
 <p>In the case of <a href="https://doc.rust-lang.org/std/boxed/struct.Box.html#method.into_raw"><code>Box::into_raw</code></a>, manual cleanup is possible but a lot more
 complicated than re-boxing the raw pointer and should be avoided:</p>
-<pre><pre class="playground"><code class="language-rust align bad"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust align bad"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// Excerpt from the standard library documentation
 use std::alloc::{Layout, dealloc};
@@ -1055,10 +1112,11 @@ unsafe {
    ptr::drop_in_place(p);
    dealloc(p as *mut u8, Layout::new::&lt;String&gt;());
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">}</span></code></pre>
 <p>Because the other types (<a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a> and <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc</code></a>) are opaque and more complex, manual
 cleanup is not possible.</p>
 </div>
+
 <h2 id="uninitialized-memory"><a class="header" href="#uninitialized-memory">Uninitialized memory</a></h2>
 <p>By default, Rust forces all values to be initialized, preventing the use of
 uninitialized memory (except when using <a href="https://doc.rust-lang.org/std/mem/fn.uninitialized.html"><code>std::mem::uninitialized</code></a> or
@@ -1068,6 +1126,7 @@ uninitialized memory (except when using <a href="https://doc.rust-lang.org/std/m
 Each usage of the <a href="https://doc.rust-lang.org/beta/std/mem/union.MaybeUninit.html"><code>std::mem::MaybeUninit</code></a> type (stabilized 1.36) MUST be explicitly
 justified when necessary.</p>
 </div>
+
 <p>The use of uninitialized memory may result in two distinct security issues:</p>
 <ul>
 <li>drop of uninitialized memory (also a memory safety issue),</li>
@@ -1080,7 +1139,9 @@ However, it does not change the second issue: the non-drop of an initialized
 memory remains. It is problematic, in particular when considering
 the use of <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a> to erase sensitive memory.</p>
 </div>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-ffi"><a class="header" href="#chapter-ffi">Foreign Function Interface (FFI)</a></h1>
+
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="chapter-ffi"><a class="header" href="#chapter-ffi">Foreign Function Interface (FFI)</a></h1>
 <p>The Rust approach to interfacing with other languages relies on a strong
 compatibility with C. However, this boundary is by its very nature <strong>unsafe</strong>
 (see <a href="https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html">Rust Book: Unsafe Rust</a>).</p>
@@ -1089,19 +1150,19 @@ compilation. They may be called from C code with any parameter values.
 The exact syntax is <code>extern "&lt;ABI&gt;"</code> where ABI is a calling convention and
 depends on the target platform. The default one is <code>C</code> which corresponds to
 a standard C calling convention on the target platform.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Export C-compatible function
 #[unsafe(no_mangle)]
 extern "C" fn mylib_f(param: u32) -&gt; i32 {
     if param == 0xCAFEBABE { 0 } else { -1 }
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">}</span></code></pre>
 <p>For the function <code>mylib_f</code> to be accessible with the same name, the function
 must also be annotated with the <code>#[unsafe(no_mangle)]</code> attribute.</p>
 <p>Conversely, one can call C functions from Rust if they are declared in an
 <code>extern</code> block:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::os::raw::c_int;
 // import C function
@@ -1113,15 +1174,16 @@ fn use_abs() {
     let x = -1;
     println!("{} {}\n", x, unsafe { abs(x) });
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">}</span></code></pre>
 <div class="note">
 <p>Any foreign function imported in Rust through an <code>extern</code> block is
 <strong>automatically <code>unsafe</code></strong>. That is why, any call to a foreign function
 must be done from an <code>unsafe</code> context.</p>
 </div>
+
 <p><code>extern</code> blocks may also contain foreign global variable declarations prefixed
 with the <code>static</code> keyword:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// A direct way to access environment variables (on Unix)
 // should not be used! Not thread safe, have a look at `std::env`!
@@ -1142,7 +1204,7 @@ fn use_static_extern() {
         next = unsafe { next.offset(1) };
     }
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">}</span></code></pre>
 <h2 id="code-structure"><a class="header" href="#code-structure">Code structure</a></h2>
 <div class="reco" id="FFI-SAFEWRAPPING" type="Recommendation" title="Provide safe wrapping to foreign library">
 <p>Interfacing a library written in another language in Rust SHOULD be done in
@@ -1156,6 +1218,7 @@ the Rust level.</li>
 <p>If the low-level API is exposed to the world, it SHOULD be done in a dedicated
 crate with a name of the form <code>*-sys</code>.</p>
 </div>
+
 <p>The crate <a href="https://crates.io/crates/bindgen"><code>rust-bindgen</code></a> may be used to automatically generate the low-level
 part of the binding from C header files.</p>
 <!--
@@ -1171,7 +1234,7 @@ laid out in the memory. The only way to make data compatible with a foreign
 language is through explicit use of a C-compatible data layout with the <code>repr</code>
 attribute (see <a href="https://doc.rust-lang.org/reference/type-layout.html">Rust Reference: Type Layout</a>). For instance, the following Rust
 types:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[repr(C)]
 struct Data {
@@ -1185,7 +1248,7 @@ struct PackedData {
     b: u16,
     c: u64,
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">}</span></code></pre>
 <p>are compatible with the following C types:</p>
 <pre><code class="language-c">struct Data
 {
@@ -1207,6 +1270,7 @@ imported or exported global variables.</p>
 <p>The lone exception is types that are considered <strong>opaque</strong> on the foreign
 side.</p>
 </div>
+
 <p>The following types are considered C-compatible:</p>
 <ul>
 <li>integral or floating point primitive types,</li>
@@ -1246,6 +1310,7 @@ and contradicts the C++ specification),</li>
 (typically to make a type opaque), types on both sides MUST have the same size
 and the same alignment requirement.</p>
 </div>
+
 <p>Concerning enumerations with fields in particular, the corresponding types in C (or
 C++) are not obvious, cf. <a href="https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html">RFC 2195</a>.</p>
 <p>Automated tools to generate bindings, such as <a href="https://crates.io/crates/bindgen"><code>rust-bindgen</code></a> or
@@ -1254,17 +1319,19 @@ C++) are not obvious, cf. <a href="https://rust-lang.github.io/rfcs/2195-really-
 <p>In a secure Rust development, automated generation tools SHOULD be used to
 generate bindings when possible and to maintain them continually.</p>
 </div>
+
 <!-- -->
 <div class="warning">
 <p>For binding C/C++ to Rust, <a href="https://crates.io/crates/bindgen"><code>rust-bindgen</code></a> is able to automatically generate
 the low-level binding. A high-level safe binding is highly recommended (see
-Recommendation <a href="unsafe/ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>).
+Recommendation <a href="#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>).
 Also some options of <a href="https://crates.io/crates/bindgen"><code>rust-bindgen</code></a> may result in dangerous translations, in
 particular <code>rustified_enum</code>.</p>
 </div>
+
 <h3 id="platform-dependent-types"><a class="header" href="#platform-dependent-types">Platform-dependent types</a></h3>
 <p>When interfacing with a foreign language, like C or C++, it is often required
-to use platform-dependent types such as C's <code>int</code>, <code>long</code>, etc.</p>
+to use platform-dependent types such as C’s <code>int</code>, <code>long</code>, etc.</p>
 <p>In addition to <code>c_void</code> in <code>std::ffi</code> (or <code>core::ffi</code>) for <code>void</code>, the standard
 library offers portable type aliases in <code>std:os::raw</code> (or <code>core::os::raw</code>):</p>
 <ul>
@@ -1286,11 +1353,12 @@ library offers portable type aliases in <code>std:os::raw</code> (or <code>core:
 the C standard library.</p>
 <div class="reco" id="FFI-PFTYPE" type="Rule" title="Use portable aliases `c_*` when binding to platform-dependent types">
 <p>In a secure Rust development, when interfacing with foreign code that
-uses platform-dependent types, such as C's <code>int</code> and <code>long</code>, Rust code MUST
+uses platform-dependent types, such as C’s <code>int</code> and <code>long</code>, Rust code MUST
 use portable type aliases, such as the ones provided by the standard library or the
 <a href="https://crates.io/crates/libc"><code>libc</code></a> crate, rather than platform-specific types, except if
 the binding is automatically generated for each platform (see Note below).</p>
 </div>
+
 <!-- -->
 <div class="note">
 <p>Automatic binding generation tools (e.g. <a href="https://crates.io/crates/cbindgen"><code>cbindgen</code></a>, <a href="https://crates.io/crates/bindgen"><code>rust-bindgen</code></a>) are able
@@ -1298,9 +1366,10 @@ to ensure type consistency on a specific platform. They should be used during
 the build process for each target to ensure that the generation is sound for
 the specific target platform.</p>
 </div>
+
 <h3 id="robustness"><a class="header" href="#robustness">Non-robust types: references, function pointers, enumerations</a></h3>
 <p>A <em>trap representation</em> of a particular type is a representation (pattern of
-bits) that respects the type's representation constraints (such as size and
+bits) that respects the type’s representation constraints (such as size and
 alignment) but does not represent a valid value of this type and leads to
 undefined behavior.</p>
 <p>In simple terms, if a Rust variable is set to such an invalid value,
@@ -1332,11 +1401,13 @@ values of non-robust types.</p>
 through explicit checking or the foreign side offers strong guarantees of the
 validity of the value.</p>
 </div>
+
 <!-- -->
 <div class="reco" id="FFI-CKINRUST" type="Recommendation" title="Check foreign values in Rust">
 <p>In a secure Rust development, the validity checks of foreign values SHOULD
 be done in Rust when possible.</p>
 </div>
+
 <p>Those generic rules are to be adapted to a specific foreign language or for the
 associated risks. Concerning languages, C is particularly unfit for offering
 guarantees about validity. However, Rust is not the only language to offer
@@ -1346,15 +1417,16 @@ the safe and unsafe segments, the recommendation is to always use Rust to check
 when possible. Concerning risks, the most dangerous types are references,
 function references, and enumerations, and are discussed below.</p>
 <div class="warning">
-<p>Rust <code>bool</code> has been made equivalent to C99's <code>_Bool</code> (aliased as <code>bool</code>
-in <code>&lt;stdbool.h&gt;</code>) and C++'s <code>bool</code>. However, loading a value other than 0 and
+<p>Rust <code>bool</code> has been made equivalent to C99’s <code>_Bool</code> (aliased as <code>bool</code>
+in <code>&lt;stdbool.h&gt;</code>) and C++’s <code>bool</code>. However, loading a value other than 0 and
 1 as a <code>_Bool</code>/<code>bool</code> is an undefined behavior <em>on both sides</em>.
 Safe Rust ensures that. Standard-compliant C and C++ compilers ensure that no
 value but 0 and 1 can be <em>stored</em> in a <code>_Bool</code>/<code>bool</code> value but cannot
 guarantee the absence of an <em>incorrect reinterpretation</em> (e.g., union types,
 pointer cast). To detect such a bad reinterpretation, sanitizers such as
-<a href="https://llvm.org/">LLVM</a>'s <code>-fsanitize=bool</code> may be used.</p>
+<a href="https://llvm.org/">LLVM</a>’s <code>-fsanitize=bool</code> may be used.</p>
 </div>
+
 <h4 id="references-and-pointers"><a class="header" href="#references-and-pointers">References and pointers</a></h4>
 <p>The types <code>&amp;mut T</code> and <code>&amp;T</code> are subject to the same validity requirements as the
 type T, with the additional constraint that they must refer to a properly
@@ -1371,7 +1443,7 @@ including C variants allowing for non-null type checking, e.g. Microsoft SAL
 annotated code.</p>
 <p>By contrast, Rust’s raw pointer types (<code>*const T</code> and <code>*mut T</code>) defer validity
 checks from the point of binding to the point of use. Furthermore, they allow
-validity to be assessed primarily against <code>std/core::ptr::null()</code> (C's <code>(void*)0</code>)
+validity to be assessed primarily against <code>std/core::ptr::null()</code> (C’s <code>(void*)0</code>)
 but also in some contexts against a known valid memory range (particularly in
 embedded systems or kernel-level programming) or against alignment requirements.</p>
 <p>Another advantage of using Rust
@@ -1386,6 +1458,7 @@ pointers against known valid memory range, tagging (or signing) pointers
 (particularly applicable if the pointed value is only manipulated from Rust)
 or checking data alignment.</p>
 </div>
+
 <div class="reco" id="FFI-INPUT-PTR" type="Recommendation" title="Use raw pointer to encode pointers coming from the external language">
 <p>In a secure Rust development, pointers received from the external language SHOULD be encoded by Rust <em>raw pointers</em>.</p>
 <p>Exceptions include:</p>
@@ -1398,6 +1471,7 @@ variants or from C++ compiled in an environment where <code>extern "C"</code>
 references are encoded as pointers.</li>
 </ul>
 </div>
+
 <p>Where the previous recommendation cannot be applied, pointer validity checks must
 be carried out by the language from which the pointer originates (that is, the external language).</p>
 <div class="reco" id="FFI-CK-INPUT-REF-VALID" type="Rule" title="Do not use unchecked foreign references">
@@ -1408,6 +1482,7 @@ Rust through FFI MUST be <strong>checked on the foreign side</strong> either aut
 and manipulated only from the Rust side and <code>Option</code>-wrapped references
 (see Note below).</p>
 </div>
+
 <!-- -->
 <p>The following code a simple example of foreign pointer use in an exported Rust
 function:</p>
@@ -1445,6 +1520,7 @@ side. The C <code>NULL</code> is understood as <code>None</code> in Rust while a
 pointer is encapsulated in <code>Some</code>. While quite ergonomic, this feature does
 not allow stronger validations such as memory range checking.</p>
 </div>
+
 <h4 id="function-pointers"><a class="header" href="#function-pointers">Function pointers</a></h4>
 <p>Function pointers that cross FFI boundaries may ultimately lead to arbitrary code
 execution and represent a real security risks.</p>
@@ -1452,6 +1528,7 @@ execution and represent a real security risks.</p>
 <p>In a secure Rust development, any function pointer types at the FFI boundary
 MUST be marked <code>extern</code> (possibly with the specific ABI) and <code>unsafe</code>.</p>
 </div>
+
 <p>Function pointers in Rust are a lot more similar to references than they are
 to normal pointers. In particular, the validity of function pointers cannot be
 checked directly on the Rust side. However, Rust offers two alternative
@@ -1488,6 +1565,7 @@ allowing more powerful checks at the cost of ergonomics.</p>
 <p>In a secure Rust development, any foreign function pointer MUST be checked at
 the FFI boundary.</p>
 </div>
+
 <p>When binding with C or even C++, one cannot guarantee easily the validity of
 function pointers. Moreover, C++ function objects (also known as functors) are not C-compatible.</p>
 <h4 id="enumerations"><a class="header" href="#enumerations">Enumerations</a></h4>
@@ -1514,6 +1592,7 @@ Rust side,</li>
 <li>bound to safe enumerations in the foreign language, e.g. <code>enum class</code> types in C++.</li>
 </ul>
 </div>
+
 <p>Concerning enumerations without field, crates like [<code>num_derive</code>] or [<code>num_enum</code>] allow
 developers to easily provide safe conversions from integer to enumeration and may
 be use to safely convert an integer (provided from a C <code>enum</code>) into a Rust enum.</p>
@@ -1524,6 +1603,7 @@ When doing multilingual development, it is something very common.</p>
 <p>In a secure Rust development, when binding foreign opaque types, one SHOULD
 use pointers to dedicated opaque types rather than <code>c_void</code> pointers.</p>
 </div>
+
 <p>Currently the recommended way to make a foreign opaque type is like so:</p>
 <pre><code class="language-rust unsafe noplaypen">#[repr(C)]
 pub struct OpaqueFoo {
@@ -1540,6 +1620,7 @@ are to be considered opaque in C/C++ SHOULD be translated as incomplete
 <code>struct</code> types (i,e., declared without definition) and be provided with
 a dedicated constructor and destructor.</p>
 </div>
+
 <p>Example of opaque Rust type:</p>
 <pre><code class="language-rust unsafe noplaypen">pub struct Opaque {
     // (...) hide details
@@ -1575,6 +1656,7 @@ memory model can be found in the <a href="https://doc.rust-lang.org/core/ptr/ind
 <p>In secure development in Rust, the use of indirection (pointers, references)
 crossing the boundary MUST preserve Rust’s memory model.</p>
 </div>
+
 <div class="example">
 <p>In the following example, the Rust code manipulates pointers originating from C,
 showing the importance of respecting Rust’s invariants from the C side.</p>
@@ -1592,6 +1674,7 @@ called from the following C code, because Rust’s memory model forbids the <em>
 }
 </code></pre>
 </div>
+
 <div class="example">
 <p>In the following example, the Rust code passes a pointer to C code,
 illustrating the importance of reflecting, in Rust’s type system,
@@ -1623,21 +1706,22 @@ fn run_inc() {
 <p>In this example, the error could have been detected by placing stronger constraints
 on the binding to the C library API, either by modifying its signature directly,
 or by wrapping the <code>inc_wrap</code> function, as in the following example.</p>
-<pre><pre class="playground"><code class="language-rust good"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust good"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn safe_inc_wrap(a: &amp;mut u8) {
     unsafe {
         inc_wrap(a);
     }
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">}</span></code></pre>
 <p>The <code>safe_inc_wrap</code> function is indeed <em>safe</em> because:</p>
 <ul>
-<li>any memory value can be interpreted as a value of type <code>u8</code> (the <code>u8</code> type is <a href="unsafe/ffi.html#robustness">robust</a>),</li>
+<li>any memory value can be interpreted as a value of type <code>u8</code> (the <code>u8</code> type is <a href="#robustness">robust</a>),</li>
 <li>the type of the <code>safe_inc_wrap</code> function enforces the <em>non-aliasing</em> and <em>mutability</em> constraints,</li>
 <li>the C code neither frees the pointer nor “retains” it (via a <code>static</code> variable, for example) beyond the call to the <code>inc_wrap</code> function.</li>
 </ul>
 </div>
+
 <h2 id="memory-and-resource-management"><a class="header" href="#memory-and-resource-management">Memory and resource management</a></h2>
 <p>Programming languages handle memory in various ways. As a result, it is
 important to known when transmitting data between Rust and another language
@@ -1653,6 +1737,7 @@ abandoning the possible reclamations associated with it.</p>
 types that are directly transmitted to foreign code  (i.e. not through a
 pointer or reference).</p>
 </div>
+
 <p>In fact, it is advisable to only use <code>Copy</code> types. Note that <code>*const T</code> is
 <code>Copy</code> even if T is not.</p>
 <p>However if not reclaiming memory and resources is bad, using reclaimed memory or
@@ -1669,6 +1754,7 @@ data.</li>
 dedicated foreign functions provided by the chosen language.</li>
 </ul>
 </div>
+
 <p>Ownership is not enough. It remains to ensure the correct lifetime, mostly that
 no use occurs after reclamation. It is a lot more challenging. When the other
 language is responsible for the memory, the best way is to provide a safe
@@ -1679,6 +1765,7 @@ allocated and deallocated in the foreign language SHOULD be encapsulated in a
 <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a> type in such a way as to provide automatic deallocation in Rust,
 through an automatic call to the foreign language deallocation routine.</p>
 </div>
+
 <p>A simple example of Rust wrapping over an external opaque type:</p>
 <pre><code class="language-rust ignore noplaypen">/// Private “raw” opaque foreign type Foo
 #[repr(C)]
@@ -1727,6 +1814,7 @@ except if the code is guaranteed to never panic.</p>
 <p>For wiping sensitive data, one could address the issue with a dedicated
 panic handler.</p>
 </div>
+
 <p>When the foreign language is the one exploiting Rust allocated resources, it is
 a lot more difficult to offer any guarantee.</p>
 <p>In C for instance, there is no easy way to check that the appropriate destructor
@@ -1842,6 +1930,7 @@ a panic handling mechanism (such as <a href="https://doc.rust-lang.org/std/panic
 <a href="https://doc.rust-lang.org/std/panic/fn.set_hook.html"><code>std::panic::set_hook</code></a>, <a href="https://doc.rust-lang.org/reference/panic.html#r-panic.panic_handler"><code>#[panic_handler]</code></a>) to ensure the rust code will not
 abort or return in an unstable state.</p>
 </div>
+
 <p>Note that <a href="https://doc.rust-lang.org/std/panic/fn.catch_unwind.html"><code>catch_unwind</code></a> will only catch unwinding panics, not those that abort
 the process.</p>
 <pre><code class="language-rust unsafe noplaypen ignore">fn may_panic() {
@@ -1868,6 +1957,7 @@ trick: the linker fails if a non-trivially-dead branch leads to <code>panic!</co
 <p>In a secure Rust development, exposing a Rust library to a foreign language
 SHOULD only be done through a <strong>dedicated C-compatible API</strong>.</p>
 </div>
+
 <p>The crate <a href="https://crates.io/crates/cbindgen"><code>cbindgen</code></a> may be used to automatically generate C or C++ bindings to
 the Rust C-compatible API of a Rust library.</p>
 <h3 id="minimal-example-of-a-c-exported-rust-library"><a class="header" href="#minimal-example-of-a-c-exported-rust-library">Minimal example of a C-exported Rust library</a></h3>
@@ -1987,10 +2077,13 @@ int main(int argc, const char **argv)
 <li><a id="unwinding"></a> <em><a href="https://doc.rust-lang.org/stable/reference/items/functions.html#unwinding">Unwinding</a></em> (unwinding)</li>
 </ul>
 <hr>
-<ol class="footnote-definition"><li id="footnote-ffi-panic-abort">
+<ol class="footnote-definition">
+<li id="footnote-ffi-panic-abort">
 <p>More details can be found in the <a href="https://doc.rust-lang.org/stable/reference/items/functions.html#unwinding">unwinding specification</a>. <a href="#fr-ffi-panic-abort-1">↩</a></p>
 </li>
-</ol><div style="break-before: page; page-break-before: always;"></div><h1 id="standard-library"><a class="header" href="#standard-library">Standard library</a></h1>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="standard-library"><a class="header" href="#standard-library">Standard library</a></h1>
 <h2 id="send-and-sync-traits"><a class="header" href="#send-and-sync-traits"><a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a> and <a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a> traits</a></h2>
 <p>The <a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a> and <a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a> traits (defined in <code>std::marker</code> or <code>core::marker</code>) are
 marker traits used to ensure the safety of concurrency in Rust. When implemented
@@ -2011,7 +2104,7 @@ As mentioned in <a href="https://doc.rust-lang.org/stable/nomicon/">Rustonomicon
 <ul>
 <li>Raw pointers are neither <a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a> nor <a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a> because they offer no safety
 guards.</li>
-<li><a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell</code></a> is not <a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a> (and as a result <a href="https://doc.rust-lang.org/std/cell/struct.Cell.html"><code>Cell</code></a> and <a href="https://doc.rust-lang.org/std/cell/struct.RefCell.html"><code>RefCell</code></a> aren't
+<li><a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell</code></a> is not <a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a> (and as a result <a href="https://doc.rust-lang.org/std/cell/struct.Cell.html"><code>Cell</code></a> and <a href="https://doc.rust-lang.org/std/cell/struct.RefCell.html"><code>RefCell</code></a> aren’t
 either) because they offer interior mutability (mutably shared value).</li>
 <li><a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a> is neither <a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a> nor <a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a> because the reference counter is shared and
 unsynchronized.</li>
@@ -2029,6 +2122,7 @@ internal fields of type <a href="https://doc.rust-lang.org/std/marker/struct.Pha
 <a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a> traits SHOULD be avoided and, if necessary, MUST be justified
 and documented.</p>
 </div>
+
 <h2 id="comparison-traits-partialeq-eq-partialord-ord"><a class="header" href="#comparison-traits-partialeq-eq-partialord-ord">Comparison traits (<a href="https://doc.rust-lang.org/std/cmp/trait.PartialEq.html"><code>PartialEq</code></a>, <a href="https://doc.rust-lang.org/std/cmp/trait.Eq.html"><code>Eq</code></a>, <a href="https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html"><code>PartialOrd</code></a>, <a href="https://doc.rust-lang.org/std/cmp/trait.Ord.html"><code>Ord</code></a>)</a></h2>
 <p>Comparisons (<code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>) in Rust rely on four standard
 traits available in <code>std::cmp</code> (or <code>core::cmp</code> for <code>no_std</code> compilation):</p>
@@ -2054,7 +2148,7 @@ the strict inverse of <code>eq</code>. The default implementation of <code>ne</c
 that.</p>
 </li>
 <li>
-<p><em>Symmetry</em>: <code>a.eq(b)</code> and <code>b.eq(a)</code>, are equivalent. From the developer's
+<p><em>Symmetry</em>: <code>a.eq(b)</code> and <code>b.eq(a)</code>, are equivalent. From the developer’s
 point of view, it means:</p>
 <ul>
 <li><code>PartialEq&lt;B&gt;</code> is implemented for type <code>A</code> (noted <code>A: PartialEq&lt;B&gt;</code>),</li>
@@ -2106,7 +2200,7 @@ guaranteed by the default implementation of <code>lt</code>, <code>le</code>, <c
 </li>
 <li>
 <p><em>Antisymmetry</em>: <code>a.lt(b)</code> (respectively <code>a.gt(b)</code>) implies <code>b.gt(a)</code>
-(respectively, <code>b.lt(a)</code>). From the developer's standpoint, it also means:</p>
+(respectively, <code>b.lt(a)</code>). From the developer’s standpoint, it also means:</p>
 <ul>
 <li><code>A: PartialOrd&lt;B&gt;</code>,</li>
 <li><code>B: PartialOrd&lt;A&gt;</code>,</li>
@@ -2154,11 +2248,13 @@ of <code>unsafe</code> blocks.</p>
 <p>In a Rust secure development, the implementation of standard comparison traits
 MUST respect the invariants described in the documentation.</p>
 </div>
+
 <div class="reco" id="LANG-CMP-DEFAULTS" type="Recommendation" title="Use the default method implementation of standard comparison traits">
 <p>In a Rust secure development, the implementation of standard comparison traits
 SHOULD only define methods with no default implementation, so as to reduce
 the risk of violating the invariants associated with the traits.</p>
 </div>
+
 <p>There is a Clippy lint to check that <code>PartialEq::ne</code> is not defined in
 <a href="https://doc.rust-lang.org/std/cmp/trait.PartialEq.html"><code>PartialEq</code></a> implementations.</p>
 <p>Rust comes with a standard way to automatically construct implementations of the
@@ -2175,7 +2271,7 @@ providing that each subtype is <a href="https://doc.rust-lang.org/std/cmp/trait.
 </ul>
 <p>For instance, the short following code shows how to compare two <code>T1</code>s easily.
 All the assertions hold.</p>
-<pre><pre class="playground"><code class="language-rust">#[derive(PartialEq, Eq, PartialOrd, Ord)]
+<pre class="playground"><code class="language-rust">#[derive(PartialEq, Eq, PartialOrd, Ord)]
 struct T1 {
     a: u8, b: u8
 }
@@ -2185,7 +2281,7 @@ struct T1 {
 assert!(T1 { a: 1, b: 0 } &gt; T1 { a: 0, b: 0 });
 assert!(T1 { a: 1, b: 1 } &gt; T1 { a: 1, b: 0 });
 <span class="boring">println!("all tests passed.");
-</span><span class="boring">}</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre>
 <div class="warning">
 <p>Derivation of comparison traits for compound types depends on the
 <strong>field order</strong>, and not on their names.</p>
@@ -2203,6 +2299,7 @@ result due to the use of short-circuit logic in the automatic implementation.</p
 <p>For enumerations, the derived comparisons depend first on the <strong>variant order</strong>, then
 on the field order.</p>
 </div>
+
 <p>Despite the ordering caveat, derived comparisons are a lot less error-prone
 than manual ones and make the code shorter and easier to maintain.</p>
 <div class="reco" id="LANG-CMP-DERIVE" type="Recommendation" title="Derive comparison traits when possible">
@@ -2211,6 +2308,7 @@ SHOULD be automatically derived with <code>#[derive(...)]</code> when structural
 and lexicographical comparison is needed. Any manual implementation of
 standard comparison traits SHOULD be documented and justified.</p>
 </div>
+
 <h2 id="drop-trait-the-destructor"><a class="header" href="#drop-trait-the-destructor"><a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a> trait, the destructor</a></h2>
 <p>Types implement the trait <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>std::ops::Drop</code></a> to perform some operations when the
 memory associated with a value of this type is to be reclaimed. <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a> is the
@@ -2218,6 +2316,7 @@ Rust equivalent of a destructor in C++ or a finalizer in Java.</p>
 <div class="note">
 <p>Implementing this trait changes the execution semantics of the language.</p>
 </div>
+
 <p>Dropping is done recursively from the outer value to the inner values.
 When a value goes out of scope (or is explicitly dropped with <a href="https://doc.rust-lang.org/std/mem/fn.drop.html"><code>mem::drop</code></a>),
 the value is dropped in two steps. The first step happens only if the type of
@@ -2235,13 +2334,14 @@ blocks as well as other security-critical operations.</p>
 <p>In a Rust secure development, the implementation of the <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>std::ops::Drop</code></a> trait
 MUST be justified and documented.</p>
 </div>
-<p>Second, Rust type system only ensures memory safety and, from the type system's
+
+<p>Second, Rust type system only ensures memory safety and, from the type system’s
 standpoint, missing drops is allowed. In fact, several things may lead to
 missing drops, such as:</p>
 <ul>
 <li>a reference cycle (for instance, with <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a> or <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc</code></a>),</li>
 <li>an explicit call to <a href="https://doc.rust-lang.org/std/mem/fn.forget.html"><code>mem::forget</code></a> (see paragraph
-on <a href="unsafe/memory.html#forget-and-memory-leaks"><code>mem::forget</code> and memory leaks</a>),</li>
+on <a href="#forget-and-memory-leaks"><code>mem::forget</code> and memory leaks</a>),</li>
 <li>a panic during drop,</li>
 <li>program aborts (and panics when abort-on-panic is on).</li>
 </ul>
@@ -2251,30 +2351,33 @@ resources leading to availability issues.</p>
 <p>In a Rust secure development, the implementation of the <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>std::ops::Drop</code></a> trait
 MUST not panic.</p>
 </div>
+
 <p>Beside panics, secure-critical drop should be protected.</p>
 <div class="reco" id="LANG-DROP-NO-CYCLE" type="Rule" title="Do not allow cycles of reference-counted `Drop`">
 <p>A value whose type implements <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a> MUST NOT be embedded directly or indirectly
 in a cycle of reference-counted references.
-(see section on <a href="standard.html#cyclic-rc-pointer">cyclic reference counted pointers</a>).</p>
+(see section on <a href="#cyclic-rc-pointer">cyclic reference counted pointers</a>).</p>
 </div>
+
 <div class="reco" id="LANG-DROP-SEC" type="Rule" title="Do not rely only on `Drop` to ensure security">
 <p>Ensuring security operations at the end of some treatment (such as key erasure
 at the end of a cryptographic encryption) MUST NOT rely only on the <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a>
 trait implementation.</p>
 </div>
+
 <h2 id="cyclic-rc-pointer"><a class="header" href="#cyclic-rc-pointer">Cyclic reference counted pointers (<a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a> and <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc</code></a>)</a></h2>
 <p>Reference-counting pointers allow values of any type to be cloned.
 To do this, these values are associated with a counter that counts the number of clones attached to that value, and when
 the counter reaches zero, the value is destroyed.</p>
 <p>This paradigm can introduce memory leaks when reference-counting pointers are used in cycles.</p>
 <center>
-<p><img src="static/images/cycle-color.svg" alt="Reference cycle" /></p>
+<p><img src="static/images/cycle-color.svg" alt="Reference cycle"></p>
 </center>
 <p>In this example, objects <code>A</code>, <code>B</code>, and <code>C</code> are each referenced by at least one other object: as long as these three objects exist,
 they will not be deleted. This results in a memory leak.</p>
 <p><strong>Combining</strong> <a href="https://doc.rust-lang.org/reference/interior-mutability.html">interior mutability</a>, recursivity and reference counted pointer into type definitions is unsafe. It can produce memory leaks which can result in DDoS attacks or leaking secrets.</p>
 <p>The following example shows such a memory leak in safe Rust:</p>
-<pre><pre class="playground"><code class="language-rust align bad">use std::{cell::Cell, rc::Rc};
+<pre class="playground"><code class="language-rust align bad">use std::{cell::Cell, rc::Rc};
 
 struct LinkedStruct {
    other: Cell&lt;Option&lt;Rc&lt;LinkedStruct&gt;&gt;&gt;,
@@ -2292,7 +2395,7 @@ fn main() {
    let bb = b.clone();
    a.other.set(Some(bb));
    b.other.set(Some(aa));
-}</code></pre></pre>
+}</code></pre>
 <p>Memory leak is shown with <code>valgrind</code>:</p>
 <pre><code>$ valgrind --leak-check=full target/release/safe-rust-leak 
 ==153637== Memcheck, a memory error detector
@@ -2333,11 +2436,13 @@ Hello, world!
 <div class="reco" id="MEM-MUT-REC-RC" type="Rule" title="Avoid cyclic reference counted pointers">
 <p>Recursive types whose recursivity uses reference counted pointers MUST NOT be used together with interior mutability.</p>
 </div>
+
 <h2 id="references-7"><a class="header" href="#references-7">References</a></h2>
 <ul>
-<li><a id="nomicon"></a> <em><a href="https://doc.rust-lang.org/stable/nomicon/">The Rustonomicon</a></em> (nomicon)</li>
+<li><a id="nomicon-1"></a> <em><a href="https://doc.rust-lang.org/stable/nomicon/">The Rustonomicon</a></em> (nomicon)</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="open-licence-20licence-ouverte-20"><a class="header" href="#open-licence-20licence-ouverte-20">OPEN LICENCE 2.0/LICENCE OUVERTE 2.0</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="open-licence-20licence-ouverte-20"><a class="header" href="#open-licence-20licence-ouverte-20">OPEN LICENCE 2.0/LICENCE OUVERTE 2.0</a></h1>
 <h2 id="reuse-of-the-information-covered-by-this-licence"><a class="header" href="#reuse-of-the-information-covered-by-this-licence">“Reuse” of the “Information” covered by this licence</a></h2>
 <p>The “Grantor” grants the “Reuser” the free, non-exclusive right to “Reuse” the “Information” subject of this licence, for commercial or non-commercial purposes, worldwide and for an unlimited period, in accordance with the conditions stated below.</p>
 <p><strong>The “Reuser” is free to reuse the “Information”:</strong></p>
@@ -2392,171 +2497,112 @@ Hello, world!
 <p>Under the Prime Minister’s authority, the Etalab mission is mandated to open up the maximum amount of data held by State administrations and public institutions. Etalab has drawn up the Open Licence to facilitate the unrestricted and free of charge reuse of public information, as defined by article L. 321-1 of the CRPA.</p>
 <p>This licence is version 2.0 of the Open Licence.</p>
 <p>Etalab reserves the right to propose new versions of the Open Licence. Nevertheless, “Reusers” may continue to reuse information obtained under this licence should they so wish.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="checklist"><a class="header" href="#checklist">Checklist</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="recommendations-checklist"><a class="header" href="#recommendations-checklist">Recommendations checklist</a></h1>
 <ul>
 <li>
 <p>Development environment:</p>
 <ul>
-<li><input disabled="" type="checkbox"/>
-Rule - Use a stable compilation toolchain (<a href="devenv.html#DENV-STABLE">DENV-STABLE</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Exclusive use of tier 1 of <code>rustc</code> for safety-critical software (<a href="devenv.html#DENV-TIERS">DENV-TIERS</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Track Cargo.lock in version control system (<a href="devenv.html#DENV-CARGO-LOCK">DENV-CARGO-LOCK</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Keep default values for critical variables in cargo profiles (<a href="devenv.html#DENV-CARGO-OPTS">DENV-CARGO-OPTS</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Keep default values for compiler environment variables when running cargo (<a href="devenv.html#DENV-CARGO-ENVVARS">DENV-CARGO-ENVVARS</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Recommendation - Use Rust formatter (rustfmt) (<a href="devenv.html#DENV-FORMAT">DENV-FORMAT</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Use linter regularly (<a href="devenv.html#DENV-LINTER">DENV-LINTER</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Manually check automatic fixes (<a href="devenv.html#DENV-AUTOFIX">DENV-AUTOFIX</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Use a stable compilation toolchain (<a href="#DENV-STABLE">DENV-STABLE</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Exclusive use of tier 1 of <code>rustc</code> for safety-critical software (<a href="#DENV-TIERS">DENV-TIERS</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Track Cargo.lock in version control system (<a href="#DENV-CARGO-LOCK">DENV-CARGO-LOCK</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Keep default values for critical variables in cargo profiles (<a href="#DENV-CARGO-OPTS">DENV-CARGO-OPTS</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Keep default values for compiler environment variables when running cargo (<a href="#DENV-CARGO-ENVVARS">DENV-CARGO-ENVVARS</a>)</li>
+<li><input disabled="" type="checkbox"> Recommendation - Use Rust formatter (rustfmt) (<a href="#DENV-FORMAT">DENV-FORMAT</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Use linter regularly (<a href="#DENV-LINTER">DENV-LINTER</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Manually check automatic fixes (<a href="#DENV-AUTOFIX">DENV-AUTOFIX</a>)</li>
 </ul>
 </li>
 <li>
 <p>Libraries:</p>
 <ul>
-<li><input disabled="" type="checkbox"/>
-Rule - Validation of Direct Third-Party Dependencies (<a href="libraries.html#LIBS-VETTING-DIRECT">LIBS-VETTING-DIRECT</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Recommendation - Validation of Transitive Third-Party Dependencies (<a href="libraries.html#LIBS-VETTING-TRANSITIVE">LIBS-VETTING-TRANSITIVE</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Check for outdated dependencies (cargo-outdated) (<a href="libraries.html#LIBS-OUTDATED">LIBS-OUTDATED</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Check for security vulnerability reports on dependencies (cargo-audit) (<a href="libraries.html#LIBS-AUDIT">LIBS-AUDIT</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Validation of Direct Third-Party Dependencies (<a href="#LIBS-VETTING-DIRECT">LIBS-VETTING-DIRECT</a>)</li>
+<li><input disabled="" type="checkbox"> Recommendation - Validation of Transitive Third-Party Dependencies (<a href="#LIBS-VETTING-TRANSITIVE">LIBS-VETTING-TRANSITIVE</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Check for outdated dependencies (cargo-outdated) (<a href="#LIBS-OUTDATED">LIBS-OUTDATED</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Check for security vulnerability reports on dependencies (cargo-audit) (<a href="#LIBS-AUDIT">LIBS-AUDIT</a>)</li>
 </ul>
 </li>
 <li>
 <p>Naming:</p>
 <ul>
-<li><input disabled="" type="checkbox"/>
-Rule - Respect naming conventions (<a href="naming.html#LANG-NAMING">LANG-NAMING</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Respect naming conventions (<a href="#LANG-NAMING">LANG-NAMING</a>)</li>
 </ul>
 </li>
 <li>
 <p>Integer operations:</p>
 <ul>
-<li><input disabled="" type="checkbox"/>
-Rule - Use appropriate arithmetic operations regarding potential overflows (<a href="integer.html#LANG-ARITH">LANG-ARITH</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Use appropriate arithmetic operations regarding potential overflows (<a href="#LANG-ARITH">LANG-ARITH</a>)</li>
 </ul>
 </li>
 <li>
 <p>Error handling:</p>
 <ul>
-<li><input disabled="" type="checkbox"/>
-Recommendation - Implement custom <code>Error</code> type wrapping all possible errors (<a href="errors.html#LANG-ERRWRAP">LANG-ERRWRAP</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Limit <code>panic</code> use (<a href="errors.html#LANG-LIMIT-PANIC">LANG-LIMIT-PANIC</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Limit use of <code>panic</code>-ing functions (<a href="errors.html#LANG-LIMIT-PANIC-SRC">LANG-LIMIT-PANIC-SRC</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Test properly array indexing or use the <code>get</code> method (<a href="errors.html#LANG-ARRINDEXING">LANG-ARRINDEXING</a>)</li>
+<li><input disabled="" type="checkbox"> Recommendation - Implement custom <code>Error</code> type wrapping all possible errors (<a href="#LANG-ERRWRAP">LANG-ERRWRAP</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Limit <code>panic</code> use (<a href="#LANG-LIMIT-PANIC">LANG-LIMIT-PANIC</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Limit use of <code>panic</code>-ing functions (<a href="#LANG-LIMIT-PANIC-SRC">LANG-LIMIT-PANIC-SRC</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Test properly array indexing or use the <code>get</code> method (<a href="#LANG-ARRINDEXING">LANG-ARRINDEXING</a>)</li>
 </ul>
 </li>
 <li>
 <p>Generalities:</p>
 <ul>
-<li><input disabled="" type="checkbox"/>
-Rule - No Undefined Behavior (<a href="unsafe/generalities.html#UNSAFE-NOUB">UNSAFE-NOUB</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Don't use unsafe blocks (<a href="unsafe/generalities.html#LANG-UNSAFE">LANG-UNSAFE</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Encapsulation of <em>unsafe</em> features (<a href="unsafe/generalities.html#LANG-UNSAFE-ENCP">LANG-UNSAFE-ENCP</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - No Undefined Behavior (<a href="#UNSAFE-NOUB">UNSAFE-NOUB</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Don’t use unsafe blocks (<a href="#LANG-UNSAFE">LANG-UNSAFE</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Encapsulation of <em>unsafe</em> features (<a href="#LANG-UNSAFE-ENCP">LANG-UNSAFE-ENCP</a>)</li>
 </ul>
 </li>
 <li>
 <p>Memory management:</p>
 <ul>
-<li><input disabled="" type="checkbox"/>
-Rule - No memory leak (<a href="unsafe/memory.html#MEM-NO-LEAK">MEM-NO-LEAK</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Do not use <code>mem::forget</code> (<a href="unsafe/memory.html#MEM-FORGET">MEM-FORGET</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Recommendation - Use clippy lint to detect use of <code>mem::forget</code> (<a href="unsafe/memory.html#MEM-FORGET-LINT">MEM-FORGET-LINT</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Do not use <code>leak</code> function (<a href="unsafe/memory.html#MEM-LEAK">MEM-LEAK</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Do release value wrapped in <code>ManuallyDrop</code> (<a href="unsafe/memory.html#MEM-MANUALLYDROP">MEM-MANUALLYDROP</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Do no convert smart pointer into raw pointer in Rust without <code>unsafe</code> (<a href="unsafe/memory.html#MEM-NORAWPOINTER">MEM-NORAWPOINTER</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Always call <code>from_raw</code> on <code>into_raw</code>ed value (<a href="unsafe/memory.html#MEM-INTOFROMRAWALWAYS">MEM-INTOFROMRAWALWAYS</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Call <code>from_raw</code> <em>only</em> on <code>into_raw</code>ed value (<a href="unsafe/memory.html#MEM-INTOFROMRAWONLY">MEM-INTOFROMRAWONLY</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Do not use uninitialized memory (<a href="unsafe/memory.html#MEM-UNINIT">MEM-UNINIT</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - No memory leak (<a href="#MEM-NO-LEAK">MEM-NO-LEAK</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Do not use <code>mem::forget</code> (<a href="#MEM-FORGET">MEM-FORGET</a>)</li>
+<li><input disabled="" type="checkbox"> Recommendation - Use clippy lint to detect use of <code>mem::forget</code> (<a href="#MEM-FORGET-LINT">MEM-FORGET-LINT</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Do not use <code>leak</code> function (<a href="#MEM-LEAK">MEM-LEAK</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Do release value wrapped in <code>ManuallyDrop</code> (<a href="#MEM-MANUALLYDROP">MEM-MANUALLYDROP</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Do no convert smart pointer into raw pointer in Rust without <code>unsafe</code> (<a href="#MEM-NORAWPOINTER">MEM-NORAWPOINTER</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Always call <code>from_raw</code> on <code>into_raw</code>ed value (<a href="#MEM-INTOFROMRAWALWAYS">MEM-INTOFROMRAWALWAYS</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Call <code>from_raw</code> <em>only</em> on <code>into_raw</code>ed value (<a href="#MEM-INTOFROMRAWONLY">MEM-INTOFROMRAWONLY</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Do not use uninitialized memory (<a href="#MEM-UNINIT">MEM-UNINIT</a>)</li>
 </ul>
 </li>
 <li>
 <p>Foreign Function Interface:</p>
 <ul>
-<li><input disabled="" type="checkbox"/>
-Recommendation - Provide safe wrapping to foreign library (<a href="unsafe/ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Use only C-compatible types in FFI (<a href="unsafe/ffi.html#FFI-CTYPE">FFI-CTYPE</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Use consistent types at FFI boundaries (<a href="unsafe/ffi.html#FFI-TCONS">FFI-TCONS</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Recommendation - Use automatic binding generator tools (<a href="unsafe/ffi.html#FFI-AUTOMATE">FFI-AUTOMATE</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Use portable aliases <code>c_*</code> when binding to platform-dependent types (<a href="unsafe/ffi.html#FFI-PFTYPE">FFI-PFTYPE</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Do not use unchecked non-robust foreign values (<a href="unsafe/ffi.html#FFI-CKNONROBUST">FFI-CKNONROBUST</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Recommendation - Check foreign values in Rust (<a href="unsafe/ffi.html#FFI-CKINRUST">FFI-CKINRUST</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Check foreign pointers (<a href="unsafe/ffi.html#FFI-CK-PTR-VALID">FFI-CK-PTR-VALID</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Recommendation - Use raw pointer to encode pointers coming from the external language (<a href="unsafe/ffi.html#FFI-INPUT-PTR">FFI-INPUT-PTR</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Do not use unchecked foreign references (<a href="unsafe/ffi.html#FFI-CK-INPUT-REF-VALID">FFI-CK-INPUT-REF-VALID</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Mark function pointer types in FFI as <code>extern</code> and <code>unsafe</code> (<a href="unsafe/ffi.html#FFI-MARKEDFUNPTR">FFI-MARKEDFUNPTR</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Check foreign function pointers (<a href="unsafe/ffi.html#FFI-CKFUNPTR">FFI-CKFUNPTR</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Do not use incoming Rust <code>enum</code> at FFI boundary (<a href="unsafe/ffi.html#FFI-NOENUM">FFI-NOENUM</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Recommendation - Use dedicated Rust types for foreign opaque types (<a href="unsafe/ffi.html#FFI-R-OPAQUE">FFI-R-OPAQUE</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Recommendation - Use incomplete C/C++ <code>struct</code> pointers to make type opaque (<a href="unsafe/ffi.html#FFI-C-OPAQUE">FFI-C-OPAQUE</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Preservation of Rust’s memory model when transferring indirections at its boundary (<a href="unsafe/ffi.html#FFI-CK-REF-MODEL">FFI-CK-REF-MODEL</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Do not use types that implement <code>Drop</code> at FFI boundary (<a href="unsafe/ffi.html#FFI-MEM-NODROP">FFI-MEM-NODROP</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Ensure clear data ownership in FFI (<a href="unsafe/ffi.html#FFI-MEM-OWNER">FFI-MEM-OWNER</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Recommendation - Wrap foreign data in memory releasing wrapper (<a href="unsafe/ffi.html#FFI-MEM-WRAPPING">FFI-MEM-WRAPPING</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Recommendation - Handle <code>panic!</code> correctly in FFI (<a href="unsafe/ffi.html#FFI-NOPANIC">FFI-NOPANIC</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Expose dedicated C-compatible API only (<a href="unsafe/ffi.html#FFI-CAPI">FFI-CAPI</a>)</li>
+<li><input disabled="" type="checkbox"> Recommendation - Provide safe wrapping to foreign library (<a href="#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Use only C-compatible types in FFI (<a href="#FFI-CTYPE">FFI-CTYPE</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Use consistent types at FFI boundaries (<a href="#FFI-TCONS">FFI-TCONS</a>)</li>
+<li><input disabled="" type="checkbox"> Recommendation - Use automatic binding generator tools (<a href="#FFI-AUTOMATE">FFI-AUTOMATE</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Use portable aliases <code>c_*</code> when binding to platform-dependent types (<a href="#FFI-PFTYPE">FFI-PFTYPE</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Do not use unchecked non-robust foreign values (<a href="#FFI-CKNONROBUST">FFI-CKNONROBUST</a>)</li>
+<li><input disabled="" type="checkbox"> Recommendation - Check foreign values in Rust (<a href="#FFI-CKINRUST">FFI-CKINRUST</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Check foreign pointers (<a href="#FFI-CK-PTR-VALID">FFI-CK-PTR-VALID</a>)</li>
+<li><input disabled="" type="checkbox"> Recommendation - Use raw pointer to encode pointers coming from the external language (<a href="#FFI-INPUT-PTR">FFI-INPUT-PTR</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Do not use unchecked foreign references (<a href="#FFI-CK-INPUT-REF-VALID">FFI-CK-INPUT-REF-VALID</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Mark function pointer types in FFI as <code>extern</code> and <code>unsafe</code> (<a href="#FFI-MARKEDFUNPTR">FFI-MARKEDFUNPTR</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Check foreign function pointers (<a href="#FFI-CKFUNPTR">FFI-CKFUNPTR</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Do not use incoming Rust <code>enum</code> at FFI boundary (<a href="#FFI-NOENUM">FFI-NOENUM</a>)</li>
+<li><input disabled="" type="checkbox"> Recommendation - Use dedicated Rust types for foreign opaque types (<a href="#FFI-R-OPAQUE">FFI-R-OPAQUE</a>)</li>
+<li><input disabled="" type="checkbox"> Recommendation - Use incomplete C/C++ <code>struct</code> pointers to make type opaque (<a href="#FFI-C-OPAQUE">FFI-C-OPAQUE</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Preservation of Rust’s memory model when transferring indirections at its boundary (<a href="#FFI-CK-REF-MODEL">FFI-CK-REF-MODEL</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Do not use types that implement <code>Drop</code> at FFI boundary (<a href="#FFI-MEM-NODROP">FFI-MEM-NODROP</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Ensure clear data ownership in FFI (<a href="#FFI-MEM-OWNER">FFI-MEM-OWNER</a>)</li>
+<li><input disabled="" type="checkbox"> Recommendation - Wrap foreign data in memory releasing wrapper (<a href="#FFI-MEM-WRAPPING">FFI-MEM-WRAPPING</a>)</li>
+<li><input disabled="" type="checkbox"> Recommendation - Handle <code>panic!</code> correctly in FFI (<a href="#FFI-NOPANIC">FFI-NOPANIC</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Expose dedicated C-compatible API only (<a href="#FFI-CAPI">FFI-CAPI</a>)</li>
 </ul>
 </li>
 <li>
 <p>Standard library:</p>
 <ul>
-<li><input disabled="" type="checkbox"/>
-Rule - Justify <code>Send</code> and <code>Sync</code> implementation (<a href="standard.html#LANG-SYNC-TRAITS">LANG-SYNC-TRAITS</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Respect the invariants of standard comparison traits (<a href="standard.html#LANG-CMP-INV">LANG-CMP-INV</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Recommendation - Use the default method implementation of standard comparison traits (<a href="standard.html#LANG-CMP-DEFAULTS">LANG-CMP-DEFAULTS</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Recommendation - Derive comparison traits when possible (<a href="standard.html#LANG-CMP-DERIVE">LANG-CMP-DERIVE</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Justify <code>Drop</code> implementation (<a href="standard.html#LANG-DROP">LANG-DROP</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Do not panic in <code>Drop</code> implementation (<a href="standard.html#LANG-DROP-NO-PANIC">LANG-DROP-NO-PANIC</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Do not allow cycles of reference-counted <code>Drop</code> (<a href="standard.html#LANG-DROP-NO-CYCLE">LANG-DROP-NO-CYCLE</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Do not rely only on <code>Drop</code> to ensure security (<a href="standard.html#LANG-DROP-SEC">LANG-DROP-SEC</a>)</li>
-<li><input disabled="" type="checkbox"/>
-Rule - Avoid cyclic reference counted pointers (<a href="standard.html#MEM-MUT-REC-RC">MEM-MUT-REC-RC</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Justify <code>Send</code> and <code>Sync</code> implementation (<a href="#LANG-SYNC-TRAITS">LANG-SYNC-TRAITS</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Respect the invariants of standard comparison traits (<a href="#LANG-CMP-INV">LANG-CMP-INV</a>)</li>
+<li><input disabled="" type="checkbox"> Recommendation - Use the default method implementation of standard comparison traits (<a href="#LANG-CMP-DEFAULTS">LANG-CMP-DEFAULTS</a>)</li>
+<li><input disabled="" type="checkbox"> Recommendation - Derive comparison traits when possible (<a href="#LANG-CMP-DERIVE">LANG-CMP-DERIVE</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Justify <code>Drop</code> implementation (<a href="#LANG-DROP">LANG-DROP</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Do not panic in <code>Drop</code> implementation (<a href="#LANG-DROP-NO-PANIC">LANG-DROP-NO-PANIC</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Do not allow cycles of reference-counted <code>Drop</code> (<a href="#LANG-DROP-NO-CYCLE">LANG-DROP-NO-CYCLE</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Do not rely only on <code>Drop</code> to ensure security (<a href="#LANG-DROP-SEC">LANG-DROP-SEC</a>)</li>
+<li><input disabled="" type="checkbox"> Rule - Avoid cyclic reference counted pointers (<a href="#MEM-MUT-REC-RC">MEM-MUT-REC-RC</a>)</li>
 </ul>
 </li>
 </ul>
@@ -2578,6 +2624,11 @@ Rule - Avoid cyclic reference counted pointers (<a href="standard.html#MEM-MUT-R
 
         </div>
 
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
 
 
 
@@ -2586,18 +2637,17 @@ Rule - Avoid cyclic reference counted pointers (<a href="standard.html#MEM-MUT-R
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="pagetoc.js"></script>
-        <script src="vars-en.js"></script>
-        <script src="custom-envs.js"></script>
+        <script src="vars-en-18c826c5.js"></script>
+        <script src="custom-envs-8d117517.js"></script>
 
         <script>
         window.addEventListener('load', function() {

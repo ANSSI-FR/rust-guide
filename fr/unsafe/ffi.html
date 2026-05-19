@@ -12,25 +12,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="../favicon.svg">
-        <link rel="shortcut icon" href="../favicon.png">
-        <link rel="stylesheet" href="../css/variables.css">
-        <link rel="stylesheet" href="../css/general.css">
-        <link rel="stylesheet" href="../css/chrome.css">
-        <link rel="stylesheet" href="../css/print.css" media="print">
+        <link rel="icon" href="../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../css/general-2459343d.css">
+        <link rel="stylesheet" href="../css/chrome-ae938929.css">
+        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="../fonts/fonts.css">
+        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="../pagetoc.css">
-        <link rel="stylesheet" href="../custom-envs.css">
+        <link rel="stylesheet" href="../custom-envs-59fe9022.css">
 
 
         <!-- Provide site root and default themes to javascript -->
@@ -38,10 +36,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex.js";
+            window.path_to_searchindex_js = "../searchindex-0799d340.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc.js"></script>
+        <script src="../toc-c0394a0f.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -55,7 +53,7 @@
             </div>
         </div>
     </div>
-    <div id="body-container">
+    <div id="mdbook-body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
@@ -84,12 +82,12 @@
             html.classList.add("js");
         </script>
 
-        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             let sidebar = null;
-            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
@@ -104,39 +102,39 @@
             }
         </script>
 
-        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
                 <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
             </div>
         </nav>
 
-        <div id="page-wrapper" class="page-wrapper">
+        <div id="mdbook-page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                            <i class="fa fa-bars"></i>
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
                         </label>
-                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                            <i class="fa fa-paint-brush"></i>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
                         </button>
-                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
-                            <i class="fa fa-search"></i>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
                         </button>
                     </div>
 
@@ -144,68 +142,68 @@
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
-                            <i id="print-button" class="fa fa-print"></i>
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
                         </a>
                         <a href="https://github.com/ANSSI-FR/rust-guide" title="Git repository" aria-label="Git repository">
-                            <i id="git-repository-button" class="fa fa-github"></i>
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
                         </a>
                         <a href="https://github.com/ANSSI-FR/rust-guide/edit/master/src/fr/unsafe/ffi.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
-                            <i id="git-edit-button" class="fa fa-edit"></i>
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
                         </a>
 
                     </div>
                 </div>
 
-                <div id="search-wrapper" class="hidden">
-                    <form id="searchbar-outer" class="searchbar-outer">
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
                         <div class="search-wrapper">
-                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
                             <div class="spinner-wrapper">
-                                <i class="fa fa-spinner fa-spin"></i>
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
                             </div>
                         </div>
                     </form>
-                    <div id="searchresults-outer" class="searchresults-outer hidden">
-                        <div id="searchresults-header" class="searchresults-header"></div>
-                        <ul id="searchresults">
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
                         </ul>
                     </div>
                 </div>
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script>
-                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
-                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
-                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
                         link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
                     });
                 </script>
 
-                <div id="content" class="content">
+                <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="chapter-ffi"><a class="header" href="#chapter-ffi">Interfaçage avec des fonctions externes (FFI)</a></h1>
-<p>L'approche de Rust en ce qui concerne l'interfaçage avec des fonctions d'autres
+<p>L’approche de Rust en ce qui concerne l’interfaçage avec des fonctions d’autres
 langages repose sur une compatibilité forte avec le C. Toutefois, cette
 frontière est par nature <strong>non sûre</strong> (voir <a href="https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html">Rust Book: Unsafe Rust</a>).</p>
 <p>Les fonctions marquées comme externes (mot-clé <code>extern</code>) sont rendues
 compatibles avec du code C à la compilation. Elles peuvent être appelées depuis
-un code C avec n'importe quelle valeur en argument. La syntaxe complète est
-<code>extern "&lt;ABI&gt;"</code> où <code>"&lt;ABI&gt;"</code> décrit la convention d'appel et dépend de la
-plateforme d'exécution visée. Par défaut, elle vaut <code>"C"</code>, ce qui correspond à
-la manière standard en C d'appeler des fonctions.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+un code C avec n’importe quelle valeur en argument. La syntaxe complète est
+<code>extern "&lt;ABI&gt;"</code> où <code>"&lt;ABI&gt;"</code> décrit la convention d’appel et dépend de la
+plateforme d’exécution visée. Par défaut, elle vaut <code>"C"</code>, ce qui correspond à
+la manière standard en C d’appeler des fonctions.</p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Export C-compatible function
 #[unsafe(no_mangle)]
 extern "C" fn mylib_f(param: u32) -&gt; i32 {
     if param == 0xCAFEBABE { 0 } else { -1 }
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">}</span></code></pre>
 <p>Pour que la fonction <code>mylib_f</code> soit accessible avec le même nom, la fonction
-doit être annotée avec l'attribut <code>#[unsafe(no_mangle)]</code>.</p>
-<p>À l'inverse, il est possible d'appeler des fonctions écrites en C depuis du code
+doit être annotée avec l’attribut <code>#[unsafe(no_mangle)]</code>.</p>
+<p>À l’inverse, il est possible d’appeler des fonctions écrites en C depuis du code
 Rust si celles-ci sont déclarées dans un bloc <code>extern</code> :</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::os::raw::c_int;
 // import C function
@@ -217,15 +215,16 @@ fn use_abs() {
     let x = -1;
     println!("{} {}\n", x, unsafe { abs(x) });
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">}</span></code></pre>
 <div class="note">
-<p>Toute fonction écrite dans un autre langage et importée dans Rust par l'usage
-d'un bloc <code>extern</code> est <strong>automatiquement <em>unsafe</em></strong>. C'est pourquoi tout
+<p>Toute fonction écrite dans un autre langage et importée dans Rust par l’usage
+d’un bloc <code>extern</code> est <strong>automatiquement <em>unsafe</em></strong>. C’est pourquoi tout
 appel à une telle fonction doit être fait dans un contexte <code>unsafe</code>.</p>
 </div>
+
 <p>Les blocs <code>extern</code> peuvent également contenir des déclarations de variables
 globales externes, préfixées alors par le mot-clé <code>static</code> :</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// A direct way to access environment variables (on Unix)
 // should not be used! Not thread safe, have a look at `std::env`!
@@ -246,37 +245,38 @@ fn use_static_extern() {
         next = unsafe { next.offset(1) };
     }
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">}</span></code></pre>
 <h2 id="organisation-du-code"><a class="header" href="#organisation-du-code">Organisation du code</a></h2>
-<div class="reco" id="FFI-SAFEWRAPPING" type="Recommandation" title="Mise en place d'une encapsulation sûre pour les bibliothèques externes">
-<p>L'interfaçage entre une bibliothèque écrite dans un autre langage et
+<div class="reco" id="FFI-SAFEWRAPPING" type="Recommandation" title="Mise en place d&#39;une encapsulation sûre pour les bibliothèques externes">
+<p>L’interfaçage entre une bibliothèque écrite dans un autre langage et
 du code Rust DEVRAIT être réalisé en deux parties :</p>
 <ul>
 <li>un module bas-niveau, potentiellement <em>caché</em>, qui traduit de façon très
-proche l'API originale en des blocs <code>extern</code> ;</li>
+proche l’API originale en des blocs <code>extern</code> ;</li>
 <li>un module qui assure la sûreté mémoire et les invariants de sécurité au
 niveau de Rust.</li>
 </ul>
-<p>Si l'API bas-niveau est exposée, cela DEVRAIT être fait dans un <em>crate</em> dédiée
+<p>Si l’API bas-niveau est exposée, cela DEVRAIT être fait dans un <em>crate</em> dédiée
 ayant un nom de la forme <code>*-sys</code>.</p>
 </div>
+
 <p>La <em>crate</em> <a href="https://crates.io/crates/bindgen"><code>rust-bindgen</code></a> peut être utilisée pour générer automatiquement la
 partie bas-niveau du <em>binding</em> depuis les fichiers <em>header</em> C.</p>
 <!--
 <mark>TODO</mark> example
 -->
 <h2 id="typage"><a class="header" href="#typage">Typage</a></h2>
-<p>Le typage est le moyen qu'utilise Rust pour assurer la sûreté mémoire. Lors de
-l'interfaçage avec d'autres langages, qui n'offrent peut-être pas les mêmes
+<p>Le typage est le moyen qu’utilise Rust pour assurer la sûreté mémoire. Lors de
+l’interfaçage avec d’autres langages, qui n’offrent peut-être pas les mêmes
 garanties, le choix des types lors du <em>binding</em> est essentiel pour maintenir
 au mieux cette sûreté mémoire.</p>
 <h3 id="agencement-des-données"><a class="header" href="#agencement-des-données">Agencement des données</a></h3>
 <p>Rust ne fournit aucune garantie, que ce soit sur un court ou un long terme,
 vis-à-vis de la façon dont sont agencées les données en mémoire. La seule
-manière de rendre les données compatibles avec d'autres langages est
-la déclaration explicite de la compatibilité avec le C, avec l'attribut <code>repr</code>
+manière de rendre les données compatibles avec d’autres langages est
+la déclaration explicite de la compatibilité avec le C, avec l’attribut <code>repr</code>
 (voir <a href="https://doc.rust-lang.org/reference/type-layout.html">Rust Reference: Type Layout</a>). Par exemple, les types Rust suivants :</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[repr(C)]
 struct Data {
@@ -290,7 +290,7 @@ struct PackedData {
     b: u16,
     c: u64,
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">}</span></code></pre>
 <p>sont compatibles avec les types C suivants :</p>
 <pre><code class="language-c">struct Data
 {
@@ -309,9 +309,10 @@ __attribute__((packed)) struct PackedData
 <p>Dans un développement sécurisé, les types non compatibles avec le C NE DOIVENT PAS
 être utilisés comme argument ou type de retour des fonctions importées ou
 exportées et comme type de variables globales importées ou exportées.</p>
-<p>La seule exception à cette règle est l'utilisation de types considérés
+<p>La seule exception à cette règle est l’utilisation de types considérés
 comme <strong>opaques</strong> du côté du langage externe.</p>
 </div>
+
 <p>Les types suivants sont considérés comme compatibles avec le C :</p>
 <ul>
 <li>les types primitifs entiers et à virgule flottante ;</li>
@@ -329,7 +330,7 @@ entier correspondant ;</li>
 </ul>
 </li>
 <li>les structures annotées avec <code>repr(transparent)</code> possédant un seul champ, qui
-est d'un type C-compatible.</li>
+est d’un type C-compatible.</li>
 </ul>
 <p>Les types suivants ne sont pas compatibles avec le C :</p>
 <ul>
@@ -348,10 +349,11 @@ contradictions dans les spécifications du C++ ;</li>
 <h3 id="cohérence-du-typage"><a class="header" href="#cohérence-du-typage">Cohérence du typage</a></h3>
 <div class="reco" id="FFI-TCONS" type="Règle" title="Utilisation de types cohérents pour les FFI">
 <p>Les types DOIVENT être cohérents entre les deux côtés des frontières des FFI.</p>
-<p>Bien que certains détails peuvent être masqués de la part d'un côté envers
-l'autre (typiquement, pour rendre un type opaque), les types des deux parties
+<p>Bien que certains détails peuvent être masqués de la part d’un côté envers
+l’autre (typiquement, pour rendre un type opaque), les types des deux parties
 DOIVENT avoir la même taille et respecter le même alignement.</p>
 </div>
+
 <p>En ce qui concerne les <code>enum</code>s avec des champs en particulier, les types
 correspondant en C (ou en C++) ne sont pas évidents (<a href="https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html">RFC 2195</a>).</p>
 <p>Les outils permettant de générer automatiquement des <em>bindings</em>, comme
@@ -362,17 +364,19 @@ types du côté C et ceux du côté Rust.</p>
 de <em>bindings</em> DEVRAIENT être utilisés lorsque cela est possible, et ce en
 continu.</p>
 </div>
+
 <!-- -->
 <div class="warning">
 <p>Pour les <em>bindings</em> C/C++ vers Rust, <a href="https://crates.io/crates/bindgen"><code>rust-bindgen</code></a> est capable de générer
-automatiquement des <em>bindings</em> de bas niveau. L'écriture d'un <em>binding</em> de
+automatiquement des <em>bindings</em> de bas niveau. L’écriture d’un <em>binding</em> de
 plus haut niveau est fortement recommandée (voir Recommandation
 <a href="ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>). Attention également à certaines
 options dangereuses de <code>rust-bindgen</code>, en particulier <code>rustified_enum</code>.</p>
 </div>
-<h3 id="types-dépendants-de-la-plateforme-dexécution"><a class="header" href="#types-dépendants-de-la-plateforme-dexécution">Types dépendants de la plateforme d'exécution</a></h3>
-<p>Lors de l'interfaçage avec un langage externe, comme C ou C++, il est souvent
-nécessaire d'utiliser des types dépendants de la plateforme d'exécution, comme
+
+<h3 id="types-dépendants-de-la-plateforme-dexécution"><a class="header" href="#types-dépendants-de-la-plateforme-dexécution">Types dépendants de la plateforme d’exécution</a></h3>
+<p>Lors de l’interfaçage avec un langage externe, comme C ou C++, il est souvent
+nécessaire d’utiliser des types dépendants de la plateforme d’exécution, comme
 les <code>int</code>s C, les <code>long</code>s, etc.</p>
 <p>En plus du type <code>c_void</code> de <code>std::ffi</code> (ou <code>core::ffi</code>) pour le type C <code>void</code>,
 la bibliothèque standard offre des alias de types portables dans <code>std::os::raw</code>
@@ -394,51 +398,53 @@ la bibliothèque standard offre des alias de types portables dans <code>std::os:
 </ul>
 <p>La crate <a href="https://crates.io/crates/libc"><code>libc</code></a> offre des types supplémentaires compatibles avec le C qui
 couvrent la quasi-entièreté de la bibliothèque standard du C.</p>
-<div class="reco" id="FFI-PFTYPE" type="Règle" title="Utilisation des alias portables `c_*` pour faire correspondre les types dépendants de la plateforme d'exécution">
-<p>Dans un développement sécurisé en Rust, lors de l'interfaçage avec du code
-faisant usage de types dépendants de la plateforme d'exécution, comme les
+<div class="reco" id="FFI-PFTYPE" type="Règle" title="Utilisation des alias portables `c_*` pour faire correspondre les types dépendants de la plateforme d&#39;exécution">
+<p>Dans un développement sécurisé en Rust, lors de l’interfaçage avec du code
+faisant usage de types dépendants de la plateforme d’exécution, comme les
 <code>int</code>s et les <code>long</code>s du C, le code Rust DOIT utiliser les alias portables de
 types, comme ceux fournis dans la bibliothèque standard ou dans la crate
-<a href="https://crates.io/crates/libc"><code>libc</code></a>, au lieu des types spécifiques à la plateforme, à l'exception du cas
+<a href="https://crates.io/crates/libc"><code>libc</code></a>, au lieu des types spécifiques à la plateforme, à l’exception du cas
 où les <em>bindings</em> sont générés automatiquement pour chaque plateforme (voir
 la note ci-dessous).</p>
 </div>
+
 <!-- -->
 <div class="note">
 <p>Les outils de génération automatiques de <em>bindings</em> (par exemple <a href="https://crates.io/crates/cbindgen"><code>cbindgen</code></a> ou
-<a href="https://crates.io/crates/bindgen"><code>rust-bindgen</code></a>) sont capables d'assurer la cohérence des types dépendants de
+<a href="https://crates.io/crates/bindgen"><code>rust-bindgen</code></a>) sont capables d’assurer la cohérence des types dépendants de
 la plateforme. Ils doivent être utilisés durant le processus de compilation
-pour chaque cible afin d'assurer que la génération est cohérente pour la
+pour chaque cible afin d’assurer que la génération est cohérente pour la
 plateforme visée.</p>
 </div>
+
 <h3 id="robustness"><a class="header" href="#robustness">Types non-robustes : références, pointeurs de fonction, énumérations</a></h3>
-<p>Une <em>représentation piégeuse</em> d'un type particulier est une représentation
-(motif d'octets) qui respecte les contraintes de représentation du type (telles
+<p>Une <em>représentation piégeuse</em> d’un type particulier est une représentation
+(motif d’octets) qui respecte les contraintes de représentation du type (telles
 que sa taille et son alignement), mais qui ne représente pas une valeur valide
 de ce type et mène à des comportements indéfinis.</p>
-<p>En d'autres termes, si une telle valeur invalide est affectée à une variable
-Rust, tout peut arriver ensuite, d'un simple <em>crash</em> à une exécution de code
+<p>En d’autres termes, si une telle valeur invalide est affectée à une variable
+Rust, tout peut arriver ensuite, d’un simple <em>crash</em> à une exécution de code
 arbitraire. Quand on écrit du code Rust sûr, ce genre de comportement ne peut
-arriver (à moins d'un <em>bug</em> dans le compilateur Rust). Toutefois, en écrivant
+arriver (à moins d’un <em>bug</em> dans le compilateur Rust). Toutefois, en écrivant
 du code Rust non sûr, et en particulier dans des FFI, cela peut facilement
 avoir lieu.</p>
 <p>Dans la suite, on appelle des <strong>types non-robustes</strong> les types dont les valeurs
 peuvent avoir ces représentations piégeuses (au moins une). Beaucoup de types
 Rust sont non-robustes, même parmi les types compatibles avec le C :</p>
 <ul>
-<li><code>bool</code> (1 octet, 256 représentations, seules deux d'entre elles valides) ;</li>
+<li><code>bool</code> (1 octet, 256 représentations, seules deux d’entre elles valides) ;</li>
 <li>les références ;</li>
 <li>les pointeurs de fonction ;</li>
 <li>les énumérations ;</li>
 <li>les flottants (même si de nombreux langages ont la même compréhension de ce
-qu'est un flottant valide) ;</li>
+qu’est un flottant valide) ;</li>
 <li>les types composés qui contiennent au moins un champ ayant pour type un type
 non-robuste.</li>
 </ul>
-<p>De l'autre côté, les types entiers (<code>u*</code>/<code>i*</code>), les types composés <em>packés</em> qui
+<p>De l’autre côté, les types entiers (<code>u*</code>/<code>i*</code>), les types composés <em>packés</em> qui
 ne contiennent pas de champs de type non-robuste, sont par exemple des
 <em>types robustes</em>.</p>
-<p>Les types non-robustes engendrent des difficultés lors de l'interfaçage entre
+<p>Les types non-robustes engendrent des difficultés lors de l’interfaçage entre
 deux langages. Cela revient à décider <strong>quel langage des deux est le plus
 responsable pour assurer la validité des valeurs hors bornes</strong> et comment
 mettre cela en place.</p>
@@ -446,24 +452,26 @@ mettre cela en place.</p>
 <p>Dans un développement sécurisé en Rust, toute valeur externe de type non-
 robuste DOIT être vérifiée.</p>
 <p>Plus précisément, soit une conversion (en Rust) est effectuée depuis des types
-robustes vers des types non-robustes à l'aide de vérifications explicites,
+robustes vers des types non-robustes à l’aide de vérifications explicites,
 soit le langage externe offre des garanties fortes quant à la validité des
 valeurs en question.</p>
 </div>
+
 <!-- -->
 <div class="reco" id="FFI-CKINRUST" type="Recommandation" title="Vérification des valeurs externes en Rust">
 <p>Dans un développement Rust sécurisé, la vérification des valeurs provenant
-d'un langage externe DEVRAIT être effectuée du côté Rust lorsque cela est
+d’un langage externe DEVRAIT être effectuée du côté Rust lorsque cela est
 possible.</p>
 </div>
+
 <p>Ces règles génériques peuvent être adaptées à un langage externe spécifique ou
 selon les risques associés. En ce qui concerne les langages, le C est
 particulièrement inapte à offrir des garanties de validité. Toutefois, Rust
-n'est pas le seul langage à offrir de telles possibilités. Par exemple, un
+n’est pas le seul langage à offrir de telles possibilités. Par exemple, un
 certain sous-ensemble de C++ (sans la réinterprétation) permet au développeur
-de faire beaucoup dans ce domaine à l'aide du typage. Parce que Rust sépare
+de faire beaucoup dans ce domaine à l’aide du typage. Parce que Rust sépare
 nativement les segments sûrs des segments non-sûrs, la recommandation est de
-toujours utiliser Rust pour les vérifications lorsque c'est possible. En ce qui
+toujours utiliser Rust pour les vérifications lorsque c’est possible. En ce qui
 concerne les risques, les types présentant le plus de dangers sont les
 références, les références de fonction et les énumérations, qui sont discutées
 ci-dessous.</p>
@@ -472,33 +480,34 @@ ci-dessous.</p>
 dans <code>&lt;stdbool.h&gt;</code>) de C99 et au type <code>bool</code> de C++. Toutefois, charger une
 valeur différente de 0 ou 1 en tant que <code>_Bool</code>/<code>bool</code> est un comportement
 indéfini <em>des deux côtés</em>. La partie sûre de Rust assure ce fait. Les
-compilateurs C et C++ assurent qu'aucune autre valeur que 0 et 1 ne peut être
-<em>stockée</em> dans un <code>_Bool</code>/<code>bool</code> mais ne peuvent garantir l'absence d'une
+compilateurs C et C++ assurent qu’aucune autre valeur que 0 et 1 ne peut être
+<em>stockée</em> dans un <code>_Bool</code>/<code>bool</code> mais ne peuvent garantir l’absence d’une
 <em>réinterprétation incorrecte</em> (par exemple dans un type union ou <em>via</em> un
 <em>cast</em> de pointeur). Pour détecter une telle réinterprétation, un
-<em>sanitizer</em> tel que l'option <code>-fsanitize=bool</code> de <a href="https://llvm.org/">LLVM</a> peut être utilisé.</p>
+<em>sanitizer</em> tel que l’option <code>-fsanitize=bool</code> de <a href="https://llvm.org/">LLVM</a> peut être utilisé.</p>
 </div>
+
 <h4 id="références-et-pointeurs"><a class="header" href="#références-et-pointeurs">Références et pointeurs</a></h4>
 <p>Les types <code>&amp;T</code> et <code>&amp;mut T</code> imposent les mêmes contraintes de validité en mémoire
 que le type <code>T</code>, avec la contrainte supplémentaire imposant de pointer sur une valeur
 bien allouée en mémoire. Toute déviation mène à des comportements indéfinis.</p>
-<p>Lors d'un <em>binding</em> depuis et vers le C, le problème peut être particulièrement
-sévère, parce que le langage C n'offre pas de références (dans le sens de
-pointeurs valides) et le compilateur n'offre pas de garantie de sûreté.</p>
-<p>Lors d'un <em>binding</em> avec le C++, les références Rust peuvent en pratique être
-liées aux références C++ bien que l'ABI d'une fonction <code>extern "C"</code> en C++ avec
-des références soit défini par l'implémentation. Enfin, le code C++ doit être
+<p>Lors d’un <em>binding</em> depuis et vers le C, le problème peut être particulièrement
+sévère, parce que le langage C n’offre pas de références (dans le sens de
+pointeurs valides) et le compilateur n’offre pas de garantie de sûreté.</p>
+<p>Lors d’un <em>binding</em> avec le C++, les références Rust peuvent en pratique être
+liées aux références C++ bien que l’ABI d’une fonction <code>extern "C"</code> en C++ avec
+des références soit défini par l’implémentation. Enfin, le code C++ doit être
 vérifié pour éviter toute confusion de pointeurs et de références.</p>
-<p>Les références Rust peuvent être raisonnablement utilisées avec d'autres
+<p>Les références Rust peuvent être raisonnablement utilisées avec d’autres
 langages compatibles avec le C, incluant les variantes de C qui mettent en
 œuvre la vérification que les pointeurs sont non nuls, comme du code annoté à
-l'aide de Microsoft SAL par exemple.</p>
+l’aide de Microsoft SAL par exemple.</p>
 <p>Les types <code>*const T</code> et <code>*mut T</code> quant à eux diffèrent la vérification de ces contraintes
 au moment de leur utilisation. De plus, ils ajoutent des moyens de contrôler certaines
 caractéristiques de ces pointeurs, comme la comparaison avec
 <code>std/core::ptr::null()</code> (<code>(void*)0</code> en C), mais aussi
-dans certains contextes par la vérification de l'appartenance à une plage
-d'adresses mémoire (en particulier dans des systèmes embarqués ou pour un
+dans certains contextes par la vérification de l’appartenance à une plage
+d’adresses mémoire (en particulier dans des systèmes embarqués ou pour un
 développement au niveau noyau) ou encore leur bon alignement.</p>
 <p>Un autre avantage à utiliser les pointeurs Rust
 dans des FFI est que tout chargement de valeur pointée est clairement marqué
@@ -511,11 +520,12 @@ En particulier, les pointeurs DOIVENT être vérifiés comme étant non nuls ava
 toute utilisation.</p>
 <p>Des approches plus strictes sont recommandées lorsque cela est possible. Elles
 comprennent la vérification des pointeurs comme appartenant à une plage
-d'adresses mémoire valides ou comme étant des pointeurs avérés (étiquetés ou
+d’adresses mémoire valides ou comme étant des pointeurs avérés (étiquetés ou
 signés) ou encore leur alignement.</p>
 <p>Cette approche est particulièrement applicable si la valeur pointée
 est seulement manipulée depuis le code Rust.</p>
 </div>
+
 <div class="reco" id="FFI-INPUT-PTR" type="Recommandation" title="Utilisation des pointeurs bruts pour encoder les pointeurs provenant du langage externe">
 <p>Dans un développement sécurisé en Rust, les pointeurs provenant du langage externe DEVRAIENT
 être encodés par des pointeurs bruts.</p>
@@ -530,18 +540,20 @@ environnement où les références de fonctions <code>extern "C"</code> sont enc
 comme des pointeurs.</li>
 </ul>
 </div>
-<p>Dans le cas où la recommendation précédente ne pourrait s'appliquer, la vérification de la validité des références doit
-être testée dans le langage d'origine des pointeurs (le langage externe).</p>
-<div class="reco" id="FFI-CK-INPUT-REF-VALID" type="Règle" title="Vérification des références provenant d'un langage externe">
+
+<p>Dans le cas où la recommendation précédente ne pourrait s’appliquer, la vérification de la validité des références doit
+être testée dans le langage d’origine des pointeurs (le langage externe).</p>
+<div class="reco" id="FFI-CK-INPUT-REF-VALID" type="Règle" title="Vérification des références provenant d&#39;un langage externe">
 <p>Dans un développement sécurisé en Rust, les références externes transmises au
-côté Rust par le biais d'une FFI DOIVENT être <strong>vérifiées du côté du langage
+côté Rust par le biais d’une FFI DOIVENT être <strong>vérifiées du côté du langage
 externe</strong>, que ce soit de manière automatique (par exemple, par un
 compilateur) ou de manière manuelle.</p>
 <p>Les exceptions comprennent les références Rust <em>encapsulées</em> de façon opaque et
 manipulées uniquement du côté Rust, et les références <em>encapsulées</em> dans un type
 <code>Option</code> (voir note ci-dessous).</p>
 </div>
-<p>Le code suivant est un simple exemple d'utilisation de pointeur externe dans une
+
+<p>Le code suivant est un simple exemple d’utilisation de pointeur externe dans une
 fonction Rust exportée :</p>
 <pre><code class="language-rust noplaypen">/// Add in place
 #[unsafe(no_mangle)]
@@ -553,7 +565,7 @@ unsafe extern "C" fn add_in_place(a: *mut u32, b: u32) {
     }
 }</code></pre>
 <p>Il faut noter que les méthodes <code>as_ref</code> et <code>as_mut</code> (pour les pointeurs
-mutables) permettent d'accéder facilement à la référence tout en assurant une
+mutables) permettent d’accéder facilement à la référence tout en assurant une
 vérification du caractère non nul de manière très idiomatique en Rust. Du côté
 du C, la fonction peut alors être utilisée comme suit :</p>
 <pre><code class="language-c">#include &lt;stdint.h&gt;
@@ -576,27 +588,29 @@ int use_add_in_place()
 comparaison explicite avec la valeur nulle. En raison de la garantie de Rust
 vis-à-vis des optimisations de pointeurs pouvant être nuls, un pointeur nul
 est acceptable du côté C. La valeur C <code>NULL</code> est comprise par Rust comme la
-valeur <code>None</code>, tandis qu'un pointeur non nul est encapsulé dans le
+valeur <code>None</code>, tandis qu’un pointeur non nul est encapsulé dans le
 constructeur <code>Some</code>.
-Bien qu'ergonomique, cette fonctionnalité ne permet pas en revanche des validations fortes des valeurs de pointeurs comme l'appartenance à une plage d'adresses mémoire valides.</p>
+Bien qu’ergonomique, cette fonctionnalité ne permet pas en revanche des validations fortes des valeurs de pointeurs comme l’appartenance à une plage d’adresses mémoire valides.</p>
 </div>
+
 <h4 id="pointeurs-de-fonction"><a class="header" href="#pointeurs-de-fonction">Pointeurs de fonction</a></h4>
-<p>Les pointeurs de fonction qui traversent les frontières d'une FFI peuvent mener
-à de l'exécution de code arbitraire et impliquent donc des risques réels de
+<p>Les pointeurs de fonction qui traversent les frontières d’une FFI peuvent mener
+à de l’exécution de code arbitraire et impliquent donc des risques réels de
 sécurité.</p>
 <div class="reco" id="FFI-MARKEDFUNPTR" type="Règle" title="Marquage des types de pointeurs de fonction dans les FFI comme `extern` et `unsafe`">
 <p>Dans un développement sécurisé en Rust, tout type de pointeur de fonction dont
-les valeurs sont amenées à traverser les frontières d'une FFI DOIT être
-marqué comme <code>extern</code> (si possible avec l'ABI spécifiée) et comme <code>unsafe</code>.</p>
+les valeurs sont amenées à traverser les frontières d’une FFI DOIT être
+marqué comme <code>extern</code> (si possible avec l’ABI spécifiée) et comme <code>unsafe</code>.</p>
 </div>
-<p>Les pointeurs de fonction en Rust ressemblent bien plus aux références qu'aux
+
+<p>Les pointeurs de fonction en Rust ressemblent bien plus aux références qu’aux
 pointeurs simples. En particulier, la validité des pointeurs de fonction ne peut
 pas être vérifiée directement du côté Rust. Toutefois, Rust offre deux
 alternatives possibles :</p>
 <ul>
 <li>
-<p>l'utilisation de pointeurs de fonctions <em>encapsulés</em> dans une valeur de type
-<code>Option</code>, accompagnée d'un test contre la valeur nulle :</p>
+<p>l’utilisation de pointeurs de fonctions <em>encapsulés</em> dans une valeur de type
+<code>Option</code>, accompagnée d’un test contre la valeur nulle :</p>
 <pre><code class="language-rust noplaypen">#[unsafe(no_mangle)]
 pub unsafe extern "C" fn repeat(
     start: u32,
@@ -618,46 +632,48 @@ pub unsafe extern "C" fn repeat(
 </code></pre>
 </li>
 <li>
-<p>l'utilisation de pointeurs <em>bruts</em> avec une transformation <code>unsafe</code> vers un
+<p>l’utilisation de pointeurs <em>bruts</em> avec une transformation <code>unsafe</code> vers un
 type pointeur de fonction, permettant des tests plus poussés au prix de
-l'ergonomie.</p>
+l’ergonomie.</p>
 </li>
 </ul>
-<div class="reco" id="FFI-CKFUNPTR" type="Règle" title="Vérification des pointeurs de fonction provenant d'une FFI">
+<div class="reco" id="FFI-CKFUNPTR" type="Règle" title="Vérification des pointeurs de fonction provenant d&#39;une FFI">
 <p>Dans un développement sécurisé en Rust, tout pointeur de fonction provenant de
-l'extérieur de l'écosystème Rust DOIT être vérifié à la frontière des FFI.</p>
+l’extérieur de l’écosystème Rust DOIT être vérifié à la frontière des FFI.</p>
 </div>
-<p>Lors d'un <em>binding</em> avec le C ou encore le C++, il n'est pas simple de garantir
-la validité d'un pointeur de fonction. De plus, les objets fonction C++ (parfois appelés foncteurs) ne sont pas compatibles
+
+<p>Lors d’un <em>binding</em> avec le C ou encore le C++, il n’est pas simple de garantir
+la validité d’un pointeur de fonction. De plus, les objets fonction C++ (parfois appelés foncteurs) ne sont pas compatibles
 avec le C.</p>
 <h4 id="enumérations"><a class="header" href="#enumérations">Enumérations</a></h4>
 <p>Les valeurs (motifs de bits) valides pour une énumération donnée sont en général
-assez peu nombreuses par rapport à l'ensemble des valeurs qu'il est possible
-d'exprimer avec le même nombre de bits. Ne pas traiter correctement une valeur
-d'<code>enum</code> fournie par un code externe peut mener à une confusion de types et
-avoir de sérieuses conséquences sur la sécurité d'un programme. Malheureusement,
-vérifier la valeur d'une énumération aux bornes d'une FFI n'est pas une tâche
+assez peu nombreuses par rapport à l’ensemble des valeurs qu’il est possible
+d’exprimer avec le même nombre de bits. Ne pas traiter correctement une valeur
+d’<code>enum</code> fournie par un code externe peut mener à une confusion de types et
+avoir de sérieuses conséquences sur la sécurité d’un programme. Malheureusement,
+vérifier la valeur d’une énumération aux bornes d’une FFI n’est pas une tâche
 triviale des deux côtés.</p>
 <p>Du côté Rust, cette vérification consiste à utiliser un type entier dans la
-déclaration du bloc <code>extern</code>, un type <em>robuste</em> donc, et d'effectuer une
+déclaration du bloc <code>extern</code>, un type <em>robuste</em> donc, et d’effectuer une
 conversion contrôlée vers le type <code>enum</code>.</p>
-<p>Du côté externe, cela est possible uniquement si l'autre langage permet la mise
-en place de tests plus stricts que ceux proposés en C. C'est par exemple
+<p>Du côté externe, cela est possible uniquement si l’autre langage permet la mise
+en place de tests plus stricts que ceux proposés en C. C’est par exemple
 possible en C++ avec les <code>enum class</code>. Notons toutefois pour référence que
-l'ABI <code>extern "C"</code> d'un <code>enum class</code> est définie par l'implémentation et doit
-être vérifiée pour chaque environnement d'exécution.</p>
-<div class="reco" id="FFI-NOENUM" type="Règle" title="Non-utilisation d'`enum`s Rust provenant de l'extérieur par une FFI">
-<p>Dans un développement sécurisé en Rust, lors de l'interfaçage avec un
+l’ABI <code>extern "C"</code> d’un <code>enum class</code> est définie par l’implémentation et doit
+être vérifiée pour chaque environnement d’exécution.</p>
+<div class="reco" id="FFI-NOENUM" type="Règle" title="Non-utilisation d&#39;`enum`s Rust provenant de l&#39;extérieur par une FFI">
+<p>Dans un développement sécurisé en Rust, lors de l’interfaçage avec un
 langage externe, le code Rust NE DOIT PAS accepter de valeurs provenant de
-l'extérieur en tant que valeur d'un type <code>enum</code>.</p>
+l’extérieur en tant que valeur d’un type <code>enum</code>.</p>
 <p>Les exceptions incluant des types <code>enum</code> Rust sont :</p>
 <ul>
 <li>les types opaques du langage externe dont les valeurs sont uniquement
 manipulées du côté Rust ;</li>
-<li>les types liés à des types d'énumération sûrs du côté du langage externe,
+<li>les types liés à des types d’énumération sûrs du côté du langage externe,
 comme les <code>enum class</code> de C++ par exemple.</li>
 </ul>
 </div>
+
 <p>Concernant les énumérations ne contenant aucun champ, des <em>crates</em> comme
 <a href="https://crates.io/crates/num_derive"><code>num_derive</code></a> ou <a href="https://crates.io/crates/num_enum"><code>num_enum</code></a> permettent au développeur de fournir facilement
 des opérations de conversions sûres depuis une valeur entière vers une
@@ -665,13 +681,14 @@ des opérations de conversions sûres depuis une valeur entière vers une
 entier (fourni par une énumération C) vers une énumération C.</p>
 <h3 id="types-opaques"><a class="header" href="#types-opaques">Types opaques</a></h3>
 <p>Rendre opaques des types est une bonne méthode pour augmenter la modularité dans
-un développement logiciel. C'est notamment une pratique assez courante dans un
+un développement logiciel. C’est notamment une pratique assez courante dans un
 développement impliquant plusieurs langages de programmation.</p>
 <div class="reco" id="FFI-R-OPAQUE" type="Recommandation" title="Utilisation de types Rust dédiés pour les types opaques externes">
-<p>Dans un développement sécurisé en Rust, lors d'un <em>binding</em> avec des types
+<p>Dans un développement sécurisé en Rust, lors d’un <em>binding</em> avec des types
 opaques externes, des pointeurs vers des types opaques dédiés DEVRAIENT être
 utilisés au lieu de pointeurs <code>c_void</code>.</p>
 </div>
+
 <p>La pratique recommandée pour récupérer des valeurs externes de type opaque est
 illustrée comme suit :</p>
 <pre><code class="language-rust unsafe noplaypen">#[repr(C)]
@@ -685,13 +702,14 @@ unsafe extern "C" {
 de faciliter cette situation en permettant de déclarer des types opaques dans
 des blocs <code>extern</code>.</p>
 <div class="reco" id="FFI-C-OPAQUE" type="Recommandation" title="Utilisation de pointeurs vers des `struct`s C/C++ pour rendre des types opaques">
-<p>Dans un développement sécurisé en Rust, lors de l'interfaçage avec du C ou du
+<p>Dans un développement sécurisé en Rust, lors de l’interfaçage avec du C ou du
 C++, les valeurs de types Rust considérés comme opaques dans la partie C/C++
-DEVRAIENT être transformées en valeurs de type <code>struct</code> incomplet (c'est-à-dire
+DEVRAIENT être transformées en valeurs de type <code>struct</code> incomplet (c’est-à-dire
 déclaré sans définition) et être fournies avec un constructeur et un
 destructeur dédiés.</p>
 </div>
-<p>Un exemple d'utilisation de type opaque Rust :</p>
+
+<p>Un exemple d’utilisation de type opaque Rust :</p>
 <pre><code class="language-rust unsafe noplaypen">pub struct Opaque {
     // (...) hide details
 }
@@ -717,21 +735,22 @@ pub unsafe extern "C" fn destroy_opaque(o: *mut Opaque) {
 }</code></pre>
 <h3 id="ffi-memory-model"><a class="header" href="#ffi-memory-model">Préservation du modèle mémoire</a></h3>
 <p>Le compilateur Rust utilise les informations du <em>borrow checker</em> pour optimiser
-l'exécution du code. Ce faisant, il prend pour hypothèse que les conditions vérifiées
+l’exécution du code. Ce faisant, il prend pour hypothèse que les conditions vérifiées
 par ce <em>borrow checker</em>, notamment les règles
-d'<a href="https://doc.rust-lang.org/nomicon/aliasing.html">aliasing</a>, sont valides, et base ses
+d’<a href="https://doc.rust-lang.org/nomicon/aliasing.html">aliasing</a>, sont valides, et base ses
 optimisations sur ces hypothèses. Plus de détails sur ce modèle mémoire se trouvent dans la
-<a href="https://doc.rust-lang.org/core/ptr/index.html">documentation de l'API <code>core</code></a>.</p>
-<p>Contrevenir à ces hypothèses peut donc conduire à l'apparition d'<em>UB</em>.</p>
-<div class="reco" id="FFI-CK-REF-MODEL" type="Règle" title="Préservation du modèle mémoire de Rust lors du transfert d'indirections à sa frontière">
-<p>Dans un développement sécurisé en Rust, l'usage d'indirection (pointeur, référence)
+<a href="https://doc.rust-lang.org/core/ptr/index.html">documentation de l’API <code>core</code></a>.</p>
+<p>Contrevenir à ces hypothèses peut donc conduire à l’apparition d’<em>UB</em>.</p>
+<div class="reco" id="FFI-CK-REF-MODEL" type="Règle" title="Préservation du modèle mémoire de Rust lors du transfert d&#39;indirections à sa frontière">
+<p>Dans un développement sécurisé en Rust, l’usage d’indirection (pointeur, référence)
 traversant la frontière DOIT préserver le modèle mémoire de Rust.</p>
 </div>
+
 <div class="example">
-<p>Dans l'exemple suivant le code Rust manipule des pointeurs provenant du C,
-montrant l'importance de respecter les invariants de Rust depuis le C.</p>
+<p>Dans l’exemple suivant le code Rust manipule des pointeurs provenant du C,
+montrant l’importance de respecter les invariants de Rust depuis le C.</p>
 <p>La fonction <code>swap</code> définie dans la suite produit un UB si elle est appelée dans le code C suivant,
-car le modèle mémoire de Rust interdit l'<em>aliasing</em> de références mutables.</p>
+car le modèle mémoire de Rust interdit l’<em>aliasing</em> de références mutables.</p>
 <pre><code class="language-rust noplaypen">extern "C" fn swap(a: *mut u8, b: *mut u8) {
     let a = unsafe { a.as_mut() }.unwrap();
     let b = unsafe { b.as_mut() }.unwrap();
@@ -744,8 +763,9 @@ car le modèle mémoire de Rust interdit l'<em>aliasing</em> de références mut
 }
 </code></pre>
 </div>
+
 <div class="example">
-<p>Dans l'exemple suivant le code Rust transmet au code C un pointeur, montrant l'importance de refléter,
+<p>Dans l’exemple suivant le code Rust transmet au code C un pointeur, montrant l’importance de refléter,
 dans le système de types de Rust, les opérations effectuées du côté du C.</p>
 <p>La fonction importée <code>inc_wrap</code> incrémente la variable <code>a</code>.</p>
 <pre><code class="language-c">void inc_wrap(uint8_t *a)
@@ -762,7 +782,7 @@ dans le système de types de Rust, les opérations effectuées du côté du C.</
 </code></pre>
 <p>Le code Rust passe à cette fonction un pointeur vers la variable <code>val</code> non mutable, contrevenant
 par conséquent au modèle mémoire de Rust, ce qui est un <em>UB</em>.</p>
-<pre><pre class="playground"><code class="language-rust ub"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust ub"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>unsafe extern "C" {
     fn inc_wrap(a: *mut u8);
@@ -773,74 +793,78 @@ fn run_inc() {
     let p = (&amp;val as *const u8) as *mut u8;
     unsafe { inc_wrap(p) };
 }
-<span class="boring">}</span></code></pre></pre>
-<p>Dans cet exemple, l'erreur aurait pu être détectée en contraignant plus fortement
-la liaison à l'API de la librairie C, soit en modifiant directement sa signature,
-soit en modifiant encapsulant la fonction <code>inc_wrap</code>, comme dans l'exemple suivant.</p>
-<pre><pre class="playground"><code class="language-rust good"><span class="boring">#![allow(unused)]
+<span class="boring">}</span></code></pre>
+<p>Dans cet exemple, l’erreur aurait pu être détectée en contraignant plus fortement
+la liaison à l’API de la librairie C, soit en modifiant directement sa signature,
+soit en modifiant encapsulant la fonction <code>inc_wrap</code>, comme dans l’exemple suivant.</p>
+<pre class="playground"><code class="language-rust good"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn safe_inc_wrap(a: &amp;mut u8) {
     unsafe {
         inc_wrap(a);
     }
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">}</span></code></pre>
 <p>La fonction <code>safe_inc_wrap</code> est en effet <em>sûre</em> car</p>
 <ul>
 <li>toute valeur mémoire peut être interprétée comme une valeur de type <code>u8</code> (le type <code>u8</code> est <a href="#robustness">robuste</a>) ;</li>
-<li>le type de la fonction <code>safe_inc_wrap</code> s'assure que les contraintes de non <em>aliasing</em> et de <em>mutabilité</em> sont respectées ;</li>
-<li>le code C ne libère pas le pointeur, ni ne le "retient" (via une variable <code>static</code> par exemple)
-au-delà de l'appel de la fonction <code>inc_wrap</code>.</li>
+<li>le type de la fonction <code>safe_inc_wrap</code> s’assure que les contraintes de non <em>aliasing</em> et de <em>mutabilité</em> sont respectées ;</li>
+<li>le code C ne libère pas le pointeur, ni ne le “retient” (via une variable <code>static</code> par exemple)
+au-delà de l’appel de la fonction <code>inc_wrap</code>.</li>
 </ul>
 </div>
+
 <h2 id="mémoire-et-gestion-des-ressources"><a class="header" href="#mémoire-et-gestion-des-ressources">Mémoire et gestion des ressources</a></h2>
 <p>Les langages de programmation ont de nombreuses façons de gérer la mémoire. En
 résultat, il est important de savoir quel langage est responsable de la
-réclamation de l'espace mémoire d'une donnée lorsqu'elle est échangée entre Rust
-et un autre langage. Il en va de même pour d'autres types de ressources comme
+réclamation de l’espace mémoire d’une donnée lorsqu’elle est échangée entre Rust
+et un autre langage. Il en va de même pour d’autres types de ressources comme
 les descripteurs de fichiers ou les <em>sockets</em>.</p>
 <p>Rust piste le responsable ainsi que la durée de vie des variables pour
 déterminer à la compilation si et quand la mémoire associée doit être libérée.
-Grâce au trait <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a>, il est possible d'exploiter ce système pour libérer
+Grâce au trait <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a>, il est possible d’exploiter ce système pour libérer
 toutes sortes de ressources comme des fichiers ou des accès au réseau.
 <em>Déplacer</em> une donnée depuis Rust vers un langage signifie également abandonner
 de possibles réclamations de la mémoire qui lui est associée.</p>
 <div class="reco" id="FFI-MEM-NODROP" type="Règle" title="Non-utilisation de types qui implémentent `Drop` dans des FFI">
 <p>Dans un développement sécurisé en Rust, le code Rust NE DOIT PAS implémenter
 <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a> pour les valeurs de types qui sont directement transmis à du code
-externe (c'est-à-dire ni par pointeur, ni par référence).</p>
+externe (c’est-à-dire ni par pointeur, ni par référence).</p>
 </div>
-<p>En fait, il est même recommandé de n'utiliser que des types qui implémentent
-<code>Copy</code>. Il faut noter que <code>*const T</code> est <code>Copy</code> même si <code>T</code> ne l'est pas.</p>
+
+<p>En fait, il est même recommandé de n’utiliser que des types qui implémentent
+<code>Copy</code>. Il faut noter que <code>*const T</code> est <code>Copy</code> même si <code>T</code> ne l’est pas.</p>
 <p>Si ne pas récupérer la mémoire et les ressources est une mauvaise pratique, en
-termes de sécurité, utiliser de la mémoire récupérée plus d'une fois ou libérer
+termes de sécurité, utiliser de la mémoire récupérée plus d’une fois ou libérer
 deux fois certaines ressources peut être pire. Afin de libérer correctement une
 ressource une seule et unique fois, il faut savoir quel langage est responsable
 de la gestion de son allocation et de sa libération.</p>
 <div class="reco" id="FFI-MEM-OWNER" type="Règle" title="Identification du langage responsable de la libération des données dans les FFI">
-<p>Dans un développement sécurisé en Rust, lorsqu'une donnée, quel que soit son
-type, est échangée par une FFI, il est nécessaire de s'assurer que :</p>
+<p>Dans un développement sécurisé en Rust, lorsqu’une donnée, quel que soit son
+type, est échangée par une FFI, il est nécessaire de s’assurer que :</p>
 <ul>
-<li>un seul langage DOIT gérer l'allocation et la libération d'une
+<li>un seul langage DOIT gérer l’allocation et la libération d’une
 donnée ;</li>
-<li>l'autre langage NE DOIT NI allouer, NI libérer la donnée directement, mais
+<li>l’autre langage NE DOIT NI allouer, NI libérer la donnée directement, mais
 peut utiliser une fonction externe dédiée fournie par le langage responsable
 choisi.</li>
 </ul>
 </div>
-<p>L'identification d'un langage responsable de la gestion des données en mémoire
-ne suffit pas. Il reste à s'assurer de la durée de vie correcte de ces données,
-principalement qu'elles ne sont plus utilisées après leur libération. C'est une
+
+<p>L’identification d’un langage responsable de la gestion des données en mémoire
+ne suffit pas. Il reste à s’assurer de la durée de vie correcte de ces données,
+principalement qu’elles ne sont plus utilisées après leur libération. C’est une
 étape bien plus difficile. Lorsque le langage externe est responsable de la
 mémoire, la même approche est de fournir un <em>wrapper</em> sûr autour du type
 externe.</p>
 <div class="reco" id="FFI-MEM-WRAPPING" type="Recommandation" title="Encapsulation des données externes dans un type `Drop`">
 <p>Dans un développement sécurisé en Rust, toute donnée à caractère non sensible
 allouée et libérée du côté du langage externe DEVRAIT être encapsulée dans un
-type implémentant <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a>, de telle sorte que Rust fournisse l'appel
+type implémentant <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a>, de telle sorte que Rust fournisse l’appel
 automatique au destructeur Rust.</p>
 </div>
-<p>Voici un simple exemple d'encapsulation autour d'un type opaque externe :</p>
+
+<p>Voici un simple exemple d’encapsulation autour d’un type opaque externe :</p>
 <pre><code class="language-rust ignore noplaypen">/// Private “raw” opaque foreign type Foo
 #[repr(C)]
 struct RawFoo {
@@ -883,20 +907,21 @@ impl Drop for Foo {
 }</code></pre>
 <div class="warning">
 <p>Parce que des <code>panic</code>s peuvent mener à ne pas exécuter la méthode
-<code>Drop::drop</code>, cette solution n'est pas satisfaisante pour le cas de la
+<code>Drop::drop</code>, cette solution n’est pas satisfaisante pour le cas de la
 libération de ressources sensibles (pour effacer les données sensibles par
 exemple), à moins que le code soit garanti exempt de <code>panic</code> potentiel.</p>
-<p>Pour le cas de l'effacement des données sensibles, le problème peut être géré
-par l'utilisation d'un <em>handler</em> de <code>panic</code>.</p>
+<p>Pour le cas de l’effacement des données sensibles, le problème peut être géré
+par l’utilisation d’un <em>handler</em> de <code>panic</code>.</p>
 </div>
+
 <p>Lorsque le langage externe exploite des ressources allouées depuis le côté Rust,
-il est encore plus difficile d'offrir quelque garantie qui soit.</p>
-<p>En C par exemple, il n'y a pas de moyen simple qui permette de vérifier que le
-destructeur correspondant est appelé. Il est possible d'utiliser des <em>callbacks</em>
+il est encore plus difficile d’offrir quelque garantie qui soit.</p>
+<p>En C par exemple, il n’y a pas de moyen simple qui permette de vérifier que le
+destructeur correspondant est appelé. Il est possible d’utiliser des <em>callbacks</em>
 pour assurer que la libération est effectivement faite.</p>
 <p>Le code Rust suivant est un exemple <strong><em>unsafe</em> du point de vue des threads</strong>
-d'une API compatible avec le C qui fournit une <em>callback</em> pour assurer la
-libération d'une ressource :</p>
+d’une API compatible avec le C qui fournit une <em>callback</em> pour assurer la
+libération d’une ressource :</p>
 <pre><code class="language-rust noplaypen">pub struct XtraResource {/* fields */}
 
 impl XtraResource {
@@ -993,21 +1018,22 @@ int use_xtra()
 }
 </code></pre>
 <h2 id="ffi-panic"><a class="header" href="#ffi-panic"><code>Panic</code>s et code externe</a></h2>
-<p>Lors de l'appel à du code Rust depuis un autre langage (par exemple, du C), le
+<p>Lors de l’appel à du code Rust depuis un autre langage (par exemple, du C), le
 code Rust ne devrait pas provoquer de <code>panic</code> : Depuis la version <a href="https://releases.rs/docs/1.81.0/">1.81.0</a>,
-dérouler (<em>unwinding</em>) depuis le code Rust dans du code externe n'est plus un comportement indéfini.
-Cependant, il est préconisé d'empêcher de dérouler depuis Rust vers le langage externe afin
-d'éviter un potentiel arrêt inopiné non contrôlé (<code>abort</code>)<sup class="footnote-reference" id="fr-ffi-panic-abort-1"><a href="#footnote-ffi-panic-abort">1</a></sup>.</p>
+dérouler (<em>unwinding</em>) depuis le code Rust dans du code externe n’est plus un comportement indéfini.
+Cependant, il est préconisé d’empêcher de dérouler depuis Rust vers le langage externe afin
+d’éviter un potentiel arrêt inopiné non contrôlé (<code>abort</code>)<sup class="footnote-reference" id="fr-ffi-panic-abort-1"><a href="#footnote-ffi-panic-abort">1</a></sup>.</p>
 <div class="reco" id="FFI-NOPANIC" type="Recommandation" title="Gestion correcte des `panic`s dans les FFI">
 <p>Le code Rust appelé depuis un langage externe DEVRAIT :</p>
 <ul>
-<li>soit s'assurer que la fonction ne peut pas provoquer de <code>panic</code>,</li>
+<li>soit s’assurer que la fonction ne peut pas provoquer de <code>panic</code>,</li>
 <li>soit utiliser un mécanisme de
 récupération de <code>panic</code> (comme <a href="https://doc.rust-lang.org/std/panic/fn.catch_unwind.html"><code>std::panic::catch_unwind</code></a>,
-<a href="https://doc.rust-lang.org/std/panic/fn.set_hook.html"><code>std::panic::set_hook</code></a>, <a href="https://doc.rust-lang.org/reference/panic.html#r-panic.panic_handler"><code>#[panic_handler]</code></a>), afin d'assurer que la fonction
+<a href="https://doc.rust-lang.org/std/panic/fn.set_hook.html"><code>std::panic::set_hook</code></a>, <a href="https://doc.rust-lang.org/reference/panic.html#r-panic.panic_handler"><code>#[panic_handler]</code></a>), afin d’assurer que la fonction
 Rust ne peut pas aboutir à un état instable.</li>
 </ul>
 </div>
+
 <p>Il faut noter que <a href="https://doc.rust-lang.org/std/panic/fn.catch_unwind.html"><code>catch_unwind</code></a> rattrapera seulement les <em>unwinding <code>panic</code>s</em>
 mais pas ceux provoquant un arrêt du processus.</p>
 <pre><code class="language-rust unsafe noplaypen ignore">fn may_panic() {
@@ -1023,26 +1049,27 @@ pub unsafe extern "C" fn no_panic() -&gt; i32 {
     }
 }</code></pre>
 <h3 id="no_std"><a class="header" href="#no_std"><code>no_std</code></a></h3>
-<p>Dans le cas des programmes n'utilisant pas la bibliothèque standard
+<p>Dans le cas des programmes n’utilisant pas la bibliothèque standard
 Rust (<code>#[no_std]</code>), un gestionnaire de <code>panic</code> (<a href="https://doc.rust-lang.org/reference/panic.html#r-panic.panic_handler"><code>#[panic_handler]</code></a>) doit être
 défini pour la sécurité du programme. Le gestionnaire de <code>panic</code> doit être écrit
 avec la plus grande précaution pour garantir non seulement la sécurité, mais
 aussi la sûreté du programme.</p>
-<p>Une approche alternative est de simplement s'assurer qu'il n'y a aucune
+<p>Une approche alternative est de simplement s’assurer qu’il n’y a aucune
 utilisation de <code>panic!</code> avec la <em>crate</em> <a href="https://crates.io/crates/panic-never"><code>panic-never</code></a>. Comme <a href="https://crates.io/crates/no-panic"><code>no-panic</code></a>,
-<a href="https://crates.io/crates/panic-never"><code>panic-never</code></a> repose sur une astuce au moment de l'édition de liens : le
-programme d'édition de liens échoue si une branche non trivialement
+<a href="https://crates.io/crates/panic-never"><code>panic-never</code></a> repose sur une astuce au moment de l’édition de liens : le
+programme d’édition de liens échoue si une branche non trivialement
 inaccessible mène à un appel à <code>panic!</code>.</p>
-<h2 id="liaison-entre-une-bibliothèque-rust-et-du-code-dun-autre-langage"><a class="header" href="#liaison-entre-une-bibliothèque-rust-et-du-code-dun-autre-langage">Liaison entre une bibliothèque Rust et du code d'un autre langage</a></h2>
-<div class="reco" id="FFI-CAPI" type="Règle" title="Exposition exclusive d'API dédiée et compatible avec le C">
+<h2 id="liaison-entre-une-bibliothèque-rust-et-du-code-dun-autre-langage"><a class="header" href="#liaison-entre-une-bibliothèque-rust-et-du-code-dun-autre-langage">Liaison entre une bibliothèque Rust et du code d’un autre langage</a></h2>
+<div class="reco" id="FFI-CAPI" type="Règle" title="Exposition exclusive d&#39;API dédiée et compatible avec le C">
 <p>Dans un développement sécurisé en Rust, exposer une bibliothèque Rust à un
-langage externe DOIT être uniquement fait par le biais d'une <strong>API dédiée et
+langage externe DOIT être uniquement fait par le biais d’une <strong>API dédiée et
 compatible avec le C</strong>.</p>
 </div>
+
 <p>La <em>crate</em> <a href="https://crates.io/crates/cbindgen"><code>cbindgen</code></a> peut être utilisée pour générer automatiquement les
-<em>bindings</em> C ou C++ pour l'API Rust compatible avec le C d'une bibliothèque
+<em>bindings</em> C ou C++ pour l’API Rust compatible avec le C d’une bibliothèque
 Rust.</p>
-<h3 id="exemple-minimal-dune-bibliothèque-rust-exportée-vers-du-c"><a class="header" href="#exemple-minimal-dune-bibliothèque-rust-exportée-vers-du-c">Exemple minimal d'une bibliothèque Rust exportée vers du C</a></h3>
+<h3 id="exemple-minimal-dune-bibliothèque-rust-exportée-vers-du-c"><a class="header" href="#exemple-minimal-dune-bibliothèque-rust-exportée-vers-du-c">Exemple minimal d’une bibliothèque Rust exportée vers du C</a></h3>
 <p><code>src/lib.rs</code>:</p>
 <pre><code class="language-rust noplaypen">/// Opaque counter
 pub struct Counter(u32);
@@ -1159,20 +1186,22 @@ int main(int argc, const char **argv)
 <li><a id="unwinding"></a> <em><a href="https://doc.rust-lang.org/stable/reference/items/functions.html#unwinding">Unwinding</a></em> (unwinding)</li>
 </ul>
 <hr>
-<ol class="footnote-definition"><li id="footnote-ffi-panic-abort">
-<p>La liste des cas où un arrêt brutal est observé est décrite dans la spécification de <a href="https://doc.rust-lang.org/stable/reference/items/functions.html#unwinding">l'<em>unwinding</em></a>. <a href="#fr-ffi-panic-abort-1">↩</a></p>
+<ol class="footnote-definition">
+<li id="footnote-ffi-panic-abort">
+<p>La liste des cas où un arrêt brutal est observé est décrite dans la spécification de <a href="https://doc.rust-lang.org/stable/reference/items/functions.html#unwinding">l’<em>unwinding</em></a>. <a href="#fr-ffi-panic-abort-1">↩</a></p>
 </li>
 </ol>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                             <a rel="prev" href="../unsafe/memory.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
-                                <i class="fa fa-angle-left"></i>
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
                             <a rel="next prefetch" href="../standard.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
                         <div style="clear: both"></div>
@@ -1182,16 +1211,21 @@ int main(int argc, const char **argv)
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                     <a rel="prev" href="../unsafe/memory.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
-                        <i class="fa fa-angle-left"></i>
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
                     <a rel="next prefetch" href="../standard.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>
 
         </div>
 
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
 
 
 
@@ -1200,18 +1234,17 @@ int main(int argc, const char **argv)
         </script>
 
 
-        <script src="../elasticlunr.min.js"></script>
-        <script src="../mark.min.js"></script>
-        <script src="../searcher.js"></script>
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-c2a407aa.js"></script>
 
-        <script src="../clipboard.min.js"></script>
-        <script src="../highlight.js"></script>
-        <script src="../book.js"></script>
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-abc7f01d.js"></script>
+        <script src="../book-a0b12cfe.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../pagetoc.js"></script>
-        <script src="../vars-fr.js"></script>
-        <script src="../custom-envs.js"></script>
+        <script src="../vars-fr-a9481740.js"></script>
+        <script src="../custom-envs-8d117517.js"></script>
 
 
 

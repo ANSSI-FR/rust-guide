@@ -12,25 +12,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="pagetoc.css">
-        <link rel="stylesheet" href="custom-envs.css">
+        <link rel="stylesheet" href="custom-envs-59fe9022.css">
 
 
         <!-- Provide site root and default themes to javascript -->
@@ -38,10 +36,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex.js";
+            window.path_to_searchindex_js = "searchindex-0799d340.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="toc-c0394a0f.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -55,7 +53,7 @@
             </div>
         </div>
     </div>
-    <div id="body-container">
+    <div id="mdbook-body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
@@ -84,12 +82,12 @@
             html.classList.add("js");
         </script>
 
-        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             let sidebar = null;
-            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
@@ -104,39 +102,39 @@
             }
         </script>
 
-        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
                 <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
             </noscript>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
             </div>
         </nav>
 
-        <div id="page-wrapper" class="page-wrapper">
+        <div id="mdbook-page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                            <i class="fa fa-bars"></i>
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
                         </label>
-                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                            <i class="fa fa-paint-brush"></i>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
                         </button>
-                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
-                            <i class="fa fa-search"></i>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
                         </button>
                     </div>
 
@@ -144,63 +142,64 @@
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
-                            <i id="print-button" class="fa fa-print"></i>
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
                         </a>
                         <a href="https://github.com/ANSSI-FR/rust-guide" title="Git repository" aria-label="Git repository">
-                            <i id="git-repository-button" class="fa fa-github"></i>
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
                         </a>
                         <a href="https://github.com/ANSSI-FR/rust-guide/edit/master/src/fr/devenv.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
-                            <i id="git-edit-button" class="fa fa-edit"></i>
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
                         </a>
 
                     </div>
                 </div>
 
-                <div id="search-wrapper" class="hidden">
-                    <form id="searchbar-outer" class="searchbar-outer">
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
                         <div class="search-wrapper">
-                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
                             <div class="spinner-wrapper">
-                                <i class="fa fa-spinner fa-spin"></i>
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
                             </div>
                         </div>
                     </form>
-                    <div id="searchresults-outer" class="searchresults-outer hidden">
-                        <div id="searchresults-header" class="searchresults-header"></div>
-                        <ul id="searchresults">
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
                         </ul>
                     </div>
                 </div>
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script>
-                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
-                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
-                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
                         link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
                     });
                 </script>
 
-                <div id="content" class="content">
+                <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="environnement-de-développement"><a class="header" href="#environnement-de-développement">Environnement de développement</a></h1>
 <h2 id="rustup"><a class="header" href="#rustup">Rustup</a></h2>
-<p><a href="https://github.com/rust-lang/rustup.rs">Rustup</a> est l'installateur des outils de la chaîne de compilation pour Rust.
+<p><a href="https://github.com/rust-lang/rustup.rs">Rustup</a> est l’installateur des outils de la chaîne de compilation pour Rust.
 Entre autres choses, il permet de basculer entre différentes variantes de la
-chaîne d'outils (<em>stable</em>, <em>beta</em>, <em>nightly</em>), de gérer l'installation des
+chaîne d’outils (<em>stable</em>, <em>beta</em>, <em>nightly</em>), de gérer l’installation des
 composants additionnels et de maintenir le tout à jour.</p>
 <div class="warning">
 <p>Du point de vue de la sécurité, <code>rustup</code> effectue tous les téléchargements en
 HTTPS, mais ne valide pas les signatures des fichiers téléchargés. Les
 protections contre les attaques par déclassement, le <em>pinning</em> de certificats
 et la validation des signatures sont des travaux en cours. Pour
-les cas les plus sensibles, il peut être préférable d'opter pour une méthode
-d'installation alternative comme celles listées dans la section <em>Install</em> du
+les cas les plus sensibles, il peut être préférable d’opter pour une méthode
+d’installation alternative comme celles listées dans la section <em>Install</em> du
 site officiel du langage Rust.</p>
 </div>
-<h3 id="Éditions-rust"><a class="header" href="#Éditions-rust">Éditions Rust</a></h3>
+
+<h3 id="éditions-rust"><a class="header" href="#éditions-rust">Éditions Rust</a></h3>
 <p>Il existe plusieurs variantes du langage Rust, appelées <em>éditions</em>. Le concept
-d'éditions a été introduit afin de distinguer la mise en place de nouvelles
+d’éditions a été introduit afin de distinguer la mise en place de nouvelles
 fonctionnalités dans le langage, et de rendre ce processus incrémental.
 Toutefois, comme mentionné dans le <a href="https://doc.rust-lang.org/edition-guide/">manuel Rust</a>, cela ne signifie pas que
 de nouvelles fonctionnalités et améliorations ne seront incluses que dans la
@@ -209,23 +208,24 @@ dernière édition.</p>
 et de nouveaux mots-clés. Les recommandations concernant ces fonctionnalités
 deviennent alors fortement liées à une édition en particulier. Dans le reste de
 ce guide, un effort sera réalisé pour mettre en évidence les règles qui ne
-s'appliqueraient qu'à certaines éditions de Rust en particulier.</p>
+s’appliqueraient qu’à certaines éditions de Rust en particulier.</p>
 <div class="note">
-<p>Aucune édition spécifique n'est recommandée, tant que le développement se
+<p>Aucune édition spécifique n’est recommandée, tant que le développement se
 conforme aux recommandations exprimées à propos des fonctionnalités que
-l'édition utilisée propose.</p>
+l’édition utilisée propose.</p>
 </div>
-<h3 id="chaînes-doutils-stable-nightly-et-beta"><a class="header" href="#chaînes-doutils-stable-nightly-et-beta">Chaînes d'outils <em>stable</em>, <em>nightly</em> et <em>beta</em></a></h3>
-<p>De manière orthogonale aux éditions qui permettent d'opter pour une variante du
-langage en termes de fonctionnalités, la chaîne d'outils du langage Rust est
+
+<h3 id="chaînes-doutils-stable-nightly-et-beta"><a class="header" href="#chaînes-doutils-stable-nightly-et-beta">Chaînes d’outils <em>stable</em>, <em>nightly</em> et <em>beta</em></a></h3>
+<p>De manière orthogonale aux éditions qui permettent d’opter pour une variante du
+langage en termes de fonctionnalités, la chaîne d’outils du langage Rust est
 déclinée en trois variantes appelées <em>release channels</em>.</p>
 <ul>
 <li>La version <em>nightly</em> est produite une fois par jour.</li>
 <li>La version <em>nightly</em> est promue en version <em>beta</em> toutes les six semaines.</li>
 <li>La version <em>beta</em> est promue en version <em>stable</em> toutes les six semaines.</li>
 </ul>
-<p>Lors du développement d'un projet, il est important de vérifier non seulement
-la version de la chaîne d'outils couramment sélectionnée par défaut, mais aussi
+<p>Lors du développement d’un projet, il est important de vérifier non seulement
+la version de la chaîne d’outils couramment sélectionnée par défaut, mais aussi
 les potentielles surcharges qui peuvent être définies en fonction des
 répertoires.</p>
 <div class="example">
@@ -239,22 +239,24 @@ $ rustup override list
 /tmp/foo                                    nightly-x86_64-unknown-linux-gnu
 $
 </code></pre>
-<p>L'exemple suivant montre que la chaîne d'outils est configurée par défaut avec
+<p>L’exemple suivant montre que la chaîne d’outils est configurée par défaut avec
 <code>stable-x86_64-unknown-linux-gnu</code>, mais que le répertoire <code>/tmp/foo</code> la surcharge
 par <code>nightly-x86_64-unknown-linux-gnu</code>.</p>
 </div>
+
 <!-- -->
-<div class="reco" id="DENV-STABLE" type="Règle" title="Utilisation de la chaîne d'outils *stable*">
-<p>Le développement d'applications sécurisées DOIT être mené en utilisant la
-chaîne d'outils dans sa version <em>stable</em>, afin de limiter les potentiels
-<em>bugs</em> à la compilation, à l'exécution et lors de l'utilisation d'outils
+<div class="reco" id="DENV-STABLE" type="Règle" title="Utilisation de la chaîne d&#39;outils *stable*">
+<p>Le développement d’applications sécurisées DOIT être mené en utilisant la
+chaîne d’outils dans sa version <em>stable</em>, afin de limiter les potentiels
+<em>bugs</em> à la compilation, à l’exécution et lors de l’utilisation d’outils
 complémentaires.</p>
 </div>
-<p>Enfin, lorsque l'utilisation d'un outil (par exemple, une sous-commande <code>cargo</code>)
-requiert l'installation d'un composant dans une chaîne d'outils non <em>stable</em>,
+
+<p>Enfin, lorsque l’utilisation d’un outil (par exemple, une sous-commande <code>cargo</code>)
+requiert l’installation d’un composant dans une chaîne d’outils non <em>stable</em>,
 le basculement de variante doit être effectué de la façon la plus locale
 possible (idéalement, uniquement pendant la commande concernée) au lieu
-d'explicitement basculer la version courante.</p>
+d’explicitement basculer la version courante.</p>
 <div class="example">
 <p>Par exemple, pour lancer la version <em>nightly</em> de la commande <code>rustfmt</code> :</p>
 <pre><code class="language-shell">$ rustup toolchain list
@@ -267,6 +269,7 @@ $ cargo +nightly fmt
 $
 </code></pre>
 </div>
+
 <h3 id="garantie-de-niveau-pour-rustc"><a class="header" href="#garantie-de-niveau-pour-rustc">Garantie de niveau pour Rustc</a></h3>
 <p>Rustc utilise <a href="https://llvm.org/">LLVM</a> comme backend, il hérite donc du support de ce dernier et classe ses cibles prises en charge en différents niveaux afin d’indiquer le degré de stabilité et de tests effectué.</p>
 <div class="example">
@@ -283,8 +286,9 @@ x86_64-unknown-linux-gnux32
 ...
 
 </code></pre>
-<p>Dans cet exemple, on voit que, parmi l'ensemble des cibles installables, les cibles <code>wasm32-unknown-unknown</code> et <code>x86_64-unknown-linux-gnu</code> sont installées.</p>
+<p>Dans cet exemple, on voit que, parmi l’ensemble des cibles installables, les cibles <code>wasm32-unknown-unknown</code> et <code>x86_64-unknown-linux-gnu</code> sont installées.</p>
 </div>
+
 <h4 id="tier-1---fonctionnement-garanti"><a class="header" href="#tier-1---fonctionnement-garanti">Tier 1 - Fonctionnement garanti</a></h4>
 <p>La cible est entièrement examinée par la communauté. Elle réussit l’ensemble complet de la batterie de tests, fait l’objet de tests de régression réguliers et est maintenue à jour avec les nouvelles versions. En pratique, vous pouvez compter sur une génération de code cohérente, une ABI<sup class="footnote-reference" id="fr-abi-1"><a href="#footnote-abi">1</a></sup> stable et des performances prévisibles d’une version à l’autre. Les cibles de tier 1 offrent une garantie de <strong>fonctionnement</strong>.</p>
 <h4 id="tier-2---compilation-garantie"><a class="header" href="#tier-2---compilation-garantie">Tier 2 - Compilation garantie</a></h4>
@@ -295,12 +299,13 @@ x86_64-unknown-linux-gnux32
 <div class="reco" id="DENV-TIERS" type="Règle" title="Utilisation exclusive du tier 1 de `rustc` pour les logiciels de sûreté critiques">
 <p>Les cibles Rustc de niveau 1 et les chaînes de compilation certifiées DOIVENT être utilisées pour les systèmes de sûreté critiques.</p>
 </div>
+
 <p>Une liste complète des cibles prises en charge est disponible dans le <a href="https://doc.rust-lang.org/stable/rustc/index.html">Rust Book</a>.</p>
 <h2 id="cargo"><a class="header" href="#cargo">Cargo</a></h2>
-<p>Une fois que la chaîne d'outils appropriée a été sélectionnée avec Rustup,
-l'outil <a href="https://doc.rust-lang.org/stable/cargo/">Cargo</a> est disponible pour exécuter ces différents outils en
+<p>Une fois que la chaîne d’outils appropriée a été sélectionnée avec Rustup,
+l’outil <a href="https://doc.rust-lang.org/stable/cargo/">Cargo</a> est disponible pour exécuter ces différents outils en
 fournissant la commande <code>cargo</code>. Cargo est le gestionnaire de paquetages de Rust.
-Il joue plusieurs rôles fondamentaux tout au long d'un développement en Rust. Il
+Il joue plusieurs rôles fondamentaux tout au long d’un développement en Rust. Il
 permet notamment de :</p>
 <ul>
 <li>structurer le projet en fournissant un squelette de projet (<code>cargo new</code>) ;</li>
@@ -314,8 +319,8 @@ permet notamment de :</p>
 forme de sous-commandes.</li>
 </ul>
 <p>Cargo permet la récupération automatique des dépendances avant compilation.
-L'utilitaire permet de vérifier l'intégrité des dépendances après téléchargement.
-Il utilise pour cela un fichier <code>Cargo.lock</code> qui, s'il est présent au moment de la compilation,
+L’utilitaire permet de vérifier l’intégrité des dépendances après téléchargement.
+Il utilise pour cela un fichier <code>Cargo.lock</code> qui, s’il est présent au moment de la compilation,
 contraint les sommes de contrôle des dépendances. En cas de différence entre
 les sources téléchargées et le fichier <code>Cargo.lock</code>, une erreur apparaît.</p>
 <pre><code>error: checksum for `sha256 v1.6.0` changed between lock files
@@ -328,22 +333,24 @@ this could be indicative of a few possible errors:
 
 unable to verify that `sha256 v1.6.0` is the same as when the lockfile was generated
 </code></pre>
-<p>En cas d'absence du fichier <code>Cargo.lock</code>, il est créé automatiquement à la première compilation en suivant les
+<p>En cas d’absence du fichier <code>Cargo.lock</code>, il est créé automatiquement à la première compilation en suivant les
 sommes de contrôle des sources téléchargées (selon le principe TOFU : <em>Trust On First Use</em>).
-Ce fichier peut également être créé manuellement avec <code>cargo generate-lockfile</code>, et s'il
+Ce fichier peut également être créé manuellement avec <code>cargo generate-lockfile</code>, et s’il
 est déjà présent, un nouveau fichier est créé avec les dernières versions compatibles de chaque crate.</p>
 <div class="reco" id="DENV-CARGO-LOCK" type="Règle" title="Mise en dépôt du fichier Cargo.lock">
 <p>Le fichier <code>Cargo.lock</code> DOIT être versionné avec le code source du programme Rust.</p>
 </div>
+
 <div class="warning">
 <p>Des discussions sont en cours pour
 déterminer le meilleur moyen de protéger et de valider les <em>crates</em> lors de leur ajout au projet
 (les téléchargements suivants sont vérifiés par le fichier <code>Cargo.lock</code>). Pour le
 moment, la sécurité des premiers téléchargements de <code>cargo</code> repose sur la bonne sécurité du site web
-<a href="https://crates.io"><code>crates.io</code></a> ainsi que celle du dépôt, hébergé sur GitHub, contenant l'index du
+<a href="https://crates.io"><code>crates.io</code></a> ainsi que celle du dépôt, hébergé sur GitHub, contenant l’index du
 registre de <em>crates</em>. Pour les cas les plus sensibles, il peut être préférable
-d'opter pour une méthode d'installation alternative pour les dépendances.</p>
+d’opter pour une méthode d’installation alternative pour les dépendances.</p>
 </div>
+
 <p>Cargo propose différentes commandes et options pour adapter le processus de
 compilation aux besoins de chaque projet, principalement au travers du fichier
 <code>Cargo.toml</code>. Pour une présentation complète, voir le <a href="https://doc.rust-lang.org/cargo/index.html">Cargo Book</a>.</p>
@@ -356,102 +363,107 @@ commandes <code>cargo build --release</code> ou <code>cargo install</code> appli
 <p>Chaque profil peut être défini/modifié grâce à la section <code>[profile.*]</code> du fichier
 <code>Cargo.toml</code>. En particulier,</p>
 <ul>
-<li>la variable <a href="https://doc.rust-lang.org/cargo/reference/profiles.html#debug-assertions"><code>debug-assertions</code></a> contrôle l'activation des assertions de
+<li>la variable <a href="https://doc.rust-lang.org/cargo/reference/profiles.html#debug-assertions"><code>debug-assertions</code></a> contrôle l’activation des assertions de
 <em>debug</em> ;</li>
-<li>la variable <a href="https://doc.rust-lang.org/cargo/reference/profiles.html#overflow-checks"><code>overflow-checks</code></a> contrôle l'activation de la vérification des
-dépassements d'entiers lors d'opérations arithmétiques.</li>
+<li>la variable <a href="https://doc.rust-lang.org/cargo/reference/profiles.html#overflow-checks"><code>overflow-checks</code></a> contrôle l’activation de la vérification des
+dépassements d’entiers lors d’opérations arithmétiques.</li>
 </ul>
-<p>Changer les options par défaut pour ces variables peut entraîner l'apparition de
+<p>Changer les options par défaut pour ces variables peut entraîner l’apparition de
 <em>bugs</em> non détectés, même si le profil <code>dev</code> qui active normalement les
 vérifications (par exemple, les
-<a href="integer.html#chapter-integer">vérifications de dépassements d'entiers</a>)
+<a href="integer.html#chapter-integer">vérifications de dépassements d’entiers</a>)
 est utilisé.</p>
 <div class="reco" id="DENV-CARGO-OPTS" type="Règle" title="Conservation des valeurs par défaut des variables critiques dans les profils cargo">
 <p>Les variables <a href="https://doc.rust-lang.org/cargo/reference/profiles.html#debug-assertions"><code>debug-assertions</code></a> et <a href="https://doc.rust-lang.org/cargo/reference/profiles.html#overflow-checks"><code>overflow-checks</code></a> NE DOIVENT PAS être
 modifiées dans les sections de profils de développement (<code>[profile.dev]</code> et
 <code>[profile.test]</code>).</p>
 </div>
-<p>Cargo propose d'autres moyens de configuration afin de modifier son comportement
+
+<p>Cargo propose d’autres moyens de configuration afin de modifier son comportement
 sur un système donné. Cela peut être très pratique, mais il peut alors aussi
 être difficile de connaître et de se souvenir de toutes les options qui sont
 effectivement passées à <code>cargo</code>, et en particulier passées ensuite au
 compilateur Rust. Finalement, cela peut affecter la robustesse du processus de
-compilation et la confiance qu'on lui accorde. Il est préférable de centraliser
+compilation et la confiance qu’on lui accorde. Il est préférable de centraliser
 les options de compilation dans le fichier de configuration <code>Cargo.toml</code>. Pour
-le cas spécifique de la variable d'environnement <code>RUSTC_WRAPPER</code>, utilisée par
+le cas spécifique de la variable d’environnement <code>RUSTC_WRAPPER</code>, utilisée par
 exemple pour générer une partie du code ou pour invoquer un outil externe avant
-la compilation, il est préférable d'utiliser la fonctionnalité de <em>scripts de
+la compilation, il est préférable d’utiliser la fonctionnalité de <em>scripts de
 compilation</em> de Cargo.</p>
-<div class="reco" id="DENV-CARGO-ENVVARS" type="Règle" title="Conservation des valeurs par défaut des variables d'environnement à l'exécution de cargo">
-<p>Les variables d'environnement <code>RUSTC</code>, <code>RUSTC_WRAPPER</code> et <code>RUSTFLAGS</code> NE
+<div class="reco" id="DENV-CARGO-ENVVARS" type="Règle" title="Conservation des valeurs par défaut des variables d&#39;environnement à l&#39;exécution de cargo">
+<p>Les variables d’environnement <code>RUSTC</code>, <code>RUSTC_WRAPPER</code> et <code>RUSTFLAGS</code> NE
 DOIVENT PAS être modifiées lorsque Cargo est appelé pour compiler un projet.</p>
 </div>
+
 <h3 id="rustfmt"><a class="header" href="#rustfmt">Rustfmt</a></h3>
 <p><a href="https://github.com/rust-lang/rustfmt">Rustfmt</a> est un outil offrant la possibilité de formater du code en fonction
 de consignes de style (<em>style guidelines</em>).</p>
 <p>Les règles de convention de style peuvent être personnalisées au besoin dans
 le fichier <code>rustfmt.toml</code> ou <code>.rustfmt.toml</code> à la racine du projet. Il sera
-utilisé par l'outil en écrasant les préférences par défaut. Par exemple :</p>
+utilisé par l’outil en écrasant les préférences par défaut. Par exemple :</p>
 <pre><code class="language-toml"># Set the maximum line width to 120
 max_width = 120
 # Maximum line length for single line if-else expressions
 single_line_if_else_max_width = 40
 </code></pre>
-<p>Pour plus d'informations à propos des règles de convention de style que
+<p>Pour plus d’informations à propos des règles de convention de style que
 <code>rustfmt</code> propose, voir le <a href="https://doc.rust-lang.org/style-guide/index.html">guide des conventions de style</a>.</p>
-<div class="reco" id="DENV-FORMAT" type="Recommandation" title="Utilisation d'un outil de formatage (rustfmt)">
-<p>L'outil de formatage <code>rustfmt</code> DEVRAIT être utilisé pour assurer le respect de
+<div class="reco" id="DENV-FORMAT" type="Recommandation" title="Utilisation d&#39;un outil de formatage (rustfmt)">
+<p>L’outil de formatage <code>rustfmt</code> DEVRAIT être utilisé pour assurer le respect de
 règles de convention de style sur une base de code.</p>
 </div>
+
 <h3 id="cargo-fix"><a class="header" href="#cargo-fix">Cargo fix</a></h3>
 <p>La commande <a href="https://doc.rust-lang.org/cargo/commands/cargo-fix.html"><code>cargo fix</code></a> est un
 outil dédié à la réparation des avertissements de compilation et facilitant la
 transition entre éditions.</p>
 <pre><code class="language-shell">$ cargo fix
 </code></pre>
-<p>Pour préparer la transition d'un projet de l'édition Rust 2021 à Rust 2024, il
+<p>Pour préparer la transition d’un projet de l’édition Rust 2021 à Rust 2024, il
 est possible de lancer la commande suivante :</p>
 <pre><code class="language-shell">$ cargo fix --edition
 </code></pre>
 <p>Rustfix va soit réparer le code afin de le rendre compatible avec Rust 2024,
 soit afficher un avertissement décrivant le problème. Le problème devra alors
 être réparé manuellement. En exécutant la commande (et en réparant
-potentiellement les problèmes manuellement) jusqu'à ce qu'elle n'affiche plus
-aucun avertissement, il est possible de s'assurer que le code est compatible
-tant avec Rust 2021 qu'avec Rust 2024.</p>
+potentiellement les problèmes manuellement) jusqu’à ce qu’elle n’affiche plus
+aucun avertissement, il est possible de s’assurer que le code est compatible
+tant avec Rust 2021 qu’avec Rust 2024.</p>
 <p>Pour basculer définitivement le projet sous Rust 2024 :</p>
 <pre><code class="language-shell">$ cargo fix --edition-idioms
 </code></pre>
-<p>Il est important de noter que l'outil ne fournit que peu de garanties quant
+<p>Il est important de noter que l’outil ne fournit que peu de garanties quant
 à la correction (<em>soundness</em>) des réparations proposées. Dans une certaine
-configuration, certaines réparations (comme celles proposées avec l'option
+configuration, certaines réparations (comme celles proposées avec l’option
 <code>--edition-idioms</code>) sont connues pour casser la compilation ou pour modifier
-la sémantique d'un programme dans certains cas.</p>
+la sémantique d’un programme dans certains cas.</p>
 <h3 id="clippy"><a class="header" href="#clippy">Clippy</a></h3>
 <p><a href="https://github.com/rust-lang/rust-clippy">Clippy</a> est un outil permettant la vérification de nombreux <em>lints</em> (<em>bugs</em>,
 style et lisibilité du code, problèmes de performances, etc.). Depuis la chaîne
-d'outils stable en version 1.29, <code>clippy</code> peut être installé dans
-l'environnement <code>rustup</code> stable. Il est aussi recommandé d'installer <code>clippy</code> en
-tant que composant (<code>rustup component add clippy</code>) dans la chaîne d'outils
-stable plutôt que de l'installer comme une dépendance de chaque projet.</p>
-<p>L'outil fournit plusieurs catégories de <em>lints</em>, selon le type de problème qu'il
+d’outils stable en version 1.29, <code>clippy</code> peut être installé dans
+l’environnement <code>rustup</code> stable. Il est aussi recommandé d’installer <code>clippy</code> en
+tant que composant (<code>rustup component add clippy</code>) dans la chaîne d’outils
+stable plutôt que de l’installer comme une dépendance de chaque projet.</p>
+<p>L’outil fournit plusieurs catégories de <em>lints</em>, selon le type de problème qu’il
 vise à détecter dans le code. Les avertissements doivent être revérifiés par le
-développeur avant d'appliquer la réparation suggérée par <code>clippy</code>, en
+développeur avant d’appliquer la réparation suggérée par <code>clippy</code>, en
 particulier dans le cas des <em>lints</em> de la catégorie <code>clippy::nursery</code> puisque
 ceux-ci sont encore en cours de développement et de mise au point.</p>
-<p><code>clippy</code> dispose maintenant d'un outil <code>fix</code> similaire à celui de <code>rustfix</code>.</p>
-<div class="reco" id="DENV-LINTER" type="Règle" title="Utilisation régulière d'un *linter*">
+<p><code>clippy</code> dispose maintenant d’un outil <code>fix</code> similaire à celui de <code>rustfix</code>.</p>
+<div class="reco" id="DENV-LINTER" type="Règle" title="Utilisation régulière d&#39;un *linter*">
 <p>Un <em>linter</em> comme <code>clippy</code> DOIT être utilisé régulièrement tout au long du
-développement d'une application sécurisée.</p>
+développement d’une application sécurisée.</p>
 </div>
+
 <div class="reco" id="DENV-AUTOFIX" type="Règle" title="Vérification manuelle des réparations automatiques">
-<p>Dans le cadre du développement d'une application sécurisée, toute réparation
+<p>Dans le cadre du développement d’une application sécurisée, toute réparation
 automatique (comme celles appliquées par <code>rustfix</code> ou <code>clippy</code> par exemple) DOIT être
 vérifiée par le développeur.</p>
 </div>
+
 <h3 id="autres"><a class="header" href="#autres">Autres</a></h3>
-<p>D'autres outils ou sous-commandes <code>cargo</code> utiles pour renforcer la sécurité
-d'un programme existent, par exemple, en recherchant des motifs de code
+<p>D’autres outils ou sous-commandes <code>cargo</code> utiles pour renforcer la sécurité
+d’un programme existent, par exemple, en recherchant des motifs de code
 particuliers. Nous en discutons dans les chapitres suivants en fonction de leurs
 portées et de leurs objectifs.</p>
 <h2 id="références"><a class="header" href="#références">Références</a></h2>
@@ -462,20 +474,22 @@ portées et de leurs objectifs.</p>
 <li><a id="rustc-book"></a> <em><a href="https://doc.rust-lang.org/stable/rustc/index.html">The rustc book</a></em> (rustc-book)</li>
 </ul>
 <hr>
-<ol class="footnote-definition"><li id="footnote-abi">
+<ol class="footnote-definition">
+<li id="footnote-abi">
 <p>Application Binary Interface <a href="#fr-abi-1">↩</a></p>
 </li>
 </ol>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                             <a rel="prev" href="introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
-                                <i class="fa fa-angle-left"></i>
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
                             <a rel="next prefetch" href="libraries.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
                         <div style="clear: both"></div>
@@ -485,16 +499,21 @@ portées et de leurs objectifs.</p>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                     <a rel="prev" href="introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
-                        <i class="fa fa-angle-left"></i>
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
                     <a rel="next prefetch" href="libraries.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>
 
         </div>
 
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
 
 
 
@@ -503,18 +522,17 @@ portées et de leurs objectifs.</p>
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="pagetoc.js"></script>
-        <script src="vars-fr.js"></script>
-        <script src="custom-envs.js"></script>
+        <script src="vars-fr-a9481740.js"></script>
+        <script src="custom-envs-8d117517.js"></script>
 
 
 

@@ -12,25 +12,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="../favicon.svg">
-        <link rel="shortcut icon" href="../favicon.png">
-        <link rel="stylesheet" href="../css/variables.css">
-        <link rel="stylesheet" href="../css/general.css">
-        <link rel="stylesheet" href="../css/chrome.css">
-        <link rel="stylesheet" href="../css/print.css" media="print">
+        <link rel="icon" href="../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../css/general-2459343d.css">
+        <link rel="stylesheet" href="../css/chrome-ae938929.css">
+        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="../fonts/fonts.css">
+        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="../pagetoc.css">
-        <link rel="stylesheet" href="../custom-envs.css">
+        <link rel="stylesheet" href="../custom-envs-59fe9022.css">
 
 
         <!-- Provide site root and default themes to javascript -->
@@ -38,10 +36,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex.js";
+            window.path_to_searchindex_js = "../searchindex-570df679.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc.js"></script>
+        <script src="../toc-f8e5a37a.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -55,7 +53,7 @@
             </div>
         </div>
     </div>
-    <div id="body-container">
+    <div id="mdbook-body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
@@ -84,12 +82,12 @@
             html.classList.add("js");
         </script>
 
-        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             let sidebar = null;
-            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
@@ -104,39 +102,39 @@
             }
         </script>
 
-        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
                 <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
             </div>
         </nav>
 
-        <div id="page-wrapper" class="page-wrapper">
+        <div id="mdbook-page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                            <i class="fa fa-bars"></i>
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
                         </label>
-                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                            <i class="fa fa-paint-brush"></i>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
                         </button>
-                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
-                            <i class="fa fa-search"></i>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
                         </button>
                     </div>
 
@@ -144,38 +142,38 @@
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
-                            <i id="print-button" class="fa fa-print"></i>
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
                         </a>
 
                     </div>
                 </div>
 
-                <div id="search-wrapper" class="hidden">
-                    <form id="searchbar-outer" class="searchbar-outer">
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
                         <div class="search-wrapper">
-                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
                             <div class="spinner-wrapper">
-                                <i class="fa fa-spinner fa-spin"></i>
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
                             </div>
                         </div>
                     </form>
-                    <div id="searchresults-outer" class="searchresults-outer hidden">
-                        <div id="searchresults-header" class="searchresults-header"></div>
-                        <ul id="searchresults">
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
                         </ul>
                     </div>
                 </div>
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script>
-                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
-                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
-                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
                         link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
                     });
                 </script>
 
-                <div id="content" class="content">
+                <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="chapter-ffi"><a class="header" href="#chapter-ffi">Foreign Function Interface (FFI)</a></h1>
 <p>The Rust approach to interfacing with other languages relies on a strong
@@ -186,19 +184,19 @@ compilation. They may be called from C code with any parameter values.
 The exact syntax is <code>extern "&lt;ABI&gt;"</code> where ABI is a calling convention and
 depends on the target platform. The default one is <code>C</code> which corresponds to
 a standard C calling convention on the target platform.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Export C-compatible function
 #[unsafe(no_mangle)]
 extern "C" fn mylib_f(param: u32) -&gt; i32 {
     if param == 0xCAFEBABE { 0 } else { -1 }
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">}</span></code></pre>
 <p>For the function <code>mylib_f</code> to be accessible with the same name, the function
 must also be annotated with the <code>#[unsafe(no_mangle)]</code> attribute.</p>
 <p>Conversely, one can call C functions from Rust if they are declared in an
 <code>extern</code> block:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::os::raw::c_int;
 // import C function
@@ -210,15 +208,16 @@ fn use_abs() {
     let x = -1;
     println!("{} {}\n", x, unsafe { abs(x) });
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">}</span></code></pre>
 <div class="note">
 <p>Any foreign function imported in Rust through an <code>extern</code> block is
 <strong>automatically <code>unsafe</code></strong>. That is why, any call to a foreign function
 must be done from an <code>unsafe</code> context.</p>
 </div>
+
 <p><code>extern</code> blocks may also contain foreign global variable declarations prefixed
 with the <code>static</code> keyword:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// A direct way to access environment variables (on Unix)
 // should not be used! Not thread safe, have a look at `std::env`!
@@ -239,7 +238,7 @@ fn use_static_extern() {
         next = unsafe { next.offset(1) };
     }
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">}</span></code></pre>
 <h2 id="code-structure"><a class="header" href="#code-structure">Code structure</a></h2>
 <div class="reco" id="FFI-SAFEWRAPPING" type="Recommendation" title="Provide safe wrapping to foreign library">
 <p>Interfacing a library written in another language in Rust SHOULD be done in
@@ -253,6 +252,7 @@ the Rust level.</li>
 <p>If the low-level API is exposed to the world, it SHOULD be done in a dedicated
 crate with a name of the form <code>*-sys</code>.</p>
 </div>
+
 <p>The crate <a href="https://crates.io/crates/bindgen"><code>rust-bindgen</code></a> may be used to automatically generate the low-level
 part of the binding from C header files.</p>
 <!--
@@ -268,7 +268,7 @@ laid out in the memory. The only way to make data compatible with a foreign
 language is through explicit use of a C-compatible data layout with the <code>repr</code>
 attribute (see <a href="https://doc.rust-lang.org/reference/type-layout.html">Rust Reference: Type Layout</a>). For instance, the following Rust
 types:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[repr(C)]
 struct Data {
@@ -282,7 +282,7 @@ struct PackedData {
     b: u16,
     c: u64,
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">}</span></code></pre>
 <p>are compatible with the following C types:</p>
 <pre><code class="language-c">struct Data
 {
@@ -304,6 +304,7 @@ imported or exported global variables.</p>
 <p>The lone exception is types that are considered <strong>opaque</strong> on the foreign
 side.</p>
 </div>
+
 <p>The following types are considered C-compatible:</p>
 <ul>
 <li>integral or floating point primitive types,</li>
@@ -343,6 +344,7 @@ and contradicts the C++ specification),</li>
 (typically to make a type opaque), types on both sides MUST have the same size
 and the same alignment requirement.</p>
 </div>
+
 <p>Concerning enumerations with fields in particular, the corresponding types in C (or
 C++) are not obvious, cf. <a href="https://rust-lang.github.io/rfcs/2195-really-tagged-unions.html">RFC 2195</a>.</p>
 <p>Automated tools to generate bindings, such as <a href="https://crates.io/crates/bindgen"><code>rust-bindgen</code></a> or
@@ -351,6 +353,7 @@ C++) are not obvious, cf. <a href="https://rust-lang.github.io/rfcs/2195-really-
 <p>In a secure Rust development, automated generation tools SHOULD be used to
 generate bindings when possible and to maintain them continually.</p>
 </div>
+
 <!-- -->
 <div class="warning">
 <p>For binding C/C++ to Rust, <a href="https://crates.io/crates/bindgen"><code>rust-bindgen</code></a> is able to automatically generate
@@ -359,9 +362,10 @@ Recommendation <a href="ffi.html#FFI-SAFEWRAPPING">FFI-SAFEWRAPPING</a>).
 Also some options of <a href="https://crates.io/crates/bindgen"><code>rust-bindgen</code></a> may result in dangerous translations, in
 particular <code>rustified_enum</code>.</p>
 </div>
+
 <h3 id="platform-dependent-types"><a class="header" href="#platform-dependent-types">Platform-dependent types</a></h3>
 <p>When interfacing with a foreign language, like C or C++, it is often required
-to use platform-dependent types such as C's <code>int</code>, <code>long</code>, etc.</p>
+to use platform-dependent types such as C’s <code>int</code>, <code>long</code>, etc.</p>
 <p>In addition to <code>c_void</code> in <code>std::ffi</code> (or <code>core::ffi</code>) for <code>void</code>, the standard
 library offers portable type aliases in <code>std:os::raw</code> (or <code>core::os::raw</code>):</p>
 <ul>
@@ -383,11 +387,12 @@ library offers portable type aliases in <code>std:os::raw</code> (or <code>core:
 the C standard library.</p>
 <div class="reco" id="FFI-PFTYPE" type="Rule" title="Use portable aliases `c_*` when binding to platform-dependent types">
 <p>In a secure Rust development, when interfacing with foreign code that
-uses platform-dependent types, such as C's <code>int</code> and <code>long</code>, Rust code MUST
+uses platform-dependent types, such as C’s <code>int</code> and <code>long</code>, Rust code MUST
 use portable type aliases, such as the ones provided by the standard library or the
 <a href="https://crates.io/crates/libc"><code>libc</code></a> crate, rather than platform-specific types, except if
 the binding is automatically generated for each platform (see Note below).</p>
 </div>
+
 <!-- -->
 <div class="note">
 <p>Automatic binding generation tools (e.g. <a href="https://crates.io/crates/cbindgen"><code>cbindgen</code></a>, <a href="https://crates.io/crates/bindgen"><code>rust-bindgen</code></a>) are able
@@ -395,9 +400,10 @@ to ensure type consistency on a specific platform. They should be used during
 the build process for each target to ensure that the generation is sound for
 the specific target platform.</p>
 </div>
+
 <h3 id="robustness"><a class="header" href="#robustness">Non-robust types: references, function pointers, enumerations</a></h3>
 <p>A <em>trap representation</em> of a particular type is a representation (pattern of
-bits) that respects the type's representation constraints (such as size and
+bits) that respects the type’s representation constraints (such as size and
 alignment) but does not represent a valid value of this type and leads to
 undefined behavior.</p>
 <p>In simple terms, if a Rust variable is set to such an invalid value,
@@ -429,11 +435,13 @@ values of non-robust types.</p>
 through explicit checking or the foreign side offers strong guarantees of the
 validity of the value.</p>
 </div>
+
 <!-- -->
 <div class="reco" id="FFI-CKINRUST" type="Recommendation" title="Check foreign values in Rust">
 <p>In a secure Rust development, the validity checks of foreign values SHOULD
 be done in Rust when possible.</p>
 </div>
+
 <p>Those generic rules are to be adapted to a specific foreign language or for the
 associated risks. Concerning languages, C is particularly unfit for offering
 guarantees about validity. However, Rust is not the only language to offer
@@ -443,15 +451,16 @@ the safe and unsafe segments, the recommendation is to always use Rust to check
 when possible. Concerning risks, the most dangerous types are references,
 function references, and enumerations, and are discussed below.</p>
 <div class="warning">
-<p>Rust <code>bool</code> has been made equivalent to C99's <code>_Bool</code> (aliased as <code>bool</code>
-in <code>&lt;stdbool.h&gt;</code>) and C++'s <code>bool</code>. However, loading a value other than 0 and
+<p>Rust <code>bool</code> has been made equivalent to C99’s <code>_Bool</code> (aliased as <code>bool</code>
+in <code>&lt;stdbool.h&gt;</code>) and C++’s <code>bool</code>. However, loading a value other than 0 and
 1 as a <code>_Bool</code>/<code>bool</code> is an undefined behavior <em>on both sides</em>.
 Safe Rust ensures that. Standard-compliant C and C++ compilers ensure that no
 value but 0 and 1 can be <em>stored</em> in a <code>_Bool</code>/<code>bool</code> value but cannot
 guarantee the absence of an <em>incorrect reinterpretation</em> (e.g., union types,
 pointer cast). To detect such a bad reinterpretation, sanitizers such as
-<a href="https://llvm.org/">LLVM</a>'s <code>-fsanitize=bool</code> may be used.</p>
+<a href="https://llvm.org/">LLVM</a>’s <code>-fsanitize=bool</code> may be used.</p>
 </div>
+
 <h4 id="references-and-pointers"><a class="header" href="#references-and-pointers">References and pointers</a></h4>
 <p>The types <code>&amp;mut T</code> and <code>&amp;T</code> are subject to the same validity requirements as the
 type T, with the additional constraint that they must refer to a properly
@@ -468,7 +477,7 @@ including C variants allowing for non-null type checking, e.g. Microsoft SAL
 annotated code.</p>
 <p>By contrast, Rust’s raw pointer types (<code>*const T</code> and <code>*mut T</code>) defer validity
 checks from the point of binding to the point of use. Furthermore, they allow
-validity to be assessed primarily against <code>std/core::ptr::null()</code> (C's <code>(void*)0</code>)
+validity to be assessed primarily against <code>std/core::ptr::null()</code> (C’s <code>(void*)0</code>)
 but also in some contexts against a known valid memory range (particularly in
 embedded systems or kernel-level programming) or against alignment requirements.</p>
 <p>Another advantage of using Rust
@@ -483,6 +492,7 @@ pointers against known valid memory range, tagging (or signing) pointers
 (particularly applicable if the pointed value is only manipulated from Rust)
 or checking data alignment.</p>
 </div>
+
 <div class="reco" id="FFI-INPUT-PTR" type="Recommendation" title="Use raw pointer to encode pointers coming from the external language">
 <p>In a secure Rust development, pointers received from the external language SHOULD be encoded by Rust <em>raw pointers</em>.</p>
 <p>Exceptions include:</p>
@@ -495,6 +505,7 @@ variants or from C++ compiled in an environment where <code>extern "C"</code>
 references are encoded as pointers.</li>
 </ul>
 </div>
+
 <p>Where the previous recommendation cannot be applied, pointer validity checks must
 be carried out by the language from which the pointer originates (that is, the external language).</p>
 <div class="reco" id="FFI-CK-INPUT-REF-VALID" type="Rule" title="Do not use unchecked foreign references">
@@ -505,6 +516,7 @@ Rust through FFI MUST be <strong>checked on the foreign side</strong> either aut
 and manipulated only from the Rust side and <code>Option</code>-wrapped references
 (see Note below).</p>
 </div>
+
 <!-- -->
 <p>The following code a simple example of foreign pointer use in an exported Rust
 function:</p>
@@ -542,6 +554,7 @@ side. The C <code>NULL</code> is understood as <code>None</code> in Rust while a
 pointer is encapsulated in <code>Some</code>. While quite ergonomic, this feature does
 not allow stronger validations such as memory range checking.</p>
 </div>
+
 <h4 id="function-pointers"><a class="header" href="#function-pointers">Function pointers</a></h4>
 <p>Function pointers that cross FFI boundaries may ultimately lead to arbitrary code
 execution and represent a real security risks.</p>
@@ -549,6 +562,7 @@ execution and represent a real security risks.</p>
 <p>In a secure Rust development, any function pointer types at the FFI boundary
 MUST be marked <code>extern</code> (possibly with the specific ABI) and <code>unsafe</code>.</p>
 </div>
+
 <p>Function pointers in Rust are a lot more similar to references than they are
 to normal pointers. In particular, the validity of function pointers cannot be
 checked directly on the Rust side. However, Rust offers two alternative
@@ -585,6 +599,7 @@ allowing more powerful checks at the cost of ergonomics.</p>
 <p>In a secure Rust development, any foreign function pointer MUST be checked at
 the FFI boundary.</p>
 </div>
+
 <p>When binding with C or even C++, one cannot guarantee easily the validity of
 function pointers. Moreover, C++ function objects (also known as functors) are not C-compatible.</p>
 <h4 id="enumerations"><a class="header" href="#enumerations">Enumerations</a></h4>
@@ -611,6 +626,7 @@ Rust side,</li>
 <li>bound to safe enumerations in the foreign language, e.g. <code>enum class</code> types in C++.</li>
 </ul>
 </div>
+
 <p>Concerning enumerations without field, crates like [<code>num_derive</code>] or [<code>num_enum</code>] allow
 developers to easily provide safe conversions from integer to enumeration and may
 be use to safely convert an integer (provided from a C <code>enum</code>) into a Rust enum.</p>
@@ -621,6 +637,7 @@ When doing multilingual development, it is something very common.</p>
 <p>In a secure Rust development, when binding foreign opaque types, one SHOULD
 use pointers to dedicated opaque types rather than <code>c_void</code> pointers.</p>
 </div>
+
 <p>Currently the recommended way to make a foreign opaque type is like so:</p>
 <pre><code class="language-rust unsafe noplaypen">#[repr(C)]
 pub struct OpaqueFoo {
@@ -637,6 +654,7 @@ are to be considered opaque in C/C++ SHOULD be translated as incomplete
 <code>struct</code> types (i,e., declared without definition) and be provided with
 a dedicated constructor and destructor.</p>
 </div>
+
 <p>Example of opaque Rust type:</p>
 <pre><code class="language-rust unsafe noplaypen">pub struct Opaque {
     // (...) hide details
@@ -672,6 +690,7 @@ memory model can be found in the <a href="https://doc.rust-lang.org/core/ptr/ind
 <p>In secure development in Rust, the use of indirection (pointers, references)
 crossing the boundary MUST preserve Rust’s memory model.</p>
 </div>
+
 <div class="example">
 <p>In the following example, the Rust code manipulates pointers originating from C,
 showing the importance of respecting Rust’s invariants from the C side.</p>
@@ -689,6 +708,7 @@ called from the following C code, because Rust’s memory model forbids the <em>
 }
 </code></pre>
 </div>
+
 <div class="example">
 <p>In the following example, the Rust code passes a pointer to C code,
 illustrating the importance of reflecting, in Rust’s type system,
@@ -720,14 +740,14 @@ fn run_inc() {
 <p>In this example, the error could have been detected by placing stronger constraints
 on the binding to the C library API, either by modifying its signature directly,
 or by wrapping the <code>inc_wrap</code> function, as in the following example.</p>
-<pre><pre class="playground"><code class="language-rust good"><span class="boring">#![allow(unused)]
+<pre class="playground"><code class="language-rust good"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn safe_inc_wrap(a: &amp;mut u8) {
     unsafe {
         inc_wrap(a);
     }
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">}</span></code></pre>
 <p>The <code>safe_inc_wrap</code> function is indeed <em>safe</em> because:</p>
 <ul>
 <li>any memory value can be interpreted as a value of type <code>u8</code> (the <code>u8</code> type is <a href="#robustness">robust</a>),</li>
@@ -735,6 +755,7 @@ or by wrapping the <code>inc_wrap</code> function, as in the following example.<
 <li>the C code neither frees the pointer nor “retains” it (via a <code>static</code> variable, for example) beyond the call to the <code>inc_wrap</code> function.</li>
 </ul>
 </div>
+
 <h2 id="memory-and-resource-management"><a class="header" href="#memory-and-resource-management">Memory and resource management</a></h2>
 <p>Programming languages handle memory in various ways. As a result, it is
 important to known when transmitting data between Rust and another language
@@ -750,6 +771,7 @@ abandoning the possible reclamations associated with it.</p>
 types that are directly transmitted to foreign code  (i.e. not through a
 pointer or reference).</p>
 </div>
+
 <p>In fact, it is advisable to only use <code>Copy</code> types. Note that <code>*const T</code> is
 <code>Copy</code> even if T is not.</p>
 <p>However if not reclaiming memory and resources is bad, using reclaimed memory or
@@ -766,6 +788,7 @@ data.</li>
 dedicated foreign functions provided by the chosen language.</li>
 </ul>
 </div>
+
 <p>Ownership is not enough. It remains to ensure the correct lifetime, mostly that
 no use occurs after reclamation. It is a lot more challenging. When the other
 language is responsible for the memory, the best way is to provide a safe
@@ -776,6 +799,7 @@ allocated and deallocated in the foreign language SHOULD be encapsulated in a
 <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a> type in such a way as to provide automatic deallocation in Rust,
 through an automatic call to the foreign language deallocation routine.</p>
 </div>
+
 <p>A simple example of Rust wrapping over an external opaque type:</p>
 <pre><code class="language-rust ignore noplaypen">/// Private “raw” opaque foreign type Foo
 #[repr(C)]
@@ -824,6 +848,7 @@ except if the code is guaranteed to never panic.</p>
 <p>For wiping sensitive data, one could address the issue with a dedicated
 panic handler.</p>
 </div>
+
 <p>When the foreign language is the one exploiting Rust allocated resources, it is
 a lot more difficult to offer any guarantee.</p>
 <p>In C for instance, there is no easy way to check that the appropriate destructor
@@ -939,6 +964,7 @@ a panic handling mechanism (such as <a href="https://doc.rust-lang.org/std/panic
 <a href="https://doc.rust-lang.org/std/panic/fn.set_hook.html"><code>std::panic::set_hook</code></a>, <a href="https://doc.rust-lang.org/reference/panic.html#r-panic.panic_handler"><code>#[panic_handler]</code></a>) to ensure the rust code will not
 abort or return in an unstable state.</p>
 </div>
+
 <p>Note that <a href="https://doc.rust-lang.org/std/panic/fn.catch_unwind.html"><code>catch_unwind</code></a> will only catch unwinding panics, not those that abort
 the process.</p>
 <pre><code class="language-rust unsafe noplaypen ignore">fn may_panic() {
@@ -965,6 +991,7 @@ trick: the linker fails if a non-trivially-dead branch leads to <code>panic!</co
 <p>In a secure Rust development, exposing a Rust library to a foreign language
 SHOULD only be done through a <strong>dedicated C-compatible API</strong>.</p>
 </div>
+
 <p>The crate <a href="https://crates.io/crates/cbindgen"><code>cbindgen</code></a> may be used to automatically generate C or C++ bindings to
 the Rust C-compatible API of a Rust library.</p>
 <h3 id="minimal-example-of-a-c-exported-rust-library"><a class="header" href="#minimal-example-of-a-c-exported-rust-library">Minimal example of a C-exported Rust library</a></h3>
@@ -1084,20 +1111,22 @@ int main(int argc, const char **argv)
 <li><a id="unwinding"></a> <em><a href="https://doc.rust-lang.org/stable/reference/items/functions.html#unwinding">Unwinding</a></em> (unwinding)</li>
 </ul>
 <hr>
-<ol class="footnote-definition"><li id="footnote-ffi-panic-abort">
+<ol class="footnote-definition">
+<li id="footnote-ffi-panic-abort">
 <p>More details can be found in the <a href="https://doc.rust-lang.org/stable/reference/items/functions.html#unwinding">unwinding specification</a>. <a href="#fr-ffi-panic-abort-1">↩</a></p>
 </li>
 </ol>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                             <a rel="prev" href="../unsafe/memory.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
-                                <i class="fa fa-angle-left"></i>
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
                             <a rel="next prefetch" href="../standard.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
                         <div style="clear: both"></div>
@@ -1107,16 +1136,21 @@ int main(int argc, const char **argv)
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                     <a rel="prev" href="../unsafe/memory.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
-                        <i class="fa fa-angle-left"></i>
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
                     <a rel="next prefetch" href="../standard.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>
 
         </div>
 
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
 
 
 
@@ -1125,18 +1159,17 @@ int main(int argc, const char **argv)
         </script>
 
 
-        <script src="../elasticlunr.min.js"></script>
-        <script src="../mark.min.js"></script>
-        <script src="../searcher.js"></script>
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-c2a407aa.js"></script>
 
-        <script src="../clipboard.min.js"></script>
-        <script src="../highlight.js"></script>
-        <script src="../book.js"></script>
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-abc7f01d.js"></script>
+        <script src="../book-a0b12cfe.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../pagetoc.js"></script>
-        <script src="../vars-en.js"></script>
-        <script src="../custom-envs.js"></script>
+        <script src="../vars-en-18c826c5.js"></script>
+        <script src="../custom-envs-8d117517.js"></script>
 
 
 
