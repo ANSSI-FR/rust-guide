@@ -57,7 +57,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Licence
 
-This document is published under the [Open Licence 2.0](LICENCE.md).
+This document is published under the [Open Licence 2.0](LICENSE.md).
 
 ## External references
 
